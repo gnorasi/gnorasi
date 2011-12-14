@@ -8,5 +8,7 @@
 ./SimpleViewer diff.img
 ./BinaryThreshold diff.img thresh.img -1 -0.1 0 255
 ./SimpleViewer thresh.img 
-./BinaryOpening thresh.img final.img
-./SimpleViewer final.img 
+./BinaryOpening thresh.img opened_1.img 1
+./SimpleViewer opened_1.img 
+./BinaryOpening thresh.img opened_3.img 3
+./SimpleViewer opened_3.img 
