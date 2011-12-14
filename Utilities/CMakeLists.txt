@@ -21,6 +21,12 @@ TARGET_LINK_LIBRARIES(ImageDifference OTBCommon OTBIO OTBBasicFilters)
 ADD_EXECUTABLE(BinaryThreshold BinaryThreshold.cxx )
 TARGET_LINK_LIBRARIES(BinaryThreshold OTBCommon OTBIO)
 
+ADD_EXECUTABLE(BinaryErode BinaryErode.cxx )
+TARGET_LINK_LIBRARIES(BinaryErode OTBCommon OTBIO)
+
+ADD_EXECUTABLE(BinaryDilate BinaryDilate.cxx )
+TARGET_LINK_LIBRARIES(BinaryDilate OTBCommon OTBIO)
+
 ADD_EXECUTABLE(BinaryOpening BinaryOpening.cxx )
 TARGET_LINK_LIBRARIES(BinaryOpening OTBCommon OTBIO)
 
