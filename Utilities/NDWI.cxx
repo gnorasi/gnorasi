@@ -1,6 +1,6 @@
 /*=========================================================================
 
-  Program:   GNORASI Image Subtraction Application
+  Program:   GNORASI NDWI Calculator Application
   Language:  C++
 
   Copyright (c) National Technical University of Athens. All rights reserved.
@@ -30,12 +30,12 @@
 
 int main( int argc, char* argv[])
 {
-  if (argc != 5)
-    {
-    std::cerr << "Usage: " << argv[0] << " inputImageFile1 ";
-    std::cerr << " inputImageFile2 outputImageFile outputPrettyImageFile ";
+  if (argc != 4)
+  {
+    std::cerr << "Usage: " << argv[0] << " inputImageFile ";
+    std::cerr << " outputImageFile outputImageFile8bit";
     return EXIT_FAILURE;
-    }
+  }
 
   typedef double                                                          PixelType;
   typedef otb::VectorImage<PixelType, 2>                                  InputImageType;
@@ -49,51 +49,34 @@ int main( int argc, char* argv[])
 
   typedef otb::BandMathImageFilter<OutputImageType>   FilterType;
 
-  ReaderType::Pointer reader1 = ReaderType::New();
-  ReaderType::Pointer reader2 = ReaderType::New();
+  ReaderType::Pointer reader = ReaderType::New();
   WriterType::Pointer writer = WriterType::New();
 
   FilterType::Pointer filter = FilterType::New();
 
   writer->SetInput(filter->GetOutput());
-  reader1->SetFileName(argv[1]);
-  reader2->SetFileName(argv[2]);
-  writer->SetFileName(argv[3]);
+  reader->SetFileName(argv[1]);
+  writer->SetFileName(argv[2]);
 
-  reader1->UpdateOutputInformation();
-  reader2->UpdateOutputInformation();
+  reader->UpdateOutputInformation();
 
-  VectorImageToImageListType::Pointer imageList1 = VectorImageToImageListType::New();
-  imageList1->SetInput(reader1->GetOutput());
+  VectorImageToImageListType::Pointer imageList = VectorImageToImageListType::New();
+  imageList->SetInput(reader->GetOutput());
 
-  imageList1->UpdateOutputInformation();
+  imageList->UpdateOutputInformation();
 
-  const unsigned int nbBands1 = reader1->GetOutput()->GetNumberOfComponentsPerPixel();
+  const unsigned int nbBands = reader->GetOutput()->GetNumberOfComponentsPerPixel();
 
-  for(unsigned int j = 0; j < nbBands1; ++j)
-      {
-      filter->SetNthInput(j, imageList1->GetOutput()->GetNthElement(j));
-      }
-  
-  VectorImageToImageListType::Pointer imageList2 = VectorImageToImageListType::New();
-  imageList2->SetInput(reader2->GetOutput());
+  for(unsigned int j = 0; j < nbBands; ++j)
+  {
+    filter->SetNthInput(j, imageList->GetOutput()->GetNthElement(j));
+  }
 
-  imageList2->UpdateOutputInformation();
-
-  const unsigned int nbBands2 = reader2->GetOutput()->GetNumberOfComponentsPerPixel();
-  int k = nbBands1;
-
-  for(unsigned int j = 0; j < nbBands2; ++j)
-      {
-      filter->SetNthInput(k, imageList2->GetOutput()->GetNthElement(j));
-      k++;
-      }
-  
-  filter->SetExpression("(b2-b1)");
+  filter->SetExpression("if( (b4 != 0), (b4-b5)/(b4+b5), 0)");
 
   writer->Update();
   
-  typedef otb::Image<unsigned char, 2>                                      OutputPrettyImageType;
+  /*typedef otb::Image<unsigned char, 2>                                      OutputPrettyImageType;
   typedef otb::ImageFileWriter<OutputPrettyImageType>            PrettyImageFileWriterType;
   typedef itk::CastImageFilter<OutputImageType, OutputPrettyImageType> CastImageFilterType;
   
@@ -102,9 +85,9 @@ int main( int argc, char* argv[])
   caster->SetInput(filter->GetOutput());
 
   prettyWriter->SetInput(caster->GetOutput());
-  prettyWriter->SetFileName(argv[4]);
+  prettyWriter->SetFileName(argv[3]);
   
-  prettyWriter->Update();
+  prettyWriter->Update();*/
 
   return EXIT_SUCCESS;
 }

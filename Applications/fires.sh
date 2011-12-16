@@ -4,7 +4,7 @@
 ./SimpleViewer ndvi_230.img
 ./NDVI 242_250.img ndvi_242.img
 ./SimpleViewer ndvi_242.img
-./ImageDifference ndvi_230.img ndvi_242.img diff.img
+./ImageDifference ndvi_230.img ndvi_242.img diff.img diff_8bit.img
 ./SimpleViewer diff.img
 ./BinaryThreshold diff.img thresh.img -1 -0.1 0 255
 ./SimpleViewer thresh.img 
