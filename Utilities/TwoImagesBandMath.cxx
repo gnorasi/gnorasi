@@ -1,6 +1,6 @@
 /*=========================================================================
 
-  Program:   GNORASI Image Subtraction Application
+  Program:   GNORASI Two Images Band Math Application
   Language:  C++
 
   Copyright (c) National Technical University of Athens. All rights reserved.
@@ -30,12 +30,14 @@
 
 int main( int argc, char* argv[])
 {
-  if (argc != 5)
-    {
+  if (argc != 6)
+  {
     std::cerr << "Usage: " << argv[0] << " inputImageFile1 ";
     std::cerr << " inputImageFile2 outputImageFile outputPrettyImageFile ";
+    std::cerr << " MathExpression " << std::endl;
+    std::cerr << "e.g. \"(b4-b3)\"" << std::endl;
     return EXIT_FAILURE;
-    }
+  }
 
   typedef double                                                          PixelType;
   typedef otb::VectorImage<PixelType, 2>                                  InputImageType;
@@ -71,9 +73,9 @@ int main( int argc, char* argv[])
   const unsigned int nbBands1 = reader1->GetOutput()->GetNumberOfComponentsPerPixel();
 
   for(unsigned int j = 0; j < nbBands1; ++j)
-      {
-      filter->SetNthInput(j, imageList1->GetOutput()->GetNthElement(j));
-      }
+  {
+    filter->SetNthInput(j, imageList1->GetOutput()->GetNthElement(j));
+  }
   
   VectorImageToImageListType::Pointer imageList2 = VectorImageToImageListType::New();
   imageList2->SetInput(reader2->GetOutput());
@@ -84,12 +86,12 @@ int main( int argc, char* argv[])
   int k = nbBands1;
 
   for(unsigned int j = 0; j < nbBands2; ++j)
-      {
-      filter->SetNthInput(k, imageList2->GetOutput()->GetNthElement(j));
-      k++;
-      }
+  {
+    filter->SetNthInput(k, imageList2->GetOutput()->GetNthElement(j));
+    k++;
+  }
   
-  filter->SetExpression("(b2-b1)");
+  filter->SetExpression(argv[5]);
 
   writer->Update();
   

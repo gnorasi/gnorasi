@@ -15,6 +15,9 @@ TARGET_LINK_LIBRARIES(SimpleViewer OTBCommon OTBIO OTBGui OTBVisualization)
 ADD_EXECUTABLE(NDVI NDVI.cxx )
 TARGET_LINK_LIBRARIES(NDVI OTBCommon OTBIO OTBBasicFilters)
 
+ADD_EXECUTABLE(NDWI NDWI.cxx )
+TARGET_LINK_LIBRARIES(NDWI OTBCommon OTBIO OTBBasicFilters)
+
 ADD_EXECUTABLE(ImageDifference ImageDifference.cxx )
 TARGET_LINK_LIBRARIES(ImageDifference OTBCommon OTBIO OTBBasicFilters)
 
@@ -32,3 +35,9 @@ TARGET_LINK_LIBRARIES(BinaryOpening OTBCommon OTBIO)
 
 ADD_EXECUTABLE(BinaryClosing BinaryClosing.cxx )
 TARGET_LINK_LIBRARIES(BinaryClosing OTBCommon OTBIO)
+
+ADD_EXECUTABLE(OneImageBandMath OneImageBandMath.cxx )
+TARGET_LINK_LIBRARIES(OneImageBandMath OTBCommon OTBIO OTBBasicFilters)
+
+ADD_EXECUTABLE(TwoImagesBandMath TwoImagesBandMath.cxx )
+TARGET_LINK_LIBRARIES(TwoImagesBandMath OTBCommon OTBIO OTBBasicFilters)
