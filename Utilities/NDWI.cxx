@@ -4,12 +4,13 @@
   Language:  C++
 
   Copyright (c) National Technical University of Athens. All rights reserved.
-  Copyright (c) Centre National d'Etudes Spatiales. All rights reserved.
+  
+  Portions of this code are covered under the OTB copyright.
   See OTBCopyright.txt for details.
 
 
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+     This software is distributed WITHOUT ANY WARRANTY; without even 
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
