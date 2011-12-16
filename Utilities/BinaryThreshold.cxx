@@ -59,9 +59,6 @@ int main(int argc, char * argv[])
   const OutputPixelType lowerThreshold = atof(argv[3]);
   const OutputPixelType upperThreshold = atof(argv[4]);
   
-  std::cout << outsideValue << std::endl;
-  std::cout << insideValue << std::endl;
-
   filter->SetLowerThreshold(lowerThreshold);
   filter->SetUpperThreshold(upperThreshold);
 
