@@ -73,7 +73,7 @@ int main( int argc, char* argv[])
       filter->SetNthInput(j, imageList->GetOutput()->GetNthElement(j));
       }
 
-  filter->SetExpression("(b2-b1)/(b2+b1) ");
+  filter->SetExpression("if( (b2 != 0), (b2-b1)/(b2+b1), 0)");
 
   writer->Update();
 
