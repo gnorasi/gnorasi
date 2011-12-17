@@ -56,3 +56,7 @@ TARGET_LINK_LIBRARIES(KullbackLeiblerDistanceChangeDetection OTBIO OTBCommon  )
 
 ADD_EXECUTABLE(CannyEdgeDetection CannyEdgeDetection.cxx )
 TARGET_LINK_LIBRARIES(CannyEdgeDetection OTBCommon OTBIO)
+
+ADD_EXECUTABLE(GradientAnisotropicDiffusion GradientAnisotropicDiffusion.cxx )
+TARGET_LINK_LIBRARIES(GradientAnisotropicDiffusion
+OTBCommon OTBIO ITKBasicFilters)
