@@ -44,3 +44,6 @@ TARGET_LINK_LIBRARIES(TwoImagesBandMath OTBCommon OTBIO OTBBasicFilters)
 
 ADD_EXECUTABLE(MeanDifferenceChangeDetection MeanDifferenceChangeDetection.cxx)
 TARGET_LINK_LIBRARIES(MeanDifferenceChangeDetection OTBIO OTBCommon  )
+
+ADD_EXECUTABLE(RatioChangeDetection RatioChangeDetection.cxx)
+TARGET_LINK_LIBRARIES(RatioChangeDetection OTBIO OTBCommon  )
