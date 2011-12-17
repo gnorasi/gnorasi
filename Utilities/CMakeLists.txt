@@ -53,3 +53,6 @@ TARGET_LINK_LIBRARIES(LocalCorrelationChangeDetection OTBIO OTBCommon  )
 
 ADD_EXECUTABLE(KullbackLeiblerDistanceChangeDetection KullbackLeiblerDistanceChangeDetection.cxx)
 TARGET_LINK_LIBRARIES(KullbackLeiblerDistanceChangeDetection OTBIO OTBCommon  )
+
+ADD_EXECUTABLE(CannyEdgeDetection CannyEdgeDetection.cxx )
+TARGET_LINK_LIBRARIES(CannyEdgeDetection OTBCommon OTBIO)
