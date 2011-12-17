@@ -60,3 +60,6 @@ TARGET_LINK_LIBRARIES(CannyEdgeDetection OTBCommon OTBIO)
 ADD_EXECUTABLE(GradientAnisotropicDiffusion GradientAnisotropicDiffusion.cxx )
 TARGET_LINK_LIBRARIES(GradientAnisotropicDiffusion
 OTBCommon OTBIO ITKBasicFilters)
+
+ADD_EXECUTABLE(WatershedSegmentation WatershedSegmentation.cxx )
+TARGET_LINK_LIBRARIES(WatershedSegmentation OTBCommon OTBIO ITKAlgorithms ITKNumerics)
