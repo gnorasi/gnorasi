@@ -47,3 +47,9 @@ TARGET_LINK_LIBRARIES(MeanDifferenceChangeDetection OTBIO OTBCommon  )
 
 ADD_EXECUTABLE(RatioChangeDetection RatioChangeDetection.cxx)
 TARGET_LINK_LIBRARIES(RatioChangeDetection OTBIO OTBCommon  )
+
+ADD_EXECUTABLE(LocalCorrelationChangeDetection LocalCorrelationChangeDetection.cxx)
+TARGET_LINK_LIBRARIES(LocalCorrelationChangeDetection OTBIO OTBCommon  )
+
+ADD_EXECUTABLE(KullbackLeiblerDistanceChangeDetection KullbackLeiblerDistanceChangeDetection.cxx)
+TARGET_LINK_LIBRARIES(KullbackLeiblerDistanceChangeDetection OTBIO OTBCommon  )
