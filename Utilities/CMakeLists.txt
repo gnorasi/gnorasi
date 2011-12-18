@@ -63,3 +63,6 @@ OTBCommon OTBIO ITKBasicFilters)
 
 ADD_EXECUTABLE(WatershedSegmentation WatershedSegmentation.cxx )
 TARGET_LINK_LIBRARIES(WatershedSegmentation OTBCommon OTBIO ITKAlgorithms ITKNumerics)
+
+ADD_EXECUTABLE(MeanShiftSegmentation MeanShiftSegmentation.cxx )
+TARGET_LINK_LIBRARIES(MeanShiftSegmentation OTBCommon OTBIO OTBBasicFilters)
