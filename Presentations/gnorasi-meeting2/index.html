@@ -1,0 +1,437 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="el">
+<head>
+  <title>ΓΝΩΡΑΣΗ - Μάιος 2012</title>
+  
+  <meta name="author" content="Unknown" >
+  <meta name="description" content=  "ΓΝΩΡΑΣΗ - Μάιος 2012">
+    
+  <meta name="generator" content="Bluefish 2.0.3" >
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=1024">
+  <link type="text/css" rel="stylesheet" href="css/charla.css"></link>  
+  
+</head>
+
+<body class="impress-not-supported">
+  <div class="banner"></div>
+  
+  <div id="impress">
+    <div class="fallback-message">
+      <p>Ο περιηγητής σας <b>δεν υποστηρίζει τις δυνατότητες</b> του
+      impress.js, οπότε σας παρουσιάζεται μια απλοποιημένη έκδοση αυτής της
+      παρουσίασης.</p>
+
+		<p>Για την καλύτερη εμπειρία της παρουσίασης χρησιμοποιήστε τον τελευταίο <b>Firefox</b>,
+      <b>Safari</b> ή <b>Chrome</b>.</p>
+    </div>
+
+    <div id="title" class="step" data-x="0" data-y="0" data-scale="5">
+      <h1>Συλλογή Τηλεπισκοπικών Δεδομένων και Πρώτη Έκδοση Αλγορίθμων Επεξεργασίας Τηλεπισκοπικών Δεδομένων</h1>
+      
+      <h2></h2>
+      
+      <p class="evento"><a target="_blank" href="http://www.gnorasi.gr/">
+        		ΓΝΩΡΑΣΗ</a> · Συνάντηση 2 · Μάιος 2012</p>
+      <p class="yo">Δημήτρης Αργιαλάς · <a href="mailto:argialas@gmail.com">argialas@gmail.com</a> ·  
+        <a href="http://www.ntua.gr" target="_blank" title="NTUA">ΕΜΠ</a><br>
+        Κων/νος Καράντζαλος · <a href="mailto:karank@central.ntua.gr">karank@central.ntua.gr</a> ·  
+        <a href="http://www.ntua.gr" target="_blank" title="NTUA">ΕΜΠ</a><br>
+        Άγγελος Τζώτσος · <a href="mailto:tzotsos@gmail.com">tzotsos@gmail.com</a> ·  
+      	<a href="http://twitter.com/tzotsos" target="_blank" title="Angelos on twitter">@tzotsos</a> ·
+        <a href="http://www.ntua.gr" target="_blank" title="NTUA">ΕΜΠ</a>
+      </p>
+    </div>
+    
+    <!-- ΠΕΡΙΕΧΟΜΕΝΑ -->
+    <div id="agenda" class="step" data-x="-1600" data-y="1800">
+      <h2>Περιεχόμενα</h2>
+
+      <ul class="discs">
+        <li>Τηλεπισκοπικά Δεδομένα</li>
+        <li>Αλγόριθμοι επεξεργασίας δεδομένων
+        <ul>
+        	<li>Orfeo Toolbox</li>
+        	<li>Ανίχνευση Καμμένων Εκτάσεων</li>
+        	<li>Ανίχνευση Πλυμμηρισμένων Εκτάσεων</li>
+        	<li>Ανίχνευση Καλλιεργειών</li>
+        	<li>Ανίχνευση Αστικού Πρασίνου</li>
+        </ul>
+        </li>     
+        <li>Συμπεράσματα</li>   
+      </ul>
+    </div>
+    
+    <!-- ΔΕΔΟΜΕΝΑ -->
+    
+    <div id="data" class="step section" data-x="-3500" data-y="1800" data-scale="4">
+      <h2>Τηλεπισκοπικά Δεδομένα</h2>
+    </div>
+    
+    <div class="step hide" id="data1" data-x="-3300" data-y="-3600" data-scale="1">
+      <h2>Προδιαγραφές δεδομένων.</h2>
+		<p><img src="imgs/data-1.png" width="800" height="600" alt="" /></p>
+    </div>
+    
+    <div class="step hide" id="data2" data-x="-3300" data-y="-3600" data-scale="1">
+      <h2>Δεδομένα MODIS για πυρκαγιές.</h2>
+		<p><img src="imgs/data-3.png" width="800" height="600" alt="" /></p>
+    </div>
+    
+    <div class="step hide" id="data3" data-x="-3300" data-y="-3600" data-scale="1">
+      <h2>Δεδομένα IKONOS για πλημμύρες.</h2>
+		<p><img src="imgs/data-5.png" width="800" height="600" alt="" /></p>
+    </div>
+
+    <div class="step hide" id="data4" data-x="-3300" data-y="-3600" data-scale="1">
+      <h2>Δεδομένα LANDSAT για πλημμύρες.</h2>
+		<p><img src="imgs/data-6.png" width="360" alt="" /></p>
+    </div>
+
+    <div class="step hide" id="data5" data-x="-3300" data-y="-3600" data-scale="1">
+      <h2>Δεδομένα QuickBird για καλλιέργειες.</h2>
+		<p><img src="imgs/data-8.png" width="800" height="600" alt="" /></p>
+    </div>
+    
+    <div class="step hide" id="data6" data-x="-3300" data-y="-3600" data-scale="1">
+      <h2>Δεδομένα QuickBird για αστικό πράσινο.</h2>
+		<p><img src="imgs/data-10.png" width="800" height="600" alt="" /></p>
+    </div>    
+
+    <div class="step hide" id="data7" data-x="-3300" data-y="-3600" data-scale="1">
+      <h2>Δεδομένα World View 2 για αυθαίρετη δόμηση.</h2>
+		<p><img src="imgs/data-12.png" width="400" alt="" /></p>
+    </div>  
+
+    <div class="step hide" id="data8" data-x="-3300" data-y="-3600" data-scale="1">
+      <h2>Δεδομένα Radar για πετρελαιοκυλίδες.</h2>
+		<p><img src="imgs/data-14.png" width="800" height="600" alt="" /></p>
+    </div>  
+
+    <div class="step hide" id="data9" data-x="-3300" data-y="-3600" data-scale="1">
+      <h2>Δεδομένα QuickBird για εγκαταστάσεις ενέργειας.</h2>
+		<p><img src="imgs/data-16.png" width="580" alt="" /></p>
+    </div>  
+
+   
+    <!-- ΑΛΓΟΡΙΘΜΟΙ -->
+
+    <div id="algorithms" class="step section" data-x="-3500" data-y="-500" data-scale="4">
+      <h2>Αλγόριθμοι Επεξεργασίας Εικόνων</h2>
+    </div>
+
+    <div class="step hide"  data-x="-4600" data-y="-1500" data-scale="1">
+    	<h2>Orfeo Toolbox.</h2>
+    	<ul class="discs">
+        <li>Προυπάρχουσα γνώση στην υλοποίηση αλγορίθμων</li>
+        <li>Ανοιχτή Επιστημονική Προσέγγιση</li>
+        <li>Ελεύθερο Λογισμικό</li>
+		  <li>Άδεια CECILL - Συμβατή με GPL</li>
+      </ul>
+    </div>
+
+    <div class="step hide"  data-x="-4600" data-y="-2500" data-scale="1">
+    	<h2>Orfeo Toolbox.</h2>
+    	<ul class="discs">
+			<li>Πρόσβαση εικόνων</li>    
+			<li>Ορθοαναγωγή και χαρτογραφικός μετασχηματισμός</li>  
+			<li>Συγχώνευση εικόνων</li>  
+			<li>Φιλτράρισμα εικόνων</li>  
+			<li>Εξαγωγή χαρακτηριστικών</li>  
+			<li>Ανίχνευση αντικειμένων</li> 
+			<li>Κατάτμηση εικόνας</li> 
+			<li>Ταξινόμηση</li> 
+			<li>Αντικειμενοστρεφής Ανάλυση Εικόνας</li> 
+			<li>Ανίχνευση μεταβολών</li>     
+        <li><a href="http://live.osgeo.org/el/overview/otb_overview.html" target="_blank" title="OTB">Λεπτομέρειες</a></li>
+      </ul>
+    </div>
+    
+    <div class="step hide"  data-x="-4600" data-y="-1500" data-scale="1">
+    	<h2>Orfeo Toolbox.</h2>
+		<p class="center"><img src="imgs/otb.png" alt="OTB" /></p>
+    </div>
+    
+    <div class="step hide"  data-x="-5600" data-y="-1500" data-scale="1">
+    	<h2>Ανάπτυξη πρώτης έκδοσης αλγορίθμων.</h2>
+    	<ul class="discs">
+			<li><a href="http://aiolos.survey.ntua.gr/hg/gnorasi/files/76d358e069bed0e4ce9f9bd33eb0c285dab752c3/Utilities/FilteringWithConvolution.cxx">Φιλτράρισμα Εικόνων</a></li>    
+			<li><a href="http://aiolos.survey.ntua.gr/hg/gnorasi/files/76d358e069bed0e4ce9f9bd33eb0c285dab752c3/Utilities/GradientAnisotropicDiffusion.cxx">Ομαλοποίηση Εικόνων</a></li>  
+			<li><a href="http://aiolos.survey.ntua.gr/hg/gnorasi/files/76d358e069bed0e4ce9f9bd33eb0c285dab752c3/Utilities/TwoImagesBandMath.cxx">Μαθηματικοί Τελεστές</a></li>  
+			<li><a href="http://aiolos.survey.ntua.gr/hg/gnorasi/files/76d358e069bed0e4ce9f9bd33eb0c285dab752c3/Utilities/BinaryOpening.cxx">Μαθηματική Μορφολογία</a></li>  
+			<li><a href="http://aiolos.survey.ntua.gr/hg/gnorasi/files/76d358e069bed0e4ce9f9bd33eb0c285dab752c3/Utilities/CannyEdgeDetection.cxx">Ανίχνευση Ακμών</a></li>  
+			<li><a href="http://aiolos.survey.ntua.gr/hg/gnorasi/files/76d358e069bed0e4ce9f9bd33eb0c285dab752c3/Utilities/MeanShiftSegmentation.cxx">Κατάτμηση Εικόνων</a></li> 
+			<li><a href="http://aiolos.survey.ntua.gr/hg/gnorasi/files/76d358e069bed0e4ce9f9bd33eb0c285dab752c3/Utilities/KMeansImageClassification.cxx">Ταξινόμηση Εικόνων</a></li> 
+			<li><a href="http://aiolos.survey.ntua.gr/hg/gnorasi/files/76d358e069bed0e4ce9f9bd33eb0c285dab752c3/Utilities/MeanDifferenceChangeDetection.cxx">Ανίχνευση Μεταβολών</a></li> 
+      </ul>
+    </div>
+
+    <div class="step hide"  data-x="-4600" data-y="-1500" data-scale="1">
+    	<h2>Πηγαίος κώδικας.</h2>
+    	<ul class="discs">
+			<li>Διαχείριση με το <a href="http://mercurial.selenic.com/">Mercurial</a></li>    
+			<li>Δημιουργία <a href="http://aiolos.survey.ntua.gr/hg/gnorasi/summary">αποθετηρίου</a></li>  
+			<li>Μεταγλώτιση μέσω τεχνολογίας Cloud</li> 
+			<ul>
+				<li><a href = "https://build.opensuse.org/package/show?package=OrfeoToolbox&project=home%3Atzotsos">Open Build Service</a></li>  
+				<li>Επίσημη υποστήριξη σε περιβάλλον GNU/Linux</li>  
+				<li>Καθημερινές αυτόματες δοκιμές</li> 
+			</ul> 
+      </ul>
+    </div>
+    
+    <!-- ΚΑΜΜΕΝΕΣ ΕΚΤΑΣΕΙΣ -->
+    
+    <div id="fires" class="step section" data-x="-1300" data-y="-2800" data-scale="4">
+      <h2>Ανίχνευση Καμμένων Εκτάσεων</h2>
+    </div>
+
+    <div class="step hide" id="fires1" data-x="-1600" data-y="-2200" data-scale="1">
+      <h2>Δείκτης βλάστησης NDVI</h2>
+		<p><img src="imgs/ndvi-1.png" width="400" alt="" />  <img src="imgs/ndvi-2.png" width="400" alt="" /><br>
+		<span style="font-size: smaller;"><span style="font-size: smaller;"> 
+		Δείκτης NDVI πριν την πυρκαγιά (αριστερά) και δείκτης NDVI μετά την πυρκαγιά</span></span></p>
+    </div> 
+    
+    <div class="step hide" id="fires2" data-x="-1600" data-y="-2200" data-scale="1" data-rotate="90">
+      <h2>Ανίχνευση Μεταβολών</h2>
+		<p><img src="imgs/ndvi-diff.png" width="400" alt="" />  <img src="imgs/burned-step1-detection.png" width="400" alt="" /><br>
+		<span style="font-size: smaller;"><span style="font-size: smaller;"> 
+		Αλγόριθμος ανίχνευσης μεταβολών διαφοράς μέσου (αριστερά) και πιθανές περιοχές ενδιαφέροντος με ταξινόμηση (δεξιά)</span></span></p>
+    </div> 
+
+    <div class="step hide" id="fires3" data-x="-1600" data-y="-2200" data-scale="1" data-rotate="-180">
+      <h2>Τελικό Αποτέλεσμα Ανίχνευσης Καμμένων</h2>
+		<p><img src="imgs/burned-step2-detection.png" width="400" alt="" />  <img src="imgs/burned-detection.png" width="400" alt="" /><br>
+		<span style="font-size: smaller;"><span style="font-size: smaller;"> 
+		Εφαρμογή μορφολογικής ανακατασκευής (reconstruction) (αριστερά) και τελικό αποτέλεσμα αυτόματης ανίχνευσης (δεξιά)</span></span></p>
+    </div> 
+
+    <div class="step hide" id="fires4" data-x="-1600" data-y="-2200" data-scale="1" data-rotate="90">
+      <h2>Πηγαίος Κώδικας.</h2>
+		<p><a href="http://aiolos.survey.ntua.gr/hg/gnorasi/files/76d358e069bed0e4ce9f9bd33eb0c285dab752c3/Applications/fires.sh" >Script εκτέλεσης αλγορίθμων</a> </p>
+    </div> 
+
+    
+    <!-- ΠΛΗΜΜΥΡΙΣΜΕΝΕΣ ΕΚΤΑΣΕΙΣ -->
+    
+    <div id="floods" class="step section" data-x="2300" data-y="-2800" data-scale="4">
+      <h2>Ανίχνευση Πλημμυρισμένων Εκτάσεων</h2>
+    </div>
+
+    <div class="step hide" id="floods1" data-x="2600" data-y="-2200" data-scale="1">
+      <h2>Τηλεπισκοπικά δεδομένα LANDSAT (Έβρος 2007).</h2>
+		<p><img src="imgs/flood-landsat.png" width="300" alt="" />  <img src="imgs/flood-landsat-nir.png" width="300" alt="" /><br>
+		<span style="font-size: smaller;"><span style="font-size: smaller;">. 
+		Φυσικό έγχρωμο σύνθετο (αριστερά) και το υπέρυθρο κανάλι (δεξιά).</span></span>
+		</p>
+    </div> 
+
+    <div class="step hide" id="floods2" data-x="2600" data-y="-2200" data-scale="1" data-rotate="90">
+      <h2>Υπολογισμός δεικτη υδάτων NDWI.</h2>
+		<p><img src="imgs/ndwi.png" width="230" alt="" /> <img src="imgs/ndwi-rule1.png" width="230" alt="" />  <img src="imgs/ndwi-rule2.png" width="230" alt="" /><br>
+		<span style="font-size: smaller;"><span style="font-size: smaller;"> 
+		Υπολογισμός δείκτη NDWI(αριστερά). Αποτελέσματα ταξινόμησης με κανόνα παρουσίας νερού (NDWI 0.14 - κέντρο) και περιοχής πλημμύρας (NDWI 0.12 - δεξιά).</span></span>
+		</p>
+    </div> 
+
+    <div class="step hide" id="floods3" data-x="2600" data-y="-2200" data-scale="1" data-rotate="-180">
+      <h2>Τηλεπισκοπικά δεδομένα IKONOS (Ρέθυμνο 2007).</h2>
+		<p><img src="imgs/ikonos-rethimno-before.png" width="800" alt="" /> <br><img src="imgs/ikonos-rethimno-after.png" width="800" alt="" /><br>
+		<span style="font-size: smaller;"><span style="font-size: smaller;"> 
+		Πρίν την πλημμύρα (πάνω) Μετά την πλημμύρα (κάτω).</span></span>
+		</p>
+    </div> 
+
+    <div class="step hide" id="floods4" data-x="2600" data-y="-2200" data-scale="1" data-rotate="90">
+      <h2>Πρώτοι Αλγόριθμοι Ανίχνευσης Μεταβολών</h2>
+		<p><img src="imgs/ikonos-kullback.png" width="800" alt="" /> <br><img src="imgs/ikonos-mean-diff.png" width="800" alt="" /><br>
+		<span style="font-size: smaller;"><span style="font-size: smaller;"> 
+		Αλγόριθμος Kullback (πάνω) και αλγόριθμος μέσης διαφοράς (κάτω).</span></span>
+		</p>
+    </div> 
+    
+    <div class="step hide" id="floods5" data-x="2600" data-y="-2200" data-scale="1">
+      <h2>Πρώτοι Αλγόριθμοι Ανίχνευσης Μεταβολών</h2>
+		<p><img src="imgs/ikonos-mean-ratio.png" width="800" alt="" /> <br><img src="imgs/ikonos-mean-ratio3.png" width="800" alt="" /><br>
+		<span style="font-size: smaller;"><span style="font-size: smaller;"> 
+		Αλγόριθμος Λόγου Μέσων με απόσταση ενός εικονοστοιχείου (πάνω) και τριών εικονοστοιχείων (κάτω).</span></span>
+		</p>
+    </div> 
+
+    <div class="step hide" id="floods6" data-x="2600" data-y="-2200" data-scale="1">
+      <h2>Πηγαίος Κώδικας.</h2>
+		<p><a href="http://aiolos.survey.ntua.gr/hg/gnorasi/files/76d358e069bed0e4ce9f9bd33eb0c285dab752c3/Applications/floods.sh" >Script εκτέλεσης αλγορίθμων</a> </p>
+    </div> 
+
+    <!-- ΒΛΑΣΤΗΣΗ -->
+    
+    <div id="vegetation" class="step section" data-x="3900" data-y="-500" data-scale="4">
+      <h2>Ανίχνευση Βλάστησης</h2>
+    </div>
+   
+    <div class="step hide" id="vegetation1" data-x="4600" data-y="-500" data-scale="1">
+      <h2>Τηλεπισκοπικά δεδομένα QuickBird (Ηράκλειο 2001).</h2>
+		<p><img src="imgs/heraklion-rgb.png" width="800" alt="" /><br>
+		<span style="font-size: smaller;"><span style="font-size: smaller;"> 
+		Εγχρωμο σύνθετο (321) με χωρική ανάλυση 0,6 μέτρα</span></span>
+		</p>
+    </div> 
+
+    <div class="step hide" id="vegetation2" data-x="4600" data-y="-500" data-scale="1">
+      <h2>Τηλεπισκοπικά δεδομένα QuickBird (Ηράκλειο 2001).</h2>
+		<p><img src="imgs/heraklion-nir.png" width="800" alt="" /><br>
+		<span style="font-size: smaller;"><span style="font-size: smaller;"> 
+		Ψευδέγχρωμο σύνθετο (432) με χωρική ανάλυση 0,6 μέτρα</span></span>
+		</p>
+    </div> 
+
+    <div class="step hide" id="vegetation3" data-x="4600" data-y="-500" data-scale="1">
+      <h2>Ομαλοποίηση δεδομένων</h2>
+		<p><img src="imgs/heraklion-perona-malik.png" width="800" alt="" /><br>
+		<span style="font-size: smaller;"><span style="font-size: smaller;"> 
+		Νέα εικόνα μετά την εφαρμογή του αλγορίθμου Perona-Malik για ανισοτροπική ομαλοποίηση</span></span>
+		</p>
+    </div> 
+
+    <div class="step hide" id="vegetation4" data-x="4600" data-y="-500" data-scale="1">
+      <h2>Κατάτμηση Εικόνας</h2>
+		<p><img src="imgs/heraklion-objects.png" width="800" alt="" /><br>
+		<span style="font-size: smaller;"><span style="font-size: smaller;"> 
+		Όρια αντικειμένων μετά από αλγόριθμο κατάτμησης εικόνας (Mean Shift)</span></span>
+		</p>
+    </div> 
+
+    <div class="step hide" id="vegetation5" data-x="4600" data-y="-500" data-scale="1">
+      <h2>Κατάτμηση Εικόνας</h2>
+		<p><img src="imgs/heraklion-object-mean.png" width="800" alt="" /><br>
+		<span style="font-size: smaller;"><span style="font-size: smaller;"> 
+		Εικόνα μέσης τιμής αντικειμένων μετά από κατάτμησης εικόνας (Mean Shift)</span></span>
+		</p>
+    </div> 
+
+    <div class="step hide" id="vegetation6" data-x="4600" data-y="-500" data-scale="1">
+      <h2>Αντικειμενοστρεφής Ταξινόμηση Βλάστησης</h2>
+		<p><img src="imgs/heraklion-vegetation.png" width="800" alt="" /><br>
+		<span style="font-size: smaller;"><span style="font-size: smaller;"> 
+		Αποτέλεσμα αντικειμενοστρεφούς ταξινόμησης βλάστησης με χρήση δεικτών βλάστησης</span></span>
+		</p>
+    </div> 
+
+    <div class="step hide" id="vegetation7" data-x="4600" data-y="-500" data-scale="1">
+      <h2>Αστικό Πράσινο</h2>
+    	<ul class="discs">
+			<li>Μελλοντική ενσωμάτωση γνώσης για την περετέρω ταξινόμηση σε σημασιολογικές κατηγορίες</li>    
+			<li>Module οντολογίας</li>  
+	   </ul>
+    </div>
+    
+    <div class="step hide" id="vegetation8" data-x="4600" data-y="-500" data-scale="1">
+      <h2>Πηγαίος Κώδικας.</h2>
+		<p><a href="http://aiolos.survey.ntua.gr/hg/gnorasi/files/76d358e069bed0e4ce9f9bd33eb0c285dab752c3/Applications/urban_green.sh" >Script εκτέλεσης αλγορίθμων</a> </p>
+    </div> 
+    
+    <!-- ΣΥΜΠΕΡΑΣΜΑΤΑ -->
+    
+    <div id="discussion" class="step section" data-x="3900" data-y="1800" data-scale="4">
+      <h2>Συμπεράσματα</h2>
+    </div>
+
+    <div class="step hide" id="discussion1" data-x="4600" data-y="1800" data-scale="1">
+      <h2>Συμπεράσματα</h2>
+    	<ul class="discs">
+			<li>Μελετήθηκαν και εφαρμόστηκαν αλγόριθμοι οι οποίοι είναι βιβλιογραφικά δοκιμασμένοι για την αποδοτικότητά τους:</li>
+			<ul><li>προ-επεξεργασία των δεδομένων</li>
+				<li>κατάτμηση των εικόνων</li>
+				<li>ταξινόμηση των εικόνων</li>
+				<li>ανίχνευση μεταβολών</li>
+			</ul>
+			<li>Αξιολογήθηκαν με σκοπό την παροχή ενός αξιόπιστου υποβάθρου</li>  
+			<li>Θα ακολουθήσει η σημασιολογική ανάλυση εικόνων με βάση και την αναπαράσταση γνώσης και συλλογιστική</li>  
+	   </ul>
+    </div>
+
+    <div class="step hide" id="discussion2" data-x="4700" data-y="1900" data-scale="1">
+      <h2>Πλεονεκτήματα μεθόδων</h2>
+    	<ul class="discs">
+			<li>Αποδοτικότητα: Το σύστημα είναι υλοποιημένο σε γλώσσα προγραμματισμού C++ με βελτιστοποιημένες δομές για την επεξεργασίας εικόνας</li>
+	   </ul>
+    </div>
+
+    <div class="step hide" id="discussion3" data-x="4700" data-y="2100" data-scale="1">
+      <h2>Πλεονεκτήματα μεθόδων</h2>
+    	<ul class="discs">
+			<li>Αυτοματοποίηση: Το σύστημα χρησιμοποιεί ροές επεξεργασίας (processing chains) το οποίο βοηθά στην εύκολη μοντελοποίηση των επεξεργασιών των εικόνων</li>
+	   </ul>
+    </div>
+
+    <div class="step hide" id="discussion4" data-x="4700" data-y="2300" data-scale="1">
+      <h2>Πλεονεκτήματα μεθόδων</h2>
+    	<ul class="discs">
+			<li>Σχεδόν σε πραγματικό χρόνο αποτελέσματα: Οι αλγόριθμοι εκτελούνται απευθείας στο υλικό του υπολογιστή (native code - C++) χωρίς ανάγκη μεταγλώττισης σε εικονική μηχανή (virtual machine)</li>
+	   </ul>
+    </div>
+
+    <div class="step hide" id="discussion5" data-x="4700" data-y="2500" data-scale="1">
+      <h2>Πλεονεκτήματα μεθόδων</h2>
+    	<ul class="discs">
+			<li>Σταθερότητα: Τα λογισμικά ΕΛΛΑΚ πάνω στα οποία είναι βασισμένη η πλατφόρμα του ΓΝΩΡΑΣΗ (OrfeoToolbox, GDAL, ITK, libGeoTiff, Voreen κλπ) είναι δοκιμασμένα σε εκατοντάδες εφαρμογές παγκοσμίως</li>
+	   </ul>
+    </div>
+
+    <div class="step hide" id="discussion6" data-x="4700" data-y="2700" data-scale="1">
+      <h2>Πλεονεκτήματα μεθόδων</h2>
+    	<ul class="discs">
+			<li>Εύκολη παραμετροποίηση και περαιτέρω ανάπτυξη: Αυτά είναι χαρακτηριστικά που συνοδεύουν το ΕΛΛΑΚ εξ ορισμού. 
+			Η πρόσβαση στον πηγαίο κώδικα και η ελευθερία βελτίωσης / διόρθωσης / παραμετροποίησης είναι αλληλένδετα στοιχεία της εκάστοτε 
+			Άδειας Χρήσης του λογισμικού (στην προκειμένη περίπτωση η άδεια CeCILL)</li>
+	   </ul>
+    </div>
+
+    <div class="step hide" id="discussion7" data-x="4700" data-y="3000" data-scale="1">
+      <h2>Πλεονεκτήματα μεθόδων</h2>
+    	<ul class="discs">
+			<li>Δυνατότητα επεξεργασίας μεγάλου όγκου και ποικιλίας δεδομένων: Οι εφαρμογές που αναπτύσσονται στο ΓΝΩΡΑΣΗ, 
+			βασίζονται σε προγραμματιστικό περιβάλλον με τεράστιες δυνατότητες 
+			κατανεμημένης και παράλληλης επεξεργασίας (parallel processing)</li>
+	   </ul>
+    </div>
+
+
+
+    
+    <div id="license" class="step" data-x="-400" data-y="1800" data-scale="1">
+      <h2>Άδεια</h2><a class="noframe" href=
+      "http://creativecommons.org/licenses/by-sa/3.0/deed.es" title=
+      "cc-by-sa"><img style="margin-top:100px;" src="../resources/imgs/cc-by-sa.png" height="100" alt=""></a>
+    </div>
+    
+    
+    <!-- OVERVIEW -->
+    <div id="overview" class="step" data-x="0" data-y="-100" data-scale="10">
+    <!--data-rotate-x="-20" data-rotate-y="-20" -->
+      <p>¡Ευχαριστώ!<br>
+      	¿Ερωτήσεις?</p>
+    </div>
+  </div>
+
+  <div class="hint">
+    <p>Χρησιμοποιήστε το space ή τα βέλη για πλοήγηση</p>
+  </div>
+  
+  <!-- JavaScript -->
+  <script type="text/javascript" src="../resources/jquery/jquery-1.7.min.js"></script>
+  <script type="text/javascript" src="../resources/impress/0.5.3/js/impress.js"></script>
+
+  <script type="text/javascript">
+  //<![CDATA[
+  $(document).ready(function(){ 
+  if ("ontouchstart" in document.documentElement) { 
+    $(".hint").innerHTML = "<p>Toca o la derecha o la izquierda para navegar<\/p>";
+  }
+  impress().init();
+  });
+  //]]>
+  </script>
+</body>
+</html>
