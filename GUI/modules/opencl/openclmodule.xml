@@ -1,0 +1,15 @@
+<Processor name="DynamicCLProcessor">
+    <Description>A dynamic processor using OpenCL.</Description>
+</Processor>
+<Processor name="GrayscaleCL">
+    <Description>Converts a color image to grayscale version using an OpenCL kernel.</Description>
+</Processor>
+<Processor name="RaycasterCL">
+    <Description>A simple raycaster using OpenCL</Description>
+</Processor>
+<Processor name="RaytracingEntryExitPoints">
+    <Description>Raytraces the Proxygeometry to create Entry/Exit points. The generated image color-codes the ray parameters for a subsequent VolumeRaycaster. See CubeMeshGeometry</Description>
+</Processor>
+<Processor name="VolumeGradientCL">
+    <Description>OpenCL-based version of the VolumeGradient processor.</Description>
+</Processor>

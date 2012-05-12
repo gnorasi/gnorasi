@@ -1,0 +1,3 @@
+modules/devil/ext/il/lib/win32/DevIL.dll:./
+modules/devil/ext/il/lib/win32/ILU.dll:./
+modules/devil/ext/jpeg/jpeg62.dll:./

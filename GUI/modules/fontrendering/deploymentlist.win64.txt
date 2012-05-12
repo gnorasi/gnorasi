@@ -1,0 +1,2 @@
+modules/fontrendering/ext/freetype/lib/win64/release/freetype.dll:./
+modules/fontrendering/ext/ftgl/lib/win64/release/ftgl.dll:./

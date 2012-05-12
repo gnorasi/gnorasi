@@ -1,0 +1,5 @@
+modules/ffmpeg/ext/ffmpeg/lib/win32/avcodec-52.dll:./
+modules/ffmpeg/ext/ffmpeg/lib/win32/avdevice-52.dll:./
+modules/ffmpeg/ext/ffmpeg/lib/win32/avformat-52.dll:./
+modules/ffmpeg/ext/ffmpeg/lib/win32/avutil-50.dll:./
+modules/ffmpeg/ext/ffmpeg/lib/win32/swscale-0.dll:./

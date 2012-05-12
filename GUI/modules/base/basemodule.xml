@@ -1,0 +1,376 @@
+<ModuleDescription>Provides elementary rendering, data processing, and volume input/output functionality.</ModuleDescription>
+<Processor name="Background">
+    <Description>Adds a background, either single color, linear or radial gradient, procedural clouds or an image file.</Description>
+</Processor>
+<Processor name="BinaryImageProcessor">
+    <Description>Image processor with two input images that is customizable by its shader property.</Description>
+</Processor>
+<Processor name="BoundingBox">
+    <Description>Draws the bounding box around the data set and allows to show a grid behind the volume.</Description>
+</Processor>
+<Processor name="BrickLoopImageCompositor">
+    <Description>In combination with BrickLoopInitiator, this processor is used to perform bricking and then composite the rendered result to a final image.</Description>
+</Processor>
+<Processor name="BrickLoopInitiator">
+    <Description>In combination with BrickLoopImageCompositor or BrickLoopVolumeCompositor, this processor is used to perform bricking using loops. It is thus possible to render or perform operations on small part of a volume and combining the result of each brick afterwards. Thus this is suitable for when using data which does not fit on GPU memory.</Description>
+</Processor>
+<Processor name="BrickLoopVolumeCompositor">
+    <Description>In combination with BrickLoopInitiator, this processor is used to perform bricking and then composite the data back to the original volume structure.</Description>
+</Processor>
+<Processor name="CameraPositionRenderer">
+    <Description>Depicts the position of a camera in a 3D scene. The camera position to display is retrieved from the processor&apos;s camera property.</Description>
+</Processor>
+<Processor name="Canny">
+    <Description>Canny edge detector.</Description>
+</Processor>
+<Processor name="ClockProcessor">
+    <Description>Performs clocking for time-based manipulation of properties in the network. A counter represented by a property is increased on every time event. This counter is intended to be linked with other properties in order to propagate the clock tick. This processor has neither any ports nor does it require any connections, instead it is used as a &apos;floating&apos; processor in the networks, solely connected by property links.</Description>
+</Processor>
+<Processor name="ColorDepth">
+    <Description>Performs a color adaptation based on the depth information. There are four modes available. &apos;Light-dark&apos; computes a gray value depending on the depth value. The current color can be modulated or replaced with this gray value. Additionally, a chromadepth or pseudo chromadepth color coding can be applied [Ropinski et al., Smartgraphics 2006].</Description>
+</Processor>
+<Processor name="Compositor">
+    <Description>Composites two images with a selectable blending method.</Description>
+</Processor>
+<Processor name="Convolution">
+    <Description>Applies an arbitrary filter mask to an image. The mask is passed through the second RenderPort.</Description>
+</Processor>
+<Processor name="CoordinateTransformation">
+    <Description>Transforms geometry coordinates between volume-dependent coordinate systems.&lt;p&gt;see GeometrySource&lt;/p&gt;</Description>
+</Processor>
+<Processor name="CPURaycaster">
+    <Description>Performs a simple ray casting on the CPU. Please note that this is more a proof-of-concept than a actually usable processor (very slow!).</Description>
+</Processor>
+<Processor name="CubeMeshProxyGeometry">
+    <Description>Provides a mesh representing a cubic proxy geometry that can be passed to a MeshEntryExitPoints processor. The proxy geometry can be manipulated by axis-aligned clipping. Clipping against an arbitrarily oriented plane is provided by the MeshClipping processor.</Description>
+</Processor>
+<Processor name="CubeProxyGeometry">
+    <Description>Provides a simple cube proxy with axis-aligned clipping planes.&#x0A;&lt;p&gt;&lt;span style=&quot;color: red; font-weight: bold;&quot;&gt;Deprecated:&lt;/span&gt; Use CubeMeshProxyGeometry and MeshEntryExitPoints instead.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="DepthDarkening">
+    <Description>Performs depth darkening as presented by Luft et al. at Siggraph 2006. The technique is based on an unsharping mask applied to the depth buffer. The kernel size of the used Gaussian filter is set to round(2.5*sigma). Lambda controls the strength of the effect.</Description>
+</Processor>
+<Processor name="DepthPeelingProcessor">
+    <Description>This processor can be used instead of the regular GeometryProcessor in order to peel away layers within a rendering as described in the white paper &apos;Order-Independent Transparency&apos; by Cass Everitt. The peeling can be controlled by encapsulating the processor within a RenderLoopInitiator and a RenderLoopFinalizer, whereby the number of iterations controls the number of layers peeled away. Since the peeling is performed within a pair of vertex and fragment shader, the attached GeometryRenderes must not use these shaders themselves. Since the input received through the inport is used as first layer, the depth values should be set accordingly (in most cases to 0.0).</Description>
+</Processor>
+<Processor name="Dilation">
+    <Description>Image dilation operator with 3x3 kernel.</Description>
+</Processor>
+<Processor name="DistanceMeasure">
+    <Description>Allows to interactively measure distances.</Description>
+</Processor>
+<Processor name="DynamicGLSLProcessor">
+    <Description>This is a highly customizable processor. It can be customized by using the associated GLSL shader. Within the shader it is possible to define a varying number of inports for receiving image or volume data. Furthermore, up to eight render outports can be defined. To allow further customization, properties can be initialized and used as regular properties, e.g., linking is possible. To learn how to setup ports and properties have a look at the standard shader, which is associated with the processor.&#x0A;&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; To update ports and properties the refresh button has to be pressed.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="EdgeDetect">
+    <Description>Performs an edge detection based on the Sobel operator. The detected edge is then drawn in selectable colors, styles, blending modi etc.</Description>
+</Processor>
+<Processor name="EEPGeometryIntegrator">
+    <Description>Modifies raycasting entry/exit points with regard to the input geometry rendering such that alpha compositing of the geometry rendering with the raycasted image gives correct results (for opaque geometry). The raycasted volume has to be passed to the volume inport.&#x0A;&lt;p&gt;See Compositor&lt;/p&gt;</Description>
+</Processor>
+<Processor name="EntryExitPoints">
+    <Description>Generates entry- and exit-points for a subsequent VolumeRaycaster.&lt;p&gt;&lt;span style=&quot;color: red; font-weight: bold;&quot;&gt;Deprecated:&lt;/span&gt; Use CubeMeshProxyGeometry and MeshEntryExitPoints instead.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="Erosion">
+    <Description>Image erosion operator with 3x3 kernel.</Description>
+</Processor>
+<Processor name="ExplosionCompositor">
+    <Description>Composites the partial renderings of an exploded view.&#x0A;&lt;p&gt;See ExplosionProxyGeometry&lt;/p&gt;</Description>
+</Processor>
+<Processor name="ExplosionProxyGeometry">
+    <Description>Provides a ray casting proxy geometry that can be sectioned into bricks for exploded views. The loop port has to be connected to a ExplosionCompositor.&#x0A;&lt;p&gt;Three bricking modes are offered:&#x0A;&lt;p&gt;Regular Grid: &lt;br&gt;In this mode the proxy geometry of the volume can be split into a regular grid by choosing the number of bricks on each axis. &lt;br&gt;The bricks can \&quot;explode\&quot; by using the gap property of this mode.&lt;/p&gt;&#x0A;&lt;p&gt;Manual Grid: &lt;br&gt;In this mode the proxy geometry of the volume can be split into a manual grid by manually adding axis-aligned planes as boundaries for the bricks. &lt;br&gt;As in regularGrid mode bricks can \&quot;explode\&quot; by using the gap property of this mode.&lt;/p&gt;&#x0A;&lt;p&gt;Custom: &lt;br&gt;In addition to manualGrid mode one or several bricks can be selected in this mode, so that added axis-aligned planes only split the selected bricks and not the whole volume. &lt;br&gt;The &quot;explosion&quot; of the bricks no longer depends on a gap-value. Instead each brick can be translated everywhere by using the translation property or the drag-and-drop translation mouse event of this mode. &lt;br&gt; Furthermore, bricks can be hidden in this mode.&lt;/p&gt;&#x0A;The created proxy geometries of regular grid or manual grid mode can be redefined in custom mode by clicking &quot;Use this for custom mode&quot;.&lt;/p&gt;&#x0A;&lt;p&gt;See ExplosionCompositor, MeshEntryExitPoints&lt;/p&gt;</Description>
+</Processor>
+<Processor name="Fade">
+    <Description>Performs a fading of the input image towards the specified color.</Description>
+</Processor>
+<Processor name="Gabor">
+    <Description>Generates a Gabor filter. &lt;p&gt;See Convolution&lt;/p&gt;</Description>
+</Processor>
+<Processor name="Gaussian">
+    <Description>Performs a convolution with a Gaussian filter kernel. The kernel size is set to round(2.5*sigma).</Description>
+</Processor>
+<Processor name="GeometryBoundingBox">
+    <Description>Creates a bounding box geometry from an arbitrarily formed MeshList</Description>
+    <Port name="geometry.input">Has to contain a geometry of the type &quot;MeshListGeometry&quot;</Port>
+</Processor>
+<Processor name="GeometryProcessor">
+    <Description>Manages the connected GeometryRenderer objects. Holds a vector of GeometryRenderer Objects and renders all of them on &lt;i&gt;render()&lt;/i&gt;. The current projection and modelview matrices are propagated to the GeometryRenderer objects.</Description>
+</Processor>
+<Processor name="GeometryRenderer">
+    <Description>Renders the passed geometry object with adjustable polygon mode and lighting settings. Additionally, a texture passed trough the render inport can be mapped onto the geometry (texture coordinates have to be set by the geometry object).</Description>
+</Processor>
+<Processor name="GeometrySave">
+    <Description>Saves the passed geometry to a selectable file on disk.&#x0A;&lt;p&gt;See also GeometrySource&lt;/p&gt;</Description>
+</Processor>
+<Processor name="GeometrySource">
+    <Description>Loads a point list or segmented point list from a text file. Each point is expected to consist of three components that are separated by white space.&#x0A;&lt;p&gt;For a segmented point list, each point is expected to be followed by a numeric segment identifier. The segments have to be listed in ascending order.&lt;/p&gt;&#x0A;&lt;p&gt;Additionally, the number of items that are to be skipped after each point can be specified.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="GLSLRaycaster">
+    <Description>Performs a simple single pass raycasting which can be modified by changing the shader property.</Description>
+</Processor>
+<Processor name="Grayscale">
+    <Description>Converts a color image to grayscale.</Description>
+</Processor>
+<Processor name="HalfAngleSlicer">
+    <Description>This class implements a slicing based volume renderer including shadows, based on the work of Joe Kniss et al.</Description>
+</Processor>
+<Processor name="IDRaycaster">
+    <Description>Writes color coded regions of a segmented dataset to the alpha channel of the rendering target. The three color channels are filled with the first-hit-positions.</Description>
+</Processor>
+<Processor name="ImageMasking">
+    <Description>Masks the input image: All fragments matching the mask color in the mask texture are cleared.</Description>
+</Processor>
+<Processor name="ImageMorphology">
+    <Description>Performs erosion or dilation operation with variable Kernel Size</Description>
+    <Property id="effectModeAsString">Sets the filter to either Erosion or Dilation mode</Property>
+    <Property id="kernelRadius">Change radius of the kernel that is used for filtering</Property>
+</Processor>
+<Processor name="ImageOverlay">
+    <Description>Renders an overlay on top of the input image. The overlay position and size is either specified in pixel coordinates or in normalized coordinates.</Description>
+</Processor>
+<Processor name="ImageSelector">
+    <Description>Selects a single image from the input image sequence and renders it to its outport.</Description>
+</Processor>
+<Processor name="ImageSequenceLoopFinalizer">
+    <Description>Establishes an image processing loop in combination with ImageSequenceLoopInitiator. All images of the input sequence are consecutively processed by the loop. Connect this processor&apos;s loop outport with the loop inport of an ImageSequenceLoopInitiator, in order to define the loop.</Description>
+</Processor>
+<Processor name="ImageSequenceLoopInitiator">
+    <Description>Establishes an image processing loop in combination with ImageSequenceLoopFinalizer. All images of the input sequence are consecutively processed by the loop. Connect this processor&apos;s loop inport with the loop outport of an ImageSequenceLoopFinalizer, in order to define the loop.</Description>
+</Processor>
+<Processor name="ImageSequenceSource">
+    <Description>Loads all images from the specified directory and puts them out as image sequence containing one OpenGL texture per image.&#x0A;&lt;p&gt;See ImageSelector.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="ImageSource">
+    <Description>Loads an image file from disk and provides it as rendering. The outport dimensions are determined by the image dimensions.</Description>
+</Processor>
+<Processor name="ImageStacker">
+    <Description>Constructs a scalar volume (16 bit unsigned int) from a sequence of 2D images. The input sequence must contain at least two elements and all images must have the same dimensions.</Description>
+</Processor>
+<Processor name="ImageThreshold">
+    <Description>All pixels with intensities below or above the two thresholds are assigned the mask color. Pixels with intensities between the thresholds are passed through.</Description>
+</Processor>
+<Processor name="IntensityMeasure">
+    <Description>Allows to interactively measure intensities.</Description>
+</Processor>
+<Processor name="IsosurfaceExtractor">
+    <Description>Extracts an isosurface from the input volume by using the Marching Cubes algorithm and puts it out as MeshGeometry.</Description>
+</Processor>
+<Processor name="Labeling">
+    <Description>Performs an interactive illustration of the volume rendering. An object of this class takes the id-raycasting result and detects anchor points for all segments contained by the id map. Based on these anchor points a hybrid labeling layout is calculated. Labels are either placed externally around the convex hull of the volume rendering or internally on the corresponding segment. &lt;p&gt;Also see IDRaycaster&lt;/p&gt;</Description>
+</Processor>
+<Processor name="LightWidgetRenderer">
+    <Description>Draws a yellow sphere that indicates the position of the lightsource and can be moved. Use linking to connect this widget to a light position of another processor.</Description>
+</Processor>
+<Processor name="Mean">
+    <Description>Mean image filter with selectable kernel size.</Description>
+</Processor>
+<Processor name="Median">
+    <Description>Median image filter with selectable kernel size.</Description>
+</Processor>
+<Processor name="MeshClipping">
+    <Description>Clips a list of mesh geometries (MeshListGeometry) against an arbitrarily oriented clipping plane.&#x0A;&lt;p&gt;See MeshClippingWidget for a convenient manipulation of the plane.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="MeshClippingWidget">
+    <Description>3D control elements to manipulate an arbitrarily oriented mesh clipping plane. Use linking to connect the properties to a MeshClipping processor.</Description>
+</Processor>
+<Processor name="MeshEntryExitPoints">
+    <Description>This is the standard processor for generating entry- and exit-points within Voreen. The generated image color-codes the ray parameters for a subsequent VolumeRaycaster. See also: CubeMeshProxyGeometry&#x0A;&lt;p&gt;&lt;span style=&quot;font-weight: bold&quot;&gt;Note:&lt;/span&gt; The input proxy geometry is expected to be convex. Non-convex geometry is accepted, but may yield unexpected results.&lt;/p&gt;&#x0A;</Description>
+</Processor>
+<Processor name="MeshSlabClipping">
+    <Description>Cuts a slab of arbitrary orientation and thickness out of the input MeshListGeometry by clipping it against two parallel planes.</Description>
+</Processor>
+<Processor name="MetaDataExtractor">
+    <Description>Provides functionality to get the Meta Information of a Volume.</Description>
+    <Property id="text">The text field that contains normal text as well as placeholders for the values of the Meta Information that was added.</Property>
+    <Port name="text">An Output String constructed of the added Meta Data.</Port>
+    <Port name="volume.inport">The Volume that provides the Meta Data</Port>
+</Processor>
+<Processor name="MultiScale">
+    <Description>Selects the optimal size for previous renderers from all connected outports and resizes the output for other outports. This processor is only needed when working with multiple canvases of independant size.</Description>
+</Processor>
+<Processor name="MultiVolumeProxyGeometry">
+    <Description>Provides a cube mesh proxy geometry for multi-volume raycasting.&#x0A;&lt;p&gt;See MeshEntryExitPoints, MultiVolumeRaycaster.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="MultiVolumeRaycaster">
+    <Description>Performs a single-pass multi-volume raycasting of up to four volumes, providing several shading and compositing modes. It allows one to generate three output renderings, whereas only the first one provides depth values.&#x0A;&lt;p&gt;See MultiVolumeProxyGeometry, MeshEntryExitPoints.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="MultiplanarProxyGeometry">
+    <Description>Provides a proxy geometry consisting of three orthogonal, axis-aligned slices. Each slice is represented by a front and a back face. The slice positions are specified in normalized coordinates.&#x0A;&lt;p&gt;&lt;span style=&quot;font-weight: bold&quot;&gt;Note:&lt;/span&gt; Since generated geometry is non-convex, it cannot be used in a raycasting pipeline.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="MultiplanarSliceRenderer">
+    <Description>Renders three orthogonal slices, aligned to the x-, y- and z-axis.</Description>
+</Processor>
+<Processor name="NonMinMaxSuppression">
+    <Description>Performs a gray-value based non-maximum or non-minimum suppression, according to the selected mode. The kernel radius can be specified for both dimensions independently.</Description>
+</Processor>
+<Processor name="OrientationOverlay">
+    <Description>Adds a cube and a tripod to the input rendering indicating the current orientation of the camera.</Description>
+</Processor>
+<Processor name="PlaneWidgetProcessor">
+    <Description>3D control elements to manipulate axis-aligned clipping planes. Use linking to connect the properties to a CubeProxyGeometry.&#x0A;&lt;p&gt;See MeshClipping and MeshClippingWidget for clipping against an arbitrarily oriented plane.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="PointListRenderer">
+    <Description>Renders a list of points (PointListGeometryVec3 or PointSegmentListGeometryVec3) as point primitives, spheres or illuminated spheres.&lt;p&gt;see GeometrySource&lt;/p&gt;</Description>
+</Processor>
+<Processor name="PointSegmentListRenderer">
+    <Description>Renders a list of segments, each consisting of points (PointSegmentListGeometryVec3), as point primitives, spheres or illuminated spheres. Each segment can be assigned a different color.&#x0A;&lt;p&gt;see GeometrySource&lt;/p&gt;</Description>
+</Processor>
+<Processor name="PropertyContainer">
+    <Description>Container able to dynamically add and remove properties at runtime.</Description>
+</Processor>
+<Processor name="QuadView">
+    <Description>Allows to arrange four renderings in one multiview layout.</Description>
+</Processor>
+<Processor name="QuadricRenderer">
+    <Description>Renders a GLU quadric. Currently supported: sphere and cylinder.</Description>
+</Processor>
+<Processor name="RegionOfInterest2D">
+    <Description>&lt;p&gt;Allows the user to sketch arbitrarily shaped 2D regions of interest: points, line strip, spline curve, free-form patch. The ROIs are put out as mask and additionally as overlay drawn over the input rendering. Multiple ROIs can be defined consecutively. Each of them is assigned the properties that are set when the user starts drawing the ROI. Double-click clears the current ROI set.&lt;p/&gt;&#x0A;&lt;p&gt;The RegionOfInterest2D processor is designed to be used in combination with a SliceViewer: The picking matrix generated by the SliceViewer can be linked with RegionOfInterest2D&apos;s matrix property in order to convert screen coordinates into volume coordinates.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="RenderLoopFinalizer">
+    <Description>In combination with RenderLoopInitiator, this processor is used to establish render loops.</Description>
+</Processor>
+<Processor name="RenderLoopInitiator">
+    <Description>In combination with RenderLoopFinalizer, this processor is used to establish render loops: The path between RenderLoopInitiator and RenderLoopFinalizer in the rendering network is executed as often as specified by this processor&apos;s \&quot;Iterations\&quot; property. At the end of each iteration, the temporary rendering result is passed back from the loop finalizer to the loop initiator where it is used as input for the next iteration.</Description>
+</Processor>
+<Processor name="RenderStore">
+    <Description>A RenderStore stores a copy of its input image and makes it available to other processors via a render outport. It provides the rendering that had been assigned to its inport during the previous rendering pass. Its outport may be connected to a predecessing processor, thereby allowing it to access a previous rendering result.&#x0A;&lt;p&gt;Furthermore, the input image is stored in a persistent render target and can therefore be accessed at any time, not necessarily during a rendering pass.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="RGBRaycaster">
+    <Description>Performs raycasting of an RGB volume data set by applying a hue-based transfer function.</Description>
+</Processor>
+<Processor name="SegmentationRaycaster">
+    <Description>Renders a segmented dataset. Each segment can be assigned a separate 1D transfer function.</Description>
+</Processor>
+<Processor name="SegmentationValidation">
+    <Description>Measures the quality of a volume segmentation by comparing it against a reference segmentation. Several similarity measures are computed. The results are displayed by read-only properties.</Description>
+</Processor>
+<Processor name="SimpleRaycaster">
+    <Description>Performs a simple single pass raycasting without lighting.</Description>
+</Processor>
+<Processor name="SingleScale">
+    <Description>Performs a scaling to render an image on a canvas of a different size. This processor does not propagate resize events from following processors and is only needed when working with multiple canvases of independant size.</Description>
+</Processor>
+<Processor name="SingleVolumeRaycaster">
+    <Description>This is the standard volume renderer in Voreen. It generates up to three output renderings, where the first one also provides depth values. Several shading and compositing modes are supported.&#x0A;&lt;p&gt;See CubeMeshProxyGeometry, MeshEntryExitPoints.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="SingleVolumeSlicer">
+    <Description>This class implements a slicing based volume renderer. The slices are view plane aligned and clipped against the volume on the GPU as described in &apos;Real-Time Volume Graphics&apos; (1st Ed., Chapter 3.5.1). At the moment no correct depth values are calculated. Currently only 1D transfer functions are supported.</Description>
+</Processor>
+<Processor name="SlicePositionRenderer">
+    <Description>Indicates the position of axis-aligned slices in a 3D view. Can be used when linking multiple views, to show the position of the 2D views with respect to the 3D view.</Description>
+</Processor>
+<Processor name="SliceViewer">
+    <Description>Displays 2D slices along one of the three main axis of the volume. Multiple slices can be viewed simultaneously.</Description>
+</Processor>
+<Processor name="TextOverlay">
+    <Description>Renders a text overlay on top of the input image.</Description>
+</Processor>
+<Processor name="TextSeriesSource">
+    <Description>This processor provides access to an array of strings which are read from a single textfile. Each string must end with a new line constant.</Description>
+    <Property id="step">The index determines which line of the array is provided at the outport.</Property>
+</Processor>
+<Processor name="TextSource">
+    <Description>Provides a textport output with content defined by the corresponding property.</Description>
+</Processor>
+<Processor name="UnaryImageProcessor">
+    <Description>Image processor with one input image that is customizable by its shader property.</Description>
+</Processor>
+<Processor name="UnsharpMasking">
+    <Description>Performs an unsharped masking operation by subtracting a (Gaussian) blurred version of the image.</Description>
+    <Property id="alpha">Controls, if the unsharp masking is applied to alpha values as well.</Property>
+    <Property id="amount">Amount controls the amount contrast is increased.</Property>
+    <Property id="radius">Radius controls the radius of the blur, which is co-dependent with Sigma.</Property>
+    <Property id="sigma">Sigma is the parameter for the Gaussian blur applied to get an unsharp version of the image, which is later subtracted. &#x0A;&#x0A;Co-dependent with Radius</Property>
+    <Property id="threshold">By using Threshold, masking is only applied when a minimal value is reached.</Property>
+</Processor>
+<Processor name="VectorMagnitude">
+    <Description>Takes a RGB or RGBA volume as input and computes the vector magnitude of the first three channels. The result is stored in an intensity volume.</Description>
+</Processor>
+<Processor name="VolumeBitScale">
+    <Description>Converts a volume to [8,12,16] bit.</Description>
+</Processor>
+<Processor name="VolumeCollectionModalityFilter">
+    <Description>Permits to select one specific modality among those of all VolumeHandles within the incoming VolumeCollection. The filtered VolumeCollection contains only VolumeHandles of the specified modality.</Description>
+</Processor>
+<Processor name="VolumeCollectionSource">
+    <Description>Loads multiple volumes and provides them as VolumeCollection. &lt;p&gt;See VolumeSeriesSource for dealing with large data series.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="VolumeCombine">
+    <Description>Combines two volumes based on a selectable function.</Description>
+</Processor>
+<Processor name="VolumeCreate">
+    <Description>Generates an 8-bit dataset with cubic dimensions.</Description>
+</Processor>
+<Processor name="VolumeCrop">
+    <Description>Crops the input volume by axis-aligned clipping planes.</Description>
+</Processor>
+<Processor name="VolumeCubify">
+    <Description>Enlarges the volume to have the same size in all dimensions.</Description>
+</Processor>
+<Processor name="VolumeCurvature">
+    <Description>Computes surface curvatures for each voxel from its Hessian matrix.</Description>
+</Processor>
+<Processor name="VolumeDecomposer">
+    <Description>Decomposes a volume into z-aligned slices and puts them out as image sequence of luminance-float textures. The slice range to be extracted is specified by the &quot;Start Slice&quot; and &quot;End Slice&quot; properties.</Description>
+</Processor>
+<Processor name="VolumeDistanceTransform">
+    <Description>Performs a 3D distance transform of the input volume.</Description>
+</Processor>
+<Processor name="VolumeFiltering">
+    <Description>Will provide the basic filtering operators like median filtering (work in progress).</Description>
+</Processor>
+<Processor name="VolumeFormatConversion">
+    <Description>Converts a single-channel input volume to an arbitrary single-channel target format.</Description>
+</Processor>
+<Processor name="VolumeGradient">
+    <Description>Computes gradients of the intensity input volume and stores them in a RGB volume. The A-channel can optionally be filled with the input volume&apos;s intensity.</Description>
+</Processor>
+<Processor name="VolumeHalfsample">
+    <Description>Reduces the Volumes resolution by half, by linearly downsampling 8 voxels to 1 voxel.</Description>
+</Processor>
+<Processor name="VolumeInformation">
+    <Description>Computes some properties such as the min, max, average voxel intensity of the input volume and displays them by read-only properties.</Description>
+</Processor>
+<Processor name="VolumeInversion">
+    <Description>Inverts the incoming volume. This is a simple VolumeProcessor for demonstrating the concept.</Description>
+</Processor>
+<Processor name="VolumeMasking">
+    <Description>Masks the incoming volume based on the masking function, such that voxels are discarded, if the masking function assigns zero opacity to their intensities.</Description>
+</Processor>
+<Processor name="VolumeMirror">
+    <Description>Mirror volume on [x,y,z] axis.</Description>
+</Processor>
+<Processor name="VolumeMorphology">
+    <Description>Provides the basic morphologic operators dilation and erosion for volumetric data.</Description>
+</Processor>
+<Processor name="VolumePicking">
+    <Description>Converts 2D mouse coordinates into a selectable volume coordinate system. The picked 3D positions are put out as PointListGeometry. Additionally, the last picked position is provided through a property. The RenderPort needs to be connected to a first-hit rendering of the picked volume (currently expecting normalized texture coordinates).</Description>
+</Processor>
+<Processor name="VolumeRegistration">
+    <Description>Registers a volume to a reference volume based on user-specified landmarks. The landmarks are expected in voxel coordinates and are either obtained from properties or as PointListGeometries from the geometry inports (see VolumePicking). The computed registration matrix is written to the output volume and additionally provided through a matrix property.</Description>
+</Processor>
+<Processor name="VolumeResample">
+    <Description>Resizes the input volume to the specified dimensions by using a selectable filtering mode.</Description>
+</Processor>
+<Processor name="VolumeSave">
+    <Description>Saves a volume to disk.</Description>
+</Processor>
+<Processor name="VolumeScaling">
+    <Description>Scales the volume by multiplying its voxel spacing with the specified scaling factors.</Description>
+</Processor>
+<Processor name="VolumeSelector">
+    <Description>Selects a single volume from the input collection.</Description>
+</Processor>
+<Processor name="VolumeSeriesSource">
+    <Description>Supplies a single volume out of a series of (time-varying) volume files. The series is defined in a .sdat file, which is like a .dat file, just with multiple &apos;ObjectFileName:&apos; entries, each corresponding to a single volume file. In contrast to the VolumeCollectionSource, the VolumeSeriesSource is intended to be used for large data series and therefore holds only the current time step in memory.&#x0A;&lt;p&gt;See volumeseries workspace archive on www.voreen.org for an example.&lt;/p&gt;</Description>
+</Processor>
+<Processor name="VolumeSource">
+    <Description>Provides a single volume.</Description>
+</Processor>
+<Processor name="VolumeTransformation">
+    <Description>Transforms the input volume&apos;s position and orientation by modifying its transformation matrix. Note: The volume data is copied by this operation.</Description>
+</Processor>
+<Processor name="VolumeTranslation">
+    <Description>Translates the volume by modifying its offset. The volume&apos;s transformation matrix is not changed.</Description>
+</Processor>
