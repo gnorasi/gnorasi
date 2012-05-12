@@ -71,7 +71,8 @@ StartupScreen::StartupScreen(QWidget* parent)
 {
     setWindowModality(Qt::ApplicationModal);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    setWindowTitle("VoreenVE");
+    //setWindowTitle("VoreenVE");
+    setWindowTitle("GNORASI");
 
     QFile file(":/voreenve/widgetstyle/startupscreen.qss");
     file.open(QFile::ReadOnly);
@@ -130,8 +131,8 @@ StartupScreen::StartupScreen(QWidget* parent)
     QButtonGroup* group = new QButtonGroup;
     group->addButton(recentsButton_);
     group->addButton(templatesButton_);
-    group->addButton(tutorialButton_);
-    group->addButton(helpButton_);
+    //group->addButton(tutorialButton_);
+    //group->addButton(helpButton_);
 
     dontShowAgain_ = new QCheckBox("Don't show again");
     QSettings settings;
@@ -151,10 +152,11 @@ StartupScreen::StartupScreen(QWidget* parent)
     mainLayout->addWidget(pixmap_, 0, 0, 1, 2);
 
     QBoxLayout* topLeftLayout = new QVBoxLayout;
-    topLeftLayout->addWidget(recentsButton_);
     topLeftLayout->addWidget(templatesButton_);
-    topLeftLayout->addWidget(tutorialButton_);
-    topLeftLayout->addWidget(helpButton_);
+    topLeftLayout->addWidget(recentsButton_);
+
+    //topLeftLayout->addWidget(tutorialButton_);
+    //topLeftLayout->addWidget(helpButton_);
     topLeftLayout->addStretch(-1);
     mainLayout->addLayout(topLeftLayout, 1, 0);
 
@@ -184,6 +186,10 @@ StartupScreen::StartupScreen(QWidget* parent)
     }
     else
         templatesButton_->click();
+
+
+    //gnorasi.. just show templates list
+    templatesButton_->click();
 }
 
 void StartupScreen::recentsButtonClicked() {
@@ -223,9 +229,12 @@ void StartupScreen::templateButtonClicked() {
 
     QList<QPair<QString, QString> > templates = TemplateWorkspaceFetcher::getTemplateWorkspaces();
 
+    /*
+      temporarly do not show new
     QListWidgetItem* newWorkspaceItem = new QListWidgetItem(tr("Empty Workspace"));
     newWorkspaceItem->setData(Qt::UserRole, 1);
     list_->addItem(newWorkspaceItem);
+    */
 
     for (int i = 0; i < templates.size(); ++i) {
         QString first = templates.at(i).first;

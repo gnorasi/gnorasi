@@ -296,7 +296,9 @@ VoreenMainWindow::VoreenMainWindow(const std::string& workspace, bool resetSetti
         currentWorkspace_ = workspace.c_str();
 
     setMinimumSize(600, 400);
+
     setWindowIcon(QIcon(":/voreenve/icons/voreen-logo_64x64.png"));
+    //setWindowIcon(QIcon(":voreenve/icons/gnorasi-logo_64x64.png"));
     setAcceptDrops(true);
 
     // show tooltips (for icons in toolbar) even if the window is inactive, as often the case
@@ -1726,7 +1728,8 @@ void VoreenMainWindow::helpWebsite() {
 }
 
 void VoreenMainWindow::helpAbout() {
-    AboutBox about("VoreenVE", tr("VoreenVE Visualization Environment"), this);
+    //AboutBox about("VoreenVE", tr("VoreenVE Visualization Environment"), this);
+    AboutBox about("GNORASI", tr("GNORASI prototype"), this);
     about.exec();
 }
 
@@ -1747,7 +1750,8 @@ void VoreenMainWindow::setWindowTitle(const QString& title) {
 }
 
 void VoreenMainWindow::updateWindowTitle() {
-    QString title = tr("VoreenVE");
+    //QString title = tr("VoreenVE");
+    QString title = tr("GNORASI");
 
     if (!ignoreWindowTitleModified_ && vis_ && vis_->isModified())
         title += " *";
