@@ -1,0 +1,4 @@
+<ModuleDescription>Provides the most basic components necessary for every network.</ModuleDescription>
+<Processor name="Canvas">
+    <Description>The Canvas processor is an end node in the network. It copies its input to the associated OpenGL canvas and can take snapshots of arbitrary size, only limited by the graphics board&apos;s maximal 2D texture dimensions.</Description>
+</Processor>

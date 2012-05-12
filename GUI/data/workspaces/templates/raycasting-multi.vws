@@ -1,0 +1,403 @@
+<?xml version="1.0" ?>
+<VoreenData version="1">
+    <Workspace version="2" GlobalDescription="" readonly="true">
+        <VolumeContainer>
+            <VolumeHandles>
+                <VolumeHandle>
+                    <Origin url="../../volumes/nucleon.dat" />
+                </VolumeHandle>
+                <VolumeHandle>
+                    <Origin url="../../volumes/walnut.dat" />
+                </VolumeHandle>
+                <VolumeHandle id="ref8">
+                    <Origin url="../../volumes/nucleon.dat?timeframe=0" />
+                </VolumeHandle>
+            </VolumeHandles>
+        </VolumeContainer>
+        <ProcessorNetwork version="11">
+            <MetaData>
+                <MetaItem name="Annotation" type="NetworkAnnotationContainer" ShowAnnotations="true">
+                    <Annotations>
+                        <item PositionX="-281" PositionY="12" hasFence="false" PositionFenceX_="0" PositionFenceY_="0">
+                            <Note>
+                                <![CDATA[The MultiVolumeRaycaster can
+handle up to four volumes.]]>
+                            </Note>
+                        </item>
+                        <item Note="Transform volume." PositionX="-916" PositionY="-156" hasFence="false" PositionFenceX_="0" PositionFenceY_="0" />
+                        <item Note="Generate a new volume." PositionX="-498" PositionY="-285" hasFence="false" PositionFenceX_="0" PositionFenceY_="0" />
+                    </Annotations>
+                </MetaItem>
+            </MetaData>
+            <Processors>
+                <Processor type="Canvas" name="Canvas" id="ref1">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-473" y="198" />
+                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="true" x="885" y="556" width="321" height="319" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="canvasSize">
+                            <value x="321" y="319" />
+                        </Property>
+                        <Property name="showCursor" value="true" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Background" name="Background" id="ref0">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-473" y="107" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="angle" value="60" />
+                        <Property name="backgroundModeAsString" value="gradient" />
+                        <Property name="color1">
+                            <value x="1" y="1" z="1" w="1" />
+                        </Property>
+                        <Property name="color2">
+                            <value x="0.39215699" y="0.39215699" z="0.39215699" w="1" />
+                        </Property>
+                        <Property name="repeat" value="1" />
+                        <Property name="texture" value="" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="VolumeSource" name="VolumeSource" id="ref2">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-764" y="-312" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="volumeHandle">
+                            <value ref="ref8" />
+                        </Property>
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="MeshEntryExitPoints" name="MeshEntryExitPoints" id="ref4">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-401" y="-89" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="camera" adjustProjectionToViewport="true" projectionMode="1" frustLeft="-0.04142136" frustRight="0.04142136" frustBottom="-0.04142136" frustTop="0.04142136" frustNear="0.1" frustFar="50" fovy="45.00000381" id="ref9">
+                            <MetaData>
+                                <MetaItem name="EditorWindow" type="WindowStateMetaData" visible="false" x="721" y="372" />
+                            </MetaData>
+                            <position x="1.95404124" y="-0.37553704" z="1.15165055" />
+                            <focus x="-0.01152854" y="0.01643574" z="0.02584974" />
+                            <upVector x="-0.48161477" y="0.08899736" z="0.8718524" />
+                        </Property>
+                        <Property name="jitterEntryPoints" value="false" />
+                        <Property name="jitterStepLength" value="0.005" />
+                        <Property name="supportCameraInsideVolume" value="true" />
+                        <Property name="useCulling" value="true" />
+                        <Property name="useFloatRenderTargets" value="true" />
+                    </Properties>
+                    <InteractionHandlers>
+                        <Handler name="cameraHandler">
+                            <Properties>
+                                <Property name="cameraHandler.interactionMetaphor" value="trackball" />
+                                <Property name="cameraHandler.moveBackward" lod="1" enabled="true" mouseAction="0" mouseButtons="0" keyCode="115" modifier="0" shareEvents="false" />
+                                <Property name="cameraHandler.moveDown" lod="1" enabled="true" mouseAction="0" mouseButtons="0" keyCode="102" modifier="0" shareEvents="false" />
+                                <Property name="cameraHandler.moveForward" lod="1" enabled="true" mouseAction="0" mouseButtons="0" keyCode="119" modifier="0" shareEvents="false" />
+                                <Property name="cameraHandler.moveLeft" lod="1" enabled="true" mouseAction="0" mouseButtons="0" keyCode="97" modifier="0" shareEvents="false" />
+                                <Property name="cameraHandler.moveRight" lod="1" enabled="true" mouseAction="0" mouseButtons="0" keyCode="100" modifier="0" shareEvents="false" />
+                                <Property name="cameraHandler.moveUp" lod="1" enabled="true" mouseAction="0" mouseButtons="0" keyCode="114" modifier="0" shareEvents="false" />
+                                <Property name="cameraHandler.rotate" lod="1" enabled="true" mouseAction="31" mouseButtons="1" keyCode="0" modifier="0" shareEvents="false" />
+                                <Property name="cameraHandler.shift" lod="1" enabled="true" mouseAction="31" mouseButtons="1" keyCode="0" modifier="1" shareEvents="false" />
+                                <Property name="cameraHandler.wheelZoom" lod="1" enabled="true" mouseAction="16" mouseButtons="96" keyCode="0" modifier="0" shareEvents="false" />
+                                <Property name="cameraHandler.zoom" lod="1" enabled="true" mouseAction="31" mouseButtons="4" keyCode="0" modifier="0" shareEvents="false" />
+                            </Properties>
+                        </Handler>
+                    </InteractionHandlers>
+                </Processor>
+                <Processor type="MultiVolumeRaycaster" name="MultiVolumeRaycaster" id="ref5">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-463" y="-5" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="applyLightAttenuation" value="false" />
+                        <Property name="camera" adjustProjectionToViewport="true" projectionMode="1" frustLeft="-0.04142136" frustRight="0.04142136" frustBottom="-0.04142136" frustTop="0.04142136" frustNear="0.1" frustFar="50" fovy="45.00000381" id="ref10">
+                            <MetaData>
+                                <MetaItem name="EditorWindow" type="WindowStateMetaData" visible="false" x="751" y="357" />
+                            </MetaData>
+                            <position x="1.95404124" y="-0.37553704" z="1.15165055" />
+                            <focus x="-0.01152854" y="0.01643574" z="0.02584974" />
+                            <upVector x="-0.48161477" y="0.08899736" z="0.8718524" />
+                        </Property>
+                        <Property name="compositing" value="dvr" />
+                        <Property name="compositing1" value="dvr" />
+                        <Property name="compositing2" value="dvr" />
+                        <Property name="gradient" value="central-differences" />
+                        <Property name="interactionCoarseness" value="4" />
+                        <Property name="interactionQuality" value="1" />
+                        <Property name="interpolation.coarseness" value="false" />
+                        <Property name="isoValue" value="0.5" />
+                        <Property name="lightAmbient">
+                            <value x="0.40000001" y="0.40000001" z="0.40000001" w="1" />
+                        </Property>
+                        <Property name="lightAttenuation">
+                            <value x="1" y="0" z="0" />
+                        </Property>
+                        <Property name="lightDiffuse">
+                            <value x="0.80000001" y="0.80000001" z="0.80000001" w="1" />
+                        </Property>
+                        <Property name="lightPosition">
+                            <MetaData>
+                                <MetaItem name="FollowCamera" type="BoolMetaData" value="false" />
+                                <MetaItem name="UseBackHemisphere" type="BoolMetaData" value="false" />
+                            </MetaData>
+                            <value x="2.29999995" y="1.5" z="1.5" w="1" />
+                        </Property>
+                        <Property name="lightSpecular">
+                            <value x="0.60000002" y="0.60000002" z="0.60000002" w="1" />
+                        </Property>
+                        <Property name="materialShininess" value="60" />
+                        <Property name="samplingRate" value="6.25" />
+                        <Property name="shading1" value="phong" />
+                        <Property name="shading2" value="phong" />
+                        <Property name="shading3" value="phong" />
+                        <Property name="shading4" value="phong" />
+                        <Property name="textureBorderIntensity" value="0" />
+                        <Property name="textureClampMode1_" value="clamp-to-edge" />
+                        <Property name="textureClampMode2_" value="clamp-to-edge" />
+                        <Property name="textureClampMode3_" value="clamp-to-edge" />
+                        <Property name="textureClampMode4_" value="clamp-to-edge" />
+                        <Property name="textureFilterMode1_" value="linear" />
+                        <Property name="textureFilterMode2_" value="linear" />
+                        <Property name="textureFilterMode3_" value="linear" />
+                        <Property name="textureFilterMode4_" value="linear" />
+                        <Property name="transferFunction1">
+                            <MetaData>
+                                <MetaItem name="EditorWindow" type="WindowStateMetaData" visible="true" x="316" y="376" width="547" height="292" />
+                            </MetaData>
+                            <TransferFunction type="TransFuncIntensity" lower="0" upper="1">
+                                <Keys>
+                                    <key type="TransFuncMappingKey" intensity="0.40202704" split="false">
+                                        <colorL r="224" g="238" b="29" a="0" />
+                                    </key>
+                                    <key type="TransFuncMappingKey" intensity="1" split="false">
+                                        <colorL r="255" g="255" b="255" a="255" />
+                                    </key>
+                                </Keys>
+                                <domain x="0" y="1" />
+                            </TransferFunction>
+                        </Property>
+                        <Property name="transferFunction2">
+                            <MetaData>
+                                <MetaItem name="EditorWindow" type="WindowStateMetaData" visible="true" x="315" y="674" width="547" height="292" />
+                            </MetaData>
+                            <TransferFunction type="TransFuncIntensity" lower="0" upper="1">
+                                <Keys>
+                                    <key type="TransFuncMappingKey" intensity="0.134921" split="false">
+                                        <colorL r="153" g="0" b="255" a="0" />
+                                    </key>
+                                    <key type="TransFuncMappingKey" intensity="0.145833" split="false">
+                                        <colorL r="129" g="90" b="255" a="11" />
+                                    </key>
+                                    <key type="TransFuncMappingKey" intensity="0.168651" split="false">
+                                        <colorL r="145" g="78" b="221" a="11" />
+                                    </key>
+                                    <key type="TransFuncMappingKey" intensity="0.180556" split="false">
+                                        <colorL r="172" g="58" b="165" a="0" />
+                                    </key>
+                                    <key type="TransFuncMappingKey" intensity="0.39781699" split="false">
+                                        <colorL r="255" g="0" b="0" a="0" />
+                                    </key>
+                                    <key type="TransFuncMappingKey" intensity="0.42261899" split="false">
+                                        <colorL r="255" g="0" b="0" a="15" />
+                                    </key>
+                                    <key type="TransFuncMappingKey" intensity="0.467262" split="false">
+                                        <colorL r="255" g="0" b="0" a="15" />
+                                    </key>
+                                    <key type="TransFuncMappingKey" intensity="0.489362" split="false">
+                                        <colorL r="156" g="99" b="0" a="0" />
+                                    </key>
+                                    <key type="TransFuncMappingKey" intensity="0.75496" split="false">
+                                        <colorL r="4" g="255" b="0" a="0" />
+                                    </key>
+                                    <key type="TransFuncMappingKey" intensity="0.82242101" split="false">
+                                        <colorL r="73" g="255" b="1" a="83" />
+                                    </key>
+                                    <key type="TransFuncMappingKey" intensity="0.92757899" split="false">
+                                        <colorL r="8" g="82" b="7" a="83" />
+                                    </key>
+                                    <key type="TransFuncMappingKey" intensity="0.96627003" split="false">
+                                        <colorL r="54" g="254" b="51" a="0" />
+                                    </key>
+                                </Keys>
+                                <domain x="0" y="1" />
+                            </TransferFunction>
+                        </Property>
+                        <Property name="transferFunction3">
+                            <MetaData>
+                                <MetaItem name="EditorWindow" type="WindowStateMetaData" visible="false" />
+                            </MetaData>
+                            <TransferFunction type="TransFuncIntensity" lower="0" upper="1">
+                                <Keys>
+                                    <key type="TransFuncMappingKey" intensity="0" split="false">
+                                        <colorL r="0" g="0" b="0" a="0" />
+                                    </key>
+                                    <key type="TransFuncMappingKey" intensity="1" split="false">
+                                        <colorL r="255" g="255" b="255" a="255" />
+                                    </key>
+                                </Keys>
+                                <domain x="0" y="1" />
+                            </TransferFunction>
+                        </Property>
+                        <Property name="transferFunction4">
+                            <MetaData>
+                                <MetaItem name="EditorWindow" type="WindowStateMetaData" visible="false" />
+                            </MetaData>
+                            <TransferFunction type="TransFuncIntensity" lower="0" upper="1">
+                                <Keys>
+                                    <key type="TransFuncMappingKey" intensity="0" split="false">
+                                        <colorL r="0" g="0" b="0" a="0" />
+                                    </key>
+                                    <key type="TransFuncMappingKey" intensity="1" split="false">
+                                        <colorL r="255" g="255" b="255" a="255" />
+                                    </key>
+                                </Keys>
+                                <domain x="0" y="1" />
+                            </TransferFunction>
+                        </Property>
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="MultiVolumeProxyGeometry" name="MultiVolumeProxyGeometry" id="ref6">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-404" y="-177" />
+                    </MetaData>
+                    <Properties />
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="VolumeTransformation" name="VolumeTransformation" id="ref3">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-785" y="-181" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="transformMatrix">
+                            <value.row0 x="0.5" y="0" z="0" w="0" />
+                            <value.row1 x="0" y="0.5" z="0" w="0" />
+                            <value.row2 x="0" y="0" z="0.5" w="0.40000001" />
+                            <value.row3 x="0" y="0" z="0" w="1" />
+                        </Property>
+                        <Property name="voxel2Cube" value="false" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="VolumeCreate" name="VolumeCreate" id="ref7">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-629" y="-311" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="dimension" value="64" />
+                        <Property name="keepShapes" value="false" />
+                        <Property name="numShapes" value="4" />
+                        <Property name="numSubdivisions" value="1" />
+                        <Property name="operation" value="spherecoord" />
+                        <Property name="regenerate" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+            </Processors>
+            <Connections>
+                <Connection>
+                    <Outport name="image.output">
+                        <Processor type="Background" ref="ref0" />
+                    </Outport>
+                    <Inport name="image.input">
+                        <Processor type="Canvas" ref="ref1" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="volumehandle.volumehandle">
+                        <Processor type="VolumeSource" ref="ref2" />
+                    </Outport>
+                    <Inport name="volumehandle.input">
+                        <Processor type="VolumeTransformation" ref="ref3" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="image.entrypoints">
+                        <Processor type="MeshEntryExitPoints" ref="ref4" />
+                    </Outport>
+                    <Inport name="image.entrypoints">
+                        <Processor type="MultiVolumeRaycaster" ref="ref5" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="image.exitpoints">
+                        <Processor type="MeshEntryExitPoints" ref="ref4" />
+                    </Outport>
+                    <Inport name="image.exitpoints">
+                        <Processor type="MultiVolumeRaycaster" ref="ref5" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="image.output">
+                        <Processor type="MultiVolumeRaycaster" ref="ref5" />
+                    </Outport>
+                    <Inport name="image.input">
+                        <Processor type="Background" ref="ref0" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="proxygeometry.geometry">
+                        <Processor type="MultiVolumeProxyGeometry" ref="ref6" />
+                    </Outport>
+                    <Inport name="proxgeometry.geometry">
+                        <Processor type="MeshEntryExitPoints" ref="ref4" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="volumehandle.output">
+                        <Processor type="VolumeTransformation" ref="ref3" />
+                    </Outport>
+                    <Inport name="volume1">
+                        <Processor type="MultiVolumeRaycaster" ref="ref5" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="volumehandle.output">
+                        <Processor type="VolumeTransformation" ref="ref3" />
+                    </Outport>
+                    <Inport name="volumehandle.volumehandle">
+                        <Processor type="MultiVolumeProxyGeometry" ref="ref6" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="volumehandle.output">
+                        <Processor type="VolumeCreate" ref="ref7" />
+                    </Outport>
+                    <Inport name="volumehandle.volumehandle">
+                        <Processor type="MultiVolumeProxyGeometry" ref="ref6" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="volumehandle.output">
+                        <Processor type="VolumeCreate" ref="ref7" />
+                    </Outport>
+                    <Inport name="volume2">
+                        <Processor type="MultiVolumeRaycaster" ref="ref5" />
+                    </Inport>
+                </Connection>
+            </Connections>
+            <CoProcessorConnections />
+            <PropertyLinks>
+                <PropertyLink>
+                    <SourceProperty type="CameraProperty" ref="ref9" />
+                    <DestinationProperty type="CameraProperty" ref="ref10" />
+                    <Evaluator type="LinkEvaluatorId" />
+                </PropertyLink>
+                <PropertyLink>
+                    <SourceProperty type="CameraProperty" ref="ref10" />
+                    <DestinationProperty type="CameraProperty" ref="ref9" />
+                    <Evaluator type="LinkEvaluatorId" />
+                </PropertyLink>
+            </PropertyLinks>
+            <PropertyStateCollections />
+            <PropertyStateFileReferences />
+            <PropertyStateDirectoryReferences />
+        </ProcessorNetwork>
+        <Animation />
+    </Workspace>
+</VoreenData>

@@ -1,0 +1,2 @@
+modules/fontrendering/ext/freetype/FTL.TXT:licenses/freetype
+modules/fontrendering/ext/ftgl/LICENSE:licenses/ftgl

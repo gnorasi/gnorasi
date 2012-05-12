@@ -1,0 +1,1 @@
+modules/tiff/ext/libtiff/COPYRIGHT:licenses/libtiff

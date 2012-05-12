@@ -1,0 +1,2 @@
+modules/python/scripts:modules/python
+modules/python/ext/python27/LICENSE:licenses/python

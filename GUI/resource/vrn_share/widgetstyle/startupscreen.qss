@@ -1,0 +1,88 @@
+/**********************************************************************
+ *                                                                    *
+ * Voreen - The Volume Rendering Engine                               *
+ *                                                                    *
+ * Created between 2005 and 2012 by The Voreen Team                   *
+ * as listed in CREDITS.TXT <http://www.voreen.org>                   *
+ *                                                                    *
+ * This file is part of the Voreen software package. Voreen is free   *
+ * software: you can redistribute it and/or modify it under the terms *
+ * of the GNU General Public License version 2 as published by the    *
+ * Free Software Foundation.                                          *
+ *                                                                    *
+ * Voreen is distributed in the hope that it will be useful,          *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of     *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the       *
+ * GNU General Public License for more details.                       *
+ *                                                                    *
+ * You should have received a copy of the GNU General Public License  *
+ * in the file "LICENSE.txt" along with this program.                 *
+ * If not, see <http://www.gnu.org/licenses/>.                        *
+ *                                                                    *
+ * The authors reserve all rights not expressly granted herein. For   *
+ * non-commercial academic use see the license exception specified in *
+ * the file "LICENSE-academic.txt". To get information about          *
+ * commercial licensing please contact the authors.                   *
+ *                                                                    *
+ **********************************************************************/
+
+voreen--StartupScreen, QListWidget {
+    border: 1px solid black;
+    background-color: rgb(79,79,79);
+}
+
+QListWidget {
+    show-decoration-selected: 1;
+    outline: none;
+}
+
+QListView::item {
+    background: white;
+    border-radius: 5px;
+    margin: 1px;
+    padding: 1px;
+}
+
+ QListView::item:selected {
+     border: 1px solid #6a6ea9;
+ }
+
+ QListView::item:selected:!active {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #ABAFE5, stop: 1 #8588B2);
+ }
+
+ QListView::item:selected:active {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #6a6ea9, stop: 1 #888dd9);
+ }
+
+ QListView::item:hover {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #FAFBFE, stop: 1 #DCDEF1);
+ }
+
+QListView {
+    border: 1px solid black;
+    border-right-style: none;
+    background-color: rgb(90,90,90);
+}
+
+QToolButton {
+    color: white;
+    border: 0px;
+}
+
+QCheckBox {
+    color: white;
+}
+
+QToolButton:checked {
+    border: 1px solid black;
+    border-left-style: none;
+    border-right-style: none;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 rgb(125,125,125), stop: 0.40 rgb(40,40,40), stop: 0.6 rgb(40,40,40), 
+                                      stop: 1 rgb(125,125,125));
+}
+
