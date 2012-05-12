@@ -6,7 +6,7 @@ TARGET = voreen_qt
 unix: VERSION = 1.0
 
 CONFIG += qt thread
-QT += opengl network
+QT += opengl network xml
 
 # include config
 !exists(../../config.txt) {
