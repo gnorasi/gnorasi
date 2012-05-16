@@ -1,4 +1,4 @@
-TARGET = voreenve
+TARGET = gnorasi
 TEMPLATE = app
 LANGUAGE = C++
 

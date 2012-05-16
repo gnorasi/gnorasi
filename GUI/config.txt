@@ -10,17 +10,17 @@
 # Unix library paths may be adjusted in "Paths" section at the bottom of this file.
 
 # We definitely need this.
-VRN_MODULES += base
+#VRN_MODULES += base
 
 # We add default Voreen modules here, i.e., those which do not depend on
 # non-standard external libraries (see modules/default.pri).
 VRN_MODULES += default
 
 # ZIP support via the zlib library.
-VRN_MODULES += zip
+#VRN_MODULES += zip
 
 # Image I/O and processing using the DevIL library.
-VRN_MODULES += devil
+#VRN_MODULES += devil
 
 #GNORASI Knowdedge
 VRN_MODULES += knowledge
@@ -58,6 +58,7 @@ VRN_MODULES += knowledge
 ###################
 # Only for unix, not considered by qmake-default.bat on Windows.
 VRN_PROJECTS = tgt core qt voreenve
+
 
 # Also build the other applications?
 #VRN_PROJECTS += voltool
