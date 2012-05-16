@@ -5,7 +5,7 @@
 # and have to be included in the public releases (source and binary).
 #
 
-VRN_MODULES += base
+#VRN_MODULES += base
 #VRN_MODULES += connectedcomponents
 #VRN_MODULES += flowreen
 #VRN_MODULES += jama
