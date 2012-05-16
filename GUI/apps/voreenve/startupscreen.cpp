@@ -229,12 +229,11 @@ void StartupScreen::templateButtonClicked() {
 
     QList<QPair<QString, QString> > templates = TemplateWorkspaceFetcher::getTemplateWorkspaces();
 
-    /*
-      temporarly do not show new
+
     QListWidgetItem* newWorkspaceItem = new QListWidgetItem(tr("Empty Workspace"));
     newWorkspaceItem->setData(Qt::UserRole, 1);
     list_->addItem(newWorkspaceItem);
-    */
+
 
     for (int i = 0; i < templates.size(); ++i) {
         QString first = templates.at(i).first;
