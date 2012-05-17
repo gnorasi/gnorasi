@@ -34,7 +34,7 @@ Processor* ImageReaderProcessor::create() const {
 void ImageReaderProcessor::initialize() throw (tgt::Exception) {
     Processor::initialize();
     setOutPortData();
-    
+    hasImage = false;
     loadImage(imageFile_.get());
 }
 
@@ -116,7 +116,7 @@ void ImageReaderProcessor::loadImage(const std::string& fname) {
 void ImageReaderProcessor::clearImage() {
 
     if (hasImage) {
-        hasImage = false
+        hasImage = false;
     }
     imageFile_.set("");
 }

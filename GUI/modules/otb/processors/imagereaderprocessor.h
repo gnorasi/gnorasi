@@ -27,8 +27,8 @@ public:
     virtual ~ImageReaderProcessor();
     virtual Processor* create() const;
 
-    virtual std::string getClassName() const { return "ImageReader"; }
-    virtual std::string getCategory() const  { return "Remote Sensing"; }
+    virtual std::string getClassName() const { return "otbImageReader"; }
+    virtual std::string getCategory() const  { return "Image IO"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; }
     
         /**
@@ -66,7 +66,7 @@ private:
     void setOutPortData();
     void readData();
     void updateView();
-    bool hasImage = false;
+    bool hasImage;
     
     /**
      * Clears the loaded image. Processor needs to be initialized when calling this function.
