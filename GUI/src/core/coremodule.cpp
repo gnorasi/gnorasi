@@ -99,7 +99,7 @@ CoreModule::CoreModule()
 #endif
 
     // core processors
-    addProcessor(new CanvasRenderer());
+    //addProcessor(new CanvasRenderer());
 
     // core properties
     addProperty(new FloatProperty());
