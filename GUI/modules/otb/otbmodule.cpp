@@ -6,7 +6,7 @@
 
 #include "otbmodule.h"
 //#include "processors/dummysegmentationprocessor.h"
-//#include "processors/classifierwsprocessor.h"
+#include "processors/imagereaderprocessor.h"
 
 namespace voreen {
 
@@ -21,7 +21,7 @@ OTBModule::OTBModule()
 
     // each module processor needs to be registered
     //addProcessor(new DummySegmentationProcessor());
-    //addProcessor(new ClassifierWSProcessor());
+    addProcessor(new ImageReaderProcessor());
 }
 
 } // namespace

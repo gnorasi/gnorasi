@@ -2,6 +2,4 @@
 <Processor name="Image Reader">
     <Description>Reads an image from the hard disk drive.</Description>
 </Processor>
-<Processor name="Image Writer">
-    <Description>Writes an image to the hard disk drive.</Description>
-</Processor>
+
