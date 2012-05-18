@@ -1,0 +1,1884 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY swrl "http://www.w3.org/2003/11/swrl#" >
+    <!ENTITY swrlb "http://www.w3.org/2003/11/swrlb#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.gnorasi.gr/ontologies/gnorasi.owl#"
+     xml:base="http://www.gnorasi.gr/ontologies/gnorasi.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#adjacent_to -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#adjacent_to">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+        <rdfs:comment>describes the common perimeter between two externally connected areas X and Y</rdfs:comment>
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeature"/>
+            <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasCommonPerimeterDescriptor"/>
+            <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasReferenceRegion"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#coarserThan -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#coarserThan">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageDecomposition"/>
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageDecomposition"/>
+        <owl:inverseOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#finerThan"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#defines -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#defines">
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageDecomposition"/>
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageRegion"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#depicts -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#depicts"/>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#depictsLandCover -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#depictsLandCover">
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Image"/>
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#depicts"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#depictsObject -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#depictsObject">
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageRegion"/>
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#depicts"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#finerThan -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#finerThan">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageDecomposition"/>
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageDecomposition"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasAssociatedObject -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasAssociatedObject">
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover"/>
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasCommonPerimeterDescriptor -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasCommonPerimeterDescriptor">
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#CommonPerimeter"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptor"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasCommonPerimeterValue -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasCommonPerimeterValue">
+        <rdfs:subPropertyOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptorValue"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasContainmentDescriptor -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasContainmentDescriptor">
+        <rdfs:subPropertyOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptor"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasContainmentPercentage -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasContainmentPercentage">
+        <rdfs:subPropertyOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptorValue"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasDistanceFrom -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasDistanceFrom">
+        <rdfs:subPropertyOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptorValue"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeature -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeature">
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Feature"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Image"/>
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageRegion"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptor -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptor">
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Feature"/>
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#FeatureDescriptor"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptorValue -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptorValue">
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#DescriptorValue"/>
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#FeatureDescriptor"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasImageDecomposition -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasImageDecomposition">
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Image"/>
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageDecomposition"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasMaxValue -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasMaxValue">
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#RangeValue"/>
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SingleValue"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasValue"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasMeanValue -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasMeanValue">
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Value"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptorValue"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasMinValue -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasMinValue">
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#RangeValue"/>
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SingleValue"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasValue"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasReferenceRegion -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasReferenceRegion">
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageRegion"/>
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Topological"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasStandardDeviation -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasStandardDeviation">
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Value"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptorValue"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasValue -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasValue"/>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#near_to -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#near_to">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#surrounded_by -->
+
+    <owl:ObjectProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#surrounded_by">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:range rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasValueFloat -->
+
+    <owl:DatatypeProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasValueFloat">
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SingleValue"/>
+        <rdfs:range rdf:resource="&xsd;float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#hasValueInteger -->
+
+    <owl:DatatypeProperty rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasValueInteger">
+        <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SingleValue"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#AgriculturalArea -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#AgriculturalArea">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#AgriculturalAreaWithNaturalVegetation -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#AgriculturalAreaWithNaturalVegetation">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#HeterogeneousAgriculturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Areas principally occupied by agriculture, interspersed with significant natural areas.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#AgroForestryArea -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#AgroForestryArea">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#HeterogeneousAgriculturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Annual crops or grazing land under the wooded cover of forestry species.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Airport -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Airport">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#TransportUnits"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Airport installations: runways, buildings and associated land.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#AnnualCrop -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#AnnualCrop">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#HeterogeneousAgriculturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Non-permanent crops (arable lands or pasture) associated with permanent crops on the same parcel.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#ArableLand -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArableLand">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#AgriculturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Cultivated areas regularly ploughed and generally under a rotation system.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Area -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Area">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ShapeDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialArea -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialArea">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialVegetatedArea -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialVegetatedArea">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialArea"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Asphalt -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Asphalt">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ManMadeObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Badland -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Badland">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PrimarilyNonVegetatedNaturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Scattered high-attitude vegetation</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#BareRock -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#BareRock">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PrimarilyNonVegetatedNaturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Scree, cliffs, rocks and outcrops.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Beach -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Beach">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PrimarilyNonVegetatedNaturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Beaches, including beds of stream channels with torrential regime.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Blue -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Blue">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralBand"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#BroadleavedForest -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#BroadleavedForest">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Forest"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Vegetation formation composed principally of trees, including shrub and bush understories, where broadleaved species predominate.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Building -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Building">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ManMadeObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#BurntArea -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#BurntArea">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PrimarilyNonVegetatedNaturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Areas affected by recent fires, still mainly black.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Canal -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Canal">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#InlandWater"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Natural or artificial water-courses serving as water drainage channels. Includes canals. Minimum width to include: 100 m.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Channel -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Channel">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#InlandWater"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Natural or artificial water-courses serving as water drainage channels. Includes canals. Minimum width to include: 100 m.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#CoastalLagoon -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#CoastalLagoon">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#MarineWater"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Unvegetated stretches of salt or brackish waters separated from the sea by a tongue of land or other similar topography. These water bodies can be connected with the sea at limited points, either permanently or for parts of the year only.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#CoastalWetland -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#CoastalWetland">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Wetland"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Non-wooded areas either tidally, seasonally or permanently waterlogged with brackish or saline water.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Color -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Color">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#CommercialUnit -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#CommercialUnit">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Artificially surfaced areas (with concrete, asphalt, tamacadam, or stabilised, e.g. beaten earth) devoid of vegetation, occupy most of the area in question, which also contains buildings and/or vegetated areas.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#CommonPerimeter -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#CommonPerimeter">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasCommonPerimeterValue"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Value"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Topological"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Compactness -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Compactness">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ShapeDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#ComplexCultivation -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ComplexCultivation">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#HeterogeneousAgriculturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Juxtaposition of small parcels of diverse annual crops, pasture and/or permanent crops.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Concrete -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Concrete">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ManMadeObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#ConiferousForest -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ConiferousForest">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Forest"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Vegetation formation composed principally of trees, including shrub and bush understories, where coniferous species predominate.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#ConstructionSite -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ConstructionSite">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Spaces under construction development, soil or bedrock excavations, earthworks.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Containment -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Containment">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasContainmentPercentage"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Value"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Topological"/>
+        <rdfs:comment>for two partially overlapping areas X and Y, it describes the percentage of area of X that is included in Y</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#ContinuousUrbanFabric -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ContinuousUrbanFabric">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#UrbanFabric"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Most of the land is covered by . Buildings, roads and artificially surfaced area cover almost all the ground. Non-linear areas of vegetation and bare soil are exceptional.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#DescriptorValue -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#DescriptorValue">
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Feature"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#FeatureDescriptor"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Image"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageDecomposition"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageRegion"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#DiscontinuousUrbanFabric -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#DiscontinuousUrbanFabric">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#UrbanFabric"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Most of the land is covered by structures. Buildings, roads and artificially surfaced areas associated with vegetated areas and bare soil, which occupy discontinuous but significant surfaces.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#DumpSite -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#DumpSite">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Landfill or mine dump sites, industrial or public.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Dune -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Dune">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PrimarilyNonVegetatedNaturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Dunes, including beds of stream channels with torrential regime.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Elongation -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Elongation">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ShapeDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Estuary -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Estuary">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#MarineWater"/>
+        <rdfs:comment rdf:datatype="&xsd;string">The mouth of a river within which the tide ebbs and flows.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#FIR -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#FIR">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralBand"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Feature -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Feature">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptor"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#FeatureDescriptor"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#FeatureDescriptor"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Image"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageDecomposition"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageRegion"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Value"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#FeatureDescriptor -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#FeatureDescriptor">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptorValue"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#DescriptorValue"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Image"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageDecomposition"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageRegion"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Value"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Forest -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Forest">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#NaturalAndSemiNaturalArea"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#FruitTree -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#FruitTree">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PermanentCrop"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Parcels planted with fruit trees or shrubs: single or mixed fruit species, fruit trees associated with permanently grassed surfaces. Includes chestnut and walnut groves.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Gabor -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Gabor">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#TextureDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Glacier -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Glacier">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PrimarilyNonVegetatedNaturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Land covered by glaciers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Grassland -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Grassland">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Herbaceous"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Low productivity grassland. Often situated in areas of rough uneven ground. Frequently includes rocky areas, briars, and heathland.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Green -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Green">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralBand"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#GreenUrbanArea -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#GreenUrbanArea">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialVegetatedArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Areas with vegetation within urban fabric. Includes parks and cemeteries with vegetation.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Haralic -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Haralic">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#TextureDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Heathland -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Heathland">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Herbaceous"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Vegetation with low and closed cover, dominated by bushes, shrubs and herbaceous plants (heath, briars, broom, gorse, laburnum, etc.).</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Herbaceous -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Herbaceous">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#NaturalAndSemiNaturalArea"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#HeterogeneousAgriculturalArea -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#HeterogeneousAgriculturalArea">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#AgriculturalArea"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Hue -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Hue">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#light"/>
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#bright"/>
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#dark"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Image -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Image">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasImageDecomposition"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageDecomposition"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#depictsLandCover"/>
+                <owl:allValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeature"/>
+                <owl:allValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Feature"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageDecomposition"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageRegion"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Value"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageDecomposition -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageDecomposition">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#defines"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageRegion"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageRegion"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Value"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageRegion -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageRegion">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeature"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Feature"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty>
+                    <rdf:Description>
+                        <owl:inverseOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#defines"/>
+                    </rdf:Description>
+                </owl:onProperty>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageDecomposition"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#depictsObject"/>
+                <owl:allValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover"/>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Value"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#IndustrialUnit -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#IndustrialUnit">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Artificially surfaced areas (with concrete, asphalt, tamacadam, or stabilised, e.g. beaten earth) devoid of vegetation, occupy most of the area in question, which also contains buildings and/or vegetated areas.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#InlandMarsh -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#InlandMarsh">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#InlandWetland"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Low-lying land usually flooded in winter, and more or less saturated by water all year round.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#InlandWater -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#InlandWater">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#WaterBody"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#InlandWetland -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#InlandWetland">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Wetland"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Non-forested areas either partially, seasonally or permanently waterlogged. The water may be sta gnant or circulating.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#IntertidalFlat -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#IntertidalFlat">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#CoastalWetland"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Generally unvegetated expanses of mud, sand or rock lying between high and low water-marks. On contour on maps.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Lake -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Lake">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#InlandWater"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Natural or artificial stretches of water.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasAssociatedObject"/>
+                <owl:allValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#LeisureFacility -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#LeisureFacility">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialVegetatedArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Camping grounds, sports grounds, leisure parks, golf courses, racecourses, etc. Includes formal parks not surrounded by urban zones.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Length -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Length">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ShapeDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Lichen -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Lichen">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Plant"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#MIR -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#MIR">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralBand"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#MSAVI -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#MSAVI">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#ManMadeObject -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ManMadeObject">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#MarineWater -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#MarineWater">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#WaterBody"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Mine -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Mine">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Areas with open-pit extraction of industrial minerals (sandpits, quarries) or other minerals (opencast mines). Includes flooded gravel pits, except for river-bed extraction.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#MixedForest -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#MixedForest">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Forest"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Vegetation formation composed principally of trees, including shrub and bush understories, where broadleaved and coniferous species co~dominate.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Moor -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Moor">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Herbaceous"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Vegetation with low and closed cover, dominated by bushes, shrubs and herbaceous plants (heath, briars, broom, gorse, laburnum, etc.).</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Moss -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Moss">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Plant"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#NIR -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#NIR">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralBand"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#NaturalAndSemiNaturalArea -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#NaturalAndSemiNaturalArea">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#NonIrrigatedArableLand -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#NonIrrigatedArableLand">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArableLand"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Cereals, legumes, fodder crops, root crops and fallow land. Includes flower and tree (nurseries) cultivation and vegetables, whether open field, under plastic or glass (includes market gardening). Includes aromatic, medicinal and culinary plants. Excludes permanent pastures.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Object -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#near_to"/>
+                <owl:allValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#surrounded_by"/>
+                <owl:allValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#adjacent_to"/>
+                <owl:allValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Ocean -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Ocean">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#MarineWater"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Zone seaward of the lowest tide limit.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#OliveGrove -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#OliveGrove">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PermanentCrop"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Areas planted with olive trees, including mixed occurrence of olive trees and vines on the same parcel.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#ParkingLot -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ParkingLot">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ManMadeObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Pasture -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Pasture">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#AgriculturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Dense, predominantly graminoid grass cover, of floral composition, not under a rotation system. Mainly used for grazing, but the fodder may be harvested mechanically. Includes areas with hedges (bocage).</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Pavement -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Pavement">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ManMadeObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Peatbog -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Peatbog">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#InlandWetland"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Peatland consisting mainly of decomposed moss and vegetable matter. May or may not be exploited.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Perimeter -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Perimeter">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ShapeDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#PermanentCrop -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#PermanentCrop">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#AgriculturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Crops not under a rotation system which provide repeated harvests and occupy the land for a long period before it is ploughed and replanted: mainly plantations of woody crops. Excludes pastures, grazing lands and forests.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#PermanentlyIrrigatedLand -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#PermanentlyIrrigatedLand">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArableLand"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Crops irrigated permanently and periodically, using a permanent infrastructure (irrigation channels, drainage network). Most of these crops could not be cultivated without an artificial water supply. Does not include sporadically irrigated land.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#PerpetualSnow -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#PerpetualSnow">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PrimarilyNonVegetatedNaturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Land covered by permanent snowfields.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#PhysicalObject -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#PhysicalObject">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Plant -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Plant">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PhysicalObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Port -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Port">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#TransportUnits"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Infrastructure of port areas, including quays, dockyards and marinas.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#PrimarilyNonVegetatedNaturalArea -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#PrimarilyNonVegetatedNaturalArea">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#NaturalAndSemiNaturalArea"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Proximity -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Proximity">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasDistanceFrom"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Value"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Topological"/>
+        <rdfs:comment>describes the distance between two disconnected areas X and Y</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#RailNetwork -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#RailNetwork">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#TransportUnits"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Railways, including associated installations (stations, platforms, embankments). Minimum width
+to include: I 00 m.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#RangeValue -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#RangeValue">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasMaxValue"/>
+                        <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SingleValue"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasMinValue"/>
+                        <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SingleValue"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasValue"/>
+                        <owl:onClass rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SingleValue"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">2</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Value"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Red -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Red">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralBand"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#RiceField -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#RiceField">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArableLand"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Land developed for rice cultivation. Flat surfaces with irrigation channels. Surfaces regularly flooded.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#River -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#River">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#InlandWater"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Natural or artificial stretches of water.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Road -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Road">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ManMadeObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#RoadNetwork -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#RoadNetwork">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#TransportUnits"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Motorways including associated installations (stations). Minimum width to include: I 00 m.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Rock -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Rock">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PhysicalObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Roundness -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Roundness">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ShapeDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Saline -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Saline">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#CoastalWetland"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Salt-pans, active or in process of . Sections of salt marsh exploited for the production of salt by evaporation. They are clearly distinguishable from the rest of the marsh by their segmentation and embankment systems.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#SaltMarsh -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#SaltMarsh">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#CoastalWetland"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Vegetated low-lying areas, above the high-tide line, susceptible to flooding by sea water. Often in the process of filling in, gradually being colonised by halophilic plants.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#SandPlain -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#SandPlain">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PrimarilyNonVegetatedNaturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Expanses of sand or pebbles in coastal or continental, including beds of stream
+channels with torrential regime.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#SclerophylousVegetation -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#SclerophylousVegetation">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Herbaceous"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Bushy sclerophyllous vegetation. Includes maquis and garrige.
+Maquis: a dense vegetation association composed of numerous shrubs associated with siliceous soils in the Mediterranean environment.
+Garrigue: discontinuous bushy associations of Mediterranean calcareous plateaus. Generally composed of kermes oak, arbutus, lavender, thyme, cistus, etc. May include a few isolated trees.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Sea -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Sea">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#MarineWater"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Zone seaward of the lowest tide limit.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Shape -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Shape">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptor"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ShapeDescriptor"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Feature"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#ShapeDescriptor -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ShapeDescriptor">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#FeatureDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Shrub -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Shrub">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Plant"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#SingleValue -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#SingleValue">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasValueFloat"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onDataRange rdf:resource="&xsd;float"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasValueInteger"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onDataRange rdf:resource="&xsd;integer"/>
+                    </owl:Restriction>
+                </owl:unionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Value"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Size -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Size">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ShapeDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Spatial -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Spatial">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptor"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDescriptor"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Feature"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDescriptor -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDescriptor">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#FeatureDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDistribution -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDistribution">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptorValue"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDistributionValue"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDescriptor"/>
+        <rdfs:comment>indication of the geographical distribution of the units in the satellite image as a whole</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDistributionValue -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDistributionValue">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#regularDistribution"/>
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#continuousDistribution"/>
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#longitudinalDistribution"/>
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#sporadicDistribution"/>
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#irregularDistribution"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#DescriptorValue"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialStructure -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialStructure">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptorValue"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialStructureValue"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDescriptor"/>
+        <rdfs:comment>spatial organization of the constituent element of the image, described solely in terms of their spatial properties</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialStructureValue -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialStructureValue">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#speckled"/>
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#cellular"/>
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#linear"/>
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#homogeneous"/>
+                    <rdf:Description rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#irregular"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#DescriptorValue"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Spectral -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Spectral">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptor"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralDescriptor"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Feature"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralBand -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralBand">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralDescriptor -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralDescriptor">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#FeatureDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#SportFacility -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#SportFacility">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialVegetatedArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Camping grounds, sports grounds, leisure parks, golf courses, racecourses, etc. Includes formal parks not surrounded by urban zones.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Square -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Square">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ManMadeObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Steppe -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Steppe">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PrimarilyNonVegetatedNaturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Scattered high-attitude vegetation</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Stream -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Stream">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#InlandWater"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Natural or artificial stretches of water.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#TIR -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#TIR">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpectralBand"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Texture -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Texture">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasFeatureDescriptor"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#TextureDescriptor"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Feature"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#TextureDescriptor -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#TextureDescriptor">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#FeatureDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Topological -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Topological">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasReferenceRegion"/>
+                <owl:someValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ImageRegion"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#TransitionalWoodlandShrub -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#TransitionalWoodlandShrub">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Herbaceous"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Bushy or herbaceous vegetation with scattered trees. Can represent either woodland degradation or forest regeneration/colonisation.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#TransportUnits -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#TransportUnits">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialArea"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Tree -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Tree">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Plant"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Tundra -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Tundra">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PrimarilyNonVegetatedNaturalArea"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Scattered high-attitude vegetation</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#UrbanFabric -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#UrbanFabric">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ArtificialArea"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Value -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Value">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#DescriptorValue"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#hasValue"/>
+                <owl:allValuesFrom rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Value"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Vineyard -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Vineyard">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#PermanentCrop"/>
+        <rdfs:comment rdf:datatype="&xsd;string">Areas planted with vines.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#WaterBody -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#WaterBody">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Wetland -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Wetland">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#LandCover"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#Width -->
+
+    <owl:Class rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#Width">
+        <rdfs:subClassOf rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#ShapeDescriptor"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#bright -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#bright">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Hue"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#cellular -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#cellular">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialStructureValue"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#continuousDistribution -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#continuousDistribution">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDistributionValue"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#dark -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#dark">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Hue"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#homogeneous -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#homogeneous">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialStructureValue"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#ins_building -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ins_building">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Building"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#ins_shrub -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#ins_shrub">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Shrub"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#irregular -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#irregular">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialStructureValue"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#irregularDistribution -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#irregularDistribution">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDistributionValue"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#light -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#light">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#Hue"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#linear -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#linear">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialStructureValue"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#longitudinalDistribution -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#longitudinalDistribution">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDistributionValue"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#regularDistribution -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#regularDistribution">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDistributionValue"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#speckled -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#speckled">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialStructureValue"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.gnorasi.gr/ontologies/gnorasi.owl#sporadicDistribution -->
+
+    <owl:NamedIndividual rdf:about="http://www.gnorasi.gr/ontologies/gnorasi.owl#sporadicDistribution">
+        <rdf:type rdf:resource="http://www.gnorasi.gr/ontologies/gnorasi.owl#SpatialDistributionValue"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.2.3.1824) http://owlapi.sourceforge.net -->
+

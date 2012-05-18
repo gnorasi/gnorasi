@@ -1,0 +1,23 @@
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:	    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+
+@prefix :           <http://example.org/ns#> .
+
+:classThingy
+    rdf:type owl:Restriction ;
+    owl:onProperty  :prop ;
+    owl:hasValue    :c ;
+    .
+
+:c1 owl:equivalentClass :c2 .
+
+
+:c rdf:type owl:Class .
+:c1 rdf:type owl:Class .
+:c2 rdf:type owl:Class .
+
+# Local Variables:
+# tab-width: 4
+# indent-tabs-mode: nil
+# End:

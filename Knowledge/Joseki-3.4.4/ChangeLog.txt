@@ -1,0 +1,89 @@
+Joseki3
+=======
+
+Joseki 3.4.3
+------------
+
++ Upgrade to ARQ 2.8.6
++ SPARQL Update (language) support.
++ Validators now include SPARQL Query, SPARQL Update and RDF Data.
+  Names of Valitor servlets have changed - see web.xml. 
+
+Joseki 3.4.2
+------------
++ Now ship (zip download) with copies of SDB and TDB compiled against the same set of dependences.
++ Add CSV (comma separated values) and TSV (tab separated values) output formats. 
+
+Joseki 3.4.1
+------------
++ Upgrade to latest Jena and ARQ
++ Improve content negotation.
+
+Joseki 3.4.0
+------------
+
++ Improvements for working with SDB and TDB
+
++ Logging facade now slf4j
+
++ Added "output=text" for plain text (UTF-8) output for queries
+  "format" is a synonym for "output"
+
++ Bug fix for pool'ed connections being unreturned after certain errors.
+
+Joseki 3.3.0
+------------
+
++ Java6 now required to run Joseki.
++ Streaming queries can now work (requires writing server initialization code for your DB) 
++ Initial support for SPARQL/Update.  Graphs can be updated, but not created, from the web side.
++ Integration with SDB (see joseki-config-sdb.ttl)
++ Integration with TDB (see joseki-config-tdb.ttl)
++ Upgraded to ARQ 2.6.0, Jena-2.5.7, lucene-core-3.2.1.jar and many other jars.
++ Upgraded Jetty to 6.1
+
+Joseki 3.1
+----------
+
++ Upgraded to ARQ 2.0
+
++ Upgraded Jetty to 6.1.3
+  This changes the names of some jars.
+  
++ MIME types corrected
+  (thanks to Richard Cyganiak for doing the background research for this)
+
+Joseki 3.0
+----------
+
+Joseki3 is not compatible with Joseki2.
+
++ Supports the SPARQL protocol over HTTP (Last Call version)
++ Supports the SPARQL query language (Last Call version)
+
++ HTTP protocol - done
++ SOAP protocol - done but highly experimental.
+
++ Jar changes for Jetty6 and other upgrades
+
+== Changes from Joseki 3.0 beta 1&2
+
++ The configuration file now uses Jena assemblers for datasets as well as models.
+  See joseki-config-example.ttl for examples
+  Warning are issued for use of the vocabulary used in Joseki-3-dev releases.
+
++ Jar file changes
+  common-logging.jar ==> commons-logging-1.1.jar
+  arq-extra.jar : new
+  Upgraded to wstx-asl-3.0.0
+
++ Uses Jetty 6, upgraded from Jetty 5.
+	org.mortbay*jar ==> jetty*jar
+	javax.servlet.jar ==> servlet-api-2.5-6.0.1.jar
+
+
+
+
+
+
+

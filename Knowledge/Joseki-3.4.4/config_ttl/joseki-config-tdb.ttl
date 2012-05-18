@@ -1,0 +1,108 @@
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix module: <http://joseki.org/2003/06/module#> .
+@prefix joseki: <http://joseki.org/2005/06/configuration#> .
+@prefix ja:     <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix sdb:      <http://jena.hpl.hp.com/2007/sdb#> .
+@prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .
+
+<> rdfs:label "Joseki Configuration File - TDB example" .
+# Stripped down to support one service that exposes an
+# TDB store as a SPARQL endpoint for query.
+
+[]  rdf:type joseki:Server .
+
+## --------------------------------------------------------------
+## Services
+
+<#service1>
+    rdf:type            joseki:Service ;
+    rdfs:label          "SPARQL-TDB" ;
+    joseki:serviceRef   "sparql" ;          # web.xml must route this name to Joseki
+    joseki:dataset      <#dataset> ;
+    joseki:processor    joseki:ProcessorSPARQL_FixedDS ;
+    .
+
+## <#service2>
+##     rdf:type            joseki:Service ;
+##     rdfs:label          "SPARQL-TDB" ;
+##     joseki:serviceRef   "sparql/graph" ;    # web.xml ust route this name to Joseki
+##     joseki:dataset      <#dataset-1graph> ;
+##     joseki:processor    joseki:ProcessorSPARQL_FixedDS ;
+##     .
+
+## SPARQL/Update.
+## Creation of named graph from web requests is not supported.
+
+<#serviceUpdate>
+    rdf:type            joseki:Service ;
+    rdfs:label          "SPARQL/Update" ;
+    joseki:serviceRef   "update/service" ;
+    # dataset part
+    joseki:dataset      <#dataset>;     # Same as service1
+    joseki:processor    joseki:ProcessorSPARQLUpdate
+    .
+
+## --------------------------------------------------------------
+## Datasets
+
+## Initialize TDB.
+
+[] ja:loadClass "com.hp.hpl.jena.tdb.TDB" .
+tdb:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
+tdb:GraphTDB    rdfs:subClassOf  ja:Model .
+
+## ---- A whole dataset managed by TDB
+<#dataset> rdf:type      tdb:DatasetTDB ;
+    tdb:location "TDB" ;
+    .
+
+## ## ---- A single graph inside a general dataset.
+## <#dataset-1graph> rdf:type         ja:RDFDataset ;
+##     # If ja:namedGraph is used here, there is no
+##     # correspondence with the name in the TDB store.
+##     ja:defaultGraph <#graph> ;
+##     . 
+## 
+## <#graph> rdf:type tdb:GraphTDB ;
+##     tdb:location "DB" ;
+##     # Pick out a named graph
+##     # tdb:graphName <http://example/aNamedGraph> ;
+##     .
+
+## --------------------------------------------------------------
+## Processors
+
+joseki:ProcessorSPARQL_FixedDS
+    rdfs:label "SPARQL processor for fixed datasets" ;
+    rdf:type joseki:Processor ;
+    module:implementation 
+    [   rdf:type   joseki:ServiceImpl ;
+        module:className <java:org.joseki.processors.SPARQL>
+    ] ;
+
+    # This processor does not accept queries with FROM/FROM NAMED
+    joseki:allowExplicitDataset       "false"^^xsd:boolean ;
+    joseki:allowWebLoading            "false"^^xsd:boolean ;
+    # The database is safe for MRSW (multiple-reader, single-writer).
+    joseki:lockingPolicy              joseki:lockingPolicyMRSW ;
+    .
+
+
+joseki:ProcessorSPARQLUpdate
+    rdfs:label "SPARQL Update processor" ;
+    rdf:type joseki:Processor ;
+    module:implementation 
+    [   rdf:type   joseki:ServiceImpl ;
+        module:className <java:org.joseki.processors.SPARQLUpdate>
+    ] ;
+    joseki:lockingPolicy              joseki:lockingPolicyMRSW ;
+    .
+
+
+# Local Variables:        
+# tab-width: 4
+# indent-tabs-mode: nil
+# End:

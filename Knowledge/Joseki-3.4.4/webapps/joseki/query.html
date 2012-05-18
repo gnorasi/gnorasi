@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head><title>SPARQLer</title>
+  <link rel="stylesheet" type="text/css" href="StyleSheets/joseki.css" />
+  </head>
+
+  <body>
+    <h1>SPARQLer - An RDF Query Demo</h1>
+    <p>Example queries (or edit and write your own!).  All the text boxes invoke the same "books" service - they just get initialised with different examples.</p>
+    <hr/>
+
+    <div class="moreindent">
+
+      <form action="books" method="get">
+	<p>SELECT - get variables (apply XSLT stylesheet)</p>
+<p><textarea name="query" cols="70" rows="5">
+PREFIX books:   &lt;http://example.org/book/&gt;
+PREFIX dc:      &lt;http://purl.org/dc/elements/1.1/&gt;
+SELECT ?book ?title
+WHERE 
+  { ?book dc:title ?title }</textarea>
+	  <br/>
+	  Output XML: <input type="radio" name="output" value="xml" checked/>
+	  with XSLT style sheet (leave blank for none): 
+	  <input name="stylesheet" size="25" value="/xml-to-html.xsl" /> <br/>
+	  or JSON output: <input type="radio" name="output" value="json"/> <br/>
+	  or text output: <input type="radio" name="output" value="text"/> <br/>
+	  or CSV output: <input type="radio" name="output" value="csv"/> <br/>
+	  or TSV output: <input type="radio" name="output" value="tsv"/> <br/>
+	  Force the accept header to <tt>text/plain</tt> regardless 
+ 	  <input type="checkbox" name="force-accept" value="text/plain"/>
+	  <br/>
+	   
+	  <input type="submit" value="Get Results" />
+	</p>
+      </form>
+
+      <hr/>
+
+      <form action="books">
+	<p>CONSTRUCT - return a graph</p>
+	<p><textarea name="query" cols="70" rows="5">
+PREFIX dc:      &lt;http://purl.org/dc/elements/1.1/&gt;
+CONSTRUCT { $book dc:title $title }
+WHERE 
+  { $book dc:title $title }
+	  </textarea>
+	  <br/>
+	  <input type="submit" value="Get Results" />
+	</p>
+      </form>
+      <hr/>
+    </div>
+  </body>
+</html>

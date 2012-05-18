@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html;charset=UTF-8" http-equiv="Content-Type"><title>Joseki - Configuration</title> <link rel="stylesheet" type="text/css" href="styles/doc.css"></head>
+<body> <h1>Joseki - Configuration</h1> <p>A
+Joseki server is configured with services. A service is implemented by
+a processor and that processor can either execute queries on a fixed,
+predefined dataset, or it can dynamically assemble the dataset from the
+query, or a do either, depending on the query. If the processor has a
+fixed dataset, then a query involving <code>FROM</code> or
+<code>FROM NAMED</code>, or a protocol request that
+describes the dataset will be rejected.</p> <p>When
+publishing some existing data, it will be most common to use a
+processor that does not allow the dataset to be specified in the query
+or the query protocol request. </p> <p>The same
+configuration is used for both HTTP and SOAP.</p> <p>The
+configuration file is an RDF graph. The default name is
+"joseki-config.ttl" and is often written in Turtle or N3, rather than
+RDF/XML. The server can read the full range of RDF serializations. The 
+distribution includes examples in &quot;joseki-config-example.ttl&quot;</p>
+<p>Beware that the <code>web.xml</code> file must route incoming requests to the 
+Joseki servlet. See the <a href="protocol.html#http">protocol specific details</a>.</p>
+<p>(Example web.xml)</p><h2>Example</h2>
+<p>First, we declare some prefixes, then some basic information
+about this file. Because the configuration file is RDF, order of the
+sections does not matter to the server but it does help a human reading
+the file.</p> <pre class="box">@prefix rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .<br>@prefix rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .<br><br>@prefix module:  &lt;http://joseki.org/2003/06/module#&gt; .<br>@prefix joseki:  &lt;http://joseki.org/2005/06/configuration#&gt; .<br><br>@prefix ja:      &lt;http://jena.hpl.hp.com/2005/11/Assembler#&gt; .<br><br>## Note: adding rdfs:label to nodes will cause Joseki <br>## to print that in any log messages.<br><br>## --------------------------------------------------------------<br>## About this configuration<br><br>&lt;&gt; rdfs:comment "Joseki example configuration" .<br><br>## --------------------------------------------------------------<br>## About this server<br><br>[]  rdf:type joseki:Server ;<br>    .</pre>
+<h3>Basic Service</h3> <p>Having got preliminaries
+out of the way, the next section describes the services:</p> <pre class="box"># Service 1<br># General purpose SPARQL processor, no dataset, expects the<br># request to specify the dataset (either by parameters in the<br># protocol request or in the query itself).<br><br>[]<br>    rdf:type           joseki:Service ;<br>    rdfs:label         "service point" ;<br>    joseki:serviceRef  "sparql" ;<br>    joseki:processor   joseki:ProcessorSPARQL ;<br>    .<br></pre>
+<p>A service must have a RDF type, a service reference (used to
+form the the URL or SOAP service name) and a processor (the thing that
+executes the request itself). This example also gave it a printable
+name "service point" that will in log messages.</p> <p>For
+HTTP, service references are used to form the URL of the service by
+combining the location of the Joseki server, based on the web
+application name</p> <p>If the web application is
+"joseki", on machine www.sparlq.org, then the web application is URLs
+starting http://sparql.org/joseki and a query request will look like:</p>
+<pre>http://www.sparql.org/joseki/sparql?query=....<br></pre>
+<p>But if the web application is the root application, then the
+URL will not involve a web application name:</p> <pre>http://www.sparql.org/sparql?query=....</pre>
+<p>See the details of your choosen web application server. The
+standalone Joseki server uses jetty running on port 2020, and mounts
+the joseki servlet in the root application giving:</p> <pre>http://machine:2020/sparql?query=....</pre>
+<h3>Service with a dataset</h3> <p>A service can
+also be set up to respond to queries made on a fixed dataset, not one
+specified in the protocol request or in the query string. The fixed
+dataset is added to the service description:</p> <pre class="box"># Service 2 - SPARQL processor only handling a given dataset<br>[]<br>    rdf:type           joseki:Service ;<br>    rdfs:label         "SPARQL on the books model" ;<br>    joseki:serviceRef  "books" ;<br>    # dataset part<br>    joseki:dataset     _:books ;<br>    # Service part.<br>    # This processor will not allow either the protocol,<br>    # nor the query, to specify the datset.<br>    joseki:processor   joseki:ProcessorSPARQL_FixedDS ;<br>    .<br></pre>
+<p>Here, we have used a blank node with a label, then placed the
+description of the dataset elsewhere. We coudl have places the
+definition inline or used a URI.</p> <h3>Defining Datasets</h3>
+<p>A dataset is defined using a <a href="http://jena.sourceforge.net/assembler/">
+Jena assembler description</a> augmented with vocabulary to handle RDF datasets, 
+not just single Jena models. <a href="http://jena.sourceforge.net/ARQ/">ARQ</a> 
+also directly understands the augmented vocabulary.</p>
+<p>An RDF dataset is a collection of a unnamed, default graph and
+zero or more named graphs. Queries access the named graph through the
+GRAPH keyword in SPARQL.</p> <p>Each graph is a Jena
+model, and these are described with the Jena Assembler vocabulary. We give some example configuration here but the assembler
+descriptions can describe a wide variety of model setups, including
+connection to an external OWL DL reasoner, such as <a href="http://www.mindswap.org/2003/pellet/">Pellet</a>
+(an open source reasoner).</p>
+<p>This first dataset just has one graph - the default graph. The
+content is loaded from a file (there could be several files loaded) but
+the file name does not give the model a name. The dataset description has an explicit type.</p> <pre class="box"># A dataset of one model as the default graph<br><br>_:books rdf:type ja:RDFDataset ;<br>    rdfs:label      "Books" ;<br>    ja:defaultGraph<br>       [ a ja:MemoryModel ;<br>         rdfs:label "books.ttl" ;<br>         ja:content [ ja:externalContent &lt;file:Data/books.ttl&gt; ]<br>       ] ;<br>    .<br></pre>
+<p>A more complicated example places the default graph
+description elsewhere and has two, named graph. Note that the names of
+the graphs are not the same as where the data for the graphs comes from.</p>
+<pre class="box">_:ds1 rdf:type ja:RDFDataset ;<br>    ja:defaultGraph   _:model0 ;<br>    rdfs:label            "Dataset _:ds1" ;<br>    ja:namedGraph<br>        [ ja:graphName  &lt;http://example.org/name1&gt; ;<br>          ja:graph      _:model1 ] ;<br>    ja:namedGraph<br>        [ ja:graphName  &lt;http://example.org/name2&gt; ;<br>          ja:graph      _:model2 ] ;<br>    .<br></pre>
+<h3>Model Descriptions</h3> <p>Next, we have model
+descriptions, using the Jena assembler vocabulary:</p> <pre class="box">## --------------------------------------------------------------<br>## Individual graphs (Jena calls them Models)<br>## (syntax of data files is determined by file extension - defaults to RDF/XML)<br><br>_:model0 rdf:type ja:MemoryModel ;<br>    rdfs:label "Model (plain, merge the 2 RDF files)" ;<br>    ja:content [ <br>        ja:externalContent &lt;file:D1.ttl&gt; ;<br>        ja:externalContent &lt;file:D2.ttl&gt; ;<br>      ] ;<br>    .<br><br>_:model1 rdf:type ja:MemoryModel ;<br>    rdfs:label "Model (D1.ttl for content)" ;<br>    ja:content [ <br>        ja:externalContent &lt;file:D1.ttl&gt; ;<br>       ] ;<br>    .<br><br>_:model2 rdf:type ja:MemoryModel ;<br>    rdfs:label "Model (D2.ttl for content)" ;<br>    ja:content [ <br>        ja:externalContent &lt;file:D2.ttl&gt; ;<br>      ] ;<br>    .<br></pre>
+<p>The dataset example placed the description for the data for
+the "Books" dataset in-line.</p><h3>Database Models<br></h3><p>A graph that is held in a Jena-format database can be used as well: </p><pre class="box">## --------------------------------------------------------------<br>_:db rdf:type ja:RDBModel ;<br>    ja:connection<br>    [<br>        ja:dbType         "MySQL" ;<br>        ja:dbURL          "jdbc:mysql://localhost/data" ;<br>        ja:dbUser         "user" ;<br>        ja:dbPassword     "password" ;<br>        ja:dbClass        "com.mysql.jdbc.Driver" ;<br>    ] ;<br>    ja:modelName "books" <br>    . <br></pre><h3><span style="font-weight: bold;"></span>Processors</h3> <p>Finally,
+we have the core definitions of processors. Processors can be described
+inline, using blank nodes, but it is convenient to give them URIs and
+place the definitions elsewhere.&nbsp;Each processor description can
+have parameters which are passed to each class instance when created.</p> <p>A
+processor implemented by a module that is a dynamically loaded Java class.&nbsp;</p>
+<pre class="box">joseki:ProcessorSPARQL<br>    rdf:type                     joseki:Processor ;<br>    rdfs:label                   "General SPARQL processor" ;<br>    module:implementation        joseki:ImplSPARQL ;<br>    # Parameters - this processor processes FROM/FROM NAMED<br>    joseki:allowExplicitDataset  "true"^^xsd:boolean ;<br>    joseki:allowWebLoading       "true"^^xsd:boolean ;
+    ## And has no locking policy (it loads data each time).
+    ## The default is mutex (one request at a time)
+    joseki:lockingPolicy joseki:lockingPolicyNone ;<br>    .<br><br>joseki:ProcessorSPARQL_FixedDS<br>    rdf:type                     joseki:Processor ;<br>    rdfs:label                   "SPARQL processor for fixed datasets" ;<br>    module:implementation        joseki:ImplSPARQL ;<br>    # This processor does not accept queries with FROM/FROM NAMED<br>    joseki:allowExplicitDataset  "false"^^xsd:boolean ;<br>    joseki:allowWebLoading       "false"^^xsd:boolean ;
+    # Fixed background dataset : multiple read requests are OK
+    joseki:lockingPolicy joseki:lockingPolicyMRSW ;<br> .<br><br>joseki:ImplSPARQL<br>    rdf:type          joseki:ServiceImpl ;<br>    module:className  &lt;java:org.joseki.processors.SPARQL&gt; .<br><br># For Emacs:<br># Local Variables:<br># tab-width: 4<br># indent-tabs-mode: nil<br># End:<br></pre><p></p>
+
+
+<h3 name="pool" id="pool">Dataset Pooling</h3>
+
+<p>Joseki supports pooling of datasets so that there can be multiple queries
+outstanding and in progress on the the same service endpoint.  This is useful for
+use with SDB where it results in multiple JDBC connections to the underlying
+SQL database.  Because results stream in Joseki, when a request returns from
+the HTTP request, the results of the query may not have been compleetly sent.
+The client has access to the start of the results from the HTTP response 
+stream and will continue to consume results as Joseki streams them.  Joseki
+cleans up aclass="box"ny transactions or locks allocated then returns the dataset to the
+pool for reuse.</p>
+
+<p>A pool is created use the <tt>joseki:poolSize</tt> property on the dataset:</p>
+
+<pre class="box">
+&lt;#dataset&gt; rdf:type ja:RDFDataset ;
+    joseki:poolSize     5 ;
+    ...</pre>
+
+<p>and for SDB that is the <tt>sdb:DatasetStore</tt> (a subclass of <tt>ja:RDFDataset</tt>).</p>
+
+<pre class="box">
+&lt;#sdb&gt; rdf:type sdb:DatasetStore ;
+    joseki:poolSize     5 ;
+    sdb:store &lt;#store&gt; .
+
+&lt;#store&gt; rdf:type sdb:Store  ;
+    rdfs:label "SDB" ;
+    ...</pre>
+
+</body></html>

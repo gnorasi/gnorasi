@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Joseki - Protocol</title>
+<link rel="stylesheet" type="text/css" href="styles/doc.css" />
+</head>
+<body>
+
+<h1>Joseki - Protocol</h1>
+
+<p>Joseki supports the HTTP binding for
+<a href="http://www.w3.org/TR/rdf-sparql-protocol/">the SPARQL protocol</a> and 
+a protocol for SPARQL/Udpate.</p>
+<p>SPARQL/Query and SPARQL/Update are different languages and should be served 
+from different endpoints.&nbsp; See the example configuration files.</p>
+<h3>SPARQL/Query Protocol</h3>
+<p>The query protocol is described in the
+<a href="http://www.w3.org/TR/rdf-sparql-protocol/">SPARQL Protocol 
+Specification</a>.</p>
+<h3>SPARQL/Update Protocol</h3>
+<p>A SPARQL/Update request is POST'ed to an update endpoint (URL). Only POST is 
+supported.</p>
+<p>The SPARQL/Update request is a string in the format described in the
+<a href="http://www.w3.org/Submission/SPARQL-Update/">SPARQL/Update submission 
+to W3C</a>.</p>
+<p>The request can go in to the URL itself using <code>?request=...</code> or in 
+the body of the HTTP POST.</p>
+<h3>Servlet routing : web.xml</h3>
+<p>The <code>web.xml</code>, which controls routing incoming requests to 
+servlets, must be set correctly. The default <code>web.xml</code> in the 
+download routes:</p>
+<ul>
+  <li><code>/sparql</code>, <code>/sparql/*</code> and <code>/service/*</code> 
+  to the Joseki SPARQL protocol servlet</li>
+  <li><code>/validator</code> routes to the validation servlet </li>
+  <li>All other URLs to the default (file serving) handler.</li>
+  <li>The welcome page is <code>index.html</code>.</li>
+</ul>
+<p>Names are relative to the web application name, so <code>http://host/myApp/sparql</code> 
+routes according to <code>/sparql</code> in the web.xml file. The default setup 
+provided in the download has a web application of /joseki set to the root 
+application so URLs look like: <code>http://host/localhost:2020/sparql</code> 
+because the server port defaults to port 2020.</p>
+<h3>Additional Parameters</h3>
+<p>Some additional parameters are supported for SPARQL/Query: use of these parameters is outside the SPARQL protocol
+and are not available on all SPARQL servers.</p>
+
+<p>Additional provides the <code>application/sparql-results+json</code>
+MIME type for the
+<a href="http://www.w3.org/TR/rdf-sparql-json-res/">JSON format for SPARQL query results</a>.</p>
+
+<ul>
+
+<li><code>stylesheet</code>: Includes a style sheet directive with the given URL
+in SPARQL XML results format responds.</li>
+
+<li><code>accept</code>: Normally, the request uses the HTTP Accept header to request a particular format. 
+Occasionally, it is hard to set the header in some toolkits or the header may be chosen automatically.
+This parameter is used to override the request HTTP header for explicit control.
+It's use is not recommended when the Accept request header can be used.</li>
+
+<li><code>output</code>: request output to be serialized as for a particular content type but get the HTTP
+response type set to text/plain regardless.  Used for debugging and also with <code>callback</code>
+for Yahoo! protocol for JSON.</li>
+
+<li><code>callback</code>: Used with JSON format for the SPARQL results.
+See the <a href="http://developer.yahoo.net/common/json.html">Yahoo! documentation</a>.</li>
+
+</ul>
+
+<p>&nbsp;</p>
+
+
+</body>
+</html>

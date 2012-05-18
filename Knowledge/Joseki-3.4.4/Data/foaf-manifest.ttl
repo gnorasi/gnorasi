@@ -1,0 +1,16 @@
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:	    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf:       <http://xmlns.com/foaf/0.1/> .
+@prefix dc:         <http://purl.org/dc/elements/1.1/> .
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/foaf/alice>
+    dc:date "2005-06-27T08:13:56.0Z"^^xsd:dateTime .
+
+<http://example.org/foaf/bob>
+    dc:date "2005-07-27T23:44:05Z"^^xsd:dateTime .
+
+# Local Variables:
+# tab-width: 4
+# indent-tabs-mode: nil
+# End:

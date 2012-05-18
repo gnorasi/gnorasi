@@ -1,0 +1,8 @@
+@prefix jena:    <http://example.org/jena/> .
+
+jena:resource1
+      jena:property1   "LITERAL-1" ;
+      jena:property2  
+              [ jena:property3
+                        "LITERAL-2"
+              ] .

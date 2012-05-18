@@ -1,0 +1,15 @@
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ns:         <http://example.org/ns#> .
+@prefix :           <http://example.org/data/> .
+
+:x ns:val  "Thingy" .
+:x ns:prop ns:c .
+
+:x rdf:type  ns:X .
+
+:y rdf:type ns:c1 .
+
+# Local Variables:
+# tab-width: 4
+# indent-tabs-mode: nil
+# End:
