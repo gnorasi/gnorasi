@@ -1,0 +1,62 @@
+@base <http://example/> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:	    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:        <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+
+# ------------------------------
+# Applications
+
+@prefix foaf:       <http://xmlns.com/foaf/0.1/> .
+@prefix vcard:      <http://www.w3.org/2001/vcard-rdf/3.0#> .
+
+
+
+<#Alice>    foaf:name   "Alice" ;
+            foaf:mbox   <mailto:alice@example.com> ;
+            foaf:knows  <#Bob> ;
+            foaf:nick   "A-online" .
+
+<#Bob>      foaf:name   "Bob" ;
+            foaf:mbox   <mailto:bob@example.com> ;
+            foaf:knows  <#Alice> .
+
+<#Charlie>  foaf:name   "Charlie" .
+##             foaf:mbox   <mailto:
+##             foaf:knows  <#Alice> .
+## 
+## <#Dave>
+
+<#Eve>      foaf:name   "Eve" ;
+            foaf:nick   "EvesDropper" .
+
+
+
+
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dc10: <http://purl.org/dc/elements/1.0/> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix stock: <http://example.org/stock#> .
+@prefix inv: <http://example.org/inventory#> .
+
+stock:book1 dc:title "SPARQL Query Language Tutorial" .
+stock:book1 inv:price 10 .
+stock:book1 inv:quantity 3 .
+
+stock:book2 dc:title "SPARQL Query Language (2nd ed)" .
+stock:book2 inv:price 20 ; inv:quantity 5 .
+
+stock:book3 dc:title "Moving from SQL to SPARQL" .
+stock:book3 inv:price 5 ; inv:quantity 0 .
+
+stock:book4 dc:title "Applying XQuery" .
+stock:book4 inv:price 20 ; inv:quantity 8 .
+
+@prefix book: <http://example/book/> .
+@prefix dc10: <http://purl.org/dc/elements/1.0/> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+
+book:a   dc10:title "SPARQL Query Language Tutorial" .
+book:b   dc11:title "SPARQL Query Language (2nd ed)" .
+book:c   dc10:title "SPARQL" .
+book:c   dc11:title "SPARQL" .

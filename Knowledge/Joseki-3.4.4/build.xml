@@ -1,0 +1,429 @@
+<project name="Joseki" default="main" basedir=".">
+
+    <property name="Name"            value="Joseki"/>
+    <property name="name"            value="joseki"/>
+
+    <!-- The major and minor version numbers  -->
+	
+    <!-- SEE pom.xml -->
+
+    <property name="version-major"     value="3"/>
+    <property name="version-minor"     value="4"/>
+    <property name="version-revision"  value="0"/>
+    <property name="version-status"    value=""/>
+    <property name="version"
+  	            value="${version-major}.${version-minor}.${version-revision}${version-status}"/>
+
+    <property name="dist.name"       value="${name}-${version}"/>
+    <property name="dist.path"       value="${Name}-${version}"/>
+    <property name="dist.root"       value="dist"/>
+    <property name="dist.dir"        value="${dist.root}/${Name}-${version}"/>
+
+    <property name="java.debug"      value="true"/>
+    <property name="java.debuglevel" value="source,lines"/>
+    <property name="java.deprecation"   value="false"/>
+    <property name="java.optimize"   value="true"/>
+    <property name="java.source"     value="1.6"/>
+    <property name="java.target"     value="1.6"/>
+
+    <property name="src.build.dir"         value="bldsrc"/>
+    <property name="classes.build.dir"     value="bldbin"/>
+
+    <property name="src.dir"         value="src"/>
+    <property name="build.dir"       value="classes.build"/>
+
+    <property name="lib.dir"         value="lib"/>
+    <property name="jar.dir"         value="${lib.dir}"/>
+    <property name="jar.name"        value="${name}.jar"/>
+    <property name="javadoc.dir"     value="doc/javadoc"/>
+
+    <property name="doc.dir"         value="doc"/>
+    <!-- <property name="web.dir"         value="Web"/> -->
+    <property name="webapp.name"     value="joseki"/>
+
+    <!-- Where to build the web application -->
+    <property name="webapps.build.dir"
+                  value="webapps.build/${webapp.name}"/>
+    
+    <!-- Where the webapp is deploy by default : also the development name -->
+    <property name="webapps.deploy.dir"      value="webapps/${webapp.name}"/>
+
+    <path id="runClasspath">
+        <fileset dir="lib/" includes="*.jar"/>
+    </path>
+
+    <path id="buildClasspath">
+        <fileset dir="lib/" includes="*.jar" excludes="joseki.jar"/>
+    </path>
+
+    <filterset id="filters.general">
+        <filter token="name"           value="${Name}"/>
+        <filter token="website"        value="http://www.joseki.org/"/>
+        <filter token="version"        value="${version}"/>
+        <filter token="version-major"  value="${version-major}"/>
+        <filter token="version-minor"  value="${version-minor}"/>
+        <filter token="version-status" value="${version-status}"/>   
+    </filterset>
+
+    <!-- ============================================== -->
+
+    <target name="main" depends="make-jar,javadoc"
+	    description="Build JAR and Javadoc"/>
+
+    <target name="build" depends="main,webapp-deploy"
+	    description="Build systems, including jar, javadoc, and web app"/>
+
+    <!-- ============================================== -->
+
+    <!-- Compilation -->
+
+    <target name="compile" depends="pre-compile,compile-java"
+	    description="Compile"/>
+
+    <target name="pre-compile" depends="clean-build-dirs">
+	<tstamp>
+          <format property="BUILD_TIME"      pattern="yyyy-MM-dd HH:mm Z"/>
+          <format property="BUILD_TIME_XSD"  pattern="yyyy-MM-dd'T'HH:mm:ssZ"/>
+        </tstamp>
+     
+	<copy todir="${src.build.dir}">
+	  <fileset dir="${src.dir}" includes="**"/>
+	  <filterset>
+	    <filterset refid="filters.general"/>
+	    <filter token="build-time" value="${BUILD_TIME}" />
+	    <filter token="build-time-xsd" value="${BUILD_TIME_XSD}" />
+	  </filterset> 
+        </copy>
+
+    </target>
+
+    <target name="compile-java">
+      <javac srcdir="${src.build.dir}"
+	     destdir="${classes.build.dir}"
+	     debug="${java.debug}"
+	     debuglevel="${java.debuglevel}"
+	     deprecation="${java.deprecation}"
+	     optimize="${java.optimize}"
+	     source="${java.source}"
+	     target="${java.target}">
+	<classpath refid="buildClasspath" />
+      </javac>
+    </target>
+
+    <!-- ============================================== -->
+
+    <target name="jar" depends="make-jar"
+	    description="Create the Joseki JAR file">
+	<!-- <antcall target="clean-build-dirs"/> -->
+    </target>
+
+
+    <target name="make-jar" depends="compile">
+        <mkdir dir="${jar.dir}"/>
+        <jar jarfile="${jar.dir}/${jar.name}"
+             basedir="${classes.build.dir}">
+        </jar>
+    </target>
+
+    <!-- ============================================== -->
+    <!-- webapp : Does not compile the source -->
+
+    <target name="webapp-build" depends="check-jar,webapp-build-clean,copy-webapp-libs" 
+        description="Create the webapps area (does not make the JAR file) in webapps.build/joseki"/>
+
+    <target name="webapp-deploy" depends="webapp-build-format,webapp-build"
+        description="Build and install into webapps/joseki">
+      <copy todir="${webapps.deploy.dir}">
+        <fileset dir="${webapps.build.dir}">
+          <include name="**"/>
+        </fileset>
+      </copy>
+    </target>
+
+    <target name="webapp-clean" 
+            description="Remove deployed JARs (use if you have deployed a full webapp)">
+      <delete>
+        <fileset dir="${webapps.deploy.dir}/WEB-INF/lib" includes="*.jar"/>
+      </delete>
+    </target>
+
+    <target name="webapp-build-clean" description="Clean out the webapp build area">
+      <delete dir="${webapps.build.dir}"/>
+      <mkdir dir="${webapps.build.dir}"/>
+    </target>
+
+
+    <!-- Create webapp area (minimal) -->
+    <target name="webapp-build-format" depends="webapp-build-clean"
+            description="Format the webapps/ area">
+        <copy tofile="${webapps.build.dir}/WEB-INF/web.xml" 
+              file="etc/webapp-web.xml"/>
+        <!-- Example setup -->   
+        <copy todir="${webapps.build.dir}">
+          <fileset dir="${webapps.deploy.dir}">
+            <include name="*.*"/>   
+          </fileset>   
+        </copy>
+        <mkdir dir="${webapps.build.dir}/StyleSheets"/>   
+        <copy todir="${webapps.build.dir}/StyleSheets">
+          <fileset dir="${webapps.deploy.dir}/StyleSheets">
+          </fileset> 
+        </copy>   
+    </target>
+
+    <target name="copy-webapp-libs" depends="check-jar">
+        <copy todir="${webapps.build.dir}/WEB-INF/lib">
+          <fileset dir="${lib.dir}"  >
+              <include name="*.jar"/>
+              <exclude name="servlet-api-*.jar"/>
+              <exclude name="jetty.*.jar"/>
+              <exclude name="jasper*.jar"/>
+          </fileset>
+        </copy>
+    </target>
+
+    <target name="war-file" depends="check-jar,webapp-build-format,webapp-build"
+      description="Create a web application archive (WAR) file" >
+        <war warfile="${webapp.name}.war"
+             webxml="${webapps.build.dir}/WEB-INF/web.xml">
+            <fileset dir="${webapps.build.dir}" excludes="**/web.xml"/>
+        </war>
+    </target>
+
+    <!-- Check the joseki.jar file exists
+         Don't build - it gets confusing in the developement environment
+    -->
+
+    <target name="check-jar" depends="">
+      <available property="joseki.jar.found"
+        file="${jar.dir}/${jar.name}"/>
+      <fail unless="joseki.jar.found">Not found: ${jar.dir}/${jar.name}</fail>
+      <echo>joseki.jar found (not built)</echo>
+    </target>
+
+    <!-- ============================================== -->
+    <!-- Create the distribution tree -->
+
+    <!-- Does not include the WAR file -->
+
+    <target name="release" depends="create-dist,create-zips"
+            description="Build a release zip">
+    </target>
+
+    <!-- Distribution includes the skeleton webapp, 
+         not the jar files in webapp directory nor the war file
+      -->
+
+    <target name="create-dist" 
+            depends="compile,javadoc,make-jar,webapp-build-format">
+        <!-- clear up old stuff -->
+        <delete dir="${dist.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+
+        <mkdir dir="${dist.dir}/${lib.dir}"/>
+        <copy todir="${dist.dir}/${lib.dir}">
+          <fileset dir="${lib.dir}" includes="*.jar"/>
+        </copy>
+
+        <!-- Dependent subsystems -->
+        <!-- None, currently,
+          <copy todir="${dist.dir}/${lib.dir}">
+          </copy>
+        -->
+
+        <copy todir="${dist.dir}/${javadoc.dir}">
+            <fileset dir="${javadoc.dir}" 
+		     includes="**"/>
+        </copy>
+
+	<!--
+        <copy todir="${dist.dir}/${web.dir}">
+            <fileset dir="${web.dir}">
+              <include name="**"/>
+              <exclude name="**/CVS/**"/>
+            </fileset>
+        </copy>
+	-->
+
+    <!-- Documentation -->
+        <copy todir="${dist.dir}/${doc.dir}">
+            <fileset dir="${doc.dir}">
+              <include name="**"/>
+              <exclude name="**/*.content.html"/>
+              <exclude name="template.html"/>
+              <!-- Scripts -->
+	      <exclude name="desktop.ini"/>
+              <exclude name="produce"/>
+              <exclude name="merge"/>
+              <exclude name="linkcheck"/>
+              <exclude name="release"/>
+              <exclude name="readme-site.txt"/>
+              <exclude name="*.~"/>
+              <exclude name="**/_*/**"/>
+              <exclude name="**/CVS/**"/>
+            </fileset>            
+        </copy>
+
+        <!-- Source code -->
+        <copy todir="${dist.dir}/${src.dir}">
+            <fileset dir="${src.build.dir}">
+              <include name="**"/>
+              <exclude name="*.~"/>
+            </fileset>
+        </copy>
+
+    <!-- Source - zipped
+        <zip zipfile="${dist.dir}/${dist.name}-src.zip">
+            <fileset dir="src" includes="**/*.java"/>
+        </zip>
+    -->
+
+        <!-- Misc -->
+        <copy todir="${dist.dir}" file="CopyrightNotice.txt"/>
+        <copy todir="${dist.dir}" file="README.txt"/>
+        <copy todir="${dist.dir}" file="build.xml"/>
+     
+        <!-- Out-of-the-box  configuration -->
+        <copy todir="${dist.dir}" file="joseki-config.ttl"/>
+
+        <copy todir="${dist.dir}" file="joseki-config-example.ttl"/>
+        <copy todir="${dist.dir}" file="joseki-config-sdb.ttl"/>
+        <copy todir="${dist.dir}" file="joseki-config-tdb.ttl"/>
+        <copy todir="${dist.dir}" file="sdb.ttl"/>
+
+        <copy todir="${dist.dir}/bin">
+          <fileset dir="bin" excludes="*.~" />
+        </copy>
+
+        <copy todir="${dist.dir}/etc">
+	      <fileset dir="etc">
+	        <include name="**"/>
+            <exclude name="*.~"/>
+    	    <exclude name="jetty.xml"/>
+	      </fileset>
+        </copy>
+
+        <copy todir="${dist.dir}/Data">
+          <fileset dir="Data" excludes="*.~"/>
+        </copy>
+
+        <!-- webapp -->
+        <mkdir  dir="${dist.dir}/${webapps.deploy.dir}"/>
+        <copy todir="${dist.dir}/${webapps.deploy.dir}">
+          <fileset dir="${webapps.build.dir}" />
+        </copy>
+    </target>
+           
+    <!-- ============================================== -->
+    <!-- The various ways to create the downloaded packages -->
+
+    <!-- depends="create-zip-all,create-zip-webapp,create-zip-base" -->
+    <target name="create-zips"
+      depends="create-zip-all"
+      />
+    
+    <target name="create-zip-all">
+        <!-- Build the zip of everything except the war file -->
+        <delete file="${dist.root}/${dist.name}.zip"/>
+        <zip zipfile="${dist.root}/${dist.name}.zip">
+            <fileset dir="dist">
+              <include name="${dist.path}/**"/>
+              <exclude name="${dist.path}/${webapp.name}.war"/>
+            </fileset>
+        </zip>
+    </target>
+
+    <target name="create-zip-base">
+        <!-- Without dependent subsystems : as above except more excludes -->
+        <delete file="${dist.root}/${dist.name}-base.zip"/>
+        <zip zipfile="${dist.root}/${dist.name}-base.zip">
+            <fileset dir="dist">
+                <include name="${dist.path}/**"/>
+                <exclude name="${dist.path}/${webapp.name}.war"/>
+                <exclude name="${dist.path}/${lib.dir}/**"/>
+            </fileset>
+            <fileset dir="dist">
+               <include name="${dist.path}/${jar.dir}/${jar.name}"/>
+            </fileset>
+        </zip>
+    </target>
+
+    <target name="create-zip-webapp">
+        <delete file="${dist.root}/${dist.name}-webapp.zip"/>
+        <zip zipfile="${dist.root}/${dist.name}-webapp.zip">
+            <fileset dir="dist">
+                <include name="${dist.path}/${webapp.name}.war"/>
+                <include name="${dist.path}/copyright.txt"/>
+                <include name="${dist.path}/README.txt"/>
+                <include name="${dist.path}/etc/**"/>
+                <!-- exclude/ -->
+            </fileset>
+        </zip>
+    </target>
+
+    <!-- ============================================== -->
+    <!-- Documentation -->
+
+    <target name="javadoc" depends="pre-compile">
+        <delete dir="${javadoc.dir}"/>
+        <mkdir dir="${javadoc.dir}"/>
+        <javadoc packagenames="org.joseki.*"
+                 sourcepath="${src.build.dir}"
+		 classpathref="buildClasspath"
+                 destdir="${javadoc.dir}"
+                 author="true"
+                 version="true"
+                 windowtitle="${Name} Server"
+                 doctitle="${Name}"
+                 Public="true"
+                 Use="true"
+                 additionalparam="-breakiterator"
+                 bottom="Copyright &#169; 2003, 2004, 2005, 2006 Hewlett-Packard. All Rights Reserved."/>
+    </target>
+
+    <!-- ============================================== -->
+    <!-- Testing / Junit -->
+    
+    <!-- SETUP:
+         junit.jar and ant-junit.jar must be loaded by the same classloader
+
+         Running ant directly:
+           Copy junit.jar to ANT_HOME/lib
+           or ${user.home}/.ant/lib 
+           or invoke ant with "-lib jars"
+           
+         Eclipse:
+         	In Window >> Preferences >> Ant >> Runtime
+         	add a junit .jar to the global entries and reset all ant task classpaths
+         http://ant.apache.org/faq.html#delegating-classloader
+     -->
+    
+    <target name="junit" depends="make-jar"
+            description="JUnit tests">
+        <!--
+          <echo>user.home (for finding .ant/lib) is: ${user.home}</echo>
+        -->
+        
+        <!-- printsummary="withOutAndErr" -->
+        <!-- Forking allows the clean up of the web server -->
+        <!-- printsummary="yes" if using an outfile with the formatter -->
+        
+	    <junit printsummary="no" fork="true">
+		    <classpath refid="runClasspath"/>
+	    	<formatter type="brief" usefile="false"/>
+	    	<test name="org.joseki.test.JosekiTests"
+	    	      outfile="junit-joseki.txt"/>
+	    </junit>
+    </target>
+
+
+    <!-- ============================================== -->
+    <!-- Misc -->
+
+    <target name="clean-build-dirs">
+        <delete dir="${src.build.dir}"/>
+        <mkdir dir="${src.build.dir}"/>
+        <delete dir="${classes.build.dir}"/>
+        <mkdir dir="${classes.build.dir}"/>
+    </target>
+</project>

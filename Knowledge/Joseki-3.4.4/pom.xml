@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.joseki</groupId>
+  <artifactId>joseki</artifactId>
+  <packaging>jar</packaging>
+  <name>Joseki</name>
+  <version>3.4.4</version>
+  <description/>
+  <url>http://joseki.org/</url>
+
+  <organization>
+    <name>The Jena Project</name>
+    <url>http://www.openjena.org/</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>BSD-style license</name>
+      <url>http://joseki.org/license.html</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:cvs:pserver:anonymous@joseki.cvs.sourceforge.net:/cvsroot/joseki:Joseki3</connection>
+    <url>http://jena.svn.sourceforge.net/</url>
+  </scm>
+
+  <properties>
+    <this.root>${project.artifactId}-${project.version}</this.root>
+    <ver.jena>2.6.4</ver.jena>
+    <ver.arq>2.8.8</ver.arq>
+    <ver.tdb>0.8.10</ver.tdb>
+    <ver.sdb>1.3.4</ver.sdb>
+  </properties>
+
+  <dependencies>
+
+    <!-- References Jena -->
+     <dependency>
+      <groupId>com.hp.hpl.jena</groupId>
+      <artifactId>arq</artifactId>
+      <version>${ver.arq}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.hp.hpl.jena</groupId>
+      <artifactId>arq</artifactId>
+      <version>${ver.arq}</version>
+      <classifier>tests</classifier>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.hp.hpl.jena</groupId>
+      <artifactId>jena</artifactId>
+      <version>${ver.jena}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.hp.hpl.jena</groupId>
+      <artifactId>jena</artifactId>
+      <classifier>tests</classifier>
+      <version>${ver.jena}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.hp.hpl.jena</groupId>
+      <artifactId>tdb</artifactId>
+      <version>${ver.tdb}</version>
+      <scope>optional</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.hp.hpl.jena</groupId>
+      <artifactId>sdb</artifactId>
+      <version>${ver.sdb}</version>
+      <scope>optional</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.5</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+      <artifactId>jetty</artifactId>
+      <version>6.1.25</version>
+    </dependency>    
+
+     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.5.8</version>
+    </dependency>
+
+     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.5.8</version>
+    </dependency>
+
+    <!-- Needed because the Joseki test suite resets logging levels -->
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.14</version>
+      <exclusions>
+	<exclusion>
+	  <groupId>javax.jms</groupId>
+	  <artifactId>jms</artifactId>
+	</exclusion>
+	<exclusion>
+	  <groupId>com.sun.jdmk</groupId>
+	  <artifactId>jmxtools</artifactId>
+	</exclusion>
+	<exclusion>
+	  <groupId>com.sun.jmx</groupId>
+	  <artifactId>jmxri</artifactId>
+	</exclusion>
+	<exclusion>
+	  <groupId>javax.mail</groupId>
+	  <artifactId>mail</artifactId>
+	</exclusion>
+      </exclusions> 
+    </dependency>
+
+    <!--
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+    </dependency>
+    -->
+
+  </dependencies>
+
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <testSourceDirectory>src-test</testSourceDirectory>
+    
+    <resources>
+      <resource>
+        <targetPath>org/joseki</targetPath>
+        <filtering>true</filtering>
+        <directory>resources</directory>
+      </resource>
+    </resources>
+    <filters>
+      <filter>${project.basedir}/target/filter.properties</filter>
+    </filters>
+    
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions> 
+          <execution>
+            <id>attach-sources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+          <includes>
+            <include>org/joseki/test/JosekiTests.java</include>
+            <!-- Needs access to the script files -->
+            <!-- <include>org/joseki/test/ProtocolTests.java</include> -->
+          </includes>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+	<configuration>
+          <outputDirectory>lib</outputDirectory>
+          <overWriteReleases>false</overWriteReleases>
+          <overWriteSnapshots>false</overWriteSnapshots>
+          <overWriteIfNewer>true</overWriteIfNewer>
+        </configuration>
+      </plugin>
+      
+
+      <!-- No javadoc shipped (it's not a library!)
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      -->
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptors>
+            <descriptor>assembly.xml</descriptor>
+          </descriptors>
+        </configuration>
+
+        <!-- Add to packaging lifecycle phase : must be last -->
+        <executions>
+          <execution>
+            <id>create-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attached</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>ant-generate-resources</id>
+            <phase>generate-resources</phase>
+            <configuration>
+              <tasks>
+                <mkdir dir="${project.basedir}/target"/>
+                <tstamp>
+                  <format property="build.time.xsd"  pattern="yyyy-MM-dd'T'HH:mm:ssZ"/>
+                  <format property="build.time.txt"  pattern="yyyy-MM-dd HH:mm Z"/>
+                </tstamp>
+                <echo file="${project.basedir}/target/filter.properties">
+#begin
+build.time.xsd=${build.time.xsd}
+build.time.txt=${build.time.txt}
+#end 
+                </echo>
+                <echo message="Version = ${project.version}"/>
+                <echo message="build.time=${build.time.txt}"/>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+ 
+    </plugins>
+
+  </build>
+  
+  <repositories>
+    <!-- jena-repo is mirrored to Maven central repository -->
+
+    <repository>
+      <id>repo-jena</id>
+      <name>Jena Maven - Repository</name>
+      <layout>default</layout>
+      <url>http://openjena.org/repo</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
+    <!-- jena-repo-dev is where SNAPSHOTs are published -->  
+    <repository>
+      <id>repo-jena-dev</id>
+      <name>Jena Maven - Development Repository</name>
+      <layout>default</layout>
+      <url>http://openjena.org/repo-dev</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <distributionManagement>
+    <downloadUrl>http://openjena.org/repo-dev</downloadUrl>
+    <repository>
+      <id>jena-repo</id>
+      <name>Jena repo</name>
+
+      <url>sftp://openjena.org/var/repo</url>
+      <!--<url>sftp://openjena.org/var/repo-dev</url>-->
+
+      <layout>default</layout>
+    </repository> 
+    <snapshotRepository>
+      <id>jena-repo-dev</id>
+      <name>Jena development repo</name>
+
+      <url>sftp://openjena.org/var/repo-dev</url>
+
+      <layout>default</layout>
+    </snapshotRepository>
+  </distributionManagement>
+
+</project>

@@ -1,0 +1,29 @@
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:	    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:       <http://www.w3.org/2004/02/skos/core#> .
+@prefix foaf:       <http://xmlns.com/foaf/0.1/> .
+@prefix dc:         <http://purl.org/dc/elements/1.1/> .
+
+_:alice a foaf:Person ;
+    foaf:mbox <mailto:alice@example> ;
+    foaf:name "Alice" .
+
+_:bob a foaf:Person ;
+    foaf:mbox <mailto:bob@example> ;
+    foaf:name "Bob" .
+
+_:charlie a foaf:Person ;
+    foaf:mbox <mailto:charlie@example> ;
+    foaf:name "Charlie" .
+
+_:dave a foaf:Person ;
+    foaf:mbox <mailto:dave@example> ;
+    foaf:name "Dave" .
+
+_:alice     dc:publisher  <http://example.org/alice> .
+_:bob       dc:publisher  <http://example.org/bob> .
+_:charlie   dc:publisher  <http://example.org/charlie> .
+_:dave      dc:publisher  <http://example.org/dave> .
+
+

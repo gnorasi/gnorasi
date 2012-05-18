@@ -1,0 +1,296 @@
+# Example fragments.
+
+# This file is written in N3 / Turtle
+
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix module: <http://joseki.org/2003/06/module#> .
+@prefix joseki: <http://joseki.org/2005/06/configuration#> .
+@prefix ql:     <http://jena.hpl.hp.com/2003/07/query/> .
+@prefix ja:     <http://jena.hpl.hp.com/2005/11/Assembler#> .
+
+## --------------------------------------------------------------
+## This file is written in N3 / Turtle
+## It is an RDF graph - order of RDF triples does not matter
+## to the machine but it does help people who need to edit this file.
+
+## Note: adding rdfs:label to blank nodes will cause Joseki 
+## to print that in log messages.
+
+
+## --------------------------------------------------------------
+## About this configuration
+
+<> rdfs:label "Joseki Configuration File" .
+
+## --------------------------------------------------------------
+## About this server
+
+[]  rdf:type joseki:Server ;
+    joseki:serverDebug   "true" ;
+    # Example of some initialization code.
+    joseki:initialization
+        [ module:implementation 
+            [ module:className <java:org.joseki.util.ServiceInitSimple> ;
+              rdfs:label "Example initializer" ; ]
+        ] ;
+    # ... which can be repeated.
+    joseki:initialization
+        [ module:implementation 
+            [ module:className <java:org.joseki.util.ServiceInitSimple> ;
+              rdfs:label "Example2" ; ]
+        ] ;
+    .
+
+## --------------------------------------------------------------
+## Services
+
+## Services are the points that request are sent to.
+## serviceRef that will be used to match requests to services,
+## not some resource URI for the description.
+
+## Note that the service reference and the routing of incoming
+## requests by URI as defined by web.xml have to align.
+
+# Service 1
+# General purpose SPARQL processor, no dataset, expects the
+# request to specify the dataset (either by parameters in the
+# protocol request or in the query itself).
+
+[]
+    rdf:type            joseki:Service ;
+    rdfs:label          "service point" ;
+    joseki:serviceRef   "sparql" ;
+    joseki:processor    joseki:ProcessorSPARQL ;
+    .
+
+# Service 2 - SPARQL processor only handling a given dataset
+[]
+    rdf:type            joseki:Service ;
+    rdfs:label          "SPARQL on the books model" ;
+    joseki:serviceRef   "books" ;   # web.xml must route this name to Joseki
+    # dataset part
+    joseki:dataset      <#books> ;
+    # Service part.
+    # This processor will not allow either the protocol,
+    # nor the query, to specify the datset.
+    joseki:processor    joseki:ProcessorSPARQL_FixedDS ;
+    .
+
+## # Service 3 - has defintions inline
+## []
+##     rdf:type    joseki:Service ;
+##     rdfs:label  "Inline example" ;
+## 
+##     # Required - serviceRef
+##     joseki:serviceRef         "example" ;    # web.xml must route this name to Joseki
+##     joseki:dataset
+##         [ ja:defaultGraph    <#model1> ; ] ;
+##     joseki:processor
+##         # Does not exist - causes a config warning and this
+##         # service is not available for requests
+##         [ module:implementation [ module:className <java:module> ] ] ;
+##     .
+## 
+
+## ---- SPARQL/Update
+## A pair of services - one for SPARQL queries, one for SPARQL/Update
+## Previous web.xml must also be updated to include a defintion for the
+## servlet "SPARQL/Update service processor" and update requests must
+## be routed to this servlet.
+
+
+## SPARQL Update
+## <#serviceUpdate>
+##     rdf:type            joseki:Service ;
+##     rdfs:label          "SPARQL/Update" ;
+##     joseki:serviceRef   "update/service" ;
+##     # dataset part
+##     joseki:dataset      <#mem>;
+##     # Service part.
+##     # This processor will not allow either the protocol,
+##     # nor the query, to specify the dataset.
+##     joseki:processor    joseki:ProcessorSPARQLUpdate
+##     .
+## 
+## <#serviceRead>
+##     rdf:type            joseki:Service ;
+##     rdfs:label          "SPARQL" ;
+##     joseki:serviceRef   "sparql/read" ;
+##     # dataset part
+##     joseki:dataset      <#mem> ;     ## Same dataset
+##     # Service part.
+##     # This processor will not allow either the protocol,
+##     # nor the query, to specify the dataset.
+##     joseki:processor    joseki:ProcessorSPARQL_FixedDS ;
+##     .
+
+## --------------------------------------------------------------
+## Datasets
+
+
+<#ds1>   rdf:type ja:RDFDataset ;
+    ja:defaultGraph    <#model1> ;
+    rdfs:label "Dataset 1" ;
+    ja:namedGraph
+        [ ja:graphName      <http://example.org/name1> ;
+          ja:graph          <#model1> ] ;
+    # Could use the location manager and have the named thing only
+    # Can't have two names for one graph?
+    ja:namedGraph
+        [ ja:graphName      <http://example.org/name2> ;
+          ja:graph          <#model2>
+        ] ;
+    .
+
+# A dataset of one model as the default graph, data loaded from a file.
+<#books>   rdf:type ja:RDFDataset ;
+    rdfs:label "Books" ;
+   ja:defaultGraph
+      [ rdfs:label "books.ttl" ;
+        a ja:MemoryModel ;
+        ja:content [ja:externalContent <file:Data/books.ttl> ] ;
+      ]
+    .
+
+## --------------------------------------------------------------
+## Individual graphs  (Jena calls them Models)
+## ---- A model, with RDF read from two files.
+## (syntax determined by file extension - defaults to RDF/XML)
+
+## ---- Data model
+
+<#model1>  rdf:type ja:MemoryModel ;
+    rdfs:label "Model(plain)" ;
+    ja:content [ ja:externalContent <file:FILE-1.ttl> ] ;
+    ja:content [ ja:externalContent <file:FILE-2.ttl> ] ;
+    .
+
+## ---- Database
+
+## ----------------
+## Database, named model in database.
+## The graph name here is just some local name - the published name is
+## defined in the dataset.
+## "reificationMode minimal" allows faster queries to operate.
+
+<#modelDB1> rdf:type ja:RDBModel ;
+    ja:connection
+    [
+        ja:dbType "MySQL" ;
+        ja:dbURL          <jdbc:mysql://localhost/data> ;
+        ja:dbUser         "user" ;
+        ja:dbPassword     "password" ;
+        ja:dbClass        "com.mysql.jdbc.Driver" ;
+    ] ;
+    ja:reificationMode    ja:minimal ;      ## Minimal means fastpath is possible.
+    ja:modelName "ModelName" 
+    .
+
+## ----------------
+## Database model, default model in database
+
+<#modelDB2> rdf:type ja:RDBModel ;
+    ja:connection
+    [
+        ja:dbType "MySQL" ;
+        ja:dbURL          <jdbc:mysql://localhost/data> ;
+        ja:dbUser         "user" ;
+        ja:dbPassword     "password" ;
+        ja:dbClass        "com.mysql.jdbc.Driver" ;
+    ] ;
+    ja:reificationMode    ja:minimal ;      ## Minimal means fastpath is possible.
+    ja:modelName "DEFAULT"
+    . 
+
+# ---- RDFS Inference model - all from one file.
+
+<#model_inf_1> rdfs:label "Inf-1" ;
+    ja:baseModel 
+        [ a ja:MemoryModel ;
+          ja:content [ja:externalContent <file:test_data_rdfs.ttl>] ;
+        ] ;
+    ja:reasoner
+         [ ja:reasonerURL <http://jena.hpl.hp.com/2003/RDFSExptRuleReasoner> ]
+    .
+
+# Separate ABox and TBox
+
+<#model_inf_2> rdfs:label "Inf-2" ;
+    ja:baseModel 
+        [ a ja:MemoryModel ;
+          ja:content [ja:externalContent <file:Data/test_abox.ttl>] ;
+          ja:content [ja:externalContent <file:Data/test_tbox.ttl>] ;
+        ] ;
+    ja:reasoner
+         [ ja:reasonerURL <http://jena.hpl.hp.com/2003/RDFSExptRuleReasoner> ] 
+    . 
+
+# Pellet : a dataset with a single model (Pellet through DIG)
+<#test> rdf:type ja:RDFDataset ;
+     rdfs:label "Test" ;
+     ja:defaultGraph
+        [ ja:baseModel
+             [ a ja:MemoryModel ;
+               ja:content [ja:externalContent <http://www.example.org/test>] ; 
+             ] ;
+         ja:reasoner
+             [ <http://jena.hpl.hp.com/2003/JenaReasoner#extReasonerURL>
+                      <http://localhost:8081/> ;
+               ja:reasonerURL <http://jena.hpl.hp.com/2003/DIGReasoner>
+             ]
+        ] ;
+     .
+
+
+
+## --------------------------------------------------------------
+## Processors
+
+joseki:ProcessorSPARQL
+    rdfs:label "General SPARQL processor" ;
+    rdf:type joseki:Processor ;
+    module:implementation joseki:ImplSPARQL ;
+
+    # Parameters - this processor processes FROM/FROM NAMED
+    joseki:allowExplicitDataset       "true"^^xsd:boolean ;
+    joseki:allowWebLoading            "true"^^xsd:boolean ;
+    ## And has no locking policy (it loads data each time).
+    ## The default is mutex (one request at a time)
+    joseki:lockingPolicy                joseki:lockingPolicyNone ;
+    .
+
+joseki:ProcessorSPARQL_FixedDS
+    rdfs:label "SPARQL processor for fixed datasets" ;
+    rdf:type joseki:Processor ;
+    module:implementation joseki:ImplSPARQL ;
+
+    # This processor does not accept queries with FROM/FROM NAMED
+    joseki:allowExplicitDataset       "false"^^xsd:boolean ;
+    joseki:allowWebLoading            "false"^^xsd:boolean ;
+    joseki:lockingPolicy              joseki:lockingPolicyMRSW ;
+    .
+
+joseki:ProcessorSPARQLUpdate
+    rdfs:label "SPARQL Update processor" ;
+    rdf:type joseki:Processor ;
+    module:implementation joseki:ImplSPARQLUpdate ;
+    joseki:lockingPolicy              joseki:lockingPolicyMRSW ;
+    .
+
+joseki:ImplSPARQL
+    rdf:type   joseki:ServiceImpl ;
+    module:className
+        <java:org.joseki.processors.SPARQL> .
+
+joseki:ImplSPARQLUpdate
+    rdf:type   joseki:ServiceImpl ;
+    module:className
+        <java:org.joseki.processors.SPARQLUpdate> .
+
+# Local Variables:        
+# tab-width: 4
+# indent-tabs-mode: nil
+# End:

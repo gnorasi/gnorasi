@@ -1,0 +1,11 @@
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix :       <http://example.com/ns#> .
+
+:prop1 rdfs:subPropertyOf :prop3 .
+
+
+# Local Variables:
+# tab-width: 4
+# indent-tabs-mode: nil
+# End:
