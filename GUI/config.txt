@@ -111,6 +111,12 @@ DEFINES += VRN_NO_STYLESHEET
 #INCLUDEPATH +=
 # For OTB Module
 INCLUDEPATH += /usr/include/otb
+INCLUDEPATH += /usr/include/otb/Common
+INCLUDEPATH += /usr/include/otb/UtilitiesAdapters/OssimAdapters
+INCLUDEPATH += /usr/include/otb/Utilities/ITK/Common
+INCLUDEPATH += /usr/include/otb/Utilities/ITK
+INCLUDEPATH += /usr/include/otb/Utilities/ITK/Utilities/vxl/vcl
+INCLUDEPATH += /usr/include/otb/Utilities/ITK/Utilities/vxl/core
 
 # Add additional library search paths
 #LIBDIR +=
