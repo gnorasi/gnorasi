@@ -4,7 +4,7 @@
  *                                                                    *
  **********************************************************************/
 
-#include "voreen/core/ports/otbimageport.h"
+#include "otbimageport.h"
 #include "voreen/core/datastructures/rendertarget.h"
 #include "voreen/core/processors/renderprocessor.h"
 #include "tgt/event/event.h"
@@ -28,7 +28,7 @@ void OTBImagePort::setData(const ImagePointer& pointer) {
     invalidate();
 }
 
-ImagePointer OTBImagePort::getData() const {
+OTBImagePort::ImagePointer OTBImagePort::getData() const {
     if (isOutport())
         return portData_;
     else {
