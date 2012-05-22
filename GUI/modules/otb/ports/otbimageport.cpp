@@ -41,8 +41,8 @@ OTBImagePort::ImagePointer OTBImagePort::getData() const {
                 return p->getData();
         }
     }
-    ImagePointer po = ImageType::New();
-    return po;
+    ImageSmartPointer po = ImageType::New();
+    return po.GetPointer();
 }
 
 std::vector<const OTBImagePort*> OTBImagePort::getConnected() const {

@@ -22,7 +22,8 @@ public:
     ~OTBImagePort();
     
     typedef otb::Image<double, 2> ImageType;
-    typedef ImageType::Pointer ImagePointer;
+    typedef ImageType::Pointer ImageSmartPointer;
+    typedef ImageType* ImagePointer;
 
     virtual void setData(const ImagePointer& pointer);
 
@@ -30,8 +31,6 @@ public:
 
     /// Returns true.
     virtual bool hasData() const;
-
-    //virtual std::vector<ImagePointer> getAllData() const;
 
     std::vector<const OTBImagePort* > getConnected() const;
 

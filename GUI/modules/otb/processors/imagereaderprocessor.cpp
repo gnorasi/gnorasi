@@ -9,23 +9,27 @@
 
 
 namespace voreen {
-const std::string ImageReaderProcessor::loggerCat_("voreen.ClassifierWSProcessor");
+const std::string ImageReaderProcessor::loggerCat_("voreen.OTBImageReaderProcessor");
 
 ImageReaderProcessor::ImageReaderProcessor()
     : Processor(),
     outPort_(Port::OUTPORT, "outport", 0),
     imageFile_("imageFile", "Image File", "Image File", VoreenApplication::app()->getDataPath()),
-    clearImage_("clearButton", "Clear Image"),
-    pTextDataOut_("")
+    clearImage_("clearButton", "Clear Image")
 {
     // register ports and properties
     addPort(outPort_);
     clearImage_.onChange(CallMemberAction<ImageReaderProcessor>(this, &ImageReaderProcessor::clearImage));
     addProperty(imageFile_);
     addProperty(clearImage_);
+    
+    //OTB stuff
+    reader = ReaderType::New();
 }
 
-ImageReaderProcessor::~ImageReaderProcessor() {}
+ImageReaderProcessor::~ImageReaderProcessor() {
+
+}
 
 Processor* ImageReaderProcessor::create() const {
     return new ImageReaderProcessor();
@@ -41,7 +45,7 @@ void ImageReaderProcessor::initialize() throw (tgt::Exception) {
 void ImageReaderProcessor::deinitialize() throw (tgt::Exception) {
 
     //outPort_.setData("");
-    pTextDataOut_ = "";
+    pDataOut_ = 0;
     clearImage();
 
     Processor::deinitialize();
@@ -57,18 +61,13 @@ bool ImageReaderProcessor::isEndProcessor() const {
 
 void ImageReaderProcessor::setOutPortData(){
     //if (outPort_.isConnected()){
-        outPort_.setData(pTextDataOut_);
+      pDataOut_ = reader->GetOutput();
+      outPort_.setData(pDataOut_);
     //}
 }
 
-void ImageReaderProcessor::setTextDataOut(std::string outTextData) {
-    pTextDataOut_ = outTextData;
-    ImageReaderProcessor::setOutPortData();
-}
-
-
 std::string ImageReaderProcessor::getProcessorInfo() const {
-    return "Open Image Data to Perforf Processing";
+    return "Open Image Data to Perform Processing";
 }
 
 void ImageReaderProcessor::readData() {
@@ -101,6 +100,7 @@ void ImageReaderProcessor::loadImage(const std::string& fname) {
     hasImage = true;
     /*texture_ = TexMgr.load(filename, tgt::Texture::LINEAR,
         false, false, true, false);*/
+    reader->SetFileName(filename.c_str());
     
     if (hasImage) {
         imageFile_.set(filename);
@@ -110,6 +110,7 @@ void ImageReaderProcessor::loadImage(const std::string& fname) {
         imageFile_.set("");
     }
 
+    setOutPortData();
     //invalidate();
 }
 
@@ -119,6 +120,10 @@ void ImageReaderProcessor::clearImage() {
         hasImage = false;
     }
     imageFile_.set("");
+}
+
+ImageReaderProcessor::ImagePointer const ImageReaderProcessor::getImage() const {
+    return pDataOut_;
 }
 
 

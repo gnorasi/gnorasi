@@ -12,7 +12,9 @@
 #include "voreen/core/properties/filedialogproperty.h"
 #include "voreen/core/properties/buttonproperty.h"
 #include "voreen/core/properties/stringproperty.h"
-#include "voreen/core/ports/textport.h"
+#include "../ports/otbimageport.h"
+#include "IO/otbImage.h"
+#include "IO/otbImageFileReader.h"
 
 
 namespace voreen {
@@ -31,6 +33,12 @@ public:
     virtual std::string getCategory() const  { return "Image IO"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; }
     
+    typedef double                   PixelType;
+    typedef otb::Image<PixelType, 2> ImageType;
+    typedef ImageType* 		     ImagePointer;
+    typedef otb::ImageFileReader<ImageType> ReaderType;
+    ReaderType::Pointer reader;
+    
         /**
      * Loads the image specified by filename.
      *
@@ -44,18 +52,14 @@ public:
      /**
      * Returns the currently assigned image pointer.
      */
-    //const tgt::Texture* getImage() const;
+    const ImagePointer getImage() const;
     
     //virtual bool usesExpensiveComputation() const { return true; }
     virtual bool isEndProcessor() const;
     virtual bool isReady() const;
     virtual std::string getProcessorInfo() const;
 
-    /// sets the link to the TextData object after calling WS (outport data actually)
-    void setTextDataOut(std::string);
-
-
-
+    
 
 protected:
     virtual void process();
@@ -73,12 +77,12 @@ private:
      */
     void clearImage();
 
-    TextPort outPort_;
+    OTBImagePort outPort_;
     
     FileDialogProperty imageFile_;  ///< Path of the loaded image file.
     ButtonProperty clearImage_;      ///< Executes clearImage().
 
-    std::string pTextDataOut_;
+    ImagePointer pDataOut_;
 
     static const std::string loggerCat_; ///< category used in logging
 };
