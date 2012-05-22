@@ -340,7 +340,7 @@ void VoreenMainWindow::initialize(VoreenSplashScreen* splash, bool showStartup) 
     }
 
     sharedContext_->hide();
-
+    /*
     // some hardware/driver checks
     if (!GpuCaps.isOpenGlVersionSupported(tgt::GpuCapabilities::GlVersion::TGT_GL_VERSION_2_0)) {
         if (splash)
@@ -373,7 +373,7 @@ void VoreenMainWindow::initialize(VoreenSplashScreen* splash, bool showStartup) 
                               tr("Voreen uses OpenGL framebuffer objects, which do not seem be supported "
                                  "on this system. Therefore, the application will most likely not work properly."));
         qApp->processEvents();
-    }
+    }*/
 
     if (splash)
         splash->showMessage("Creating visualization...");
