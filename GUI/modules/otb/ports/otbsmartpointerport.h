@@ -9,7 +9,7 @@
 
 #include "voreen/core/voreencoredefine.h"
 #include "voreen/core/ports/port.h"
-#include "Utilities/ITK/Common/itkSmartPointer.h"
+#include "itkSmartPointer.h"
 
 namespace voreen {
 

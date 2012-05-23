@@ -13,8 +13,8 @@
 #include "voreen/core/properties/buttonproperty.h"
 #include "voreen/core/properties/stringproperty.h"
 #include "../ports/otbimageport.h"
-#include "IO/otbImage.h"
-#include "IO/otbImageFileReader.h"
+#include "otbImage.h"
+#include "otbImageFileReader.h"
 
 
 namespace voreen {
