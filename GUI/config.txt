@@ -112,11 +112,16 @@ DEFINES += VRN_NO_STYLESHEET
 # For OTB Module
 INCLUDEPATH += /usr/include/otb
 INCLUDEPATH += /usr/include/otb/Common
+INCLUDEPATH += /usr/include/otb/BasicFilters
+INCLUDEPATH += /usr/include/otb/IO
 INCLUDEPATH += /usr/include/otb/UtilitiesAdapters/OssimAdapters
 INCLUDEPATH += /usr/include/otb/UtilitiesAdapters/CurlAdapters
+INCLUDEPATH += /usr/include/otb/Utilities/otbconfigfile
 INCLUDEPATH += /usr/include/otb/Utilities/ITK/Common
 INCLUDEPATH += /usr/include/otb/Utilities/ITK
 INCLUDEPATH += /usr/include/otb/Utilities/ITK/IO
+INCLUDEPATH += /usr/include/otb/Utilities/ITK/BasicFilters
+INCLUDEPATH += /usr/include/otb/Utilities/ITK/Review
 INCLUDEPATH += /usr/include/otb/Utilities/ITK/Utilities
 INCLUDEPATH += /usr/include/otb/Utilities/ITK/Utilities/vxl/vcl
 INCLUDEPATH += /usr/include/otb/Utilities/ITK/Utilities/vxl/core
