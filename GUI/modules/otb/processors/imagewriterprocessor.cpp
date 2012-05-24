@@ -38,6 +38,7 @@ ImageWriterProcessor::ImageWriterProcessor()
     int_writer = IntegerWriterType::New();
     float_writer = FloatWriterType::New();
     byte_writer = ByteWriterType::New();
+
 }
 
 Processor* ImageWriterProcessor::create() const {
@@ -63,9 +64,7 @@ void ImageWriterProcessor::process() {
 void ImageWriterProcessor::initialize() throw (VoreenException) {
     // call superclass function first
     Processor::initialize();
-   
     hasImage = false;
-    loadImage(imageFile_.get());
     //getProcessorWidget()->updateFromProcessor();
 }
 
@@ -73,55 +72,34 @@ void ImageWriterProcessor::deinitialize() throw (VoreenException) {
     Processor::deinitialize();
 }
 
-void ImageWriterProcessor::loadImage(const std::string& fname) {
-
-    // necessary since the passed string reference might be changed during clearImage/invalidate,
-    std::string filename = fname;
-
-    // clear image and check for empty filename
-    if (hasImage) {
-        clearImage();
-    }
-    if (filename.empty())
-        return;
-
-    // load image
-    hasImage = true;
-    
-    writer->SetFileName(filename.c_str());
-    int_writer->SetFileName(filename.c_str());
-    float_writer->SetFileName(filename.c_str());
-    byte_writer->SetFileName(filename.c_str());
-    
-    if (hasImage) {
-        imageFile_.set(filename);
-    }
-    else {
-        LWARNING("Failed to load image: " << filename);
-        imageFile_.set("");
-    }
-
-    //invalidate();
-}
-
 void ImageWriterProcessor::saveImage() {
     
+    std::string filename = imageFile_.get();
+    if (!filename.empty())
+    {
+	hasImage = true;
+    }
+  
     if(this->isReady() && hasImage)
     {
         if (imageType_.get() == "double") {
+	    writer->SetFileName(filename.c_str());
 	    writer->SetInput(inport_.getData());
 	    writer->Update();
 	    LWARNING("Success!");
 	}else if (imageType_.get() == "float"){
+	    //float_writer->SetFileName(filename.c_str());
             //float_writer->SetInput(inport_.getData());
             //float_writer->Update();
 	    LWARNING("Success!");
 	}else if (imageType_.get() == "int"){
-            //int_writer->SetInput(inport_.getData());
+	    //int_writer->SetFileName(filename.c_str());
+	    //int_writer->SetInput(inport_.getData());
             //int_writer->Update();
 	    LWARNING("Success!");
 	}else if (imageType_.get() == "char"){
-            //byte_writer->SetInput(inport_.getData());
+	    //byte_writer->SetFileName(filename.c_str());  
+	    //byte_writer->SetInput(inport_.getData());
             //byte_writer->Update();
 	    LWARNING("Success!");
 	}
