@@ -1,0 +1,5 @@
+<ModuleDescription>Orfeo Toolbox Remote Sensing Processors.</ModuleDescription>
+<Processor name="otbImageReader">
+    <Description>Reads an image from the hard disk drive.</Description>
+</Processor>
+

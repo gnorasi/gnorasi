@@ -4,6 +4,7 @@
   Language:  C++
 
   Copyright (c) National Technical University of Athens. All rights reserved.
+  Copyright (c) Centre National d'Etudes Spatiales. All rights reserved.
   
   Portions of this code are covered under the OTB copyright.
   See OTBCopyright.txt for details.
