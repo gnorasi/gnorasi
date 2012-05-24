@@ -14,15 +14,22 @@ const std::string ImageWriterProcessor::loggerCat_("voreen.OTBImageWriterProcess
 ImageWriterProcessor::ImageWriterProcessor()
     : Processor(),
     inport_(Port::INPORT, "inport", 0),
-    imageFile_("imageFile", "Image File", "Image File", VoreenApplication::app()->getDataPath(), "TIFF Image file (*.tif)", FileDialogProperty::SAVE_FILE),
+    imageFile_("imageFile", "Output Image", "Image File", VoreenApplication::app()->getDataPath(), "TIFF Image file (*.tif)", FileDialogProperty::SAVE_FILE),
+    imageType_("outputImageType", "Output Image Type"),
     clearImage_("clearButton", "Clear Image"),
     saveImageButton_("saveButton", "Save Image")
 {
+    imageType_.addOption("double", "64-bit double");
+    imageType_.addOption("float", "32-bit float");
+    imageType_.addOption("int", "16-bit integer");
+    imageType_.addOption("char", "8-bit integer");
+      
     // register ports and properties
     addPort(inport_);
     clearImage_.onChange(CallMemberAction<ImageWriterProcessor>(this, &ImageWriterProcessor::clearImage));
     saveImageButton_.onChange(CallMemberAction<ImageWriterProcessor>(this, &ImageWriterProcessor::saveImage));
     addProperty(imageFile_);
+    addProperty(imageType_);
     addProperty(clearImage_);
     addProperty(saveImageButton_);
     
@@ -101,9 +108,23 @@ void ImageWriterProcessor::saveImage() {
     
     if(this->isReady() && hasImage)
     {
-        writer->SetInput(inport_.getData());
-        writer->Update();
-	LWARNING("Success!");
+        if (imageType_.get() == "double") {
+	    writer->SetInput(inport_.getData());
+	    writer->Update();
+	    LWARNING("Success!");
+	}else if (imageType_.get() == "float"){
+            //float_writer->SetInput(inport_.getData());
+            //float_writer->Update();
+	    LWARNING("Success!");
+	}else if (imageType_.get() == "int"){
+            //int_writer->SetInput(inport_.getData());
+            //int_writer->Update();
+	    LWARNING("Success!");
+	}else if (imageType_.get() == "char"){
+            //byte_writer->SetInput(inport_.getData());
+            //byte_writer->Update();
+	    LWARNING("Success!");
+	}
     }else if(!this->isReady()){
 	LWARNING("Writer Inport not connected");
 	return;

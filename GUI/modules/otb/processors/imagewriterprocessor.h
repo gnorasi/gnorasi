@@ -11,6 +11,7 @@
 #include "voreen/core/properties/filedialogproperty.h"
 #include "voreen/core/properties/buttonproperty.h"
 #include "voreen/core/properties/stringproperty.h"
+#include "voreen/core/properties/optionproperty.h"
 #include "../ports/otbimageport.h"
 #include "otbImage.h"
 #include "otbImageFileWriter.h"
@@ -78,6 +79,7 @@ public:
      */
     void loadImage(const std::string& filename);
 
+
 protected:
     virtual void process();
     virtual void initialize() throw (VoreenException);
@@ -88,6 +90,7 @@ private:
   
     OTBImagePort inport_;
     FileDialogProperty imageFile_;  ///< Path of the saved image file.
+    StringOptionProperty imageType_;///< Select output image type
     ButtonProperty clearImage_;      ///< Executes clearImage().
     ButtonProperty saveImageButton_;    ///< saves the image.
     
