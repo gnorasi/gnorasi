@@ -73,12 +73,6 @@ public:
      */
     void clearImage();
     
-     /**
-     * Loads the image specified by filename.
-     *
-     */
-    void loadImage(const std::string& filename);
-
 
 protected:
     virtual void process();
