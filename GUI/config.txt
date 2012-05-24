@@ -25,6 +25,9 @@ VRN_MODULES += default
 #GNORASI Knowdedge
 VRN_MODULES += knowledge
 
+#GNORASI Orfeo Toolbox Module
+VRN_MODULES += otb
+
 # GPU-based isosurface extraction and rendering, requires the HPMC library.
 #VRN_MODULES += hpmc
 
@@ -105,10 +108,29 @@ DEFINES += VRN_SPLASHSCREEN
 DEFINES += VRN_NO_STYLESHEET
 
 # Add additional include paths
-INCLUDEPATH +=
+#INCLUDEPATH +=
+# For OTB Module
+INCLUDEPATH += /usr/include/otb
+INCLUDEPATH += /usr/include/otb/Common
+INCLUDEPATH += /usr/include/otb/BasicFilters
+INCLUDEPATH += /usr/include/otb/IO
+INCLUDEPATH += /usr/include/otb/UtilitiesAdapters/OssimAdapters
+INCLUDEPATH += /usr/include/otb/UtilitiesAdapters/CurlAdapters
+INCLUDEPATH += /usr/include/otb/Utilities/otbconfigfile
+INCLUDEPATH += /usr/include/otb/Utilities/ITK/Common
+INCLUDEPATH += /usr/include/otb/Utilities/ITK
+INCLUDEPATH += /usr/include/otb/Utilities/ITK/IO
+INCLUDEPATH += /usr/include/otb/Utilities/ITK/BasicFilters
+INCLUDEPATH += /usr/include/otb/Utilities/ITK/Review
+INCLUDEPATH += /usr/include/otb/Utilities/ITK/Utilities
+INCLUDEPATH += /usr/include/otb/Utilities/ITK/Utilities/vxl/vcl
+INCLUDEPATH += /usr/include/otb/Utilities/ITK/Utilities/vxl/core
 
 # Add additional library search paths
-LIBDIR +=
+#LIBDIR +=
+# For OTB Module (select 32 or 64 bit)
+LIBDIR += /usr/lib64/otb
+#LIBDIR += /usr/lib/otb
 
 # Disable optimization (useful for debugging)
 #QMAKE_CXXFLAGS_RELEASE -= -O2
@@ -164,6 +186,7 @@ VRN_HOME = $$PWD
 
 unix {
   FREETYPE_DIR = /usr/include/freetype2
+  OTB_DIR = /usr/include/otb
   PYTHON_DIR = /usr/include/python2.6
   PYTHON_LIBS = -lpython2.6
 }
