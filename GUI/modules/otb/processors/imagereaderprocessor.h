@@ -47,7 +47,7 @@ public:
      *
      * @param filename the image to load
      */
-    void loadImage(const std::string& filename);
+    void loadImage();
     
      /**
      * Returns the currently assigned image pointer.

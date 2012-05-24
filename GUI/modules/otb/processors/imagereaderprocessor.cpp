@@ -19,6 +19,7 @@ ImageReaderProcessor::ImageReaderProcessor()
 {
     // register ports and properties
     addPort(outPort_);
+    imageFile_.onChange(CallMemberAction<ImageReaderProcessor>(this, &ImageReaderProcessor::loadImage));
     clearImage_.onChange(CallMemberAction<ImageReaderProcessor>(this, &ImageReaderProcessor::clearImage));
     addProperty(imageFile_);
     addProperty(clearImage_);
@@ -39,7 +40,6 @@ void ImageReaderProcessor::initialize() throw (tgt::Exception) {
     Processor::initialize();
     setOutPortData();
     hasImage = false;
-    loadImage(imageFile_.get());
 }
 
 void ImageReaderProcessor::deinitialize() throw (tgt::Exception) {
@@ -84,15 +84,13 @@ void ImageReaderProcessor::process() {
     
 }
 
-void ImageReaderProcessor::loadImage(const std::string& fname) {
+void ImageReaderProcessor::loadImage() {
 
     // necessary since the passed string reference might be changed during clearImage/invalidate,
-    std::string filename = fname;
+    std::string filename = imageFile_.get();
 
-    // clear image and check for empty filename
-    if (hasImage) {
-        clearImage();
-    }
+    // check for empty filename
+    
     if (filename.empty())
         return;
 
@@ -102,10 +100,7 @@ void ImageReaderProcessor::loadImage(const std::string& fname) {
         false, false, true, false);*/
     reader->SetFileName(filename.c_str());
     
-    if (hasImage) {
-        imageFile_.set(filename);
-    }
-    else {
+    if (!hasImage) {
         LWARNING("Failed to load image: " << filename);
         imageFile_.set("");
     }
