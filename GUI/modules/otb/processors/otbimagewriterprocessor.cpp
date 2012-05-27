@@ -4,14 +4,14 @@
  *                                                                    *
  **********************************************************************/
 
-#include "imagewriterprocessor.h"
+#include "otbimagewriterprocessor.h"
 #include "voreen/core/voreenapplication.h"
 
 namespace voreen {
 
-const std::string ImageWriterProcessor::loggerCat_("voreen.OTBImageWriterProcessor");
+const std::string OTBImageWriterProcessor::loggerCat_("voreen.OTBImageWriterProcessor");
   
-ImageWriterProcessor::ImageWriterProcessor()
+OTBImageWriterProcessor::OTBImageWriterProcessor()
     : Processor(),
     inport_(Port::INPORT, "inport", 0),
     imageFile_("imageFile", "Output Image", "Image File", VoreenApplication::app()->getDataPath(), "TIFF Image file (*.tif)", FileDialogProperty::SAVE_FILE),
@@ -29,8 +29,8 @@ ImageWriterProcessor::ImageWriterProcessor()
       
     // register ports and properties
     addPort(inport_);
-    clearImage_.onChange(CallMemberAction<ImageWriterProcessor>(this, &ImageWriterProcessor::clearImage));
-    saveImageButton_.onChange(CallMemberAction<ImageWriterProcessor>(this, &ImageWriterProcessor::saveImage));
+    clearImage_.onChange(CallMemberAction<OTBImageWriterProcessor>(this, &OTBImageWriterProcessor::clearImage));
+    saveImageButton_.onChange(CallMemberAction<OTBImageWriterProcessor>(this, &OTBImageWriterProcessor::saveImage));
     addProperty(imageFile_);
     addProperty(clearImage_);
     addProperty(imageType_);
@@ -50,38 +50,38 @@ ImageWriterProcessor::ImageWriterProcessor()
 
 }
 
-Processor* ImageWriterProcessor::create() const {
-    return new ImageWriterProcessor();
+Processor* OTBImageWriterProcessor::create() const {
+    return new OTBImageWriterProcessor();
 }
 
-bool ImageWriterProcessor::isEndProcessor() const {
+bool OTBImageWriterProcessor::isEndProcessor() const {
     return true;
 }
 
-bool ImageWriterProcessor::isReady() const {
+bool OTBImageWriterProcessor::isReady() const {
     return (inport_.isConnected());
 }
 
-std::string ImageWriterProcessor::getProcessorInfo() const {
+std::string OTBImageWriterProcessor::getProcessorInfo() const {
     return "Saves Image Data after Performing Processing";
 }
 
-void ImageWriterProcessor::process() {
+void OTBImageWriterProcessor::process() {
 
 }
 
-void ImageWriterProcessor::initialize() throw (VoreenException) {
+void OTBImageWriterProcessor::initialize() throw (VoreenException) {
     // call superclass function first
     Processor::initialize();
     hasImage = false;
     //getProcessorWidget()->updateFromProcessor();
 }
 
-void ImageWriterProcessor::deinitialize() throw (VoreenException) {
+void OTBImageWriterProcessor::deinitialize() throw (VoreenException) {
     Processor::deinitialize();
 }
 
-void ImageWriterProcessor::saveImage() {
+void OTBImageWriterProcessor::saveImage() {
     
     std::string filename = imageFile_.get();
     if (!filename.empty())
@@ -137,7 +137,7 @@ void ImageWriterProcessor::saveImage() {
     
 }
 
-void ImageWriterProcessor::clearImage() {
+void OTBImageWriterProcessor::clearImage() {
 
     if (hasImage) {
         hasImage = false;
