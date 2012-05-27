@@ -94,8 +94,15 @@ void OTBImageWriterProcessor::saveImage() {
         if (imageType_.get() == "double") {
 	    writer->SetFileName(filename.c_str());
 	    writer->SetInput(inport_.getData());
-	    writer->Update();
-	    LWARNING("Success!");
+	    try
+	    {
+		writer->Update();
+	    }
+	    catch (itk::ExceptionObject& err)
+	    {
+		LWARNING("ExceptionObject caught !");
+		return;
+	    }
 	}else if (imageType_.get() == "float"){
 	    floatrescaler->SetInput(inport_.getData());
 	    if(rescale_.get()){ //rescale enabled
@@ -104,8 +111,15 @@ void OTBImageWriterProcessor::saveImage() {
 	    }
 	    float_writer->SetFileName(filename.c_str());
             float_writer->SetInput(floatrescaler->GetOutput());
-            float_writer->Update();
-	    LWARNING("Success!");
+            try
+	    {
+		float_writer->Update();
+	    }
+	    catch (itk::ExceptionObject& err)
+	    {
+		LWARNING("ExceptionObject caught !");
+		return;
+	    }
 	}else if (imageType_.get() == "int"){
 	    intrescaler->SetInput(inport_.getData());
 	    if(rescale_.get()){ //rescale enabled
@@ -114,8 +128,15 @@ void OTBImageWriterProcessor::saveImage() {
 	    }  
 	    int_writer->SetFileName(filename.c_str());
 	    int_writer->SetInput(intrescaler->GetOutput());
-            int_writer->Update();
-	    LWARNING("Success!");
+	    try
+	    {
+		int_writer->Update();
+	    }
+	    catch (itk::ExceptionObject& err)
+	    {
+		LWARNING("ExceptionObject caught !");
+		return;
+	    }
 	}else if (imageType_.get() == "char"){
 	    byterescaler->SetInput(inport_.getData());
 	    if(rescale_.get()){ //rescale enabled
@@ -124,8 +145,15 @@ void OTBImageWriterProcessor::saveImage() {
 	    }  
 	    byte_writer->SetFileName(filename.c_str());  
 	    byte_writer->SetInput(byterescaler->GetOutput());
-            byte_writer->Update();
-	    LWARNING("Success!");
+	    try
+	    {
+		byte_writer->Update();
+	    }
+	    catch (itk::ExceptionObject& err)
+	    {
+		LWARNING("ExceptionObject caught !");
+		return;
+	    }
 	}
     }else if(!this->isReady()){
 	LWARNING("Writer Inport not connected");
