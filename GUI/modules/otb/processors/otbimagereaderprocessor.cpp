@@ -13,7 +13,7 @@ const std::string OTBImageReaderProcessor::loggerCat_("voreen.OTBImageReaderProc
 
 OTBImageReaderProcessor::OTBImageReaderProcessor()
     : Processor(),
-    outPort_(Port::OUTPORT, "outport", 0),
+    outPort_(OTBImagePort::OUTPORT, "outport", 0),
     imageFile_("imageFile", "Image File", "Image File", VoreenApplication::app()->getDataPath()),
     clearImage_("clearButton", "Clear Image")
 {
