@@ -17,6 +17,9 @@ ImageWriterProcessor::ImageWriterProcessor()
     imageFile_("imageFile", "Output Image", "Image File", VoreenApplication::app()->getDataPath(), "TIFF Image file (*.tif)", FileDialogProperty::SAVE_FILE),
     imageType_("outputImageType", "Output Image Type"),
     clearImage_("clearButton", "Clear Image"),
+    rescale_("rescaleSelection", "Rescale Output", false),
+    min_("minValue","Minimum Output Value", 0.0f, 0.0f, 10000.0f),
+    max_("maxValue","Maximum Output Value", 255.0f, 0.0f, 10000.0f),
     saveImageButton_("saveButton", "Save Image")
 {
     imageType_.addOption("double", "64-bit double");
@@ -29,15 +32,21 @@ ImageWriterProcessor::ImageWriterProcessor()
     clearImage_.onChange(CallMemberAction<ImageWriterProcessor>(this, &ImageWriterProcessor::clearImage));
     saveImageButton_.onChange(CallMemberAction<ImageWriterProcessor>(this, &ImageWriterProcessor::saveImage));
     addProperty(imageFile_);
-    addProperty(imageType_);
     addProperty(clearImage_);
+    addProperty(imageType_);
+    addProperty(rescale_);
+    addProperty(min_);
+    addProperty(max_);
     addProperty(saveImageButton_);
     
     //OTB initialization
     writer = WriterType::New();
     int_writer = IntegerWriterType::New();
+    intrescaler = IntegerRescalerFilterType::New();
     float_writer = FloatWriterType::New();
+    floatrescaler = FloatRescalerFilterType::New();
     byte_writer = ByteWriterType::New();
+    byterescaler = ByteRescalerFilterType::New();
 
 }
 
@@ -88,19 +97,34 @@ void ImageWriterProcessor::saveImage() {
 	    writer->Update();
 	    LWARNING("Success!");
 	}else if (imageType_.get() == "float"){
-	    //float_writer->SetFileName(filename.c_str());
-            //float_writer->SetInput(inport_.getData());
-            //float_writer->Update();
+	    floatrescaler->SetInput(inport_.getData());
+	    if(rescale_.get()){ //rescale enabled
+		floatrescaler->SetOutputMinimum(min_.get());
+		floatrescaler->SetOutputMaximum(max_.get());
+	    }
+	    float_writer->SetFileName(filename.c_str());
+            float_writer->SetInput(floatrescaler->GetOutput());
+            float_writer->Update();
 	    LWARNING("Success!");
 	}else if (imageType_.get() == "int"){
-	    //int_writer->SetFileName(filename.c_str());
-	    //int_writer->SetInput(inport_.getData());
-            //int_writer->Update();
+	    intrescaler->SetInput(inport_.getData());
+	    if(rescale_.get()){ //rescale enabled
+		intrescaler->SetOutputMinimum(min_.get());
+		intrescaler->SetOutputMaximum(max_.get());
+	    }  
+	    int_writer->SetFileName(filename.c_str());
+	    int_writer->SetInput(intrescaler->GetOutput());
+            int_writer->Update();
 	    LWARNING("Success!");
 	}else if (imageType_.get() == "char"){
-	    //byte_writer->SetFileName(filename.c_str());  
-	    //byte_writer->SetInput(inport_.getData());
-            //byte_writer->Update();
+	    byterescaler->SetInput(inport_.getData());
+	    if(rescale_.get()){ //rescale enabled
+		byterescaler->SetOutputMinimum(min_.get());
+		byterescaler->SetOutputMaximum(max_.get());
+	    }  
+	    byte_writer->SetFileName(filename.c_str());  
+	    byte_writer->SetInput(byterescaler->GetOutput());
+            byte_writer->Update();
 	    LWARNING("Success!");
 	}
     }else if(!this->isReady()){
