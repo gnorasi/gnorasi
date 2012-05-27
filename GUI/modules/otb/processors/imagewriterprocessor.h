@@ -12,9 +12,12 @@
 #include "voreen/core/properties/buttonproperty.h"
 #include "voreen/core/properties/stringproperty.h"
 #include "voreen/core/properties/optionproperty.h"
+#include "voreen/core/properties/floatproperty.h"
+#include "voreen/core/properties/boolproperty.h"
 #include "../ports/otbimageport.h"
 #include "otbImage.h"
 #include "otbImageFileWriter.h"
+#include "itkRescaleIntensityImageFilter.h"
 
 namespace voreen {
 
@@ -44,12 +47,20 @@ public:
     typedef otb::Image<IntegerPixelType, 2> IntegerImageType;
     typedef otb::ImageFileWriter<IntegerImageType> IntegerWriterType;
     IntegerWriterType::Pointer int_writer;
+    typedef itk::RescaleIntensityImageFilter<
+      ImageType,
+      IntegerImageType>    IntegerRescalerFilterType;
+    IntegerRescalerFilterType::Pointer  intrescaler;
     
     //float image writer
     typedef float             FloatPixelType;
     typedef otb::Image<FloatPixelType, 2> FloatImageType;
     typedef otb::ImageFileWriter<FloatImageType> FloatWriterType;
     FloatWriterType::Pointer float_writer;
+    typedef itk::RescaleIntensityImageFilter<
+      ImageType,
+      FloatImageType>    FloatRescalerFilterType;
+    FloatRescalerFilterType::Pointer  floatrescaler;
     
     //8bit image writer
     //TODO: set default???
@@ -57,6 +68,10 @@ public:
     typedef otb::Image<BytePixelType, 2> ByteImageType;
     typedef otb::ImageFileWriter<ByteImageType> ByteWriterType;
     ByteWriterType::Pointer byte_writer;
+    typedef itk::RescaleIntensityImageFilter<
+      ImageType,
+      ByteImageType>    ByteRescalerFilterType;
+    ByteRescalerFilterType::Pointer  byterescaler;
     
     //**********************************************************************
     
@@ -84,8 +99,11 @@ private:
   
     OTBImagePort inport_;
     FileDialogProperty imageFile_;  ///< Path of the saved image file.
-    StringOptionProperty imageType_;///< Select output image type
     ButtonProperty clearImage_;      ///< Executes clearImage().
+    StringOptionProperty imageType_;///< Select output image type
+    BoolProperty rescale_; 	///< Perform rescaling on output image
+    FloatProperty min_; 		///< Minimum output value
+    FloatProperty max_; 		///< Maximum output value
     ButtonProperty saveImageButton_;    ///< saves the image.
     
     static const std::string loggerCat_; ///< category used in logging
