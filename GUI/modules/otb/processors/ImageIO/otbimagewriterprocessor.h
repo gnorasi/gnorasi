@@ -14,7 +14,7 @@
 #include "voreen/core/properties/optionproperty.h"
 #include "voreen/core/properties/floatproperty.h"
 #include "voreen/core/properties/boolproperty.h"
-#include "../ports/otbimageport.h"
+#include "../../ports/otbimageport.h"
 #include "otbImage.h"
 #include "otbImageFileWriter.h"
 #include "itkRescaleIntensityImageFilter.h"
