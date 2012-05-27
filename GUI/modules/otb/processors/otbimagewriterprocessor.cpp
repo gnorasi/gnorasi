@@ -13,7 +13,7 @@ const std::string OTBImageWriterProcessor::loggerCat_("voreen.OTBImageWriterProc
   
 OTBImageWriterProcessor::OTBImageWriterProcessor()
     : Processor(),
-    inport_(Port::INPORT, "inport", 0),
+    inport_(OTBImagePort::INPORT, "inport", 0),
     imageFile_("imageFile", "Output Image", "Image File", VoreenApplication::app()->getDataPath(), "TIFF Image file (*.tif)", FileDialogProperty::SAVE_FILE),
     imageType_("outputImageType", "Output Image Type"),
     clearImage_("clearButton", "Clear Image"),
