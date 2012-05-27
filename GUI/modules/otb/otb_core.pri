@@ -1,12 +1,12 @@
 # processor sources
 SOURCES += \
-$${VRN_MODULE_DIR}/otb/processors/imagereaderprocessor.cpp \
-$${VRN_MODULE_DIR}/otb/processors/imagewriterprocessor.cpp
+$${VRN_MODULE_DIR}/otb/processors/otbimagereaderprocessor.cpp \
+$${VRN_MODULE_DIR}/otb/processors/otbimagewriterprocessor.cpp
 
 # processor headers
 HEADERS += \
-$${VRN_MODULE_DIR}/otb/processors/imagereaderprocessor.h \
-$${VRN_MODULE_DIR}/otb/processors/imagewriterprocessor.h
+$${VRN_MODULE_DIR}/otb/processors/otbimagereaderprocessor.h \
+$${VRN_MODULE_DIR}/otb/processors/otbimagewriterprocessor.h
 
 # port sources
 SOURCES += \

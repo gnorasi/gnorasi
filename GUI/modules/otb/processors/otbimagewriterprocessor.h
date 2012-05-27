@@ -4,8 +4,8 @@
  *                                                                    *
  **********************************************************************/
 
-#ifndef VRN_IMAGEWRITERPROCESSOR_H
-#define VRN_IMAGEWRITERPROCESSOR_H
+#ifndef VRN_OTBIMAGEWRITERPROCESSOR_H
+#define VRN_OTBIMAGEWRITERPROCESSOR_H
 
 #include "voreen/core/processors/processor.h"
 #include "voreen/core/properties/filedialogproperty.h"
@@ -21,9 +21,9 @@
 
 namespace voreen {
 
-class ImageWriterProcessor : public Processor {
+class OTBImageWriterProcessor : public Processor {
 public:
-    ImageWriterProcessor();
+    OTBImageWriterProcessor();
     virtual Processor* create() const;
 
     virtual std::string getClassName() const { return "otbImageWriter"; }
@@ -111,4 +111,4 @@ private:
 
 } // namespace
 
-#endif // VRN_IMAGEWRITERPROCESSOR_H
+#endif // VRN_OTBIMAGEWRITERPROCESSOR_H

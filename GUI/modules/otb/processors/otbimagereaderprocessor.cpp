@@ -4,14 +4,14 @@
  *                                                                    *
  **********************************************************************/
 
-#include "imagereaderprocessor.h"
+#include "otbimagereaderprocessor.h"
 #include "voreen/core/voreenapplication.h"
 
 
 namespace voreen {
-const std::string ImageReaderProcessor::loggerCat_("voreen.OTBImageReaderProcessor");
+const std::string OTBImageReaderProcessor::loggerCat_("voreen.OTBImageReaderProcessor");
 
-ImageReaderProcessor::ImageReaderProcessor()
+OTBImageReaderProcessor::OTBImageReaderProcessor()
     : Processor(),
     outPort_(Port::OUTPORT, "outport", 0),
     imageFile_("imageFile", "Image File", "Image File", VoreenApplication::app()->getDataPath()),
@@ -19,8 +19,8 @@ ImageReaderProcessor::ImageReaderProcessor()
 {
     // register ports and properties
     addPort(outPort_);
-    imageFile_.onChange(CallMemberAction<ImageReaderProcessor>(this, &ImageReaderProcessor::loadImage));
-    clearImage_.onChange(CallMemberAction<ImageReaderProcessor>(this, &ImageReaderProcessor::clearImage));
+    imageFile_.onChange(CallMemberAction<OTBImageReaderProcessor>(this, &OTBImageReaderProcessor::loadImage));
+    clearImage_.onChange(CallMemberAction<OTBImageReaderProcessor>(this, &OTBImageReaderProcessor::clearImage));
     addProperty(imageFile_);
     addProperty(clearImage_);
     
@@ -28,21 +28,21 @@ ImageReaderProcessor::ImageReaderProcessor()
     reader = ReaderType::New();
 }
 
-ImageReaderProcessor::~ImageReaderProcessor() {
+OTBImageReaderProcessor::~OTBImageReaderProcessor() {
 
 }
 
-Processor* ImageReaderProcessor::create() const {
-    return new ImageReaderProcessor();
+Processor* OTBImageReaderProcessor::create() const {
+    return new OTBImageReaderProcessor();
 }
 
-void ImageReaderProcessor::initialize() throw (tgt::Exception) {
+void OTBImageReaderProcessor::initialize() throw (tgt::Exception) {
     Processor::initialize();
     setOutPortData();
     hasImage = false;
 }
 
-void ImageReaderProcessor::deinitialize() throw (tgt::Exception) {
+void OTBImageReaderProcessor::deinitialize() throw (tgt::Exception) {
 
     //outPort_.setData("");
     pDataOut_ = 0;
@@ -51,40 +51,40 @@ void ImageReaderProcessor::deinitialize() throw (tgt::Exception) {
     Processor::deinitialize();
 }
 
-bool ImageReaderProcessor::isReady() const {
+bool OTBImageReaderProcessor::isReady() const {
     return true;
 }
 
-bool ImageReaderProcessor::isEndProcessor() const {
+bool OTBImageReaderProcessor::isEndProcessor() const {
     return (!outPort_.isConnected());
 }
 
-void ImageReaderProcessor::setOutPortData(){
+void OTBImageReaderProcessor::setOutPortData(){
     //if (outPort_.isConnected()){
       pDataOut_ = reader->GetOutput();
       outPort_.setData(pDataOut_);
     //}
 }
 
-std::string ImageReaderProcessor::getProcessorInfo() const {
+std::string OTBImageReaderProcessor::getProcessorInfo() const {
     return "Open Image Data to Perform Processing";
 }
 
-void ImageReaderProcessor::readData() {
+void OTBImageReaderProcessor::readData() {
 
-    ImageReaderProcessor::updateView();
+    OTBImageReaderProcessor::updateView();
     
 }
 
-void ImageReaderProcessor::updateView() {
+void OTBImageReaderProcessor::updateView() {
     
 }
 
-void ImageReaderProcessor::process() {
+void OTBImageReaderProcessor::process() {
     
 }
 
-void ImageReaderProcessor::loadImage() {
+void OTBImageReaderProcessor::loadImage() {
 
     // necessary since the passed string reference might be changed during clearImage/invalidate,
     std::string filename = imageFile_.get();
@@ -109,7 +109,7 @@ void ImageReaderProcessor::loadImage() {
     //invalidate();
 }
 
-void ImageReaderProcessor::clearImage() {
+void OTBImageReaderProcessor::clearImage() {
 
     if (hasImage) {
         hasImage = false;
@@ -117,7 +117,7 @@ void ImageReaderProcessor::clearImage() {
     imageFile_.set("");
 }
 
-ImageReaderProcessor::ImagePointer const ImageReaderProcessor::getImage() const {
+OTBImageReaderProcessor::ImagePointer const OTBImageReaderProcessor::getImage() const {
     return pDataOut_;
 }
 

@@ -4,8 +4,8 @@
  *                                                                    *
  **********************************************************************/
 
-#ifndef VRN_IMAGEREADERPROCESSOR_H
-#define VRN_IMAGEREADERPROCESSOR_H
+#ifndef VRN_OTBIMAGEREADERPROCESSOR_H
+#define VRN_OTBIMAGEREADERPROCESSOR_H
 
 
 #include "voreen/core/processors/processor.h"
@@ -23,10 +23,10 @@ namespace voreen {
  * Loads an image file from disk and supplies the SmartPointer to it.
  */
   
-class ImageReaderProcessor : public Processor {
+class OTBImageReaderProcessor : public Processor {
 public:
-    ImageReaderProcessor();
-    virtual ~ImageReaderProcessor();
+    OTBImageReaderProcessor();
+    virtual ~OTBImageReaderProcessor();
     virtual Processor* create() const;
 
     virtual std::string getClassName() const { return "otbImageReader"; }
@@ -89,5 +89,5 @@ private:
 
 } // namespace
 
-#endif // VRN_IMAGEREADERPROCESSOR_H
+#endif // VRN_OTBIMAGEREADERPROCESSOR_H
 
