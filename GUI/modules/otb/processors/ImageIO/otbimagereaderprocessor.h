@@ -29,7 +29,7 @@ public:
     virtual ~OTBImageReaderProcessor();
     virtual Processor* create() const;
 
-    virtual std::string getClassName() const { return "otbImageReader"; }
+    virtual std::string getClassName() const { return "otbImageFileReader"; }
     virtual std::string getCategory() const  { return "Image IO"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; }
     

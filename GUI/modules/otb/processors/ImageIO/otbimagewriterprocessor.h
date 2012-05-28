@@ -26,7 +26,7 @@ public:
     OTBImageWriterProcessor();
     virtual Processor* create() const;
 
-    virtual std::string getClassName() const { return "otbImageWriter"; }
+    virtual std::string getClassName() const { return "otbImageFileWriter"; }
     virtual std::string getCategory() const  { return "Image IO"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; } //STABLE, TESTING, EXPERIMENTAL
     virtual std::string getProcessorInfo() const;

@@ -39,9 +39,9 @@ protected:
     virtual void bypass(OTBImagePort *inport, OTBImagePort *outport); ///< Passes the image from inport to outport without changes.
     virtual void initialize() throw (tgt::Exception);
     virtual void deinitialize() throw (tgt::Exception);
+    BoolProperty enableSwitch_; ///< Should be used to control if bypass or actual image processing is applied
 
 private:
-    BoolProperty enableSwitch_; ///< Should be used to control if bypass or actual image processing is applied
 
     static const std::string loggerCat_; ///< category used in logging
 };
