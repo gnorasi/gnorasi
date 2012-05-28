@@ -47,9 +47,30 @@ std::string OTBConvolutionImageFilterProcessor::getProcessorInfo() const {
 
 void OTBConvolutionImageFilterProcessor::process() {
 
+    //check bypass switch
     if (!enableSwitch_.get()){
         bypass(&inPort_, &outPort_);
         return;
+    }
+    
+    //Property validation
+    int rad = filterSize_.get();
+    int filternum = (2*rad+1)*(2*rad+1);
+    std::string line = kernel_.get();
+    int itemnum = 0;
+    std::istringstream linestream(line);
+    std::string item;
+    while (std::getline (linestream, item, ';'))
+    {
+        itemnum++;
+        //LINFO("Item "<< itemnum << ": " << item);
+    }
+    
+    if(filternum!=itemnum){
+	LWARNING("Kernel size does not match provided elements");
+	return;
+    }else{
+	LINFO("Kernel setup is OK");
     }
     
 }

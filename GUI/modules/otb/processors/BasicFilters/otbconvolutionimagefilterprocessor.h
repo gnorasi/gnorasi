@@ -37,12 +37,13 @@ protected:
     virtual void deinitialize() throw (tgt::Exception);
 
 private:
-  
-    OTBImagePort inPort_;
-    OTBImagePort outPort_;
 
     IntProperty filterSize_;
     StringProperty kernel_;
+
+    OTBImagePort inPort_;
+    OTBImagePort outPort_;
+
     
     static const std::string loggerCat_; ///< category used in logging
 };
