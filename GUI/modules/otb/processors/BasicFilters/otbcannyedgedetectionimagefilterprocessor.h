@@ -48,7 +48,7 @@ public:
     
     virtual Processor* create() const { return new OTBCannyEdgeDetectionImageFilterProcessor(); }
     
-    virtual std::string getCategory() const { return "Basic Filters"; }
+    virtual std::string getCategory() const { return "Edge Detection"; }
     virtual std::string getClassName() const { return "CannyEdgeDetectionFilter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     

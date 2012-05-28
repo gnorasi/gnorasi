@@ -26,34 +26,72 @@
  *                                                                    		*
  ********************************************************************************/
 
-#include "otbmodule.h"
-//#include "processors/dummysegmentationprocessor.h"
-#include "processors/ImageIO/otbimagereaderprocessor.h"
-#include "processors/ImageIO/otbimagewriterprocessor.h"
-#include "processors/BasicFilters/otbconvolutionimagefilterprocessor.h"
-#include "processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h"
-#include "processors/BasicFilters/otbcannyedgedetectionimagefilterprocessor.h"
 #include "otbsimpleviewerprocessor.h"
+#include "voreen/core/voreenapplication.h"
 
 namespace voreen {
 
-OTBModule::OTBModule() 
-    : VoreenModule()
+const std::string OTBSimpleViewerProcessor::loggerCat_("voreen.OTBSimpleViewerProcessor");
+  
+OTBSimpleViewerProcessor::OTBSimpleViewerProcessor()
+    : Processor(),
+    inPort_(Port::INPORT, "OTBImage.inport", 0),
+    outPort_(Port::OUTPORT, "OTBImage.outport", 0),
+    showImageButton_("showButton", "Show Image")
 {
-    // module name to be used in the GUI
-    setName("Orfeo Toolbox");
+    // register ports and properties
+    addPort(inPort_);
+    addPort(outPort_);
+    showImageButton_.onChange(CallMemberAction<OTBSimpleViewerProcessor>(this, &OTBSimpleViewerProcessor::showImage));
+    addProperty(showImageButton_);
     
-    // module description file
-    setXMLFileName("otb/otbmodule.xml");
+    //OTB initialization
+    viewer = ViewerType::New();
+}
 
-    // each module processor needs to be registered
-    //addProcessor(new DummySegmentationProcessor());
-    addProcessor(new OTBImageReaderProcessor());
-    addProcessor(new OTBImageWriterProcessor());
-    addProcessor(new OTBConvolutionImageFilterProcessor());
-    addProcessor(new OTBCannyEdgeDetectionImageFilterProcessor());
-    addProcessor(new OTBSimpleViewerProcessor());
-    //addProcessor(new OTBFFTConvolutionImageFilterProcessor()); TODO: Enable FFTW in OTB
+Processor* OTBSimpleViewerProcessor::create() const {
+    return new OTBSimpleViewerProcessor();
+}
+
+bool OTBSimpleViewerProcessor::isEndProcessor() const {
+    return (!outPort_.isConnected());
+}
+
+bool OTBSimpleViewerProcessor::isReady() const {
+    return (inPort_.isConnected());
+}
+
+std::string OTBSimpleViewerProcessor::getProcessorInfo() const {
+    return "Saves Image Data after Performing Processing";
+}
+
+void OTBSimpleViewerProcessor::initialize() throw (VoreenException) {
+    Processor::initialize();
+}
+
+void OTBSimpleViewerProcessor::deinitialize() throw (VoreenException) {
+    Processor::deinitialize();
+}
+
+void OTBSimpleViewerProcessor::process() {
+    
+    outPort->setData(inPort->getData());
+}
+
+void OTBSimpleViewerProcessor::showImage() {
+    
+    if(this->isReady())
+    {
+	viewer->SetImage(inPort->getData());
+	viewer->SetLabel("Simple Image Viewer");
+	viewer->Update();
+	//Fl::check();
+	Fl::run();
+	return;
+    }else{
+	LWARNING("Image Inport not connected");
+	return;
+    }
 }
 
 } // namespace

@@ -26,7 +26,7 @@
  *                                                                    		*
  ********************************************************************************/
 
-#include "otbcannyedgedetectionimagefilter.h"
+#include "otbcannyedgedetectionimagefilterprocessor.h"
 #include "voreen/core/voreenapplication.h"
 
 
