@@ -6,8 +6,9 @@
 
 #include "otbmodule.h"
 //#include "processors/dummysegmentationprocessor.h"
-#include "processors/otbimagereaderprocessor.h"
-#include "processors/otbimagewriterprocessor.h"
+#include "processors/ImageIO/otbimagereaderprocessor.h"
+#include "processors/ImageIO/otbimagewriterprocessor.h"
+#include "processors/BasicFilters/otbconvolutionimagefilterprocessor.h"
 
 namespace voreen {
 
@@ -24,6 +25,7 @@ OTBModule::OTBModule()
     //addProcessor(new DummySegmentationProcessor());
     addProcessor(new OTBImageReaderProcessor());
     addProcessor(new OTBImageWriterProcessor());
+    addProcessor(new OTBConvolutionImageFilterProcessor());
 }
 
 } // namespace
