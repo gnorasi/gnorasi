@@ -26,13 +26,13 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_OTBCONVOLUTIONIMAGEFILTERPROCESSOR_H
-#define VRN_OTBCONVOLUTIONIMAGEFILTERPROCESSOR_H
+#ifndef VRN_OTBFFTCONVOLUTIONIMAGEFILTERPROCESSOR_H
+#define VRN_OTBFFTCONVOLUTIONIMAGEFILTERPROCESSOR_H
 
 
 #include "voreen/core/properties/intproperty.h"
 #include "otbimagefilterprocessor.h"
-#include "otbConvolutionImageFilter.h"
+#include "otbOverlapSaveConvolutionImageFilter.h"
 #include "itkArray.h"
 
 namespace voreen {
@@ -42,20 +42,20 @@ namespace voreen {
  *
  */
   
-class OTBConvolutionImageFilterProcessor : public OTBImageFilterProcessor {
+class OTBFFTConvolutionImageFilterProcessor : public OTBImageFilterProcessor {
 public:
-    OTBConvolutionImageFilterProcessor();
-    virtual ~OTBConvolutionImageFilterProcessor();
+    OTBFFTConvolutionImageFilterProcessor();
+    virtual ~OTBFFTConvolutionImageFilterProcessor();
     
-    virtual Processor* create() const { return new OTBConvolutionImageFilterProcessor(); }
+    virtual Processor* create() const { return new OTBFFTConvolutionImageFilterProcessor(); }
     
     virtual std::string getCategory() const { return "Basic Filters"; }
-    virtual std::string getClassName() const { return "ConvolutionImageFilter"; }
+    virtual std::string getClassName() const { return "FFTConvolutionImageFilter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;
     
-    typedef otb::ConvolutionImageFilter<OTBImageFilterProcessor::ImageType,OTBImageFilterProcessor::ImageType> FilterType;
+    typedef otb::OverlapSaveConvolutionImageFilter<OTBImageFilterProcessor::ImageType,OTBImageFilterProcessor::ImageType> FilterType;
     FilterType::Pointer filter;
     typedef itk::Array<double> ArrayType;
     
@@ -79,4 +79,4 @@ private:
 
 } // namespace
 
-#endif // VRN_OTBCONVOLUTIONIMAGEFILTERPROCESSOR_H
+#endif // VRN_OTBFFTCONVOLUTIONIMAGEFILTERPROCESSOR_H

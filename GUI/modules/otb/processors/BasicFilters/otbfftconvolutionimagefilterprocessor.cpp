@@ -26,14 +26,14 @@
  *                                                                    		*
  ********************************************************************************/
 
-#include "otbconvolutionimagefilterprocessor.h"
+#include "otbfftconvolutionimagefilterprocessor.h"
 #include "voreen/core/voreenapplication.h"
 
 
 namespace voreen {
-const std::string OTBConvolutionImageFilterProcessor::loggerCat_("voreen.OTBConvolutionImageFilterProcessor");
+const std::string OTBFFTConvolutionImageFilterProcessor::loggerCat_("voreen.OTBFFTConvolutionImageFilterProcessor");
 
-OTBConvolutionImageFilterProcessor::OTBConvolutionImageFilterProcessor()
+OTBFFTConvolutionImageFilterProcessor::OTBFFTConvolutionImageFilterProcessor()
     : OTBImageFilterProcessor(),
     filterSize_("filterSize", "Filter Radius", 1),
     kernel_("kernel", "Filter Kernel in CSV", "1;1;1;1;1;1;1;1;1"),
@@ -49,26 +49,26 @@ OTBConvolutionImageFilterProcessor::OTBConvolutionImageFilterProcessor()
     filter = FilterType::New();
 }
 
-OTBConvolutionImageFilterProcessor::~OTBConvolutionImageFilterProcessor() {
+OTBFFTConvolutionImageFilterProcessor::~OTBFFTConvolutionImageFilterProcessor() {
 
 }
 
-void OTBConvolutionImageFilterProcessor::initialize() throw (tgt::Exception) {
+void OTBFFTConvolutionImageFilterProcessor::initialize() throw (tgt::Exception) {
 
     Processor::initialize();
 }
 
-void OTBConvolutionImageFilterProcessor::deinitialize() throw (tgt::Exception) {
+void OTBFFTConvolutionImageFilterProcessor::deinitialize() throw (tgt::Exception) {
 
     Processor::deinitialize();
 }
 
-std::string OTBConvolutionImageFilterProcessor::getProcessorInfo() const {
+std::string OTBFFTConvolutionImageFilterProcessor::getProcessorInfo() const {
     
-    return "Fast Fourier Transform Convolution Filtering Processor";
+    return "Convolution Filtering Processor";
 }
 
-void OTBConvolutionImageFilterProcessor::process() {
+void OTBFFTConvolutionImageFilterProcessor::process() {
 
     //check bypass switch
     if (!enableSwitch_.get()){

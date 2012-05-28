@@ -51,9 +51,9 @@ public:
     virtual ~OTBImageReaderProcessor();
     virtual Processor* create() const;
 
-    virtual std::string getClassName() const { return "otbImageFileReader"; }
+    virtual std::string getClassName() const { return "ImageFileReader"; }
     virtual std::string getCategory() const  { return "Image IO"; }
-    virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; }
+    virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     typedef double                   PixelType;
     typedef otb::Image<PixelType, 2> ImageType;

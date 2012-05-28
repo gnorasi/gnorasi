@@ -121,6 +121,7 @@ INCLUDEPATH += /usr/include/otb/Utilities/ITK/Common
 INCLUDEPATH += /usr/include/otb/Utilities/ITK
 INCLUDEPATH += /usr/include/otb/Utilities/ITK/IO
 INCLUDEPATH += /usr/include/otb/Utilities/ITK/BasicFilters
+INCLUDEPATH += /usr/include/otb/Utilities/ITK/Algorithms
 INCLUDEPATH += /usr/include/otb/Utilities/ITK/Review
 INCLUDEPATH += /usr/include/otb/Utilities/ITK/Utilities
 INCLUDEPATH += /usr/include/otb/Utilities/ITK/Utilities/vxl/vcl
