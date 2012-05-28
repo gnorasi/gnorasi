@@ -24,6 +24,7 @@ OTBConvolutionImageFilterProcessor::OTBConvolutionImageFilterProcessor()
     addPort(inPort_);
     addPort(outPort_);
     
+    filter = FilterType::New();
 }
 
 OTBConvolutionImageFilterProcessor::~OTBConvolutionImageFilterProcessor() {
@@ -54,16 +55,30 @@ void OTBConvolutionImageFilterProcessor::process() {
     }
     
     //Property validation
+    
     int rad = filterSize_.get();
     int filternum = (2*rad+1)*(2*rad+1);
+    ArrayType array(filternum);
     std::string line = kernel_.get();
     int itemnum = 0;
     std::istringstream linestream(line);
     std::string item;
-    while (std::getline (linestream, item, ';'))
+    try
     {
-        itemnum++;
-        //LINFO("Item "<< itemnum << ": " << item);
+	while (std::getline (linestream, item, ';'))
+	{
+	    double temp = (double)atof(item.c_str());
+	    //LINFO("Testing kernel element: " << temp);
+	    if(itemnum<filternum){
+		array.SetElement(itemnum,temp);
+	    }
+	    itemnum++;
+	}
+    }
+    catch (int e)
+    {
+	LERROR("Problem converting kernel element to number!");
+	return;
     }
     
     if(filternum!=itemnum){
@@ -72,6 +87,10 @@ void OTBConvolutionImageFilterProcessor::process() {
     }else{
 	LINFO("Kernel setup is OK");
     }
+    
+    filter->SetFilter(array);
+    filter->SetInput(inPort_.getData());
+    outPort_.setData(filter->GetOutput());
     
 }
 

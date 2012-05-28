@@ -10,6 +10,8 @@
 
 #include "voreen/core/properties/intproperty.h"
 #include "otbimagefilterprocessor.h"
+#include "otbConvolutionImageFilter.h"
+#include "itkArray.h"
 
 namespace voreen {
 
@@ -30,6 +32,11 @@ public:
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }
     
     virtual std::string getProcessorInfo() const;
+    
+    typedef otb::ConvolutionImageFilter<OTBImageFilterProcessor::ImageType,OTBImageFilterProcessor::ImageType> FilterType;
+    FilterType::Pointer filter;
+    typedef itk::Array<double> ArrayType;
+    
 
 protected:
     void process();
