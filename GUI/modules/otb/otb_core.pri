@@ -3,14 +3,16 @@ SOURCES += \
 $${VRN_MODULE_DIR}/otb/processors/ImageIO/otbimagereaderprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/ImageIO/otbimagewriterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbimagefilterprocessor.cpp \
-$${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbconvolutionimagefilterprocessor.cpp
+$${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbconvolutionimagefilterprocessor.cpp \
+$${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbfftconvolutionimagefilterprocessor.cpp
 
 # processor headers
 HEADERS += \
 $${VRN_MODULE_DIR}/otb/processors/ImageIO/otbimagereaderprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/ImageIO/otbimagewriterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbimagefilterprocessor.h \
-$${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbconvolutionimagefilterprocessor.h
+$${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbconvolutionimagefilterprocessor.h \
+$${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h
 
 # port sources
 SOURCES += \
