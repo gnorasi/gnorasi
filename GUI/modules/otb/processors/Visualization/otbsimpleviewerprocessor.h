@@ -26,34 +26,59 @@
  *                                                                    		*
  ********************************************************************************/
 
-#include "otbmodule.h"
-//#include "processors/dummysegmentationprocessor.h"
-#include "processors/ImageIO/otbimagereaderprocessor.h"
-#include "processors/ImageIO/otbimagewriterprocessor.h"
-#include "processors/BasicFilters/otbconvolutionimagefilterprocessor.h"
-#include "processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h"
-#include "processors/BasicFilters/otbcannyedgedetectionimagefilterprocessor.h"
-#include "otbsimpleviewerprocessor.h"
+#ifndef VRN_OTBSIMPLEVIEWERPROCESSOR_H
+#define VRN_OTBSIMPLEVIEWERPROCESSOR_H
+
+#include "voreen/core/processors/processor.h"
+#include "voreen/core/properties/buttonproperty.h"
+#include "../../ports/otbimageport.h"
+#include "otbImage.h"
+#include "otbStandardImageViewer.h"
 
 namespace voreen {
 
-OTBModule::OTBModule() 
-    : VoreenModule()
-{
-    // module name to be used in the GUI
-    setName("Orfeo Toolbox");
-    
-    // module description file
-    setXMLFileName("otb/otbmodule.xml");
+class OTBSimpleViewerProcessor : public Processor {
+public:
+    OTBSimpleViewerProcessor();
+    virtual Processor* create() const;
 
-    // each module processor needs to be registered
-    //addProcessor(new DummySegmentationProcessor());
-    addProcessor(new OTBImageReaderProcessor());
-    addProcessor(new OTBImageWriterProcessor());
-    addProcessor(new OTBConvolutionImageFilterProcessor());
-    addProcessor(new OTBCannyEdgeDetectionImageFilterProcessor());
-    addProcessor(new OTBSimpleViewerProcessor());
-    //addProcessor(new OTBFFTConvolutionImageFilterProcessor()); TODO: Enable FFTW in OTB
-}
+    virtual std::string getClassName() const { return "SimpleImageViewer"; }
+    virtual std::string getCategory() const  { return "Visualization"; }
+    virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; } //STABLE, TESTING, EXPERIMENTAL
+    virtual std::string getProcessorInfo() const;
+    
+    virtual bool isEndProcessor() const;
+    virtual bool isReady() const;
+    
+    typedef double                   DoublePixelType;
+    typedef otb::Image<DoublePixelType, 2> ImageType;
+    typedef ImageType* 		     ImagePointer;
+    typedef otb::StandardImageViewer<ImageType> ViewerType;
+    ViewerType::Pointer viewer;
+    
+     /**
+     * Shows the image.
+     *
+     * @note The processor must have been initialized
+     *       before calling this function.
+     */
+    void showImage();
+    
+    
+protected:
+    virtual void process();
+    virtual void initialize() throw (VoreenException);
+    virtual void deinitialize() throw (VoreenException);
+
+private:
+  
+    OTBImagePort inPort_;
+    OTBImagePort outPort_;		///< passes the image directly to a next processor
+    ButtonProperty showImageButton_;    ///< shows the image.
+    
+    static const std::string loggerCat_; ///< category used in logging
+};
 
 } // namespace
+
+#endif // VRN_OTBSIMPLEVIEWERPROCESSOR_H
