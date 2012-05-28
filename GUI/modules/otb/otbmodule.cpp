@@ -32,6 +32,7 @@
 #include "processors/ImageIO/otbimagewriterprocessor.h"
 #include "processors/BasicFilters/otbconvolutionimagefilterprocessor.h"
 #include "processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h"
+#include "processors/BasicFilters/otbcannyedgedetectionimagefilter.h"
 
 namespace voreen {
 
@@ -49,6 +50,7 @@ OTBModule::OTBModule()
     addProcessor(new OTBImageReaderProcessor());
     addProcessor(new OTBImageWriterProcessor());
     addProcessor(new OTBConvolutionImageFilterProcessor());
+    addProcessor(new OTBCannyEdgeDetectionImageFilterProcessor());
     //addProcessor(new OTBFFTConvolutionImageFilterProcessor()); TODO: Enable FFTW in OTB
 }
 
