@@ -162,6 +162,8 @@ void OTBImageWriterProcessor::saveImage() {
 	LWARNING("Image Name Not Set");
 	return;
     }
+
+    LINFO("Image written succesfully!");
     
 }
 
