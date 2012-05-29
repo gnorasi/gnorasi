@@ -1,6 +1,7 @@
 # processor sources
 SOURCES += \
 $${VRN_MODULE_DIR}/otb/processors/ImageIO/otbimagereaderprocessor.cpp \
+$${VRN_MODULE_DIR}/otb/processors/ImageIO/otbvectorimagereaderprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/ImageIO/otbimagewriterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbimagefilterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbconvolutionimagefilterprocessor.cpp \
@@ -16,6 +17,7 @@ $${VRN_MODULE_DIR}/otb/processors/Visualization/otbsimpleviewerprocessor.cpp
 # processor headers
 HEADERS += \
 $${VRN_MODULE_DIR}/otb/processors/ImageIO/otbimagereaderprocessor.h \
+$${VRN_MODULE_DIR}/otb/processors/ImageIO/otbvectorimagereaderprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/ImageIO/otbimagewriterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbimagefilterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbconvolutionimagefilterprocessor.h \
