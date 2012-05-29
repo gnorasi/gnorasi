@@ -35,6 +35,7 @@
 #include "processors/BasicFilters/otbcannyedgedetectionimagefilterprocessor.h"
 #include "processors/BasicFilters/otbmeanimagefilterprocessor.h"
 #include "processors/BasicFilters/otbmedianimagefilterprocessor.h"
+#include "processors/BasicFilters/otbsobelimagefilterprocessor.h"
 #include "processors/Visualization/otbsimpleviewerprocessor.h"
 
 
@@ -58,6 +59,7 @@ OTBModule::OTBModule()
     addProcessor(new OTBSimpleViewerProcessor());
     addProcessor(new OTBMeanImageFilterProcessor());
     addProcessor(new OTBMedianImageFilterProcessor());
+    addProcessor(new OTBSobelImageFilterProcessor());
     //addProcessor(new OTBFFTConvolutionImageFilterProcessor()); TODO: Enable FFTW in OTB
 }
 
