@@ -74,7 +74,7 @@ public:
      /**
      * Returns the currently assigned image pointer.
      */
-    const ImagePointer getImage() const;
+    ImagePointer getImage();
     
     //virtual bool usesExpensiveComputation() const { return true; }
     virtual bool isEndProcessor() const;
