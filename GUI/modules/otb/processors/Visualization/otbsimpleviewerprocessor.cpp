@@ -46,7 +46,14 @@ OTBSimpleViewerProcessor::OTBSimpleViewerProcessor()
     addProperty(showImageButton_);
     
     //OTB initialization
-    viewer = ViewerType::New();
+
+    
+}
+
+OTBSimpleViewerProcessor::~OTBSimpleViewerProcessor() {
+    //inPort_.setData(0);
+    //outPort_.setData(0);
+
 }
 
 Processor* OTBSimpleViewerProcessor::create() const {
@@ -74,19 +81,24 @@ void OTBSimpleViewerProcessor::deinitialize() throw (VoreenException) {
 }
 
 void OTBSimpleViewerProcessor::process() {
-    
-    outPort_.setData(inPort_.getData());
+    if(!isEndProcessor()){
+	outPort_.setData(inPort_.getData());
+    }
 }
 
 void OTBSimpleViewerProcessor::showImage() {
     
     if(this->isReady())
     {
-        viewer->SetImage(inPort_.getData());
+        viewer = ViewerType::New();
+	viewer->SetImage(inPort_.getData());
 	viewer->SetLabel("Simple Image Viewer");
 	viewer->Update();
 	//Fl::check();
 	Fl::run();
+        Fl::flush();
+	Fl::release();
+        viewer->Delete();
 	return;
     }else{
 	LWARNING("Image Inport not connected");
