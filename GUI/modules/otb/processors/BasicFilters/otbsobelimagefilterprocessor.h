@@ -36,11 +36,6 @@
 
 
 namespace voreen {
-
-/**
- * Base class for image filter processors.
- *
- */
   
 class OTBSobelImageFilterProcessor : public OTBImageFilterProcessor {
 public:

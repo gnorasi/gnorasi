@@ -26,33 +26,33 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_OTBMEANIMAGEFILTERPROCESSOR_H
-#define VRN_OTBMEANIMAGEFILTERPROCESSOR_H
+#ifndef VRN_OTBGRADIENTANISOTROPICDIFFUSIONFILTERPROCESSOR_H
+#define VRN_OTBGRADIENTANISOTROPICDIFFUSIONFILTERPROCESSOR_H
 
 
 #include "voreen/core/properties/intproperty.h"
+#include "voreen/core/properties/floatproperty.h"
 #include "otbimagefilterprocessor.h"
-#include "itkMeanImageFilter.h"
-
+#include "itkGradientAnisotropicDiffusionImageFilter.h"
 
 namespace voreen {
-  
-class OTBMeanImageFilterProcessor : public OTBImageFilterProcessor {
+
+class OTBGradientAnisotropicDiffusionFilterProcessor : public OTBImageFilterProcessor {
 public:
-    OTBMeanImageFilterProcessor();
-    virtual ~OTBMeanImageFilterProcessor();
+    OTBGradientAnisotropicDiffusionFilterProcessor();
+    virtual ~OTBGradientAnisotropicDiffusionFilterProcessor();
     
-    virtual Processor* create() const { return new OTBMeanImageFilterProcessor(); }
+    virtual Processor* create() const { return new OTBGradientAnisotropicDiffusionFilterProcessor(); }
     
-    virtual std::string getCategory() const { return "Basic Filters"; }
-    virtual std::string getClassName() const { return "MeanImageFilter"; }
+    virtual std::string getCategory() const { return "Anisotropic Diffusion"; }
+    virtual std::string getClassName() const { return "GradientAnisotropicDiffusion"; }
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;
     
-    typedef itk::MeanImageFilter<OTBImageFilterProcessor::ImageType,OTBImageFilterProcessor::ImageType> FilterType;
+    typedef itk::GradientAnisotropicDiffusionImageFilter<OTBImageFilterProcessor::ImageType,
+					      OTBImageFilterProcessor::ImageType> FilterType;
     FilterType::Pointer filter;
-        
 
 protected:
     void process();
@@ -61,8 +61,10 @@ protected:
 
 private:
 
-    IntProperty filterSize_;
-    
+    IntProperty numberOfIterations_;
+    FloatProperty timeStep_;
+    FloatProperty conductance_;
+
     OTBImagePort inPort_;
     OTBImagePort outPort_;
 
@@ -72,4 +74,4 @@ private:
 
 } // namespace
 
-#endif // VRN_OTBMEANIMAGEFILTERPROCESSOR_H
+#endif // VRN_OTBGRADIENTANISOTROPICDIFFUSIONFILTERPROCESSOR_H
