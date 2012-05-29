@@ -75,14 +75,14 @@ void OTBSimpleViewerProcessor::deinitialize() throw (VoreenException) {
 
 void OTBSimpleViewerProcessor::process() {
     
-    outPort->setData(inPort->getData());
+    outPort_.setData(inPort_.getData());
 }
 
 void OTBSimpleViewerProcessor::showImage() {
     
     if(this->isReady())
     {
-	viewer->SetImage(inPort->getData());
+        viewer->SetImage(inPort_.getData());
 	viewer->SetLabel("Simple Image Viewer");
 	viewer->Update();
 	//Fl::check();

@@ -33,7 +33,7 @@
 #include "processors/BasicFilters/otbconvolutionimagefilterprocessor.h"
 #include "processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h"
 #include "processors/BasicFilters/otbcannyedgedetectionimagefilterprocessor.h"
-#include "otbsimpleviewerprocessor.h"
+#include "processors/Visualization/otbsimpleviewerprocessor.h"
 
 namespace voreen {
 
