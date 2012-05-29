@@ -139,7 +139,7 @@ void OTBImageReaderProcessor::clearImage() {
     imageFile_.set("");
 }
 
-OTBImageReaderProcessor::ImagePointer const OTBImageReaderProcessor::getImage() const {
+OTBImageReaderProcessor::ImagePointer OTBImageReaderProcessor::getImage() {
     return pDataOut_;
 }
 
