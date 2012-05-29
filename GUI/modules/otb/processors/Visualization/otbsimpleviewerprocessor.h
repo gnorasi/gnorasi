@@ -40,6 +40,7 @@ namespace voreen {
 class OTBSimpleViewerProcessor : public Processor {
 public:
     OTBSimpleViewerProcessor();
+    virtual ~OTBSimpleViewerProcessor();
     virtual Processor* create() const;
 
     virtual std::string getClassName() const { return "SimpleImageViewer"; }
