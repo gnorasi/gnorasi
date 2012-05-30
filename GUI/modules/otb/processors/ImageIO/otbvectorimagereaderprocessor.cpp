@@ -35,16 +35,26 @@ const std::string OTBVectorImageReaderProcessor::loggerCat_("voreen.OTBVectorIma
 
 OTBVectorImageReaderProcessor::OTBVectorImageReaderProcessor()
     : Processor(),
-    outPort_(Port::OUTPORT, "OTBMultibandImage.outport", 0),
+    outPort_(Port::OUTPORT, "MultibandImage", 0),
+    outPort2_(Port::OUTPORT, "SingleBandImage", 0),
     imageFile_("imageFile", "Image File", "Image File", VoreenApplication::app()->getDataPath()),
-    clearImage_("clearButton", "Clear Image")
+    clearImage_("clearButton", "Clear Image"),
+    enableSingleBand_("enableSignleBand", "Select Output Single Band", false),
+    outputBand_("outputBand", "Band number", 1)
 {
     // register ports and properties
     addPort(outPort_);
+    addPort(outPort2_);
     imageFile_.onChange(CallMemberAction<OTBVectorImageReaderProcessor>(this, &OTBVectorImageReaderProcessor::loadImage));
     clearImage_.onChange(CallMemberAction<OTBVectorImageReaderProcessor>(this, &OTBVectorImageReaderProcessor::clearImage));
     addProperty(imageFile_);
     addProperty(clearImage_);
+    enableSingleBand_.onChange(CallMemberAction<OTBVectorImageReaderProcessor>(this, 
+					&OTBVectorImageReaderProcessor::setSingleBandData));
+    outputBand_.onChange(CallMemberAction<OTBVectorImageReaderProcessor>(this, 
+					&OTBVectorImageReaderProcessor::setSingleBandData));
+    addProperty(enableSingleBand_);
+    addProperty(outputBand_);
     
     //OTB stuff
     reader = ReaderType::New();
@@ -82,10 +92,9 @@ bool OTBVectorImageReaderProcessor::isEndProcessor() const {
 }
 
 void OTBVectorImageReaderProcessor::setOutPortData(){
-    //if (outPort_.isConnected()){
       pDataOut_ = reader->GetOutput();
       outPort_.setData(pDataOut_);
-    //}
+    
 }
 
 std::string OTBVectorImageReaderProcessor::getProcessorInfo() const {
@@ -103,6 +112,38 @@ void OTBVectorImageReaderProcessor::updateView() {
 }
 
 void OTBVectorImageReaderProcessor::process() {
+    
+}
+
+void OTBVectorImageReaderProcessor::setSingleBandData() {
+    
+    if(hasImage && enableSingleBand_.get()){ //Image is loaded and single band output enabled 
+	reader->GenerateOutputInformation();
+	int bands = reader->GetOutput()->GetNumberOfComponentsPerPixel();
+	LINFO("Image has " << bands << " bands.");
+	imageList = VectorImageToImageListType::New();
+	imageList->SetInput(reader->GetOutput());
+	imageList->UpdateOutputInformation();
+	
+	if(outputBand_.get() <= bands && outputBand_.get() > 0){
+            outPort2_.setData(imageList->GetOutput()->GetNthElement(outputBand_.get()-1));
+	}
+	else{
+	    LWARNING("Selected band is out of range. Please select another value.");
+	    return;
+	}
+    }
+    else if(!hasImage){
+	LWARNING("Image not loaded!");
+	return;
+    }
+    else if(!enableSingleBand_.get()){
+	LWARNING("Single Band Output not enabled.");
+	return;
+    }
+    else{
+	return;
+    }
     
 }
 
@@ -139,7 +180,7 @@ void OTBVectorImageReaderProcessor::clearImage() {
     imageFile_.set("");
 }
 
-OTBVectorImageReaderProcessor::ImagePointer OTBVectorImageReaderProcessor::getImage() {
+OTBVectorImageReaderProcessor::VectorImagePointer OTBVectorImageReaderProcessor::getImage() {
     return pDataOut_;
 }
 
