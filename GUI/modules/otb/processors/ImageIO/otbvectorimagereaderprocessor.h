@@ -35,8 +35,10 @@
 #include "voreen/core/properties/buttonproperty.h"
 #include "voreen/core/properties/stringproperty.h"
 #include "../../ports/otbvectorimageport.h"
+#include "../../ports/otbimageport.h"
 #include "otbVectorImage.h"
 #include "otbImageFileReader.h"
+#include "otbVectorImageToImageListFilter.h"
 
 
 namespace voreen {
@@ -56,10 +58,15 @@ public:
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     typedef double                   PixelType;
-    typedef otb::VectorImage<PixelType, 2> ImageType;
-    typedef ImageType* 		     ImagePointer;
-    typedef otb::ImageFileReader<ImageType> ReaderType;
+    typedef otb::Image<PixelType, 2> ImageType;
+    typedef otb::VectorImage<PixelType, 2> VectorImageType;
+    typedef otb::ImageList<ImageType>      ImageListType;
+    typedef VectorImageType* 		   VectorImagePointer;
+    typedef otb::VectorImageToImageListFilter<VectorImageType, ImageListType>
+				    VectorImageToImageListType;
+    typedef otb::ImageFileReader<VectorImageType> ReaderType;
     ReaderType::Pointer reader;
+    VectorImageToImageListType::Pointer imageList;
     
         /**
      * Loads the image specified by filename.
@@ -74,7 +81,7 @@ public:
      /**
      * Returns the currently assigned image pointer.
      */
-    ImagePointer getImage();
+    VectorImagePointer getImage();
     
     //virtual bool usesExpensiveComputation() const { return true; }
     virtual bool isEndProcessor() const;
@@ -93,6 +100,7 @@ private:
     void readData();
     void updateView();
     bool hasImage;
+    void setSingleBandData();
     
     /**
      * Clears the loaded image. Processor needs to be initialized when calling this function.
@@ -100,11 +108,14 @@ private:
     void clearImage();
 
     OTBVectorImagePort outPort_;
+    OTBImagePort outPort2_;
     
     FileDialogProperty imageFile_;  ///< Path of the loaded image file.
     ButtonProperty clearImage_;      ///< Executes clearImage().
+    BoolProperty enableSingleBand_;	     ///< Enables single band output.
+    IntProperty outputBand_;	     ///< Output band selector
 
-    ImagePointer pDataOut_;
+    VectorImagePointer pDataOut_;
 
     static const std::string loggerCat_; ///< category used in logging
 };
