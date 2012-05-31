@@ -45,7 +45,7 @@ public:
     virtual Processor* create() const { return new OTBSobelImageFilterProcessor(); }
     
     virtual std::string getCategory() const { return "Edge Detection"; }
-    virtual std::string getClassName() const { return "SobelImageFilter"; }
+    virtual std::string getClassName() const { return "Sobel Image Filter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;

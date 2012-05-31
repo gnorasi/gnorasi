@@ -50,7 +50,7 @@ public:
     virtual Processor* create() const { return new OTBConvolutionImageFilterProcessor(); }
     
     virtual std::string getCategory() const { return "Basic Filters"; }
-    virtual std::string getClassName() const { return "ConvolutionImageFilter"; }
+    virtual std::string getClassName() const { return "Convolution Image Filter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;

@@ -45,7 +45,7 @@ public:
     virtual Processor* create() const { return new OTBMeanImageFilterProcessor(); }
     
     virtual std::string getCategory() const { return "Basic Filters"; }
-    virtual std::string getClassName() const { return "MeanImageFilter"; }
+    virtual std::string getClassName() const { return "Mean Image Filter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;

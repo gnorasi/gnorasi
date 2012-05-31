@@ -4,6 +4,7 @@ $${VRN_MODULE_DIR}/otb/processors/ImageIO/otbimagereaderprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/ImageIO/otblabelimagereaderprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/ImageIO/otbvectorimagereaderprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/ImageIO/otbimagewriterprocessor.cpp \
+$${VRN_MODULE_DIR}/otb/processors/ImageIO/otblabelimagewriterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbimagefilterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbconvolutionimagefilterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbfftconvolutionimagefilterprocessor.cpp \
@@ -22,6 +23,7 @@ $${VRN_MODULE_DIR}/otb/processors/ImageIO/otbimagereaderprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/ImageIO/otblabelimagereaderprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/ImageIO/otbvectorimagereaderprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/ImageIO/otbimagewriterprocessor.h \
+$${VRN_MODULE_DIR}/otb/processors/ImageIO/otblabelimagewriterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbimagefilterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbconvolutionimagefilterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h \ 
