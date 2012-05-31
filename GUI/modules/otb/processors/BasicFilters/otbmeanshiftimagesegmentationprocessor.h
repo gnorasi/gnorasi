@@ -48,7 +48,7 @@ public:
     virtual Processor* create() const { return new OTBMeanShiftSegmentationProcessor(); }
     
     virtual std::string getCategory() const { return "Image Segmentation"; }
-    virtual std::string getClassName() const { return "MeanShiftSegmentation"; }
+    virtual std::string getClassName() const { return "Mean Shift Image Segmentation"; }
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;
