@@ -26,61 +26,46 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_OTBMEANSHIFTSEGMENTATIONPROCESSOR_H
-#define VRN_OTBMEANSHIFTSEGMENTATIONPROCESSOR_H
+#ifndef VRN_OTBLABELIMAGEPORT_H
+#define VRN_OTBLABELIMAGEPORT_H
 
-
-#include "voreen/core/properties/floatproperty.h"
-#include "voreen/core/properties/intproperty.h"
-#include "otbimagefilterprocessor.h"
-#include "otbMeanShiftVectorImageFilter.h"
-#include "../../ports/otbvectorimageport.h"
-#include "../../ports/otblabelimageport.h"
-#include "otbVectorImage.h"
+#include "voreen/core/voreencoredefine.h"
+#include "voreen/core/ports/port.h"
+#include "otbImage.h"
 
 namespace voreen {
-  
-class OTBMeanShiftSegmentationProcessor : public OTBImageFilterProcessor {
+
+class VRN_CORE_API OTBLabelImagePort : public Port {
 public:
-    OTBMeanShiftSegmentationProcessor();
-    virtual ~OTBMeanShiftSegmentationProcessor();
+    explicit OTBLabelImagePort(PortDirection direction, const std::string& name,
+                        bool allowMultipleConnections = false,
+                        Processor::InvalidationLevel invalidationLevel = Processor::INVALID_PARAMETERS);
+    ~OTBLabelImagePort();
     
-    virtual Processor* create() const { return new OTBMeanShiftSegmentationProcessor(); }
-    
-    virtual std::string getCategory() const { return "Image Segmentation"; }
-    virtual std::string getClassName() const { return "MeanShiftSegmentation"; }
-    virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
-    
-    virtual std::string getProcessorInfo() const;
-    
-    typedef otb::VectorImage<double, 2> VectorImageType;
-    typedef otb::Image<unsigned int, 2> LabeledImageType;
-    typedef otb::MeanShiftVectorImageFilter<VectorImageType, VectorImageType, LabeledImageType> FilterType;
-    FilterType::Pointer filter;
-    
+    typedef otb::Image<unsigned int, 2> ImageType;
+    typedef ImageType::Pointer ImageSmartPointer;
+    typedef ImageType* ImagePointer;
+
+    virtual void setData(const ImagePointer& pointer);
+
+    virtual ImagePointer getData() const;
+
+    /// Returns true.
+    virtual bool hasData() const;
+
+    std::vector<const OTBLabelImagePort* > getConnected() const;
+
+    /**
+     * Returns true, if the port is connected
+     */
+    virtual bool isReady() const;
+
 protected:
-    void process();
-    virtual void initialize() throw (tgt::Exception);
-    virtual void deinitialize() throw (tgt::Exception);
-    virtual void bypass(OTBVectorImagePort *inport, OTBVectorImagePort *outport); ///< Passes the image from inport to outport without changes.
+    ImagePointer portData_;
 
-private:
-
-    IntProperty spatialRadius_; 
-    FloatProperty rangeRadius_;
-    IntProperty minRegionSize_; 
-    FloatProperty scale_;
-
-    OTBVectorImagePort inPort_;
-    OTBVectorImagePort outPort_;
-    OTBVectorImagePort outPort2_;
-    OTBLabelImagePort outPort3_;
-    OTBLabelImagePort outPort4_;
-    OTBVectorImagePort outPort5_;
-    
     static const std::string loggerCat_; ///< category used in logging
 };
 
 } // namespace
 
-#endif // VRN_OTBMEANSHIFTSEGMENTATIONPROCESSOR_H
+#endif // VRN_OTBLABELIMAGEPORT_H

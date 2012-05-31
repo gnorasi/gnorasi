@@ -43,7 +43,8 @@ OTBMeanShiftSegmentationProcessor::OTBMeanShiftSegmentationProcessor()
     outPort_(Port::OUTPORT, "FilteredMultiBandImage", 0),
     outPort2_(Port::OUTPORT, "ClusteredMultiBandImage", 0),
     outPort3_(Port::OUTPORT, "LabeledImage", 0),
-    outPort4_(Port::OUTPORT, "BoundaryImage", 0)
+    outPort4_(Port::OUTPORT, "BoundaryImage", 0),
+    outPort5_(Port::OUTPORT, "InitialImage", 0)
 {
     addProperty(enableSwitch_);
     addProperty(spatialRadius_);
@@ -55,6 +56,7 @@ OTBMeanShiftSegmentationProcessor::OTBMeanShiftSegmentationProcessor()
     addPort(outPort2_);
     addPort(outPort3_);
     addPort(outPort4_);
+    addPort(outPort5_);
     
     filter = FilterType::New();
 }
@@ -97,6 +99,7 @@ void OTBMeanShiftSegmentationProcessor::process() {
 	outPort2_.setData(filter->GetClusteredOutput());
 	outPort3_.setData(filter->GetLabeledClusteredOutput());
 	outPort4_.setData(filter->GetClusterBoundariesOutput());
+	outPort5_.setData(inPort_.getData());
 	
 	LINFO("Mean Shift Segmentation Sucesfull!");
     }
