@@ -29,6 +29,7 @@
 #include "otbmodule.h"
 //#include "processors/dummysegmentationprocessor.h"
 #include "processors/ImageIO/otbimagereaderprocessor.h"
+#include "processors/ImageIO/otblabelimagereaderprocessor.h"
 #include "processors/ImageIO/otbvectorimagereaderprocessor.h"
 #include "processors/ImageIO/otbimagewriterprocessor.h"
 #include "processors/BasicFilters/otbconvolutionimagefilterprocessor.h"
@@ -56,6 +57,7 @@ OTBModule::OTBModule()
     // each module processor needs to be registered
     //addProcessor(new DummySegmentationProcessor());
     addProcessor(new OTBImageReaderProcessor());
+    addProcessor(new OTBLabelImageReaderProcessor());
     addProcessor(new OTBVectorImageReaderProcessor());
     addProcessor(new OTBImageWriterProcessor());
     addProcessor(new OTBConvolutionImageFilterProcessor());
