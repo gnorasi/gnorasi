@@ -27,7 +27,7 @@
  ********************************************************************************/
 
 #include "otbmodule.h"
-//#include "processors/dummysegmentationprocessor.h"
+
 #include "processors/ImageIO/otbimagereaderprocessor.h"
 #include "processors/ImageIO/otblabelimagereaderprocessor.h"
 #include "processors/ImageIO/otbvectorimagereaderprocessor.h"

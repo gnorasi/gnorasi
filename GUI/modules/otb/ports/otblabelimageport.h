@@ -42,7 +42,7 @@ public:
                         Processor::InvalidationLevel invalidationLevel = Processor::INVALID_PARAMETERS);
     ~OTBLabelImagePort();
     
-    typedef otb::Image<long int, 2> ImageType;
+    typedef otb::Image<unsigned long, 2> ImageType;
     typedef ImageType::Pointer ImageSmartPointer;
     typedef ImageType* ImagePointer;
 

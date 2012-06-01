@@ -55,7 +55,7 @@ public:
     virtual std::string getCategory() const  { return "Image IO"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
-    typedef long int             PixelType;
+    typedef unsigned long             PixelType;
     typedef otb::Image<PixelType, 2> ImageType;
     typedef ImageType* 		     ImagePointer;
     typedef otb::ImageFileReader<ImageType> ReaderType;
