@@ -26,49 +26,58 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_OTBIMAGEFILTERPROCESSOR_H
-#define VRN_OTBIMAGEFILTERPROCESSOR_H
-
-
-#include "voreen/core/processors/processor.h"
-#include "voreen/core/properties/filedialogproperty.h"
-#include "voreen/core/properties/buttonproperty.h"
-#include "voreen/core/properties/stringproperty.h"
-#include "voreen/core/properties/boolproperty.h"
-#include "../../ports/otbimageport.h"
-#include "otbImage.h"
-
+#include "otblabelimagetolabelmapprocessor.h"
+#include "voreen/core/voreenapplication.h"
 
 
 namespace voreen {
+const std::string OTBLabelImageToLabelMapProcessor::loggerCat_("voreen.OTBLabelImageToLabelMapProcessor");
 
-/**
- * Base class for image filter processors.
- *
- */
-  
-class OTBImageFilterProcessor : public Processor {
-public:
-    OTBImageFilterProcessor();
-    virtual ~OTBImageFilterProcessor();
+OTBLabelImageToLabelMapProcessor::OTBLabelImageToLabelMapProcessor()
+    : Processor(),
+    inPort_(Port::INPORT, "Label Image", 0),
+    outPort_(Port::OUTPORT, "Object Map", 0)
+{
+    addPort(inPort_);
+    addPort(outPort_);
     
-    typedef double                   PixelType;
-    typedef otb::Image<PixelType, 2> ImageType;
-    typedef ImageType* 		     ImagePointer;
+    labelMapFilter = LabelMapFilterType::New();
+}
+
+OTBLabelImageToLabelMapProcessor::~OTBLabelImageToLabelMapProcessor() {
+
+}
+
+void OTBLabelImageToLabelMapProcessor::initialize() throw (tgt::Exception) {
+
+    Processor::initialize();
+}
+
+void OTBLabelImageToLabelMapProcessor::deinitialize() throw (tgt::Exception) {
+
+    Processor::deinitialize();
+}
+
+std::string OTBLabelImageToLabelMapProcessor::getProcessorInfo() const {
     
-    virtual std::string getProcessorInfo() const;
+    return "Transformation of Label Image to Object Map";
+}
 
-protected:
-    virtual void bypass(OTBImagePort *inport, OTBImagePort *outport); ///< Passes the image from inport to outport without changes.
-    virtual void initialize() throw (tgt::Exception);
-    virtual void deinitialize() throw (tgt::Exception);
-    BoolProperty enableSwitch_; ///< Should be used to control if bypass or actual image processing is applied
+void OTBLabelImageToLabelMapProcessor::process() {
 
-private:
+    try
+    {
+	labelMapFilter->SetInput(inPort_.getData());
+	labelMapFilter->SetBackgroundValue(itk::NumericTraits<LabelType>::min());
+	outPort_.setData(labelMapFilter->GetOutput());
+    }
+    catch (int e)
+    {
+	LERROR("Problem with Label Image to Object Map process!");
+	return;
+    }
+    
+}
 
-    static const std::string loggerCat_; ///< category used in logging
-};
 
 } // namespace
-
-#endif // VRN_OTBIMAGEFILTERPROCESSOR_H
