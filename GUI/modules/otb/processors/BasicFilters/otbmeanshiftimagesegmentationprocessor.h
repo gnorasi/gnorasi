@@ -54,7 +54,7 @@ public:
     virtual std::string getProcessorInfo() const;
     
     typedef otb::VectorImage<double, 2> VectorImageType;
-    typedef otb::Image<unsigned int, 2> LabeledImageType;
+    typedef otb::Image<long int, 2> LabeledImageType;
     typedef otb::MeanShiftVectorImageFilter<VectorImageType, VectorImageType, LabeledImageType> FilterType;
     FilterType::Pointer filter;
     
