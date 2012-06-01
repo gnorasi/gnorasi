@@ -53,7 +53,7 @@ public:
     virtual ~OTBVectorImageReaderProcessor();
     virtual Processor* create() const;
 
-    virtual std::string getClassName() const { return "MultiBandImageFileReader"; }
+    virtual std::string getClassName() const { return "MultiBand Image File Reader"; }
     virtual std::string getCategory() const  { return "Image IO"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
