@@ -41,6 +41,7 @@
 #include "processors/BasicFilters/otbmedianimagefilterprocessor.h"
 #include "processors/BasicFilters/otbsobelimagefilterprocessor.h"
 #include "processors/BasicFilters/otbmeanshiftimagesegmentationprocessor.h"
+#include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/Visualization/otbsimpleviewerprocessor.h"
 
 
@@ -70,6 +71,7 @@ OTBModule::OTBModule()
     addProcessor(new OTBSobelImageFilterProcessor());
     addProcessor(new OTBGradientAnisotropicDiffusionFilterProcessor());
     addProcessor(new OTBMeanShiftSegmentationProcessor());
+    addProcessor(new OTBLabelImageToLabelMapProcessor());
     //addProcessor(new OTBFFTConvolutionImageFilterProcessor()); TODO: Enable FFTW in OTB
 }
 

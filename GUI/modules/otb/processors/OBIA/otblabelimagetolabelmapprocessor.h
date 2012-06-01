@@ -26,49 +26,56 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_OTBIMAGEFILTERPROCESSOR_H
-#define VRN_OTBIMAGEFILTERPROCESSOR_H
+#ifndef VRN_OTBLABELIMAGETOLABELMAPPROCESSOR_H
+#define VRN_OTBLABELIMAGETOLABELMAPPROCESSOR_H
 
 
 #include "voreen/core/processors/processor.h"
-#include "voreen/core/properties/filedialogproperty.h"
-#include "voreen/core/properties/buttonproperty.h"
-#include "voreen/core/properties/stringproperty.h"
-#include "voreen/core/properties/boolproperty.h"
-#include "../../ports/otbimageport.h"
+#include "../../ports/otblabelimageport.h"
+#include "../../ports/otblabelmapport.h"
 #include "otbImage.h"
-
+#include "itkLabelImageToLabelMapFilter.h"
+#include "otbAttributesMapLabelObject.h"
+#include "itkLabelMap.h"
 
 
 namespace voreen {
-
-/**
- * Base class for image filter processors.
- *
- */
   
-class OTBImageFilterProcessor : public Processor {
+class OTBLabelImageToLabelMapProcessor : public Processor {
 public:
-    OTBImageFilterProcessor();
-    virtual ~OTBImageFilterProcessor();
+    OTBLabelImageToLabelMapProcessor();
+    virtual ~OTBLabelImageToLabelMapProcessor();
     
-    typedef double                   PixelType;
-    typedef otb::Image<PixelType, 2> ImageType;
-    typedef ImageType* 		     ImagePointer;
+    virtual Processor* create() const { return new OTBLabelImageToLabelMapProcessor(); }
+    
+    virtual std::string getCategory() const { return "OBIA"; }
+    virtual std::string getClassName() const { return "Label Image to Object Map"; }
+    virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;
-
+    
+    typedef unsigned long           LabelType;
+    typedef otb::Image<LabelType, 2> LabeledImageType;
+    typedef otb::AttributesMapLabelObject<LabelType, 2, double> LabelObjectType;
+    typedef itk::LabelMap<LabelObjectType> LabelMapType;
+    typedef itk::LabelImageToLabelMapFilter<LabeledImageType, LabelMapType>
+							    LabelMapFilterType;
+    LabelMapFilterType::Pointer labelMapFilter;
+    
+    
 protected:
-    virtual void bypass(OTBImagePort *inport, OTBImagePort *outport); ///< Passes the image from inport to outport without changes.
+    void process();
     virtual void initialize() throw (tgt::Exception);
     virtual void deinitialize() throw (tgt::Exception);
-    BoolProperty enableSwitch_; ///< Should be used to control if bypass or actual image processing is applied
 
 private:
 
+    OTBLabelImagePort inPort_;
+    OTBLabelMapPort outPort_;
+    
     static const std::string loggerCat_; ///< category used in logging
 };
 
 } // namespace
 
-#endif // VRN_OTBIMAGEFILTERPROCESSOR_H
+#endif // VRN_OTBLABELIMAGETOLABELMAPPROCESSOR_H
