@@ -39,6 +39,7 @@ $${VRN_MODULE_DIR}/otb/processors/Visualization/otbsimpleviewerprocessor.h
 SOURCES += \
 $${VRN_MODULE_DIR}/otb/ports/otbimageport.cpp \
 $${VRN_MODULE_DIR}/otb/ports/otblabelimageport.cpp \
+$${VRN_MODULE_DIR}/otb/ports/otblabelmapport.cpp \
 $${VRN_MODULE_DIR}/otb/ports/otbvectorimageport.cpp \
 $${VRN_MODULE_DIR}/otb/ports/otbsmartpointerport.cpp
 
@@ -46,5 +47,6 @@ $${VRN_MODULE_DIR}/otb/ports/otbsmartpointerport.cpp
 HEADERS += \
 $${VRN_MODULE_DIR}/otb/ports/otbimageport.h \
 $${VRN_MODULE_DIR}/otb/ports/otblabelimageport.h \
+$${VRN_MODULE_DIR}/otb/ports/otblabelmapport.h \
 $${VRN_MODULE_DIR}/otb/ports/otbvectorimageport.h \
 $${VRN_MODULE_DIR}/otb/ports/otbsmartpointerport.h
