@@ -55,7 +55,7 @@ public:
     virtual bool isEndProcessor() const;
     virtual bool isReady() const;
     
-    typedef unsigned int             	    PixelType;
+    typedef long int             	    PixelType;
     typedef otb::Image<PixelType, 2> ImageType;
     typedef otb::ImageFileWriter<ImageType> WriterType;
     WriterType::Pointer writer;
