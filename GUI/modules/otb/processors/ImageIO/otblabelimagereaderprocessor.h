@@ -51,7 +51,7 @@ public:
     virtual ~OTBLabelImageReaderProcessor();
     virtual Processor* create() const;
 
-    virtual std::string getClassName() const { return "LabelImageFileReader"; }
+    virtual std::string getClassName() const { return "Label Image File Reader"; }
     virtual std::string getCategory() const  { return "Image IO"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
