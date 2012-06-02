@@ -36,6 +36,7 @@ const std::string OTBBandStatisticsAttributesLabelMapProcessor::loggerCat_("vore
 OTBBandStatisticsAttributesLabelMapProcessor::OTBBandStatisticsAttributesLabelMapProcessor()
     : Processor(),
     reducedProperties_("reduced", "Only Basic Properties", true),
+    update_("updateButton", "Update"), 
     inPort_(Port::INPORT, "Input Object Map", 0),
     inVImage_(Port::INPORT, "Input MultiBand Image", 0),
     outPort_(Port::OUTPORT, "Output Object Map", 0),
@@ -43,6 +44,8 @@ OTBBandStatisticsAttributesLabelMapProcessor::OTBBandStatisticsAttributesLabelMa
     outVImage_(Port::OUTPORT, "Unchanged Input MultiBand Image", 0)
 {
     addProperty(reducedProperties_);
+    update_.onChange(CallMemberAction<OTBBandStatisticsAttributesLabelMapProcessor>(this, &OTBBandStatisticsAttributesLabelMapProcessor::update));
+    addProperty(update_);
     addPort(inPort_);
     addPort(inVImage_);
     addPort(outPort_);
@@ -82,6 +85,7 @@ void OTBBandStatisticsAttributesLabelMapProcessor::process() {
 	outPort_.setData(statisticsLabelMapFilter->GetOutput());
 	outVImage_.setData(inVImage_.getData());
 	outPort2_.setData(inPort_.getData());
+	LINFO("Here");
     }
     catch (int e)
     {
@@ -89,6 +93,11 @@ void OTBBandStatisticsAttributesLabelMapProcessor::process() {
 	return;
     }
     
+}
+
+void OTBBandStatisticsAttributesLabelMapProcessor::update() {
+    process();
+    statisticsLabelMapFilter->Update();
 }
 
 
