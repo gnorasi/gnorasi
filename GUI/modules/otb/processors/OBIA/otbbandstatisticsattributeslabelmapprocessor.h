@@ -51,7 +51,7 @@ public:
     virtual Processor* create() const { return new OTBBandStatisticsAttributesLabelMapProcessor(); }
     
     virtual std::string getCategory() const { return "OBIA"; }
-    virtual std::string getClassName() const { return "Object Band Statistics Properties Calculator"; }
+    virtual std::string getClassName() const { return "Calculate Band Statistics for Objects"; }
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;

@@ -51,7 +51,7 @@ public:
     virtual Processor* create() const { return new OTBStatisticsAttributesLabelMapProcessor(); }
     
     virtual std::string getCategory() const { return "OBIA"; }
-    virtual std::string getClassName() const { return "Add Object Statistics Property"; }
+    virtual std::string getClassName() const { return "Calculate New Feature for Objects"; }
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;
