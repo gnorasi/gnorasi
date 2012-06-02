@@ -39,12 +39,12 @@ OTBMeanShiftSegmentationProcessor::OTBMeanShiftSegmentationProcessor()
     rangeRadius_("rangeRadius", "Range Radius", 30.0f, 0.0f, 10000.0f),
     minRegionSize_("minRegionSize", "Min Region Size", 20),
     scale_("scale", "Scale", 1.0f, 0.0f, 10000.0f),
-    inPort_(Port::INPORT, "MultiBandImage", 0),
-    outPort_(Port::OUTPORT, "FilteredMultiBandImage", 0),
-    outPort2_(Port::OUTPORT, "ClusteredMultiBandImage", 0),
-    outPort3_(Port::OUTPORT, "LabeledImage", 0),
-    outPort4_(Port::OUTPORT, "BoundaryImage", 0),
-    outPort5_(Port::OUTPORT, "InitialImage", 0)
+    inPort_(Port::INPORT, "MultiBand Image", 0),
+    outPort_(Port::OUTPORT, "Filtered MultiBand Image", 0),
+    outPort2_(Port::OUTPORT, "Clustered MultiBand Image", 0),
+    outPort3_(Port::OUTPORT, "Labeled Image", 0),
+    outPort4_(Port::OUTPORT, "Boundary Image", 0),
+    outPort5_(Port::OUTPORT, "Initial MultiBand Image", 0)
 {
     addProperty(enableSwitch_);
     addProperty(spatialRadius_);

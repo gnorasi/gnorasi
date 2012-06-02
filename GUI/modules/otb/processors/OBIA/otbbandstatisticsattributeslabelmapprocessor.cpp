@@ -26,58 +26,66 @@
  *                                                                    		*
  ********************************************************************************/
 
-#include "otbshapeattributeslabelmapprocessor.h"
+#include "otbbandstatisticsattributeslabelmapprocessor.h"
 #include "voreen/core/voreenapplication.h"
 
 
 namespace voreen {
-const std::string OTBShapeAttributesLabelMapProcessor::loggerCat_("voreen.OTBShapeAttributesLabelMapProcessor");
+const std::string OTBBandStatisticsAttributesLabelMapProcessor::loggerCat_("voreen.OTBBandStatisticsAttributesLabelMapProcessor");
 
-OTBShapeAttributesLabelMapProcessor::OTBShapeAttributesLabelMapProcessor()
+OTBBandStatisticsAttributesLabelMapProcessor::OTBBandStatisticsAttributesLabelMapProcessor()
     : Processor(),
     reducedProperties_("reduced", "Only Basic Properties", true),
     inPort_(Port::INPORT, "Input Object Map", 0),
-    outPort_(Port::OUTPORT, "Output Object Map", 0)
+    inVImage_(Port::INPORT, "Input MultiBand Image", 0),
+    outPort_(Port::OUTPORT, "Output Object Map", 0),
+    outPort2_(Port::OUTPORT, "Unchanged Input Object Map", 0),
+    outVImage_(Port::OUTPORT, "Unchanged Input MultiBand Image", 0)
 {
     addProperty(reducedProperties_);
     addPort(inPort_);
+    addPort(inVImage_);
     addPort(outPort_);
-    
-    shapeLabelMapFilter = ShapeLabelMapFilterType::New();
+    addPort(outPort2_);
+    addPort(outVImage_);
+        
+    statisticsLabelMapFilter = StatisticsLabelMapFilterType::New();
 }
 
-OTBShapeAttributesLabelMapProcessor::~OTBShapeAttributesLabelMapProcessor() {
+OTBBandStatisticsAttributesLabelMapProcessor::~OTBBandStatisticsAttributesLabelMapProcessor() {
 
 }
 
-void OTBShapeAttributesLabelMapProcessor::initialize() throw (tgt::Exception) {
+void OTBBandStatisticsAttributesLabelMapProcessor::initialize() throw (tgt::Exception) {
 
     Processor::initialize();
 }
 
-void OTBShapeAttributesLabelMapProcessor::deinitialize() throw (tgt::Exception) {
+void OTBBandStatisticsAttributesLabelMapProcessor::deinitialize() throw (tgt::Exception) {
 
     Processor::deinitialize();
 }
 
-std::string OTBShapeAttributesLabelMapProcessor::getProcessorInfo() const {
+std::string OTBBandStatisticsAttributesLabelMapProcessor::getProcessorInfo() const {
     
-    return "Calculation of Shape Properties on Object Map";
+    return "Calculation of Band Statistics Properties on Object Map";
 }
 
-void OTBShapeAttributesLabelMapProcessor::process() {
+void OTBBandStatisticsAttributesLabelMapProcessor::process() {
 
     try
     {
-	shapeLabelMapFilter->SetInput(inPort_.getData());
-	(reducedProperties_.get()) ? shapeLabelMapFilter->ReducedAttributeSetOn() : 
-				     shapeLabelMapFilter->ReducedAttributeSetOff();
-	LINFO("Here");
-	outPort_.setData(shapeLabelMapFilter->GetOutput());
+	statisticsLabelMapFilter->SetInput(inPort_.getData());
+	statisticsLabelMapFilter->SetFeatureImage(inVImage_.getData());
+	(reducedProperties_.get()) ? statisticsLabelMapFilter->ReducedAttributeSetOn() : 
+				     statisticsLabelMapFilter->ReducedAttributeSetOff();
+	outPort_.setData(statisticsLabelMapFilter->GetOutput());
+	outVImage_.setData(inVImage_.getData());
+	outPort2_.setData(inPort_.getData());
     }
     catch (int e)
     {
-	LERROR("Problem with Label Image to Object Map process!");
+	LERROR("Problem with Statistics Calculation on Object Map!");
 	return;
     }
     
