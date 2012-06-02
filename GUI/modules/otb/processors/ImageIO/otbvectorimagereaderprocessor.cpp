@@ -162,6 +162,7 @@ void OTBVectorImageReaderProcessor::loadImage() {
     /*texture_ = TexMgr.load(filename, tgt::Texture::LINEAR,
         false, false, true, false);*/
     reader->SetFileName(filename.c_str());
+    reader->GenerateOutputInformation();
     
     if (!hasImage) {
         LWARNING("Failed to load image: " << filename);

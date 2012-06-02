@@ -32,6 +32,7 @@
 #include "processors/ImageIO/otblabelimagereaderprocessor.h"
 #include "processors/ImageIO/otbvectorimagereaderprocessor.h"
 #include "processors/ImageIO/otbimagewriterprocessor.h"
+#include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 #include "processors/ImageIO/otblabelimagewriterprocessor.h"
 #include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 #include "processors/BasicFilters/otbconvolutionimagefilterprocessor.h"
@@ -69,6 +70,7 @@ OTBModule::OTBModule()
     addProcessor(new OTBLabelImageReaderProcessor());
     addProcessor(new OTBVectorImageReaderProcessor());
     addProcessor(new OTBImageWriterProcessor());
+    addProcessor(new OTBVectorImageWriterProcessor());
     addProcessor(new OTBImageToVectorImageCastProcessor());
     addProcessor(new OTBLabelImageWriterProcessor());
     addProcessor(new OTBConvolutionImageFilterProcessor());
