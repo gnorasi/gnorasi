@@ -16,6 +16,7 @@ $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbgradientanisotropicdiffusionfi
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbmeanshiftimagesegmentationprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otblabelimagetolabelmapprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbshapeattributeslabelmapprocessor.cpp \
+$${VRN_MODULE_DIR}/otb/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/Visualization/otbsimpleviewerprocessor.cpp
 
 
@@ -37,6 +38,7 @@ $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbgradientanisotropicdiffusionfi
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbmeanshiftimagesegmentationprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otblabelimagetolabelmapprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbshapeattributeslabelmapprocessor.h \
+$${VRN_MODULE_DIR}/otb/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/Visualization/otbsimpleviewerprocessor.h
 
 # port sources
