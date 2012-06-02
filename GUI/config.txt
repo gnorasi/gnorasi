@@ -119,6 +119,7 @@ INCLUDEPATH += /usr/include/otb/IO
 INCLUDEPATH += /usr/include/otb/Projections
 INCLUDEPATH += /usr/include/otb/Gui
 INCLUDEPATH += /usr/include/otb/OBIA
+INCLUDEPATH += /usr/include/otb/Radiometry
 INCLUDEPATH += /usr/include/otb/FeatureExtraction
 INCLUDEPATH += /usr/include/otb/Utilities/otbedison
 INCLUDEPATH += /usr/include/otb/UtilitiesAdapters/OssimAdapters
