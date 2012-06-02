@@ -47,6 +47,7 @@
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbstatisticsattributeslabelmapprocessor.h"
 #include "processors/Radiometry/otbndviprocessor.h"
+#include "processors/Radiometry/otbmsaviprocessor.h"
 #include "processors/Visualization/otbsimpleviewerprocessor.h"
 
 
@@ -82,6 +83,7 @@ OTBModule::OTBModule()
     addProcessor(new OTBBandStatisticsAttributesLabelMapProcessor());
     addProcessor(new OTBStatisticsAttributesLabelMapProcessor());
     addProcessor(new OTBNDVIProcessor());
+    addProcessor(new OTBMSAVIProcessor());
     //addProcessor(new OTBFFTConvolutionImageFilterProcessor()); TODO: Enable FFTW in OTB
 }
 
