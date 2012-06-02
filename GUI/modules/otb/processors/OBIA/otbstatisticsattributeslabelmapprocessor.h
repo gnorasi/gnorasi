@@ -26,58 +26,70 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_OTBCONVOLUTIONIMAGEFILTERPROCESSOR_H
-#define VRN_OTBCONVOLUTIONIMAGEFILTERPROCESSOR_H
+#ifndef VRN_OTBSTATISTICSATTRIBUTESLABELMAPPPROCESSOR_H
+#define VRN_OTBSTATISTICSATTRIBUTESLABELMAPPPROCESSOR_H
 
 
-#include "voreen/core/properties/intproperty.h"
+#include "voreen/core/processors/processor.h"
+#include "voreen/core/properties/boolproperty.h"
+#include "voreen/core/properties/buttonproperty.h"
 #include "voreen/core/properties/stringproperty.h"
-#include "otbimagefilterprocessor.h"
-#include "otbConvolutionImageFilter.h"
-#include "itkArray.h"
+#include "../../ports/otblabelmapport.h"
+#include "../../ports/otbimageport.h"
+#include "otbImage.h"
+#include "otbAttributesMapLabelObject.h"
+#include "itkLabelMap.h"
+#include "otbStatisticsAttributesLabelMapFilter.h"
 
 namespace voreen {
-
-/**
- * Base class for image filter processors.
- *
- */
   
-class OTBConvolutionImageFilterProcessor : public OTBImageFilterProcessor {
+class OTBStatisticsAttributesLabelMapProcessor : public Processor {
 public:
-    OTBConvolutionImageFilterProcessor();
-    virtual ~OTBConvolutionImageFilterProcessor();
+    OTBStatisticsAttributesLabelMapProcessor();
+    virtual ~OTBStatisticsAttributesLabelMapProcessor();
     
-    virtual Processor* create() const { return new OTBConvolutionImageFilterProcessor(); }
+    virtual Processor* create() const { return new OTBStatisticsAttributesLabelMapProcessor(); }
     
-    virtual std::string getCategory() const { return "Basic Filters"; }
-    virtual std::string getClassName() const { return "Convolution Image Filter"; }
+    virtual std::string getCategory() const { return "OBIA"; }
+    virtual std::string getClassName() const { return "Add Object Statistics Property"; }
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;
     
-    typedef otb::ConvolutionImageFilter<OTBImageFilterProcessor::ImageType,OTBImageFilterProcessor::ImageType> FilterType;
-    FilterType::Pointer filter;
-    typedef itk::Array<double> ArrayType;
-    
+    typedef unsigned long           LabelType;
+    typedef double                  PixelType;
+    typedef otb::Image<PixelType, 2>  ImageType;
+    typedef otb::Image<LabelType, 2> LabeledImageType;
+    typedef otb::AttributesMapLabelObject<LabelType, 2, double> LabelObjectType;
+    typedef itk::LabelMap<LabelObjectType> LabelMapType;
+    typedef otb::StatisticsAttributesLabelMapFilter<LabelMapType, ImageType>
+							StatisticsLabelMapFilterType;
 
+    StatisticsLabelMapFilterType::Pointer statisticsLabelMapFilter;
+    
 protected:
     void process();
+    void update();
+    void setFeatureName();
     virtual void initialize() throw (tgt::Exception);
     virtual void deinitialize() throw (tgt::Exception);
+    BoolProperty reducedProperties_; ///< Calculate reduced number of shape properties
+    StringProperty featureName_; ///< Set the name of the attribute added to the Object Map
+    ButtonProperty update_;      ///< Executes clearImage().
+    
+    std::string featureName;
+    
 
 private:
 
-    IntProperty filterSize_;
-    StringProperty kernel_;
-
-    OTBImagePort inPort_;
-    OTBImagePort outPort_;
-
+    OTBLabelMapPort inPort_;
+    OTBImagePort inImage_;
+    OTBLabelMapPort outPort_;
+    OTBImagePort outImage_;
     
     static const std::string loggerCat_; ///< category used in logging
 };
 
 } // namespace
 
-#endif // VRN_OTBCONVOLUTIONIMAGEFILTERPROCESSOR_H
+#endif // VRN_OTBSTATISTICSATTRIBUTESLABELMAPPPROCESSOR_H
