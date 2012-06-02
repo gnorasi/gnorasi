@@ -33,6 +33,7 @@
 #include "voreen/core/processors/processor.h"
 #include "voreen/core/properties/filedialogproperty.h"
 #include "voreen/core/properties/buttonproperty.h"
+#include "voreen/core/properties/intproperty.h"
 #include "voreen/core/properties/stringproperty.h"
 #include "../../ports/otbvectorimageport.h"
 #include "../../ports/otbimageport.h"
