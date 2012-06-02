@@ -20,6 +20,7 @@ $${VRN_MODULE_DIR}/otb/processors/OBIA/otbshapeattributeslabelmapprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbstatisticsattributeslabelmapprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbndviprocessor.cpp \
+$${VRN_MODULE_DIR}/otb/processors/Radiometry/otbmsaviprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/Visualization/otbsimpleviewerprocessor.cpp
 
 
@@ -45,6 +46,7 @@ $${VRN_MODULE_DIR}/otb/processors/OBIA/otbshapeattributeslabelmapprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbstatisticsattributeslabelmapprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbndviprocessor.h \
+$${VRN_MODULE_DIR}/otb/processors/Radiometry/otbmsaviprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/Visualization/otbsimpleviewerprocessor.h
 
 # port sources
