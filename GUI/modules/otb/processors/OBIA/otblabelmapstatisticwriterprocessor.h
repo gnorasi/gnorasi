@@ -78,6 +78,8 @@ protected:
     virtual void deinitialize() throw (VoreenException);
 
 private:
+    void setOutPortData();
+   
     bool hasFileName;
   
     OTBLabelMapPort inPort_;
