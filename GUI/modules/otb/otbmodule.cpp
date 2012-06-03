@@ -46,6 +46,7 @@
 #include "processors/BasicFilters/otbbinarythresholdfilterprocessor.h"
 #include "processors/BasicFilters/otbbinarydilatefilterprocessor.h"
 #include "processors/BasicFilters/otbbinaryerodefilterprocessor.h"
+#include "processors/BasicFilters/otbbinaryopeningfilterprocessor.h"
 #include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
@@ -83,6 +84,7 @@ OTBModule::OTBModule()
     addProcessor(new OTBBinaryThresholdFilterProcessor());
     addProcessor(new OTBBinaryDilateFilterProcessor());
     addProcessor(new OTBBinaryErodeFilterProcessor());
+    addProcessor(new OTBBinaryOpeningFilterProcessor());
     addProcessor(new OTBMedianImageFilterProcessor());
     addProcessor(new OTBSobelImageFilterProcessor());
     addProcessor(new OTBGradientAnisotropicDiffusionFilterProcessor());

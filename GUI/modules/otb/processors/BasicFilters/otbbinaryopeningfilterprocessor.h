@@ -26,35 +26,58 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_OTBBINARYTHRESHOLDFILTERPROCESSOR_H
-#define VRN_OTBBINARYTHRESHOLDFILTERPROCESSOR_H
+#ifndef VRN_OTBBINARYOPENINGFILTERPROCESSOR_H
+#define VRN_OTBBINARYOPENINGFILTERPROCESSOR_H
 
 
 #include "voreen/core/properties/intproperty.h"
 #include "voreen/core/properties/floatproperty.h"
 #include "otbimagefilterprocessor.h"
-#include "itkBinaryThresholdImageFilter.h"
+#include "itkBinaryDilateImageFilter.h"
+#include "itkBinaryErodeImageFilter.h"
+#include "itkBinaryBallStructuringElement.h"
+#include "itkRescaleIntensityImageFilter.h"
 
 
 namespace voreen {
   
-class OTBBinaryThresholdFilterProcessor : public OTBImageFilterProcessor {
+class OTBBinaryOpeningFilterProcessor : public OTBImageFilterProcessor {
 public:
-    OTBBinaryThresholdFilterProcessor();
-    virtual ~OTBBinaryThresholdFilterProcessor();
+    OTBBinaryOpeningFilterProcessor();
+    virtual ~OTBBinaryOpeningFilterProcessor();
     
-    virtual Processor* create() const { return new OTBBinaryThresholdFilterProcessor(); }
+    virtual Processor* create() const { return new OTBBinaryOpeningFilterProcessor(); }
     
-    virtual std::string getCategory() const { return "Image Segmentation"; }
-    virtual std::string getClassName() const { return "Binary Threshold Image Segmentation"; }
+    virtual std::string getCategory() const { return "Morphology"; }
+    virtual std::string getClassName() const { return "Binary Opening Image Filter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;
     
-    typedef itk::BinaryThresholdImageFilter<OTBImageFilterProcessor::ImageType,
-				OTBImageFilterProcessor::ImageType>  FilterType;
-    FilterType::Pointer filter;
-        
+    typedef double                   DoublePixelType;
+    typedef otb::Image<DoublePixelType, 2> ImageType;
+    
+    typedef unsigned char             BytePixelType;
+    typedef otb::Image<BytePixelType, 2> ByteImageType;
+    
+    typedef itk::RescaleIntensityImageFilter<ImageType,
+      ByteImageType>    ByteRescalerFilterType;
+    ByteRescalerFilterType::Pointer  byterescaler;
+    
+     typedef itk::RescaleIntensityImageFilter<ByteImageType,
+      ImageType>    DoubleRescalerFilterType;
+    DoubleRescalerFilterType::Pointer  doublerescaler;
+    
+    typedef itk::BinaryBallStructuringElement<BytePixelType, 2> StructuringElementType;
+    
+    typedef itk::BinaryDilateImageFilter<ByteImageType, ByteImageType, 
+				    StructuringElementType>  DilateFilterType;
+    typedef itk::BinaryErodeImageFilter<ByteImageType, ByteImageType, 
+				    StructuringElementType>  ErodeFilterType;
+    
+    StructuringElementType structuringElement;
+    DilateFilterType::Pointer dilatefilter;
+    ErodeFilterType::Pointer erodefilter;
 
 protected:
     void process();
@@ -63,10 +86,8 @@ protected:
 
 private:
 
-    FloatProperty insideValue_;
-    FloatProperty outsideValue_;
-    FloatProperty lowerThreshold_;
-    FloatProperty upperThreshold_;
+    IntProperty radius_;
+    FloatProperty foreground_;
     
     OTBImagePort inPort_;
     OTBImagePort outPort_;
@@ -77,4 +98,4 @@ private:
 
 } // namespace
 
-#endif // VRN_OTBBINARYTHRESHOLDFILTERPROCESSOR_H
+#endif // VRN_OTBBINARYDILATEFILTERPROCESSOR_H
