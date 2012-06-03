@@ -35,6 +35,7 @@
 #include "otbimagefilterprocessor.h"
 #include "itkBinaryDilateImageFilter.h"
 #include "itkBinaryBallStructuringElement.h"
+#include "itkRescaleIntensityImageFilter.h"
 
 
 namespace voreen {
@@ -52,10 +53,24 @@ public:
     
     virtual std::string getProcessorInfo() const;
     
-    typedef itk::BinaryBallStructuringElement<OTBImageFilterProcessor::PixelType, 2> StructuringElementType;
+    typedef double                   DoublePixelType;
+    typedef otb::Image<DoublePixelType, 2> ImageType;
     
-    typedef itk::BinaryDilateImageFilter<OTBImageFilterProcessor::ImageType,
-		OTBImageFilterProcessor::ImageType, StructuringElementType>  FilterType;
+    typedef unsigned char             BytePixelType;
+    typedef otb::Image<BytePixelType, 2> ByteImageType;
+    
+    typedef itk::RescaleIntensityImageFilter<ImageType,
+      ByteImageType>    ByteRescalerFilterType;
+    ByteRescalerFilterType::Pointer  byterescaler;
+    
+     typedef itk::RescaleIntensityImageFilter<ByteImageType,
+      ImageType>    DoubleRescalerFilterType;
+    DoubleRescalerFilterType::Pointer  doublerescaler;
+    
+    typedef itk::BinaryBallStructuringElement<BytePixelType, 2> StructuringElementType;
+    
+    typedef itk::BinaryDilateImageFilter<ByteImageType, ByteImageType, 
+				    StructuringElementType>  FilterType;
     
     StructuringElementType structuringElement;
     FilterType::Pointer filter;
