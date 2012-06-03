@@ -60,7 +60,7 @@ Processor* OTBLabelMapStatisticsWriterProcessor::create() const {
 
 
 bool OTBLabelMapStatisticsWriterProcessor::isReady() const {
-    return (inport_.isConnected());
+    return (inPort_.isConnected());
 }
 
 std::string OTBLabelMapStatisticsWriterProcessor::getProcessorInfo() const {
@@ -82,7 +82,7 @@ void OTBLabelMapStatisticsWriterProcessor::deinitialize() throw (VoreenException
     Processor::deinitialize();
 }
 
-void OTBLabelMapStatisticsWriterProcessor::saveImage() {
+void OTBLabelMapStatisticsWriterProcessor::saveCSV() {
     
     std::string filename = CSVFile_.get();
     if (!filename.empty())
@@ -106,12 +106,22 @@ void OTBLabelMapStatisticsWriterProcessor::saveImage() {
     
 }
 
-void OTBLabelMapStatisticsWriterProcessor::clearImage() {
+void OTBLabelMapStatisticsWriterProcessor::clearCSV() {
 
     if (hasFileName) {
         hasFileName = false;
     }
     CSVFile_.set("");
+}
+
+void OTBLabelMapStatisticsWriterProcessor::setTextDataOut(std::string outTextData) {
+    pTextDataOut_ = outTextData;
+    OTBLabelMapStatisticsWriterProcessor::setOutPortData();
+}
+
+void OTBLabelMapStatisticsWriterProcessor::setOutPortData(){
+
+    outPort_.setData(pTextDataOut_);
 }
 
 } // namespace
