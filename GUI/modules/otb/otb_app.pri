@@ -7,6 +7,7 @@ unix {
     LIBS += -lOTBGui
     LIBS += -lOTBVisualization
     LIBS += -lotbMeanShiftModule
+    LIBS += -lOTBLearning
     LIBS += -lOTBOBIA
     LIBS += -lITKCommon
     LIBS += -lITKIO
