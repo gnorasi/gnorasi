@@ -29,6 +29,7 @@ $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbndviprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbmsaviprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbndwiprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbvectorimagebandmathprocessor.cpp \
+$${VRN_MODULE_DIR}/otb/processors/Radiometry/otbtwoimagebandmathprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/Visualization/otbsimpleviewerprocessor.cpp
 
 
@@ -63,6 +64,7 @@ $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbndviprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbmsaviprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbndwiprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbvectorimagebandmathprocessor.h \
+$${VRN_MODULE_DIR}/otb/processors/Radiometry/otbtwoimagebandmathprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/Visualization/otbsimpleviewerprocessor.h
 
 # port sources
