@@ -43,6 +43,7 @@
 #include "processors/BasicFilters/otbmedianimagefilterprocessor.h"
 #include "processors/BasicFilters/otbsobelimagefilterprocessor.h"
 #include "processors/BasicFilters/otbmeanshiftimagesegmentationprocessor.h"
+#include "processors/BasicFilters/otbbinarythresholdfilterprocessor.h"
 #include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
@@ -77,6 +78,7 @@ OTBModule::OTBModule()
     addProcessor(new OTBCannyEdgeDetectionImageFilterProcessor());
     addProcessor(new OTBSimpleViewerProcessor());
     addProcessor(new OTBMeanImageFilterProcessor());
+    addProcessor(new OTBBinaryThresholdFilterProcessor());
     addProcessor(new OTBMedianImageFilterProcessor());
     addProcessor(new OTBSobelImageFilterProcessor());
     addProcessor(new OTBGradientAnisotropicDiffusionFilterProcessor());
