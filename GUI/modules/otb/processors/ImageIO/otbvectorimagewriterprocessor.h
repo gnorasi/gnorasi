@@ -65,7 +65,7 @@ public:
     WriterType::Pointer writer;
     
     //16 bit image writer
-    typedef unsigned int             IntegerPixelType;
+    typedef unsigned short             IntegerPixelType;
     typedef otb::VectorImage<IntegerPixelType, 2> IntegerImageType;
     typedef otb::ImageFileWriter<IntegerImageType> IntegerWriterType;
     IntegerWriterType::Pointer int_writer;
