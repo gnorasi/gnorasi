@@ -48,6 +48,8 @@ OTBBinaryErodeFilterProcessor::OTBBinaryErodeFilterProcessor()
     
     filter = FilterType::New();
     structuringElement.SetRadius(radius_.get());
+    byterescaler = ByteRescalerFilterType::New();
+    doublerescaler = DoubleRescalerFilterType::New();
 }
 
 OTBBinaryErodeFilterProcessor::~OTBBinaryErodeFilterProcessor() {
@@ -66,7 +68,7 @@ void OTBBinaryErodeFilterProcessor::deinitialize() throw (tgt::Exception) {
 
 std::string OTBBinaryErodeFilterProcessor::getProcessorInfo() const {
     
-    return "Binary Dilation Filtering Processor";
+    return "Binary Erosion Filtering Processor";
 }
 
 void OTBBinaryErodeFilterProcessor::process() {
@@ -85,12 +87,21 @@ void OTBBinaryErodeFilterProcessor::process() {
     
     try
     {
-	filter->SetInput(inPort_.getData());
-	outPort_.setData(filter->GetOutput());
+	byterescaler->SetOutputMinimum(0);
+	byterescaler->SetOutputMaximum(255);
+        byterescaler->SetInput(inPort_.getData());
+	
+	filter->SetInput(byterescaler->GetOutput());
+	
+	doublerescaler->SetOutputMinimum(0);
+	doublerescaler->SetOutputMaximum(255);
+	doublerescaler->SetInput(filter->GetOutput());
+	
+	outPort_.setData(doublerescaler->GetOutput());
     }
     catch (int e)
     {
-	LERROR("Problem with Binary Dilation Image Filter!");
+	LERROR("Problem with Binary Erosion Image Filter!");
 	return;
     }
     
