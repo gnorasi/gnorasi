@@ -37,7 +37,7 @@
 #include "../../ports/otblabelmapport.h"
 #include "../../ports/otbimageport.h"
 #include "otbImage.h"
-#include "otbAttributesMapLabelObject.h"
+#include "otbAttributesMapLabelObjectWithClassLabel.h"
 #include "itkLabelMap.h"
 #include "otbStatisticsAttributesLabelMapFilter.h"
 
@@ -60,7 +60,7 @@ public:
     typedef double                  PixelType;
     typedef otb::Image<PixelType, 2>  ImageType;
     typedef otb::Image<LabelType, 2> LabeledImageType;
-    typedef otb::AttributesMapLabelObject<LabelType, 2, double> LabelObjectType;
+    typedef otb::AttributesMapLabelObjectWithClassLabel<LabelType, 2, double, unsigned short> LabelObjectType;
     typedef itk::LabelMap<LabelObjectType> LabelMapType;
     typedef otb::StatisticsAttributesLabelMapFilter<LabelMapType, ImageType>
 							StatisticsLabelMapFilterType;

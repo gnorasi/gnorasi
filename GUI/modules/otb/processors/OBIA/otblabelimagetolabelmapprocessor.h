@@ -35,7 +35,7 @@
 #include "../../ports/otblabelmapport.h"
 #include "otbImage.h"
 #include "itkLabelImageToLabelMapFilter.h"
-#include "otbAttributesMapLabelObject.h"
+#include "otbAttributesMapLabelObjectWithClassLabel.h"
 #include "itkLabelMap.h"
 
 
@@ -56,7 +56,7 @@ public:
     
     typedef unsigned long           LabelType;
     typedef otb::Image<LabelType, 2> LabeledImageType;
-    typedef otb::AttributesMapLabelObject<LabelType, 2, double> LabelObjectType;
+    typedef otb::AttributesMapLabelObjectWithClassLabel<LabelType, 2, double, unsigned short> LabelObjectType;
     typedef itk::LabelMap<LabelObjectType> LabelMapType;
     typedef itk::LabelImageToLabelMapFilter<LabeledImageType, LabelMapType>
 							    LabelMapFilterType;
