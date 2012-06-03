@@ -37,7 +37,7 @@
 #include "../../ports/otbvectorimageport.h"
 #include "otbImage.h"
 #include "otbVectorImage.h"
-#include "otbAttributesMapLabelObject.h"
+#include "otbAttributesMapLabelObjectWithClassLabel.h"
 #include "itkLabelMap.h"
 #include "otbBandsStatisticsAttributesLabelMapFilter.h"
 
@@ -61,7 +61,7 @@ public:
     typedef otb::Image<PixelType, 2>  ImageType;
     typedef otb::VectorImage<PixelType, 2>  VectorImageType;
     typedef otb::Image<LabelType, 2> LabeledImageType;
-    typedef otb::AttributesMapLabelObject<LabelType, 2, double> LabelObjectType;
+    typedef otb::AttributesMapLabelObjectWithClassLabel<LabelType, 2, double, unsigned short> LabelObjectType;
     typedef itk::LabelMap<LabelObjectType> LabelMapType;
     typedef otb::BandsStatisticsAttributesLabelMapFilter<LabelMapType, VectorImageType>
 							StatisticsLabelMapFilterType;

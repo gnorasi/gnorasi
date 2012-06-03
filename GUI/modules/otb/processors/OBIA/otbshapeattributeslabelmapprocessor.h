@@ -34,7 +34,7 @@
 #include "voreen/core/properties/boolproperty.h"
 #include "../../ports/otblabelmapport.h"
 #include "otbImage.h"
-#include "otbAttributesMapLabelObject.h"
+#include "otbAttributesMapLabelObjectWithClassLabel.h"
 #include "itkLabelMap.h"
 #include "otbShapeAttributesLabelMapFilter.h"
 
@@ -55,7 +55,7 @@ public:
     
     typedef unsigned long           LabelType;
     typedef otb::Image<LabelType, 2> LabeledImageType;
-    typedef otb::AttributesMapLabelObject<LabelType, 2, double> LabelObjectType;
+    typedef otb::AttributesMapLabelObjectWithClassLabel<LabelType, 2, double, unsigned short> LabelObjectType;
     typedef itk::LabelMap<LabelObjectType> LabelMapType;
     typedef otb::ShapeAttributesLabelMapFilter<LabelMapType> ShapeLabelMapFilterType;
 

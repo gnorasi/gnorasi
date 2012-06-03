@@ -31,7 +31,7 @@
 
 #include "voreen/core/voreencoredefine.h"
 #include "voreen/core/ports/port.h"
-#include "otbAttributesMapLabelObject.h"
+#include "otbAttributesMapLabelObjectWithClassLabel.h"
 #include "itkLabelMap.h"
 
 namespace voreen {
@@ -44,7 +44,7 @@ public:
     ~OTBLabelMapPort();
     
     typedef unsigned long LabelType;
-    typedef otb::AttributesMapLabelObject<LabelType, 2, double> LabelObjectType;
+    typedef otb::AttributesMapLabelObjectWithClassLabel<LabelType, 2, double, unsigned short> LabelObjectType;
     typedef itk::LabelMap<LabelObjectType> LabelMapType;
     
     typedef LabelMapType::Pointer LabelMapSmartPointer;
