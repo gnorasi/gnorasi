@@ -36,9 +36,9 @@ const std::string OTBBinaryErodeFilterProcessor::loggerCat_("voreen.OTBBinaryEro
 OTBBinaryErodeFilterProcessor::OTBBinaryErodeFilterProcessor()
     : OTBImageFilterProcessor(),
     radius_("radius", "Structuring Element Radius", 1),
-    foreground_("foreground", "Foregroung Value to Dilate", 255.0f, 0.0f, 1024.0f), 
-    inPort_(Port::INPORT, "OTBImage.inport", 0),
-    outPort_(Port::OUTPORT, "OTBImage.outport", 0)
+    foreground_("foreground", "Foregroung Value to Erode", 255.0f, 0.0f, 1024.0f), 
+    inPort_(Port::INPORT, "Image Input", 0),
+    outPort_(Port::OUTPORT, "Image Output", 0)
 {
     addProperty(enableSwitch_);
     addProperty(radius_);

@@ -19,6 +19,7 @@ $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbmeanshiftimagesegmentationproc
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinarythresholdfilterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinarydilatefilterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryerodefilterprocessor.cpp \
+$${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryopeningfilterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otblabelimagetolabelmapprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbshapeattributeslabelmapprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.cpp \
@@ -50,6 +51,7 @@ $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbmeanshiftimagesegmentationproc
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinarythresholdfilterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinarydilatefilterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryerodefilterprocessor.h \
+$${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryopeningfilterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otblabelimagetolabelmapprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbshapeattributeslabelmapprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h \

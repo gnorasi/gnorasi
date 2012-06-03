@@ -26,17 +26,17 @@
  *                                                                    		*
  ********************************************************************************/
 
-#include "otbbinarydilatefilterprocessor.h"
+#include "otbbinaryopeningfilterprocessor.h"
 #include "voreen/core/voreenapplication.h"
 
 
 namespace voreen {
-const std::string OTBBinaryDilateFilterProcessor::loggerCat_("voreen.OTBBinaryDilateFilterProcessor");
+const std::string OTBBinaryOpeningFilterProcessor::loggerCat_("voreen.OTBBinaryOpeningFilterProcessor");
 
-OTBBinaryDilateFilterProcessor::OTBBinaryDilateFilterProcessor()
+OTBBinaryOpeningFilterProcessor::OTBBinaryOpeningFilterProcessor()
     : OTBImageFilterProcessor(),
     radius_("radius", "Structuring Element Radius", 1),
-    foreground_("foreground", "Foregroung Value to Dilate", 255.0f, 0.0f, 1024.0f), 
+    foreground_("foreground", "Foregroung Value to Open", 255.0f, 0.0f, 1024.0f), 
     inPort_(Port::INPORT, "Image Input", 0),
     outPort_(Port::OUTPORT, "Image Output", 0)
 {
@@ -46,32 +46,33 @@ OTBBinaryDilateFilterProcessor::OTBBinaryDilateFilterProcessor()
     addPort(inPort_);
     addPort(outPort_);
     
-    filter = FilterType::New();
+    dilatefilter = DilateFilterType::New();
+    erodefilter = ErodeFilterType::New();
     structuringElement.SetRadius(radius_.get());
     byterescaler = ByteRescalerFilterType::New();
     doublerescaler = DoubleRescalerFilterType::New();
 }
 
-OTBBinaryDilateFilterProcessor::~OTBBinaryDilateFilterProcessor() {
+OTBBinaryOpeningFilterProcessor::~OTBBinaryOpeningFilterProcessor() {
 
 }
 
-void OTBBinaryDilateFilterProcessor::initialize() throw (tgt::Exception) {
+void OTBBinaryOpeningFilterProcessor::initialize() throw (tgt::Exception) {
 
     Processor::initialize();
 }
 
-void OTBBinaryDilateFilterProcessor::deinitialize() throw (tgt::Exception) {
+void OTBBinaryOpeningFilterProcessor::deinitialize() throw (tgt::Exception) {
 
     Processor::deinitialize();
 }
 
-std::string OTBBinaryDilateFilterProcessor::getProcessorInfo() const {
+std::string OTBBinaryOpeningFilterProcessor::getProcessorInfo() const {
     
-    return "Binary Dilation Filtering Processor";
+    return "Binary Opening Filtering Processor";
 }
 
-void OTBBinaryDilateFilterProcessor::process() {
+void OTBBinaryOpeningFilterProcessor::process() {
 
     //check bypass switch
     if (!enableSwitch_.get()){
@@ -82,8 +83,10 @@ void OTBBinaryDilateFilterProcessor::process() {
     //Property validation
     structuringElement.SetRadius(radius_.get());
     structuringElement.CreateStructuringElement();
-    filter->SetKernel(structuringElement);
-    filter->SetDilateValue(foreground_.get());
+    dilatefilter->SetKernel(structuringElement);
+    dilatefilter->SetDilateValue(foreground_.get());
+    erodefilter->SetKernel(structuringElement);
+    erodefilter->SetErodeValue(foreground_.get());
     
     try
     {
@@ -91,17 +94,18 @@ void OTBBinaryDilateFilterProcessor::process() {
 	byterescaler->SetOutputMaximum(255);
         byterescaler->SetInput(inPort_.getData());
 	
-	filter->SetInput(byterescaler->GetOutput());
+	erodefilter->SetInput(byterescaler->GetOutput());
+	dilatefilter->SetInput(erodefilter->GetOutput());
 	
 	doublerescaler->SetOutputMinimum(0);
 	doublerescaler->SetOutputMaximum(255);
-	doublerescaler->SetInput(filter->GetOutput());
+	doublerescaler->SetInput(dilatefilter->GetOutput());
 	
 	outPort_.setData(doublerescaler->GetOutput());
     }
     catch (int e)
     {
-	LERROR("Problem with Binary Dilation Image Filter!");
+	LERROR("Problem with Binary Opening Image Filter!");
 	return;
     }
     
