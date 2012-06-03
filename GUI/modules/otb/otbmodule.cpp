@@ -55,6 +55,7 @@
 #include "processors/Radiometry/otbndviprocessor.h"
 #include "processors/Radiometry/otbmsaviprocessor.h"
 #include "processors/Radiometry/otbndwiprocessor.h"
+#include "processors/Radiometry/otbvectorimagebandmathprocessor.h"
 #include "processors/Visualization/otbsimpleviewerprocessor.h"
 
 
@@ -98,6 +99,7 @@ OTBModule::OTBModule()
     addProcessor(new OTBNDVIProcessor());
     addProcessor(new OTBMSAVIProcessor());
     addProcessor(new OTBNDWIProcessor());
+    addProcessor(new OTBVectorImageBandMathProcessor());
     //addProcessor(new OTBFFTConvolutionImageFilterProcessor()); TODO: Enable FFTW in OTB
 }
 
