@@ -26,7 +26,7 @@
  *                                                                    		*
  ********************************************************************************/
 
-#include "otblabelmapstatisticswriterprocessor.h"
+#include "otblabelmapstatisticwriterprocessor.h"
 #include "voreen/core/voreenapplication.h"
 
 namespace voreen {
@@ -97,7 +97,7 @@ void OTBLabelMapStatisticsWriterProcessor::saveCSV() {
     }else if(!this->isReady()){
 	LWARNING("Writer Inport not connected");
 	return;
-    }else if(!hasImage){
+    }else if(!hasFileName){
 	LWARNING("Image Name Not Set");
 	return;
     }
