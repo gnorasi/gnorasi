@@ -52,6 +52,7 @@
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbstatisticsattributeslabelmapprocessor.h"
+#include "processors/OBIA/otblabelmapstatisticwriterprocessor.h"
 #include "processors/Radiometry/otbndviprocessor.h"
 #include "processors/Radiometry/otbmsaviprocessor.h"
 #include "processors/Radiometry/otbndwiprocessor.h"
@@ -97,6 +98,7 @@ OTBModule::OTBModule()
     addProcessor(new OTBShapeAttributesLabelMapProcessor());
     addProcessor(new OTBBandStatisticsAttributesLabelMapProcessor());
     addProcessor(new OTBStatisticsAttributesLabelMapProcessor());
+    addProcessor(new OTBLabelMapStatisticsWriterProcessor());
     addProcessor(new OTBNDVIProcessor());
     addProcessor(new OTBMSAVIProcessor());
     addProcessor(new OTBNDWIProcessor());
