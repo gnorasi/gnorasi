@@ -45,32 +45,15 @@ public:
     OTBLabelMapStatisticsWriterProcessor();
     virtual Processor* create() const;
 
-    virtual std::string getClassName() const { return "Object Properties To CSV Converter"; }
+    virtual std::string getClassName() const { return "Object Properties To CSV"; }
     virtual std::string getCategory() const  { return "OBIA"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; } //STABLE, TESTING, EXPERIMENTAL
     virtual std::string getProcessorInfo() const;
     
-    virtual bool isEndProcessor() const;
     virtual bool isReady() const;
     
-     /**
-     * Saves the CSV string.
-     *
-     * @note The processor must have been initialized
-     *       before calling this function.
-     */
     void saveCSV();
-    
-    /**
-     * Clears the loaded image. Processor needs to be initialized when calling this function.
-     */
     void clearCSV();
-    
-    /// sets the link to the TextData object after calling the processor (outport data actually)
-    void setTextDataOut(std::string);
-    /// returns the link to the TextData object (inport data actually...)
-    const std::string getTextData() const;
-    
 
 protected:
     virtual void process();

@@ -37,7 +37,7 @@ OTBLabelMapStatisticsWriterProcessor::OTBLabelMapStatisticsWriterProcessor()
     : Processor(),
     inPort_(Port::INPORT, "Object Map Input", 0),
     outPort_(Port::OUTPORT, "Object Properties Output", 0),
-    CSVFile_("csvfile", "Output File", "Properties File", VoreenApplication::app()->getDataPath(), "CSV Image file (*.csv)", FileDialogProperty::SAVE_FILE),
+    CSVFile_("csvfile", "Output File", "Properties Output File", VoreenApplication::app()->getDataPath(), "CSV Image file (*.csv)", FileDialogProperty::SAVE_FILE),
     clearFile_("clearButton", "Clear File"),
     saveButton_("saveButton", "Save Properties")
 {
@@ -75,7 +75,7 @@ void OTBLabelMapStatisticsWriterProcessor::initialize() throw (VoreenException) 
     // call superclass function first
     Processor::initialize();
     hasFileName = false;
-    //getProcessorWidget()->updateFromProcessor();
+    
 }
 
 void OTBLabelMapStatisticsWriterProcessor::deinitialize() throw (VoreenException) {
@@ -112,11 +112,6 @@ void OTBLabelMapStatisticsWriterProcessor::clearCSV() {
         hasFileName = false;
     }
     CSVFile_.set("");
-}
-
-void OTBLabelMapStatisticsWriterProcessor::setTextDataOut(std::string outTextData) {
-    pTextDataOut_ = outTextData;
-    OTBLabelMapStatisticsWriterProcessor::setOutPortData();
 }
 
 void OTBLabelMapStatisticsWriterProcessor::setOutPortData(){
