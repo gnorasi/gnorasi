@@ -6,7 +6,7 @@ unix {
     LIBS += -lOTBBasicFilters
     LIBS += -lOTBGui
     LIBS += -lOTBVisualization
-    LIBS += -lotbMeanShiftModule
+    LIBS += -lotbedison
     LIBS += -lOTBLearning
     LIBS += -lOTBOBIA
     LIBS += -lITKCommon
