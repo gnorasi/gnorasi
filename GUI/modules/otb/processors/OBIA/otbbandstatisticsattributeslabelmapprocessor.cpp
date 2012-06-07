@@ -100,5 +100,16 @@ void OTBBandStatisticsAttributesLabelMapProcessor::update() {
     statisticsLabelMapFilter->Update();
 }
 
+bool OTBBandStatisticsAttributesLabelMapProcessor::isReady() const {
+    if (!isInitialized())
+        return false;
+
+    if(!inPort_.isConnected()) return false;
+    
+    if(!outPort_.isConnected() && !outPort2_.isConnected() && !outVImage_.isConnected()) return false;
+    
+    return true;
+}
+
 
 } // namespace
