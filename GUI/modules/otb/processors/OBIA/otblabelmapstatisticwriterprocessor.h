@@ -52,6 +52,13 @@ public:
     
     virtual bool isReady() const;
     
+    typedef unsigned long           LabelType;
+    typedef otb::AttributesMapLabelObjectWithClassLabel<LabelType, 2, double, unsigned short> 
+				    LabelObjectType;
+    typedef itk::LabelMap<LabelObjectType> LabelMapType;
+    typedef LabelMapType* LabelMapPointer;
+    
+    
     void saveCSV();
     void clearCSV();
 
