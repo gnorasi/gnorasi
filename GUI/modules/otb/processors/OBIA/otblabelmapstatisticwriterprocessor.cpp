@@ -135,10 +135,10 @@ void OTBLabelMapStatisticsWriterProcessor::saveCSV() {
 	    return;
 	}
     }else if(!this->isReady()){
-	LWARNING("Inport is not connected");
+	LWARNING("Input Object Map is not connected");
 	return;
     }else if(!hasFileName){
-	LWARNING("Image Name Not Set");
+	LWARNING("Properties File Name Not Set");
 	return;
     }
 
