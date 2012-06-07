@@ -51,7 +51,7 @@ OTBLabelMapStatisticsWriterProcessor::OTBLabelMapStatisticsWriterProcessor()
     addProperty(saveButton_);
     
     //OTB initialization
-    
+    labelmap = 0;
 }
 
 Processor* OTBLabelMapStatisticsWriterProcessor::create() const {
@@ -92,8 +92,41 @@ void OTBLabelMapStatisticsWriterProcessor::saveCSV() {
   
     if(this->isReady() && hasFileName)
     {
-	
-	
+	try
+	{
+	    //Connect with data inport
+	    labelmap = inPort_.getData();
+	    	    
+	    //we need to read the titles of the Properties in the Attribute Table
+	    //in this case we read the first LabelObject from the std::map container.
+	    typename LabelMapType::LabelObjectContainerType::const_iterator it=
+		labelmap->GetLabelObjectContainer().begin();
+	    
+	    //we now go in the LabelObject type and read the Attributes Name List
+	    std::vector<std::string> attrvector = it->second->GetAvailableAttributes();
+	    
+	    for(int i=0;i<attrvector.size();i++)
+	    {
+		if (i!=0) pTextDataOut_ << ";";
+		pTextDataOut_ << attrvector[i];
+	    }
+	    pTextDataOut_ << std::endl;
+	    
+	    //Write the csv header to file
+            std::ofstream outfile;
+            outfile.open(CSVFile_.get().c_str());
+	    outfile << pTextDataOut_.rdbuf();
+	    outfile.close();
+	    
+	    
+	    //Output the csv string to the outport
+	    setOutPortData();
+	}
+	catch(itk::ExceptionObject& err)
+	{
+	    LWARNING("ExceptionObject caught !");
+	    return;
+	}
     }else if(!this->isReady()){
 	LWARNING("Writer Inport not connected");
 	return;
@@ -116,7 +149,7 @@ void OTBLabelMapStatisticsWriterProcessor::clearCSV() {
 
 void OTBLabelMapStatisticsWriterProcessor::setOutPortData(){
 
-    outPort_.setData(pTextDataOut_);
+    outPort_.setData(pTextDataOut_.str());
 }
 
 } // namespace
