@@ -64,14 +64,13 @@ std::string OTBLabelImageToLabelMapProcessor::getProcessorInfo() const {
 }
 
 void OTBLabelImageToLabelMapProcessor::process() {
-
-    LINFO("Label Image to Objects Processed");
+    
     try
     {
 	labelMapFilter->SetInput(inPort_.getData());
 	labelMapFilter->SetBackgroundValue(itk::NumericTraits<LabelType>::min());
 	outPort_.setData(labelMapFilter->GetOutput());
-	LINFO("Label Image to Objects: Map size is " << labelMapFilter->GetOutput()->GetLabelObjectContainer().size());
+	LINFO("Label Image to Objects Processed");
     }
     catch (int e)
     {
