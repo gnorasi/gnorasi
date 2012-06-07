@@ -37,6 +37,8 @@
 #include "voreen/core/ports/textport.h"
 #include "otbAttributesMapLabelObjectWithClassLabel.h"
 #include "itkLabelMap.h"
+#include <fstream>
+#include <sstream>
 
 namespace voreen {
 
@@ -58,6 +60,7 @@ public:
     typedef itk::LabelMap<LabelObjectType> LabelMapType;
     typedef LabelMapType* LabelMapPointer;
     
+    LabelMapPointer labelmap;
     
     void saveCSV();
     void clearCSV();
@@ -75,7 +78,7 @@ private:
     OTBLabelMapPort inPort_;
     TextPort outPort_;
     
-    std::string pTextDataOut_;
+    std::stringstream pTextDataOut_;
     
     FileDialogProperty CSVFile_;  ///< Path of the saved image file.
     ButtonProperty clearFile_;      ///< Executes clearImage().
