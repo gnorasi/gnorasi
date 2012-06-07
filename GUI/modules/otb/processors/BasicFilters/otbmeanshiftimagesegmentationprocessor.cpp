@@ -88,20 +88,13 @@ bool OTBMeanShiftSegmentationProcessor::isReady() const {
     
     if(!outPort_.isConnected() && !outPort2_.isConnected() && !outPort3_.isConnected() &&
         !outPort4_.isConnected() && !outPort5_.isConnected()) return false;
-    /*for (size_t i=0; i<outports_.size(); ++i)
-        if(!outports_[i]->isReady())
-            return false;
-
-    for (size_t i=0; i<coProcessorInports_.size(); ++i)
-        if (!coProcessorInports_[i]->isReady())
-            return false;*/
 
     return true;
 }
 
 void OTBMeanShiftSegmentationProcessor::process() {
     
-    LINFO("Mean Shift Segmentation Enabled!");
+    //LINFO("Mean Shift Segmentation Enabled!");
     //check bypass switch
     if (!enableSwitch_.get()){
         bypass(&inPort_, &outPort_);
@@ -121,7 +114,7 @@ void OTBMeanShiftSegmentationProcessor::process() {
 	outPort3_.setData(filter->GetLabeledClusteredOutput());
 	outPort4_.setData(filter->GetClusterBoundariesOutput());
 	outPort5_.setData(inPort_.getData());
-	LINFO("Mean Shift Segmentation Sucesfull!");
+	LINFO("Mean Shift Segmentation Connected!");
     }
     catch (int e)
     {

@@ -87,6 +87,7 @@ void OTBStatisticsAttributesLabelMapProcessor::process() {
 				     statisticsLabelMapFilter->ReducedAttributeSetOff();
 	outPort_.setData(statisticsLabelMapFilter->GetOutput());
 	outImage_.setData(inImage_.getData());
+	LINFO("Statistics Calculation Processor Connected.");
     }
     catch (int e)
     {
