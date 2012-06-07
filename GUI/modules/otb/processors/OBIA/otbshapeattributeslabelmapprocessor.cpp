@@ -36,10 +36,13 @@ const std::string OTBShapeAttributesLabelMapProcessor::loggerCat_("voreen.OTBSha
 OTBShapeAttributesLabelMapProcessor::OTBShapeAttributesLabelMapProcessor()
     : Processor(),
     reducedProperties_("reduced", "Only Basic Properties", true),
+    update_("updateButton", "Update"),
     inPort_(Port::INPORT, "Input Object Map", 0),
     outPort_(Port::OUTPORT, "Output Object Map", 0)
 {
     addProperty(reducedProperties_);
+    update_.onChange(CallMemberAction<OTBShapeAttributesLabelMapProcessor>(this, &OTBShapeAttributesLabelMapProcessor::update));
+    addProperty(update_);
     addPort(inPort_);
     addPort(outPort_);
     
@@ -67,20 +70,30 @@ std::string OTBShapeAttributesLabelMapProcessor::getProcessorInfo() const {
 
 void OTBShapeAttributesLabelMapProcessor::process() {
     
-    LINFO("ShapeAttributes Processed");
+    if(!inPort_.isConnected())
+    {
+	LWARNING("Input Object Mapis not connected");
+	return;
+    }
     try
     {
 	shapeLabelMapFilter->SetInput(inPort_.getData());
 	(reducedProperties_.get()) ? shapeLabelMapFilter->ReducedAttributeSetOn() : 
 				     shapeLabelMapFilter->ReducedAttributeSetOff();
 	outPort_.setData(shapeLabelMapFilter->GetOutput());
+	LINFO("Shape Properties on Object Map Processed");
     }
     catch (int e)
     {
-	LERROR("Problem with Label Image to Object Map process!");
+	LERROR("Problem with Shape Properties on Object Map!");
 	return;
     }
     
+}
+
+void OTBShapeAttributesLabelMapProcessor::update() {
+    process();
+    shapeLabelMapFilter->Update();
 }
 
 

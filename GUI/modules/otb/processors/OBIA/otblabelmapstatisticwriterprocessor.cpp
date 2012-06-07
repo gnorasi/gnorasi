@@ -96,11 +96,18 @@ void OTBLabelMapStatisticsWriterProcessor::saveCSV() {
 	{
 	    //Connect with data inport
 	    labelmap = inPort_.getData();
-	    	    
+	    
+	    //Check if Object Map has data in it
+	    if(labelmap->GetLabelObjectContainer().empty()){
+		LWARNING("Object Map is empty. Please Update previous processors");
+		return;
+	    }
+	    
 	    //we need to read the titles of the Properties in the Attribute Table
 	    //in this case we read the first LabelObject from the std::map container.
 	    typename LabelMapType::LabelObjectContainerType::const_iterator it=
 		labelmap->GetLabelObjectContainer().begin();
+	    
 	    
 	    //we now go in the LabelObject type and read the Attributes Name List
 	    std::vector<std::string> attrvector = it->second->GetAvailableAttributes();
@@ -128,7 +135,7 @@ void OTBLabelMapStatisticsWriterProcessor::saveCSV() {
 	    return;
 	}
     }else if(!this->isReady()){
-	LWARNING("Writer Inport not connected");
+	LWARNING("Inport is not connected");
 	return;
     }else if(!hasFileName){
 	LWARNING("Image Name Not Set");

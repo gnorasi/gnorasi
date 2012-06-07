@@ -71,6 +71,7 @@ void OTBLabelImageToLabelMapProcessor::process() {
 	labelMapFilter->SetInput(inPort_.getData());
 	labelMapFilter->SetBackgroundValue(itk::NumericTraits<LabelType>::min());
 	outPort_.setData(labelMapFilter->GetOutput());
+	LINFO("Label Image to Objects: Map size is " << labelMapFilter->GetOutput()->GetLabelObjectContainer().size());
     }
     catch (int e)
     {
