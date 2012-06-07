@@ -32,6 +32,7 @@
 
 #include "voreen/core/processors/processor.h"
 #include "voreen/core/properties/boolproperty.h"
+#include "voreen/core/properties/buttonproperty.h"
 #include "../../ports/otblabelmapport.h"
 #include "otbImage.h"
 #include "otbAttributesMapLabelObjectWithClassLabel.h"
@@ -64,9 +65,11 @@ public:
     
 protected:
     void process();
+    void update();
     virtual void initialize() throw (tgt::Exception);
     virtual void deinitialize() throw (tgt::Exception);
     BoolProperty reducedProperties_; ///< Calculate reduced number of shape properties
+    ButtonProperty update_;      ///< Updates the chain
 
 private:
 
