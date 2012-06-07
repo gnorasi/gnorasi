@@ -84,6 +84,11 @@ void OTBVectorImageReaderProcessor::deinitialize() throw (tgt::Exception) {
 }
 
 bool OTBVectorImageReaderProcessor::isReady() const {
+    
+    if (!isInitialized()) return false;
+    
+    if(!outPort_.isConnected() && !outPort2_.isConnected()) return false;
+    
     return true;
 }
 
