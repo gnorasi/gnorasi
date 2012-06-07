@@ -105,5 +105,15 @@ void OTBStatisticsAttributesLabelMapProcessor::setFeatureName() {
     featureName = featureName_.get();
 }
 
+bool OTBStatisticsAttributesLabelMapProcessor::isReady() const {
+    if (!isInitialized())
+        return false;
+
+    if(!inPort_.isConnected() && !inImage_.isConnected()) return false;
+    
+    if(!outPort_.isConnected() && !outImage_.isConnected()) return false;
+    
+    return true;
+}
 
 } // namespace
