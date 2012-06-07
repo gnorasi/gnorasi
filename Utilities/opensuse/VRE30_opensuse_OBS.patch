@@ -1,0 +1,119 @@
+Index: include/voreen/qt/widgets/performancerecordwidget.h
+===================================================================
+--- include/voreen/qt/widgets/performancerecordwidget.h	(revision 41)
++++ include/voreen/qt/widgets/performancerecordwidget.h	(working copy)
+@@ -124,7 +124,7 @@
+         TimeTypeAfterProcess
+     };
+ 
+-    PerformanceRecordTreeWidget(PerformanceRecordWidget* performanceRecordWidget, bool averageTime = false, PerformanceRecordTreeWidget::TimeType sortType = PerformanceRecordTreeWidget::TimeTypeTotalProcess, PerformanceRecordTreeWidget::TimeType showType = PerformanceRecordTreeWidget::TimeTypeTotalProcess, bool clearOnUpdate = false, QWidget* parent = 0);
++    PerformanceRecordTreeWidget(QWidget* parent = 0, PerformanceRecordWidget* performanceRecordWidget = 0, bool averageTime = false, PerformanceRecordTreeWidget::TimeType sortType = PerformanceRecordTreeWidget::TimeTypeTotalProcess, PerformanceRecordTreeWidget::TimeType showType = PerformanceRecordTreeWidget::TimeTypeTotalProcess, bool clearOnUpdate = false);
+ 
+ public slots:
+     void update();
+@@ -170,10 +170,10 @@
+     static bool compare_highest_process_time(PerformanceSample first, PerformanceSample second) { return first.getChildTime("process") > second.getChildTime("process"); }
+     static bool compare_highest_afterprocess_time(PerformanceSample first, PerformanceSample second) { return first.getChildTime("afterprocess") > second.getChildTime("afterprocess"); }
+ 
+-    bool clearTreeOnUpdate_;
+     bool averageTime_;
+     TimeType sortType_;
+     TimeType showType_;
++    bool clearTreeOnUpdate_;
+     std::string filterText_;
+ 
+     std::vector<PerformanceSample> performanceSamples_;
+Index: src/qt/widgets/performancerecordwidget.cpp
+===================================================================
+--- src/qt/widgets/performancerecordwidget.cpp	(revision 41)
++++ src/qt/widgets/performancerecordwidget.cpp	(working copy)
+@@ -233,7 +233,7 @@
+ 
+     settings.endGroup();
+ 
+-    tree_ = new PerformanceRecordTreeWidget(this, averageT, sortT, showT, clearTreeWhenRecordsUpdate_->isChecked());
++    tree_ = new PerformanceRecordTreeWidget(0, this, averageT, sortT, showT, clearTreeWhenRecordsUpdate_->isChecked());
+     tree_->filterText_ = text;
+     edit_->setText(QString::fromStdString(tree_->filterText_));
+ 
+@@ -355,7 +355,7 @@
+ 
+ // ----------------------------------------------------------------------------
+ 
+-PerformanceRecordTreeWidget::PerformanceRecordTreeWidget(PerformanceRecordWidget* performanceRecordWidget, bool averageTime, PerformanceRecordTreeWidget::TimeType sortType, PerformanceRecordTreeWidget::TimeType showType, bool clearOnUpdate, QWidget* parent)
++PerformanceRecordTreeWidget::PerformanceRecordTreeWidget(QWidget* parent, PerformanceRecordWidget* performanceRecordWidget, bool averageTime, PerformanceRecordTreeWidget::TimeType sortType, PerformanceRecordTreeWidget::TimeType showType, bool clearOnUpdate)
+     : QTreeWidget(parent)
+     , performanceRecordWidget_(performanceRecordWidget)
+     , averageTime_(averageTime)
+Index: src/core/utils/variant.cpp
+===================================================================
+--- src/core/utils/variant.cpp	(revision 41)
++++ src/core/utils/variant.cpp	(working copy)
+@@ -82,7 +82,7 @@
+ //  Left side -> Right side 
+ //  is allowed in general
+ //  WARNING: This list has to be in the same
+-//  oder as the enum VariantType
++//  order as the enum VariantType
+ /*Invalid*/             0,
+ 
+ /*Bool*/                1 << Variant::VariantTypeDouble     | 1 << Variant::VariantTypeFloat    | 1 << Variant::VariantTypeInteger  |
+@@ -817,12 +817,13 @@
+         if ( (s >> result).fail() )
+             throw ConversionFailedException("String->Int conversion failed");
+         return result;
+-        break;
+     }
+     case VariantTypeInvalid:
+         throw OperationNotDefinedForInvalidVariantException();
++        return 0;
+     default:
+         throw NoSuchTransformationException("Variant: Conversion from " + typeToName(currentType_) + " to long not implemented");
++        return 0;
+     }
+ }
+ 
+@@ -1783,6 +1784,8 @@
+         case VariantTypeVolumeCollection:
+             set(*rhs.getVolumeCollection(), VariantTypeVolumeCollection);
+             break;
++        default:
++            break;
+         }
+         if (rhs.getType() >= VariantTypeUserType) {
+             currentType_ = rhs.currentType_;
+Index: ext/tgt/event/eventlistener.cpp
+===================================================================
+--- ext/tgt/event/eventlistener.cpp	(revision 41)
++++ ext/tgt/event/eventlistener.cpp	(working copy)
+@@ -46,16 +46,25 @@
+     */
+     if (typeid(*e) == typeid(MouseEvent)) {
+         MouseEvent* me = static_cast<MouseEvent*>(e);
+-        if (me->action() == MouseEvent::PRESSED)
++        switch (me->action()) {
++        case MouseEvent::PRESSED:
+             mousePressEvent(me);
+-        else if (me->action() == MouseEvent::RELEASED)
++            break;
++        case MouseEvent::RELEASED:
+             mouseReleaseEvent(me);
+-        else if (me->action() == MouseEvent::MOTION)
++            break;
++        case MouseEvent::MOTION:
+             mouseMoveEvent(me);
+-        else if (me->action() == MouseEvent::DOUBLECLICK)
++            break;
++        case MouseEvent::DOUBLECLICK:
+             mouseDoubleClickEvent(me);
+-        else if (me->action() == MouseEvent::WHEEL)
++            break;
++        case MouseEvent::MOUSE_WHEEL:
+             wheelEvent(me);
++            break;
++        default:
++            break;
++        }
+     }
+     else if (typeid(*e) == typeid(KeyEvent)) {
+         keyEvent(static_cast<KeyEvent*>(e));
