@@ -66,13 +66,13 @@ std::string OTBShapeAttributesLabelMapProcessor::getProcessorInfo() const {
 }
 
 void OTBShapeAttributesLabelMapProcessor::process() {
-
+    
+    LINFO("ShapeAttributes Processed");
     try
     {
 	shapeLabelMapFilter->SetInput(inPort_.getData());
 	(reducedProperties_.get()) ? shapeLabelMapFilter->ReducedAttributeSetOn() : 
 				     shapeLabelMapFilter->ReducedAttributeSetOff();
-	LINFO("Here");
 	outPort_.setData(shapeLabelMapFilter->GetOutput());
     }
     catch (int e)

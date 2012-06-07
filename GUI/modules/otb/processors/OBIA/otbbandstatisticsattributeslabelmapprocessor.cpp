@@ -75,7 +75,7 @@ std::string OTBBandStatisticsAttributesLabelMapProcessor::getProcessorInfo() con
 }
 
 void OTBBandStatisticsAttributesLabelMapProcessor::process() {
-
+    LINFO("Band Attributes Processed");
     try
     {
 	statisticsLabelMapFilter->SetInput(inPort_.getData());
@@ -85,7 +85,6 @@ void OTBBandStatisticsAttributesLabelMapProcessor::process() {
 	outPort_.setData(statisticsLabelMapFilter->GetOutput());
 	outVImage_.setData(inVImage_.getData());
 	outPort2_.setData(inPort_.getData());
-	LINFO("Here");
     }
     catch (int e)
     {

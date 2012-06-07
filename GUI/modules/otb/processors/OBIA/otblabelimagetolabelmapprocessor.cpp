@@ -65,6 +65,7 @@ std::string OTBLabelImageToLabelMapProcessor::getProcessorInfo() const {
 
 void OTBLabelImageToLabelMapProcessor::process() {
 
+    LINFO("Label Image to Objects Processed");
     try
     {
 	labelMapFilter->SetInput(inPort_.getData());
@@ -76,8 +77,17 @@ void OTBLabelImageToLabelMapProcessor::process() {
 	LERROR("Problem with Label Image to Object Map process!");
 	return;
     }
-    
+
 }
+
+/*bool OTBLabelImageToLabelMapProcessor::isReady() const {
+    if (!isInitialized())
+        return false;
+
+    if(!inPort_.isConnected() && !outPort_.isConnected()) return false;
+    
+    return true;
+}*/
 
 
 } // namespace
