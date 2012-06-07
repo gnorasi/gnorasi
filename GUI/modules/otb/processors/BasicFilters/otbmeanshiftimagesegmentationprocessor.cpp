@@ -81,11 +81,12 @@ std::string OTBMeanShiftSegmentationProcessor::getProcessorInfo() const {
 }
 
 void OTBMeanShiftSegmentationProcessor::process() {
-
+    
+    LINFO("Mean Shift Segmentation Enabled!");
     //check bypass switch
     if (!enableSwitch_.get()){
         bypass(&inPort_, &outPort_);
-        return;
+	return;
     }
     
     try
@@ -94,13 +95,13 @@ void OTBMeanShiftSegmentationProcessor::process() {
 	filter->SetRangeRadius(rangeRadius_.get());
 	filter->SetMinimumRegionSize(minRegionSize_.get());
 	filter->SetScale(scale_.get());
+	filter->SetNumberOfThreads(1);
 	filter->SetInput(inPort_.getData());
 	outPort_.setData(filter->GetOutput());
 	outPort2_.setData(filter->GetClusteredOutput());
 	outPort3_.setData(filter->GetLabeledClusteredOutput());
 	outPort4_.setData(filter->GetClusterBoundariesOutput());
 	outPort5_.setData(inPort_.getData());
-	
 	LINFO("Mean Shift Segmentation Sucesfull!");
     }
     catch (int e)
