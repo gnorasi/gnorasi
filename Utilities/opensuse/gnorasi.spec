@@ -4,6 +4,7 @@
 
 # norootforbuild
 
+%define _datadir /usr/share
 Name:           gnorasi
 Version:        0.1.0
 Release:        1
@@ -12,6 +13,8 @@ Group:          Development/Libraries/C and C++
 License:        GPL
 URL:            http://www.gnorasi.gr
 Source0:        %{name}-%{version}.tar.gz
+Source1:	gnorasi.desktop
+Source2:	gnorasi.png
 Patch1:		VRE30_opensuse_OBS.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 # BuildArch:      noarch
@@ -51,6 +54,10 @@ mkdir -p %{buildroot}/usr/bin
 install -m 755 ./bin/*.so* %{buildroot}/usr/%{_lib}/
 install -m 755 ./bin/gnorasi %{buildroot}/usr/bin/gnorasi
 mv ./include/voreen %{buildroot}/usr/include/
+install -d $RPM_BUILD_ROOT%{_datadir}/applications
+install -m 644 %SOURCE1  $RPM_BUILD_ROOT%{_datadir}/applications/gnorasi.desktop
+install -d $RPM_BUILD_ROOT%{_datadir}/icons
+install -m 644 %SOURCE2  $RPM_BUILD_ROOT%{_datadir}/icons/gnorasi.png
 #%%makeinstall
 %fdupes %{buildroot}
 
@@ -65,6 +72,8 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %{_bindir}/*
 %{_libdir}/lib*.so.*
+%{_datadir}/applications/gnorasi.desktop
+%{_datadir}/icons/gnorasi.png
 
 %files devel
 %defattr(-,root,root,-)
