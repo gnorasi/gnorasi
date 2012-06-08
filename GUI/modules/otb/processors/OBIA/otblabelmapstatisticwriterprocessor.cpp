@@ -112,12 +112,26 @@ void OTBLabelMapStatisticsWriterProcessor::saveCSV() {
 	    //we now go in the LabelObject type and read the Attributes Name List
 	    std::vector<std::string> attrvector = it->second->GetAvailableAttributes();
 	    
+	    pTextDataOut_ << "ID" << ";";
+	    
 	    for(int i=0;i<attrvector.size();i++)
 	    {
-		if (i!=0) pTextDataOut_ << ";";
-		pTextDataOut_ << attrvector[i];
+		(i!=attrvector.size()-1) ? pTextDataOut_ << attrvector[i] << ";" 
+		    : pTextDataOut_ << attrvector[i];
+		
 	    }
 	    pTextDataOut_ << std::endl;
+	    
+	    //Iterate through all LabelMap Objects
+	    it = labelmap->GetLabelObjectContainer().begin();
+	    while(it != labelmap->GetLabelObjectContainer().end())
+	    {
+		//Iterate through the attributes
+		
+		
+		//Move to next MapObject
+		++it;
+	    }
 	    
 	    //Write the csv header to file
             std::ofstream outfile;
