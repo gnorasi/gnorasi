@@ -1,0 +1,7 @@
+[home:tzotsos:Application:Geo]
+name=home:tzotsos:Application:Geo
+baseurl=http://download.opensuse.org/repositories/home:/tzotsos:/Application:/Geo/openSUSE_12.1
+type=rpm-md
+enabled=1
+autorefresh=1
+gpgcheck=1
