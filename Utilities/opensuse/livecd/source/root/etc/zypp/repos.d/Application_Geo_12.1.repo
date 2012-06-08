@@ -1,0 +1,7 @@
+[Application:Geo_12.1]
+name=Application:Geo_12.1
+baseurl=http://download.opensuse.org/repositories/Application:Geo/openSUSE_12.1
+type=rpm-md
+enabled=1
+autorefresh=1
+gpgcheck=1

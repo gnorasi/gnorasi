@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<image name='gnorasilive' displayname='gnorasilive' schemeversion='2.4'>
+  <description type='system'>
+    <author>tzotsos</author>
+    <contact>studio-devel@suse.de</contact>
+    <specification>Base system + KDE 4</specification>
+  </description>
+  <preferences>
+    <type flags='clic' checkprebuilt='true' hybrid='true' fsnocheck='true' boot='isoboot/suse-12.1'>iso</type>
+    <version>0.1.2</version>
+    <packagemanager>zypper</packagemanager>
+    <rpm-check-signatures>False</rpm-check-signatures>
+    <rpm-force>False</rpm-force>
+    <boot-theme>studio</boot-theme>
+    <locale>el_GR</locale>
+  </preferences>
+  <users group='root'>
+    <user name='root' shell='/bin/bash' pwd='$1$TJmvu4cC$lTwimlnl5OxyLx3FGrjep.' home='/root'/>
+  </users>
+  <users group='users'>
+    <user name='user' shell='/bin/bash' pwd='$1$8KqaBg8L$RtIvC7TkuDAlWhU4ccI3H/' home='/home/user'/>
+  </users>
+  <split>
+    <temporary>
+      <file name='/var'/>
+      <file name='/var/*'/>
+      <file name='/etc'/>
+      <file name='/etc/*'/>
+      <file name='/tmp'/>
+      <file name='/tmp/*'/>
+      <file name='/home'/>
+      <file name='/home/*'/>
+    </temporary>
+  </split>
+  <packages patternType='onlyRequired' type='image' patternPackageType='onlyRequired'>
+    <opensusePattern name='kde4'/>
+    <opensusePattern name='base'/>
+    <opensusePattern name='x11'/>
+    <package name='gnorasi'/>
+    <package name='libgdal-grass'/>
+    <package name='qgis-plugin-grass'/>
+    <package name='saga-gis'/>
+    <package name='cmake-gui'/>
+    <package name='Monteverdi'/>
+    <package name='git'/>
+    <package name='tortoisehg'/>
+    <package name='mercurial'/>
+    <package name='qt-creator'/>
+    <package name='qgis-sextante'/>
+    <package name='qgis'/>
+    <package name='MozillaFirefox'/>
+    <package name='kate'/>
+    <package name='Orfeo-Applications'/>
+    <package name='OrfeoToolbox'/>
+    <package name='OrfeoToolbox-devel'/>
+    <package name='kdebase4-openSUSE'/>
+    <package name='kdebase4-workspace-branding-openSUSE'/>
+    <package name='kdm'/>
+    <package name='konsole'/>
+    <package name='phonon-backend-gstreamer-0_10'/>
+    <package name='plasma-addons'/>
+    <package name='sax2-tools'/>
+    <package name='soprano-backend-virtuoso'/>
+    <package name='yast2-control-center-qt'/>
+    <package name='yast2-qt'/>
+    <package name='yast2-qt-pkg'/>
+    <package name='SuSEfirewall2'/>
+    <package name='bootsplash-branding-openSUSE'/>
+    <package name='iputils'/>
+    <package name='kernel-default'/>
+    <package name='less'/>
+    <package name='syslog-ng'/>
+    <package name='vim'/>
+    <package name='yast2'/>
+    <package name='yast2-firstboot'/>
+    <package name='yast2-ncurses'/>
+    <package name='zypper'/>
+    <package name='xorg-x11-server'/>
+    <package name='x11-tools'/>
+    <package name='dbus-1-x11'/>
+    <package name='xorg-x11-fonts'/>
+    <package name='xorg-x11-driver-video'/>
+    <package name='xorg-x11-driver-input'/>
+    <package name='ConsoleKit-x11'/>
+    <package name='icewm'/>
+    <package name='grub'/>
+    <package name='yast2-live-installer'/>
+    <package name='yast2-users'/>
+    <archive bootinclude='true' name='bootsplash.tar'/>
+    <archive name='kdm4.tar'/>
+  </packages>
+  <packages type='bootstrap'>
+    <package name='filesystem'/>
+    <package name='glibc-locale'/>
+  </packages>
+  <repository type='rpm-md'>
+    <source path='http://download.opensuse.org/update/12.1/'/>
+  </repository>
+  <repository type='yast2'>
+    <source path='http://download.opensuse.org/distribution/12.1/repo/oss/'/>
+  </repository>
+  <repository type='rpm-md'>
+    <source path='http://download.opensuse.org/repositories/Education/openSUSE_12.1'/>
+  </repository>
+  <repository type='rpm-md'>
+    <source path='http://download.opensuse.org/repositories/games/openSUSE_12.1'/>
+  </repository>
+  <repository type='rpm-md'>
+    <source path='http://download.opensuse.org/repositories/devel:/tools:/scm/openSUSE_12.1'/>
+  </repository>
+  <repository type='rpm-md'>
+    <source path='http://download.opensuse.org/repositories/devel:languages:python/openSUSE_12.1'/>
+  </repository>
+  <repository type='rpm-md'>
+    <source path='http://download.opensuse.org/repositories/home:tzotsos/openSUSE_12.1'/>
+  </repository>
+  <repository type='rpm-md'>
+    <source path='http://download.opensuse.org/repositories/Application:Geo/openSUSE_12.1'/>
+  </repository>
+  <repository type='rpm-md'>
+    <source path='http://download.opensuse.org/repositories/home:tzotsos:python/openSUSE_12.1'/>
+  </repository>
+  <repository type='rpm-md'>
+    <source path='http://download.opensuse.org/repositories/home:/tzotsos:/Application:/Geo/openSUSE_12.1'/>
+  </repository>
+</image>

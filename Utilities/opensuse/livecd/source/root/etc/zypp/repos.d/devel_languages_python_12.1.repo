@@ -1,0 +1,7 @@
+[devel:languages:python_12.1]
+name=devel:languages:python_12.1
+baseurl=http://download.opensuse.org/repositories/devel:languages:python/openSUSE_12.1
+type=rpm-md
+enabled=1
+autorefresh=1
+gpgcheck=1
