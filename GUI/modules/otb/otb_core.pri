@@ -28,6 +28,7 @@ $${VRN_MODULE_DIR}/otb/processors/OBIA/otbshapeattributeslabelmapprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbstatisticsattributeslabelmapprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otblabelmapstatisticwriterprocessor.cpp \
+$${VRN_MODULE_DIR}/otb/processors/OBIA/otbobjectclassificationtolabelmapprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbndviprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbmsaviprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbndwiprocessor.cpp \
@@ -66,6 +67,7 @@ $${VRN_MODULE_DIR}/otb/processors/OBIA/otbshapeattributeslabelmapprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbstatisticsattributeslabelmapprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otblabelmapstatisticwriterprocessor.h \
+$${VRN_MODULE_DIR}/otb/processors/OBIA/otbobjectclassificationtolabelmapprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbndviprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbmsaviprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/Radiometry/otbndwiprocessor.h \

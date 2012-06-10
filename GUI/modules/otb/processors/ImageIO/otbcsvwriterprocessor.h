@@ -44,7 +44,7 @@ public:
     OTBCSVWriterProcessor();
     virtual Processor* create() const;
 
-    virtual std::string getClassName() const { return "Export Data To CSV"; }
+    virtual std::string getClassName() const { return "CSV File Writer"; }
     virtual std::string getCategory() const  { return "Image IO"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; } //STABLE, TESTING, EXPERIMENTAL
     virtual std::string getProcessorInfo() const;
