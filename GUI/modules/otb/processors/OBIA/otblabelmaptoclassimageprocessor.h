@@ -66,7 +66,7 @@ public:
     typedef otb::AttributesMapLabelObjectWithClassLabel<LabelType, 2, double, ClassType> LabelObjectType;
     typedef itk::LabelMap<LabelObjectType> LabelMapType;
     
-    typedef itk::LabelMapWithClassLabelToClassLabelImageFilter<LabelMapType, ClassLabeledImageType>
+    typedef otb::LabelMapWithClassLabelToClassLabelImageFilter<LabelMapType, ClassLabeledImageType>
 							    LabelMapFilterType;
     LabelMapFilterType::Pointer labelMapFilter;
     
