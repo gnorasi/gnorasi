@@ -97,6 +97,10 @@ void OTBLabelMapStatisticsWriterProcessor::saveCSV() {
 	    //Connect with data inport
 	    labelmap = inPort_.getData();
 	    
+	    //test code
+	    std::stringstream tmp1;
+	    tmp1 << "ID" << ";" << "CLASS" << std::endl;
+	    
 	    //Check if Object Map has data in it
 	    if(labelmap->GetLabelObjectContainer().empty()){
 		LWARNING("Object Map is empty. Please Update previous processors");
@@ -123,10 +127,13 @@ void OTBLabelMapStatisticsWriterProcessor::saveCSV() {
 	    
 	    //Iterate through all LabelMap Objects
 	    it = labelmap->GetLabelObjectContainer().begin();
+            int k =0;
 	    while(it != labelmap->GetLabelObjectContainer().end())
 	    {
 		//Export Label ID
 		pTextDataOut_ << it->second->GetLabel() << ";";
+		//test code
+		tmp1 << it->second->GetLabel() << ";";
 		//Iterate through the attributes
                 for(unsigned int i=0;i<attrvector.size();i++)
 		{
@@ -134,9 +141,13 @@ void OTBLabelMapStatisticsWriterProcessor::saveCSV() {
 			pTextDataOut_ << it->second->GetAttribute(attrvector[i].c_str()) << ";" :
                         pTextDataOut_ << it->second->GetAttribute(attrvector[i].c_str());
 		}
+		
+		//test code
+                (k%5==0)? tmp1 << "1" << std::endl : tmp1 << "2" << std::endl;
 		//Move to next MapObject
 		pTextDataOut_ << std::endl;
 		++it;
+                k++;
 	    }
 	    
 	    //Write the csv header to file
@@ -145,6 +156,12 @@ void OTBLabelMapStatisticsWriterProcessor::saveCSV() {
 	    outfile << pTextDataOut_.rdbuf();
 	    outfile.close();
 	    
+	    //test code
+	    std::ofstream outfile2;
+	    std::string koko = CSVFile_.get() + ".class";
+            outfile2.open(koko.c_str());
+	    outfile2 << tmp1.rdbuf();
+	    outfile2.close();
 	    
 	    //Output the csv string to the outport
 	    setOutPortData();
