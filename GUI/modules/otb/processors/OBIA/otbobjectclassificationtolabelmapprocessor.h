@@ -26,33 +26,42 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_OTBCSVREADERPROCESSOR_H
-#define VRN_OTBCSVREADERPROCESSOR_H
+#ifndef VRN_OTBOBJECTCLASSIFCATIONTOLABELMAPPROCESSOR_H
+#define VRN_OTBOBJECTCLASSIFCATIONTOLABELMAPPROCESSOR_H
 
 #include "voreen/core/processors/processor.h"
 #include "voreen/core/properties/filedialogproperty.h"
 #include "voreen/core/properties/buttonproperty.h"
 #include "voreen/core/properties/stringproperty.h"
+#include "../../ports/otblabelmapport.h"
 #include "voreen/core/ports/textport.h"
-#include <fstream>
+#include "otbAttributesMapLabelObjectWithClassLabel.h"
+#include "itkLabelMap.h"
 #include <sstream>
 
 namespace voreen {
 
-class OTBCSVReaderProcessor : public Processor {
+class OTBObjectClassificationToLabelMapProcessor : public Processor {
 public:
-    OTBCSVReaderProcessor();
+    OTBObjectClassificationToLabelMapProcessor();
     virtual Processor* create() const;
 
-    virtual std::string getClassName() const { return "CSV File Reader"; }
-    virtual std::string getCategory() const  { return "Image IO"; }
+    virtual std::string getClassName() const { return "Update Object Map with Classification"; }
+    virtual std::string getCategory() const  { return "OBIA"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; } //STABLE, TESTING, EXPERIMENTAL
     virtual std::string getProcessorInfo() const;
     
     virtual bool isReady() const;
     
-    void loadCSV();
-    void clearCSV();
+    typedef unsigned long           LabelType;
+    typedef otb::AttributesMapLabelObjectWithClassLabel<LabelType, 2, double, unsigned short> 
+				    LabelObjectType;
+    typedef itk::LabelMap<LabelObjectType> LabelMapType;
+    typedef LabelMapType* LabelMapPointer;
+    
+    LabelMapPointer labelmap;
+    
+    void update();
 
 protected:
     virtual void process();
@@ -60,17 +69,16 @@ protected:
     virtual void deinitialize() throw (VoreenException);
 
 private:
-   
-    bool hasFileName;
-  
-    TextPort outPort_;
     
-    FileDialogProperty CSVFile_;  ///< Path of the saved image file.
-    ButtonProperty clearFile_;      ///< Executes clearImage().
+    OTBLabelMapPort inPort_;
+    TextPort inTextPort_;
+    OTBLabelMapPort outPort_;
+    
+    ButtonProperty updateButton_;    ///< Update
     
     static const std::string loggerCat_; ///< category used in logging
 };
 
 } // namespace
 
-#endif // VRN_OTBCSVREADERPROCESSOR_H
+#endif // VRN_OTBOBJECTCLASSIFCATIONTOLABELMAPPROCESSOR_H
