@@ -73,6 +73,7 @@ private:
     TextPort outPort_;
     
     std::stringstream pTextDataOut_;
+    bool DataWritten;
     
     ButtonProperty update_;    ///< Updates the text data.
     
