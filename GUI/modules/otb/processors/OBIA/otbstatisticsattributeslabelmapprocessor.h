@@ -76,7 +76,7 @@ protected:
     virtual void deinitialize() throw (tgt::Exception);
     BoolProperty reducedProperties_; ///< Calculate reduced number of shape properties
     StringProperty featureName_; ///< Set the name of the attribute added to the Object Map
-    ButtonProperty update_;      ///< Executes clearImage().
+    ButtonProperty update_;      ///< Executes update().
     
     std::string featureName;
     

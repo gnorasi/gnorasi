@@ -46,8 +46,8 @@ OTBStatisticsAttributesLabelMapProcessor::OTBStatisticsAttributesLabelMapProcess
     addProperty(reducedProperties_);
     featureName_.onChange(CallMemberAction<OTBStatisticsAttributesLabelMapProcessor>(this, &OTBStatisticsAttributesLabelMapProcessor::setFeatureName));
     addProperty(featureName_);
-    //update_.onChange(CallMemberAction<OTBStatisticsAttributesLabelMapProcessor>(this, &OTBStatisticsAttributesLabelMapProcessor::update));
-    //addProperty(update_);
+    update_.onChange(CallMemberAction<OTBStatisticsAttributesLabelMapProcessor>(this, &OTBStatisticsAttributesLabelMapProcessor::update));
+    addProperty(update_);
     addPort(inPort_);
     addPort(inImage_);
     addPort(outPort_);
