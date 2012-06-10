@@ -56,6 +56,7 @@
 #include "processors/OBIA/otbstatisticsattributeslabelmapprocessor.h"
 #include "processors/OBIA/otblabelmapstatisticwriterprocessor.h"
 #include "processors/OBIA/otbobjectclassificationtolabelmapprocessor.h"
+#include "processors/OBIA/otblabelmaptoclassimageprocessor.h"
 #include "processors/Radiometry/otbndviprocessor.h"
 #include "processors/Radiometry/otbmsaviprocessor.h"
 #include "processors/Radiometry/otbndwiprocessor.h"
@@ -105,6 +106,7 @@ OTBModule::OTBModule()
     addProcessor(new OTBStatisticsAttributesLabelMapProcessor());
     addProcessor(new OTBLabelMapStatisticsWriterProcessor());
     addProcessor(new OTBObjectClassificationToLabelMapProcessor());
+    addProcessor(new OTBLabelMapToClassImageProcessor());
     addProcessor(new OTBNDVIProcessor());
     addProcessor(new OTBMSAVIProcessor());
     addProcessor(new OTBNDWIProcessor());
