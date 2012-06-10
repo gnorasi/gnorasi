@@ -37,18 +37,13 @@ OTBLabelMapStatisticsWriterProcessor::OTBLabelMapStatisticsWriterProcessor()
     : Processor(),
     inPort_(Port::INPORT, "Object Map Input", 0),
     outPort_(Port::OUTPORT, "Object Properties Output", 0),
-    CSVFile_("csvfile", "Output File", "Properties Output File", VoreenApplication::app()->getDataPath(), "CSV Image file (*.csv)", FileDialogProperty::SAVE_FILE),
-    clearFile_("clearButton", "Clear File"),
-    saveButton_("saveButton", "Save Properties")
+    update_("updateButton", "Update Text Data")
 {
     // register ports and properties
     addPort(inPort_);
     addPort(outPort_);
-    clearFile_.onChange(CallMemberAction<OTBLabelMapStatisticsWriterProcessor>(this, &OTBLabelMapStatisticsWriterProcessor::clearCSV));
-    saveButton_.onChange(CallMemberAction<OTBLabelMapStatisticsWriterProcessor>(this, &OTBLabelMapStatisticsWriterProcessor::saveCSV));
-    addProperty(CSVFile_);
-    addProperty(clearFile_);
-    addProperty(saveButton_);
+    update_.onChange(CallMemberAction<OTBLabelMapStatisticsWriterProcessor>(this, &OTBLabelMapStatisticsWriterProcessor::process));
+    addProperty(update_);
     
     //OTB initialization
     labelmap = 0;
@@ -60,37 +55,24 @@ Processor* OTBLabelMapStatisticsWriterProcessor::create() const {
 
 
 bool OTBLabelMapStatisticsWriterProcessor::isReady() const {
-    return (inPort_.isConnected());
+    return (inPort_.isConnected() && outPort_.isConnected());
 }
 
 std::string OTBLabelMapStatisticsWriterProcessor::getProcessorInfo() const {
-    return "Saves Object Properties";
-}
-
-void OTBLabelMapStatisticsWriterProcessor::process() {
-
+    return "Saves Object Properties To Text Data";
 }
 
 void OTBLabelMapStatisticsWriterProcessor::initialize() throw (VoreenException) {
-    // call superclass function first
     Processor::initialize();
-    hasFileName = false;
-    
 }
 
 void OTBLabelMapStatisticsWriterProcessor::deinitialize() throw (VoreenException) {
     Processor::deinitialize();
 }
 
-void OTBLabelMapStatisticsWriterProcessor::saveCSV() {
+void OTBLabelMapStatisticsWriterProcessor::process() {
     
-    std::string filename = CSVFile_.get();
-    if (!filename.empty())
-    {
-	hasFileName = true;
-    }
-  
-    if(this->isReady() && hasFileName)
+    if(this->isReady())
     {
 	try
 	{
@@ -150,12 +132,6 @@ void OTBLabelMapStatisticsWriterProcessor::saveCSV() {
                 //k++;
 	    }
 	    
-	    //Write the csv header to file
-            std::ofstream outfile;
-            outfile.open(CSVFile_.get().c_str());
-	    outfile << pTextDataOut_.rdbuf();
-	    outfile.close();
-	    
 	    //test code
 	    //std::ofstream outfile2;
 	    //std::string koko = CSVFile_.get() + ".class";
@@ -172,24 +148,14 @@ void OTBLabelMapStatisticsWriterProcessor::saveCSV() {
 	    return;
 	}
     }else if(!this->isReady()){
-	LWARNING("Input Object Map is not connected");
-	return;
-    }else if(!hasFileName){
-	LWARNING("Properties File Name Not Set");
+	LWARNING("Ports not connected");
 	return;
     }
 
-    LINFO("Properties written succesfully!");
+    LINFO("Text Data ready!");
     
 }
 
-void OTBLabelMapStatisticsWriterProcessor::clearCSV() {
-
-    if (hasFileName) {
-        hasFileName = false;
-    }
-    CSVFile_.set("");
-}
 
 void OTBLabelMapStatisticsWriterProcessor::setOutPortData(){
 

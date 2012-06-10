@@ -35,6 +35,7 @@
 #include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 #include "processors/ImageIO/otblabelimagewriterprocessor.h"
 #include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
+#include "processors/ImageIO/otbcsvwriterprocessor.h"
 #include "processors/BasicFilters/otbconvolutionimagefilterprocessor.h"
 #include "processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h"
 #include "processors/BasicFilters/otbcannyedgedetectionimagefilterprocessor.h"
@@ -81,6 +82,7 @@ OTBModule::OTBModule()
     addProcessor(new OTBVectorImageWriterProcessor());
     addProcessor(new OTBImageToVectorImageCastProcessor());
     addProcessor(new OTBLabelImageWriterProcessor());
+    addProcessor(new OTBCSVWriterProcessor());
     addProcessor(new OTBConvolutionImageFilterProcessor());
     addProcessor(new OTBCannyEdgeDetectionImageFilterProcessor());
     addProcessor(new OTBSimpleViewerProcessor());
@@ -104,7 +106,7 @@ OTBModule::OTBModule()
     addProcessor(new OTBNDWIProcessor());
     addProcessor(new OTBVectorImageBandMathProcessor());
     addProcessor(new OTBTwoVectorImagesBandMathProcessor());
-    //addProcessor(new OTBFFTConvolutionImageFilterProcessor()); TODO: Enable FFTW in OTB
+    addProcessor(new OTBFFTConvolutionImageFilterProcessor());
 }
 
 } // namespace

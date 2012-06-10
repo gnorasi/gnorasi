@@ -26,59 +26,54 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_OTBLABELMAPSTATISTICSWRITERPROCESSOR_H
-#define VRN_OTBLABELMAPSTATISTICSWRITERPROCESSOR_H
+#ifndef VRN_OTBCSVWRITERPROCESSOR_H
+#define VRN_OTBCSVWRITERPROCESSOR_H
 
 #include "voreen/core/processors/processor.h"
 #include "voreen/core/properties/filedialogproperty.h"
 #include "voreen/core/properties/buttonproperty.h"
 #include "voreen/core/properties/stringproperty.h"
-#include "../../ports/otblabelmapport.h"
 #include "voreen/core/ports/textport.h"
-#include "otbAttributesMapLabelObjectWithClassLabel.h"
-#include "itkLabelMap.h"
+#include <fstream>
 #include <sstream>
 
 namespace voreen {
 
-class OTBLabelMapStatisticsWriterProcessor : public Processor {
+class OTBCSVWriterProcessor : public Processor {
 public:
-    OTBLabelMapStatisticsWriterProcessor();
+    OTBCSVWriterProcessor();
     virtual Processor* create() const;
 
-    virtual std::string getClassName() const { return "Object Properties To Text Data"; }
-    virtual std::string getCategory() const  { return "OBIA"; }
+    virtual std::string getClassName() const { return "Export Data To CSV"; }
+    virtual std::string getCategory() const  { return "ImageIO"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; } //STABLE, TESTING, EXPERIMENTAL
     virtual std::string getProcessorInfo() const;
     
     virtual bool isReady() const;
     
-    typedef unsigned long           LabelType;
-    typedef otb::AttributesMapLabelObjectWithClassLabel<LabelType, 2, double, unsigned short> 
-				    LabelObjectType;
-    typedef itk::LabelMap<LabelObjectType> LabelMapType;
-    typedef LabelMapType* LabelMapPointer;
-    
-    LabelMapPointer labelmap;
-    
+    void saveCSV();
+    void clearCSV();
+
 protected:
     virtual void process();
     virtual void initialize() throw (VoreenException);
     virtual void deinitialize() throw (VoreenException);
 
 private:
-    void setOutPortData();
    
-    OTBLabelMapPort inPort_;
-    TextPort outPort_;
+    bool hasFileName;
+  
+    TextPort inPort_;
     
-    std::stringstream pTextDataOut_;
+    std::string inData;
     
-    ButtonProperty update_;    ///< Updates the text data.
+    FileDialogProperty CSVFile_;  ///< Path of the saved image file.
+    ButtonProperty clearFile_;      ///< Executes clearImage().
+    ButtonProperty saveButton_;    ///< saves the image.
     
     static const std::string loggerCat_; ///< category used in logging
 };
 
 } // namespace
 
-#endif // VRN_OTBLABELMAPSTATISTICSWRITERPROCESSOR_H
+#endif // VRN_OTBCSVWRITERPROCESSOR_H
