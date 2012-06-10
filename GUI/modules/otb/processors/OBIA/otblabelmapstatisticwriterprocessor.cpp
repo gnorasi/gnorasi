@@ -47,6 +47,7 @@ OTBLabelMapStatisticsWriterProcessor::OTBLabelMapStatisticsWriterProcessor()
     
     //OTB initialization
     labelmap = 0;
+    DataWritten = false;
 }
 
 Processor* OTBLabelMapStatisticsWriterProcessor::create() const {
@@ -159,7 +160,10 @@ void OTBLabelMapStatisticsWriterProcessor::process() {
 
 void OTBLabelMapStatisticsWriterProcessor::setOutPortData(){
 
-    outPort_.setData(pTextDataOut_.str());
+    if(!DataWritten){
+	outPort_.setData(pTextDataOut_.str());
+	DataWritten = true;
+    }
 }
 
 } // namespace
