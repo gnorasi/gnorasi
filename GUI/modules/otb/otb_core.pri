@@ -24,6 +24,7 @@ $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbgrayscaledilatefilterprocessor
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryerodefilterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbgrayscaleerodefilterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryopeningfilterprocessor.cpp \
+$${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbgrayscaleopeningfilterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryclosingfilterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otblabelimagetolabelmapprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbshapeattributeslabelmapprocessor.cpp \
@@ -66,6 +67,7 @@ $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbgrayscaledilatefilterprocessor
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryerodefilterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbgrayscaleerodefilterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryopeningfilterprocessor.h \
+$${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbgrayscaleopeningfilterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryclosingfilterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otblabelimagetolabelmapprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/OBIA/otbshapeattributeslabelmapprocessor.h \
