@@ -20,6 +20,7 @@ $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbgradientanisotropicdiffusionfi
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbmeanshiftimagesegmentationprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinarythresholdfilterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinarydilatefilterprocessor.cpp \
+$${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbgrayscaledilatefilterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryerodefilterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryopeningfilterprocessor.cpp \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryclosingfilterprocessor.cpp \
@@ -60,6 +61,7 @@ $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbgradientanisotropicdiffusionfi
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbmeanshiftimagesegmentationprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinarythresholdfilterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinarydilatefilterprocessor.h \
+$${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbgrayscaledilatefilterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryerodefilterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryopeningfilterprocessor.h \
 $${VRN_MODULE_DIR}/otb/processors/BasicFilters/otbbinaryclosingfilterprocessor.h \

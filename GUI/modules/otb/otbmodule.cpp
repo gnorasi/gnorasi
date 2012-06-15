@@ -47,6 +47,7 @@
 #include "processors/BasicFilters/otbmeanshiftimagesegmentationprocessor.h"
 #include "processors/BasicFilters/otbbinarythresholdfilterprocessor.h"
 #include "processors/BasicFilters/otbbinarydilatefilterprocessor.h"
+#include "processors/BasicFilters/otbgrayscaledilatefilterprocessor.h"
 #include "processors/BasicFilters/otbbinaryerodefilterprocessor.h"
 #include "processors/BasicFilters/otbbinaryopeningfilterprocessor.h"
 #include "processors/BasicFilters/otbbinaryclosingfilterprocessor.h"
@@ -93,6 +94,7 @@ OTBModule::OTBModule()
     addProcessor(new OTBMeanImageFilterProcessor());
     addProcessor(new OTBBinaryThresholdFilterProcessor());
     addProcessor(new OTBBinaryDilateFilterProcessor());
+    addProcessor(new OTBGrayscaleDilateFilterProcessor());
     addProcessor(new OTBBinaryErodeFilterProcessor());
     addProcessor(new OTBBinaryOpeningFilterProcessor());
     addProcessor(new OTBBinaryClosingFilterProcessor());
