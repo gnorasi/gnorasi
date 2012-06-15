@@ -53,6 +53,7 @@
 #include "processors/BasicFilters/otbbinaryopeningfilterprocessor.h"
 #include "processors/BasicFilters/otbgrayscaleopeningfilterprocessor.h"
 #include "processors/BasicFilters/otbbinaryclosingfilterprocessor.h"
+#include "processors/BasicFilters/otbgrayscaleclosingfilterprocessor.h"
 #include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
@@ -102,6 +103,7 @@ OTBModule::OTBModule()
     addProcessor(new OTBBinaryOpeningFilterProcessor());
     addProcessor(new OTBGrayscaleOpeningFilterProcessor());
     addProcessor(new OTBBinaryClosingFilterProcessor());
+    addProcessor(new OTBGrayscaleClosingFilterProcessor());
     addProcessor(new OTBMedianImageFilterProcessor());
     addProcessor(new OTBSobelImageFilterProcessor());
     addProcessor(new OTBGradientAnisotropicDiffusionFilterProcessor());
