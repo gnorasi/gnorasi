@@ -35,6 +35,7 @@
 #include <QLabel>
 #include <QString>
 #include <QtGui>
+#include <QDomDocument>
 
 namespace voreen {
 
@@ -48,6 +49,9 @@ public:
 
     virtual void updateFromProcessor();
     virtual std::string invokeWebService(std::string input);
+    virtual QVector<QVector<QString> > parseHeaders(QStringList headers);
+    virtual QDomDocument readMappings(QString mapFile, QString* error, int* line, int *col);
+    virtual QString parseResults(QString xml2);
 
 private:
     static const std::string loggerCat_;
