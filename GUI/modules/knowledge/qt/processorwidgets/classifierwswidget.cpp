@@ -33,7 +33,7 @@
 #include <QGridLayout>
 #include <QMainWindow>
 #include <QLabel>
-
+#include <QtCore/QVector>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkRequest>
 #include <QtNetwork/QNetworkReply>
@@ -98,13 +98,12 @@ void ClassifierWSWidget::updateFromProcessor() {
     classifierWSProcessor->setTextDataOut("");
     if ( !classifierWSProcessor->getTextData().empty() ) {
 
-        editor_->appendPlainText( classifierWSProcessor->getTextData().c_str() );
+        //editor_->appendPlainText( classifierWSProcessor->getTextData().c_str() );
 
         std::string result =  invokeWebService(classifierWSProcessor->getTextData().c_str());
         editor_->appendPlainText("-------- RESULT -------");
         editor_->appendPlainText(result.c_str());
         classifierWSProcessor->setTextDataOut(result);
-
     }
 
 
@@ -119,15 +118,6 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
     StringProperty* serverURLUpdate_ = static_cast<StringProperty*>(classifierWSProcessor->getProperty("serverURLupdate_"));
     StringProperty* serverURLquery_ = static_cast<StringProperty*>(classifierWSProcessor->getProperty("serverURLquery_"));
 
-    std::string serverUpdate = serverURLUpdate_->get().c_str();
-    std::string serverQuery = serverURLquery_->get().c_str();
-
-    QString prefix = "PREFIX gno: <http://www.gnorasi.gr/ontologies/gnorasi.owl#>\n" \
-                    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" \
-                    "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" \
-                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" \
-                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n";
-
     QNetworkAccessManager *manager = new QNetworkAccessManager();
     QNetworkRequest request;
     QNetworkReply *reply;
@@ -135,39 +125,88 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
     QUrl url;
     QUrl params;
 
+    std::string serverUpdate = serverURLUpdate_->get().c_str();
+    std::string serverQuery = serverURLquery_->get().c_str();
+
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
-    QString error;
-    int line, col;
+    QString prefix = "PREFIX gno: <http://www.gnorasi.gr/ontology#>\n" \
+                    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" \
+                    "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" \
+                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" \
+                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n";
 
-    // read XML string
-    QDomDocument doc("instances");
-    if (!doc.setContent(QString::fromStdString(input), &error, &line, &col)) {
-        // Voreen style exit
-        return "Input Incompatible !!";
+    QString error;
+    int lineNum,col;
+    QDomDocument doc = readMappings("mappings.xml", &error, &lineNum, &col);
+
+    if (!doc.isDocument()) {
+        QString ret = "Error in file \"mappings.xml\" in line "+ QString::number(lineNum) + ", column " + QString::number(col) + ": " + error;
+        return ret.toStdString();
     }
 
-    // get MSAVI values
-    QDomNodeList nodeList = doc.elementsByTagName("regions").at(0).toElement().elementsByTagName("region");
-    if (nodeList.count() > 0) {
-        for (int i=0;i<nodeList.count();i++) {
-            int id = nodeList.at(i).attributes().namedItem("id").nodeValue().toInt();
-            QDomNodeList msaviNode = nodeList.at(i).toElement().elementsByTagName("msavi");
-            float msaviVal = msaviNode.at(0).toElement().text().toFloat();
+    QString qinput = QString::fromStdString(input);
+    QTextStream stream(&qinput);
+    QString line;
 
-            QString ins1 = "gno:objectInstance_"+QString::number(id)+" rdf:type gno:ImageRegion . " \
-                    "gno:objectInstanceFeature_"+QString::number(id)+" rdf:type gno:Spectral . " \
-                    "gno:objectInstanceFeatureDescriptor_"+QString::number(id)+" rdf:type gno:MSAVI . " \
-                    "gno:objectInstanceFeatureDescriptorValue_"+QString::number(id)+" rdf:type gno:SingleValue . " \
-                    "gno:objectInstance_"+QString::number(id)+" gno:hasFeature gno:objectInstanceFeature_"+QString::number(id)+" . " \
-                    "gno:objectInstanceFeature_"+QString::number(id)+" gno:hasFeatureDescriptor gno:objectInstanceFeatureDescriptor_"+QString::number(id)+" . " \
-                    "gno:objectInstanceFeatureDescriptor_"+QString::number(id)+" gno:hasFeatureDescriptorValue gno:objectInstanceFeatureDescriptorValue_"+QString::number(id)+" . " \
-                    "gno:objectInstanceFeatureDescriptorValue_"+QString::number(id)+" gno:hasValueFloat \""+QString::number(msaviVal)+"\"^^xsd:float . ";
+    //read the header line
+    QStringList headers = stream.readLine().split(";");
 
-            //url.setUrl(serverURLupdate_.getData());
+    //parse the header line in a vector
+    QVector<QVector<QString> > headersList = parseHeaders(headers);
+
+    //read the rest of the lines with the data
+    long count = 0;
+    QString updateString = "";\
+
+    LINFO("Sending data to knowledge web service...");
+
+    while (!stream.atEnd()) {
+        line = stream.readLine();
+        count++;
+
+        QStringList parts = line.split(";");
+        if (parts.size() != headersList.size()) {
+            LWARNING("Line "<< count << "contains " << parts.size() << " values. Should be " << headersList.size());
+            continue;
+        }
+
+        QString id = "";
+        for (int i=0;i<parts.size();i++) {
+            QString part = parts[i];
+
+            QVector<QString> headerAtI = headersList[i];
+
+            if (headerAtI[0] == "ID") {
+                id = part;
+                updateString += "gno:region_"+id+" rdf:type gno:Region . \n";
+                updateString += "gno:region_"+id+" gno:hasID \""+id+"\"^^xsd:int . \n";
+            }
+            else {
+                QString value = part;
+                updateString += "gno:region_"+id+" gno:hasFeature gno:feature_"+id+"_"+QString::number(i)+" . \n";
+
+                //for the demo the 1st position for each CSV header entry (headerAtI[0]) has the STATS keyword.
+                QDomNodeList nodeList = doc.elementsByTagName("feature").at(0).toElement().elementsByTagName(headerAtI[0]); //STATS
+                QString featureType = nodeList.at(0).attributes().namedItem("type").nodeValue();
+                QString featureProperty = nodeList.at(0).attributes().namedItem("property").nodeValue();
+                updateString += "gno:feature_"+id+"_"+QString::number(i)+" gno:"+featureProperty+" gno:"+featureType+" . \n";
+
+                for (int j=1;j<headerAtI.size();j++) {
+                    QDomNode node = nodeList.at(0).toElement().elementsByTagName(headerAtI[j]).at(0);
+                    QString property = node.attributes().namedItem("property").nodeValue();
+                    QString propertyType = node.toElement().text();
+
+                    updateString += "gno:feature_"+id+"_"+QString::number(i)+" gno:"+property+" gno:"+propertyType+" . \n";
+                }
+                updateString += "gno:feature_"+id+"_"+QString::number(i)+" gno:featureHasValue \""+value+"\"^^xsd:float . \n";
+            }
+        }
+
+        int batch = 100;
+        if ((count-1)%batch == 0) {
             url.setUrl(QString::fromStdString(serverUpdate));
-
-            params.addQueryItem("request",prefix+"INSERT DATA {"+ins1+"}");
+            params.addQueryItem("request",prefix+"INSERT DATA {"+updateString+"}");
 
             request.setUrl(url);
 
@@ -176,14 +215,50 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
             QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
             loop.exec();
 
+            if (reply->error() != QNetworkReply::NoError) {
+                LWARNING("Error in connection");
+                return "Error in connection";
+             }
+
             reply->close();
             url.clear();
             params.clear();
+
+            updateString = "";
         }
     }
 
-    //QString query = "SELECT ?region ?type WHERE {?region gno:depictsObject ?y . ?y rdf:type ?type}";
-    QString query = "SELECT ?region ?y WHERE {?region gno:depictsObject ?y }";
+    //insert the last entries if they exist
+    if (updateString != "") {
+        url.setUrl(QString::fromStdString(serverUpdate));
+        params.addQueryItem("request",prefix+"INSERT DATA {"+updateString+"}");
+
+        request.setUrl(url);
+
+        reply = manager->post(request, params.encodedQuery());
+
+        QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+        loop.exec();
+
+        if (reply->error() != QNetworkReply::NoError) {
+            LWARNING("Error in connection");
+            return "Error in connection";
+         }
+
+        reply->close();
+        url.clear();
+        params.clear();
+
+        updateString = "";
+    }
+    LINFO("All data sent");
+
+    //issue query to get regions
+    QString query = "SELECT ?regionID ?objectClassID " \
+                    "WHERE { " \
+                        "?region gno:depictsObject ?y ; " \
+                        "gno:hasID ?regionID . ?y gno:hasObjectClassID ?objectClassID . " \
+                    "}";
 
     url.clear();
     url.setUrl(QString::fromStdString(serverQuery));
@@ -196,51 +271,121 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
     QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
 
-    //QString replyBody = reply->readAll();
-    QByteArray replyBody = reply->readAll();
-    QString results = QString(replyBody);
+    if (reply->error() != QNetworkReply::NoError) {
+        LWARNING("Error in connection");
+        return "Error in connection";
+     }
 
-    reply->close();
-    url.clear();
+    QString replyBody = reply->readAll();
 
-    // delete on server side //
-    //clear data from XML
-    QString deleteClause = "DELETE {" \
-                            "?reg rdf:type gno:ImageRegion . " \
-                            "?feat rdf:type gno:Spectral . " \
-                            "?featdesc rdf:type gno:MSAVI . " \
-                            "?featdescv rdf:type gno:SingleValue . " \
-                            "?reg gno:hasFeature ?feat . " \
-                            "?feat gno:hasFeatureDescriptor ?featdesc . " \
-                            "?featdesc gno:hasFeatureDescriptorValue ?featdescv . " \
-                            "?featdescv gno:hasValueFloat ?val . " \
-                    "} WHERE {" \
-                            "?reg rdf:type gno:ImageRegion . " \
-                            "?feat rdf:type gno:Spectral . " \
-                            "?featdesc rdf:type gno:MSAVI . " \
-                            "?featdescv rdf:type gno:SingleValue . " \
-                            "?reg gno:hasFeature ?feat . " \
-                            "?feat gno:hasFeatureDescriptor ?featdesc . " \
-                            "?featdesc gno:hasFeatureDescriptorValue ?featdescv . " \
-                            "?featdescv gno:hasValueFloat ?val . " \
-                    "}";
+    QString csv = parseResults(replyBody);
+
+    LINFO("Classification results obtained");
 
     url.clear();
-    url.setUrl(QString::fromStdString(serverUpdate));
-    params.clear();
-    params.addQueryItem("request",prefix+deleteClause);
-
-    request.setUrl(url);
-
-    reply = manager->post(request, params.encodedQuery());
-    QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
-    loop.exec();
-
     reply->deleteLater();
     manager->deleteLater();
 
-    return results.toStdString();
+    return csv.toStdString();
 }
+
+
+QVector<QVector<QString> > ClassifierWSWidget::parseHeaders(QStringList headers) {
+
+    QVector<QVector<QString> > h(headers.size());
+
+    for (int i=0; i<headers.size();i++) {
+        QString headerValue = headers.at(i);
+        QStringList headerValueList = headerValue.split("::");
+        for (int j=0;j<headerValueList.size();j++) {
+            QString val = headerValueList[j];
+            h[i].append(val);
+        }
+    }
+
+    return h;
+}
+
+QDomDocument ClassifierWSWidget::readMappings(QString mapFile, QString* error, int* line, int *col) {
+    QDomDocument doc("mappings");
+    QFile file(mapFile);
+
+    file.open(QIODevice::ReadOnly);
+
+    doc.setContent(&file, error, line, col);
+
+    file.close();
+
+    return doc;
+}
+
+QString ClassifierWSWidget::parseResults(QString xml2) {
+    QDomDocument doc("results");
+
+    doc.setContent(xml2);
+
+    QString ns = "http://www.w3.org/2005/sparql-results#";
+
+    QDomNodeList nodeList = doc.elementsByTagName("sparql").at(0).toElement().elementsByTagName("head").at(0).toElement().elementsByTagName("variable");
+
+    //we need at least 2 values, region ID and Class ID
+    if (nodeList.size() < 2)
+        return 0;
+
+    QString csvHeader = "ID;CLASS";
+    QString csvValues = "";
+
+    QString* variables = new QString[nodeList.size()];
+    for (int i=0;i<nodeList.size();i++) {
+        variables[i] = nodeList.at(i).attributes().namedItem("name").nodeValue();
+        if (i>1)
+            csvHeader += ";"+variables[i];
+    }
+    csvHeader += "\n";
+
+    nodeList = doc.elementsByTagName("sparql").at(0).toElement().elementsByTagName("results").at(0).toElement().elementsByTagName("result");
+    for (int i=0;i<nodeList.size();i++) {
+        QDomNodeList bindings = nodeList.at(i).toElement().elementsByTagName("binding");
+        //position 0 is the ID
+        //position 1 is the class ID
+        //the rest are undefined
+        QDomNodeList IDs = bindings.at(0).toElement().elementsByTagName("literal");
+        if (IDs.size() > 0) {
+            QString ID = IDs.at(0).toElement().text();
+            csvValues += ID;
+        }
+
+        QDomNodeList classIDs = bindings.at(1).toElement().elementsByTagName("literal");
+        if (classIDs.size() > 0) {
+            QString classID = classIDs.at(0).toElement().text();
+            csvValues += ";"+classID;
+        }
+
+        if (bindings.size() > 2) {
+            QString* otherValues = new QString[bindings.size()-2];
+            for (int j=0;j<bindings.size()-2;j++) {
+                QDomNodeList otherList = bindings.at(j+2).toElement().elementsByTagName("literal");
+                if (otherList.size() > 0) {
+                    otherValues[j] = otherList.at(0).toElement().text();
+                }
+                else {
+                    otherList = bindings.at(j+2).toElement().elementsByTagName("uri");
+                    if (otherList.size() > 0) {
+                        otherValues[j] = otherList.at(0).toElement().text();
+                    }
+                }
+                csvValues += ";"+otherValues[j];
+            }
+            delete[] otherValues;
+        }
+        csvValues += "\n";
+    }
+
+    delete[] variables;
+
+    return csvHeader+csvValues;
+}
+
 
 } //namespace voreen
 
