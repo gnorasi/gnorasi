@@ -109,6 +109,7 @@ DEFINES += VRN_NO_STYLESHEET
 
 # Add additional include paths
 #INCLUDEPATH +=
+#INCLUDEPATH += "$${VRN_HOME}/ext/glew/include"
 # For OTB Module
 INCLUDEPATH += /usr/include/gdal
 INCLUDEPATH += /usr/include/otb
