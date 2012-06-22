@@ -138,7 +138,7 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
 
     QString error;
     int lineNum,col;
-    QDomDocument doc = readMappings("mappings.xml", &error, &lineNum, &col);
+    QDomDocument doc = readMappings("../data/mapping/mappings.xml", &error, &lineNum, &col);
 
     if (!doc.isDocument()) {
         QString ret = "Error in file \"mappings.xml\" in line "+ QString::number(lineNum) + ", column " + QString::number(col) + ": " + error;

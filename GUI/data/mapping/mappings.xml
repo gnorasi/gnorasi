@@ -1,0 +1,17 @@
+<feature>
+	<ID property="hasID" domain="Region" range="int" />
+	<STATS property="featureIsType" type="Statistics_featureType">
+		<Band1 property="featureRelatedTo" type="ImageBand">Band1</Band1>
+		<Band2 property="featureRelatedTo" type="ImageBand">Band2</Band2>
+		<Band3 property="featureRelatedTo" type="ImageBand">Band3</Band3>
+		<Band4 property="featureRelatedTo" type="ImageBand">Band4</Band4>
+		<MSAVI property="featureRelatedTo" type="FeatureClass">MSAVI_feature</MSAVI>
+		<Variance property="featureHasMeasure" type="StatisticsMeasure">Variance</Variance>
+		<Kurtosis property="featureHasMeasure" type="StatisticsMeasure">Kurtosis</Kurtosis>
+		<Skewness property="featureHasMeasure" type="StatisticsMeasure">Skewness</Skewness>
+		<Mean property="featureHasMeasure" type="StatisticsMeasure">Mean</Mean>
+	</STATS>
+	<SHAPE property="featureIsType" type="Shape_featureType">
+		<Elongation property="featureRelatedTo" type="Elongation">Elongation_feat</Elongation>
+	</SHAPE>
+</feature>
