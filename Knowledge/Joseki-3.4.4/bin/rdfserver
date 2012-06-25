@@ -2,6 +2,8 @@
 # Run the Joseki RDF server 
 # $Id: rdfserver,v 1.1 2003/07/09 15:58:42 andy_seaborne Exp $
 
+export JOSEKIROOT=./
+
 [ "$JOSEKIROOT" = "" ] && { echo "JOSEKIROOT unset" 1>&2 ; exit 1 ; }
 
 # Make sure all the scripts are on the PATH
@@ -37,6 +39,7 @@ then
 
 #JAVA_ARGS="-server" 
 JAVA_ARGS="-server -Xmx1G" 
+JAVA_ARGS="$JAVA_ARGS -Dorg.mortbay.jetty.Request.maxFormContentSize=6000000"
 
 # If Jetty needs to handle very large incoming requests (e.g. SPARQL/Update)
 # you may need to add ...

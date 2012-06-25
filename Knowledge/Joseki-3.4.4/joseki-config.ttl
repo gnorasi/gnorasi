@@ -159,7 +159,7 @@
 		ja:defaultGraph [
 			a ja:InfModel ;
 			rdfs:label "GNORASI model" ;
-			ja:content [ja:externalContent <file:Data/gnorasi/GNORASI_D3.1_ontology.owl>] ; 
+			ja:content [ja:externalContent <file:Data/gnorasi/demo_ontology_v2.owl>] ; 
 			ja:reasoner [  
 				ja:reasonerURL <http://jena.hpl.hp.com/2003/GenericRuleReasoner> ;
 				ja:rulesFrom <file:rules/GNORASI_rules.rl>;
