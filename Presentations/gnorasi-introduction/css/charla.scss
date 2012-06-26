@@ -1,0 +1,99 @@
+
+@import "../../resources/impress/css/_variables";
+
+$cIz2: #780c18; // granate
+$cIz1: #1281b7; // azul claro
+$cBase: #00486b; // prode
+$cDe1: #383606; // verde oscuro
+$cDe2: #b7b109;  // verde claro
+
+$cPrimario: $cBase;
+$cSecundario: $cIz2;
+
+$cFondo: $cDe2;// $cIz1;
+$cFondo1: lighten($cFondo,80%); /*fondo*/
+$cFondo2: lighten($cFondo,40%); /*exterior*/
+$cFondo3: lighten($cFondo,60%); /*interior*/
+
+$cQuotes: $cDe1;
+
+@import url("http://fonts.googleapis.com/css?family=Imprima&subset=latin,latin-ext");
+@import url("http://fonts.googleapis.com/css?family=Inconsolata");
+
+$f_principal: 'Imprima', verdana, sans-serif;
+$f_condensada: Inconsolata, courier;
+
+
+
+@import "../../resources/impress/css/_plantilla"; 
+
+body{background: url('playa-trans.png') no-repeat center center;}
+
+.hint{bottom: 60px;}
+
+.banner{
+	background-image: url(banner.png);
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	/* los tamaños son los de la imagen */
+	width: 290px; 
+	height: 45px;
+}
+
+
+a { background:lighten($cIz2,60%);}
+
+img {z-index:1000;}
+
+#title {
+
+	h1,p {
+		text-align: justify;
+		text-align-last: justify;
+		}
+	p:after, h1:after
+	{content: ".";
+	display: inline-block;
+	width: 100%;
+	height: 0;
+	visibility: hidden;}
+	
+	h1{
+		font-size: 60px;
+		margin-bottom:50px;
+	}
+	h2{
+		font-size: 50px;
+		text-align: center;
+		margin-bottom: 50px
+	}
+	.yo{font-size:28px;margin-bottom:90px;}
+	
+}
+
+.active.objetivos, .active.section{
+	blockquote{font-size:60px;} 
+	h2{font-size:90px;}
+}
+
+#acabado img{
+	height:350px;
+}
+
+.impress-on-acabado #objetivos-portal,
+.impress-on-rendimiento #acabado,
+.impress-on-rendimiento #objetivos-portal
+{opacity:0;}
+
+
+.impress-on-overview{ 
+	/* ocultar todo por defecto 
+	.step {
+    opacity: 0.6;
+    cursor: pointer;
+	}*/
+}
+
+#overview.active p{
+	margin: 420px 0 0 250px;
+}
