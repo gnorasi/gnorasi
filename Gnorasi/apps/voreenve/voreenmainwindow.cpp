@@ -763,7 +763,7 @@ void VoreenMainWindow::createToolWindows() {
     //consoleTool->resize(700, 150);
 
     // input mapping
-/*
+
     inputMappingDialog_ =  new InputMappingDialog(this, vis_->getWorkspace()->getProcessorNetwork());
     QAction* inputMappingAction = new QAction(QIcon(":/qt/icons/keymapping.png"), tr("&Input Mapping"), this);
     inputMappingAction->setShortcut(tr("Ctrl+I"));
@@ -771,10 +771,10 @@ void VoreenMainWindow::createToolWindows() {
         Qt::NoDockWidgetArea, Qt::NoDockWidgetArea, true);
     inputWindow->resize(520, 400);
     vis_->setInputMappingDialog(inputMappingDialog_);
-*/
+
 
     // render target debug window
-/*
+
     renderTargetViewer_ = new RenderTargetViewer(sharedContext_);
     renderTargetViewer_->setEvaluator(vis_->getEvaluator());
     renderTargetViewer_->setMinimumSize(200, 200);
@@ -786,7 +786,7 @@ void VoreenMainWindow::createToolWindows() {
     tc->widget()->layout()->setContentsMargins(0,0,0,0);
     tc->resize(500, 500);
     vis_->setRenderTargetViewer(renderTargetViewer_);
-*/
+
     // animation editor
 /*
     animationEditor_ = new AnimationEditor(vis_->getEvaluator(), vis_->getWorkspace(), this);
