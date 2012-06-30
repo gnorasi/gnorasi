@@ -1,3 +1,0 @@
-modules/devil/ext/il/lgpl.txt:licenses/devil
-modules/devil/ext/il/libpng-LICENSE.txt:licenses/libpng
-modules/devil/ext/jpeg/license.txt:licenses/libjpeg
