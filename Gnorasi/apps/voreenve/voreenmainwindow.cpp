@@ -404,7 +404,7 @@ void VoreenMainWindow::initialize(VoreenSplashScreen* splash) {
     }
     else {
         // load an initial workspace
-        //openWorkspace(VoreenApplication::app()->getResourcePath("workspaces/standard.vws").c_str());
+        openWorkspace(VoreenApplication::app()->getResourcePath("workspaces/standard.vws").c_str());
     }
     startupComplete("workspace");
 }
