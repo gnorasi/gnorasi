@@ -1,15 +1,15 @@
-PROJECT(Voreen)
+PROJECT(Gnorasi)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.0 FATAL_ERROR)
 include(cmake/commonconf.cmake)
 
 ################################################################################
 # handle target dependencies
 ################################################################################
-IF(VRN_BUILD_VOREENVE OR VRN_BUILD_VOREENTOOL OR VRN_BUILD_SIMPLEQT)
+IF(VRN_BUILD_VOREENVE)
     SET(VRN_BUILD_LIB_VOREENQT ON)
 ENDIF()
 
-IF(VRN_BUILD_LIB_VOREENQT OR VRN_BUILD_SIMPLEGLUT OR VRN_BUILD_TESTAPPS OR
+IF(VRN_BUILD_LIB_VOREENQT OR VRN_BUILD_TESTAPPS OR
        VRN_BUILD_BLASTEST OR VRN_BUILD_ITKWRAPPER)
     SET(VRN_BUILD_LIB_VOREENCORE ON)
 ENDIF()
@@ -35,18 +35,6 @@ ENDIF()
 
 IF(VRN_BUILD_VOREENVE)
     ADD_SUBDIRECTORY(apps/voreenve)
-ENDIF()
-
-IF(VRN_BUILD_VOREENTOOL)
-    ADD_SUBDIRECTORY(apps/voreentool)
-ENDIF()
-
-IF(VRN_BUILD_SIMPLEQT)
-    ADD_SUBDIRECTORY(apps/simple/simple-qt)
-ENDIF()
-
-IF(VRN_BUILD_SIMPLEGLUT)
-    ADD_SUBDIRECTORY(apps/simple/simple-glut)
 ENDIF()
 
 #-------------------------------------------------------------------------------
