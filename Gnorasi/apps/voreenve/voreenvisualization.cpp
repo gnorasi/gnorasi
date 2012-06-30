@@ -158,15 +158,12 @@ void VoreenVisualization::newWorkspace() {
     // clear workspace resources
     evaluator_->unlock();
     propagateNetwork(0);
-    LINFO("Here3");
     workspace_->clear();
-    LINFO("Here4");
     
     // generate new resources
     workspace_->setProcessorNetwork(new ProcessorNetwork());
     blockSignals(false);
-    LINFO("Here5");
-
+    
     // propagate resources
     propagateNetwork(workspace_->getProcessorNetwork());
     if (workspace_->hasDescription())
