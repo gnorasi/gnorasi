@@ -1,0 +1,7 @@
+<ModuleDescription>GNORASI Knowledge Processors.</ModuleDescription>
+<Processor name="Dummy Segmentation">
+    <Description>Dummy Segmentation, segments an image and outputs region IDs and features.</Description>
+</Processor>
+<Processor name="ClassifierWS">
+    <Description>Perform knowledge classification using a knowledge web service.</Description>
+</Processor>

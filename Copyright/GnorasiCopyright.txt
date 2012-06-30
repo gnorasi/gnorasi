@@ -24,13 +24,15 @@
  * If not, see <http://www.gnu.org/licenses/>.                        		*
  *                                                                    		*
  * ******************************************************************************
- *   Code under /Utilities is covered under the OTB copyright.			*
+ *   Part of code under /Utilities is covered under the OTB copyright.		*
  *   See OTBCopyright.txt for details.						*
+ *   Part of code under /Gnorasi is covered also under the Voreen copyright.	*
+ *   See VoreenCopyright.txt for details.					*
  *										*
  *   This software is distributed WITHOUT ANY WARRANTY; without even 		*
  *   the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 	*
  *   PURPOSE.  See the above copyright notices for more information.		*
  *                                                                    		*
- ********************************************************************************/
+ * ******************************************************************************
 
 
