@@ -60,6 +60,7 @@ VoreenVisualization::VoreenVisualization(tgt::GLCanvas* sharedContext)
     , readOnlyWorkspace_(false)
     , modified_(false)
 {
+    
     // assign network evaluator to application
     VoreenApplication::app()->setNetworkEvaluator(evaluator_);
 }
@@ -153,18 +154,18 @@ void VoreenVisualization::newWorkspace() {
     tgtAssert(evaluator_, "No network evaluator");
 
     readOnlyWorkspace_ = false;
-
     blockSignals(true);
-
     // clear workspace resources
     evaluator_->unlock();
     propagateNetwork(0);
+    LINFO("Here3");
     workspace_->clear();
-
+    LINFO("Here4");
+    
     // generate new resources
     workspace_->setProcessorNetwork(new ProcessorNetwork());
-
     blockSignals(false);
+    LINFO("Here5");
 
     // propagate resources
     propagateNetwork(workspace_->getProcessorNetwork());

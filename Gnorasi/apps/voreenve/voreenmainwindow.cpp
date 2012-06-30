@@ -1082,9 +1082,7 @@ bool VoreenMainWindow::askSave() {
 void VoreenMainWindow::newWorkspace() {
     if (!askSave())
         return;
-    LINFO("Here1");
     vis_->newWorkspace();
-    LINFO("Here2");
     currentWorkspace_ = "";
     currentWorkspaceWorkDir_ = "";
     lastWorkspace_ = currentWorkspace_;
