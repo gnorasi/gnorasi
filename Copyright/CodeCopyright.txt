@@ -7,6 +7,7 @@
 
 
   Copyright (c) National Technical University of Athens. All rights reserved.
+  Copyright (c) Informatics and Telematics Institute Centre for Research and Technology Hellas. All rights reserved.
   
   Portions of this code are covered under the OTB copyright.
   See OTBCopyright.txt for details.
