@@ -307,7 +307,7 @@ void VoreenMainWindow::initialize(VoreenSplashScreen* splash) {
     }
 
     sharedContext_->hide();
-
+/*
     // some hardware/driver checks
     if (!GpuCaps.isOpenGlVersionSupported(tgt::GpuCapabilities::GlVersion::TGT_GL_VERSION_2_0)) {
         if (splash)
@@ -341,6 +341,7 @@ void VoreenMainWindow::initialize(VoreenSplashScreen* splash) {
                                  "on this system. Therefore, the application will most likely not work properly."));
         qApp->processEvents();
     }
+*/
 
     if (splash)
         splash->showMessage("Creating visualization...");
@@ -374,14 +375,14 @@ void VoreenMainWindow::initialize(VoreenSplashScreen* splash) {
     createToolWindows();
     addVEPlugins();
     qApp->processEvents();
-
+    
     // signals indicating a change in network
     connect(vis_, SIGNAL(networkModified(ProcessorNetwork*)), this, SLOT(adjustScreenshotMenu()));
     connect(vis_, SIGNAL(modified()), this, SLOT(updateWindowTitle()));
     connect(vis_, SIGNAL(newNetwork(ProcessorNetwork*)), this, SLOT(adjustScreenshotMenu()));
 
     loadWindowSettings();
-
+    
     setGuiMode(guiMode_);
 
     // hide splash
@@ -403,7 +404,7 @@ void VoreenMainWindow::initialize(VoreenSplashScreen* splash) {
     }
     else {
         // load an initial workspace
-        openWorkspace(VoreenApplication::app()->getResourcePath("workspaces/standard.vws").c_str());
+        //openWorkspace(VoreenApplication::app()->getResourcePath("workspaces/standard.vws").c_str());
     }
     startupComplete("workspace");
 }
@@ -815,7 +816,6 @@ void VoreenMainWindow::addVEPlugins() {
         }
         LINFO("VoreenVE plugins: " << strJoin(pluginNames, ", "));
     }
-
     /// Initialize all VoreenVEPlugins and add them to the main window
     for (size_t i=0; i<plugins_.size(); i++) {
         VoreenVEPlugin* plugin = plugins_.at(i);
@@ -1082,9 +1082,9 @@ bool VoreenMainWindow::askSave() {
 void VoreenMainWindow::newWorkspace() {
     if (!askSave())
         return;
-
+    LINFO("Here1");
     vis_->newWorkspace();
-
+    LINFO("Here2");
     currentWorkspace_ = "";
     currentWorkspaceWorkDir_ = "";
     lastWorkspace_ = currentWorkspace_;
