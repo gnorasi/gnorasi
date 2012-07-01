@@ -1,11 +1,11 @@
 ################################################################################
-# Project file for the VoreenVE Application
+# Project file for the Gnorasi Application
 ################################################################################
-PROJECT(voreenve)
+PROJECT(gnorasi)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.0 FATAL_ERROR)
 INCLUDE(../../cmake/commonconf.cmake)
 
-MESSAGE(STATUS "Configuring VoreenVE Application")
+MESSAGE(STATUS "Configuring Gnorasi Application")
 
 # sources
 SET(VRN_VE_SOURCES
@@ -145,7 +145,7 @@ IF(VRN_WINDOWS_DEPLOYMENT)
     MESSAGE("* Linking against Windows subsystem (deployment build)")
     
     # WIN32 symbol causes the executable to link against the Windows subsystem (thus not showing console window)
-    ADD_EXECUTABLE(voreenve WIN32
+    ADD_EXECUTABLE(gnorasi WIN32
         ${VRN_VE_SOURCES} ${VRN_VE_HEADERS} ${VRN_VE_HEADERS_NONMOC} 
         ${VRN_VE_RESOURCES_RCC} 
         "${VRN_HOME}/resource/icons/winicon.rc") 
@@ -153,24 +153,24 @@ IF(VRN_WINDOWS_DEPLOYMENT)
     # explicitly define application entry point to prevent linker error when using Windows subsystem 
     SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ENTRY:mainCRTStartup") 
 ELSE()
-    ADD_EXECUTABLE(voreenve
+    ADD_EXECUTABLE(gnorasi
         ${VRN_VE_SOURCES} ${VRN_VE_HEADERS} ${VRN_VE_HEADERS_NONMOC} 
         ${VRN_VE_RESOURCES_RCC} 
         "${VRN_HOME}/resource/icons/winicon.rc") 
 ENDIF()
 ADD_DEFINITIONS(${VRN_DEFINITIONS} ${VRN_MODULE_DEFINITIONS})
 INCLUDE_DIRECTORIES(${VRN_INCLUDE_DIRECTORIES} ${VRN_MODULE_INCLUDE_DIRECTORIES})
-TARGET_LINK_LIBRARIES(voreenve tgt voreen_core voreen_qt ${VRN_EXTERNAL_LIBRARIES})
+TARGET_LINK_LIBRARIES(gnorasi tgt voreen_core voreen_qt ${VRN_EXTERNAL_LIBRARIES})
 
 # add Qt dependency
 INCLUDE(${QT_USE_FILE})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}) #< location of generated ui headers in out-of-source builds
 ADD_DEFINITIONS(${QT_DEFINITIONS})
-TARGET_LINK_LIBRARIES(voreenve ${QT_LIBRARIES})
+TARGET_LINK_LIBRARIES(gnorasi ${QT_LIBRARIES})
 
 # add gcc pch
 IF (VRN_PRECOMPILED_HEADER AND CMAKE_COMPILER_IS_GNUCXX)
-    ADD_GCC_PRECOMPILED_HEADER(voreenve pch_ve.h)
+    ADD_GCC_PRECOMPILED_HEADER(gnorasi pch_ve.h)
 ENDIF()
 
 
@@ -178,7 +178,7 @@ ENDIF()
 # deployment
 ################################################################################
 IF(VRN_ADD_INSTALL_TARGET)
-    INSTALL(TARGETS voreenve
+    INSTALL(TARGETS gnorasi
         RUNTIME DESTINATION .
     )
 ENDIF()    
