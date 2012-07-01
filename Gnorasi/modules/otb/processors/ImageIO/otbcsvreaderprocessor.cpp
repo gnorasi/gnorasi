@@ -36,7 +36,7 @@ const std::string OTBCSVReaderProcessor::loggerCat_("voreen.OTBCSVReaderProcesso
 OTBCSVReaderProcessor::OTBCSVReaderProcessor()
     : Processor(),
     outPort_(Port::OUTPORT, "Text Data Output", 0),
-    CSVFile_("csvfile", "Input File", "Input File Name", VoreenApplication::app()->getDataPath()),
+    CSVFile_("csvfile", "Input File", "Input File Name", VoreenApplication::app()->getUserDataPath()),
     clearFile_("clearButton", "Clear File")
 {
     // register ports and properties

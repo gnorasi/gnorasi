@@ -36,7 +36,7 @@ const std::string OTBLabelImageWriterProcessor::loggerCat_("voreen.OTBLabelImage
 OTBLabelImageWriterProcessor::OTBLabelImageWriterProcessor()
     : Processor(),
     inport_(Port::INPORT, "Label Image", 0),
-    imageFile_("imageFile", "Output Image", "Image File", VoreenApplication::app()->getDataPath(), "IMG Image file (*.img)", FileDialogProperty::SAVE_FILE),
+    imageFile_("imageFile", "Output Image", "Image File", VoreenApplication::app()->getUserDataPath(), "IMG Image file (*.img)", FileDialogProperty::SAVE_FILE),
     clearImage_("clearButton", "Clear Image"),
     saveImageButton_("saveButton", "Save Image")
 {

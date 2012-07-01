@@ -36,7 +36,7 @@ const std::string OTBVectorImageWriterProcessor::loggerCat_("voreen.OTBVectorIma
 OTBVectorImageWriterProcessor::OTBVectorImageWriterProcessor()
     : Processor(),
     inport_(Port::INPORT, "MultiBand Image Input", 0),
-    imageFile_("imageFile", "Output Image", "Image File", VoreenApplication::app()->getDataPath(), "IMG Image file (*.img)", FileDialogProperty::SAVE_FILE),
+    imageFile_("imageFile", "Output Image", "Image File", VoreenApplication::app()->getUserDataPath(), "IMG Image file (*.img)", FileDialogProperty::SAVE_FILE),
     clearImage_("clearButton", "Clear Image"),
     imageType_("outputImageType", "Output Image Type"),
     clip_("clipValue","Clip Value", 0.01f, 0.0f, 1.0f),

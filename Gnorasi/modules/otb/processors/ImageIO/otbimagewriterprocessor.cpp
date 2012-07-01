@@ -36,7 +36,7 @@ const std::string OTBImageWriterProcessor::loggerCat_("voreen.OTBImageWriterProc
 OTBImageWriterProcessor::OTBImageWriterProcessor()
     : Processor(),
     inport_(Port::INPORT, "OTBImage.inport", 0),
-    imageFile_("imageFile", "Output Image", "Image File", VoreenApplication::app()->getDataPath(), "IMG Image file (*.img)", FileDialogProperty::SAVE_FILE),
+    imageFile_("imageFile", "Output Image", "Image File", VoreenApplication::app()->getUserDataPath(), "IMG Image file (*.img)", FileDialogProperty::SAVE_FILE),
     clearImage_("clearButton", "Clear Image"),
     imageType_("outputImageType", "Output Image Type"),
     rescale_("rescaleSelection", "Rescale Output", false),

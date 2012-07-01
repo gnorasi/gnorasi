@@ -36,7 +36,7 @@ const std::string OTBImageReaderProcessor::loggerCat_("voreen.OTBImageReaderProc
 OTBImageReaderProcessor::OTBImageReaderProcessor()
     : Processor(),
     outPort_(Port::OUTPORT, "OTBImage.outport", 0),
-    imageFile_("imageFile", "Image File", "Image File", VoreenApplication::app()->getDataPath()),
+    imageFile_("imageFile", "Image File", "Image File", VoreenApplication::app()->getUserDataPath()),
     clearImage_("clearButton", "Clear Image")
 {
     // register ports and properties
