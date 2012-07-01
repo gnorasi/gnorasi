@@ -29,7 +29,7 @@
 #ifndef VRN_OTBIMAGEPORT_H
 #define VRN_OTBIMAGEPORT_H
 
-#include "voreen/core/voreencoredefine.h"
+#include "voreen/core/voreencoreapi.h"
 #include "voreen/core/ports/port.h"
 //#include "Utilities/ITK/Common/itkSmartPointer.h"
 #include "otbImage.h"
