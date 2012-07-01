@@ -15,7 +15,7 @@
 OPTION(VRN_BUILD_LIB_TGT        "Build tgt library?"                                            ON )
 OPTION(VRN_BUILD_LIB_VOREENCORE "Build voreen_core library?"                                    ON )
 OPTION(VRN_BUILD_LIB_VOREENQT   "Build voreen_qt library?"                                      ON )
-OPTION(VRN_BUILD_VOREENVE       "Build VoreenVE application?"                                   ON )
+OPTION(VRN_BUILD_GNORASI        "Build Gnorasi application?"                                    ON )
 OPTION(VRN_BUILD_VOREENTOOL     "Build VoreenTool console application?"                         OFF )
 
 # Additional Projects (disabled by default)

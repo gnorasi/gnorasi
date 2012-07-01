@@ -5,7 +5,7 @@ include(cmake/commonconf.cmake)
 ################################################################################
 # handle target dependencies
 ################################################################################
-IF(VRN_BUILD_VOREENVE)
+IF(VRN_BUILD_GNORASI)
     SET(VRN_BUILD_LIB_VOREENQT ON)
 ENDIF()
 
@@ -33,7 +33,7 @@ IF(VRN_BUILD_LIB_VOREENQT)
     ADD_SUBDIRECTORY(src/qt)
 ENDIF()
 
-IF(VRN_BUILD_VOREENVE)
+IF(VRN_BUILD_GNORASI)
     ADD_SUBDIRECTORY(apps/voreenve)
 ENDIF()
 
