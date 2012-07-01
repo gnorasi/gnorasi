@@ -44,6 +44,10 @@ OTBImageToVectorImageCastProcessor::OTBImageToVectorImageCastProcessor()
     filter = ImageToVectorImageCastFilterType::New();
 }
 
+Processor* OTBImageToVectorImageCastProcessor::create() const {
+  return new OTBImageToVectorImageCastProcessor(); 
+}
+
 OTBImageToVectorImageCastProcessor::~OTBImageToVectorImageCastProcessor() {
 
 }

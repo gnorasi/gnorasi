@@ -29,7 +29,7 @@
 #ifndef VRN_OTBLABELIMAGEPORT_H
 #define VRN_OTBLABELIMAGEPORT_H
 
-#include "voreen/core/voreencoredefine.h"
+#include "voreen/core/voreencoreapi.h"
 #include "voreen/core/ports/port.h"
 #include "otbImage.h"
 

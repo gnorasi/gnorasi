@@ -29,7 +29,7 @@
 #ifndef VRN_OTBLABELMAPPORT_H
 #define VRN_OTBLABELMAPPORT_H
 
-#include "voreen/core/voreencoredefine.h"
+#include "voreen/core/voreencoreapi.h"
 #include "voreen/core/ports/port.h"
 #include "otbAttributesMapLabelObjectWithClassLabel.h"
 #include "itkLabelMap.h"

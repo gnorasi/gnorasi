@@ -29,7 +29,7 @@
 #ifndef VRN_OTBSMARTPOINTERPORT_H
 #define VRN_OTBSMARTPOINTERPORT_H
 
-#include "voreen/core/voreencoredefine.h"
+#include "voreen/core/voreencoreapi.h"
 #include "voreen/core/ports/port.h"
 #include "itkSmartPointer.h"
 

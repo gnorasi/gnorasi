@@ -44,7 +44,7 @@ public:
     OTBImageToVectorImageCastProcessor();
     virtual ~OTBImageToVectorImageCastProcessor();
     
-    virtual Processor* create() const { return new OTBImageToVectorImageCastProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Image IO"; }
     virtual std::string getClassName() const { return "Image to MultiBand Image Converter"; }
