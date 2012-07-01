@@ -14,7 +14,7 @@ Installation:
 
 2. Run cmake configuration in /Gnorasi:
 
-cmake -DCMAKE_BUILD_TYPE:STRING="Release" \		#or "Debug"
+cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
       -DCMAKE_INSTALL_PREFIX:PATH=/usr \
       -DVRN_DEBUG:BOOL=OFF
 
