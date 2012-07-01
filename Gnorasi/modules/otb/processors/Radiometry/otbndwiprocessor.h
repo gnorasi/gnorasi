@@ -47,7 +47,7 @@ public:
     OTBNDWIProcessor();
     virtual ~OTBNDWIProcessor();
     
-    virtual Processor* create() const { return new OTBNDWIProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Radiometry"; }
     virtual std::string getClassName() const { return "Calculate NDWI"; }

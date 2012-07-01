@@ -47,6 +47,10 @@ OTBMeanImageFilterProcessor::OTBMeanImageFilterProcessor()
     filter = FilterType::New();
 }
 
+Processor* OTBMeanImageFilterProcessor::create() const {
+  return new OTBMeanImageFilterProcessor(); 
+}
+
 OTBMeanImageFilterProcessor::~OTBMeanImageFilterProcessor() {
 
 }

@@ -42,7 +42,7 @@ public:
     OTBMeanImageFilterProcessor();
     virtual ~OTBMeanImageFilterProcessor();
     
-    virtual Processor* create() const { return new OTBMeanImageFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Basic Filters"; }
     virtual std::string getClassName() const { return "Mean Image Filter"; }

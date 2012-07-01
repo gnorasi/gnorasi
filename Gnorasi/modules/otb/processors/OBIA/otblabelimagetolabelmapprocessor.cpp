@@ -44,6 +44,10 @@ OTBLabelImageToLabelMapProcessor::OTBLabelImageToLabelMapProcessor()
     labelMapFilter = LabelMapFilterType::New();
 }
 
+Processor* OTBLabelImageToLabelMapProcessor::create() const {
+  return new OTBLabelImageToLabelMapProcessor(); 
+}
+
 OTBLabelImageToLabelMapProcessor::~OTBLabelImageToLabelMapProcessor() {
 
 }

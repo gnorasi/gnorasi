@@ -49,6 +49,10 @@ OTBShapeAttributesLabelMapProcessor::OTBShapeAttributesLabelMapProcessor()
     shapeLabelMapFilter = ShapeLabelMapFilterType::New();
 }
 
+Processor* OTBShapeAttributesLabelMapProcessor::create() const {
+  return new OTBShapeAttributesLabelMapProcessor(); 
+}
+
 OTBShapeAttributesLabelMapProcessor::~OTBShapeAttributesLabelMapProcessor() {
 
 }

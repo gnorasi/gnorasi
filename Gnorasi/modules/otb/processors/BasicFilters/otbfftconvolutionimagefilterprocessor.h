@@ -47,7 +47,7 @@ public:
     OTBFFTConvolutionImageFilterProcessor();
     virtual ~OTBFFTConvolutionImageFilterProcessor();
     
-    virtual Processor* create() const { return new OTBFFTConvolutionImageFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Basic Filters"; }
     virtual std::string getClassName() const { return "FFT Convolution Image Filter"; }

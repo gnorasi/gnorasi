@@ -48,6 +48,10 @@ OTBVectorImageBandMathProcessor::OTBVectorImageBandMathProcessor()
     imageList = VectorImageToImageListType::New();
 }
 
+Processor* OTBVectorImageBandMathProcessor::create() const {
+  return new OTBVectorImageBandMathProcessor(); 
+}
+
 OTBVectorImageBandMathProcessor::~OTBVectorImageBandMathProcessor() {
 
 }

@@ -47,6 +47,10 @@ OTBMedianImageFilterProcessor::OTBMedianImageFilterProcessor()
     filter = FilterType::New();
 }
 
+Processor* OTBMedianImageFilterProcessor::create() const {
+  return new OTBMedianImageFilterProcessor(); 
+}
+
 OTBMedianImageFilterProcessor::~OTBMedianImageFilterProcessor() {
 
 }

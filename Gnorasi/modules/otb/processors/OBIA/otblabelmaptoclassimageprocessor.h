@@ -50,7 +50,7 @@ public:
     OTBLabelMapToClassImageProcessor();
     virtual ~OTBLabelMapToClassImageProcessor();
     
-    virtual Processor* create() const { return new OTBLabelMapToClassImageProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "OBIA"; }
     virtual std::string getClassName() const { return "Object Map to Classified Image"; }

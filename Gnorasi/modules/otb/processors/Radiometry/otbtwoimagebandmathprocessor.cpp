@@ -51,6 +51,10 @@ OTBTwoVectorImagesBandMathProcessor::OTBTwoVectorImagesBandMathProcessor()
     imageList2 = VectorImageToImageListType::New();
 }
 
+Processor* OTBTwoVectorImagesBandMathProcessor::create() const {
+  return new OTBTwoVectorImagesBandMathProcessor(); 
+}
+
 OTBTwoVectorImagesBandMathProcessor::~OTBTwoVectorImagesBandMathProcessor() {
 
 }

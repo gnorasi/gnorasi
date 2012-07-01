@@ -46,7 +46,7 @@ public:
     OTBLabelImageToLabelMapProcessor();
     virtual ~OTBLabelImageToLabelMapProcessor();
     
-    virtual Processor* create() const { return new OTBLabelImageToLabelMapProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "OBIA"; }
     virtual std::string getClassName() const { return "Label Image to Object Map"; }

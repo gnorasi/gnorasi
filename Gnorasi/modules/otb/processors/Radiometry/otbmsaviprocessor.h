@@ -46,7 +46,7 @@ public:
     OTBMSAVIProcessor();
     virtual ~OTBMSAVIProcessor();
     
-    virtual Processor* create() const { return new OTBMSAVIProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Radiometry"; }
     virtual std::string getClassName() const { return "Calculate MSAVI"; }

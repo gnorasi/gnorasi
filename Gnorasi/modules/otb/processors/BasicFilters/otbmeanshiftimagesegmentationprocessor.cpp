@@ -61,6 +61,10 @@ OTBMeanShiftSegmentationProcessor::OTBMeanShiftSegmentationProcessor()
     filter = FilterType::New();
 }
 
+Processor* OTBMeanShiftSegmentationProcessor::create() const {
+  return new OTBMeanShiftSegmentationProcessor(); 
+}
+
 OTBMeanShiftSegmentationProcessor::~OTBMeanShiftSegmentationProcessor() {
 
 }

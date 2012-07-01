@@ -46,7 +46,7 @@ public:
     OTBShapeAttributesLabelMapProcessor();
     virtual ~OTBShapeAttributesLabelMapProcessor();
     
-    virtual Processor* create() const { return new OTBShapeAttributesLabelMapProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "OBIA"; }
     virtual std::string getClassName() const { return "Calculate Shape Properties for Objects"; }

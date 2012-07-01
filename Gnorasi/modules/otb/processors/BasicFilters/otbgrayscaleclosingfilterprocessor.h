@@ -45,7 +45,7 @@ public:
     OTBGrayscaleClosingFilterProcessor();
     virtual ~OTBGrayscaleClosingFilterProcessor();
     
-    virtual Processor* create() const { return new OTBGrayscaleClosingFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Morphology"; }
     virtual std::string getClassName() const { return "Grayscale Closing Image Filter"; }

@@ -47,7 +47,7 @@ public:
     OTBTwoVectorImagesBandMathProcessor();
     virtual ~OTBTwoVectorImagesBandMathProcessor();
     
-    virtual Processor* create() const { return new OTBTwoVectorImagesBandMathProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Radiometry"; }
     virtual std::string getClassName() const { return "Band Math Calculator (Two Images)"; }

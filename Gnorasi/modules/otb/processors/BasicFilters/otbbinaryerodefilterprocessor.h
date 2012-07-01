@@ -45,7 +45,7 @@ public:
     OTBBinaryErodeFilterProcessor();
     virtual ~OTBBinaryErodeFilterProcessor();
     
-    virtual Processor* create() const { return new OTBBinaryErodeFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Morphology"; }
     virtual std::string getClassName() const { return "Binary Erotion Image Filter"; }

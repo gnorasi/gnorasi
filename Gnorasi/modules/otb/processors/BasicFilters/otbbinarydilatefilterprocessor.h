@@ -45,7 +45,7 @@ public:
     OTBBinaryDilateFilterProcessor();
     virtual ~OTBBinaryDilateFilterProcessor();
     
-    virtual Processor* create() const { return new OTBBinaryDilateFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Morphology"; }
     virtual std::string getClassName() const { return "Binary Dilation Image Filter"; }

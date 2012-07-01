@@ -53,6 +53,10 @@ OTBBinaryClosingFilterProcessor::OTBBinaryClosingFilterProcessor()
     doublerescaler = DoubleRescalerFilterType::New();
 }
 
+Processor* OTBBinaryClosingFilterProcessor::create() const {
+  return new OTBBinaryClosingFilterProcessor(); 
+}
+
 OTBBinaryClosingFilterProcessor::~OTBBinaryClosingFilterProcessor() {
 
 }

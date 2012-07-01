@@ -45,7 +45,7 @@ public:
     OTBGrayscaleOpeningFilterProcessor();
     virtual ~OTBGrayscaleOpeningFilterProcessor();
     
-    virtual Processor* create() const { return new OTBGrayscaleOpeningFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Morphology"; }
     virtual std::string getClassName() const { return "Grayscale Opening Image Filter"; }

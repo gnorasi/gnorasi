@@ -46,7 +46,7 @@ public:
     OTBBinaryOpeningFilterProcessor();
     virtual ~OTBBinaryOpeningFilterProcessor();
     
-    virtual Processor* create() const { return new OTBBinaryOpeningFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Morphology"; }
     virtual std::string getClassName() const { return "Binary Opening Image Filter"; }

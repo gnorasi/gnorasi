@@ -52,6 +52,10 @@ OTBBinaryDilateFilterProcessor::OTBBinaryDilateFilterProcessor()
     doublerescaler = DoubleRescalerFilterType::New();
 }
 
+Processor* OTBBinaryDilateFilterProcessor::create() const {
+  return new OTBBinaryDilateFilterProcessor(); 
+}
+
 OTBBinaryDilateFilterProcessor::~OTBBinaryDilateFilterProcessor() {
 
 }

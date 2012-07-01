@@ -51,6 +51,10 @@ OTBGrayscaleOpeningFilterProcessor::OTBGrayscaleOpeningFilterProcessor()
     doublerescaler = DoubleRescalerFilterType::New();
 }
 
+Processor* OTBGrayscaleOpeningFilterProcessor::create() const {
+  return new OTBGrayscaleOpeningFilterProcessor(); 
+}
+
 OTBGrayscaleOpeningFilterProcessor::~OTBGrayscaleOpeningFilterProcessor() {
 
 }

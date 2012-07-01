@@ -48,7 +48,7 @@ public:
     OTBConvolutionImageFilterProcessor();
     virtual ~OTBConvolutionImageFilterProcessor();
     
-    virtual Processor* create() const { return new OTBConvolutionImageFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Basic Filters"; }
     virtual std::string getClassName() const { return "Convolution Image Filter"; }
