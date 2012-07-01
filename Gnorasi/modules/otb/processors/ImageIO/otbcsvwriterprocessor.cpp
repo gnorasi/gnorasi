@@ -36,7 +36,7 @@ const std::string OTBCSVWriterProcessor::loggerCat_("voreen.OTBCSVWriterProcesso
 OTBCSVWriterProcessor::OTBCSVWriterProcessor()
     : Processor(),
     inPort_(Port::INPORT, "Text Data Input", 0),
-    CSVFile_("csvfile", "Output File", "Output File Name", VoreenApplication::app()->getDataPath(), "CSV Image file (*.csv)", FileDialogProperty::SAVE_FILE),
+    CSVFile_("csvfile", "Output File", "Output File Name", VoreenApplication::app()->getUserDataPath(), "CSV Image file (*.csv)", FileDialogProperty::SAVE_FILE),
     clearFile_("clearButton", "Clear File"),
     saveButton_("saveButton", "Save CSV")
 {

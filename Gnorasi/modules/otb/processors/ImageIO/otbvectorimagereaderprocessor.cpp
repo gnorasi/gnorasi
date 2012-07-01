@@ -37,7 +37,7 @@ OTBVectorImageReaderProcessor::OTBVectorImageReaderProcessor()
     : Processor(),
     outPort_(Port::OUTPORT, "MultibandImage", 0),
     outPort2_(Port::OUTPORT, "SingleBandImage", 0),
-    imageFile_("imageFile", "Image File", "Image File", VoreenApplication::app()->getDataPath()),
+    imageFile_("imageFile", "Image File", "Image File", VoreenApplication::app()->getUserDataPath()),
     clearImage_("clearButton", "Clear Image"),
     enableSingleBand_("enableSignleBand", "Select Output Single Band", false),
     outputBand_("outputBand", "Band number", 1)

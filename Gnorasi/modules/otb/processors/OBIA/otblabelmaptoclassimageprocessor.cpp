@@ -36,7 +36,7 @@ const std::string OTBLabelMapToClassImageProcessor::loggerCat_("voreen.OTBLabelM
 OTBLabelMapToClassImageProcessor::OTBLabelMapToClassImageProcessor()
     : Processor(),
     inPort_(Port::INPORT, "Object Map", 0),
-    imageFile_("imageFile", "Output Image", "Classification Image File", VoreenApplication::app()->getDataPath(), "IMG Image file (*.img)", FileDialogProperty::SAVE_FILE),
+    imageFile_("imageFile", "Output Image", "Classification Image File", VoreenApplication::app()->getUserDataPath(), "IMG Image file (*.img)", FileDialogProperty::SAVE_FILE),
     clearImage_("clearButton", "Clear Classification Image"),
     saveImageButton_("saveButton", "Save Classification Image")
 {
