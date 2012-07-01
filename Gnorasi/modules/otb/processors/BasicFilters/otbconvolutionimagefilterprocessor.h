@@ -62,6 +62,9 @@ public:
     
 
 protected:
+    virtual void setDescriptions() {
+	setDescription("processor.");
+    }
     void process();
     virtual void initialize() throw (tgt::Exception);
     virtual void deinitialize() throw (tgt::Exception);

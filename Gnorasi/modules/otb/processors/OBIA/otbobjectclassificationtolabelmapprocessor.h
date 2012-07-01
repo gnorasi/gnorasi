@@ -64,6 +64,9 @@ public:
     void update();
 
 protected:
+    virtual void setDescriptions() {
+	setDescription("processor.");
+    }
     virtual void process();
     virtual void initialize() throw (VoreenException);
     virtual void deinitialize() throw (VoreenException);

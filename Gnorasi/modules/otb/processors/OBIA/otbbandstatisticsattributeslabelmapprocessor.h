@@ -70,6 +70,9 @@ public:
     StatisticsLabelMapFilterType::Pointer statisticsLabelMapFilter;
     
 protected:
+    virtual void setDescriptions() {
+	setDescription("processor.");
+    }
     void process();
     void update();
     virtual void initialize() throw (tgt::Exception);

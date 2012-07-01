@@ -69,6 +69,9 @@ public:
     StatisticsLabelMapFilterType::Pointer statisticsLabelMapFilter;
     
 protected:
+    virtual void setDescriptions() {
+	setDescription("processor.");
+    }
     void process();
     void update();
     void setFeatureName();
