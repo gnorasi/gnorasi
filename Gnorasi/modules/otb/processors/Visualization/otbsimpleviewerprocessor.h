@@ -30,6 +30,7 @@
 #define VRN_OTBSIMPLEVIEWERPROCESSOR_H
 
 #include "voreen/core/processors/processor.h"
+#include "voreen/core/properties/filedialogproperty.h"
 #include "voreen/core/properties/buttonproperty.h"
 #include "../../ports/otbimageport.h"
 #include "otbImage.h"
