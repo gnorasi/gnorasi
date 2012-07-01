@@ -63,6 +63,9 @@ public:
         
 
 protected:
+    virtual void setDescriptions() {
+	setDescription("processor.");
+    }
     void process();
     void setRedBandIndex();
     void setNirBandIndex();
