@@ -119,7 +119,7 @@ CoreModule::CoreModule(const std::string& modulePath)
 
     addShaderPath(getModulePath("glsl"));
     addShaderPath(getModulePath("glsl/utils"));
-
+/*
     // core processors
     registerProcessor(new VolumeSource());
     registerProcessor(new VolumeCollectionSource());
@@ -136,7 +136,7 @@ CoreModule::CoreModule(const std::string& modulePath)
     registerProcessor(new ImageSequenceSave());
     registerProcessor(new GeometrySave());
     registerProcessor(new TextSave());
-
+*/
     // core properties
     registerProperty(new FloatProperty());
     registerProperty(new IntProperty());
