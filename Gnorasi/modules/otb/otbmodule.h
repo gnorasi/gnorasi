@@ -36,7 +36,7 @@ namespace voreen {
 class OTBModule : public VoreenModule {
 
 public:
-    OTBModule();
+    OTBModule(const std::string& moduleName);
 
     virtual std::string getDescription() const { 
         return "GNORASI Remote Sensing Module."; 

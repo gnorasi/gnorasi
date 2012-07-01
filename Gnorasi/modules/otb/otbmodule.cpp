@@ -71,17 +71,13 @@
 
 namespace voreen {
 
-OTBModule::OTBModule() 
-    : VoreenModule()
+OTBModule::OTBModule(const std::string& moduleName) 
+    : VoreenModule(moduleName)
 {
     // module name to be used in the GUI
     setName("Orfeo Toolbox");
     
-    // module description file
-    setXMLFileName("otb/otbmodule.xml");
-
     // each module processor needs to be registered
-    //addProcessor(new DummySegmentationProcessor());
     addProcessor(new OTBImageReaderProcessor());
     addProcessor(new OTBLabelImageReaderProcessor());
     addProcessor(new OTBVectorImageReaderProcessor());
