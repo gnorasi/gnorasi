@@ -44,7 +44,7 @@ public:
     OTBGrayscaleDilateFilterProcessor();
     virtual ~OTBGrayscaleDilateFilterProcessor();
     
-    virtual Processor* create() const { return new OTBGrayscaleDilateFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Morphology"; }
     virtual std::string getClassName() const { return "Grayscale Dilation Image Filter"; }

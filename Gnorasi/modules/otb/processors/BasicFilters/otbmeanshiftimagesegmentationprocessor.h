@@ -46,7 +46,7 @@ public:
     OTBMeanShiftSegmentationProcessor();
     virtual ~OTBMeanShiftSegmentationProcessor();
     
-    virtual Processor* create() const { return new OTBMeanShiftSegmentationProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Image Segmentation"; }
     virtual std::string getClassName() const { return "Mean Shift Image Segmentation"; }

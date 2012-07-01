@@ -53,6 +53,10 @@ OTBBinaryThresholdFilterProcessor::OTBBinaryThresholdFilterProcessor()
     filter = FilterType::New();
 }
 
+Processor* OTBBinaryThresholdFilterProcessor::create() const {
+  return new OTBBinaryThresholdFilterProcessor(); 
+}
+
 OTBBinaryThresholdFilterProcessor::~OTBBinaryThresholdFilterProcessor() {
 
 }

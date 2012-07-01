@@ -51,6 +51,10 @@ OTBLabelMapToClassImageProcessor::OTBLabelMapToClassImageProcessor()
     writer = WriterType::New();
 }
 
+Processor* OTBLabelMapToClassImageProcessor::create() const {
+  return new OTBLabelMapToClassImageProcessor(); 
+}
+
 OTBLabelMapToClassImageProcessor::~OTBLabelMapToClassImageProcessor() {
 
 }

@@ -46,7 +46,7 @@ public:
     OTBCannyEdgeDetectionImageFilterProcessor();
     virtual ~OTBCannyEdgeDetectionImageFilterProcessor();
     
-    virtual Processor* create() const { return new OTBCannyEdgeDetectionImageFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Edge Detection"; }
     virtual std::string getClassName() const { return "Canny Edge Detection Filter"; }

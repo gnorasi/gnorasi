@@ -55,6 +55,10 @@ OTBBandStatisticsAttributesLabelMapProcessor::OTBBandStatisticsAttributesLabelMa
     statisticsLabelMapFilter = StatisticsLabelMapFilterType::New();
 }
 
+Processor* OTBBandStatisticsAttributesLabelMapProcessor::create() const {
+  return new OTBBandStatisticsAttributesLabelMapProcessor(); 
+}
+
 OTBBandStatisticsAttributesLabelMapProcessor::~OTBBandStatisticsAttributesLabelMapProcessor() {
 
 }

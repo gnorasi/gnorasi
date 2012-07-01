@@ -44,7 +44,7 @@ public:
     OTBGrayscaleErodeFilterProcessor();
     virtual ~OTBGrayscaleErodeFilterProcessor();
     
-    virtual Processor* create() const { return new OTBGrayscaleErodeFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Morphology"; }
     virtual std::string getClassName() const { return "Grayscale Erosion Image Filter"; }

@@ -43,7 +43,7 @@ public:
     OTBBinaryThresholdFilterProcessor();
     virtual ~OTBBinaryThresholdFilterProcessor();
     
-    virtual Processor* create() const { return new OTBBinaryThresholdFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Image Segmentation"; }
     virtual std::string getClassName() const { return "Binary Threshold Image Segmentation"; }

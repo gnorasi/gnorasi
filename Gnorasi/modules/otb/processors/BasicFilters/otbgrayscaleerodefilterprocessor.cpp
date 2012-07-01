@@ -50,6 +50,10 @@ OTBGrayscaleErodeFilterProcessor::OTBGrayscaleErodeFilterProcessor()
     doublerescaler = DoubleRescalerFilterType::New();
 }
 
+Processor* OTBGrayscaleErodeFilterProcessor::create() const {
+  return new OTBGrayscaleErodeFilterProcessor(); 
+}
+
 OTBGrayscaleErodeFilterProcessor::~OTBGrayscaleErodeFilterProcessor() {
 
 }

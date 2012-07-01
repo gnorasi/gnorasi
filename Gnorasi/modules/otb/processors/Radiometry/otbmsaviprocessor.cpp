@@ -52,6 +52,10 @@ OTBMSAVIProcessor::OTBMSAVIProcessor()
     filter = MSAVIImageFilterType::New();
 }
 
+Processor* OTBMSAVIProcessor::create() const {
+  return new OTBMSAVIProcessor(); 
+}
+
 OTBMSAVIProcessor::~OTBMSAVIProcessor() {
 
 }

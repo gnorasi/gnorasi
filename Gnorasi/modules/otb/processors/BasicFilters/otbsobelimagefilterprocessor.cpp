@@ -45,6 +45,10 @@ OTBSobelImageFilterProcessor::OTBSobelImageFilterProcessor()
     filter = FilterType::New();
 }
 
+Processor* OTBSobelImageFilterProcessor::create() const {
+  return new OTBSobelImageFilterProcessor(); 
+}
+
 OTBSobelImageFilterProcessor::~OTBSobelImageFilterProcessor() {
 
 }

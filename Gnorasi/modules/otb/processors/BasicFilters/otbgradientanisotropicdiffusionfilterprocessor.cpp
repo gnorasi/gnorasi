@@ -51,6 +51,10 @@ OTBGradientAnisotropicDiffusionFilterProcessor::OTBGradientAnisotropicDiffusionF
     filter = FilterType::New();
 }
 
+Processor* OTBGradientAnisotropicDiffusionFilterProcessor::create() const {
+  return new OTBGradientAnisotropicDiffusionFilterProcessor(); 
+}
+
 OTBGradientAnisotropicDiffusionFilterProcessor::~OTBGradientAnisotropicDiffusionFilterProcessor() {
 
 }

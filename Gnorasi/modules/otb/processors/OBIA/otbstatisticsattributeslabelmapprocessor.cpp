@@ -57,6 +57,10 @@ OTBStatisticsAttributesLabelMapProcessor::OTBStatisticsAttributesLabelMapProcess
     featureName = "feature1";
 }
 
+Processor* OTBStatisticsAttributesLabelMapProcessor::create() const {
+  return new OTBStatisticsAttributesLabelMapProcessor(); 
+}
+
 OTBStatisticsAttributesLabelMapProcessor::~OTBStatisticsAttributesLabelMapProcessor() {
 
 }

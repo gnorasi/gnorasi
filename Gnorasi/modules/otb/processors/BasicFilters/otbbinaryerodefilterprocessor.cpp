@@ -52,6 +52,10 @@ OTBBinaryErodeFilterProcessor::OTBBinaryErodeFilterProcessor()
     doublerescaler = DoubleRescalerFilterType::New();
 }
 
+Processor* OTBBinaryErodeFilterProcessor::create() const {
+  return new OTBBinaryErodeFilterProcessor(); 
+}
+
 OTBBinaryErodeFilterProcessor::~OTBBinaryErodeFilterProcessor() {
 
 }

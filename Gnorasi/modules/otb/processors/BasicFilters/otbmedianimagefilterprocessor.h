@@ -47,7 +47,7 @@ public:
     OTBMedianImageFilterProcessor();
     virtual ~OTBMedianImageFilterProcessor();
     
-    virtual Processor* create() const { return new OTBMedianImageFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Basic Filters"; }
     virtual std::string getClassName() const { return "Median Image Filter"; }

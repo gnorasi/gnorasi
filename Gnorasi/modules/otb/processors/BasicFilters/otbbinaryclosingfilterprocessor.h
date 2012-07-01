@@ -46,7 +46,7 @@ public:
     OTBBinaryClosingFilterProcessor();
     virtual ~OTBBinaryClosingFilterProcessor();
     
-    virtual Processor* create() const { return new OTBBinaryClosingFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Morphology"; }
     virtual std::string getClassName() const { return "Binary Closing Image Filter"; }

@@ -51,6 +51,10 @@ OTBCannyEdgeDetectionImageFilterProcessor::OTBCannyEdgeDetectionImageFilterProce
     filter = FilterType::New();
 }
 
+Processor* OTBCannyEdgeDetectionImageFilterProcessor::create() const {
+  return new OTBCannyEdgeDetectionImageFilterProcessor(); 
+}
+
 OTBCannyEdgeDetectionImageFilterProcessor::~OTBCannyEdgeDetectionImageFilterProcessor() {
 
 }

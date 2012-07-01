@@ -52,6 +52,10 @@ OTBNDWIProcessor::OTBNDWIProcessor()
     filter = NDWIImageFilterType::New();
 }
 
+Processor* OTBNDWIProcessor::create() const {
+  return new OTBNDWIProcessor(); 
+}
+
 OTBNDWIProcessor::~OTBNDWIProcessor() {
 
 }

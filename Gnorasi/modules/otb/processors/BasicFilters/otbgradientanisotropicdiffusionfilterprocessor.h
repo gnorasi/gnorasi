@@ -42,7 +42,7 @@ public:
     OTBGradientAnisotropicDiffusionFilterProcessor();
     virtual ~OTBGradientAnisotropicDiffusionFilterProcessor();
     
-    virtual Processor* create() const { return new OTBGradientAnisotropicDiffusionFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Anisotropic Diffusion"; }
     virtual std::string getClassName() const { return "Gradient Anisotropic Diffusion"; }

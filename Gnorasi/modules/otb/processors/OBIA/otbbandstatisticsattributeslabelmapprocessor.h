@@ -48,7 +48,7 @@ public:
     OTBBandStatisticsAttributesLabelMapProcessor();
     virtual ~OTBBandStatisticsAttributesLabelMapProcessor();
     
-    virtual Processor* create() const { return new OTBBandStatisticsAttributesLabelMapProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "OBIA"; }
     virtual std::string getClassName() const { return "Calculate Band Statistics for Objects"; }

@@ -52,6 +52,10 @@ OTBNDVIProcessor::OTBNDVIProcessor()
     filter = NDVIImageFilterType::New();
 }
 
+Processor* OTBNDVIProcessor::create() const {
+  return new OTBNDVIProcessor(); 
+}
+
 OTBNDVIProcessor::~OTBNDVIProcessor() {
 
 }

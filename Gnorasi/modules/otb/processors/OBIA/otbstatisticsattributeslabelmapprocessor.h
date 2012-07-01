@@ -48,7 +48,7 @@ public:
     OTBStatisticsAttributesLabelMapProcessor();
     virtual ~OTBStatisticsAttributesLabelMapProcessor();
     
-    virtual Processor* create() const { return new OTBStatisticsAttributesLabelMapProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "OBIA"; }
     virtual std::string getClassName() const { return "Calculate New Feature for Objects"; }

@@ -42,7 +42,7 @@ public:
     OTBSobelImageFilterProcessor();
     virtual ~OTBSobelImageFilterProcessor();
     
-    virtual Processor* create() const { return new OTBSobelImageFilterProcessor(); }
+    virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Edge Detection"; }
     virtual std::string getClassName() const { return "Sobel Image Filter"; }

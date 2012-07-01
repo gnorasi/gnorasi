@@ -49,6 +49,10 @@ OTBConvolutionImageFilterProcessor::OTBConvolutionImageFilterProcessor()
     filter = FilterType::New();
 }
 
+Processor* OTBConvolutionImageFilterProcessor::create() const {
+  return new OTBConvolutionImageFilterProcessor(); 
+}
+
 OTBConvolutionImageFilterProcessor::~OTBConvolutionImageFilterProcessor() {
 
 }
