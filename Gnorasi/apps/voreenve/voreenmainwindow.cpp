@@ -1518,7 +1518,7 @@ void VoreenMainWindow::setWindowTitle(const QString& title) {
 }
 
 void VoreenMainWindow::updateWindowTitle() {
-    QString title = tr("VoreenVE");
+    QString title = tr("Gnorasi");
 
     if (!ignoreWindowTitleModified_ && vis_ && vis_->isModified())
         title += " *";
