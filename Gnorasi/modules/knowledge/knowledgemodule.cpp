@@ -32,18 +32,15 @@
 
 namespace voreen {
 
-KnowledgeModule::KnowledgeModule() 
-    : VoreenModule()
+KnowledgeModule::KnowledgeModule(const std::string& moduleName) 
+    : VoreenModule(moduleName)
 {
     // module name to be used in the GUI
     setName("Knowledge");
     
-    // module description file
-    setXMLFileName("knowledge/knowledgemodule.xml");
-
     // each module processor needs to be registered
-    addProcessor(new DummySegmentationProcessor());
-    addProcessor(new ClassifierWSProcessor());
+    //registerProcessor(new DummySegmentationProcessor());
+    registerProcessor(new ClassifierWSProcessor());
 
     // adds the module source glsl dir to the shader search path
     //addShaderPath(getModulesPath("knowledge/processors/glsl"));

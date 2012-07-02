@@ -35,3 +35,4 @@ OPTION(VRN_MODULE_DCMTK
 # additional modules
 OPTION(VRN_MODULE_DEPRECATED    "Deprecated code to be removed in future releases"              OFF)
 OPTION(VRN_MODULE_OTB    	"Orfeo Toolbox module"              ON)
+OPTION(VRN_MODULE_KNOWLEDGE    	"Knowledge module"              OFF)

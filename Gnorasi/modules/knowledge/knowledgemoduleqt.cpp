@@ -34,12 +34,12 @@ namespace voreen {
 
 const std::string KnowledgeModuleQt::loggerCat_("voreen.knowledge.KnowledgeModuleQt");
 
-KnowledgeModuleQt::KnowledgeModuleQt()
-    : VoreenModuleQt() 
+KnowledgeModuleQt::KnowledgeModuleQt(const std::string& moduleName)
+    : VoreenModuleQt(moduleName) 
 {
     setName("Knowledge (Qt)");
 
-    addProcessorWidgetFactory(new KnowledgeProcessorWidgetFactory());
+    registerProcessorWidgetFactory(new KnowledgeProcessorWidgetFactory());
 }
 
 } // namespace
