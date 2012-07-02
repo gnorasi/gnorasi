@@ -8,7 +8,8 @@ Gnorasi is Free Software licenced under the GPLv2.
 An introduction to Gnorasi can be found here:
 http://www.youtube.com/watch?v=WSjbEvoSkFM
 
-Installation:
+Installation from source
+------------------------
 
 1. Dependencies: CMake, OrfeoToolbox-devel, libqt4-devel, glew-devel, boost-devel 
 
@@ -25,5 +26,21 @@ make
 4. Install:
 
 make install
+
+
+Alternative Build Process
+-------------------------
+
+1. Dependencies: CMake, OrfeoToolbox-devel, libqt4-devel, glew-devel, boost-devel, Qt-Creator
+
+2. Open Qt-Creator
+
+3. From the menu File -> Open File or Project
+
+4. Select CMakeLists.txt from /Gnorasi
+
+5. Run CMake
+
+6. Build and Run Gnorasi from within Qt-Creator
 
 For problems / suggestions / bugs etc please contact Angelos Tzotsos (tzotsos@gmail.com)
