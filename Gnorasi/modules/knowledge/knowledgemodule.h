@@ -36,7 +36,7 @@ namespace voreen {
 class KnowledgeModule : public VoreenModule {
 
 public:
-    KnowledgeModule();
+    KnowledgeModule(const std::string& moduleName);
 
     virtual std::string getDescription() const { 
         return "GNORASI Knowledge Module."; 

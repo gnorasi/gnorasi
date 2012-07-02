@@ -36,8 +36,8 @@ namespace voreen {
 class KnowledgeModuleQt : public VoreenModuleQt {
 
 public:
-    KnowledgeModuleQt();
-
+    KnowledgeModuleQt(const std::string& moduleName);
+ 
 protected:
     static const std::string loggerCat_;
 };
