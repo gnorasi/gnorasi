@@ -1,1 +1,0 @@
-modules/ffmpeg/ext/ffmpeg/lgpl-2.1.txt:licenses/ffmpeg
