@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<VoreenData version="1">
+    <Workspace version="2" GlobalDescription="">
+        <ProcessorNetwork version="12">
+            <Processors />
+            <Connections />
+            <CoProcessorConnections />
+            <PropertyLinks />
+        </ProcessorNetwork>
+        <Animation />
+    </Workspace>
+</VoreenData>

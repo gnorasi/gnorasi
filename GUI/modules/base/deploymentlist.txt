@@ -1,2 +1,0 @@
-modules/base/basemodule.xml
-modules/base/glsl:modules/base
