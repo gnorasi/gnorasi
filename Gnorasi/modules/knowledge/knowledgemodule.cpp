@@ -39,7 +39,7 @@ KnowledgeModule::KnowledgeModule(const std::string& moduleName)
     setName("Knowledge");
     
     // each module processor needs to be registered
-    //registerProcessor(new DummySegmentationProcessor());
+    registerProcessor(new DummySegmentationProcessor());
     registerProcessor(new ClassifierWSProcessor());
 
     // adds the module source glsl dir to the shader search path
