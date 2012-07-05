@@ -1,4 +1,10 @@
 ----------------------------------------------------------------------
+Thu Jul  5 17:54:01 UTC 2012 - Angelos Tzotsos <tzotsos@opensuse.org>
+
+* Updated to 0.1.8
+* moved to Voreen API 4.0
+
+----------------------------------------------------------------------
 Fri Jun  8 01:07:48 UTC 2012 - Angelos Tzotsos <tzotsos@opensuse.org>
 
 * Added icon and desktop items
