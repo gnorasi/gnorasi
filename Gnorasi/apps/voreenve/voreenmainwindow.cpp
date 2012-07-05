@@ -403,8 +403,16 @@ void VoreenMainWindow::initialize(VoreenSplashScreen* splash) {
         openWorkspace(lastWorkspace_);
     }
     else {
-        // load an initial workspace
-        openWorkspace(VoreenApplication::app()->getResourcePath("workspaces/standard.vws").c_str());
+        // choose to load an initial workspace
+        std::ifstream infile(VoreenApplication::app()->getResourcePath("workspaces/standard.vws").c_str());
+	std::ifstream infile2("/usr/local/gnorasi/standard.vws");
+	if(infile.good()) {
+	  openWorkspace(VoreenApplication::app()->getResourcePath("workspaces/standard.vws").c_str());
+	}
+	else if (infile2.good()) {
+	  openWorkspace("/usr/local/gnorasi/standard.vws");
+	}
+	else {}
     }
     startupComplete("workspace");
 }
