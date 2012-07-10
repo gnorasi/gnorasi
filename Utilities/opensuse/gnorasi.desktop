@@ -7,5 +7,5 @@ Icon=/usr/share/icons/gnorasi.png
 Exec=/usr/bin/gnorasi
 Terminal=0
 Type=Application
-Categories=Education;Science;
+Categories=Education;Geography;
 X-SuSE-translate=true
