@@ -4,41 +4,28 @@
 ################################################################################
 
 IF(UNIX)
-    # TODO: Use FindOTB
+    find_package(OTB)
     
+    #include(${OTB_USE_FILE})
+
+
     # include paths
-    SET(MOD_INCLUDE_DIRECTORIES
-        /usr/include/gdal
-        /usr/include/otb
-        /usr/include/otb/Common
-        /usr/include/otb/BasicFilters
-        /usr/include/otb/Visualization
-        /usr/include/otb/IO
-        /usr/include/otb/Projections
-        /usr/include/otb/Gui
-        /usr/include/otb/OBIA
-        /usr/include/otb/Radiometry
-        /usr/include/otb/FeatureExtraction
-        /usr/include/otb/Learning
-        /usr/include/otb/Utilities/otbedison
-        /usr/include/otb/UtilitiesAdapters/OssimAdapters
-        /usr/include/otb/UtilitiesAdapters/CurlAdapters
-        /usr/include/otb/Utilities/otbconfigfile
-        /usr/include/otb/Utilities/ITK/Common
-        /usr/include/otb/Utilities/ITK
-        /usr/include/otb/Utilities/ITK/IO
-        /usr/include/otb/Utilities/ITK/BasicFilters
-        /usr/include/otb/Utilities/ITK/Algorithms
-        /usr/include/otb/Utilities/ITK/Review
-        /usr/include/otb/Utilities/ITK/Utilities
-        /usr/include/otb/Utilities/ITK/Utilities/vxl/vcl
-        /usr/include/otb/Utilities/ITK/Utilities/vxl/core
-        /usr/include/otb/Utilities/ITK/Numerics/Statistics
-    )
+    SET(MOD_INCLUDE_DIRECTORIES ${OTB_INCLUDE_DIRS})
+
+    FIND_LIBRARY(OTBCommon_LIBRARY
+                 NAMES libOTBCommon
+                 HINTS ${OTB_LIBRARY_DIRS}
+                 PATHS /usr/lib/otb
+                       /usr/lib64/otb
+                 )
+
+    GET_FILENAME_COMPONENT(OTBCommon_LIBRARY_PATH
+                           ${OTBCommon_LIBRARY}
+                           PATH)
 
     # link against OTB + ITK V3.0
     SET(MOD_LIBRARIES
-        -L/usr/lib64/otb
+        -L${OTBCommon_LIBRARY_PATH}
         -lOTBCommon
         -lOTBIO
         -lOTBBasicFilters
@@ -53,7 +40,6 @@ IF(UNIX)
         -lITKBasicFilters
         -lITKAlgorithms
         -lITKNumerics
-
     )
     
 ENDIF()
