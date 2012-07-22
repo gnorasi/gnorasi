@@ -111,7 +111,7 @@ void OTBObjectClassificationToLabelMapProcessor::update() {
 		    i++;
 		}
 		
-		typename LabelMapType::LabelObjectContainerType::iterator it=
+		LabelMapType::LabelObjectContainerType::iterator it=
 		labelmap->GetLabelObjectContainer().find(id);
 		if (it != labelmap->GetLabelObjectContainer().end())
 		{

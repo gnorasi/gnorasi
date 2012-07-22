@@ -92,7 +92,7 @@ void OTBLabelMapStatisticsWriterProcessor::process() {
 	    
 	    //we need to read the titles of the Properties in the Attribute Table
 	    //in this case we read the first LabelObject from the std::map container.
-	    typename LabelMapType::LabelObjectContainerType::const_iterator it=
+	    LabelMapType::LabelObjectContainerType::const_iterator it=
 		labelmap->GetLabelObjectContainer().begin();
 	    
 	    //we now go in the LabelObject type and read the Attributes Name List
