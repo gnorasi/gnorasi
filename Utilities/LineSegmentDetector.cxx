@@ -35,14 +35,14 @@ int main(int argc, char * argv[])
   
   const char * infname  = argv[1];
   const char * outfname  = argv[2];
-
+  
   typedef unsigned char InputPixelType;
-  typedef unsigned int OutputPixelType;
+  //typedef unsigned int OutputPixelType;
   typedef double        PrecisionType;
   const unsigned int Dimension = 2;
-
+  
   typedef otb::Image<InputPixelType,  Dimension> ImageType;
-  typedef otb::Image<OutputPixelType,  Dimension> OutImageType;
+  //typedef otb::Image<OutputPixelType,  Dimension> OutImageType;
   typedef otb::ImageFileReader<ImageType>        ReaderType;
   
   ReaderType::Pointer reader = ReaderType::New();
@@ -58,20 +58,19 @@ int main(int argc, char * argv[])
   typedef otb::VectorData<PrecisionType> VectorDataType;
   
   typedef otb::VectorDataToLabelImageFilter<VectorDataType,
-      OutImageType> VectorDataRendererType;
+      ImageType> VectorDataRendererType;
   VectorDataRendererType::Pointer vectorDataRenderer = VectorDataRendererType::New();
 
-  typedef otb::ImageFileWriter<OutImageType> WriterType;
+  
+  typedef otb::ImageFileWriter<ImageType> WriterType;
   WriterType::Pointer writer = WriterType::New();
   writer->SetFileName(outfname);
   
   lsdFilter->SetInput(reader->GetOutput());
-
+  reader->GenerateOutputInformation();
   vectorDataRenderer->AddVectorData(lsdFilter->GetOutput());
   vectorDataRenderer->SetOutputParametersFromImage(reader->GetOutput());
- 
   writer->SetInput(vectorDataRenderer->GetOutput());
-
   reader->GenerateOutputInformation();
   writer->Update();
 
