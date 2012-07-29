@@ -21,6 +21,7 @@
 
 #include "otbImageFileReader.h"
 #include "otbImageFileWriter.h"
+#include "otbVectorDataFileWriter.h"
 #include "otbVectorDataToLabelImageFilter.h"
 #include "otbLineSegmentDetector.h"
 
@@ -36,7 +37,7 @@ int main(int argc, char * argv[])
   const char * infname  = argv[1];
   const char * outfname  = argv[2];
   
-  typedef unsigned char InputPixelType;
+  typedef unsigned int InputPixelType;
   //typedef unsigned int OutputPixelType;
   typedef double        PrecisionType;
   const unsigned int Dimension = 2;
@@ -62,17 +63,25 @@ int main(int argc, char * argv[])
   VectorDataRendererType::Pointer vectorDataRenderer = VectorDataRendererType::New();
 
   
-  typedef otb::ImageFileWriter<ImageType> WriterType;
+  /*typedef otb::ImageFileWriter<ImageType> WriterType;
   WriterType::Pointer writer = WriterType::New();
-  writer->SetFileName(outfname);
+  writer->SetFileName(outfname);*/
   
   lsdFilter->SetInput(reader->GetOutput());
   reader->GenerateOutputInformation();
-  vectorDataRenderer->AddVectorData(lsdFilter->GetOutput());
+  
+  /*vectorDataRenderer->AddVectorData(lsdFilter->GetOutput());
   vectorDataRenderer->SetOutputParametersFromImage(reader->GetOutput());
   writer->SetInput(vectorDataRenderer->GetOutput());
   reader->GenerateOutputInformation();
   writer->Update();
-
+  */
+  
+  typedef otb::VectorDataFileWriter<VectorDataType> VectorDataWriterType;
+  VectorDataWriterType::Pointer vdWriter = VectorDataWriterType::New();
+  vdWriter->SetFileName(outfname);
+  vdWriter->SetInput(lsdFilter->GetOutput());
+  vdWriter->Update();
+  
   return EXIT_SUCCESS;
 }
