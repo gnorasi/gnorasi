@@ -18,10 +18,16 @@ IF(UNIX)
                  PATHS /usr/lib/otb
                        /usr/lib64/otb
                  )
+                 
+	IF(NOT OTBCommon_LIBRARY)  
+		# In case library not found set path
+		SET(OTBCommon_LIBRARY_PATH /usr/lib/otb)
+	ELSE()
+		GET_FILENAME_COMPONENT(OTBCommon_LIBRARY_PATH
+							   ${OTBCommon_LIBRARY}
+							   PATH)	
+	ENDIF()	
 
-    GET_FILENAME_COMPONENT(OTBCommon_LIBRARY_PATH
-                           ${OTBCommon_LIBRARY}
-                           PATH)
 
     # link against OTB + ITK V3.0
     SET(MOD_LIBRARIES
