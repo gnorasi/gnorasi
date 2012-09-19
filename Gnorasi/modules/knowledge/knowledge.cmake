@@ -26,12 +26,12 @@ SET(MOD_QT_SOURCES
 )
 
 SET(MOD_QT_HEADERS
+    ${MOD_DIR}/qt/processorwidgets/dummysegmentationwidget.h
+    ${MOD_DIR}/qt/processorwidgets/classifierwswidget.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC
     ${MOD_DIR}/qt/processorwidgets/knowledgeprocessorwidgetfactory.h
-    ${MOD_DIR}/qt/processorwidgets/dummysegmentationwidget.h
-    ${MOD_DIR}/qt/processorwidgets/classifierwswidget.h
 )
 
 SET(QT_USE_QTXML TRUE)
