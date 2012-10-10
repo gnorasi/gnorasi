@@ -203,10 +203,12 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
             }
         }
 
-        int batch = 100;
+        int batch = 50;
         if ((count-1)%batch == 0) {
             url.setUrl(QString::fromStdString(serverUpdate));
             params.addQueryItem("request",prefix+"INSERT DATA {"+updateString+"}");
+
+            //LINFO(updateString.toStdString());
 
             request.setUrl(url);
 
@@ -241,8 +243,8 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
         loop.exec();
 
         if (reply->error() != QNetworkReply::NoError) {
-            LWARNING("Error in connection");
-            return "Error in connection";
+            LWARNING("Error in connection 2");
+            return "Error in connection 2";
          }
 
         reply->close();
@@ -311,6 +313,9 @@ QDomDocument ClassifierWSWidget::readMappings(QString mapFile, QString* error, i
     QFile file(mapFile);
 
     file.open(QIODevice::ReadOnly);
+    if (file.exists() == false) {
+        LWARNING(" Mappings file does not exist");
+    }
 
     doc.setContent(&file, error, line, col);
 
