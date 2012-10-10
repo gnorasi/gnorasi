@@ -39,7 +39,7 @@ then
 
 #JAVA_ARGS="-server" 
 JAVA_ARGS="-server -Xmx1G" 
-JAVA_ARGS="$JAVA_ARGS -Dorg.mortbay.jetty.Request.maxFormContentSize=6000000"
+JAVA_ARGS="$JAVA_ARGS -Dorg.mortbay.jetty.Request.maxFormContentSize=10000000"
 
 # If Jetty needs to handle very large incoming requests (e.g. SPARQL/Update)
 # you may need to add ...
