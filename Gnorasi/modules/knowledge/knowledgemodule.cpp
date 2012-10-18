@@ -29,6 +29,7 @@
 #include "knowledgemodule.h"
 #include "processors/dummysegmentationprocessor.h"
 #include "processors/classifierwsprocessor.h"
+#include "processors/retrieveclassificationdataprocessor.h"
 
 namespace voreen {
 
@@ -41,6 +42,7 @@ KnowledgeModule::KnowledgeModule(const std::string& moduleName)
     // each module processor needs to be registered
     registerProcessor(new DummySegmentationProcessor());
     registerProcessor(new ClassifierWSProcessor());
+    registerProcessor(new RetrieveClassificationDataProcessor());
 
     // adds the module source glsl dir to the shader search path
     //addShaderPath(getModulesPath("knowledge/processors/glsl"));

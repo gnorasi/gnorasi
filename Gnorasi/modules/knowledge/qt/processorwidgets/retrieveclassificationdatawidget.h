@@ -26,10 +26,10 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_CLASSIFIERWSWIDGET_H
-#define VRN_CLASSIFIERWSWIDGET_H
+#ifndef VRN_RETRIEVECLASSIFICATIONDATAWIDGET_H
+#define VRN_RETRIEVECLASSIFICATIONDATAWIDGET_H
 
-#include "modules/knowledge/processors/classifierwsprocessor.h"
+#include "modules/knowledge/processors/retrieveclassificationdataprocessor.h"
 #include "voreen/qt/widgets/processor/qprocessorwidget.h"
 
 #include <QLabel>
@@ -39,18 +39,17 @@
 
 namespace voreen {
 
-class ClassifierWSWidget : public QProcessorWidget {
+class RetrieveClassificationDataWidget : public QProcessorWidget {
     Q_OBJECT
 public:
-    ClassifierWSWidget(QWidget* parent, ClassifierWSProcessor* classifierWSProcessor);
-    virtual ~ClassifierWSWidget();
+    RetrieveClassificationDataWidget(QWidget* parent, RetrieveClassificationDataProcessor* retrieveClassificationDataProcessor);
+    virtual ~RetrieveClassificationDataWidget();
 
     void initialize();
 
     virtual void updateFromProcessor();
     virtual std::string invokeWebService(std::string input);
-    virtual QVector<QVector<QString> > parseHeaders(QStringList headers);
-    virtual QDomDocument readMappings(QString mapFile, QString* error, int* line, int *col);
+    virtual QString parseResults(QString resultString);
 
 private:
     static const std::string loggerCat_;
@@ -59,5 +58,5 @@ private:
 
 } // namespace voreen
 
-#endif // VRN_CLASSIFIERWSWIDGET_H
+#endif // VRN_RETRIEVECLASSIFICATIONDATAWIDGET_H
 

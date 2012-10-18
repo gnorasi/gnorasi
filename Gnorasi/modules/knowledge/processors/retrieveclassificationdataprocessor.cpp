@@ -26,38 +26,38 @@
  *                                                                    		*
  ********************************************************************************/
 
-#include "classifierwsprocessor.h"
+#include "retrieveclassificationdataprocessor.h"
 
 #include "voreen/core/processors/processorwidget.h"
 #include "voreen/core/processors/processorwidgetfactory.h"
 
 
 namespace voreen {
-const std::string ClassifierWSProcessor::loggerCat_("voreen.ClassifierWSProcessor");
+const std::string RetrieveClassificationDataProcessor::loggerCat_("voreen.RetrieveClassificationDataProcessor");
 
-ClassifierWSProcessor::ClassifierWSProcessor()
+RetrieveClassificationDataProcessor::RetrieveClassificationDataProcessor()
     : Processor()
     , inPort_(Port::INPORT, "inport", 0)
     , outPort_(Port::OUTPORT, "outport", 0)
-    , serverURLupdate_("serverURLupdate_", "URL for sending data to ontology", "http://localhost:2020/update/gnorasi")
+    , serverURLquery_("serverURLquery_", "URL for issuing queries", "http://localhost:2020/gnorasi")
     , pTextData_("")
     , pTextDataOut_("")
 {
     // register ports and properties
     addPort(inPort_);
     addPort(outPort_);
-    addProperty(serverURLupdate_);
+    addProperty(serverURLquery_);
 
 
 }
 
-ClassifierWSProcessor::~ClassifierWSProcessor() {}
+RetrieveClassificationDataProcessor::~RetrieveClassificationDataProcessor() {}
 
-Processor* ClassifierWSProcessor::create() const {
-    return new ClassifierWSProcessor();
+Processor* RetrieveClassificationDataProcessor::create() const {
+    return new RetrieveClassificationDataProcessor();
 }
 
-void ClassifierWSProcessor::initialize() throw (tgt::Exception) {
+void RetrieveClassificationDataProcessor::initialize() throw (tgt::Exception) {
     Processor::initialize();
 
     if (inPort_.hasData()) {
@@ -68,7 +68,7 @@ void ClassifierWSProcessor::initialize() throw (tgt::Exception) {
 
 }
 
-void ClassifierWSProcessor::deinitialize() throw (tgt::Exception) {
+void RetrieveClassificationDataProcessor::deinitialize() throw (tgt::Exception) {
 
     //outPort_.setData("");
 
@@ -79,39 +79,39 @@ void ClassifierWSProcessor::deinitialize() throw (tgt::Exception) {
     Processor::deinitialize();
 }
 
-bool ClassifierWSProcessor::isReady() const {
+bool RetrieveClassificationDataProcessor::isReady() const {
     return true;
 }
 
-bool ClassifierWSProcessor::isEndProcessor() const {
+bool RetrieveClassificationDataProcessor::isEndProcessor() const {
     return (!outPort_.isConnected());
 }
 
-void ClassifierWSProcessor::setOutPortData(){
+void RetrieveClassificationDataProcessor::setOutPortData(){
     //if (outPort_.isConnected()){
         outPort_.setData(pTextDataOut_);
     //}
 }
 
-void ClassifierWSProcessor::setTextDataOut(std::string outTextData) {
+void RetrieveClassificationDataProcessor::setTextDataOut(std::string outTextData) {
     pTextDataOut_ = outTextData;
-    ClassifierWSProcessor::setOutPortData();
+    RetrieveClassificationDataProcessor::setOutPortData();
 }
 
-const std::string ClassifierWSProcessor::getTextData() const {
+const std::string RetrieveClassificationDataProcessor::getTextData() const {
     return pTextData_;
 }
 
 
-std::string ClassifierWSProcessor::getProcessorInfo() const {
-    return "Perform classification using a knowledge web service";
+std::string RetrieveClassificationDataProcessor::getProcessorInfo() const {
+    return "Retrieve classification data from a knowledge web service";
 }
 
-void ClassifierWSProcessor::readData() {
+void RetrieveClassificationDataProcessor::readData() {
     //if (dynamic_cast<const std::string>(inPort_.getData())) {
         //pTextData_ = dynamic_cast<const std::string>(inPort_.getData());
     pTextData_ = inPort_.getData();
-    ClassifierWSProcessor::updateView();
+    RetrieveClassificationDataProcessor::updateView();
     //}
     /*
     if (!inPort_.hasData())
@@ -123,13 +123,13 @@ void ClassifierWSProcessor::readData() {
     */
 }
 
-void ClassifierWSProcessor::updateView() {
+void RetrieveClassificationDataProcessor::updateView() {
     if (getProcessorWidget()){
         getProcessorWidget()->updateFromProcessor();
     }
 }
 
-void ClassifierWSProcessor::process() {
+void RetrieveClassificationDataProcessor::process() {
     tgtAssert(isInitialized(), "not initialized");
 
     if (inPort_.hasData() && inPort_.hasChanged() ) {

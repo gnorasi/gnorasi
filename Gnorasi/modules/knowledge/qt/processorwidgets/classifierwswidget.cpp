@@ -116,7 +116,6 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
     ClassifierWSProcessor* classifierWSProcessor = dynamic_cast<ClassifierWSProcessor*>(processor_);
 
     StringProperty* serverURLUpdate_ = static_cast<StringProperty*>(classifierWSProcessor->getProperty("serverURLupdate_"));
-    StringProperty* serverURLquery_ = static_cast<StringProperty*>(classifierWSProcessor->getProperty("serverURLquery_"));
 
     QNetworkAccessManager *manager = new QNetworkAccessManager();
     QNetworkRequest request;
@@ -126,7 +125,6 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
     QUrl params;
 
     std::string serverUpdate = serverURLUpdate_->get().c_str();
-    std::string serverQuery = serverURLquery_->get().c_str();
 
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
@@ -218,8 +216,8 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
             loop.exec();
 
             if (reply->error() != QNetworkReply::NoError) {
-                LWARNING("Error in connection");
-                return "Error in connection";
+                LWARNING("Error in connection for sending data");
+                return "Error in connection for sending data";
              }
 
             reply->close();
@@ -243,8 +241,8 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
         loop.exec();
 
         if (reply->error() != QNetworkReply::NoError) {
-            LWARNING("Error in connection 2");
-            return "Error in connection 2";
+            LWARNING("Error in connection for sending data");
+            return "Error in connection for sending data";
          }
 
         reply->close();
@@ -255,40 +253,11 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
     }
     LINFO("All data sent");
 
-    //issue query to get regions
-    QString query = "SELECT ?regionID ?objectClassID " \
-                    "WHERE { " \
-                        "?region gno:depictsObject ?y ; " \
-                        "gno:hasID ?regionID . ?y gno:hasObjectClassID ?objectClassID . " \
-                    "}";
-
-    url.clear();
-    url.setUrl(QString::fromStdString(serverQuery));
-    url.addQueryItem("query",prefix+query);
-    url.addQueryItem("output", "xml");
-
-    request.setUrl(url);
-
-    reply = manager->get(request);
-    QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
-    loop.exec();
-
-    if (reply->error() != QNetworkReply::NoError) {
-        LWARNING("Error in connection");
-        return "Error in connection";
-     }
-
-    QString replyBody = reply->readAll();
-
-    QString csv = parseResults(replyBody);
-
-    LINFO("Classification results obtained");
-
     url.clear();
     reply->deleteLater();
     manager->deleteLater();
 
-    return csv.toStdString();
+    return "Data ready";
 }
 
 
@@ -322,73 +291,6 @@ QDomDocument ClassifierWSWidget::readMappings(QString mapFile, QString* error, i
     file.close();
 
     return doc;
-}
-
-QString ClassifierWSWidget::parseResults(QString xml2) {
-    QDomDocument doc("results");
-
-    doc.setContent(xml2);
-
-    QString ns = "http://www.w3.org/2005/sparql-results#";
-
-    QDomNodeList nodeList = doc.elementsByTagName("sparql").at(0).toElement().elementsByTagName("head").at(0).toElement().elementsByTagName("variable");
-
-    //we need at least 2 values, region ID and Class ID
-    if (nodeList.size() < 2)
-        return 0;
-
-    QString csvHeader = "ID;CLASS";
-    QString csvValues = "";
-
-    QString* variables = new QString[nodeList.size()];
-    for (int i=0;i<nodeList.size();i++) {
-        variables[i] = nodeList.at(i).attributes().namedItem("name").nodeValue();
-        if (i>1)
-            csvHeader += ";"+variables[i];
-    }
-    csvHeader += "\n";
-
-    nodeList = doc.elementsByTagName("sparql").at(0).toElement().elementsByTagName("results").at(0).toElement().elementsByTagName("result");
-    for (int i=0;i<nodeList.size();i++) {
-        QDomNodeList bindings = nodeList.at(i).toElement().elementsByTagName("binding");
-        //position 0 is the ID
-        //position 1 is the class ID
-        //the rest are undefined
-        QDomNodeList IDs = bindings.at(0).toElement().elementsByTagName("literal");
-        if (IDs.size() > 0) {
-            QString ID = IDs.at(0).toElement().text();
-            csvValues += ID;
-        }
-
-        QDomNodeList classIDs = bindings.at(1).toElement().elementsByTagName("literal");
-        if (classIDs.size() > 0) {
-            QString classID = classIDs.at(0).toElement().text();
-            csvValues += ";"+classID;
-        }
-
-        if (bindings.size() > 2) {
-            QString* otherValues = new QString[bindings.size()-2];
-            for (int j=0;j<bindings.size()-2;j++) {
-                QDomNodeList otherList = bindings.at(j+2).toElement().elementsByTagName("literal");
-                if (otherList.size() > 0) {
-                    otherValues[j] = otherList.at(0).toElement().text();
-                }
-                else {
-                    otherList = bindings.at(j+2).toElement().elementsByTagName("uri");
-                    if (otherList.size() > 0) {
-                        otherValues[j] = otherList.at(0).toElement().text();
-                    }
-                }
-                csvValues += ";"+otherValues[j];
-            }
-            delete[] otherValues;
-        }
-        csvValues += "\n";
-    }
-
-    delete[] variables;
-
-    return csvHeader+csvValues;
 }
 
 
