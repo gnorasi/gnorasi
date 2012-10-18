@@ -34,6 +34,9 @@
 #include "../../processors/classifierwsprocessor.h"
 #include "classifierwswidget.h"
 
+#include "../../processors/retrieveclassificationdataprocessor.h"
+#include "retrieveclassificationdatawidget.h"
+
 #include "voreen/qt/voreenapplicationqt.h"
 #include <QWidget>
 #include <QMainWindow>
@@ -48,11 +51,14 @@ ProcessorWidget* KnowledgeProcessorWidgetFactory::createWidget(Processor* proces
     }
     QWidget* parent = VoreenApplicationQt::qtApp()->getMainWindow();
 
-    if (dynamic_cast<DummySegmentationProcessor*>(processor))
-        return new DummySegmentationWidget(parent, static_cast<DummySegmentationProcessor*>(processor));
+    if (dynamic_cast<RetrieveClassificationDataProcessor*>(processor))
+        return new RetrieveClassificationDataWidget(parent, static_cast<RetrieveClassificationDataProcessor*>(processor));
 
     if (dynamic_cast<ClassifierWSProcessor*>(processor))
         return new ClassifierWSWidget(parent, static_cast<ClassifierWSProcessor*>(processor));
+
+    if (dynamic_cast<DummySegmentationProcessor*>(processor))
+        return new DummySegmentationWidget(parent, static_cast<DummySegmentationProcessor*>(processor));
 
     return 0;
 }

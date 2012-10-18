@@ -26,8 +26,8 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_CLASSIFIERWSPROCESSOR_H
-#define VRN_CLASSIFIERWSPROCESSOR_H
+#ifndef VRN_RETRIEVECLASSIFICATIONDATAPROCESSOR_H
+#define VRN_RETRIEVECLASSIFICATIONDATAPROCESSOR_H
 
 
 #include "voreen/core/processors/processor.h"
@@ -37,13 +37,13 @@
 
 namespace voreen {
 
-class ClassifierWSProcessor : public Processor {
+class RetrieveClassificationDataProcessor : public Processor {
 public:
-    ClassifierWSProcessor();
-    virtual ~ClassifierWSProcessor();
+    RetrieveClassificationDataProcessor();
+    virtual ~RetrieveClassificationDataProcessor();
     virtual Processor* create() const;
 
-    virtual std::string getClassName() const { return "ClassifierWS"; }
+    virtual std::string getClassName() const { return "Retrieve Classification Data"; }
     virtual std::string getCategory() const  { return "Classification"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; }
     //virtual bool usesExpensiveComputation() const { return true; }
@@ -60,7 +60,7 @@ public:
 
 protected:
     virtual void setDescriptions() {
-	setDescription("Web Service Classification processor.");
+    setDescription("Retrieve Web Service Classification Data processor.");
     }
     virtual void process();
     virtual void initialize() throw (tgt::Exception);
@@ -77,12 +77,12 @@ private:
     std::string pTextData_;
     std::string pTextDataOut_;
 
-    StringProperty serverURLupdate_;
+    StringProperty serverURLquery_;
 
     static const std::string loggerCat_; ///< category used in logging
 };
 
 } // namespace
 
-#endif // VRN_CLASSIFIERWSPROCESSOR_H
+#endif // VRN_RETRIEVECLASSIFICATIONDATAPROCESSOR_H
 
