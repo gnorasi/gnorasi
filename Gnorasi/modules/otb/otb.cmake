@@ -13,7 +13,7 @@ IF(UNIX)
     SET(MOD_INCLUDE_DIRECTORIES ${OTB_INCLUDE_DIRS})
 
     FIND_LIBRARY(OTBCommon_LIBRARY
-                 NAMES libOTBCommon
+                 NAMES libOTBCommon.so
                  HINTS ${OTB_LIBRARY_DIRS}
                  PATHS /usr/lib/otb
                        /usr/lib64/otb
