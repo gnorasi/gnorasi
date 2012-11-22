@@ -33,7 +33,7 @@
 
 namespace voreen {
 
-class VRN_QT_API KnowledgeModuleQt : public VoreenModuleQt {
+class KnowledgeModuleQt : public VoreenModuleQt {
 
 public:
     KnowledgeModuleQt(const std::string& moduleName);

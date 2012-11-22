@@ -53,6 +53,6 @@ IF(WIN32)
     OPTION(VRN_INCREMENTAL_LINKING  "Enable incremental linking in Visual Studio debug builds?" ON )
     OPTION(VRN_GENERATE_MANIFEST    "Generate manifest in Visual Studio debug builds?"          OFF)
 
-    OPTION(VRN_WINDOWS_DEPLOYMENT   "Settings/install target for Windows deployment archive"    ON )
+    OPTION(VRN_WINDOWS_DEPLOYMENT   "Settings/install target for Windows deployment archive"    OFF)
     MARK_AS_ADVANCED(VRN_WINDOWS_DEPLOYMENT)
 ENDIF()

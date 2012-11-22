@@ -108,93 +108,93 @@ void OTBVectorImageWriterProcessor::saveImage() {
     std::string filename = imageFile_.get();
     if (!filename.empty())
     {
-    hasImage = true;
+	hasImage = true;
     }
   
     if(this->isReady() && hasImage)
     {
         if (imageType_.get() == "double") {
-        writer->SetFileName(filename.c_str());
-        writer->SetInput(inport_.getData());
+	    writer->SetFileName(filename.c_str());
+	    writer->SetInput(inport_.getData());
             try
             {
-        writer->Update();
+		writer->Update();
             }
             catch (itk::ExceptionObject& err)
             {
                 LWARNING("ExceptionObject caught !");
                 return;
             }
-    }else if (imageType_.get() == "float"){
-        try
+	}else if (imageType_.get() == "float"){
+	    try
             {
-        FloatImageType::PixelType minimum, maximum;
-        minimum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
-        maximum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
-        minimum.Fill(min_.get());
+		FloatImageType::PixelType minimum, maximum;
+		minimum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
+		maximum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
+		minimum.Fill(min_.get());
                 maximum.Fill(max_.get());
-        floatrescaler->SetInput(inport_.getData());
-        floatrescaler->SetOutputMinimum(minimum);
-        floatrescaler->SetOutputMaximum(maximum);
-        floatrescaler->SetClampThreshold(clip_.get());
-        float_writer->SetFileName(filename.c_str());
-        float_writer->SetInput(floatrescaler->GetOutput());
-        float_writer->Update();
-        }
-        catch (itk::ExceptionObject& err)
+		floatrescaler->SetInput(inport_.getData());
+		floatrescaler->SetOutputMinimum(minimum);
+		floatrescaler->SetOutputMaximum(maximum);
+		floatrescaler->SetClampThreshold(clip_.get());
+		float_writer->SetFileName(filename.c_str());  
+		float_writer->SetInput(floatrescaler->GetOutput());
+		float_writer->Update();
+	    }
+	    catch (itk::ExceptionObject& err)
             {
-            LWARNING("ExceptionObject caught !");
-            return;
+        	LWARNING("ExceptionObject caught !");
+        	return;
             }
-    }else if (imageType_.get() == "int"){
-        try
+	}else if (imageType_.get() == "int"){
+	    try
             {
-        IntegerImageType::PixelType minimum, maximum;
-        minimum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
-        maximum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
-        minimum.Fill(min_.get());
+		IntegerImageType::PixelType minimum, maximum;
+		minimum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
+		maximum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
+		minimum.Fill(min_.get());
                 maximum.Fill(max_.get());
-        intrescaler->SetInput(inport_.getData());
-        intrescaler->SetOutputMinimum(minimum);
-        intrescaler->SetOutputMaximum(maximum);
-        intrescaler->SetClampThreshold(clip_.get());
-        int_writer->SetFileName(filename.c_str());
-        int_writer->SetInput(intrescaler->GetOutput());
-        int_writer->Update();
-        }
-        catch (itk::ExceptionObject& err)
+		intrescaler->SetInput(inport_.getData());
+		intrescaler->SetOutputMinimum(minimum);
+		intrescaler->SetOutputMaximum(maximum);
+		intrescaler->SetClampThreshold(clip_.get());
+		int_writer->SetFileName(filename.c_str());  
+		int_writer->SetInput(intrescaler->GetOutput());
+		int_writer->Update();
+	    }
+	    catch (itk::ExceptionObject& err)
             {
-            LWARNING("ExceptionObject caught !");
-            return;
+        	LWARNING("ExceptionObject caught !");
+        	return;
             }
-    }else if (imageType_.get() == "char"){
-        try
+	}else if (imageType_.get() == "char"){
+	    try
             {
-        ByteImageType::PixelType minimum, maximum;
-        minimum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
-        maximum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
-        minimum.Fill(min_.get());
+		ByteImageType::PixelType minimum, maximum;
+		minimum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
+		maximum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
+		minimum.Fill(min_.get());
                 maximum.Fill(max_.get());
-        byterescaler->SetInput(inport_.getData());
-        byterescaler->SetOutputMinimum(minimum);
-        byterescaler->SetOutputMaximum(maximum);
-        byterescaler->SetClampThreshold(clip_.get());
-        byte_writer->SetFileName(filename.c_str());
-        byte_writer->SetInput(byterescaler->GetOutput());
-        byte_writer->Update();
-        }
-        catch (itk::ExceptionObject& err)
+		byterescaler->SetInput(inport_.getData());
+		byterescaler->SetOutputMinimum(minimum);
+		byterescaler->SetOutputMaximum(maximum);
+		byterescaler->SetClampThreshold(clip_.get());
+		byte_writer->SetFileName(filename.c_str());  
+		byte_writer->SetInput(byterescaler->GetOutput());
+		byte_writer->Update();
+	    }
+	    catch (itk::ExceptionObject& err)
             {
-            LWARNING("ExceptionObject caught !");
-            return;
+        	LWARNING("ExceptionObject caught !");
+        	return;
             }
-    }
+	}
     }else if(!this->isReady()){
-    LWARNING("Writer Inport not connected");
-    return;
+	LWARNING("Writer Inport not connected");
+	return;
     }else if(!hasImage){
-    LWARNING("Image Name Not Set");
-    return;
+	LWARNING("Image Name Not Set");
+	return;
     }
 
     LINFO("Image written succesfully!");

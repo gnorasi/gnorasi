@@ -32,7 +32,6 @@
 #include "modules/knowledge/processors/dummysegmentationprocessor.h"
 #include "voreen/qt/widgets/processor/qprocessorwidget.h"
 //#include "voreen/qt/widgets/shaderplugin.h"
-#include "voreen/qt/voreenmoduleqt.h"
 
 //#include "tgt/qt/qtcanvas.h"
 #include <QLabel>
@@ -40,7 +39,7 @@
 
 namespace voreen {
 
-class VRN_QT_API DummySegmentationWidget : public QProcessorWidget {
+class DummySegmentationWidget : public QProcessorWidget {
     Q_OBJECT
 public:
     DummySegmentationWidget(QWidget* parent, DummySegmentationProcessor* dummySegmentationProcessor);

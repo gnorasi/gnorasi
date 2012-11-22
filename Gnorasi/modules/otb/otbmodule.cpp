@@ -32,7 +32,9 @@
 #include "processors/ImageIO/otblabelimagereaderprocessor.h"
 #include "processors/ImageIO/otbvectorimagereaderprocessor.h"
 #include "processors/ImageIO/otbimagewriterprocessor.h"
+#include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 #include "processors/ImageIO/otblabelimagewriterprocessor.h"
+#include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 #include "processors/ImageIO/otbcsvwriterprocessor.h"
 #include "processors/ImageIO/otbcsvreaderprocessor.h"
 #include "processors/BasicFilters/otbconvolutionimagefilterprocessor.h"
@@ -64,20 +66,8 @@
 #include "processors/Radiometry/otbndwiprocessor.h"
 #include "processors/Radiometry/otbvectorimagebandmathprocessor.h"
 #include "processors/Radiometry/otbtwoimagebandmathprocessor.h"
-
-#ifdef WIN32
-
-//#include "processors/ImageIO/otbvectorimagewriterprocessor.h"
-//#include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
-//#include "processors/Visualization/otbsimpleviewerprocessor.h"
-
-#else
-
-#include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
-#include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 #include "processors/Visualization/otbsimpleviewerprocessor.h"
 
-#endif
 
 namespace voreen {
 
@@ -92,20 +82,14 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBLabelImageReaderProcessor());
     registerProcessor(new OTBVectorImageReaderProcessor());
     registerProcessor(new OTBImageWriterProcessor());
-#ifdef WIN32
-    //registerProcessor(new OTBVectorImageWriterProcessor());
-    //registerProcessor(new OTBImageToVectorImageCastProcessor());
-    //registerProcessor(new OTBSimpleViewerProcessor());
-#else
     registerProcessor(new OTBVectorImageWriterProcessor());
     registerProcessor(new OTBImageToVectorImageCastProcessor());
-    registerProcessor(new OTBSimpleViewerProcessor());
-#endif
     registerProcessor(new OTBLabelImageWriterProcessor());
     registerProcessor(new OTBCSVWriterProcessor());
     registerProcessor(new OTBCSVReaderProcessor());
     registerProcessor(new OTBConvolutionImageFilterProcessor());
     registerProcessor(new OTBCannyEdgeDetectionImageFilterProcessor());
+    registerProcessor(new OTBSimpleViewerProcessor());
     registerProcessor(new OTBMeanImageFilterProcessor());
     registerProcessor(new OTBBinaryThresholdFilterProcessor());
     registerProcessor(new OTBBinaryDilateFilterProcessor());
