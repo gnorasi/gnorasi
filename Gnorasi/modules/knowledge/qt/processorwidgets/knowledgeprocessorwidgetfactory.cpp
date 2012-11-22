@@ -37,12 +37,6 @@
 #include "../../processors/retrieveclassificationdataprocessor.h"
 #include "retrieveclassificationdatawidget.h"
 
-#include "../../processors/ontologycreatorprocessor.h"
-#include "ontologycreatorwidget.h"
-
-#include "../../processors/geospatialclassificationprocessor.h"
-#include "geospatialclassificationwidget.h"
-
 #include "voreen/qt/voreenapplicationqt.h"
 #include <QWidget>
 #include <QMainWindow>
@@ -65,12 +59,6 @@ ProcessorWidget* KnowledgeProcessorWidgetFactory::createWidget(Processor* proces
 
     if (dynamic_cast<DummySegmentationProcessor*>(processor))
         return new DummySegmentationWidget(parent, static_cast<DummySegmentationProcessor*>(processor));
-
-    if (dynamic_cast<OntologyCreatorProcessor*>(processor))
-        return new OntologyCreatorWidget(parent, static_cast<OntologyCreatorProcessor*>(processor));
-
-    if(dynamic_cast<GeospatialClassificationProcessor*>(processor))
-        return new GeoSpatialClassificationWidget(parent, static_cast<GeospatialClassificationProcessor*>(processor));
 
     return 0;
 }

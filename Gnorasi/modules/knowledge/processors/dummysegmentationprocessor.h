@@ -38,7 +38,7 @@
 
 namespace voreen {
 
-class VRN_CORE_API DummySegmentationProcessor : public RenderProcessor {
+class DummySegmentationProcessor : public RenderProcessor {
 public:
     DummySegmentationProcessor();
     virtual Processor* create() const;

@@ -31,12 +31,6 @@
 
 #include "voreen/core/voreenmodule.h"
 
-#ifdef WIN32
-    #if !defined(_VARIADIC_MAX)
-      #define _VARIADIC_MAX    10
-    #endif
-#endif
-
 namespace voreen {
 
 class OTBModule : public VoreenModule {
