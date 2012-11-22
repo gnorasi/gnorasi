@@ -529,7 +529,7 @@ void VoreenMainWindow::createMenus() {
     //
     viewMenu_ = menu_->addMenu(tr("&View"));
 
-    modeDevelopmentAction_ = new QAction(QIcon(":/voreenve/icons/development-mode.png"),
+    modeDevelopmentAction_ = new QAction(QIcon(":/icons/development-mode.png"),
                                      tr("&Development Mode"), this);
     modeDevelopmentAction_->setCheckable(true);
     modeDevelopmentAction_->setShortcut(tr("F3"));

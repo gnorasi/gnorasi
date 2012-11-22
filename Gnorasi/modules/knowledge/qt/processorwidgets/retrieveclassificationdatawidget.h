@@ -31,6 +31,7 @@
 
 #include "modules/knowledge/processors/retrieveclassificationdataprocessor.h"
 #include "voreen/qt/widgets/processor/qprocessorwidget.h"
+#include "voreen/qt/voreenmoduleqt.h"
 
 #include <QLabel>
 #include <QString>
@@ -39,7 +40,7 @@
 
 namespace voreen {
 
-class RetrieveClassificationDataWidget : public QProcessorWidget {
+class VRN_QT_API RetrieveClassificationDataWidget : public QProcessorWidget {
     Q_OBJECT
 public:
     RetrieveClassificationDataWidget(QWidget* parent, RetrieveClassificationDataProcessor* retrieveClassificationDataProcessor);
