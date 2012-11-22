@@ -146,17 +146,17 @@ IF(VRN_WINDOWS_DEPLOYMENT)
     
     # WIN32 symbol causes the executable to link against the Windows subsystem (thus not showing console window)
     ADD_EXECUTABLE(gnorasi WIN32
-        ${VRN_VE_SOURCES} ${VRN_VE_HEADERS} ${VRN_VE_HEADERS_NONMOC} 
-        ${VRN_VE_RESOURCES_RCC} 
-        "${VRN_HOME}/resource/icons/winicon.rc") 
+        ${VRN_VE_SOURCES} ${VRN_VE_HEADERS} ${VRN_VE_HEADERS_NONMOC}
+        ${VRN_VE_RESOURCES_RCC})
+        #"${VRN_HOME}/resource/icons/winicon.rc")
 
     # explicitly define application entry point to prevent linker error when using Windows subsystem 
     SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ENTRY:mainCRTStartup") 
 ELSE()
     ADD_EXECUTABLE(gnorasi
-        ${VRN_VE_SOURCES} ${VRN_VE_HEADERS} ${VRN_VE_HEADERS_NONMOC} 
-        ${VRN_VE_RESOURCES_RCC} 
-        "${VRN_HOME}/resource/icons/winicon.rc") 
+        ${VRN_VE_SOURCES} ${VRN_VE_HEADERS} ${VRN_VE_HEADERS_NONMOC}
+        ${VRN_VE_RESOURCES_RCC}
+        "${VRN_HOME}/resource/icons/winicon.rc")
 ENDIF()
 ADD_DEFINITIONS(${VRN_DEFINITIONS} ${VRN_MODULE_DEFINITIONS})
 INCLUDE_DIRECTORIES(${VRN_INCLUDE_DIRECTORIES} ${VRN_MODULE_INCLUDE_DIRECTORIES})

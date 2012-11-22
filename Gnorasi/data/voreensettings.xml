@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<VoreenData version="1">
+    <Properties>
+        <name value="availableGraphicsMemory" />
+        <Property>
+            <value value="845.90625" />
+        </Property>
+        <name value="cacheLimit" />
+        <Property>
+            <value value="1024" />
+        </Property>
+        <name value="deleteCache" />
+        <Property />
+        <name value="refreshAvailableGraphicsMemory" />
+        <Property />
+        <name value="resetApplicationSettings" />
+        <Property />
+        <name value="showSplashScreen" />
+        <Property>
+            <value value="true" />
+        </Property>
+        <name value="testDataPath" />
+        <Property>
+            <noPathSet value="true" />
+            <value value="" />
+        </Property>
+        <name value="useCaching" />
+        <Property>
+            <value value="true" />
+        </Property>
+    </Properties>
+</VoreenData>

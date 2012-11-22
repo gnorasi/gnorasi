@@ -37,7 +37,7 @@
 
 namespace voreen {
 
-class RetrieveClassificationDataProcessor : public Processor {
+class VRN_CORE_API RetrieveClassificationDataProcessor : public Processor {
 public:
     RetrieveClassificationDataProcessor();
     virtual ~RetrieveClassificationDataProcessor();

@@ -31,6 +31,8 @@
 
 #include "modules/knowledge/processors/classifierwsprocessor.h"
 #include "voreen/qt/widgets/processor/qprocessorwidget.h"
+#include "voreen/core/voreencoreapi.h"
+#include "voreen/qt/voreenmoduleqt.h"
 
 #include <QLabel>
 #include <QString>
@@ -39,7 +41,7 @@
 
 namespace voreen {
 
-class ClassifierWSWidget : public QProcessorWidget {
+class VRN_QT_API ClassifierWSWidget : public QProcessorWidget {
     Q_OBJECT
 public:
     ClassifierWSWidget(QWidget* parent, ClassifierWSProcessor* classifierWSProcessor);

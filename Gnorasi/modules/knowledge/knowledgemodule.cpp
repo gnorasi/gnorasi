@@ -31,6 +31,9 @@
 #include "processors/classifierwsprocessor.h"
 #include "processors/retrieveclassificationdataprocessor.h"
 
+#include "processors/ontologycreatorprocessor.h"
+#include "processors/geospatialclassificationprocessor.h"
+
 namespace voreen {
 
 KnowledgeModule::KnowledgeModule(const std::string& moduleName) 
@@ -43,6 +46,9 @@ KnowledgeModule::KnowledgeModule(const std::string& moduleName)
     registerProcessor(new DummySegmentationProcessor());
     registerProcessor(new ClassifierWSProcessor());
     registerProcessor(new RetrieveClassificationDataProcessor());
+
+    registerProcessor(new OntologyCreatorProcessor());
+    registerProcessor(new GeospatialClassificationProcessor());
 
     // adds the module source glsl dir to the shader search path
     //addShaderPath(getModulesPath("knowledge/processors/glsl"));

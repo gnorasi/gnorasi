@@ -1,0 +1,10 @@
+within
+intersects
+overlaps
+crosses
+coveredBy
+covers
+contains
+equals
+disjoint
+touches
