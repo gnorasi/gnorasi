@@ -23,8 +23,15 @@ public:
     //! append the data from the OntologyClassItem
     void appendData(OntologyClassItem* );
 
+    //!
     //! set the namespaces edited by the user
-    void setNamespaces(const QString &nsXmlns, const QString &nsXmlBase);
+    //!
+    //! vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+    //!
+    //! Take notice that this function must be called prior to the appendData() function..
+    //!
+    //! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    void setupNamespaces(const QString &nsXmlns, const QString &nsXmlBase);
 
     //! return the dom document data as text
     QString docToText();
@@ -34,6 +41,13 @@ public:
 
 private:
 
+    //!
+    QString m_namespaceXmlns;
+
+    //!
+    QString m_namespaceXmlBase;
+
+    //!
     int helperCounter;
 
     QDomDocument doc;
