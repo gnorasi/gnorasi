@@ -16,7 +16,7 @@ using namespace voreen;
 RuleItemView::RuleItemView(QWidget *parent) :
     QTableView(parent)
 {
-//    verticalHeader()->setVisible(true);
+
 }
 
 //

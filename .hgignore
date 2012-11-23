@@ -1,0 +1,65 @@
+# use glob syntax.
+syntax: glob
+
+============================================
+
+#bin dir
+Gnorasi/bin
+
+============================================
+
+#Build dir
+Gnorasi-build
+
+============================================
+
+# qt related files
+.DS_Store
+*.obj
+*.moc
+Makefile*
+*.so.*
+*.so
+*.so.debug
+*.o
+.cd.rc
+*.swp
+moc_*.cpp
+*.Debug
+*.Release
+*.pdb
+*.idb
+*.ib_pdb_index
+.qmake.cache
+
+============================================
+
+#QtCreator project files
+*.pro.user
+*.pro.user*
+
+============================================
+
+# Failed patch
+*.orig
+*.rej
+moc_*.cxx
+moc_*.cpp
+
+============================================
+
+#external directories
+Gnorasi/ext/boost
+Gnorasi/ext/glew
+Gnorasi/ext/glut
+Gnorasi/ext/osgeo4w
+
+============================================
+
+#otb related directories
+Gnorasi/modules/otb/ext
+
+============================================
+
+#Other
+CMakeLists.txt.user

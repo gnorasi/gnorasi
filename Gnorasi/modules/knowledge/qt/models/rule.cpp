@@ -1,7 +1,6 @@
 #include "rule.h"
 #include "ruleitem.h"
 #include "ontologyclassitem.h"
-#include "persistentruleitem.h"
 
 using namespace voreen;
 
