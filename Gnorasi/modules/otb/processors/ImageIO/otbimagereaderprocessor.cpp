@@ -121,6 +121,7 @@ void OTBImageReaderProcessor::loadImage() {
     /*texture_ = TexMgr.load(filename, tgt::Texture::LINEAR,
         false, false, true, false);*/
     reader->SetFileName(filename.c_str());
+    reader->Update();
     reader->GenerateOutputInformation();
     
     if (!hasImage) {
