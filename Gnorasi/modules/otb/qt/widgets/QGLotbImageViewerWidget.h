@@ -53,7 +53,13 @@ private:
 
 //    ImageType *m_pImageType;
 
-    QGLImageWidget *m_pQGLImageWidget;
+    QGLImageWidget *m_pQGLImageWidgetMain;
+
+    QGLImageWidget *m_pQGLImageWidgetQuick;
+
+    QGLImageWidget *m_pQGLImageWidgetZoom;
+
+    QWidget *m_pHistogramPlaceHolderWidget;
 };
 
 }

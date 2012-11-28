@@ -11,6 +11,8 @@
 #include <QFileDialog>
 #include <QDebug>
 
+#include <QSplitter>
+
 using namespace otb;
 
 typedef otb::ImageFileReader<ImageType>   ReaderType;
@@ -27,7 +29,7 @@ QGLOtbImageViewerWidget::QGLOtbImageViewerWidget(QWidget *parent, OTBImageViewer
     tgtAssert(otbImageViewerProcessor, "No QGLOtbImageViewerWidget processor");
 
     setWindowTitle(QString::fromStdString(otbImageViewerProcessor->getName()));
-    resize(400, 400);
+    resize(600, 400);
     setPosition(QApplication::desktop()->width()/2 - 200,QApplication::desktop()->height()/2 - 200);
 }
 
@@ -35,11 +37,35 @@ QGLOtbImageViewerWidget::QGLOtbImageViewerWidget(QWidget *parent, OTBImageViewer
 void QGLOtbImageViewerWidget::initialize(){
     QProcessorWidget::initialize();
 
-    m_pQGLImageWidget = new QGLImageWidget(this);
+    m_pQGLImageWidgetMain = new QGLImageWidget(this);
+    m_pQGLImageWidgetQuick = new QGLImageWidget(this);
+    m_pQGLImageWidgetZoom = new QGLImageWidget(this);
+
+    m_pHistogramPlaceHolderWidget = new QWidget(this);
+    m_pHistogramPlaceHolderWidget->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+
+    QWidget *pWidgetLeft = new QWidget(this);
+
+    QSplitter *horizontalSplitterLeft = new QSplitter(Qt::Vertical,this);
+    horizontalSplitterLeft->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
+
+    horizontalSplitterLeft->addWidget(m_pQGLImageWidgetQuick);
+    horizontalSplitterLeft->addWidget(m_pQGLImageWidgetZoom);
+
+    QVBoxLayout *vBoxLayoutLeft = new QVBoxLayout();
+    vBoxLayoutLeft->addWidget(horizontalSplitterLeft);
+    vBoxLayoutLeft->addWidget(m_pHistogramPlaceHolderWidget);
+
+    pWidgetLeft->setLayout(vBoxLayoutLeft);
+
+    QSplitter *horizontalSplitter = new QSplitter(Qt::Horizontal,this);
+
+    horizontalSplitter->addWidget(pWidgetLeft);
+    horizontalSplitter->addWidget(m_pQGLImageWidgetMain);
 
     QVBoxLayout *vboxlayout = new QVBoxLayout();
 
-    vboxlayout->addWidget(m_pQGLImageWidget);
+    vboxlayout->addWidget(horizontalSplitter);
 
     setLayout(vboxlayout);
 
@@ -79,8 +105,10 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
             RegionType region = image->GetLargestPossibleRegion();
 
 
-            m_pQGLImageWidget->SetIsotropicZoom(2);
-            m_pQGLImageWidget->ReadBuffer(image, region);
+            m_pQGLImageWidgetMain->SetIsotropicZoom(1);
+            m_pQGLImageWidgetQuick->SetIsotropicZoom(0.5);
+            m_pQGLImageWidgetMain->ReadBuffer(image, region);
+            m_pQGLImageWidgetQuick->ReadBuffer(image,region);
 
             show();
         }else{
@@ -91,8 +119,9 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
             RegionType region = imageType->GetLargestPossibleRegion();
 
 
-            m_pQGLImageWidget->SetIsotropicZoom(1);
-            m_pQGLImageWidget->ReadBuffer(imageType,region);
+            m_pQGLImageWidgetMain->SetIsotropicZoom(1);
+            m_pQGLImageWidgetQuick->SetIsotropicZoom(0.5);
+            m_pQGLImageWidgetMain->ReadBuffer(imageType,region);
         }
     }
 }
