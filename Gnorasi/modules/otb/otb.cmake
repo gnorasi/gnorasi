@@ -359,15 +359,17 @@ SET(MOD_QT_MODULECLASS OtbModuleQt)
 ################################################################################
 SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/otbprocessorwidgetfactory.cpp
-    ${MOD_DIR}/qt/widgets/otbQGLImageWidget.cxx
     ${MOD_DIR}/qt/widgets/QGLotbImageViewerWidget.cpp
+    ${MOD_DIR}/qt/widgets/qotbImageWidget.cpp
+    ${MOD_DIR}/qt/utils/qglotbimagemanager.cpp
 )
 ################################################################################
 # Qt headers
 ################################################################################
 SET(MOD_QT_HEADERS
-    ${MOD_DIR}/qt/widgets/otbQGLImageWidget.h
     ${MOD_DIR}/qt/widgets/QGLotbImageViewerWidget.h
+    ${MOD_DIR}/qt/widgets/qotbImageWidget.h
+    ${MOD_DIR}/qt/utils/qglotbimagemanager.h
 )
 
 

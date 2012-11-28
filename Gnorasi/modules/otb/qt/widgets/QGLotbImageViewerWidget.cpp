@@ -2,11 +2,11 @@
 
 #include "voreen/qt/voreenapplicationqt.h"
 
-#include "otbQGLImageWidget.h"
-
 #include "otbImageFileReader.h"
 
 #include "../../ports/otbimageport.h"
+
+#include "../utils/qglotbimagemanager.h"
 
 #include <QFileDialog>
 #include <QDebug>
@@ -37,9 +37,11 @@ QGLOtbImageViewerWidget::QGLOtbImageViewerWidget(QWidget *parent, OTBImageViewer
 void QGLOtbImageViewerWidget::initialize(){
     QProcessorWidget::initialize();
 
-    m_pQGLImageWidgetMain = new QGLImageWidget(this);
-    m_pQGLImageWidgetQuick = new QGLImageWidget(this);
-    m_pQGLImageWidgetZoom = new QGLImageWidget(this);
+    QGLotbImageManager *manager = QGLotbImageManager::instance();
+
+    m_pQGLImageWidgetScroll = manager->scrollWidget();
+    m_pQGLImageWidgetFull = manager->fullWidget();
+    m_pQGLImageWidgetZoom = manager->zoomWidget();
 
     m_pHistogramPlaceHolderWidget = new QWidget(this);
     m_pHistogramPlaceHolderWidget->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
@@ -49,7 +51,7 @@ void QGLOtbImageViewerWidget::initialize(){
     QSplitter *horizontalSplitterLeft = new QSplitter(Qt::Vertical,this);
     horizontalSplitterLeft->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
 
-    horizontalSplitterLeft->addWidget(m_pQGLImageWidgetQuick);
+    horizontalSplitterLeft->addWidget(m_pQGLImageWidgetFull);
     horizontalSplitterLeft->addWidget(m_pQGLImageWidgetZoom);
 
     QVBoxLayout *vBoxLayoutLeft = new QVBoxLayout();
@@ -61,7 +63,7 @@ void QGLOtbImageViewerWidget::initialize(){
     QSplitter *horizontalSplitter = new QSplitter(Qt::Horizontal,this);
 
     horizontalSplitter->addWidget(pWidgetLeft);
-    horizontalSplitter->addWidget(m_pQGLImageWidgetMain);
+    horizontalSplitter->addWidget(m_pQGLImageWidgetScroll);
 
     QVBoxLayout *vboxlayout = new QVBoxLayout();
 
@@ -105,10 +107,10 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
             RegionType region = image->GetLargestPossibleRegion();
 
 
-            m_pQGLImageWidgetMain->SetIsotropicZoom(1);
-            m_pQGLImageWidgetQuick->SetIsotropicZoom(0.5);
-            m_pQGLImageWidgetMain->ReadBuffer(image, region);
-            m_pQGLImageWidgetQuick->ReadBuffer(image,region);
+            m_pQGLImageWidgetScroll->setIsotropicZoom(1);
+            m_pQGLImageWidgetFull->setIsotropicZoom(0.5);
+            m_pQGLImageWidgetScroll->ReadBuffer(image, region);
+            m_pQGLImageWidgetFull->ReadBuffer(image,region);
 
             show();
         }else{
@@ -119,9 +121,9 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
             RegionType region = imageType->GetLargestPossibleRegion();
 
 
-            m_pQGLImageWidgetMain->SetIsotropicZoom(1);
-            m_pQGLImageWidgetQuick->SetIsotropicZoom(0.5);
-            m_pQGLImageWidgetMain->ReadBuffer(imageType,region);
+            m_pQGLImageWidgetScroll->setIsotropicZoom(1);
+            m_pQGLImageWidgetFull->setIsotropicZoom(0.5);
+            m_pQGLImageWidgetScroll->ReadBuffer(imageType,region);
         }
     }
 }
@@ -139,5 +141,10 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
 
 //    QWidget::mouseMoveEvent(event);
 //}
+
+
+QGLOtbImageViewerWidget::~QGLOtbImageViewerWidget(){
+    QGLotbImageManager::deleteInstance();
+}
 
 } //namespace voreen

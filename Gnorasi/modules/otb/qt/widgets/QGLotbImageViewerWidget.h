@@ -7,7 +7,7 @@
 #include "voreen/qt/widgets/processor/qprocessorwidget.h"
 #include "../../ports/otbimageport.h"
 
-#include "otbQGLImageWidget.h"
+#include "qotbImageWidget.h"
 
 #include <QLabel>
 #include <QString>
@@ -27,7 +27,7 @@ class VRN_QT_API QGLOtbImageViewerWidget : public QProcessorWidget
 public:
     QGLOtbImageViewerWidget(QWidget*, OTBImageViewerProcessor* );
 
-    virtual ~QGLOtbImageViewerWidget() { }
+    virtual ~QGLOtbImageViewerWidget();
 
     void initialize();
 
@@ -53,11 +53,11 @@ private:
 
 //    ImageType *m_pImageType;
 
-    QGLImageWidget *m_pQGLImageWidgetMain;
+    QOtbImageWidget *m_pQGLImageWidgetScroll;
 
-    QGLImageWidget *m_pQGLImageWidgetQuick;
+    QOtbImageWidget *m_pQGLImageWidgetFull;
 
-    QGLImageWidget *m_pQGLImageWidgetZoom;
+    QOtbImageWidget *m_pQGLImageWidgetZoom;
 
     QWidget *m_pHistogramPlaceHolderWidget;
 };
