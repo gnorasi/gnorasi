@@ -7,6 +7,7 @@ using namespace otb;
 QOtbImageWidget::QOtbImageWidget(QWidget *parent) :
     m_IsotropicZoom(1.0), m_OpenGlBuffer(NULL), m_OpenGlBufferedRegion(), m_Extent(), m_SubsamplingRate(1), QGLWidget(parent)
 {
+    m_GlComponents = GlComponentListType::New();
 }
 
 //!

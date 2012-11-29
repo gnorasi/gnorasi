@@ -39,6 +39,7 @@ void QGLOtbImageViewerWidget::initialize(){
 
     QGLotbImageManager *manager = QGLotbImageManager::instance();
 
+    //!
     m_pQGLImageWidgetScroll = manager->scrollWidget();
     m_pQGLImageWidgetFull = manager->fullWidget();
     m_pQGLImageWidgetZoom = manager->zoomWidget();
