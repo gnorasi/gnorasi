@@ -358,23 +358,25 @@ SET(MOD_QT_MODULECLASS OtbModuleQt)
 # Qt sources
 ################################################################################
 SET(MOD_QT_SOURCES
-    ${MOD_DIR}/qt/otbprocessorwidgetfactory.cpp
-    ${MOD_DIR}/qt/widgets/QGLotbImageViewerWidget.cpp
+    ${MOD_DIR}/qt/qotbprocessorwidgetfactory.cpp
+    ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.cpp
     ${MOD_DIR}/qt/widgets/qotbImageWidget.cpp
-    ${MOD_DIR}/qt/utils/qglotbimagemanager.cpp
+    ${MOD_DIR}/qt/utils/qotbimagemanager.cpp
+    ${MOD_DIR}/qt/widgets/qotbimageviewer.cpp
 )
 ################################################################################
 # Qt headers
 ################################################################################
 SET(MOD_QT_HEADERS
-    ${MOD_DIR}/qt/widgets/QGLotbImageViewerWidget.h
+    ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.h
     ${MOD_DIR}/qt/widgets/qotbImageWidget.h
-    ${MOD_DIR}/qt/utils/qglotbimagemanager.h
+    ${MOD_DIR}/qt/utils/qotbimagemanager.h
+    ${MOD_DIR}/qt/widgets/qotbimageviewer.h
 )
 
 
 SET(MOD_QT_HEADERS_NONMOC
-    ${MOD_DIR}/qt/otbprocessorwidgetfactory.h
+    ${MOD_DIR}/qt/qotbprocessorwidgetfactory.h
 )
 
 SET(QT_USE_QTOPENGL TRUE)

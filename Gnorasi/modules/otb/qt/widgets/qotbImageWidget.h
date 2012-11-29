@@ -1,5 +1,5 @@
-#ifndef _QOTBIMAGEWIDGET_H_
-#define _QOTBIMAGEWIDGET_H_
+#ifndef QOTBIMAGEWIDGET_H
+#define QOTBIMAGEWIDGET_H
 
 #include <QGLWidget>
 
@@ -8,22 +8,27 @@
 #include "itkFixedArray.h"
 #include "otbGlComponent.h"
 #include "otbObjectList.h"
+#include "otbImageWidgetController.h"
+
+using namespace otb;
 
 const unsigned int Dimension = 2;
-typedef itk::RGBAPixel<unsigned char>     PixelType;
-typedef otb::Image<PixelType, Dimension>  ImageType;
-typedef ImageType::RegionType             RegionType;
-typedef ImageType::IndexType              IndexType;
-typedef ImageType::SizeType               SizeType;
+
+typedef itk::RGBAPixel<unsigned char>       PixelType;
+typedef otb::Image<PixelType, Dimension>    ImageType;
+typedef ImageType::RegionType               RegionType;
+typedef ImageType::IndexType                IndexType;
+typedef ImageType::SizeType                 SizeType;
 
 /** GlComponent typedef */
-typedef otb::GlComponent                    GlComponentType;
-typedef otb::ObjectList<GlComponentType>    GlComponentListType;
+typedef GlComponent                    GlComponentType;
+typedef ObjectList<GlComponentType>    GlComponentListType;
+
+/** Controller typedef */
+typedef ImageWidgetController          ControllerType;
 
 
-namespace otb
-{
-/** \class ImageWidget
+/** \class QOtbImageWidget
 *   \brief This class renders an RGB bytes image buffer to the screen.
 *   Rendered data can be loaded using the ReadBuffer() method.
 *   The SetIsotropicZoom() method allows to tune the zooming (zooming
@@ -33,13 +38,13 @@ namespace otb
 *  \ingroup Visualization
  */
 
-class QOtbImageWidget : public QGLWidget
+class QOTBImageWidget : public QGLWidget
 {
     Q_OBJECT
 public:
-    explicit QOtbImageWidget(QWidget *parent = 0);
+    explicit QOTBImageWidget(QWidget *parent = 0);
 
-    virtual ~QOtbImageWidget();
+    virtual ~QOTBImageWidget();
 
     /** Reads the OpenGl buffer from an image pointer
      *  \param image The image pointer,
@@ -54,22 +59,22 @@ public:
     /** Clear the OpenGl buffer */
     void ClearBuffer();
 
-    //!
+    //! setter getter, self explanatory
     double isotropicZoom() const { return m_IsotropicZoom; }
     void setIsotropicZoom(double z) { m_IsotropicZoom = z; }
 
-    //!
+    //! setter getter, self explanatory
     unsigned int subSamplingRate() const { return m_SubsamplingRate; }
     void setSubSamplingRate(unsigned int ss) { m_SubsamplingRate = ss; }
 
-    //!
+    //! setter getter, self explanatory
     unsigned char * openGLBuffer() { return m_OpenGlBuffer;}
 
-    //!
+    //! setter getter, self explanatory
     RegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
     void setOpenGLBufferedRegion(RegionType r) { m_OpenGlBufferedRegion = r; }
 
-    //!
+    //! setter getter, self explanatory
     RegionType extent() { return m_Extent; }
 
     /** Compute the linear buffer index according to the 2D region and
@@ -116,15 +121,19 @@ public:
         return m_GlComponents->Size();
     }
 
+    //! set / get the MVC Controller
+    ControllerType* controller() const { return m_pController; }
+    void setController(ControllerType *control) { m_pController = control; }
+
 protected:
 
-    //!
+    //! reimplemented method declared in the QGLWidget class
     void initializeGL();
 
-    //!
+    //! reimplemented method declared in the QGLWidget class
     void resizeGL(int w, int h);
 
-    //!
+    //! reimplemented method declared in the QGLWidget class
     void paintGL();
 
 
@@ -151,12 +160,13 @@ private:
      * this indicates the subsampling rate */
     unsigned int m_SubsamplingRate;
 
+    /** Controller */
+    ControllerType::Pointer m_pController;
 
     /** Addtionnal Gl components */
     GlComponentListType::Pointer m_GlComponents;
 
 };
 
-} // end of namespace otb
 
-#endif // _QOTBIMAGEWIDGET_H_
+#endif // QOTBIMAGEWIDGET_H
