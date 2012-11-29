@@ -6,6 +6,7 @@
 #include "otbImageLayer.h"
 #include "otbImageLayerRenderingModel.h"
 #include "otbRegionGlComponent.h"
+#include "otbListenerBase.h"
 
 
 #include "../widgets/qotbImageWidget.h"
@@ -29,13 +30,18 @@ typedef RegionGlComponent                       RegionGlComponentType;
  *  used as an interface - console item , accessible from everywhere in
  *  the project.
  *
+ *  This class has widgets as member variables that will be used in the main
+ *  interface of the app.
+ *
  */
 
-class QGLotbImageManager : public QObject
+class QGLotbImageManager : public QObject, public ListenerBase
 {
 public:
+    //!
     static QGLotbImageManager* instance();
 
+    //!
     static void deleteInstance();
 
     /**
@@ -49,14 +55,17 @@ public:
      */
     void update();
 
-
+    //! self explanatory
     QOtbImageWidget* scrollWidget() { return m_pScrollWidget; }
 
-
+    //! self explanatory
     QOtbImageWidget* zoomWidget() { return m_pZoomWidget; }
 
-
+    //! self explanatory
     QOtbImageWidget* fullWidget() { return m_pFullWidget; }
+
+    /** Handle notification from the viewer */
+    virtual void Notify();
 
 protected:
     /** Update Scroll widget */
@@ -73,6 +82,7 @@ private:
 
     ~QGLotbImageManager();
 
+    //!
     static QGLotbImageManager* m_pInstance;
 
     /** The three classical widgets */
@@ -81,8 +91,8 @@ private:
     QOtbImageWidget* m_pZoomWidget;
 
     /** Viewed region gl components */
-    RegionGlComponentType* m_pExtractRegionGlComponent;
-    RegionGlComponentType* m_pScaledExtractRegionGlComponent;
+    RegionGlComponentType::Pointer m_pExtractRegionGlComponent;
+    RegionGlComponentType::Pointer m_pScaledExtractRegionGlComponent;
 
     /** Model pointer */
     RenderingModelType *m_pModel;

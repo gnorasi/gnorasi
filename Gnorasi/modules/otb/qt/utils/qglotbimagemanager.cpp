@@ -1,5 +1,7 @@
 #include "qglotbimagemanager.h"
 
+//#include "otbImageView.h"
+
 using namespace otb;
 
 QGLotbImageManager* QGLotbImageManager::m_pInstance = NULL;
@@ -9,6 +11,14 @@ QGLotbImageManager::QGLotbImageManager()
     m_pScrollWidget = new QOtbImageWidget();
     m_pFullWidget = new QOtbImageWidget();
     m_pZoomWidget = new QOtbImageWidget();
+
+    // Extract regions gl components
+    m_pExtractRegionGlComponent = RegionGlComponentType::New();
+    m_pScaledExtractRegionGlComponent = RegionGlComponentType::New();
+    m_pExtractRegionGlComponent->SetVisible(false);
+    m_pScaledExtractRegionGlComponent->SetVisible(false);
+    m_pScrollWidget->AddGlComponent(m_pExtractRegionGlComponent);
+    m_pFullWidget->AddGlComponent(m_pScaledExtractRegionGlComponent);
 }
 
 QGLotbImageManager* QGLotbImageManager::instance(){
@@ -29,17 +39,24 @@ void QGLotbImageManager::deleteInstance(){
 
 
 void
+QGLotbImageManager::Notify()
+{
+  this->update();
+}
+
+
+void
 QGLotbImageManager::setModel(RenderingModelType * model)
 {
   // Unregister from previous model if nay
-//  if (m_pModel->IsNotNull())
-//  {
-//    m_pModel->UnRegisterListener(this);
-//  }
+  if (m_pModel)
+  {
+    m_pModel->UnRegisterListener(this);
+  }
 
   // Set and register with new model
   m_pModel = model;
-//  m_pModel->RegisterListener(this);
+  m_pModel->RegisterListener(this);
 }
 
 
@@ -195,4 +212,11 @@ QGLotbImageManager::~QGLotbImageManager(){
         delete m_pScrollWidget;
     if(m_pZoomWidget)
         delete m_pZoomWidget;
+
+    //
+    //
+    // TODO
+    // check that the regions pointers are also deleted
+    // could not delete them beacause the destructor is protected
+    //
 }

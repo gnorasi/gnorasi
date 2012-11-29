@@ -6,6 +6,8 @@
 #include "otbImage.h"
 #include "itkRGBAPixel.h"
 #include "itkFixedArray.h"
+#include "otbGlComponent.h"
+#include "otbObjectList.h"
 
 const unsigned int Dimension = 2;
 typedef itk::RGBAPixel<unsigned char>     PixelType;
@@ -13,6 +15,10 @@ typedef otb::Image<PixelType, Dimension>  ImageType;
 typedef ImageType::RegionType             RegionType;
 typedef ImageType::IndexType              IndexType;
 typedef ImageType::SizeType               SizeType;
+
+/** GlComponent typedef */
+typedef otb::GlComponent                    GlComponentType;
+typedef otb::ObjectList<GlComponentType>    GlComponentListType;
 
 
 namespace otb
@@ -78,6 +84,38 @@ public:
               index[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
     }
 
+
+    /** Add a GlComponent */
+    unsigned int AddGlComponent(GlComponent * glComponent)
+    {
+        m_GlComponents->PushBack(glComponent);
+        return m_GlComponents->Size() - 1;
+    }
+
+    /** Get the nth GlComponent */
+    GlComponent * GetNthGlComponent(unsigned int index)
+    {
+        return m_GlComponents->GetNthElement(index);
+    }
+
+    /** Remove a GlComponent */
+    void RemoveGlComponent(unsigned int index)
+    {
+        m_GlComponents->Erase(index);
+    }
+
+    /** Clear the GlComponent list */
+    void ClearGlComponents()
+    {
+        m_GlComponents->Clear();
+    }
+
+    /** Get the number of GlComponent */
+    unsigned int GetNumberOfGlComponents()
+    {
+        return m_GlComponents->Size();
+    }
+
 protected:
 
     //!
@@ -112,6 +150,10 @@ private:
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */
     unsigned int m_SubsamplingRate;
+
+
+    /** Addtionnal Gl components */
+    GlComponentListType::Pointer m_GlComponents;
 
 };
 
