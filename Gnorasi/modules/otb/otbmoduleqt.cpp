@@ -28,7 +28,7 @@
 
 #include "otbmoduleqt.h"
 
-#include "qt/otbprocessorwidgetfactory.h"
+#include "qt/qotbprocessorwidgetfactory.h"
 
 namespace voreen {
 
@@ -39,7 +39,7 @@ OtbModuleQt::OtbModuleQt(const std::string& moduleName)
 {
     setName("Otb (Qt)");
 
-    registerProcessorWidgetFactory(new OtbProcessorWidgetFactory());
+    registerProcessorWidgetFactory(new QOTBProcessorWidgetFactory());
 }
 
 } // namespace

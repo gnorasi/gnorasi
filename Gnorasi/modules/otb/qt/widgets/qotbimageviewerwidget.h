@@ -7,11 +7,13 @@
 #include "voreen/qt/widgets/processor/qprocessorwidget.h"
 #include "../../ports/otbimageport.h"
 
-#include "qotbImageWidget.h"
+#include "qotbimagewidget.h"
 
 #include <QLabel>
 #include <QString>
 #include <QtGui>
+
+class QOTBImageViewer;
 
 
 using namespace otb;
@@ -49,17 +51,7 @@ private slots:
 private:
     static const std::string loggerCat_;
 
-//    QString constructMetadataInfo();
-
-//    ImageType *m_pImageType;
-
-    QOtbImageWidget *m_pQGLImageWidgetScroll;
-
-    QOtbImageWidget *m_pQGLImageWidgetFull;
-
-    QOtbImageWidget *m_pQGLImageWidgetZoom;
-
-    QWidget *m_pHistogramPlaceHolderWidget;
+    QOTBImageViewer *m_pQOTBImageViewer;
 };
 
 }
