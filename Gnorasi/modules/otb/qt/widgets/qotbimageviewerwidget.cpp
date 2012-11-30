@@ -6,13 +6,12 @@
 
 #include "../../ports/otbimageport.h"
 
-#include "qotbimageviewer.h"
-#include "../utils/qotbimagemanager.h"
+#include "../viewer/itiotbimagemanager.h"
 
 using namespace otb;
 
 
-typedef ImageType::Pointer ImagePointer;
+//typedef ImageType::Pointer ImagePointer;
 
 namespace voreen {
 
@@ -34,9 +33,9 @@ void QGLOtbImageViewerWidget::initialize(){
 
     QVBoxLayout *layout = new QVBoxLayout(this);
 
-    m_pQOTBImageViewer = new QOTBImageViewer(this);
+//    m_pQOTBImageViewer = new QOTBImageViewer(this);
 
-    layout->addWidget(m_pQOTBImageViewer);
+//    layout->addWidget(m_pQOTBImageViewer);
 
     this->setLayout(layout);
 
@@ -65,23 +64,23 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
 
         QString filePath = QString::fromStdString(otbivProcessor->getFilePath());
 
-        QOTBImageManager *manager = QOTBImageManager::instance();
+//        QOTBImageManager *manager = QOTBImageManager::instance();
 
         if(!filePath.isEmpty()){
 
-            manager->load(filePath);
+//            manager->load(filePath);
 
-            m_pQOTBImageViewer->update();
+//            m_pQOTBImageViewer->update();
 
             show();
         }else{
-            ImageType *imageType = (ImageType*)pP->getData();
-            if(!imageType)
-                return;
+//            ImageType *imageType = (ImageType*)pP->getData();
+//            if(!imageType)
+//                return;
 
-            manager->load(imageType);
+//            manager->load(imageType);
 
-            m_pQOTBImageViewer->update();
+//            m_pQOTBImageViewer->update();
 
             show();
         }
@@ -104,7 +103,7 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
 
 
 QGLOtbImageViewerWidget::~QGLOtbImageViewerWidget(){
-    QOTBImageManager::deleteInstance();
+//    QOTBImageManager::deleteInstance();
 }
 
 } //namespace voreen

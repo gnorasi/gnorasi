@@ -360,18 +360,22 @@ SET(MOD_QT_MODULECLASS OtbModuleQt)
 SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/qotbprocessorwidgetfactory.cpp
     ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.cpp
-    ${MOD_DIR}/qt/widgets/qotbImageWidget.cpp
-    ${MOD_DIR}/qt/utils/qotbimagemanager.cpp
-    ${MOD_DIR}/qt/widgets/qotbimageviewer.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimagemanager.cpp
+    ${MOD_DIR}/qt/viewer/itiotbrgbaimagewidget.cpp
+    ${MOD_DIR}/qt/viewer/itiotbrgbaimageviewer.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerfactory.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimageviewer.cpp
 )
 ################################################################################
 # Qt headers
 ################################################################################
 SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.h
-    ${MOD_DIR}/qt/widgets/qotbImageWidget.h
-    ${MOD_DIR}/qt/utils/qotbimagemanager.h
-    ${MOD_DIR}/qt/widgets/qotbimageviewer.h
+    ${MOD_DIR}/qt/viewer/itiotbimagemanager.h/
+    ${MOD_DIR}/qt/viewer/itiotbrgbaimagewidget.h
+    ${MOD_DIR}/qt/viewer/itiotbrgbaimageviewer.h
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerfactory.h
+    ${MOD_DIR}/qt/viewer/itiotbimageviewer.h
 )
 
 

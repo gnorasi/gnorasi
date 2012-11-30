@@ -1,16 +1,17 @@
-#include "qotbimagewidget.h"
+#include "itiotbrgbaimagewidget.h"
 #include "itkImageRegionConstIteratorWithIndex.h"
 
 using namespace otb;
+using namespace itiviewer;
 
-QOTBImageWidget::QOTBImageWidget(QWidget *parent) :
-    m_IsotropicZoom(1.0), m_pController(), m_OpenGlBuffer(NULL), m_OpenGlBufferedRegion(), m_Extent(), m_SubsamplingRate(1), QGLWidget(parent)
+ItiOtbRgbaImageWidget::ItiOtbRgbaImageWidget(QWidget *parent) :
+    m_IsotropicZoom(1.0), m_OpenGlBuffer(NULL), m_OpenGlBufferedRegion(), m_Extent(), m_SubsamplingRate(1), QGLWidget(parent)
 {
-    m_GlComponents = GlComponentListType::New();
+
 }
 
 //!
-void QOTBImageWidget::ReadBuffer(const ImageType *image, const RegionType &region){
+void ItiOtbRgbaImageWidget::ReadBuffer(const RGBAImageType *image, const RGBARegionType &region){
     // Before doing anything, check if region is inside the buffered
     // region of image
     if (!image->GetBufferedRegion().IsInside(region))
@@ -24,7 +25,7 @@ void QOTBImageWidget::ReadBuffer(const ImageType *image, const RegionType &regio
     m_OpenGlBuffer = new unsigned char[3 * region.GetNumberOfPixels()];
 
     // Declare the iterator
-    itk::ImageRegionConstIteratorWithIndex<ImageType> it(image, region);
+    itk::ImageRegionConstIteratorWithIndex<RGBAImageType> it(image, region);
 
     // Go to begin
     it.GoToBegin();
@@ -49,7 +50,7 @@ void QOTBImageWidget::ReadBuffer(const ImageType *image, const RegionType &regio
 }
 
 //!
-void QOTBImageWidget::ClearBuffer(){
+void ItiOtbRgbaImageWidget::ClearBuffer(){
     // Delete previous buffer if needed
     if (m_OpenGlBuffer != NULL)
     {
@@ -57,9 +58,9 @@ void QOTBImageWidget::ClearBuffer(){
         m_OpenGlBuffer = NULL;
     }
 
-    RegionType                     region;
-    IndexType index;
-    SizeType  size;
+    RGBARegionType region;
+    RGBAIndexType index;
+    RGBASizeType  size;
 
     size.Fill(0);
     index.Fill(0);
@@ -71,20 +72,20 @@ void QOTBImageWidget::ClearBuffer(){
 }
 
 
-void QOTBImageWidget::initializeGL()
+void ItiOtbRgbaImageWidget::initializeGL()
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
 }
 
 
-void QOTBImageWidget::resizeGL(int w, int h)
+void ItiOtbRgbaImageWidget::resizeGL(int w, int h)
 {
-    SizeType size;
+    RGBASizeType size;
     size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[0]));
     size [1] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[1]));
 
-    RegionType::IndexType index;
+    RGBARegionType::IndexType index;
     index[0] = (w - static_cast<int>(size[0])) / 2;
     index[1] = (h - static_cast<int>(size[1])) / 2;
 
@@ -105,7 +106,7 @@ void QOTBImageWidget::resizeGL(int w, int h)
 
 }
 
-void QOTBImageWidget::paintGL()
+void ItiOtbRgbaImageWidget::paintGL()
 {
     unsigned int nb_displayed_rows;
     unsigned int nb_displayed_cols;
@@ -135,7 +136,7 @@ void QOTBImageWidget::paintGL()
     }
 
 
-    IndexType startPosition = m_Extent.GetIndex();
+    RGBAIndexType startPosition = m_Extent.GetIndex();
     startPosition[0] = startPosition[0] < 0 ? 0 : startPosition[0];
     startPosition[1] = startPosition[1] < 0 ? 0 : startPosition[1];
 
@@ -160,6 +161,6 @@ void QOTBImageWidget::paintGL()
 
 
 //!
-QOTBImageWidget::~QOTBImageWidget(){
+ItiOtbRgbaImageWidget::~ItiOtbRgbaImageWidget(){
     ClearBuffer();
 }
