@@ -10,7 +10,7 @@
 
 class OntologyClassItem;
 
-class /*VRN_QT_API*/ OwlWriter : public QObject{
+class OwlWriter : public QObject{
     Q_OBJECT
 
 public:

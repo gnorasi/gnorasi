@@ -28,7 +28,7 @@ public:
     //!
     static ItiOtbImageManager* instance();
 
-    //!
+    //! This function should be called at the destructor of the top level class
     static void deleteInstance();
 
     /** Set/Get the image to render */
@@ -53,13 +53,13 @@ private:
     //! this is the unique instance
     static ItiOtbImageManager* m_pInstance;
 
-    /** Pointer to the image */
+    /*! Pointer to the image , the port holds image related data.*/
     voreen::Port *m_pPort;
 
-    /** Path to the DEMDirectory (used if a VectorData is rendered */
+    /*! Path to the DEMDirectory (used if a VectorData is rendered */
     QString m_DEMDirectory;
 
-    /** GeoidFile filename (used if a VectorData is rendered */
+    /*! GeoidFile filename (used if a VectorData is rendered */
     QString m_GeoidFile;
 };
 

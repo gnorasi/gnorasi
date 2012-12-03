@@ -29,6 +29,8 @@
 #ifndef VRN_KNOWLEDGEPROCESSORWIDGETFACTORY_H
 #define VRN_KNOWLEDGEPROCESSORWIDGETFACTORY_H
 
+#include <QtCore>
+
 #include "voreen/core/processors/processorwidgetfactory.h"
 
 namespace voreen {

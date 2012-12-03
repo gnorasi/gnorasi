@@ -30,7 +30,7 @@ class RuleWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit RuleWidget(QString &ocid = QString(), QWidget *parent = 0);
+    explicit RuleWidget(const QString &ocid = QString(), QWidget *parent = 0);
 
     virtual ~RuleWidget();
 

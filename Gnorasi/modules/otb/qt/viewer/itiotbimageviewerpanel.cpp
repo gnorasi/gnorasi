@@ -32,14 +32,14 @@ void ItiOtbImageViewerPanel::initialize(){
     //! the tab widget
     m_pTabWidget = new QTabWidget(this);
 
+    //! add widgets to the tab
     m_pTabWidget->addTab(m_pDataTab,m_pDataTab->windowTitle());
     m_pTabWidget->addTab(m_pSetupTab,m_pSetupTab->windowTitle());
     m_pTabWidget->addTab(m_pHistogramTab,m_pHistogramTab->windowTitle());
     m_pTabWidget->addTab(m_pPixelDescriptionTab,m_pPixelDescriptionTab->windowTitle());
 
+    //! setup layout
     QVBoxLayout *layout = new QVBoxLayout(this);
-
     layout->addWidget(m_pTabWidget);
-
     setLayout(layout);
 }
