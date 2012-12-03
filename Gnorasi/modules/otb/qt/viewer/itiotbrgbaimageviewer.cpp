@@ -54,16 +54,12 @@ void ItiOtbRgbaImageViewer::setupLayout(){
     setLayout(vboxlayout);
 }
 
+//!
+void ItiOtbRgbaImageViewer::disassembleWidgets(){
 
-//void ItiOtbRgbaImageViewer::setCenter(IndexType index){
-//    QOTBImageManager *mgr = QOTBImageManager::instance();
+}
 
-//    mgr->model()->SetExtractRegionCenter(index);
-//    mgr->model()->SetScaledExtractRegionCenter(index);
-//    mgr->model()->Update();
-//}
-
-
-void ItiOtbRgbaImageViewer::clearLayout(){
+//!
+void ItiOtbRgbaImageViewer::draw(){
 
 }

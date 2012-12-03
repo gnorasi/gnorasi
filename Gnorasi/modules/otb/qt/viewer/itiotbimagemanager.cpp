@@ -5,18 +5,16 @@
 using namespace itiviewer;
 
 
-template <class TImage> ItiOtbImageManager<TImage>* ItiOtbImageManager<TImage>::m_pInstance = NULL;
+ItiOtbImageManager* ItiOtbImageManager::m_pInstance = NULL;
 
 //!
-template< class TImage>
-ItiOtbImageManager<TImage>::ItiOtbImageManager()
+ItiOtbImageManager::ItiOtbImageManager()
 {
 
 }
 
 //!
-template< class TImage>
-ItiOtbImageManager<TImage>* ItiOtbImageManager<TImage>::instance(){
+ItiOtbImageManager* ItiOtbImageManager::instance(){
     if(m_pInstance == NULL){
         m_pInstance = new ItiOtbImageManager();
     }
@@ -25,8 +23,7 @@ ItiOtbImageManager<TImage>* ItiOtbImageManager<TImage>::instance(){
 }
 
 //!
-template< class TImage>
-void ItiOtbImageManager<TImage>::deleteInstance(){
+void ItiOtbImageManager::deleteInstance(){
     if(m_pInstance != NULL){
         delete m_pInstance;
 
@@ -35,7 +32,6 @@ void ItiOtbImageManager<TImage>::deleteInstance(){
 }
 
 //!
-template< class TImage>
-ItiOtbImageManager<TImage>::~ItiOtbImageManager(){
+ItiOtbImageManager::~ItiOtbImageManager(){
 
 }

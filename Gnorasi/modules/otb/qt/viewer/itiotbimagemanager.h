@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include "voreen/core/ports/port.h"
 
 
 namespace itiviewer{
@@ -21,18 +22,18 @@ namespace itiviewer{
  *  user interface of the viewer's widget.
  *
  */
-template< class TImage>
 class ItiOtbImageManager
 {
 public:
     //!
-    static ItiOtbImageManager<TImage>* instance();
+    static ItiOtbImageManager* instance();
 
     //!
     static void deleteInstance();
 
     /** Set/Get the image to render */
-    TImage* image() const { return m_pImage; }
+    voreen::Port* imagePort() const { return m_pPort; }
+    void setImagePort(voreen::Port* p) { m_pPort = p; }
 
     /** Set/Get the DEM directory */
     void setDemDirectory(const QString &d) { m_DEMDirectory = d; }
@@ -50,10 +51,10 @@ private:
     ~ItiOtbImageManager();
 
     //! this is the unique instance
-    static ItiOtbImageManager<TImage>* m_pInstance;
+    static ItiOtbImageManager* m_pInstance;
 
     /** Pointer to the image */
-    TImage m_pImage;
+    voreen::Port *m_pPort;
 
     /** Path to the DEMDirectory (used if a VectorData is rendered */
     QString m_DEMDirectory;

@@ -2,6 +2,7 @@
 #define ITIOTBIMAGEVIEWER_H
 
 #include <QWidget>
+#include <QLabel>
 
 #include "itkImage.h"
 
@@ -19,15 +20,18 @@ class ItiOtbImageViewer : public QWidget
     Q_OBJECT
 public:
     //! ctor
-    explicit ItiOtbImageViewer(QWidget *parent = 0) : QWidget(parent) { }
+    explicit ItiOtbImageViewer(QWidget *parent = 0);
     
     //! This is an abstract function needs to be implemented by every concrete subclass
-    virtual void clearLayout() = 0;
+    virtual void disassembleWidgets() = 0;
 
     //! This is a virtual method required for painting stuff
     virtual void draw() = 0;
 
 protected:
+    QLabel *m_pLabelFullResolution;
+    QLabel *m_pLabelNavigationView;
+    QLabel *m_pLabelZoomView;
 
     
 };

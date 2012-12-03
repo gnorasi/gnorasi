@@ -5,11 +5,16 @@
 #include "otbImageFileReader.h"
 
 #include "../../ports/otbimageport.h"
+#include "../../ports/otbvectorimageport.h"
+
 
 #include "../viewer/itiotbimagemanager.h"
+#include "../viewer/itiotbimageviewer.h"
+#include "../viewer/itiotbrgbaimageviewerfactory.h"
+#include "../viewer/itiotbimageviewerpanel.h"
 
 using namespace otb;
-
+using namespace itiviewer;
 
 //typedef ImageType::Pointer ImagePointer;
 
@@ -33,9 +38,17 @@ void QGLOtbImageViewerWidget::initialize(){
 
     QVBoxLayout *layout = new QVBoxLayout(this);
 
-//    m_pQOTBImageViewer = new QOTBImageViewer(this);
+    m_pItiOtbImageFactory = new ItiOtbRgbaImageViewerFactory(this);
+    m_pItiOtbImageViewer = m_pItiOtbImageFactory->createViewer();
+    m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
 
-//    layout->addWidget(m_pQOTBImageViewer);
+    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
+
+    m_pvSplitter = new QSplitter(Qt::Vertical,this);
+    m_pvSplitter->addWidget(m_pItiOtbImageViewer);
+    m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
+
+    layout->addWidget(m_pvSplitter);
 
     this->setLayout(layout);
 
@@ -54,56 +67,60 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
 
     std::vector<Port*> l = otbivProcessor->getInports();
     if(l.empty()){
-
+        qDebug() << "image port list is empty..";
 
     }else{
-        OTBImagePort *pP = dynamic_cast<OTBImagePort*>(l.at(0));
+        //! get the first port
+        Port *pPort = l.at(0);
 
-        if(!pP)
-            return;
+        //! set the port to the image manager
+        ItiOtbImageManager *mgr = ItiOtbImageManager::instance();
+        mgr->setImagePort(pPort);
 
-        QString filePath = QString::fromStdString(otbivProcessor->getFilePath());
-
-//        QOTBImageManager *manager = QOTBImageManager::instance();
-
-        if(!filePath.isEmpty()){
-
-//            manager->load(filePath);
-
-//            m_pQOTBImageViewer->update();
-
-            show();
-        }else{
-//            ImageType *imageType = (ImageType*)pP->getData();
-//            if(!imageType)
-//                return;
-
-//            manager->load(imageType);
-
-//            m_pQOTBImageViewer->update();
-
-            show();
+        //! type case checking
+        if(dynamic_cast<OTBImagePort*>(pPort)){ // set here the raster image port
+            m_pItiOtbImageFactory = new ItiOtbRgbaImageViewerFactory(this);
         }
+        else if(dynamic_cast<OTBVectorImagePort*>(pPort)){ // set here the vector image factory
+
+        }
+
+        //! create a new ItiOtbImageViewer instance
+        m_pItiOtbImageViewer = m_pItiOtbImageFactory->createViewer();
+
+        //! draw stuff
+        m_pItiOtbImageViewer->draw();
     }
 }
 
-//QString QGLOtbImageViewerWidget::constructMetadataInfo(){
-//    QString text;
+//!
+void QGLOtbImageViewerWidget::keyPressEvent(QKeyEvent *event){
+    if(event->key() == Qt::Key_F1){
+        disassembleWidgets();
+    }else if(event->key() == Qt::Key_F9)
+        assembleWidgets();
 
-//    qDebug() <<  QString::fromStdString(m_pImageType->GetProjectionRef());
+    QWidget::keyPressEvent(event);
+}
 
-//    return text;
-//}
+//!
+void QGLOtbImageViewerWidget::disassembleWidgets(){
 
-//void QGLOtbImageViewerWidget::mouseMoveEvent(QMouseEvent *event){
-//    qDebug() << event->pos();
+    //! TODO
+    // setup the functionality for spliting all layouts and setup all widgets
+    // into a seperate window
 
-//    QWidget::mouseMoveEvent(event);
-//}
+}
 
+//!
+void QGLOtbImageViewerWidget::assembleWidgets(){
+    //! TODO
+    // setup the functionality for merging all layouts and setup all widgets
+    // into one single window
+}
 
 QGLOtbImageViewerWidget::~QGLOtbImageViewerWidget(){
-//    QOTBImageManager::deleteInstance();
+    ItiOtbImageManager::deleteInstance();
 }
 
 } //namespace voreen
