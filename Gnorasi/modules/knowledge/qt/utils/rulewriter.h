@@ -5,7 +5,6 @@
 
 #include <QDomDocument>
 
-namespace voreen{
 
 class RuleItem;
 
@@ -41,6 +40,5 @@ private:
     
 };
 
-}
 
 #endif // RULEWRITER_H

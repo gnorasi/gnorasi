@@ -10,7 +10,6 @@
 #define KEY_NAMESPACEXMLNS      "nsxmlns"
 #define KEY_NAMESPACEXMLBASE    "nsxmlbase"
 
-using namespace voreen;
 
 RuleParser::RuleParser(QObject *parent) :
     QObject(parent)

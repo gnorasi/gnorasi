@@ -52,8 +52,8 @@ void OntologyCreatorWidget::initialize() {
 
     QLabel *pLabelActions = new QLabel(tr("Actions"),this);
 
-    QPushButton *addSubClassButton      = new QPushButton(QIcon(":/voreenve/icons/add1.png"),tr("Add subclass"),this);
-    QPushButton *addSiblingClassButton  = new QPushButton(QIcon(":/voreenve/icons/add2.png"),tr("Add sibling class"),this);
+    QPushButton *addSubClassButton      = new QPushButton(QIcon(":/voreenve/icons/add1.png"),tr("New subclass"),this);
+    QPushButton *addSiblingClassButton  = new QPushButton(QIcon(":/voreenve/icons/add2.png"),tr("New sibling class"),this);
     QPushButton *deleteClassButton      = new QPushButton(QIcon(":/voreenve/icons/delete.png"),tr("Delete class"),this);
 
     QLabel *pLabelHeader = new QLabel(tr("Ontology Classes"),this);

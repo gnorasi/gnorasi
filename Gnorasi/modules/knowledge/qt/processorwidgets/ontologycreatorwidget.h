@@ -36,9 +36,6 @@ public:
     //!
     virtual void updateFromProcessor();
 
-    //! getters
-    OwlWriter owlWriter() { return m_owlWriter; }
-    OWLParser owlParser() { return m_owlParser; }
 
 private slots:
     void onModelDataChanged(QModelIndex,QModelIndex);

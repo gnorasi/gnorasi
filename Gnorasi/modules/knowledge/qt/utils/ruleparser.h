@@ -5,7 +5,6 @@
 
 #include <QDomDocument>
 
-namespace voreen{
 
 //!
 //! Functionality, parses xml data related to rules
@@ -34,6 +33,5 @@ private:
     
 };
 
-}
 
 #endif // RULEPARSER_H

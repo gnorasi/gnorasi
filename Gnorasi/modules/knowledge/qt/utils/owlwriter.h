@@ -7,11 +7,10 @@
 
 #include "voreen/qt/voreenmoduleqt.h"
 
-namespace voreen {
 
 class OntologyClassItem;
 
-class VRN_QT_API OwlWriter : public QObject{
+class /*VRN_QT_API*/ OwlWriter : public QObject{
     Q_OBJECT
 
 public:
@@ -55,6 +54,5 @@ private:
     QDomElement rootElement;
 }; // OWLWRITER_H
 
-}
 
 #endif
