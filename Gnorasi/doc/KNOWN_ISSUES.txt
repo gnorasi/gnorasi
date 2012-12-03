@@ -1,0 +1,30 @@
+Gnorasis Build Issues on Windows :
+
+	+ The following classes have been causing errors and have commented :
+		- otbvectorimagewriterprocessor											x
+		- otbimagetovectorimagecastprocessor									x
+		- otbsimpleviewerprocessor												x
+
+	+ Due to the fact that the classes above have been commented 
+	the processor related to the classes are not able to be registered.
+	The following processors are not working and were not registered : 
+		- OTBVectorImageWriterProcessor											x		
+		- OTBImageToVectorImageCastProcessor									x
+		- OTBSimpleViewerProcessor												x
+		
+		
+	***********************************************************************************
+	**
+	** The errors mentioned above are expected errors.
+	** Visual C++ 2010 does not support variadic templates.
+	** http://stackoverflow.com/questions/4763736/vs2010-c-variadic-template-example
+	** 
+	***********************************************************************************
+
+	+ The windows executable windows file icon is not shown and 
+	the respective cmake code has been commented 			
+	in order the application to be built.										x
+		**
+		** This may be a known issue to the vs 2010 compiler and newer versions
+		** see : http://public.kitware.com/Bug/view.php?id=11460 
+		**
