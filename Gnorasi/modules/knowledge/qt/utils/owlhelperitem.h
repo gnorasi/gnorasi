@@ -7,9 +7,8 @@
 
 #include "voreen/qt/voreenmoduleqt.h"
 
-namespace voreen {
 
-class VRN_QT_API OWLHelperItem : public QObject
+class OWLHelperItem : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString id       READ id         WRITE setId         NOTIFY idChanged)
@@ -47,7 +46,5 @@ private:
     QString m_comment;
     QString m_id;
 };
-
-}
 
 #endif // OWLHELPERITEM_H

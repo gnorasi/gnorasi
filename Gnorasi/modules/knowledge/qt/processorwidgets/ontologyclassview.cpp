@@ -9,7 +9,6 @@
 
 #include <QtCore/QDebug>
 
-using namespace voreen;
 
 OntologyClassView::OntologyClassView(QWidget *parent)
     : QTreeView(parent)
@@ -34,12 +33,12 @@ void OntologyClassView::contextMenuEvent ( QContextMenuEvent * e )
     QMenu *menu = new QMenu(this);
     QModelIndex index = indexAt(e->pos());
     if (index.isValid()){
-        menu->addAction(tr("Create subclass"),this,SLOT(onAddChildClass()));
-        menu->addAction(tr("Create sibling class"),this,SLOT(onAddSiblingClass()));
+        menu->addAction(tr("New subclass"),this,SLOT(onAddChildClass()));
+        menu->addAction(tr("New sibling class"),this,SLOT(onAddSiblingClass()));
         menu->addAction(tr("Delete class"),this,SLOT(onRemoveCurrentClass()));
     }
     else
-        menu->addAction("Create subclass",this,SLOT(onAddChildClass()));
+        menu->addAction("New subclass",this,SLOT(onAddChildClass()));
 
     menu->exec(QCursor::pos());
 

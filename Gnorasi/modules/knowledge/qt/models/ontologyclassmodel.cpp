@@ -13,7 +13,6 @@
 
 #define OBJECTDEPICTION_VALUE   "http://www.gnorasi.gr/ontology#ObjectDepiction"
 
-using namespace voreen;
 
 OntologyClassModel::OntologyClassModel(QObject *parent, bool editable)
     : m_editable(editable), QAbstractItemModel(parent)

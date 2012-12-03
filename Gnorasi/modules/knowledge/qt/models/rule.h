@@ -3,7 +3,6 @@
 
 #include <QObject>
 
-namespace voreen{
 
 class                   RuleItem;
 class                   OntologyClassItem;
@@ -78,7 +77,5 @@ private:
     QString             m_headClass;
     double              m_confidence;
 };
-
-} // namespace voreen
 
 #endif // RULE_H

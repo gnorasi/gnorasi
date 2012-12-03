@@ -5,8 +5,6 @@
 
 #include <QDebug>
 
-using namespace voreen;
-
 #define RULES_TAG               "rules"
 
 #define NS_KEY                  "ns"

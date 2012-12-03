@@ -5,17 +5,13 @@
 #include <QModelIndex>
 #include <QVariant>
 
-#include "voreen/qt/voreenmoduleqt.h"
-
-namespace voreen {
-
 class OntologyClassItem;
 class OWLHelperItem;
 
 //!
 //! Models the Ontology Class hierrarchy
 //!
-class VRN_QT_API OntologyClassModel : public QAbstractItemModel
+class  OntologyClassModel : public QAbstractItemModel
 {
     Q_OBJECT
 
@@ -80,6 +76,5 @@ private:
     bool m_editable;
 };
 
-}
 
 #endif // ONTOLOGYMODEL_H

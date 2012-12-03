@@ -8,7 +8,6 @@
 #include "../models/rule.h"
 #include "../models/ruleitem.h"
 
-#include "voreen/qt/voreenapplicationqt.h"
 
 #include <QHBoxLayout>
 #include <QLineEdit>
@@ -21,9 +20,8 @@
 #include <QStandardItemModel>
 #include <QListView>
 
-using namespace voreen;
 
-RuleWidget::RuleWidget(QString &ocid, QWidget *parent) :
+RuleWidget::RuleWidget(QString ocid, QWidget *parent) :
     m_ontologyClassId(ocid), QWidget(parent)
 {
     initialize();

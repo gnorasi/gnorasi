@@ -11,7 +11,6 @@
 #include <QMessageBox>
 #include <QStandardItemModel>
 
-using namespace voreen;
 
 RuleItemView::RuleItemView(QWidget *parent) :
     QTableView(parent)
