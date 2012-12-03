@@ -29,8 +29,14 @@ public:
     virtual void draw() = 0;
 
 protected:
+    //! the following labels were taken from the monteverdi viewer
+    //! a label showing a title for the full resolution view
     QLabel *m_pLabelFullResolution;
+
+    //! a label showing a title for the navigation view
     QLabel *m_pLabelNavigationView;
+
+    //! a label showing a title for the zoom view
     QLabel *m_pLabelZoomView;
 
     

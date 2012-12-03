@@ -1,6 +1,7 @@
 #ifndef ITIOTBRGBAIMAGEVIEWER_H
 #define ITIOTBRGBAIMAGEVIEWER_H
 
+#include <QtCore>
 #include <QWidget>
 
 #include "itiotbimageviewer.h"

@@ -16,8 +16,6 @@
 using namespace otb;
 using namespace itiviewer;
 
-//typedef ImageType::Pointer ImagePointer;
-
 namespace voreen {
 
 const std::string QGLOtbImageViewerWidget::loggerCat_("voreen.QGLOtbImageViewerWidget");
@@ -28,7 +26,7 @@ QGLOtbImageViewerWidget::QGLOtbImageViewerWidget(QWidget *parent, OTBImageViewer
     tgtAssert(otbImageViewerProcessor, "No QOtbImageViewerWidget processor");
 
     setWindowTitle(QString::fromStdString(otbImageViewerProcessor->getName()));
-    resize(600, 400);
+    resize(600, 500);
     setPosition(QApplication::desktop()->width()/2 - 200,QApplication::desktop()->height()/2 - 200);
 }
 
@@ -73,6 +71,14 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
         //! get the first port
         Port *pPort = l.at(0);
 
+
+        //! START OF INCOMING DATA USAGE
+
+        //! TODO
+        //!
+        //! Here should be established incoming image data usage protocol
+        //!
+
         //! set the port to the image manager
         ItiOtbImageManager *mgr = ItiOtbImageManager::instance();
         mgr->setImagePort(pPort);
@@ -90,6 +96,9 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
 
         //! draw stuff
         m_pItiOtbImageViewer->draw();
+
+        //!
+        //! END OF INCOMING DATA USAGE
     }
 }
 
