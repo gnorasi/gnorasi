@@ -30,10 +30,13 @@ public:
 
     void initialize();
 
-    bool checkForRules(const QString &);
-
+    //!
+    //! This function is called whenever a new event is triggered by the OntologyCreatorProcessor
+    //! IO functionality and new Ontology functionality is handled..
+    //!
     virtual void updateFromProcessor();
 
+    //! getters
     OwlWriter owlWriter() { return m_owlWriter; }
     OWLParser owlParser() { return m_owlParser; }
 
@@ -41,6 +44,11 @@ private slots:
     void onModelDataChanged(QModelIndex,QModelIndex);
 
 private:
+    //!
+    //! This is a core functionality
+    //! every time the ontolgoy model changes the TextOutport is being updated
+    //! in order connected Inports to be updated
+    //!
     void setupOutportText();
 
     static const std::string loggerCat_;

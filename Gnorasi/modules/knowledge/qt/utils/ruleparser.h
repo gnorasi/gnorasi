@@ -26,6 +26,10 @@ public slots:
 
 
 private:
+    //! namespace checking
+    //! checks the rdf element namespaces attribute key values contained in the document passed as a parameter
+    //! and the namespaces set in the RuleUtility instance while loading a valid OntologyClassModel given by
+    //! the OntologyCreator processor
     bool validateNamespaces(const QDomDocument& );
     
 };

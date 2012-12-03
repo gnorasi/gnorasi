@@ -29,6 +29,10 @@
 #define OWL_RDFSDOMAINVAL       "http://www.gnorasi.gr/ontology#ObjectDepiction"
 #define OWL_RDFRANGETAG         "rdfs:range"
 #define OWL_RANGEVAL            "http://www.w3.org/2001/XMLSchema#int"
+#define OWL_DESCRIPTIONKTAG     "rdf:Description"
+#define OWL_TYPETAG             "rdf:type"
+#define OWL_GNOHASOBJIDTAG      "gno:hasObjectClassID"
+
 
 #define OBJECTDEPICTION_VALUE   "http://www.gnorasi.gr/ontology#ObjectDepiction"
 
@@ -55,11 +59,8 @@
 #define XMLNS_GEOVALUE          "http://rdf.opensahara.com/type/geo/"
 #define XMLNS_BASEKEY           "xml:base"
 #define XMLNS_BASEVALUE         "http://www.gnorasi.gr/ontology"
-
-//<owl:DatatypeProperty rdf:about="http://www.gnorasi.gr/ontology#hasObjectClassID">
-//    <rdfs:domain rdf:resource="http://www.gnorasi.gr/ontology#ObjectDepiction"/>
-//    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
-//  </owl:DatatypeProperty>
+#define XMLNS_GNOKEY            "xmlns:gno"
+#define XMLNS_GNOVALUE          "http://www.gnorasi.gr/ontology#"
 
 // a custom tag name
 #define TAG_HASOBJECTID         "hasObjectClassID"
@@ -84,19 +85,15 @@ void OwlWriter::createDocument(){
     QDomProcessingInstruction xmlDeclaration = doc.createProcessingInstruction("xml", "version=\"1.0\"");
     doc.appendChild(xmlDeclaration);
 
+    // create the root element
     rootElement = doc.createElement(QString::fromAscii(OWL_RDFTAGNAME));
 
-//    rootElement.setAttribute(QString::fromAscii(XMLNS_BASEKEY),QString::fromAscii(XMLNS_BASEVALUE));
     rootElement.setAttribute(QString::fromAscii(XMLNS_GEOKEY),QString::fromAscii(XMLNS_GEOVALUE));
-//    rootElement.setAttribute(QString::fromAscii(XMLNS_KEY),QString::fromAscii(XMLNS_VALUE));
     rootElement.setAttribute(QString::fromAscii(XMLNS_OWLKEY),QString::fromAscii(XMLNS_OWLVALUE));
-//    rootElement.setAttribute(QString::fromAscii(XMLNS_PROTEGEKEY),QString::fromAscii(XMLNS_PROTEGEVALUE));
     rootElement.setAttribute(QString::fromAscii(XMLNS_RDFKEY),QString::fromAscii(XMLNS_RDFVALUE));
     rootElement.setAttribute(QString::fromAscii(XMLNS_RDFSKEY),QString::fromAscii(XMLNS_RDFSVALUE));
-//    rootElement.setAttribute(QString::fromAscii(XMLNS_SWRLBKEY),QString::fromAscii(XMLNS_SWRLVALUE));
-//    rootElement.setAttribute(QString::fromAscii(XMLNS_SWRLBKEY),QString::fromAscii(XMLNS_SWRLBVALUE));
     rootElement.setAttribute(QString::fromAscii(XMLNS_XSDKEY),QString::fromAscii(XMLNS_XSDVALUE));
-//    rootElement.setAttribute(QString::fromAscii(XMLNS_XSPKEY),QString::fromAscii(XMLNS_XSPVALUE));
+    rootElement.setAttribute(QString::fromAscii(XMLNS_GNOKEY),QString::fromAscii(XMLNS_GNOVALUE));
 
     doc.appendChild(rootElement);
 
@@ -104,17 +101,6 @@ void OwlWriter::createDocument(){
     QDomElement element = doc.createElement(QString::fromAscii(OWL_ONTOLOGYTAGNAME));
     element.setAttribute(QString::fromAscii(OWL_ABOUTKEY),QString(""));
     rootElement.appendChild(element);
-
-    //! create the datatype tag element
-    QDomElement dataPropertyElement = doc.createElement(QString::fromAscii(OWL_DATAPROPERTYTAG));
-    dataPropertyElement.setAttribute(QString::fromAscii(OWL_ABOUTKEY),QString::fromAscii(OWL_DPABOUTVAL));
-    QDomElement domainElement = doc.createElement(QString::fromAscii(OWL_RDFSDOMAINTAG));
-    domainElement.setAttribute(QString::fromAscii(OWL_RESOURCEKEY),QString::fromAscii(OWL_RDFSDOMAINVAL));
-    QDomElement rangeElement = doc.createElement(QString::fromAscii(OWL_RDFRANGETAG));
-    rangeElement.setAttribute(QString::fromAscii(OWL_RESOURCEKEY),QString::fromAscii(OWL_RANGEVAL));
-    dataPropertyElement.appendChild(domainElement);
-    dataPropertyElement.appendChild(rangeElement);
-    rootElement.appendChild(dataPropertyElement);
 }
 
 void OwlWriter::appendData(OntologyClassItem *item){
@@ -158,13 +144,18 @@ void OwlWriter::appendData(OntologyClassItem *item){
     rootElement.appendChild(classElement);
 
     // Create an individual element and append it to the root node.
-    QDomElement individualElement = doc.createElement(id);
+    QDomElement individualElement = doc.createElement(QString::fromAscii(OWL_DESCRIPTIONKTAG));
     individualElement.setAttribute(QString::fromAscii(OWL_IDKEY),QString("ins_%1").arg(id.toLower()));
-    QDomElement hasObjectClassIDElement = doc.createElement(QString::fromAscii(TAG_HASOBJECTID));
-    hasObjectClassIDElement.setAttribute(QString::fromAscii(OWL_INTDATATYPEKEY),QString::fromAscii(OWL_INTDATATYPEVAL));
+    // create the type element
+    QDomElement typeElement = doc.createElement(QString::fromAscii(OWL_TYPETAG));
+    typeElement.setAttribute(QString::fromAscii(OWL_RESOURCEKEY),QString("%1%2").arg(m_namespaceXmlns).arg(id));
+    // create the hasObjectIdTExtElement
+    QDomElement hasObjectIdElement = doc.createElement(QString::fromAscii(OWL_GNOHASOBJIDTAG));
+    hasObjectIdElement.setAttribute(QString::fromAscii(OWL_STRINGDATATYPEKEY),QString::fromAscii(OWL_INTDATATYPEVAL));
     QDomText hasObjectIDTextElement = doc.createTextNode(QString::number(helperCounter++));
-    hasObjectClassIDElement.appendChild(hasObjectIDTextElement);
-    individualElement.appendChild(hasObjectClassIDElement);
+    hasObjectIdElement.appendChild(hasObjectIDTextElement);
+    individualElement.appendChild(typeElement);
+    individualElement.appendChild(hasObjectIdElement);
 
     // append the individual element to the root Element
     rootElement.appendChild(individualElement);
@@ -180,7 +171,18 @@ void OwlWriter::appendData(OntologyClassItem *item){
 }
 
 //!
-void OwlWriter::setNamespaces(const QString &nsXmlns, const QString &nsXmlBase){
+//! set the namespaces edited by the user
+//!
+//! vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+//!
+//! Take notice that this function must be called prior to the appendData() function..
+//!
+//! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+void OwlWriter::setupNamespaces(const QString &nsXmlns, const QString &nsXmlBase){
+    //! settter
+    m_namespaceXmlBase = nsXmlBase;
+    m_namespaceXmlns = nsXmlns;
+
     QDomNodeList list = doc.elementsByTagName(QString::fromAscii(OWL_RDFTAGNAME));
     for(int i = 0; i < list.count(); i++){
         QDomNode node = list.at(i);

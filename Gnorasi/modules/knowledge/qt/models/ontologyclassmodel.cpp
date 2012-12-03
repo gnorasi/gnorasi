@@ -186,15 +186,25 @@ bool OntologyClassModel::setData(const QModelIndex &index, const QVariant &value
     }
 
 
-    // check for rules
+    //!
+    //! Checking funcitonality whether Rules are connected to the Ontontolgy Class Item is being edited
     //
     if(m_editable && !index.row()){
+        //!
+        //! get the old name
+        //!
         QString oldname = data(index.sibling(index.row(),0),Qt::DisplayRole).toString();
+        //!
+        //! compare it with the new name and check if the old name class has any rules attached
+        //! if yes inform the user
+        //!
+        //! Using a QMessageBox in a core class is not a good practise , it is used though as a fast checking..
+        //!
         if(value.toString().compare(oldname) && hasRules(oldname)){
             int ret = QMessageBox::question(0,tr("Edit"),tr("Rules have been found related to this class , click Yes if you want to continue to update the rules attached to this class, or click Cancel to go back."),QMessageBox::Yes,QMessageBox::No);
             if(ret == QMessageBox::No)
                 return false;
-            else
+            else //! the rules attached will be updated with the new name of this class
                 updateRules(oldname,value.toString());
         }
     }
@@ -229,6 +239,9 @@ bool OntologyClassModel::setHeaderData(int section, Qt::Orientation orientation,
     return result;
 }
 
+//! This functions traverses the OntologyClassItem hierarchy and using the OWLHelperItem item
+//! creates the respective OntologyClassItem hierrarchey
+//! This funciton is called recursive as there is parent child relation of the OWLHelperItem class
 void OntologyClassModel::traverseHierarchy(OWLHelperItem *owlItem, OntologyClassItem *ontologyItem){
     QList<OWLHelperItem*> list = owlItem->owlChildren();
     QList<OWLHelperItem*>::const_iterator i;
@@ -245,6 +258,7 @@ void OntologyClassModel::traverseHierarchy(OWLHelperItem *owlItem, OntologyClass
     }
 }
 
+//! getter
 QStringList OntologyClassModel::classIdList(OntologyClassItem *item) const {
     QStringList list;
     QList<OntologyClassItem*> ilist = item->getChildItems();
@@ -259,6 +273,7 @@ QStringList OntologyClassModel::classIdList(OntologyClassItem *item) const {
     return list;
 }
 
+//! checking functionality
 bool OntologyClassModel::hasRules(const QString &name) const{
     RuleUtility *ru = RuleUtility::instance();
 
@@ -283,6 +298,7 @@ bool OntologyClassModel::hasRules(const QString &name) const{
     return false;
 }
 
+//! updating the Rules is achieved using the RuleUtility signleton class
 void OntologyClassModel::updateRules(const QString &oldname, const QString &newname){
 
     RuleUtility *ru = RuleUtility::instance();
@@ -308,6 +324,8 @@ void OntologyClassModel::updateRules(const QString &oldname, const QString &newn
     }
 }
 
+//! this is a validation label functionality . Al it does is to check for already added OntologyClassItem and
+//! return false if there are already functions and true if no
 bool OntologyClassModel::validateLabel(const QVariant &val){
     QModelIndex index_ = index(0,0);
     // check for matching values

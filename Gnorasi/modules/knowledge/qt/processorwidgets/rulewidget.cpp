@@ -6,7 +6,6 @@
 #include "../utils/ruleutility.h"
 #include "../models/ontologyclassitem.h"
 #include "../models/rule.h"
-#include "../models/persistentruleitem.h"
 #include "../models/ruleitem.h"
 
 #include "voreen/qt/voreenapplicationqt.h"
