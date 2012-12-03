@@ -16,14 +16,11 @@ class QStandardItem;
 class QListView;
 class QModelIndex;
 
-
-
-namespace voreen {
-
 class RuleItemView;
 class Rule;
 class OntologyClassItem;
 class ComboBoxDelegate;
+
 
 //!
 //! This is where all the handling of Rule items is done
@@ -115,7 +112,5 @@ private:
     //! holds the list of the availabel property values
     QStringList m_propertyFeatureList;
 };
-
-}
 
 #endif // RULEWIDGET_H

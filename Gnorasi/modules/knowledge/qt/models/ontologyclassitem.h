@@ -5,9 +5,6 @@
 #include <QVariant>
 #include <QVector>
 
-#include "voreen/qt/voreenmoduleqt.h"
-
-namespace voreen {
 
 //!
 //! This class stores data related to OntologyClass items handled by the OntologyClassModel
@@ -43,5 +40,4 @@ private:
     QString m_id;
 };
 
-}
 #endif // ONTOLOGYCLASSITEM_H

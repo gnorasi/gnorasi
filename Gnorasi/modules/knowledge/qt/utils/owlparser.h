@@ -5,16 +5,13 @@
 
 #include <QtXml/QDomDocument>
 
-#include "voreen/qt/voreenmoduleqt.h"
-
-namespace voreen {
 
 class OWLHelperItem;
 
 //!
 //! This class is a parse of the OWL document
 //!
-class VRN_QT_API OWLParser : public QObject{
+class /*VRN_QT_API*/ OWLParser : public QObject{
     Q_OBJECT
 
 public:
@@ -48,6 +45,5 @@ private:
 
 }; // OWLPARSER_H
 
-}
 
 #endif

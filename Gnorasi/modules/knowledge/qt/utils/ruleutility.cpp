@@ -5,7 +5,6 @@
 
 #include <QStringList>
 
-using namespace voreen;
 
 RuleUtility* RuleUtility::m_pInstance = NULL;
 
