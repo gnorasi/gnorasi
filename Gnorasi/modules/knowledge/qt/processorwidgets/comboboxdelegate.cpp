@@ -2,8 +2,6 @@
 
 #include <QComboBox>
 
-using namespace voreen;
-
 ComboBoxDelegate::ComboBoxDelegate(const QStringList &list, QObject *parent) :
     m_data(list), QItemDelegate(parent)
 {

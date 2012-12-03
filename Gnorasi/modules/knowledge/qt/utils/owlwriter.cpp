@@ -65,7 +65,6 @@
 // a custom tag name
 #define TAG_HASOBJECTID         "hasObjectClassID"
 
-using namespace voreen;
 
 OwlWriter::OwlWriter(QObject *parent)
     : QObject(parent)

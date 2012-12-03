@@ -5,10 +5,6 @@
 #include <QVariant>
 #include <QVector>
 
-#include "voreen/qt/voreenmoduleqt.h"
-
-namespace voreen {
-
 
 //!
 //! The rule item represents a record on the rules table view
@@ -50,5 +46,4 @@ private:
     QVector<QVariant> itemData;
 };
 
-}
 #endif // RULEITEM_H

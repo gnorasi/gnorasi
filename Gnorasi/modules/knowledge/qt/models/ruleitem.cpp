@@ -4,7 +4,6 @@
 
 #include "ruleitem.h"
 
-using namespace voreen;
 
 RuleItem::RuleItem(const QVector<QVariant> &data)
 {
