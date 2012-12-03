@@ -74,6 +74,11 @@ void ItiOtbRgbaImageViewer::disassembleWidgets(){
 }
 
 //!
+void ItiOtbRgbaImageViewer::assembleWidgets(){
+
+}
+
+//!
 void ItiOtbRgbaImageViewer::draw(){
 
 }
