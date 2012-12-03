@@ -22,7 +22,10 @@ public:
     explicit ItiOtbImageViewerFactory(QObject *parent = 0) : QObject(parent) { }
 
     //! abstract method, every subclass must implement this class
-    virtual ItiOtbImageViewer* create() = 0;
+    virtual ItiOtbImageViewer* createViewer() = 0;
+
+protected:
+
     
 };
 

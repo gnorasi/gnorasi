@@ -28,7 +28,10 @@ public:
 //    void setCenter(IndexType index);
 
     //! implementation
-    void clearLayout();
+    void disassembleWidgets();
+
+    //! implementation
+    void draw();
 
 signals:
     

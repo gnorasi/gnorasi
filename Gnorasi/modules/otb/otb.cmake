@@ -365,6 +365,12 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/itiotbrgbaimageviewer.cpp
     ${MOD_DIR}/qt/viewer/itiotbimageviewerfactory.cpp
     ${MOD_DIR}/qt/viewer/itiotbimageviewer.cpp
+    ${MOD_DIR}/qt/viewer/itiotbrgbaimageviewerfactory.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanel.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpaneldatatab.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelsetuptab.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelhistogramtab.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelpixeldescriptiontab.cpp
 )
 ################################################################################
 # Qt headers
@@ -376,6 +382,12 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/itiotbrgbaimageviewer.h
     ${MOD_DIR}/qt/viewer/itiotbimageviewerfactory.h
     ${MOD_DIR}/qt/viewer/itiotbimageviewer.h
+    ${MOD_DIR}/qt/viewer/itiotbrgbaimageviewerfactory.h
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanel.h
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpaneldatatab.h
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelsetuptab.h
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelhistogramtab.h
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelpixeldescriptiontab.h
 )
 
 
