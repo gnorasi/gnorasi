@@ -26,10 +26,8 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_KNOWLEDGEPROCESSORWIDGETFACTORY_H
-#define VRN_KNOWLEDGEPROCESSORWIDGETFACTORY_H
-
-#include <QtCore>
+#ifndef VRN_OTBPROCESSORWIDGETFACTORY_H
+#define VRN_OTBPROCESSORWIDGETFACTORY_H
 
 #include "voreen/core/processors/processorwidgetfactory.h"
 
@@ -40,7 +38,7 @@ namespace voreen {
  * - ClassifierWSProcessor (ClassifierWSWidget)
  * - DummySegmentationProcessor (DummySegmentationWidget)
  */
-class KnowledgeProcessorWidgetFactory : public ProcessorWidgetFactory {
+class QOTBProcessorWidgetFactory : public ProcessorWidgetFactory {
 public:
     virtual ProcessorWidget* createWidget(Processor*) const;
 };
