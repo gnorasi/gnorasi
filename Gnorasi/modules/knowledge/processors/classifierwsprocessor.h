@@ -37,7 +37,7 @@
 
 namespace voreen {
 
-class ClassifierWSProcessor : public Processor {
+class VRN_CORE_API ClassifierWSProcessor : public Processor {
 public:
     ClassifierWSProcessor();
     virtual ~ClassifierWSProcessor();
