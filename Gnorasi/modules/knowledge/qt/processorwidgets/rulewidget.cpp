@@ -21,7 +21,7 @@
 #include <QListView>
 
 
-RuleWidget::RuleWidget(QString ocid, QWidget *parent) :
+RuleWidget::RuleWidget(const QString &ocid, QWidget *parent) :
     m_ontologyClassId(ocid), QWidget(parent)
 {
     initialize();

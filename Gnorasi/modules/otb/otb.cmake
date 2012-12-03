@@ -271,6 +271,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbvectorimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.cpp
+    ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
 )
 
 SET(MOD_CORE_HEADERS
@@ -316,6 +317,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbvectorimagebandmathprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.h
+    ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
 )
 
 #
@@ -345,3 +347,53 @@ ELSE(UNIX)
     # LIST(APPEND MOD_CORE_HEADERS ${MOD_DIR}/processors/ImageIO/otbimagetovectorimagecastprocessor.h)
     # LIST(APPEND MOD_CORE_HEADERS ${MOD_DIR}/processors/Visualization/otbsimpleviewerprocessor.h)
 ENDIF(UNIX)
+
+################################################################################
+# Qt module resources
+################################################################################
+SET(MOD_QT_MODULECLASS OtbModuleQt)
+
+
+################################################################################
+# Qt sources
+################################################################################
+SET(MOD_QT_SOURCES
+    ${MOD_DIR}/qt/qotbprocessorwidgetfactory.cpp
+    ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimagemanager.cpp
+    ${MOD_DIR}/qt/viewer/itiotbrgbaimagewidget.cpp
+    ${MOD_DIR}/qt/viewer/itiotbrgbaimageviewer.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerfactory.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimageviewer.cpp
+    ${MOD_DIR}/qt/viewer/itiotbrgbaimageviewerfactory.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanel.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpaneldatatab.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelsetuptab.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelhistogramtab.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelpixeldescriptiontab.cpp
+)
+################################################################################
+# Qt headers
+################################################################################
+SET(MOD_QT_HEADERS
+    ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.h
+    ${MOD_DIR}/qt/viewer/itiotbimagemanager.h/
+    ${MOD_DIR}/qt/viewer/itiotbrgbaimagewidget.h
+    ${MOD_DIR}/qt/viewer/itiotbrgbaimageviewer.h
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerfactory.h
+    ${MOD_DIR}/qt/viewer/itiotbimageviewer.h
+    ${MOD_DIR}/qt/viewer/itiotbrgbaimageviewerfactory.h
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanel.h
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpaneldatatab.h
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelsetuptab.h
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelhistogramtab.h
+    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelpixeldescriptiontab.h
+)
+
+
+SET(MOD_QT_HEADERS_NONMOC
+    ${MOD_DIR}/qt/qotbprocessorwidgetfactory.h
+)
+
+SET(QT_USE_QTOPENGL TRUE)
+SET(QT_USE_QTGUI TRUE)

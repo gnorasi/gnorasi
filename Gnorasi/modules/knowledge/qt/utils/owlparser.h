@@ -11,7 +11,7 @@ class OWLHelperItem;
 //!
 //! This class is a parse of the OWL document
 //!
-class /*VRN_QT_API*/ OWLParser : public QObject{
+class OWLParser : public QObject{
     Q_OBJECT
 
 public:

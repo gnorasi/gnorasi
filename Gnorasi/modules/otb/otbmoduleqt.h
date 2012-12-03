@@ -26,25 +26,22 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_KNOWLEDGEPROCESSORWIDGETFACTORY_H
-#define VRN_KNOWLEDGEPROCESSORWIDGETFACTORY_H
+#ifndef VRN_OTBMODULE_QT_H
+#define VRN_OTBMODULE_QT_H
 
-#include <QtCore>
-
-#include "voreen/core/processors/processorwidgetfactory.h"
+#include "voreen/qt/voreenmoduleqt.h"
 
 namespace voreen {
 
-/**
- * Constructs Qt processor widgets for:
- * - ClassifierWSProcessor (ClassifierWSWidget)
- * - DummySegmentationProcessor (DummySegmentationWidget)
- */
-class KnowledgeProcessorWidgetFactory : public ProcessorWidgetFactory {
+class VRN_QT_API OtbModuleQt : public VoreenModuleQt {
+
 public:
-    virtual ProcessorWidget* createWidget(Processor*) const;
+    OtbModuleQt(const std::string& moduleName);
+ 
+protected:
+    static const std::string loggerCat_;
 };
 
-} //namespace voreen
+} // namespace
 
-#endif
+#endif // VRN_OTBMODULE_QT_H

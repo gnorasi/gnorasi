@@ -26,25 +26,31 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_KNOWLEDGEPROCESSORWIDGETFACTORY_H
-#define VRN_KNOWLEDGEPROCESSORWIDGETFACTORY_H
+#include "qotbprocessorwidgetfactory.h"
 
-#include <QtCore>
+#include <QWidget>
+#include "voreen/qt/voreenapplicationqt.h"
+#include <QMainWindow>
 
-#include "voreen/core/processors/processorwidgetfactory.h"
+#include "widgets/qotbimageviewerwidget.h"
+#include "../processors/Visualization/otbimageviewerprocessor.h"
+
+
+
 
 namespace voreen {
 
-/**
- * Constructs Qt processor widgets for:
- * - ClassifierWSProcessor (ClassifierWSWidget)
- * - DummySegmentationProcessor (DummySegmentationWidget)
- */
-class KnowledgeProcessorWidgetFactory : public ProcessorWidgetFactory {
-public:
-    virtual ProcessorWidget* createWidget(Processor*) const;
-};
+ProcessorWidget* QOTBProcessorWidgetFactory::createWidget(Processor* processor) const {
 
-} //namespace voreen
+    if (!VoreenApplicationQt::qtApp()) {
+        LERRORC("voreen.OtbProcessorWidgetFactory", "VoreenApplicationQt not instantiated");
+        return 0;
+    }
+    QWidget* parent = VoreenApplicationQt::qtApp()->getMainWindow();
 
-#endif
+    if(dynamic_cast<OTBImageViewerProcessor*>(processor))
+        return new QGLOtbImageViewerWidget(parent, static_cast<OTBImageViewerProcessor*>(processor));
+
+    return 0;
+}
+} // namespace voreen
