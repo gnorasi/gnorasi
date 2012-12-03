@@ -23,7 +23,14 @@ public:
     explicit ItiOtbImageViewer(QWidget *parent = 0);
     
     //! This is an abstract function needs to be implemented by every concrete subclass
+    //! The implementation should contain the functionality to disassemble all viewer's widgets
+    //! each sub widget should be a separate window
     virtual void disassembleWidgets() = 0;
+
+    //! This is an abstract function needs to be implemented by every concrete subclass
+    //! The implementation should contain the functionality to assemble all viewer's widgets
+    //! into one single window
+    virtual void assembleWidgets() = 0;
 
     //! This is a virtual method required for painting stuff
     virtual void draw() = 0;

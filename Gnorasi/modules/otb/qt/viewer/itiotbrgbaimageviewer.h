@@ -32,6 +32,9 @@ public:
     void disassembleWidgets();
 
     //! implementation
+    void assembleWidgets();
+
+    //! implementation
     void draw();
 
 signals:

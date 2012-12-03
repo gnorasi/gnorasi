@@ -4,7 +4,7 @@
 
 using namespace itiviewer;
 
-
+//! initialize the unique instance to null
 ItiOtbImageManager* ItiOtbImageManager::m_pInstance = NULL;
 
 //!

@@ -119,6 +119,27 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
     // setup the functionality for spliting all layouts and setup all widgets
     // into a seperate window
 
+    while(layout()->count()){
+        layout()->removeItem(layout()->itemAt(0));
+    }
+
+    m_pItiOtbImageViewer->hide();
+
+    m_pItiOtbImageViewerPanel->hide();
+
+    delete m_pItiOtbImageViewer;
+    delete m_pItiOtbImageViewerPanel;
+
+    m_pItiOtbImageViewer = m_pItiOtbImageFactory->createViewer();
+    m_pItiOtbImageViewer->setParent(this);
+    m_pItiOtbImageViewer->setWindowFlags(Qt::Window);
+    m_pItiOtbImageViewer->show();
+
+
+    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
+    m_pItiOtbImageViewerPanel->setWindowFlags(Qt::Window);
+    m_pItiOtbImageViewerPanel->show();
+
 }
 
 //!
@@ -126,6 +147,31 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     //! TODO
     // setup the functionality for merging all layouts and setup all widgets
     // into one single window
+
+
+    m_pItiOtbImageViewer->hide();
+
+    m_pItiOtbImageViewerPanel->hide();
+
+    delete m_pItiOtbImageViewer;
+    delete m_pItiOtbImageViewerPanel;
+
+    m_pItiOtbImageViewer = m_pItiOtbImageFactory->createViewer();
+    m_pItiOtbImageViewer->setParent(this);
+    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
+
+    m_pItiOtbImageViewer->show();
+    m_pItiOtbImageViewerPanel->show();
+
+    m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
+
+    m_pvSplitter->addWidget(m_pItiOtbImageViewer);
+    m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
+
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->addWidget(m_pvSplitter);
+
+    setLayout(layout);
 }
 
 QGLOtbImageViewerWidget::~QGLOtbImageViewerWidget(){
