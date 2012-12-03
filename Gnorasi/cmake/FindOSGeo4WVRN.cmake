@@ -10,7 +10,7 @@ IF (WIN32)
     
     SET(OSGEO4W_DEFINITIONS "-DOSGEO4W_ALL_NO_LIB")
 
-    #SET(OSGeo4W_INCLUDE_DIRS "${OSGeo4W_DIR}/include")
+    SET(OSGeo4W_INCLUDE_DIRS "${OSGeo4W_DIR}/include")
 
     # set debug and release libraries
     IF(VRN_WIN32)
