@@ -30,7 +30,7 @@ OntologyCreatorWidget::~OntologyCreatorWidget() {
 
 void OntologyCreatorWidget::initialize() {
 
-   m_pOntologyClassModel = new OntologyClassModel( this);
+    m_pOntologyClassModel = new OntologyClassModel( this);
 
     QGroupBox *pGroupBox = new QGroupBox(this);
     pGroupBox->setTitle(tr("Namespace properties"));
@@ -129,6 +129,9 @@ void OntologyCreatorWidget::updateFromProcessor() {
         //! create a new domdocument
         m_owlWriter.createDocument();
 
+        //! append the namespace data
+        m_owlWriter.setupNamespaces(m_pLineEditXmlns->text(),m_pLabelXmlBase->text());
+
         //! iterate through the OntologyClassItem item hierarchy and append data
         QList<OntologyClassItem*> list = m_pOntologyClassModel->getRootItem()->getChildItems();
         QList<OntologyClassItem*>::const_iterator i;
@@ -136,9 +139,6 @@ void OntologyCreatorWidget::updateFromProcessor() {
             OntologyClassItem *citem = *i;
             m_owlWriter.appendData(citem);
         }
-
-        //! append the namespace data
-        m_owlWriter.setNamespaces(m_pLineEditXmlns->text(),m_pLabelXmlBase->text());
 
         //! save the QDomDocument content to a file location
         QString path = QFileDialog::getSaveFileName(this,tr("Save file"),QDir::homePath(),tr("Ontology Files (*.owl)"));
@@ -211,6 +211,9 @@ void OntologyCreatorWidget::setupOutportText(){
     //! create a new QDomDocument
     m_owlWriter.createDocument();
 
+    //! append the namespaces
+    m_owlWriter.setupNamespaces(m_pLineEditXmlns->text(),m_pLabelXmlBase->text());
+
     //! iterate through the item hierrarch and append the data
     QList<OntologyClassItem*> list = m_pOntologyClassModel->getRootItem()->getChildItems();
     QList<OntologyClassItem*>::const_iterator i;
@@ -218,9 +221,6 @@ void OntologyCreatorWidget::setupOutportText(){
         OntologyClassItem *citem = *i;
         m_owlWriter.appendData(citem);
     }
-
-    //! append the namespaces
-    m_owlWriter.setNamespaces(m_pLineEditXmlns->text(),m_pLabelXmlBase->text());
 
     //! get the text
     QString text = m_owlWriter.docToText();

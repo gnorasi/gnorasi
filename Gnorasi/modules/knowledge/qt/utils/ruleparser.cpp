@@ -17,6 +17,7 @@ RuleParser::RuleParser(QObject *parent) :
 {
 }
 
+//! parses the file and create Rules instances
 void RuleParser::parseFile(const QString &filePath, QString *error){
     QFile file(filePath);
     if(!file.open(QIODevice::ReadOnly )){
@@ -57,6 +58,7 @@ void RuleParser::parseFile(const QString &filePath, QString *error){
                 QDomElement ruleElement             = ruleNode.toElement();
                 QString rid                         = ruleElement.attribute("id");
 
+                //! create a new Rule object
                 Rule *pRule                         = ru->createRule(rid);
 
                 // parse the body part
@@ -77,8 +79,10 @@ void RuleParser::parseFile(const QString &filePath, QString *error){
                         QVector<QVariant> data;
                         data << regid << headclasstext << propertutext << leveltext;
 
+                        //! create a new RuleItem
                         RuleItem *pRuleItem         = new RuleItem(data);
 
+                        //! add it to the Rule
                         pRule->appendRuleItem(pRuleItem);
                     }
 
@@ -110,7 +114,10 @@ void RuleParser::parseFile(const QString &filePath, QString *error){
     }
 }
 
-//
+//! namespace checking
+//! checks the rdf element namespaces attribute key values contained in the document passed as a parameter
+//! and the namespaces set in the RuleUtility instance while loading a valid OntologyClassModel given by
+//! the OntologyCreator processor
 bool RuleParser::validateNamespaces(const QDomDocument &doc){
     QDomNode rulesNode              = doc.lastChild();
     if(rulesNode.isElement()){
