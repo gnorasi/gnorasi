@@ -39,6 +39,7 @@ class ItiOtbImageViewerPanelDataTab;
 class ItiOtbImageViewerPanelSetupTab;
 class ItiOtbImageViewerPanelHistogramTab;
 class ItiOtbImageViewerPanelPixelDescriptionTab;
+class ItiOtbImageViewer;
 
 /*!
  * \brief The ItiOtbImageViewerPanel class
@@ -51,7 +52,7 @@ class ItiOtbImageViewerPanel : public QWidget
     Q_OBJECT
 public:
     //! ctor
-    explicit ItiOtbImageViewerPanel(QWidget *parent = 0);
+    explicit ItiOtbImageViewerPanel(ItiOtbImageViewer* v,  QWidget *parent = 0);
     
     //! dtor
     virtual ~ItiOtbImageViewerPanel() {}
@@ -78,6 +79,9 @@ private:
 
     //! tab widget for setting up pixel description properties
 //    ItiOtbImageViewerPanelPixelDescriptionTab *m_pPixelDescriptionTab;
+
+    //!
+    ItiOtbImageViewer *m_pItiOtbImageViewer;
     
 };
 

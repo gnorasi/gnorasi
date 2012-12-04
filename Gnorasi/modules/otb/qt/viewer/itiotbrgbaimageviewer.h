@@ -67,6 +67,18 @@ public:
     //! implementation
     void draw();
 
+    //! implementation
+    void zoomIn();
+
+    //! implementation
+    void zoomOut();
+
+    //! implementation
+    void setGreyScaleColorMode(int band);
+
+    //! implementation
+    void setRGBColorMode(int red, int green, int blue);
+
 signals:
     
 public slots:

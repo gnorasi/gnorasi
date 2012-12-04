@@ -125,3 +125,25 @@ void ItiOtbRgbaImageViewer::assembleWidgets(){
 void ItiOtbRgbaImageViewer::draw(){
 
 }
+
+//!
+void ItiOtbRgbaImageViewer::zoomIn(){
+
+}
+
+//!
+void ItiOtbRgbaImageViewer::zoomOut(){
+
+}
+
+//!
+void ItiOtbRgbaImageViewer::setGreyScaleColorMode(int band){
+    Q_UNUSED(band)
+}
+
+//!
+void ItiOtbRgbaImageViewer::setRGBColorMode(int red, int green, int blue){
+    Q_UNUSED(red)
+    Q_UNUSED(green)
+    Q_UNUSED(blue)
+}

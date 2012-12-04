@@ -4,13 +4,14 @@
 #include "itiotbimageviewerpanelsetuptab.h"
 #include "itiotbimageviewerpanelhistogramtab.h"
 #include "itiotbimageviewerpanelpixeldescriptiontab.h"
+#include "itiotbimageviewer.h"
 
 #include <QVBoxLayout>
 
 using namespace itiviewer;
 
-ItiOtbImageViewerPanel::ItiOtbImageViewerPanel(QWidget *parent) :
-    QWidget(parent)
+ItiOtbImageViewerPanel::ItiOtbImageViewerPanel(ItiOtbImageViewer *v, QWidget *parent) :
+    m_pItiOtbImageViewer(v), QWidget(parent)
 {
     initialize();
 }
