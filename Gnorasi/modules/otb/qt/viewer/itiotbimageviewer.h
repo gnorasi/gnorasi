@@ -47,55 +47,85 @@ class ItiOtbImageViewer : public QWidget
 {
     Q_OBJECT
 public:
-    enum COLORCOMPOSITION{
-        COLORCOMPOSITION_GREYSCALE              = 0,
-        COLORCOMPOSITION_RGBA                   = 1
+    /*!
+     * \brief The CC enum stands for the Color Composition mode
+     */
+    enum CC{
+        CC_GREYSCALE                                                                    = 0,
+        CC_RGBA                                                                         = 1
     };
 
-    enum CONTRASTENHACEMENT{
-        CONTRASTENHACEMENT_LINEAR_0_255         = 0,
-        CONTRASTENHACEMENT_LINEAR_X_PERC        = 1,
-        CONTRASTENHACEMENT_GAUSSIAN             = 2,
-        CONTRASTENHACEMENT_SQUARE_ROOT          = 3
+    /*!
+     * \brief The CE enum stands for the Contrast Enhancement method
+     */
+    enum CE{
+        CELINEAR_0_255                                                                  = 0,
+        CE_LINEAR_X_PERC                                                                = 1,
+        CE_GAUSSIAN                                                                     = 2,
+        CE_SQUARE_ROOT                                                                  = 3
     };
 
+    //!
     //! ctor
+    //!
     explicit ItiOtbImageViewer(QWidget *parent = 0);
-    
-    //! This is an abstract function needs to be implemented by every concrete subclass
-    //! The implementation should contain the functionality to disassemble all viewer's widgets
-    //! each sub widget should be a separate window
-    virtual void disassembleWidgets()           = 0;
 
-    //! This is an abstract function needs to be implemented by every concrete subclass
-    //! The implementation should contain the functionality to assemble all viewer's widgets
-    //! into one single window
-    virtual void assembleWidgets()              = 0;
+    /*!
+     * \brief disassembleWidgets
+     *  This is an abstract function needs to be implemented by every concrete subclass
+     *  The implementation should contain the functionality to disassemble all viewer's widgets
+     *  each sub widget should be a separate window
+     */
+    virtual void disassembleWidgets()                                                   = 0;
 
-    //! This is a virtual method required for painting stuff
-    virtual void draw()                         = 0;
+    /*!
+     * \brief assembleWidgets
+     *  This is an abstract function needs to be implemented by every concrete subclass
+     *  The implementation should contain the functionality to assemble all viewer's widgets
+     *  into one single window
+     */
+    virtual void assembleWidgets()                                                      = 0;
 
-    //! This is a virtual method for abstracting the zoomin functionality
-    virtual void zoomIn()                       = 0;
+    /*!
+     * \brief draw
+     *  This is a virtual method required for painting stuff
+     */
+    virtual void draw()                                                                 = 0;
 
-    //! This is a virtual method for abstracting the zoom out functionality
-    virtual void zoomOut()                      = 0;
+    /*!
+     * \brief zoomIn
+     *  This is a virtual method for abstracting the zoomin functionality
+     */
+    virtual void zoomIn()                                                               = 0;
 
-    //! This is a virtual method for abstracting the setting the color mode functionality
-    //! \param The band parameter sets the band channel will be used to draw the image
-    virtual void setGreyScaleColorMode(int band) = 0;
+    /*!
+     * \brief zoomOut
+     *  This is a virtual method for abstracting the zoom out functionality
+     */
+    virtual void zoomOut()                                                              = 0;
 
-    //! This is a virtual method for abstracting the setting the color mode functionality
-    //! \param The red parameter sets the band channel to be used to visualize the red part
-    //! \param The green parameter sets the band channel to be used to visualize the green part
-    //! \param the blue parameter sets the band channel to be used to visualize the blue part
-    virtual void setRGBColorMode(int red, int green, int blue) = 0;
+    /*!
+     * \brief setGreyScaleColorMode
+     *  This is a virtual method for abstracting the setting the color mode functionality
+     * \param band,  sets the band channel will be used to draw the image
+     */
+    virtual void setGreyScaleColorMode(int band)                                        = 0;
 
-    //! This is a virtual function for abstracting the contrast enhancement method
-    //! \param The ce parameter sets the method to be set
-    //! \param The aval parameter sets the lower quantile value or the standard deviation value if the ce param equals to CONTRASTENHACEMENT_GAUSSIAN
-    //! \param The bval parameter equals to the upper quantile value
-    void setContrastEnhancementMethod(CONTRASTENHACEMENT ce, double aval, double bval = 0.0);
+    /*!
+     * \brief setRGBColorMode, This is a virtual method for abstracting the setting the color mode functionality
+     * \param red, sets the band channel to be used to visualize the red part
+     * \param green, sets the band channel to be used to visualize the green part
+     * \param blue, sets the band channel to be used to visualize the blue part
+     */
+    virtual void setRGBColorMode(int red, int green, int blue)                          = 0;
+
+    /*!
+     * \brief setContrastEnhancementMethod, This is a virtual function for abstracting the contrast enhancement method
+     * \param ce, sets the method to be set
+     * \param aval, sets the lower quantile value or the standard deviation value if the ce param equals to CE_GAUSSIAN
+     * \param bval equals to the upper quantile value
+     */
+    virtual void setContrastEnhancementMethod(CC ce, double aval, double bval = 0.0)    = 0;
 
 protected:
 
