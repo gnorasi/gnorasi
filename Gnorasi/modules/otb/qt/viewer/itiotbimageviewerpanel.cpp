@@ -18,25 +18,25 @@ ItiOtbImageViewerPanel::ItiOtbImageViewerPanel(QWidget *parent) :
 //!
 void ItiOtbImageViewerPanel::initialize(){
     //! the data tab
-    m_pDataTab = new ItiOtbImageViewerPanelDataTab(this);
+//    m_pDataTab = new ItiOtbImageViewerPanelDataTab(this);
 
     //! the setu tab
     m_pSetupTab = new ItiOtbImageViewerPanelSetupTab(this);
 
     //! the histogram data tab
-    m_pHistogramTab = new ItiOtbImageViewerPanelHistogramTab(this);
+//    m_pHistogramTab = new ItiOtbImageViewerPanelHistogramTab(this);
 
     //! the pixel description tab
-    m_pPixelDescriptionTab = new ItiOtbImageViewerPanelPixelDescriptionTab(this);
+//    m_pPixelDescriptionTab = new ItiOtbImageViewerPanelPixelDescriptionTab(this);
 
     //! the tab widget
     m_pTabWidget = new QTabWidget(this);
 
     //! add widgets to the tab
-    m_pTabWidget->addTab(m_pDataTab,m_pDataTab->windowTitle());
+//    m_pTabWidget->addTab(m_pDataTab,m_pDataTab->windowTitle());
     m_pTabWidget->addTab(m_pSetupTab,m_pSetupTab->windowTitle());
-    m_pTabWidget->addTab(m_pHistogramTab,m_pHistogramTab->windowTitle());
-    m_pTabWidget->addTab(m_pPixelDescriptionTab,m_pPixelDescriptionTab->windowTitle());
+//    m_pTabWidget->addTab(m_pHistogramTab,m_pHistogramTab->windowTitle());
+//    m_pTabWidget->addTab(m_pPixelDescriptionTab,m_pPixelDescriptionTab->windowTitle());
 
     //! setup layout
     QVBoxLayout *layout = new QVBoxLayout(this);

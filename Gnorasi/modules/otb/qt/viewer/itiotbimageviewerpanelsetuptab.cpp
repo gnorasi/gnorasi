@@ -1,14 +1,193 @@
 #include "itiotbimageviewerpanelsetuptab.h"
 
+#include <QVBoxLayout>
+
 using namespace itiviewer;
 
 ItiOtbImageViewerPanelSetupTab::ItiOtbImageViewerPanelSetupTab(QWidget *parent) :
     QWidget(parent)
 {
     setWindowTitle(tr("Setup"));
+
+    initialize();
+}
+
+//!
+void ItiOtbImageViewerPanelSetupTab::onComboBoxMethodCurrentIndexChanged(int index){
+    if(index == 2){
+        m_pLabelLowerQuantile->setVisible(false);
+        m_pLabelUpperQuantile->setVisible(false);
+        m_pLabelStandardDeviation->setVisible(true);
+        m_pLineEditLowerQuantileValue->setVisible(false);
+        m_pLineEditUpperQuantileValue->setVisible(false);
+        m_pLineEditStandardDeviationValue->setVisible(true);
+    }else{
+        m_pLabelLowerQuantile->setVisible(true);
+        m_pLabelUpperQuantile->setVisible(true);
+        m_pLabelStandardDeviation->setVisible(false);
+        m_pLineEditLowerQuantileValue->setVisible(true);
+        m_pLineEditUpperQuantileValue->setVisible(true);
+        m_pLineEditStandardDeviationValue->setVisible(false);
+    }
+}
+
+//!
+void ItiOtbImageViewerPanelSetupTab::onRadioButtonColorCompositionChanged(){
+    if(m_pRadioButtonGrayscaleMode->isChecked()){
+        m_pLabelGreyChannel->setEnabled(true);
+        m_pSpinBoxGreyscaleChannel->setEnabled(true);
+        m_pLabelRedChannel->setEnabled(false);
+        m_pLabelGreenChannel->setEnabled(false);
+        m_pLabelBlueChannel->setEnabled(false);
+        m_pSpinBoxRedChannel->setEnabled(false);
+        m_pSpinBoxGreenChannel->setEnabled(false);
+        m_pSpinBoxBlueChannel->setEnabled(false);
+    }else{
+        m_pLabelGreyChannel->setEnabled(false);
+        m_pSpinBoxGreyscaleChannel->setEnabled(false);
+        m_pLabelRedChannel->setEnabled(true);
+        m_pLabelGreenChannel->setEnabled(true);
+        m_pLabelBlueChannel->setEnabled(true);
+        m_pSpinBoxRedChannel->setEnabled(true);
+        m_pSpinBoxGreenChannel->setEnabled(true);
+        m_pSpinBoxBlueChannel->setEnabled(true);
+    }
+}
+
+//!
+void ItiOtbImageViewerPanelSetupTab::setupColorCompositionGroupBox(){
+
+    //!
+    m_pGroupBoxColorComposition         = new QGroupBox(this);
+    m_pRadioButtonGrayscaleMode         = new QRadioButton(this);
+    m_pRadioButtonRGBCompositionMode    = new QRadioButton(this);
+    m_pLabelGreyChannel                 = new QLabel(tr("Grey channel"),this);
+    m_pSpinBoxRedChannel                = new QSpinBox(this);
+    m_pSpinBoxGreenChannel              = new QSpinBox(this);
+    m_pSpinBoxBlueChannel               = new QSpinBox(this);
+    m_pSpinBoxGreyscaleChannel          = new QSpinBox(this);
+    m_pLabelRedChannel                  = new QLabel(tr("Red channel"),this);
+    m_pLabelGreenChannel                = new QLabel(tr("Green channel"),this);
+    m_pLabelBlueChannel                 = new QLabel(tr("Blue channel"),this);
+    m_pButtonApplyColorComposition      = new QPushButton(this);
+
+    //!
+    m_pGroupBoxColorComposition->setTitle(tr("Color Composition"));
+    m_pRadioButtonGrayscaleMode->setText(tr("Greyscale mode"));
+    m_pRadioButtonRGBCompositionMode->setText(tr("RGB composition mode"));
+    m_pButtonApplyColorComposition->setText(tr("Apply"));
+
+    //!
+    QHBoxLayout *hboxLayout = new QHBoxLayout;
+    hboxLayout->addWidget(m_pLabelGreyChannel);
+    hboxLayout->addWidget(m_pSpinBoxGreyscaleChannel);
+
+    //!
+    QHBoxLayout *hboxLayout1 = new QHBoxLayout;
+    hboxLayout1->addWidget(m_pLabelRedChannel);
+    hboxLayout1->addWidget(m_pSpinBoxRedChannel);
+
+    QHBoxLayout *hboxLayout2 = new QHBoxLayout;
+    hboxLayout2->addWidget(m_pLabelGreenChannel);
+    hboxLayout2->addWidget(m_pSpinBoxGreenChannel);
+
+    //!
+    QHBoxLayout *hboxLayout3 = new QHBoxLayout;
+    hboxLayout3->addWidget(m_pLabelBlueChannel);
+    hboxLayout3->addWidget(m_pSpinBoxBlueChannel);
+
+
+    QVBoxLayout *layout = new QVBoxLayout();
+    layout->addWidget(m_pRadioButtonGrayscaleMode);
+    layout->addLayout(hboxLayout);
+    layout->addWidget(m_pRadioButtonRGBCompositionMode);
+    layout->addLayout(hboxLayout1);
+    layout->addLayout(hboxLayout2);
+    layout->addLayout(hboxLayout3);
+    layout->addSpacerItem(new QSpacerItem(100,100,QSizePolicy::Fixed,QSizePolicy::Expanding));
+    layout->addWidget(m_pButtonApplyColorComposition);
+
+    m_pGroupBoxColorComposition->setLayout(layout);
+
+    connect(m_pRadioButtonGrayscaleMode,SIGNAL(clicked()),this,SLOT(onRadioButtonColorCompositionChanged()));
+    connect(m_pRadioButtonRGBCompositionMode,SIGNAL(clicked()),this,SLOT(onRadioButtonColorCompositionChanged()));
+}
+
+//!
+void ItiOtbImageViewerPanelSetupTab::setupContrastEnhancememtGroupBox(){
+    //!
+    m_pGroupBoxContrastEnhancement      = new QGroupBox(this);
+    m_pGroupBoxMethod                   = new QGroupBox(this);
+    m_pComboBoxMethod                   = new QComboBox(this);
+    m_pLabelLowerQuantile               = new QLabel(tr("Lower Quantile %"),this);
+    m_pLabelUpperQuantile               = new QLabel(tr("Upper Quantile %"),this);
+    m_pLabelStandardDeviation           = new QLabel(tr("Standard Deviation"),this);
+    m_pLineEditLowerQuantileValue       = new QLineEdit(this);
+    m_pLineEditStandardDeviationValue   = new QLineEdit(this);
+    m_pLineEditUpperQuantileValue       = new QLineEdit(this);
+    m_pButtonApplyContrastEnhancement   = new QPushButton(this);
+
+    //!
+    m_pGroupBoxContrastEnhancement->setTitle(tr("Contrast Enhancement"));
+    m_pGroupBoxMethod->setTitle(tr("Method"));
+    QStringList list;
+    list << tr("Linear 0-255") << tr("Linear X%") << tr("Gaussian") << tr("Square roor");
+    m_pComboBoxMethod->insertItems(0,list);
+    m_pLineEditLowerQuantileValue->setText(QString::number(2.0,'f',1));
+    m_pLineEditUpperQuantileValue->setText(QString::number(2.0,'f',1));
+    m_pLineEditLowerQuantileValue->setValidator(new QDoubleValidator(0.0,1000.0,1,this));
+    m_pLineEditUpperQuantileValue->setValidator(new QDoubleValidator(0.0,1000.0,1,this));
+    m_pLineEditStandardDeviationValue->setText(QString::number(1.0,'f',2));
+    m_pButtonApplyContrastEnhancement->setText(tr("Apply"));
+    m_pLabelStandardDeviation->setVisible(false);
+    m_pLineEditStandardDeviationValue->setVisible(false);
+
+    //!
+    QHBoxLayout *hboxLayout = new QHBoxLayout;
+    hboxLayout->addWidget(m_pLabelLowerQuantile);
+    hboxLayout->addWidget(m_pLineEditLowerQuantileValue);
+
+    //!
+    QHBoxLayout *hboxLayout1 = new QHBoxLayout;
+    hboxLayout1->addWidget(m_pLabelUpperQuantile);
+    hboxLayout1->addWidget(m_pLineEditUpperQuantileValue);
+
+    //!
+    QHBoxLayout *hboxLayout2 = new QHBoxLayout;
+    hboxLayout2->addWidget(m_pLabelStandardDeviation);
+    hboxLayout2->addWidget(m_pLineEditStandardDeviationValue);
+
+    //!
+    QVBoxLayout *vBoxLayout = new QVBoxLayout;
+    vBoxLayout->addWidget(m_pComboBoxMethod);
+    vBoxLayout->addLayout(hboxLayout);
+    vBoxLayout->addLayout(hboxLayout1);
+    vBoxLayout->addLayout(hboxLayout2);
+    m_pGroupBoxMethod->setLayout(vBoxLayout);
+
+    //!
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(m_pGroupBoxMethod);
+    layout->addSpacerItem(new QSpacerItem(100,100,QSizePolicy::Preferred,QSizePolicy::Expanding));
+    layout->addWidget(m_pButtonApplyContrastEnhancement);
+
+    m_pGroupBoxContrastEnhancement->setLayout(layout);
+
+    connect(m_pComboBoxMethod,SIGNAL(currentIndexChanged(int)),this,SLOT(onComboBoxMethodCurrentIndexChanged(int)));
 }
 
 //!
 void ItiOtbImageViewerPanelSetupTab::initialize(){
+    setupColorCompositionGroupBox();
 
+    setupContrastEnhancememtGroupBox();
+
+    QHBoxLayout *hboxLayout = new QHBoxLayout(this);
+    hboxLayout->addWidget(m_pGroupBoxColorComposition);
+    hboxLayout->addWidget(m_pGroupBoxContrastEnhancement);
+    hboxLayout->addSpacerItem(new QSpacerItem(100,100,QSizePolicy::Expanding,QSizePolicy::Fixed));
+    setLayout(hboxLayout);
+
+    m_pRadioButtonGrayscaleMode->toggle();
+    onRadioButtonColorCompositionChanged();
 }

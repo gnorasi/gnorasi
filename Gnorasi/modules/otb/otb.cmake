@@ -390,7 +390,6 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelpixeldescriptiontab.h
 )
 
-
 SET(MOD_QT_HEADERS_NONMOC
     ${MOD_DIR}/qt/qotbprocessorwidgetfactory.h
 )
