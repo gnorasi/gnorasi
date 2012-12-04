@@ -2,6 +2,8 @@
 
 #include "otbImageFileReader.h"
 
+#include "commands/command.h"
+
 using namespace itiviewer;
 
 //! initialize the unique instance to null
@@ -29,6 +31,13 @@ void ItiOtbImageManager::deleteInstance(){
 
         m_pInstance = NULL;
     }
+}
+
+//!
+void ItiOtbImageManager::processCommand(Command *c){
+    c->execute();
+
+    m_commandList.append(c);
 }
 
 //!

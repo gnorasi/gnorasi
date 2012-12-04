@@ -24,6 +24,7 @@ namespace voreen {
 
 /*!
  * \brief The QGLOtbImageViewerWidget class
+ *
  *  This is the main widget of the GeospatialClassificationProcessor
  *  This widget accepts data from the processors which are connected with the
  *  OtbImageViewerProcessor. It has two key member variables : ItiOtbImageViewer and ItiOtbImageViewerFactory
@@ -31,6 +32,7 @@ namespace voreen {
  *  The ItiOtbImageViewerFactory is the core class which is responsible for creating the
  *  ItiOtbImageViewer instances. Depending on the port a new ItiOtbImageViewerFactory instance
  *  is created.
+ *
  */
 class VRN_QT_API QGLOtbImageViewerWidget : public QProcessorWidget
 {

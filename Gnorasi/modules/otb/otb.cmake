@@ -371,6 +371,7 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelsetuptab.cpp
     ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelhistogramtab.cpp
     ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelpixeldescriptiontab.cpp
+    ${MOD_DIR}/qt/viewer/commands/command.cpp
 )
 ################################################################################
 # Qt headers
@@ -388,6 +389,7 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelsetuptab.h
     ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelhistogramtab.h
     ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelpixeldescriptiontab.h
+    ${MOD_DIR}/qt/viewer/commands/command.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC
