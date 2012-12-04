@@ -15,11 +15,11 @@ using namespace otb;
 
 const unsigned int Dimension = 2;
 
-typedef itk::RGBAPixel<unsigned char>       PixelType;
-typedef otb::Image<PixelType, Dimension>    RGBAImageType;
-typedef RGBAImageType::RegionType           RGBARegionType;
-typedef RGBAImageType::IndexType            RGBAIndexType;
-typedef RGBAImageType::SizeType             RGBASizeType;
+typedef itk::RGBAPixel<unsigned char>           PixelType;
+typedef otb::Image<PixelType, Dimension>  RGBAImageType;
+typedef RGBAImageType::RegionType               RGBARegionType;
+typedef RGBAImageType::IndexType                RGBAIndexType;
+typedef RGBAImageType::SizeType                 RGBASizeType;
 
 namespace itiviewer{
 

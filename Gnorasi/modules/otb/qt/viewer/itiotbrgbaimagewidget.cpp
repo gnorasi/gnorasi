@@ -45,7 +45,8 @@ void ItiOtbRgbaImageWidget::ReadBuffer(const RGBAImageType *image, const RGBAReg
         m_OpenGlBuffer[index + 2] = it.Get()[2];
         ++it;
     }
-    // Last, updating buffer size
+
+    //! Last, updating buffer size
     m_OpenGlBufferedRegion = region;
 }
 
