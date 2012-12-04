@@ -18,8 +18,8 @@ namespace itiviewer{
  *  used as an interface - console item , accessible from everywhere in
  *  the project.
  *
- *  This class has widgets as member variables, that will be used in the main
- *  user interface of the viewer's widget.
+ *  This class has a voreen Port as member variable, this port holds data related to the image
+ *  The concrete ItiOtbImageViewer class knows which kind of port is used a raster or vector port
  *
  */
 class ItiOtbImageManager

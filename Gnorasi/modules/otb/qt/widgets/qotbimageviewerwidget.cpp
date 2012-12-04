@@ -28,30 +28,36 @@ QGLOtbImageViewerWidget::QGLOtbImageViewerWidget(QWidget *parent, OTBImageViewer
     setWindowTitle(QString::fromStdString(otbImageViewerProcessor->getName()));
     resize(600, 500);
     setPosition(QApplication::desktop()->width()/2 - 200,QApplication::desktop()->height()/2 - 200);
+    setToolTip(tr("Press F1 to dissasembe sub widgets into seperate windows, press F9 to assemble widgets into one single window."));
 }
 
 //!
 void QGLOtbImageViewerWidget::initialize(){
     QProcessorWidget::initialize();
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
-
+    //!
     m_pItiOtbImageFactory = new ItiOtbRgbaImageViewerFactory(this);
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->createViewer();
+    m_pItiOtbImageViewer->setParent(this);
     m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
 
+    //!
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
+    m_pItiOtbImageViewerPanel->setMinimumHeight(100);
 
+    //! create a splitter and add the widgets
     m_pvSplitter = new QSplitter(Qt::Vertical,this);
     m_pvSplitter->addWidget(m_pItiOtbImageViewer);
     m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
+    m_pvSplitter->setChildrenCollapsible(false);
 
+    //! create a vertical box layout and add the splitter on it
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(m_pvSplitter);
-
     this->setLayout(layout);
 
+    //!
     initialized_ = true;
-
     hide();
 }
 
@@ -104,6 +110,8 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
 
 //!
 void QGLOtbImageViewerWidget::keyPressEvent(QKeyEvent *event){
+
+    //! check key pressed
     if(event->key() == Qt::Key_F1){
         disassembleWidgets();
     }else if(event->key() == Qt::Key_F9)
@@ -115,27 +123,23 @@ void QGLOtbImageViewerWidget::keyPressEvent(QKeyEvent *event){
 //!
 void QGLOtbImageViewerWidget::disassembleWidgets(){
 
-    //! TODO
-    // setup the functionality for spliting all layouts and setup all widgets
-    // into a seperate window
+    //! Due to a lack of removing added itmes functionality on a QSplitter instance
+    //! the added widgets must be firstly hidden and then deleted..
 
-    while(layout()->count()){
-        layout()->removeItem(layout()->itemAt(0));
-    }
-
+    //! hide widgets
     m_pItiOtbImageViewer->hide();
-
     m_pItiOtbImageViewerPanel->hide();
 
+    //! delete widgets
     delete m_pItiOtbImageViewer;
     delete m_pItiOtbImageViewerPanel;
 
+    //! Create again the viewer and disassemble the sub widgets
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->createViewer();
     m_pItiOtbImageViewer->setParent(this);
-    m_pItiOtbImageViewer->setWindowFlags(Qt::Window);
-    m_pItiOtbImageViewer->show();
+    m_pItiOtbImageViewer->disassembleWidgets();
 
-
+    //! create the panel
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
     m_pItiOtbImageViewerPanel->setWindowFlags(Qt::Window);
     m_pItiOtbImageViewerPanel->show();
@@ -144,34 +148,30 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
 
 //!
 void QGLOtbImageViewerWidget::assembleWidgets(){
-    //! TODO
-    // setup the functionality for merging all layouts and setup all widgets
-    // into one single window
 
+    //! Due to a lack of removing added itmes functionality on a QSplitter instance
+    //! the added widgets must be firstly hidden and then deleted..
 
+    //! hide widgets
     m_pItiOtbImageViewer->hide();
-
     m_pItiOtbImageViewerPanel->hide();
 
+    //! delete widgets
     delete m_pItiOtbImageViewer;
     delete m_pItiOtbImageViewerPanel;
 
+    //! Create again the viewer and the panel
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->createViewer();
     m_pItiOtbImageViewer->setParent(this);
-    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
-
-    m_pItiOtbImageViewer->show();
-    m_pItiOtbImageViewerPanel->show();
-
     m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
+    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
+    m_pItiOtbImageViewerPanel->setMinimumHeight(100);
 
+    //! add the newly added widgets to the splitter
     m_pvSplitter->addWidget(m_pItiOtbImageViewer);
     m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
+    m_pvSplitter->setChildrenCollapsible(false);
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->addWidget(m_pvSplitter);
-
-    setLayout(layout);
 }
 
 QGLOtbImageViewerWidget::~QGLOtbImageViewerWidget(){
