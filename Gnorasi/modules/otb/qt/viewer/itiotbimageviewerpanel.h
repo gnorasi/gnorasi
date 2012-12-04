@@ -40,16 +40,16 @@ private:
     QTabWidget *m_pTabWidget;
 
     //! tab widget for setting up data properties
-    ItiOtbImageViewerPanelDataTab *m_pDataTab;
+//    ItiOtbImageViewerPanelDataTab *m_pDataTab;
 
     //! tab widget for setting up setup properties
     ItiOtbImageViewerPanelSetupTab *m_pSetupTab;
 
     //! tab widget for setting up histogram properties
-    ItiOtbImageViewerPanelHistogramTab *m_pHistogramTab;
+//    ItiOtbImageViewerPanelHistogramTab *m_pHistogramTab;
 
     //! tab widget for setting up pixel description properties
-    ItiOtbImageViewerPanelPixelDescriptionTab *m_pPixelDescriptionTab;
+//    ItiOtbImageViewerPanelPixelDescriptionTab *m_pPixelDescriptionTab;
     
 };
 

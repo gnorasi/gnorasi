@@ -43,7 +43,7 @@ void QGLOtbImageViewerWidget::initialize(){
 
     //!
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
-    m_pItiOtbImageViewerPanel->setMinimumHeight(100);
+    m_pItiOtbImageViewerPanel->setMinimumHeight(270);
 
     //! create a splitter and add the widgets
     m_pvSplitter = new QSplitter(Qt::Vertical,this);
