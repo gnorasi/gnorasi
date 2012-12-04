@@ -42,7 +42,7 @@ void QGLOtbImageViewerWidget::initialize(){
     m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
 
     //!
-    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
+    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(m_pItiOtbImageViewer, this);
     m_pItiOtbImageViewerPanel->setMinimumHeight(270);
 
     //! create a splitter and add the widgets
@@ -140,7 +140,7 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
     m_pItiOtbImageViewer->disassembleWidgets();
 
     //! create the panel
-    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
+    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(m_pItiOtbImageViewer, this);
     m_pItiOtbImageViewerPanel->setWindowFlags(Qt::Window);
     m_pItiOtbImageViewerPanel->show();
 
@@ -164,7 +164,7 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->createViewer();
     m_pItiOtbImageViewer->setParent(this);
     m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
-    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
+    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(m_pItiOtbImageViewer, this);
     m_pItiOtbImageViewerPanel->setMinimumHeight(100);
 
     //! add the newly added widgets to the splitter
