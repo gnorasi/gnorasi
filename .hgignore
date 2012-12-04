@@ -63,3 +63,5 @@ Gnorasi/modules/otb/ext
 
 #Other
 CMakeLists.txt.user
+Gnorasi/data/voreensettings.xml
+Gnorasi/data/voreenve-log.html
