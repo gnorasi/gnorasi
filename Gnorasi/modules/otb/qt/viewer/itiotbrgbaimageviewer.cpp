@@ -147,3 +147,9 @@ void ItiOtbRgbaImageViewer::setRGBColorMode(int red, int green, int blue){
     Q_UNUSED(green)
     Q_UNUSED(blue)
 }
+
+void ItiOtbRgbaImageViewer::setContrastEnhancementMethod(CC ce, double aval, double bval){
+    Q_UNUSED(ce)
+    Q_UNUSED(aval)
+    Q_UNUSED(bval)
+}
