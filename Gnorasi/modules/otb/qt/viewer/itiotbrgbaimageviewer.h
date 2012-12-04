@@ -79,6 +79,9 @@ public:
     //! implementation
     void setRGBColorMode(int red, int green, int blue);
 
+    //! implementation
+    void setContrastEnhancementMethod(CC ce, double aval, double bval);
+
 signals:
     
 public slots:
