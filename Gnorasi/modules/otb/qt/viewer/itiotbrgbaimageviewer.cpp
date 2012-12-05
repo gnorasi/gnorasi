@@ -41,9 +41,9 @@ void ItiOtbRgbaImageViewer::setupLayout(){
 
     //! TODO
     //!
-    //! create the histogram widget, also a widget for showing pixel info metadata
+    //! create the metadata widget, also a widget for showing pixel info metadata
     //!
-    m_pMetadataWidget       = new QWidget(this);
+    m_pMetadataWidget                   = new QWidget(this);
     m_pMetadataWidget->setGeometry(0,0,200,200);
     m_pMetadataWidget->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
@@ -123,16 +123,6 @@ void ItiOtbRgbaImageViewer::assembleWidgets(){
 
 //!
 void ItiOtbRgbaImageViewer::draw(){
-
-}
-
-//!
-void ItiOtbRgbaImageViewer::zoomIn(){
-
-}
-
-//!
-void ItiOtbRgbaImageViewer::zoomOut(){
 
 }
 

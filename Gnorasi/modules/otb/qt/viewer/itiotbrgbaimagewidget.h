@@ -44,7 +44,7 @@ using namespace otb;
 const unsigned int Dimension = 2;
 
 typedef itk::RGBAPixel<unsigned char>           PixelType;
-typedef otb::Image<PixelType, Dimension>  RGBAImageType;
+typedef otb::Image<PixelType, Dimension>        RGBAImageType;
 typedef RGBAImageType::RegionType               RGBARegionType;
 typedef RGBAImageType::IndexType                RGBAIndexType;
 typedef RGBAImageType::SizeType                 RGBASizeType;
@@ -114,13 +114,22 @@ public:
 
 protected:
 
-    //! reimplemented method declared in the QGLWidget class
+    /*!
+     * \brief initializeGL
+     *  reimplemented method declared in the QGLWidget class
+     */
     void initializeGL();
 
-    //! reimplemented method declared in the QGLWidget class
+    /*!
+     * \brief resizeGL , reimplemented method declared in the QGLWidget class
+     * \param w , the width parameter
+     * \param h , the height parameter
+     */
     void resizeGL(int w, int h);
 
-    //! reimplemented method declared in the QGLWidget class
+    /*!
+     * \brief paintGL , reimplemented method declared in the QGLWidget class
+     */
     void paintGL();
 
 
