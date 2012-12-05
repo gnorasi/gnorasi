@@ -33,12 +33,6 @@ void ItiOtbImageManager::deleteInstance(){
     }
 }
 
-//!
-void ItiOtbImageManager::processCommand(Command *c){
-    c->execute();
-
-    m_commandList.append(c);
-}
 
 //!
 ItiOtbImageManager::~ItiOtbImageManager(){

@@ -55,9 +55,6 @@ class ItiOtbRgbaImageViewer : public ItiOtbImageViewer
 public:
     explicit ItiOtbRgbaImageViewer(QWidget *parent = 0);
 
-    /** Set center*/
-//    void setCenter(IndexType index);
-
     //! implementation
     void disassembleWidgets();
 
