@@ -376,6 +376,10 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.cpp
     ${MOD_DIR}/qt/viewer/itiotbfocusregion.cpp
     ${MOD_DIR}/qt/viewer/itiotbrgbafocusregion.cpp
+    ${MOD_DIR}/qt/viewer/itiotbrgbascrollablewidget.cpp
+    ${MOD_DIR}/qt/viewer/itiotbfocusregionobserver.cpp
+    ${MOD_DIR}/qt/viewer/itiotbrgbazoomablewidget.cpp
+    ${MOD_DIR}/qt/viewer/itiotbrgbafullwidget.cpp
 )
 ################################################################################
 # Qt headers
@@ -398,6 +402,10 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.h
     ${MOD_DIR}/qt/viewer/itiotbfocusregion.h
     ${MOD_DIR}/qt/viewer/itiotbrgbafocusregion.h
+    ${MOD_DIR}/qt/viewer/itiotbrgbascrollablewidget.h
+    ${MOD_DIR}/qt/viewer/itiotbfocusregionobserver.h
+    ${MOD_DIR}/qt/viewer/itiotbrgbazoomablewidget.h
+    ${MOD_DIR}/qt/viewer/itiotbrgbafullwidget.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

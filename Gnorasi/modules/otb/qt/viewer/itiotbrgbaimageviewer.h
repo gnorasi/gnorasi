@@ -40,7 +40,9 @@
 
 namespace itiviewer{
 
-class ItiOtbRgbaImageWidget;
+class ItiOtbRgbaScrollableWidget;
+class ItiOtbRgbaFullWidget;
+class ItiOtbRgbaZoomableWidget;
 class ItiOtbRgbaFocusRegion;
 
 /** \class ITIOTBImageViewer
@@ -82,13 +84,13 @@ private:
     void setupLayout();
 
     //! The Scrollable QGLWidget
-    ItiOtbRgbaImageWidget *m_pItiOtbRgbaImageWidgetScroll;
+    ItiOtbRgbaScrollableWidget *m_pItiOtbRgbaImageWidgetScroll;
 
     //! The Full QGLWidget
-    ItiOtbRgbaImageWidget *m_pItiOtbRgbaImageWidgetFull;
+    ItiOtbRgbaFullWidget *m_pItiOtbRgbaImageWidgetFull;
 
     //! The Zoomable QGLWidget
-    ItiOtbRgbaImageWidget *m_pItiOtbRgbaImageWidgetZoom;
+    ItiOtbRgbaZoomableWidget *m_pItiOtbRgbaImageWidgetZoom;
 
     //! The left vertical layout, needed for assembiling and disassembliing purposes
     QVBoxLayout *m_pvBoxLayoutLeft;
