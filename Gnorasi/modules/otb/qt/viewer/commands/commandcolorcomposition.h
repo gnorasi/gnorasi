@@ -26,91 +26,48 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef VRN_QGLOTBIMAGEVIEWERWIDGET_H
-#define VRN_QGLOTBIMAGEVIEWERWIDGET_H
+#ifndef COMMANDCOLORCOMPOSITION_H
+#define COMMANDCOLORCOMPOSITION_H
 
-#include <QLabel>
-#include <QString>
-#include <QtGui>
-
-#include "modules/otb/processors/Visualization/otbimageviewerprocessor.h"
-#include "voreen/core/voreencoreapi.h"
-#include "voreen/qt/voreenmoduleqt.h"
-#include "voreen/qt/widgets/processor/qprocessorwidget.h"
-#include "../../ports/otbimageport.h"
-
+#include "command.h"
 
 namespace itiviewer{
-    class ItiOtbImageViewer;
-    class ItiOtbImageViewerFactory;
-    class ItiOtbImageViewerPanel;
-}
 
-using namespace otb;
-
-namespace voreen {
+class ItiOtbImageViewer;
 
 /*!
- * \brief The QGLOtbImageViewerWidget class
- *
- *  This is the main widget of the GeospatialClassificationProcessor
- *  This widget accepts data from the processors which are connected with the
- *  OtbImageViewerProcessor. It has two key member variables : ItiOtbImageViewer and ItiOtbImageViewerFactory
- *  The ItiOtbImageViewer is the GUI class which hadles all the visualization stuff.
- *  The ItiOtbImageViewerFactory is the core class which is responsible for creating the
- *  ItiOtbImageViewer instances. Depending on the port a new ItiOtbImageViewerFactory instance
- *  is created.
- *
+ * \brief The CommandColorComposition class
+ *  This command handles color composition functionality
  */
-class VRN_QT_API QGLOtbImageViewerWidget : public QProcessorWidget
+class CommandColorComposition : public Command
 {
     Q_OBJECT
 public:
-    QGLOtbImageViewerWidget(QWidget*, OTBImageViewerProcessor* );
 
-    virtual ~QGLOtbImageViewerWidget();
+    //! ctor
+    CommandColorComposition(ItiOtbImageViewer *, QObject *parent);
 
-    void initialize();
+    //! implementation
+    void execute();
 
-    virtual void updateFromProcessor();
-    
-protected:
-    void keyPressEvent(QKeyEvent *);
-
-signals:
-    
 public slots:
-    //!
+    void setGreyScaleMethod(int channel);
 
-
-private slots:
-    //!
-
+    void setRGBMethod(int red, int green, int blue);
 
 private:
-    //! setup connections between commands and panel properties
-    void setupCommands();
+    ItiOtbImageViewer *m_pItiOtbImageViewer;
 
-    //! this function creates and assembles all the widgets into one single widget
-    void assembleWidgets();
+    //! a color composition could be either greyscale or RGB
+    bool m_isGreyScale;
 
-    //! this function splits the layout
-    void disassembleWidgets();
-
-    static const std::string loggerCat_;
-
-    //! this is the main widget of this viewer
-    itiviewer::ItiOtbImageViewer *m_pItiOtbImageViewer;
-
-    //! a factory responsible for creating ItiOtbImageViewer instances..
-    itiviewer::ItiOtbImageViewerFactory *m_pItiOtbImageFactory;
-
-    //! a panel widget for handling viewer parameters
-    itiviewer::ItiOtbImageViewerPanel *m_pItiOtbImageViewerPanel;
-
-    QSplitter *m_pvSplitter;
+    //! channel numbers
+    int m_greyChannel;
+    int m_redChannel;
+    int m_greenChannel;
+    int m_blueChannel;
 };
 
-}
+} // namespace itiviewer
 
-#endif // VRN_QGLOTBIMAGEVIEWERWIDGET_H
+#endif // COMMANDCOLORCOMPOSITION_H

@@ -74,13 +74,13 @@ public:
     void zoomOut();
 
     //! implementation
-    void setGreyScaleColorMode(int band);
+    void applyGreyScaleColorMode(int band);
 
     //! implementation
-    void setRGBColorMode(int red, int green, int blue);
+    void applyRGBColorMode(int red, int green, int blue);
 
     //! implementation
-    void setContrastEnhancementMethod(CC ce, double aval, double bval);
+    void applyContrastEnhancementMethod(CC ce, double aval, double bval);
 
 signals:
     

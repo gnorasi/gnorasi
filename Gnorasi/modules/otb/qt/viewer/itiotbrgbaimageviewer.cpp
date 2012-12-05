@@ -137,18 +137,18 @@ void ItiOtbRgbaImageViewer::zoomOut(){
 }
 
 //!
-void ItiOtbRgbaImageViewer::setGreyScaleColorMode(int band){
+void ItiOtbRgbaImageViewer::applyGreyScaleColorMode(int band){
     Q_UNUSED(band)
 }
 
 //!
-void ItiOtbRgbaImageViewer::setRGBColorMode(int red, int green, int blue){
+void ItiOtbRgbaImageViewer::applyRGBColorMode(int red, int green, int blue){
     Q_UNUSED(red)
     Q_UNUSED(green)
     Q_UNUSED(blue)
 }
 
-void ItiOtbRgbaImageViewer::setContrastEnhancementMethod(CC ce, double aval, double bval){
+void ItiOtbRgbaImageViewer::applyContrastEnhancementMethod(CC ce, double aval, double bval){
     Q_UNUSED(ce)
     Q_UNUSED(aval)
     Q_UNUSED(bval)

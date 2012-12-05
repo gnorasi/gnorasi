@@ -53,13 +53,36 @@ public:
 
     
 signals:
+    //! emitted when the apply button for color composition has been clicked
+    void colorCompositionApplyButtonClicked();
+
+    //! emitted when the apply button for contrast enhancement has been clicked
+    void contrastEnhancementApplyButtonClicked();
+
+    //! emitted when the grey scale channel selection has been altered
+    void greyScaleColorCompositionChannelChanged(int);
+
+    //! emitted when the rgb channel selection has been altered
+    void rgbColorCompositionChannelsChanged(int red, int green, int blue);
+
+    //! emitted when the contrast enhancement method has been changed
+    void contrastEnhancementChanged(int method, double aval, double bval);
     
 public slots:
     //!
     void onRadioButtonColorCompositionChanged();
 
     //!
-    void onComboBoxMethodCurrentIndexChanged(int);
+    void onComboBoxContrastEnhancementMethodCurrentIndexChanged(int);
+
+    //!
+    void onSpinBoxRedChannelChanged(int val);
+
+    //!
+    void onSpinBoxGreenChannelChanged(int val);
+
+    //!
+    void onSpinBoxBlueChannelChanged(int val);
 
 private:
     void initialize();
