@@ -73,9 +73,6 @@ public:
     void setGeoidFile(const QString &fp) { m_GeoidFile = fp; }
     QString geoidFile() const { return m_GeoidFile; }
 
-    //! this function executes the commnad and also adds the command to the history list
-    void processCommand(Command *c);
-
 private:
     //! ctor
     ItiOtbImageManager();
@@ -94,9 +91,6 @@ private:
 
     /*! GeoidFile filename (used if a VectorData is rendered */
     QString m_GeoidFile;
-
-    //! a list holding Command objects
-    QList<Command*> m_commandList;
 };
 
 } // end of namespace itiviewer

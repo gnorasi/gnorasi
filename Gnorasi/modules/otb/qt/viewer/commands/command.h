@@ -50,7 +50,9 @@ class Command : public QObject
 public:
     explicit Command(QObject *parent = 0);
 
-    //! every subclass must implement the execute function
+    /*!
+     * \brief execute , every subclass must implement the execute function
+     */
     virtual void execute() = 0;
 
     

@@ -47,24 +47,57 @@ public:
     //! ctor
     CommandColorComposition(ItiOtbImageViewer *, QObject *parent);
 
-    //! implementation
+    /*!
+     * \brief execute
+     *  implementation
+     */
     void execute();
 
 public slots:
+    /*!
+     * \brief setGreyScaleMethod
+     *  set the method to greyscale
+     * \param channel , the channel number to be used for the color composition
+     */
     void setGreyScaleMethod(int channel);
 
+    /*!
+     * \brief setRGBMethod , sets the method to RGB
+     * \param red , the red channel to be used for the color composition
+     * \param green, the green channel to be used for the color composition
+     * \param blue, the blue channel to be used for the color composition
+     */
     void setRGBMethod(int red, int green, int blue);
 
 private:
+    /*!
+     * \brief m_pItiOtbImageViewer , the viewer instance
+     */
     ItiOtbImageViewer *m_pItiOtbImageViewer;
 
-    //! a color composition could be either greyscale or RGB
+    /*!
+     * \brief m_isGreyScale , a color composition could be either greyscale or RGB
+     */
     bool m_isGreyScale;
 
-    //! channel numbers
+    /*!
+     * \brief m_greyChannel , the grey channel to be used
+     */
     int m_greyChannel;
+
+    /*!
+     * \brief m_redChannel, the red channel to be used
+     */
     int m_redChannel;
+
+    /*!
+     * \brief m_greenChannel, the green channel to be used
+     */
     int m_greenChannel;
+
+    /*!
+     * \brief m_blueChannel, the blue channel to be used
+     */
     int m_blueChannel;
 };
 

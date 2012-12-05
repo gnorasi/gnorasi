@@ -193,12 +193,12 @@ void QGLOtbImageViewerWidget::setupCommands(){
     CommandColorComposition *pCmdCC = new CommandColorComposition(m_pItiOtbImageViewer,this);
     connect(m_pItiOtbImageViewerPanel,SIGNAL(greyScaleColorCompositionChannelChanged(int)),pCmdCC,SLOT(setGreyScaleMethod(int)));
     connect(m_pItiOtbImageViewerPanel,SIGNAL(rgbColorCompositionChannelsChanged(int,int,int)),pCmdCC,SLOT(setRGBMethod(int,int,int)));
-    m_pItiOtbImageViewerPanel->setCommand(ItiOtbImageViewerPanel::COMMAND_CC, pCmdCC);
+    m_pItiOtbImageViewerPanel->setCommand(ItiOtbImageViewerPanel::SLOT_CC, pCmdCC);
 
     //! create command for contrast enhancenment
     CommandContrastEnhancement *pCmdCE = new CommandContrastEnhancement(m_pItiOtbImageViewer,this);
     connect(m_pItiOtbImageViewerPanel,SIGNAL(contrastEnhancementChanged(int,double,double)),pCmdCE,SLOT(setContrastEnhancementMethod(int,double,double)));
-    m_pItiOtbImageViewerPanel->setCommand(ItiOtbImageViewerPanel::COMMAND_CE,pCmdCE);
+    m_pItiOtbImageViewerPanel->setCommand(ItiOtbImageViewerPanel::SLOT_CE,pCmdCE);
 }
 
 QGLOtbImageViewerWidget::~QGLOtbImageViewerWidget(){

@@ -58,12 +58,12 @@ void ItiOtbImageViewerPanel::applyConstrastEnhancement(){
 }
 
 //!
-void ItiOtbImageViewerPanel::setCommand(COMMAND_KEY cmdk, Command *pC){
+void ItiOtbImageViewerPanel::setCommand(SLOT_KEY cmdk, Command *pC){
     switch(cmdk){
-        case COMMAND_CC:
+        case SLOT_CC:
             m_commandHash["CMD_CC"] = pC;
             break;
-        case COMMAND_CE:
+        case SLOT_CE:
             m_commandHash["CMD_CE"] = pC;
             break;
         default:
