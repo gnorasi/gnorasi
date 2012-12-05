@@ -374,6 +374,8 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/commands/command.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcolorcomposition.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.cpp
+    ${MOD_DIR}/qt/viewer/itiotbfocusregion.cpp
+    ${MOD_DIR}/qt/viewer/itiotbrgbafocusregion.cpp
 )
 ################################################################################
 # Qt headers
@@ -394,6 +396,8 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/commands/command.h
     ${MOD_DIR}/qt/viewer/commands/commandcolorcomposition.h
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.h
+    ${MOD_DIR}/qt/viewer/itiotbfocusregion.h
+    ${MOD_DIR}/qt/viewer/itiotbrgbafocusregion.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

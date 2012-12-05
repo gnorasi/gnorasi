@@ -26,101 +26,39 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITIOTBRGBAIMAGEVIEWER_H
-#define ITIOTBRGBAIMAGEVIEWER_H
+#ifndef ITBOTBRGBAFOCUSREGION_H
+#define ITBOTBRGBAFOCUSREGION_H
 
-#include <QtCore>
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QSplitter>
+#include <QObject>
 
-#include "itiotbimageviewer.h"
-#include "itiotbimagemanager.h"
-
+#include "itiotbfocusregion.h"
 
 namespace itiviewer{
 
-class ItiOtbRgbaImageWidget;
-class ItiOtbRgbaFocusRegion;
-
-/** \class ITIOTBImageViewer
- *   \brief This class implements a standard visualization tool to be
- *   plugged at the end of a pipeline.
- *
- *  \ingroup Visualization
- *
+/*!
+ * \brief The ItiOtbRgbaFocusRegion class
  */
-class ItiOtbRgbaImageViewer : public ItiOtbImageViewer
+class ItiOtbRgbaFocusRegion : public ItiOtbFocusRegion
 {
     Q_OBJECT
 public:
-    explicit ItiOtbRgbaImageViewer(QWidget *parent = 0);
+    /*!
+     * \brief ItiOtbRgbaFocusRegion
+     * \param parent
+     */
+    explicit ItiOtbRgbaFocusRegion(QObject *parent = 0);
 
-    //! implementation
-    void disassembleWidgets();
-
-    //! implementation
-    void assembleWidgets();
-
-    //! implementation
-    void draw();
-
-    //! implementation
-    void applyGreyScaleColorMode(int band);
-
-    //! implementation
-    void applyRGBColorMode(int red, int green, int blue);
-
-    //! implementation
-    void applyContrastEnhancementMethod(CC ce, double aval, double bval);
-
+    
 signals:
     
 public slots:
 
 private:
-    void setupLayout();
 
-    //! The Scrollable QGLWidget
-    ItiOtbRgbaImageWidget *m_pItiOtbRgbaImageWidgetScroll;
-
-    //! The Full QGLWidget
-    ItiOtbRgbaImageWidget *m_pItiOtbRgbaImageWidgetFull;
-
-    //! The Zoomable QGLWidget
-    ItiOtbRgbaImageWidget *m_pItiOtbRgbaImageWidgetZoom;
-
-    //! The left vertical layout, needed for assembiling and disassembliing purposes
-    QVBoxLayout *m_pvBoxLayoutLeft;
-
-    //! The right vertical layout, needed for assembiling and disassembliing purposes
-    QVBoxLayout *m_pVboxLayoutRight;
-
-    //! The main layout, needed for assembiling and disassembliing purposes
-    QVBoxLayout *m_pMainLayout;
-
-    //! The horizontal splitter;
-    QSplitter *m_pSplitter;
-
-    //! the following labels were taken from the monteverdi viewer
-    //! a label showing a title for the full resolution view
-    QLabel *m_pLabelFullResolution;
-
-    //! a label showing a title for the navigation view
-    QLabel *m_pLabelNavigationView;
-
-    //! a label showing a title for the zoom view
-    QLabel *m_pLabelZoomView;
-
-    //! a label showing a title for the metadata view
-    QLabel *m_pLabelMetadataView;
-
-    //! Container widget
-    QWidget *m_pMetadataWidget;
 
     
 };
 
-} // end of namespace itiviewer
+} // namespace itiviewer
 
-#endif // ITIOTBRGBAIMAGEVIEWER_H
+#endif // ITBOTBRGBAFOCUSREGION_H
