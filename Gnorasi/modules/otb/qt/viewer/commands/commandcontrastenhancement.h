@@ -26,91 +26,55 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef VRN_QGLOTBIMAGEVIEWERWIDGET_H
-#define VRN_QGLOTBIMAGEVIEWERWIDGET_H
+#ifndef COMMANDCONTRASTENHANCEMENT_H
+#define COMMANDCONTRASTENHANCEMENT_H
 
-#include <QLabel>
-#include <QString>
-#include <QtGui>
-
-#include "modules/otb/processors/Visualization/otbimageviewerprocessor.h"
-#include "voreen/core/voreencoreapi.h"
-#include "voreen/qt/voreenmoduleqt.h"
-#include "voreen/qt/widgets/processor/qprocessorwidget.h"
-#include "../../ports/otbimageport.h"
-
+#include "command.h"
 
 namespace itiviewer{
-    class ItiOtbImageViewer;
-    class ItiOtbImageViewerFactory;
-    class ItiOtbImageViewerPanel;
-}
 
-using namespace otb;
-
-namespace voreen {
+class ItiOtbImageViewer;
 
 /*!
- * \brief The QGLOtbImageViewerWidget class
- *
- *  This is the main widget of the GeospatialClassificationProcessor
- *  This widget accepts data from the processors which are connected with the
- *  OtbImageViewerProcessor. It has two key member variables : ItiOtbImageViewer and ItiOtbImageViewerFactory
- *  The ItiOtbImageViewer is the GUI class which hadles all the visualization stuff.
- *  The ItiOtbImageViewerFactory is the core class which is responsible for creating the
- *  ItiOtbImageViewer instances. Depending on the port a new ItiOtbImageViewerFactory instance
- *  is created.
- *
+ * \brief The CommandContrastEnhancement class
+ *  This command handles contrast enhancement functionality
  */
-class VRN_QT_API QGLOtbImageViewerWidget : public QProcessorWidget
+class CommandContrastEnhancement : public Command
 {
     Q_OBJECT
+
 public:
-    QGLOtbImageViewerWidget(QWidget*, OTBImageViewerProcessor* );
 
-    virtual ~QGLOtbImageViewerWidget();
+    enum METHOD{
+        METHOD_LINEAR_0_255 = 0,
+        METHOD_LINERA_PERC  = 1,
+        METHOD_GAUSSIAN     = 2,
+        METHOD_SQUARE_ROOT  = 3
+    };
 
-    void initialize();
+    //! ctor
+    CommandContrastEnhancement(ItiOtbImageViewer *, QObject *parent);
 
-    virtual void updateFromProcessor();
-    
-protected:
-    void keyPressEvent(QKeyEvent *);
+    //! implementation
+    void execute();
 
-signals:
-    
 public slots:
     //!
-
-
-private slots:
-    //!
-
+    void setContrastEnhancementMethod(int method, double aval, double bval);
 
 private:
-    //! setup connections between commands and panel properties
-    void setupCommands();
+    //!
+    ItiOtbImageViewer *m_pItiOtbImageViewer;
 
-    //! this function creates and assembles all the widgets into one single widget
-    void assembleWidgets();
+    //! contrast enhancement variable
+    METHOD m_method;
 
-    //! this function splits the layout
-    void disassembleWidgets();
-
-    static const std::string loggerCat_;
-
-    //! this is the main widget of this viewer
-    itiviewer::ItiOtbImageViewer *m_pItiOtbImageViewer;
-
-    //! a factory responsible for creating ItiOtbImageViewer instances..
-    itiviewer::ItiOtbImageViewerFactory *m_pItiOtbImageFactory;
-
-    //! a panel widget for handling viewer parameters
-    itiviewer::ItiOtbImageViewerPanel *m_pItiOtbImageViewerPanel;
-
-    QSplitter *m_pvSplitter;
+    //! parameters
+    double m_standardDeviation;
+    double m_upperQuantile;
+    double m_lowerQuantile;
 };
 
-}
+} //end of namespace itiviewer
 
-#endif // VRN_QGLOTBIMAGEVIEWERWIDGET_H
+#endif // COMMANDCONTRASTENHANCEMENT_H

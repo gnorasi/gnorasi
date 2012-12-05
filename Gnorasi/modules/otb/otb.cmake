@@ -372,6 +372,8 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelhistogramtab.cpp
     ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelpixeldescriptiontab.cpp
     ${MOD_DIR}/qt/viewer/commands/command.cpp
+    ${MOD_DIR}/qt/viewer/commands/commandcolorcomposition.cpp
+    ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.cpp
 )
 ################################################################################
 # Qt headers
@@ -390,6 +392,8 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelhistogramtab.h
     ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelpixeldescriptiontab.h
     ${MOD_DIR}/qt/viewer/commands/command.h
+    ${MOD_DIR}/qt/viewer/commands/commandcolorcomposition.h
+    ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

@@ -12,6 +12,8 @@
 #include "../viewer/itiotbimageviewer.h"
 #include "../viewer/itiotbrgbaimageviewerfactory.h"
 #include "../viewer/itiotbimageviewerpanel.h"
+#include "../viewer/commands/commandcolorcomposition.h"
+#include "../viewer/commands/commandcontrastenhancement.h"
 
 using namespace otb;
 using namespace itiviewer;
@@ -42,7 +44,7 @@ void QGLOtbImageViewerWidget::initialize(){
     m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
 
     //!
-    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(m_pItiOtbImageViewer, this);
+    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
     m_pItiOtbImageViewerPanel->setMinimumHeight(270);
 
     //! create a splitter and add the widgets
@@ -50,6 +52,9 @@ void QGLOtbImageViewerWidget::initialize(){
     m_pvSplitter->addWidget(m_pItiOtbImageViewer);
     m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
     m_pvSplitter->setChildrenCollapsible(false);
+
+    //! setup commands
+    setupCommands();
 
     //! create a vertical box layout and add the splitter on it
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -140,9 +145,12 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
     m_pItiOtbImageViewer->disassembleWidgets();
 
     //! create the panel
-    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(m_pItiOtbImageViewer, this);
+    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
     m_pItiOtbImageViewerPanel->setWindowFlags(Qt::Window);
     m_pItiOtbImageViewerPanel->show();
+
+    //! setup commands
+    setupCommands();
 
 }
 
@@ -164,7 +172,7 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->createViewer();
     m_pItiOtbImageViewer->setParent(this);
     m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
-    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(m_pItiOtbImageViewer, this);
+    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
     m_pItiOtbImageViewerPanel->setMinimumHeight(100);
 
     //! add the newly added widgets to the splitter
@@ -172,6 +180,25 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
     m_pvSplitter->setChildrenCollapsible(false);
 
+    //! setup commands
+    setupCommands();
+}
+
+//!
+void QGLOtbImageViewerWidget::setupCommands(){
+    Q_ASSERT(m_pItiOtbImageViewer);
+    Q_ASSERT(m_pItiOtbImageViewerPanel);
+
+    //! create command color composition
+    CommandColorComposition *pCmdCC = new CommandColorComposition(m_pItiOtbImageViewer,this);
+    connect(m_pItiOtbImageViewerPanel,SIGNAL(greyScaleColorCompositionChannelChanged(int)),pCmdCC,SLOT(setGreyScaleMethod(int)));
+    connect(m_pItiOtbImageViewerPanel,SIGNAL(rgbColorCompositionChannelsChanged(int,int,int)),pCmdCC,SLOT(setRGBMethod(int,int,int)));
+    m_pItiOtbImageViewerPanel->setCommand(ItiOtbImageViewerPanel::COMMAND_CC, pCmdCC);
+
+    //! create command for contrast enhancenment
+    CommandContrastEnhancement *pCmdCE = new CommandContrastEnhancement(m_pItiOtbImageViewer,this);
+    connect(m_pItiOtbImageViewerPanel,SIGNAL(contrastEnhancementChanged(int,double,double)),pCmdCE,SLOT(setContrastEnhancementMethod(int,double,double)));
+    m_pItiOtbImageViewerPanel->setCommand(ItiOtbImageViewerPanel::COMMAND_CE,pCmdCE);
 }
 
 QGLOtbImageViewerWidget::~QGLOtbImageViewerWidget(){

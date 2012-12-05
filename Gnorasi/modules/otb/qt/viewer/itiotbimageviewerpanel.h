@@ -31,6 +31,7 @@
 
 #include <QWidget>
 #include <QTabWidget>
+#include <QtCore/QHash>
 
 namespace itiviewer{
 
@@ -40,6 +41,8 @@ class ItiOtbImageViewerPanelSetupTab;
 class ItiOtbImageViewerPanelHistogramTab;
 class ItiOtbImageViewerPanelPixelDescriptionTab;
 class ItiOtbImageViewer;
+
+class Command;
 
 /*!
  * \brief The ItiOtbImageViewerPanel class
@@ -51,15 +54,36 @@ class ItiOtbImageViewerPanel : public QWidget
 {
     Q_OBJECT
 public:
+    enum COMMAND_KEY{
+        COMMAND_CC  = 0,    //! color composition
+        COMMAND_CE  = 1     //! contrast enhancement
+    };
+
     //! ctor
-    explicit ItiOtbImageViewerPanel(ItiOtbImageViewer* v,  QWidget *parent = 0);
+    explicit ItiOtbImageViewerPanel(QWidget *parent = 0);
     
     //! dtor
     virtual ~ItiOtbImageViewerPanel() {}
 
+    //! set the command to the hash
+    void setCommand(COMMAND_KEY cmdk, Command *pC);
+
 signals:
+    //! emitted when the grey scale channel selection has been altered
+    void greyScaleColorCompositionChannelChanged(int);
+
+    //! emitted when the rgb channel selection has been altered
+    void rgbColorCompositionChannelsChanged(int red, int green, int blue);
+
+    //! emitted when the contrast enhancement method has been changed
+    void contrastEnhancementChanged(int method, double aval, double bval);
     
-public slots:
+private slots:
+    //!
+    void applyColorComposition();
+
+    //!
+    void applyConstrastEnhancement();
 
 private:
     //! inititializing stuff
@@ -68,20 +92,11 @@ private:
     //! the main tool box
     QTabWidget *m_pTabWidget;
 
-    //! tab widget for setting up data properties
-//    ItiOtbImageViewerPanelDataTab *m_pDataTab;
-
     //! tab widget for setting up setup properties
     ItiOtbImageViewerPanelSetupTab *m_pSetupTab;
 
-    //! tab widget for setting up histogram properties
-//    ItiOtbImageViewerPanelHistogramTab *m_pHistogramTab;
-
-    //! tab widget for setting up pixel description properties
-//    ItiOtbImageViewerPanelPixelDescriptionTab *m_pPixelDescriptionTab;
-
-    //!
-    ItiOtbImageViewer *m_pItiOtbImageViewer;
+    //! a has holding the command objects
+    QHash<QString,Command*> m_commandHash;
     
 };
 

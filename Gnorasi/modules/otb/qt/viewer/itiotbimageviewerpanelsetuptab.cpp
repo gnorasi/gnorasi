@@ -12,47 +12,6 @@ ItiOtbImageViewerPanelSetupTab::ItiOtbImageViewerPanelSetupTab(QWidget *parent) 
     initialize();
 }
 
-//!
-void ItiOtbImageViewerPanelSetupTab::onComboBoxMethodCurrentIndexChanged(int index){
-    if(index == 2){
-        m_pLabelLowerQuantile->setVisible(false);
-        m_pLabelUpperQuantile->setVisible(false);
-        m_pLabelStandardDeviation->setVisible(true);
-        m_pLineEditLowerQuantileValue->setVisible(false);
-        m_pLineEditUpperQuantileValue->setVisible(false);
-        m_pLineEditStandardDeviationValue->setVisible(true);
-    }else{
-        m_pLabelLowerQuantile->setVisible(true);
-        m_pLabelUpperQuantile->setVisible(true);
-        m_pLabelStandardDeviation->setVisible(false);
-        m_pLineEditLowerQuantileValue->setVisible(true);
-        m_pLineEditUpperQuantileValue->setVisible(true);
-        m_pLineEditStandardDeviationValue->setVisible(false);
-    }
-}
-
-//!
-void ItiOtbImageViewerPanelSetupTab::onRadioButtonColorCompositionChanged(){
-    if(m_pRadioButtonGrayscaleMode->isChecked()){
-        m_pLabelGreyChannel->setEnabled(true);
-        m_pSpinBoxGreyscaleChannel->setEnabled(true);
-        m_pLabelRedChannel->setEnabled(false);
-        m_pLabelGreenChannel->setEnabled(false);
-        m_pLabelBlueChannel->setEnabled(false);
-        m_pSpinBoxRedChannel->setEnabled(false);
-        m_pSpinBoxGreenChannel->setEnabled(false);
-        m_pSpinBoxBlueChannel->setEnabled(false);
-    }else{
-        m_pLabelGreyChannel->setEnabled(false);
-        m_pSpinBoxGreyscaleChannel->setEnabled(false);
-        m_pLabelRedChannel->setEnabled(true);
-        m_pLabelGreenChannel->setEnabled(true);
-        m_pLabelBlueChannel->setEnabled(true);
-        m_pSpinBoxRedChannel->setEnabled(true);
-        m_pSpinBoxGreenChannel->setEnabled(true);
-        m_pSpinBoxBlueChannel->setEnabled(true);
-    }
-}
 
 //!
 void ItiOtbImageViewerPanelSetupTab::setupColorCompositionGroupBox(){
@@ -173,7 +132,7 @@ void ItiOtbImageViewerPanelSetupTab::setupContrastEnhancememtGroupBox(){
 
     m_pGroupBoxContrastEnhancement->setLayout(layout);
 
-    connect(m_pComboBoxMethod,SIGNAL(currentIndexChanged(int)),this,SLOT(onComboBoxMethodCurrentIndexChanged(int)));
+    connect(m_pComboBoxMethod,SIGNAL(currentIndexChanged(int)),this,SLOT(onComboBoxContrastEnhancementMethodCurrentIndexChanged(int)));
 }
 
 //!
@@ -190,4 +149,81 @@ void ItiOtbImageViewerPanelSetupTab::initialize(){
 
     m_pRadioButtonGrayscaleMode->toggle();
     onRadioButtonColorCompositionChanged();
+}
+
+//!
+void ItiOtbImageViewerPanelSetupTab::onSpinBoxRedChannelChanged(int val){
+    Q_UNUSED(val)
+
+    //!
+    emit rgbColorCompositionChannelsChanged(m_pSpinBoxRedChannel->value(),m_pSpinBoxGreenChannel->value(),m_pSpinBoxBlueChannel->value());
+}
+
+//!
+void ItiOtbImageViewerPanelSetupTab::onSpinBoxGreenChannelChanged(int val){
+    Q_UNUSED(val)
+
+    //!
+    emit rgbColorCompositionChannelsChanged(m_pSpinBoxRedChannel->value(),m_pSpinBoxGreenChannel->value(),m_pSpinBoxBlueChannel->value());
+}
+
+//!
+void ItiOtbImageViewerPanelSetupTab::onSpinBoxBlueChannelChanged(int val){
+    Q_UNUSED(val)
+
+    //!
+    emit rgbColorCompositionChannelsChanged(m_pSpinBoxRedChannel->value(),m_pSpinBoxGreenChannel->value(),m_pSpinBoxBlueChannel->value());
+}
+
+//!
+void ItiOtbImageViewerPanelSetupTab::onComboBoxContrastEnhancementMethodCurrentIndexChanged(int index){
+    if(index == 2){
+        m_pLabelLowerQuantile->setVisible(false);
+        m_pLabelUpperQuantile->setVisible(false);
+        m_pLabelStandardDeviation->setVisible(true);
+        m_pLineEditLowerQuantileValue->setVisible(false);
+        m_pLineEditUpperQuantileValue->setVisible(false);
+        m_pLineEditStandardDeviationValue->setVisible(true);
+
+        emit contrastEnhancementChanged(index,m_pLineEditStandardDeviationValue->text().toDouble(),0.0);
+    }else{
+        m_pLabelLowerQuantile->setVisible(true);
+        m_pLabelUpperQuantile->setVisible(true);
+        m_pLabelStandardDeviation->setVisible(false);
+        m_pLineEditLowerQuantileValue->setVisible(true);
+        m_pLineEditUpperQuantileValue->setVisible(true);
+        m_pLineEditStandardDeviationValue->setVisible(false);
+
+        emit contrastEnhancementChanged(index,m_pLineEditLowerQuantileValue->text().toDouble(),m_pLineEditUpperQuantileValue->text().toDouble());
+    }
+}
+
+//!
+void ItiOtbImageViewerPanelSetupTab::onRadioButtonColorCompositionChanged(){
+    //!
+    if(m_pRadioButtonGrayscaleMode->isChecked()){
+        m_pLabelGreyChannel->setEnabled(true);
+        m_pSpinBoxGreyscaleChannel->setEnabled(true);
+        m_pLabelRedChannel->setEnabled(false);
+        m_pLabelGreenChannel->setEnabled(false);
+        m_pLabelBlueChannel->setEnabled(false);
+        m_pSpinBoxRedChannel->setEnabled(false);
+        m_pSpinBoxGreenChannel->setEnabled(false);
+        m_pSpinBoxBlueChannel->setEnabled(false);
+
+        //!
+        emit greyScaleColorCompositionChannelChanged(m_pSpinBoxGreyscaleChannel->value());
+
+    }else{
+        m_pLabelGreyChannel->setEnabled(false);
+        m_pSpinBoxGreyscaleChannel->setEnabled(false);
+        m_pLabelRedChannel->setEnabled(true);
+        m_pLabelGreenChannel->setEnabled(true);
+        m_pLabelBlueChannel->setEnabled(true);
+        m_pSpinBoxRedChannel->setEnabled(true);
+        m_pSpinBoxGreenChannel->setEnabled(true);
+        m_pSpinBoxBlueChannel->setEnabled(true);
+
+        emit rgbColorCompositionChannelsChanged(m_pSpinBoxRedChannel->value(),m_pSpinBoxGreenChannel->value(),m_pSpinBoxBlueChannel->value());
+    }
 }
