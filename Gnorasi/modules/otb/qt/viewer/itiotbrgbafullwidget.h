@@ -26,59 +26,46 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITIOTBFOCUSREGION_H
-#define ITIOTBFOCUSREGION_H
+#ifndef ITIOTBRGBAFULLWIDGET_H
+#define ITIOTBRGBAFULLWIDGET_H
 
-#include <QObject>
+#include "itiotbfocusregionobserver.h"
 
 namespace itiviewer{
 
-class ItiOtbFocusRegionObserver;
+class ItiOtbRgbaImageWidget;
+class ItiOtbFocusRegion;
 
 /*!
- * \brief The ItiOtbFocusRegion class
- *  This class is a subject of observing through various observer classes
- *  It contains variables related to the Image visualized and the region in
- *  which the scene is focused on.
- *  This class provides an iterface , a set of pure virtual functions all
- *  concrete subclasses must implement.
+ * \brief The ItiOtbRgbaFullWidget class
+ *  This class is a container class
  */
-class ItiOtbFocusRegion : public QObject
+class ItiOtbRgbaFullWidget : public ItiOtbFocusRegionObserver
 {
-    Q_OBJECT
 public:
-    //!
-    explicit ItiOtbFocusRegion(QObject *parent = 0);
-    
     /*!
-     * \brief registerObserver , adds an observer
-     * \param obr,  the observer to register
+     * \brief ItiOtbRgbaFullWidget
+     * \param parent
      */
-    void registerObserver(ItiOtbFocusRegionObserver *obr) { m_observerList.append(obr); }
+    ItiOtbRgbaFullWidget(QWidget *parent);
 
     /*!
-     * \brief unRegisterObserver , unregisters the observer object
-     * \param obr , the observer instance to be unregistered by the list
+     * \brief update , implementation from parent class
+     * \param region, the region
      */
-    void unRegisterObserver(ItiOtbFocusRegionObserver *obr) { m_observerList.removeOne(obr); }
-
-    /*!
-     * \brief notifyObservers , notifies all registered observer objects
-     */
-    void notifyObservers();
-
-signals:
-    
-public slots:
+    void update(ItiOtbFocusRegion *region);
 
 private:
+
     /*!
-     * \brief m_observerList , a list of observers
+     * \brief initialize
      */
-    QList<ItiOtbFocusRegionObserver*> m_observerList;
-    
+    void initialize();
+
+    //! The opengl QGLWidget
+    ItiOtbRgbaImageWidget *m_pOpenGlWidget;
 };
 
 }
 
-#endif // ITIOTBFOCUSREGION_H
+#endif // ITIOTBRGBAFULLWIDGET_H
