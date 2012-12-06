@@ -7,7 +7,7 @@
 using namespace itiviewer;
 
 ItiOtbRgbaFullWidget::ItiOtbRgbaFullWidget(QWidget *parent)
-    : ItiOtbFocusRegionObserver(parent)
+    : ItiViewerObserver(parent)
 {
     initialize();
 }
@@ -24,9 +24,9 @@ void ItiOtbRgbaFullWidget::initialize(){
 }
 
 //!
-void ItiOtbRgbaFullWidget::update(ItiOtbFocusRegion *region){
+void ItiOtbRgbaFullWidget::update(ItiViewerObservable *observable){
 
-    ItiOtbRgbaFocusRegion *rgbaRegion = qobject_cast<ItiOtbRgbaFocusRegion*>(region);
+    ItiOtbRgbaFocusRegion *rgbaRegion = qobject_cast<ItiOtbRgbaFocusRegion*>(observable);
     if(!rgbaRegion)
         return;
 

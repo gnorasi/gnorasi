@@ -374,12 +374,13 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/commands/command.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcolorcomposition.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.cpp
-    ${MOD_DIR}/qt/viewer/itiotbfocusregion.cpp
+    ${MOD_DIR}/qt/viewer/itiviewerobservable.cpp
     ${MOD_DIR}/qt/viewer/itiotbrgbafocusregion.cpp
     ${MOD_DIR}/qt/viewer/itiotbrgbascrollablewidget.cpp
-    ${MOD_DIR}/qt/viewer/itiotbfocusregionobserver.cpp
+    ${MOD_DIR}/qt/viewer/itiviewerobserver.cpp
     ${MOD_DIR}/qt/viewer/itiotbrgbazoomablewidget.cpp
     ${MOD_DIR}/qt/viewer/itiotbrgbafullwidget.cpp
+    ${MOD_DIR}/qt/viewer/itiotbimagevisibleregion.cpp
 )
 ################################################################################
 # Qt headers
@@ -400,12 +401,13 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/commands/command.h
     ${MOD_DIR}/qt/viewer/commands/commandcolorcomposition.h
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.h
-    ${MOD_DIR}/qt/viewer/itiotbfocusregion.h
+    ${MOD_DIR}/qt/viewer/itiviewerobservable.h
     ${MOD_DIR}/qt/viewer/itiotbrgbafocusregion.h
     ${MOD_DIR}/qt/viewer/itiotbrgbascrollablewidget.h
-    ${MOD_DIR}/qt/viewer/itiotbfocusregionobserver.h
+    ${MOD_DIR}/qt/viewer/itiviewerobserver.h
     ${MOD_DIR}/qt/viewer/itiotbrgbazoomablewidget.h
     ${MOD_DIR}/qt/viewer/itiotbrgbafullwidget.h
+    ${MOD_DIR}/qt/viewer/itiotbimagevisibleregion.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

@@ -31,14 +31,14 @@
 
 #include <QObject>
 
-#include "itiotbfocusregion.h"
+#include "itiviewerobservable.h"
 
 namespace itiviewer{
 
 /*!
  * \brief The ItiOtbRgbaFocusRegion class
  */
-class ItiOtbRgbaFocusRegion : public ItiOtbFocusRegion
+class ItiOtbRgbaFocusRegion : public ItiViewerObservable
 {
     Q_OBJECT
 public:
