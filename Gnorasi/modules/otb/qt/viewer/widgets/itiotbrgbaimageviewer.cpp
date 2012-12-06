@@ -3,10 +3,10 @@
 #include "itiotbrgbafullwidget.h"
 #include "itiotbrgbascrollablewidget.h"
 #include "itiotbrgbazoomablewidget.h"
-#include "itiotbimagemanager.h"
+#include "../utils/itiotbimagemanager.h"
 #include "itiotbrgbaimagewidget.h"
 
-#include "../../ports/otbimageport.h"
+#include "../../../ports/otbimageport.h"
 
 #include "otbImage.h"
 

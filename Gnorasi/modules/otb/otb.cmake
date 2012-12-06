@@ -360,54 +360,54 @@ SET(MOD_QT_MODULECLASS OtbModuleQt)
 SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/qotbprocessorwidgetfactory.cpp
     ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.cpp
-    ${MOD_DIR}/qt/viewer/itiotbimagemanager.cpp
-    ${MOD_DIR}/qt/viewer/itiotbrgbaimagewidget.cpp
-    ${MOD_DIR}/qt/viewer/itiotbrgbaimageviewer.cpp
-    ${MOD_DIR}/qt/viewer/itiotbimageviewerfactory.cpp
-    ${MOD_DIR}/qt/viewer/itiotbimageviewer.cpp
-    ${MOD_DIR}/qt/viewer/itiotbrgbaimageviewerfactory.cpp
-    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanel.cpp
-    ${MOD_DIR}/qt/viewer/itiotbimageviewerpaneldatatab.cpp
-    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelsetuptab.cpp
-    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelhistogramtab.cpp
-    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelpixeldescriptiontab.cpp
+    ${MOD_DIR}/qt/viewer/utils/itiotbimagemanager.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaimagewidget.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaimageviewer.cpp
+    ${MOD_DIR}/qt/viewer/factories/itiotbimageviewerfactory.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbimageviewer.cpp
+    ${MOD_DIR}/qt/viewer/factories/itiotbrgbaimageviewerfactory.cpp
+    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanel.cpp
+    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpaneldatatab.cpp
+    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanelsetuptab.cpp
+    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanelhistogramtab.cpp
+    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanelpixeldescriptiontab.cpp
     ${MOD_DIR}/qt/viewer/commands/command.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcolorcomposition.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.cpp
-    ${MOD_DIR}/qt/viewer/itiviewerobservable.cpp
-    ${MOD_DIR}/qt/viewer/itiotbrgbafocusregion.cpp
-    ${MOD_DIR}/qt/viewer/itiotbrgbascrollablewidget.cpp
-    ${MOD_DIR}/qt/viewer/itiviewerobserver.cpp
-    ${MOD_DIR}/qt/viewer/itiotbrgbazoomablewidget.cpp
-    ${MOD_DIR}/qt/viewer/itiotbrgbafullwidget.cpp
-    ${MOD_DIR}/qt/viewer/itiotbimagevisibleregion.cpp
+    ${MOD_DIR}/qt/viewer/observables/itiviewerobservable.cpp
+    ${MOD_DIR}/qt/viewer/observables/itiotbrgbafocusregion.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbascrollablewidget.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiviewerobserver.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbazoomablewidget.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbafullwidget.cpp
+    ${MOD_DIR}/qt/viewer/observables/itiotbimagevisibleregion.cpp
 )
 ################################################################################
 # Qt headers
 ################################################################################
 SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.h
-    ${MOD_DIR}/qt/viewer/itiotbimagemanager.h/
-    ${MOD_DIR}/qt/viewer/itiotbrgbaimagewidget.h
-    ${MOD_DIR}/qt/viewer/itiotbrgbaimageviewer.h
-    ${MOD_DIR}/qt/viewer/itiotbimageviewerfactory.h
-    ${MOD_DIR}/qt/viewer/itiotbimageviewer.h
-    ${MOD_DIR}/qt/viewer/itiotbrgbaimageviewerfactory.h
-    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanel.h
-    ${MOD_DIR}/qt/viewer/itiotbimageviewerpaneldatatab.h
-    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelsetuptab.h
-    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelhistogramtab.h
-    ${MOD_DIR}/qt/viewer/itiotbimageviewerpanelpixeldescriptiontab.h
+    ${MOD_DIR}/qt/viewer/utils/itiotbimagemanager.h/
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaimagewidget.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaimageviewer.h
+    ${MOD_DIR}/qt/viewer/factories/itiotbimageviewerfactory.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbimageviewer.h
+    ${MOD_DIR}/qt/viewer/factories/itiotbrgbaimageviewerfactory.h
+    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanel.h
+    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpaneldatatab.h
+    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanelsetuptab.h
+    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanelhistogramtab.h
+    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanelpixeldescriptiontab.h
     ${MOD_DIR}/qt/viewer/commands/command.h
     ${MOD_DIR}/qt/viewer/commands/commandcolorcomposition.h
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.h
-    ${MOD_DIR}/qt/viewer/itiviewerobservable.h
-    ${MOD_DIR}/qt/viewer/itiotbrgbafocusregion.h
-    ${MOD_DIR}/qt/viewer/itiotbrgbascrollablewidget.h
-    ${MOD_DIR}/qt/viewer/itiviewerobserver.h
-    ${MOD_DIR}/qt/viewer/itiotbrgbazoomablewidget.h
-    ${MOD_DIR}/qt/viewer/itiotbrgbafullwidget.h
-    ${MOD_DIR}/qt/viewer/itiotbimagevisibleregion.h
+    ${MOD_DIR}/qt/viewer/observables/itiviewerobservable.h
+    ${MOD_DIR}/qt/viewer/observables/itiotbrgbafocusregion.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbascrollablewidget.h
+    ${MOD_DIR}/qt/viewer/widgets/itiviewerobserver.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbazoomablewidget.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbafullwidget.h
+    ${MOD_DIR}/qt/viewer/observables/itiotbimagevisibleregion.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

@@ -2,7 +2,7 @@
 
 #include "otbImageFileReader.h"
 
-#include "commands/command.h"
+#include "../commands/command.h"
 
 using namespace itiviewer;
 

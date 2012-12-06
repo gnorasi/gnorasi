@@ -35,7 +35,7 @@
 #include <QSplitter>
 
 #include "itiotbimageviewer.h"
-#include "itiotbimagemanager.h"
+#include "../utils/itiotbimagemanager.h"
 
 
 namespace itiviewer{

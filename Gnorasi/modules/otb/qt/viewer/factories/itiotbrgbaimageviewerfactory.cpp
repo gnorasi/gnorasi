@@ -1,6 +1,6 @@
 #include "itiotbrgbaimageviewerfactory.h"
 
-#include "itiotbrgbaimageviewer.h"
+#include "../widgets/itiotbrgbaimageviewer.h"
 
 
 using namespace itiviewer;

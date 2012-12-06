@@ -1,6 +1,6 @@
 #include "commandcolorcomposition.h"
 
-#include "../itiotbimageviewer.h"
+#include "../widgets/itiotbimageviewer.h"
 
 using namespace itiviewer;
 

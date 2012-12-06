@@ -8,10 +8,10 @@
 #include "../../ports/otbvectorimageport.h"
 
 
-#include "../viewer/itiotbimagemanager.h"
-#include "../viewer/itiotbimageviewer.h"
-#include "../viewer/itiotbrgbaimageviewerfactory.h"
-#include "../viewer/itiotbimageviewerpanel.h"
+#include "../viewer/utils/itiotbimagemanager.h"
+#include "../viewer/widgets/itiotbimageviewer.h"
+#include "../viewer/factories/itiotbrgbaimageviewerfactory.h"
+#include "../viewer/panel/itiotbimageviewerpanel.h"
 #include "../viewer/commands/commandcolorcomposition.h"
 #include "../viewer/commands/commandcontrastenhancement.h"
 
