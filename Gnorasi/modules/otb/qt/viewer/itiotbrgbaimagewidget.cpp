@@ -11,7 +11,7 @@ ItiOtbRgbaImageWidget::ItiOtbRgbaImageWidget(QWidget *parent) :
 }
 
 //!
-void ItiOtbRgbaImageWidget::ReadBuffer(const RGBAImageType *image, const RGBARegionType &region){
+void ItiOtbRgbaImageWidget::ReadBuffer(const RasterImageType *image, const RasterRegionType &region){
     // Before doing anything, check if region is inside the buffered
     // region of image
     if (!image->GetBufferedRegion().IsInside(region))
@@ -25,7 +25,7 @@ void ItiOtbRgbaImageWidget::ReadBuffer(const RGBAImageType *image, const RGBAReg
     m_OpenGlBuffer = new unsigned char[3 * region.GetNumberOfPixels()];
 
     // Declare the iterator
-    itk::ImageRegionConstIteratorWithIndex<RGBAImageType> it(image, region);
+    itk::ImageRegionConstIteratorWithIndex<RasterImageType> it(image, region);
 
     // Go to begin
     it.GoToBegin();
@@ -59,9 +59,9 @@ void ItiOtbRgbaImageWidget::ClearBuffer(){
         m_OpenGlBuffer = NULL;
     }
 
-    RGBARegionType region;
-    RGBAIndexType index;
-    RGBASizeType  size;
+    RasterRegionType region;
+    RasterIndexType index;
+    RasterSizeType  size;
 
     size.Fill(0);
     index.Fill(0);
@@ -82,11 +82,11 @@ void ItiOtbRgbaImageWidget::initializeGL()
 
 void ItiOtbRgbaImageWidget::resizeGL(int w, int h)
 {
-    RGBASizeType size;
+    RasterSizeType size;
     size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[0]));
     size [1] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[1]));
 
-    RGBARegionType::IndexType index;
+    RasterRegionType::IndexType index;
     index[0] = (w - static_cast<int>(size[0])) / 2;
     index[1] = (h - static_cast<int>(size[1])) / 2;
 
@@ -137,7 +137,7 @@ void ItiOtbRgbaImageWidget::paintGL()
     }
 
 
-    RGBAIndexType startPosition = m_Extent.GetIndex();
+    RasterIndexType startPosition = m_Extent.GetIndex();
     startPosition[0] = startPosition[0] < 0 ? 0 : startPosition[0];
     startPosition[1] = startPosition[1] < 0 ? 0 : startPosition[1];
 

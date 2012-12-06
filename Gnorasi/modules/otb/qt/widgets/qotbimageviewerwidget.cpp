@@ -82,33 +82,8 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
         //! get the first port
         Port *pPort = l.at(0);
 
-
-        //! START OF INCOMING DATA USAGE
-
-        //! TODO
         //!
-        //! Here should be established incoming image data usage protocol
-        //!
-
-        //! set the port to the image manager
-        ITIOTBIMAGEMANAGER->setPort(pPort);
-
-        //! type case checking
-        if(dynamic_cast<OTBImagePort*>(pPort)){ // set here the raster image port
-            m_pItiOtbImageFactory = new ItiOtbRgbaImageViewerFactory(this);
-        }
-        else if(dynamic_cast<OTBVectorImagePort*>(pPort)){ // set here the vector image factory
-
-        }
-
-        //! create a new ItiOtbImageViewer instance
-        m_pItiOtbImageViewer = m_pItiOtbImageFactory->createViewer();
-
-        //! draw stuff
-        m_pItiOtbImageViewer->draw();
-
-        //!
-        //! END OF INCOMING DATA USAGE
+        setupByPort(pPort);
     }
 }
 
@@ -198,6 +173,54 @@ void QGLOtbImageViewerWidget::setupCommands(){
     CommandContrastEnhancement *pCmdCE = new CommandContrastEnhancement(m_pItiOtbImageViewer,this);
     connect(m_pItiOtbImageViewerPanel,SIGNAL(contrastEnhancementChanged(int,double,double)),pCmdCE,SLOT(setContrastEnhancementMethod(int,double,double)));
     m_pItiOtbImageViewerPanel->setCommand(ItiOtbImageViewerPanel::SLOT_CE,pCmdCE);
+}
+
+//!
+void QGLOtbImageViewerWidget::setupByPort(Port *port){
+    //! START OF INCOMING DATA USAGE
+
+    //! TODO
+    //!
+    //! Here should be established incoming image data usage protocol
+    //!
+
+    //! set the port to the image manager
+    ITIOTBIMAGEMANAGER->setPort(port);
+
+    createViewer(port);
+
+    //! draw stuff
+    m_pItiOtbImageViewer->draw();
+
+    //!
+    //! END OF INCOMING DATA USAGE
+}
+
+void QGLOtbImageViewerWidget::createViewer(Port *pPort){
+    //! type case checking
+    if(dynamic_cast<OTBImagePort*>(pPort)){ // set here the raster image port
+        m_pItiOtbImageFactory = new ItiOtbRgbaImageViewerFactory(this);
+    }
+    else if(dynamic_cast<OTBVectorImagePort*>(pPort)){ // set here the vector image factory
+
+    }
+
+    //!
+    m_pItiOtbImageViewer->hide();
+    delete m_pItiOtbImageViewer;
+
+    //! create a new ItiOtbImageViewer instance
+    m_pItiOtbImageViewer = m_pItiOtbImageFactory->createViewer();
+
+    //! setup commands
+    setupCommands();
+
+    //!
+    m_pItiOtbImageViewer->setParent(this);
+    m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
+
+    //!
+    m_pvSplitter->insertWidget(0,m_pItiOtbImageViewer);
 }
 
 QGLOtbImageViewerWidget::~QGLOtbImageViewerWidget(){

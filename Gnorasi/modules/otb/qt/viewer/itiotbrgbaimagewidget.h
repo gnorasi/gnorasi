@@ -31,7 +31,8 @@
 
 #include <QGLWidget>
 
-#include "otbImage.h"
+#include "../../ports/otbimageport.h"
+
 #include "itkRGBAPixel.h"
 #include "itkFixedArray.h"
 #include "otbGlComponent.h"
@@ -39,15 +40,15 @@
 #include "otbImageWidgetController.h"
 
 using namespace otb;
-
+using namespace voreen;
 
 const unsigned int Dimension = 2;
 
 typedef itk::RGBAPixel<unsigned char>           PixelType;
-typedef otb::Image<PixelType, Dimension>        RGBAImageType;
-typedef RGBAImageType::RegionType               RGBARegionType;
-typedef RGBAImageType::IndexType                RGBAIndexType;
-typedef RGBAImageType::SizeType                 RGBASizeType;
+typedef otb::Image<PixelType, Dimension>        RasterImageType;
+typedef RasterImageType::RegionType             RasterRegionType;
+typedef RasterImageType::IndexType              RasterIndexType;
+typedef RasterImageType::SizeType               RasterSizeType;
 
 namespace itiviewer{
 
@@ -77,7 +78,7 @@ public:
      * This method fills the m_OpenGl buffer according to the region
      *  size. Buffer in flipped over X axis if OTB_USE_GL_ACCEL is OFF.
      */
-    virtual void ReadBuffer(const RGBAImageType * image, const RGBARegionType& region);
+    virtual void ReadBuffer(const RasterImageType * image, const RasterRegionType& region);
 
     /** Clear the OpenGl buffer */
     void ClearBuffer();
@@ -94,11 +95,11 @@ public:
     unsigned char * openGLBuffer() { return m_OpenGlBuffer;}
 
     //! setter getter, self explanatory
-    RGBARegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
-    void setOpenGLBufferedRegion(RGBARegionType r) { m_OpenGlBufferedRegion = r; }
+    RasterRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
+    void setOpenGLBufferedRegion(RasterRegionType r) { m_OpenGlBufferedRegion = r; }
 
     //! setter getter, self explanatory
-    RGBARegionType extent() { return m_Extent; }
+    RasterRegionType extent() { return m_Extent; }
 
     /** Compute the linear buffer index according to the 2D region and
      * its 2D index.This method is used when OTB_GL_USE_ACCEL is OFF.
@@ -106,7 +107,7 @@ public:
      * \param index 2D index
      * \param region 2D region
      */
-    static inline unsigned int ComputeXAxisFlippedBufferIndex(const RGBAIndexType& index, const RGBARegionType& region)
+    static inline unsigned int ComputeXAxisFlippedBufferIndex(const RasterIndexType& index, const RasterRegionType& region)
     {
       return (region.GetSize()[1] - 1 + region.GetIndex()[1] -
               index[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
@@ -147,10 +148,10 @@ private:
     unsigned char * m_OpenGlBuffer;
 
     /** OpenGl buffered region */
-    RGBARegionType m_OpenGlBufferedRegion;
+    RasterRegionType m_OpenGlBufferedRegion;
 
     /** The display extent */
-    RGBARegionType m_Extent;
+    RasterRegionType m_Extent;
 
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */
