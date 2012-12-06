@@ -26,37 +26,58 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITIOTBIMAGEVISIBLEREGION_H
-#define ITIOTBIMAGEVISIBLEREGION_H
+#ifndef ITIOTBRGBARESIZABLEWIDGET_H
+#define ITIOTBRGBARESIZABLEWIDGET_H
 
-#include <QObject>
-
-#include "itiviewerobservable.h"
+#include "itiviewerobserver.h"
 
 namespace itiviewer{
 
+class ItiOtbRgbaQGLWidgetAutoResize;
+class ItiViewerObservable;
+
 /*!
- * \brief The ItiOtbImageVisibleRegion class
- *  The ItiOtbImageVisibleRegion encapsulates the region of the viewer's scrollable area.
- *  An instance of this class serve as an observable item, which various observer objects
- *  can observe.
+ * \brief The ItiOtbRgbaFullWidget class
+ *  This class is a container class
  */
-class ItiOtbImageVisibleRegion : public ItiViewerObservable
+class ItiOtbRgbaResizableWidget : public ItiViewerObserver
 {
-    Q_OBJECT
 public:
     /*!
-     * \brief ItiOtbImageVisibleRegion
+     * \brief ItiOtbRgbaFullWidget
      * \param parent
      */
-    explicit ItiOtbImageVisibleRegion(QObject *parent = 0);
-    
-signals:
-    
-public slots:
-    
+    ItiOtbRgbaResizableWidget(QWidget *parent);
+
+    /*!
+     * \brief update , implementation from parent class
+     * \param region, the region
+     */
+    void update(ItiViewerObservable *observable);
+
+
+    /*!
+     * \brief itiOtbRgbaImageWidget
+     * \return the open gl widget
+     */
+    ItiOtbRgbaQGLWidgetAutoResize* itiOtbRgbaImageWidget() const { return m_pOpenGlWidget; }
+
+    /*!
+     * \brief draw
+     */
+    void draw();
+
+private:
+
+    /*!
+     * \brief initialize
+     */
+    void initialize();
+
+    //! The opengl QGLWidget
+    ItiOtbRgbaQGLWidgetAutoResize *m_pOpenGlWidget;
 };
 
-} // end of namespace itiviewer
+}
 
-#endif // ITIOTBIMAGEVISIBLEREGION_H
+#endif // ITIOTBRGBARESIZABLEWIDGET_H

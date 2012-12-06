@@ -126,6 +126,8 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
     //! setup commands
     setupCommands();
 
+    //!
+    m_pItiOtbImageViewer->draw();
 }
 
 //!

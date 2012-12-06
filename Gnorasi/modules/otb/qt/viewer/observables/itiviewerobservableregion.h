@@ -26,19 +26,25 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITBOTBRGBAFOCUSREGION_H
-#define ITBOTBRGBAFOCUSREGION_H
+#ifndef ITBVIEWEROBSERVABLEREGION_H
+#define ITBVIEWEROBSERVABLEREGION_H
 
 #include <QObject>
 
 #include "itiviewerobservable.h"
 
+#include "../widgets/itiotbrgbaqglwidget.h"
+
 namespace itiviewer{
 
 /*!
- * \brief The ItiOtbRgbaFocusRegion class
+ * \brief The ItiViewerObservableRegion class
+ *  The region in a conceptual view is an area where the viewer is focused on
+ *  In the viewer's UI this focus region is represented by a red lined rectangle in
+ *  the area of the scrollable widget.
+ *  In a c++ view it encaptulates an otb image region.
  */
-class ItiOtbRgbaFocusRegion : public ItiViewerObservable
+class ItiViewerObservableRegion : public ItiViewerObservable
 {
     Q_OBJECT
 public:
@@ -46,19 +52,30 @@ public:
      * \brief ItiOtbRgbaFocusRegion
      * \param parent
      */
-    explicit ItiOtbRgbaFocusRegion(QObject *parent = 0);
+    explicit ItiViewerObservableRegion(QObject *parent = 0);
 
-    
+    /*!
+     * \brief region
+     * \return
+     */
+    RasterRegionType region() const { return m_region; }
+
+    /*!
+     * \brief setRegion
+     * \param r
+     */
+    void setRegion(RasterRegionType r) { m_region = r; }
+
 signals:
     
 public slots:
 
 private:
-
+    RasterRegionType m_region;
 
     
 };
 
 } // namespace itiviewer
 
-#endif // ITBOTBRGBAFOCUSREGION_H
+#endif // ITBVIEWEROBSERVABLEREGION_H

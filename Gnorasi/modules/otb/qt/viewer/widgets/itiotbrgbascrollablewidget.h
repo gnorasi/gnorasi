@@ -33,7 +33,7 @@
 
 namespace itiviewer{
 
-class ItiOtbRgbaImageWidget;
+class ItiOtbRgbaQGLWidget;
 class ItiViewerObservable;
 
 /*!
@@ -60,7 +60,7 @@ public:
      * \brief itiOtbRgbaImageWidget
      * \return the open gl widget
      */
-    ItiOtbRgbaImageWidget* itiOtbRgbaImageWidget() const { return m_pOpenGlWidget; }
+    ItiOtbRgbaQGLWidget* itiOtbRgbaImageWidget() const { return m_pOpenGlWidget; }
 
     /*!
      * \brief draw
@@ -79,7 +79,7 @@ private:
     void initialize();
 
     //! The opengl QGLWidget
-    ItiOtbRgbaImageWidget *m_pOpenGlWidget;
+    ItiOtbRgbaQGLWidget *m_pOpenGlWidget;
     
 };
 

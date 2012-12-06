@@ -1,7 +1,7 @@
-#include "itiotbrgbafullwidget.h"
-#include "../observables/itiotbrgbafocusregion.h"
+#include "itiotbrgbaresizablewidget.h"
 #include "../utils/itiotbimagemanager.h"
-#include "itiotbrgbaimagewidget.h"
+#include "../observables/itiviewerobservableregion.h"
+#include "itiotbrgbaqglwidgetautoresize.h"
 
 #include "../../../ports/otbimageport.h"
 
@@ -9,15 +9,15 @@
 
 using namespace itiviewer;
 
-ItiOtbRgbaFullWidget::ItiOtbRgbaFullWidget(QWidget *parent)
+ItiOtbRgbaResizableWidget::ItiOtbRgbaResizableWidget(QWidget *parent)
     : ItiViewerObserver(parent)
 {
     initialize();
 }
 
 //!
-void ItiOtbRgbaFullWidget::initialize(){
-    m_pOpenGlWidget = new ItiOtbRgbaImageWidget(this);
+void ItiOtbRgbaResizableWidget::initialize(){
+    m_pOpenGlWidget = new ItiOtbRgbaQGLWidgetAutoResize(this);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
 
@@ -27,9 +27,9 @@ void ItiOtbRgbaFullWidget::initialize(){
 }
 
 //!
-void ItiOtbRgbaFullWidget::update(ItiViewerObservable *observable){
+void ItiOtbRgbaResizableWidget::update(ItiViewerObservable *observable){
 
-    ItiOtbRgbaFocusRegion *rgbaRegion = qobject_cast<ItiOtbRgbaFocusRegion*>(observable);
+    ItiViewerObservable *rgbaRegion = qobject_cast<ItiViewerObservable*>(observable);
     if(!rgbaRegion)
         return;
 
@@ -38,7 +38,7 @@ void ItiOtbRgbaFullWidget::update(ItiViewerObservable *observable){
 }
 
 //!
-void ItiOtbRgbaFullWidget::draw(){
+void ItiOtbRgbaResizableWidget::draw(){
     OTBImagePort *port = (OTBImagePort*)ITIOTBIMAGEMANAGER->port();
 
     if(!port)

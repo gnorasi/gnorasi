@@ -1,17 +1,17 @@
-#include "itiotbrgbaimagewidget.h"
+#include "itiotbrgbaqglwidgetautoresize.h"
 #include "itkImageRegionConstIteratorWithIndex.h"
 
 using namespace otb;
 using namespace itiviewer;
 
-ItiOtbRgbaImageWidget::ItiOtbRgbaImageWidget(QWidget *parent) :
+ItiOtbRgbaQGLWidgetAutoResize::ItiOtbRgbaQGLWidgetAutoResize(QWidget *parent) :
     m_IsotropicZoom(1.0), m_OpenGlBuffer(NULL), m_OpenGlBufferedRegion(), m_Extent(), m_SubsamplingRate(1), QGLWidget(parent)
 {
 
 }
 
 //!
-void ItiOtbRgbaImageWidget::ReadBuffer(const RasterImageType *image, const RasterRegionType &region){
+void ItiOtbRgbaQGLWidgetAutoResize::ReadBuffer(const RasterImageType *image, const RasterRegionType &region){
     // Before doing anything, check if region is inside the buffered
     // region of image
     if (!image->GetBufferedRegion().IsInside(region))
@@ -51,7 +51,7 @@ void ItiOtbRgbaImageWidget::ReadBuffer(const RasterImageType *image, const Raste
 }
 
 //!
-void ItiOtbRgbaImageWidget::ClearBuffer(){
+void ItiOtbRgbaQGLWidgetAutoResize::ClearBuffer(){
     // Delete previous buffer if needed
     if (m_OpenGlBuffer != NULL)
     {
@@ -73,14 +73,14 @@ void ItiOtbRgbaImageWidget::ClearBuffer(){
 }
 
 
-void ItiOtbRgbaImageWidget::initializeGL()
+void ItiOtbRgbaQGLWidgetAutoResize::initializeGL()
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
 }
 
 
-void ItiOtbRgbaImageWidget::resizeGL(int w, int h)
+void ItiOtbRgbaQGLWidgetAutoResize::resizeGL(int w, int h)
 {
     RasterSizeType size;
     size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[0]));
@@ -107,7 +107,7 @@ void ItiOtbRgbaImageWidget::resizeGL(int w, int h)
 
 }
 
-void ItiOtbRgbaImageWidget::paintGL()
+void ItiOtbRgbaQGLWidgetAutoResize::paintGL()
 {
     unsigned int nb_displayed_rows;
     unsigned int nb_displayed_cols;
@@ -162,6 +162,6 @@ void ItiOtbRgbaImageWidget::paintGL()
 
 
 //!
-ItiOtbRgbaImageWidget::~ItiOtbRgbaImageWidget(){
+ItiOtbRgbaQGLWidgetAutoResize::~ItiOtbRgbaQGLWidgetAutoResize(){
     ClearBuffer();
 }
