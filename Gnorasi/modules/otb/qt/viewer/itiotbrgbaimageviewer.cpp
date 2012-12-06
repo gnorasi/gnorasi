@@ -150,6 +150,16 @@ void ItiOtbRgbaImageViewer::draw(){
 
     if(!port)
         return;
+
+    //!
+    RasterImageType* imgType =  (RasterImageType*)port->getData();
+    if(!imgType)
+        return;
+
+    RasterRegionType region = imgType->GetLargestPossibleRegion();
+
+    //!
+    m_pItiOtbRgbaImageWidgetFull->itiOtbRgbaImageWidget()->ReadBuffer(imgType,region);
 }
 
 /*!

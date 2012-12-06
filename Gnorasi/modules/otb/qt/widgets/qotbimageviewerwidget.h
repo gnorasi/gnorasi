@@ -70,11 +70,20 @@ public:
 
     virtual ~QGLOtbImageViewerWidget();
 
+    /*!
+     * \brief initialize
+     */
     void initialize();
 
+    /*!
+     * \brief updateFromProcessor , implementation
+     */
     virtual void updateFromProcessor();
     
 protected:
+    /*!
+     * \brief keyPressEvent , implementation
+     */
     void keyPressEvent(QKeyEvent *);
 
 signals:
@@ -88,26 +97,60 @@ private slots:
 
 
 private:
-    //! setup connections between commands and panel properties
+
+    /*!
+     * \brief createViewer
+     * \param port
+     */
+    void createViewer(voreen::Port* port);
+
+    /*!
+     * \brief setupByPort
+     * \param port , port in general
+     */
+    void setupByPort(voreen::Port* port) ;
+
+    /*!
+     * \brief setupCommands
+     *  setup connections between commands and panel properties
+     */
     void setupCommands();
 
-    //! this function creates and assembles all the widgets into one single widget
+    /*!
+     * \brief assembleWidgets
+     *  this function creates and assembles all the widgets into one single widget
+     */
     void assembleWidgets();
 
-    //! this function splits the layout
+    /*!
+     * \brief disassembleWidgets
+     *  this function splits the layout
+     */
     void disassembleWidgets();
 
+    /*!
+     * \brief loggerCat_
+     */
     static const std::string loggerCat_;
 
-    //! this is the main widget of this viewer
+    /*!
+     * \brief m_pItiOtbImageViewer , this is the main widget of this viewer
+     */
     itiviewer::ItiOtbImageViewer *m_pItiOtbImageViewer;
 
-    //! a factory responsible for creating ItiOtbImageViewer instances..
+    /*!
+     * \brief m_pItiOtbImageFactory, a factory responsible for creating ItiOtbImageViewer instances..
+     */
     itiviewer::ItiOtbImageViewerFactory *m_pItiOtbImageFactory;
 
-    //! a panel widget for handling viewer parameters
+    /*!
+     * \brief m_pItiOtbImageViewerPanel, a panel widget for handling viewer parameters
+     */
     itiviewer::ItiOtbImageViewerPanel *m_pItiOtbImageViewerPanel;
 
+    /*!
+     * \brief m_pvSplitter
+     */
     QSplitter *m_pvSplitter;
 };
 
