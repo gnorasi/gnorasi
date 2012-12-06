@@ -1,6 +1,6 @@
 #include "itiviewerobservable.h"
 
-#include "itiviewerobserver.h"
+#include "../widgets/itiviewerobserver.h"
 
 using namespace itiviewer;
 

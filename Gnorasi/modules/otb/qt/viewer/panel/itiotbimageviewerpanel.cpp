@@ -4,8 +4,8 @@
 #include "itiotbimageviewerpanelsetuptab.h"
 #include "itiotbimageviewerpanelhistogramtab.h"
 #include "itiotbimageviewerpanelpixeldescriptiontab.h"
-#include "itiotbimageviewer.h"
-#include "commands/command.h"
+#include "../widgets/itiotbimageviewer.h"
+#include "../commands/command.h"
 
 #include <QVBoxLayout>
 

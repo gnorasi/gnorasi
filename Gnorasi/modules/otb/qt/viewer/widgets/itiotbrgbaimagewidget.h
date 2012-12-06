@@ -31,7 +31,7 @@
 
 #include <QGLWidget>
 
-#include "../../ports/otbimageport.h"
+#include "../../../ports/otbimageport.h"
 
 #include "itkRGBAPixel.h"
 #include "itkFixedArray.h"

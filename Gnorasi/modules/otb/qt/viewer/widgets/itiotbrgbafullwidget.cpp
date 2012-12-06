@@ -1,19 +1,19 @@
-#include "itiotbrgbascrollablewidget.h"
-#include "itiotbrgbafocusregion.h"
+#include "itiotbrgbafullwidget.h"
+#include "../observables/itiotbrgbafocusregion.h"
 #include "itiotbrgbaimagewidget.h"
 
 #include <QVBoxLayout>
 
 using namespace itiviewer;
 
-ItiOtbRgbaScrollableWidget::ItiOtbRgbaScrollableWidget(QWidget *parent) :
-    ItiViewerObserver(parent)
+ItiOtbRgbaFullWidget::ItiOtbRgbaFullWidget(QWidget *parent)
+    : ItiViewerObserver(parent)
 {
     initialize();
 }
 
 //!
-void ItiOtbRgbaScrollableWidget::initialize(){
+void ItiOtbRgbaFullWidget::initialize(){
     m_pOpenGlWidget = new ItiOtbRgbaImageWidget(this);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -24,12 +24,12 @@ void ItiOtbRgbaScrollableWidget::initialize(){
 }
 
 //!
-void ItiOtbRgbaScrollableWidget::update(ItiViewerObservable *observable){
+void ItiOtbRgbaFullWidget::update(ItiViewerObservable *observable){
 
     ItiOtbRgbaFocusRegion *rgbaRegion = qobject_cast<ItiOtbRgbaFocusRegion*>(observable);
     if(!rgbaRegion)
         return;
 
     //! TODO
-    //! add the functionality here for drawing here
+    //! add the functionality here
 }

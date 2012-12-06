@@ -1,19 +1,20 @@
-#include "itiotbrgbafullwidget.h"
-#include "itiotbrgbafocusregion.h"
+#include "itiotbrgbazoomablewidget.h"
 #include "itiotbrgbaimagewidget.h"
+#include "../observables/itiotbrgbafocusregion.h"
 
 #include <QVBoxLayout>
 
 using namespace itiviewer;
 
-ItiOtbRgbaFullWidget::ItiOtbRgbaFullWidget(QWidget *parent)
+
+ItiOtbRgbaZoomableWidget::ItiOtbRgbaZoomableWidget(QWidget *parent)
     : ItiViewerObserver(parent)
 {
     initialize();
 }
 
 //!
-void ItiOtbRgbaFullWidget::initialize(){
+void ItiOtbRgbaZoomableWidget::initialize(){
     m_pOpenGlWidget = new ItiOtbRgbaImageWidget(this);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -24,7 +25,7 @@ void ItiOtbRgbaFullWidget::initialize(){
 }
 
 //!
-void ItiOtbRgbaFullWidget::update(ItiViewerObservable *observable){
+void ItiOtbRgbaZoomableWidget::update(ItiViewerObservable *observable){
 
     ItiOtbRgbaFocusRegion *rgbaRegion = qobject_cast<ItiOtbRgbaFocusRegion*>(observable);
     if(!rgbaRegion)
