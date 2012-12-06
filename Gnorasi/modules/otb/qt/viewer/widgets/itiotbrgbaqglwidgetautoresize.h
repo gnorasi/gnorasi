@@ -26,10 +26,12 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITIOTBRGBAIMAGEWIDGET_H
-#define ITIOTBRGBAIMAGEWIDGET_H
+#ifndef ITIOTBRGBAQGLWIDGETAUTORESIZE_H
+#define ITIOTBRGBAQGLWIDGETAUTORESIZE_H
 
 #include <QGLWidget>
+
+#include "itiotbrgbaqglwidget.h"
 
 #include "../../../ports/otbimageport.h"
 
@@ -41,14 +43,6 @@
 
 using namespace otb;
 using namespace voreen;
-
-const unsigned int Dimension = 2;
-
-typedef itk::RGBAPixel<unsigned char>           PixelType;
-typedef otb::Image<PixelType, Dimension>        RasterImageType;
-typedef RasterImageType::RegionType             RasterRegionType;
-typedef RasterImageType::IndexType              RasterIndexType;
-typedef RasterImageType::SizeType               RasterSizeType;
 
 namespace itiviewer{
 
@@ -62,13 +56,13 @@ namespace itiviewer{
 *  \ingroup Visualization
  */
 
-class ItiOtbRgbaImageWidget : public QGLWidget
+class ItiOtbRgbaQGLWidgetAutoResize : public QGLWidget
 {
     Q_OBJECT
 public:
-    explicit ItiOtbRgbaImageWidget(QWidget *parent = 0);
+    explicit ItiOtbRgbaQGLWidgetAutoResize(QWidget *parent = 0);
 
-    virtual ~ItiOtbRgbaImageWidget();
+    virtual ~ItiOtbRgbaQGLWidgetAutoResize();
 
     /** Reads the OpenGl buffer from an image pointer
      *  \param image The image pointer,
@@ -161,4 +155,4 @@ private:
 
 } // end of itiviewer
 
-#endif // ITIOTBRGBAIMAGEWIDGET_H
+#endif // ITIOTBRGBAQGLWIDGETAUTORESIZE

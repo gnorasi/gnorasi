@@ -361,7 +361,8 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/qotbprocessorwidgetfactory.cpp
     ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.cpp
     ${MOD_DIR}/qt/viewer/utils/itiotbimagemanager.cpp
-    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaimagewidget.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetautoresize.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidget.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaimageviewer.cpp
     ${MOD_DIR}/qt/viewer/factories/itiotbimageviewerfactory.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiotbimageviewer.cpp
@@ -375,12 +376,11 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/commands/commandcolorcomposition.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.cpp
     ${MOD_DIR}/qt/viewer/observables/itiviewerobservable.cpp
-    ${MOD_DIR}/qt/viewer/observables/itiotbrgbafocusregion.cpp
+    ${MOD_DIR}/qt/viewer/observables/itiviewerobservableregion.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbascrollablewidget.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiviewerobserver.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbazoomablewidget.cpp
-    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbafullwidget.cpp
-    ${MOD_DIR}/qt/viewer/observables/itiotbimagevisibleregion.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaresizablewidget.cpp
 )
 ################################################################################
 # Qt headers
@@ -388,7 +388,8 @@ SET(MOD_QT_SOURCES
 SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.h
     ${MOD_DIR}/qt/viewer/utils/itiotbimagemanager.h/
-    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaimagewidget.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetautoresize.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidget.h
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaimageviewer.h
     ${MOD_DIR}/qt/viewer/factories/itiotbimageviewerfactory.h
     ${MOD_DIR}/qt/viewer/widgets/itiotbimageviewer.h
@@ -402,12 +403,11 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/commands/commandcolorcomposition.h
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.h
     ${MOD_DIR}/qt/viewer/observables/itiviewerobservable.h
-    ${MOD_DIR}/qt/viewer/observables/itiotbrgbafocusregion.h
+    ${MOD_DIR}/qt/viewer/observables/itiviewerobservableregion.h
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbascrollablewidget.h
     ${MOD_DIR}/qt/viewer/widgets/itiviewerobserver.h
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbazoomablewidget.h
-    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbafullwidget.h
-    ${MOD_DIR}/qt/viewer/observables/itiotbimagevisibleregion.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaresizablewidget.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

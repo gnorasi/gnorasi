@@ -35,15 +35,15 @@
 #include <QSplitter>
 
 #include "itiotbimageviewer.h"
-#include "../utils/itiotbimagemanager.h"
 
 
 namespace itiviewer{
 
 class ItiOtbRgbaScrollableWidget;
-class ItiOtbRgbaFullWidget;
+class ItiOtbRgbaResizableWidget;
 class ItiOtbRgbaZoomableWidget;
 class ItiOtbRgbaFocusRegion;
+class ItiViewerObservableRegion;
 
 /** \class ITIOTBImageViewer
  *   \brief This class implements a standard visualization tool to be
@@ -100,6 +100,11 @@ public:
 
 private:
     /*!
+     * \brief setupObserverMechanism
+     */
+    void setupObserverMechanism();
+
+    /*!
      * \brief setupLayout
      */
     void setupLayout();
@@ -113,7 +118,7 @@ private:
     /*!
      * \brief m_pItiOtbRgbaImageWidgetFull , The full widget always shows the whole image extents
      */
-    ItiOtbRgbaFullWidget *m_pItiOtbRgbaImageWidgetFull;
+    ItiOtbRgbaResizableWidget *m_pItiOtbRgbaImageWidgetResizable;
 
     /*!
      * \brief m_pItiOtbRgbaImageWidgetZoom
@@ -175,6 +180,20 @@ private:
      */
     QWidget *m_pMetadataWidget;
 
+    /*!
+     * \brief m_focusRegion
+     *  The m_focusRegion region extents equal to the zoomable widget extents, so the zoomable widget
+     *  visualizes the content defined by the focus region.
+     *  This instance is an observable item
+     */
+    ItiViewerObservableRegion *m_pFocusRegion;
+
+    /*!
+     * \brief m_pVisibleRegion
+     *  The visible region extents equal to the visible part of the image shown on the scrollable widget view
+     *  This instance is an observable item
+     */
+    ItiViewerObservableRegion *m_pVisibleRegion;
     
 };
 

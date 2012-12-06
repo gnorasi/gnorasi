@@ -1,7 +1,7 @@
 #include "itiotbrgbascrollablewidget.h"
-#include "../observables/itiotbrgbafocusregion.h"
+#include "../observables/itiviewerobservableregion.h"
 #include "../utils/itiotbimagemanager.h"
-#include "itiotbrgbaimagewidget.h"
+#include "itiotbrgbaqglwidget.h"
 
 #include "../../../ports/otbimageport.h"
 
@@ -17,7 +17,7 @@ ItiOtbRgbaScrollableWidget::ItiOtbRgbaScrollableWidget(QWidget *parent) :
 
 //!
 void ItiOtbRgbaScrollableWidget::initialize(){
-    m_pOpenGlWidget = new ItiOtbRgbaImageWidget(this);
+    m_pOpenGlWidget = new ItiOtbRgbaQGLWidget(this);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
 
@@ -29,7 +29,7 @@ void ItiOtbRgbaScrollableWidget::initialize(){
 //!
 void ItiOtbRgbaScrollableWidget::update(ItiViewerObservable *observable){
 
-    ItiOtbRgbaFocusRegion *rgbaRegion = qobject_cast<ItiOtbRgbaFocusRegion*>(observable);
+    ItiViewerObservable *rgbaRegion = qobject_cast<ItiViewerObservable*>(observable);
     if(!rgbaRegion)
         return;
 
