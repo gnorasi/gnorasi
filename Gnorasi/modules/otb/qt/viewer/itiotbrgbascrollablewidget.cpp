@@ -31,5 +31,5 @@ void ItiOtbRgbaScrollableWidget::update(ItiOtbFocusRegion *region){
         return;
 
     //! TODO
-    //! add the functionality here
+    //! add the functionality here for drawing here
 }

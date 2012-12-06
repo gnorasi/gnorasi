@@ -68,7 +68,7 @@ public:
     //!
     //! ctor
     //!
-    explicit ItiOtbImageViewer(QWidget *parent = 0);
+    explicit ItiOtbImageViewer(QWidget *parent = 0) : QWidget(parent) { }
 
     /*!
      * \brief disassembleWidgets

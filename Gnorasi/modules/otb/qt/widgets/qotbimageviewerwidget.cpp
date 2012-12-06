@@ -91,8 +91,7 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
         //!
 
         //! set the port to the image manager
-        ItiOtbImageManager *mgr = ItiOtbImageManager::instance();
-        mgr->setImagePort(pPort);
+        ITIOTBIMAGEMANAGER->setPort(pPort);
 
         //! type case checking
         if(dynamic_cast<OTBImagePort*>(pPort)){ // set here the raster image port
