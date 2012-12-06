@@ -61,8 +61,8 @@ void ItiOtbRgbaImageViewer::setupLayout(){
     //! create the metadata widget, also a widget for showing pixel info metadata
     //!
     m_pMetadataWidget                   = new QWidget(this);
-    m_pMetadataWidget->setGeometry(0,0,200,200);
-    m_pMetadataWidget->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+    m_pMetadataWidget->setGeometry(0,0,160,160);
+    m_pMetadataWidget->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
 
     //! setup the left layout
     m_pvBoxLayoutLeft                   = new QVBoxLayout();
