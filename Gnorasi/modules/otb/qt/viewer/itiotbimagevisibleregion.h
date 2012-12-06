@@ -26,59 +26,37 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITIOTBFOCUSREGION_H
-#define ITIOTBFOCUSREGION_H
+#ifndef ITIOTBIMAGEVISIBLEREGION_H
+#define ITIOTBIMAGEVISIBLEREGION_H
 
 #include <QObject>
 
+#include "itiviewerobservable.h"
+
 namespace itiviewer{
 
-class ItiOtbFocusRegionObserver;
-
 /*!
- * \brief The ItiOtbFocusRegion class
- *  This class is a subject of observing through various observer classes
- *  It contains variables related to the Image visualized and the region in
- *  which the scene is focused on.
- *  This class provides an iterface , a set of pure virtual functions all
- *  concrete subclasses must implement.
+ * \brief The ItiOtbImageVisibleRegion class
+ *  The ItiOtbImageVisibleRegion encapsulates the region of the viewer's scrollable area.
+ *  An instance of this class serve as an observable item, which various observer objects
+ *  can observe.
  */
-class ItiOtbFocusRegion : public QObject
+class ItiOtbImageVisibleRegion : public ItiViewerObservable
 {
     Q_OBJECT
 public:
-    //!
-    explicit ItiOtbFocusRegion(QObject *parent = 0);
+    /*!
+     * \brief ItiOtbImageVisibleRegion
+     * \param parent
+     */
+    explicit ItiOtbImageVisibleRegion(QObject *parent = 0);
     
-    /*!
-     * \brief registerObserver , adds an observer
-     * \param obr,  the observer to register
-     */
-    void registerObserver(ItiOtbFocusRegionObserver *obr) { m_observerList.append(obr); }
-
-    /*!
-     * \brief unRegisterObserver , unregisters the observer object
-     * \param obr , the observer instance to be unregistered by the list
-     */
-    void unRegisterObserver(ItiOtbFocusRegionObserver *obr) { m_observerList.removeOne(obr); }
-
-    /*!
-     * \brief notifyObservers , notifies all registered observer objects
-     */
-    void notifyObservers();
-
 signals:
     
 public slots:
-
-private:
-    /*!
-     * \brief m_observerList , a list of observers
-     */
-    QList<ItiOtbFocusRegionObserver*> m_observerList;
     
 };
 
-}
+} // end of namespace itiviewer
 
-#endif // ITIOTBFOCUSREGION_H
+#endif // ITIOTBIMAGEVISIBLEREGION_H

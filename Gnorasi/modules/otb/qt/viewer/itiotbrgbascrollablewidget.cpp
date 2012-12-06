@@ -7,7 +7,7 @@
 using namespace itiviewer;
 
 ItiOtbRgbaScrollableWidget::ItiOtbRgbaScrollableWidget(QWidget *parent) :
-    ItiOtbFocusRegionObserver(parent)
+    ItiViewerObserver(parent)
 {
     initialize();
 }
@@ -24,9 +24,9 @@ void ItiOtbRgbaScrollableWidget::initialize(){
 }
 
 //!
-void ItiOtbRgbaScrollableWidget::update(ItiOtbFocusRegion *region){
+void ItiOtbRgbaScrollableWidget::update(ItiViewerObservable *observable){
 
-    ItiOtbRgbaFocusRegion *rgbaRegion = qobject_cast<ItiOtbRgbaFocusRegion*>(region);
+    ItiOtbRgbaFocusRegion *rgbaRegion = qobject_cast<ItiOtbRgbaFocusRegion*>(observable);
     if(!rgbaRegion)
         return;
 

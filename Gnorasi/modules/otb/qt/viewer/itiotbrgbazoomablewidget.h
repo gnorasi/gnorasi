@@ -29,16 +29,16 @@
 #ifndef ITIOTBRGBAZOOMABLEWIDGET_H
 #define ITIOTBRGBAZOOMABLEWIDGET_H
 
-#include "itiotbfocusregionobserver.h"
+#include "itiviewerobserver.h"
 
 namespace itiviewer{
 class ItiOtbRgbaImageWidget;
-class ItiOtbFocusRegion;
+class ItiViewerObservable;
 
 /*!
  * \brief The ItiOtbRgbaZoomWidget class
  */
-class ItiOtbRgbaZoomableWidget : public ItiOtbFocusRegionObserver
+class ItiOtbRgbaZoomableWidget : public ItiViewerObserver
 {
 public:
     /*!
@@ -51,7 +51,7 @@ public:
      * \brief update , implementation from parent class
      * \param region, the region
      */
-    void update(ItiOtbFocusRegion *region);
+    void update(ItiViewerObservable *observable);
 
     /*!
      * \brief itiOtbRgbaImageWidget

@@ -5,23 +5,23 @@
 
 namespace itiviewer{
 
-class ItiOtbFocusRegion;
+class ItiViewerObservable;
 
 /*!
  * \brief The ItiOtbFocusRegionObserver class
  *  This is the base class for all subclasses .
  *  It observes a focus region
  */
-class ItiOtbFocusRegionObserver : public QWidget
+class ItiViewerObserver : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ItiOtbFocusRegionObserver(QWidget *parent = 0);
+    explicit ItiViewerObserver(QWidget *parent = 0);
 
     /*!
      * \brief notify
      */
-    virtual void update(ItiOtbFocusRegion* ) = 0;
+    virtual void update(ItiViewerObservable* ) = 0;
     
 signals:
     
