@@ -61,6 +61,11 @@ public:
      * \return the open gl widget
      */
     ItiOtbRgbaImageWidget* itiOtbRgbaImageWidget() const { return m_pOpenGlWidget; }
+
+    /*!
+     * \brief draw
+     */
+    void draw();
     
 signals:
     

@@ -146,20 +146,9 @@ void ItiOtbRgbaImageViewer::assembleWidgets(){
  *  This is where all the painting is done.
  */
 void ItiOtbRgbaImageViewer::draw(){
-    OTBImagePort *port = (OTBImagePort*)ITIOTBIMAGEMANAGER->port();
-
-    if(!port)
-        return;
-
-    //!
-    RasterImageType* imgType =  (RasterImageType*)port->getData();
-    if(!imgType)
-        return;
-
-    RasterRegionType region = imgType->GetLargestPossibleRegion();
-
-    //!
-    m_pItiOtbRgbaImageWidgetFull->itiOtbRgbaImageWidget()->ReadBuffer(imgType,region);
+    m_pItiOtbRgbaImageWidgetFull->draw();
+    m_pItiOtbRgbaImageWidgetScroll->draw();
+    m_pItiOtbRgbaImageWidgetZoom->draw();
 }
 
 /*!

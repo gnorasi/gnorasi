@@ -62,6 +62,11 @@ public:
      */
     ItiOtbRgbaImageWidget* itiOtbRgbaImageWidget() const { return m_pOpenGlWidget; }
 
+    /*!
+     * \brief draw
+     */
+    void draw();
+
 private:
 
     /*!
