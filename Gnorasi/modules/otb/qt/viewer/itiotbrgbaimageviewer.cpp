@@ -3,6 +3,12 @@
 #include "itiotbrgbafullwidget.h"
 #include "itiotbrgbascrollablewidget.h"
 #include "itiotbrgbazoomablewidget.h"
+#include "itiotbimagemanager.h"
+#include "itiotbrgbaimagewidget.h"
+
+#include "../../ports/otbimageport.h"
+
+#include "otbImage.h"
 
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopWidget>
@@ -11,6 +17,7 @@
 #include <QDebug>
 
 using namespace itiviewer;
+using namespace voreen;
 
 ItiOtbRgbaImageViewer::ItiOtbRgbaImageViewer(QWidget *parent) :
     ItiOtbImageViewer(parent)
@@ -18,16 +25,19 @@ ItiOtbRgbaImageViewer::ItiOtbRgbaImageViewer(QWidget *parent) :
     setupLayout();
 }
 
+/*!
+ * \brief ItiOtbRgbaImageViewer::setupLayout
+ */
 void ItiOtbRgbaImageViewer::setupLayout(){
     // initialize instances
-    m_pLabelFullResolution              = new QLabel(tr("Full Resolution View"),this);
-    m_pLabelNavigationView              = new QLabel(tr("Navigation View"),this);
-    m_pLabelZoomView                    = new QLabel(tr("Zoom View"),this);
+    m_pLabelScrollableResolution        = new QLabel(tr("Scrollable View"),this);
+    m_pLabelFullView                    = new QLabel(tr("Full View"),this);
+    m_pLabelZoomView                    = new QLabel(tr("Zoomable View"),this);
     m_pLabelMetadataView                = new QLabel(tr("Metadata View"),this);
 
     //! setup the resize policy
-    m_pLabelFullResolution->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
-    m_pLabelNavigationView->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+    m_pLabelScrollableResolution->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+    m_pLabelFullView->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
     m_pLabelZoomView->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
 
     //!
@@ -51,7 +61,7 @@ void ItiOtbRgbaImageViewer::setupLayout(){
 
     //! setup the left layout
     m_pvBoxLayoutLeft                   = new QVBoxLayout();
-    m_pvBoxLayoutLeft->addWidget(m_pLabelNavigationView);
+    m_pvBoxLayoutLeft->addWidget(m_pLabelFullView);
     m_pvBoxLayoutLeft->addWidget(m_pItiOtbRgbaImageWidgetFull);
     m_pvBoxLayoutLeft->addWidget(m_pLabelZoomView);
     m_pvBoxLayoutLeft->addWidget(m_pItiOtbRgbaImageWidgetZoom);
@@ -62,7 +72,7 @@ void ItiOtbRgbaImageViewer::setupLayout(){
 
     //! setup the right layout
     m_pVboxLayoutRight                  = new QVBoxLayout();
-    m_pVboxLayoutRight->addWidget(m_pLabelFullResolution);
+    m_pVboxLayoutRight->addWidget(m_pLabelScrollableResolution);
     m_pVboxLayoutRight->addWidget(m_pItiOtbRgbaImageWidgetScroll);
     //! create the widget
     QWidget *pWidgetRight               = new QWidget(this);
@@ -82,7 +92,9 @@ void ItiOtbRgbaImageViewer::setupLayout(){
     setLayout(m_pMainLayout);
 }
 
-//!
+/*!
+ * \brief ItiOtbRgbaImageViewer::disassembleWidgets
+ */
 void ItiOtbRgbaImageViewer::disassembleWidgets(){
     m_pMainLayout->removeWidget(m_pSplitter);
 
@@ -98,12 +110,12 @@ void ItiOtbRgbaImageViewer::disassembleWidgets(){
     //! create the widgets
     m_pItiOtbRgbaImageWidgetScroll      = new ItiOtbRgbaScrollableWidget(this);
     m_pItiOtbRgbaImageWidgetScroll->setWindowFlags(Qt::Window);
-    m_pItiOtbRgbaImageWidgetScroll->setWindowTitle(m_pLabelFullResolution->text());
+    m_pItiOtbRgbaImageWidgetScroll->setWindowTitle(m_pLabelScrollableResolution->text());
     m_pItiOtbRgbaImageWidgetScroll->setGeometry(QApplication::desktop()->width()/2 - 200,QApplication::desktop()->height()/2 - 200,200,200);
     m_pItiOtbRgbaImageWidgetScroll->show();
     m_pItiOtbRgbaImageWidgetFull        = new ItiOtbRgbaFullWidget(this);
     m_pItiOtbRgbaImageWidgetFull->setWindowFlags(Qt::Window);
-    m_pItiOtbRgbaImageWidgetFull->setWindowTitle(m_pLabelNavigationView->text());
+    m_pItiOtbRgbaImageWidgetFull->setWindowTitle(m_pLabelFullView->text());
     m_pItiOtbRgbaImageWidgetFull->setGeometry(QApplication::desktop()->width()/2 - 160,QApplication::desktop()->height()/2 - 160,200,200);
     m_pItiOtbRgbaImageWidgetFull->show();
     m_pItiOtbRgbaImageWidgetZoom        = new ItiOtbRgbaZoomableWidget(this);
@@ -118,28 +130,54 @@ void ItiOtbRgbaImageViewer::disassembleWidgets(){
     m_pMetadataWidget->show();
 }
 
-//!
+/*!
+ * \brief ItiOtbRgbaImageViewer::assembleWidgets
+ */
 void ItiOtbRgbaImageViewer::assembleWidgets(){
-
+    //!
+    //! TODO
+    //! Add functionality if needed when assembling operation is handled,
+    //! Though it may needed , as  the assembling operation creates a new instance of this class
+    //!
 }
 
-//!
+/*!
+ * \brief ItiOtbRgbaImageViewer::draw
+ *  This is where all the painting is done.
+ */
 void ItiOtbRgbaImageViewer::draw(){
+    OTBImagePort *port = (OTBImagePort*)ITIOTBIMAGEMANAGER->port();
 
+    if(!port)
+        return;
 }
 
-//!
+/*!
+ * \brief ItiOtbRgbaImageViewer::applyGreyScaleColorMode
+ * \param band
+ */
 void ItiOtbRgbaImageViewer::applyGreyScaleColorMode(int band){
     Q_UNUSED(band)
 }
 
-//!
+/*!
+ * \brief ItiOtbRgbaImageViewer::applyRGBColorMode
+ * \param red
+ * \param green
+ * \param blue
+ */
 void ItiOtbRgbaImageViewer::applyRGBColorMode(int red, int green, int blue){
     Q_UNUSED(red)
     Q_UNUSED(green)
     Q_UNUSED(blue)
 }
 
+/*!
+ * \brief ItiOtbRgbaImageViewer::applyContrastEnhancementMethod
+ * \param ce
+ * \param aval
+ * \param bval
+ */
 void ItiOtbRgbaImageViewer::applyContrastEnhancementMethod(CC ce, double aval, double bval){
     Q_UNUSED(ce)
     Q_UNUSED(aval)

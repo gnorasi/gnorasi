@@ -58,66 +58,121 @@ class ItiOtbRgbaImageViewer : public ItiOtbImageViewer
 public:
     explicit ItiOtbRgbaImageViewer(QWidget *parent = 0);
 
-    //! implementation
+    /*!
+     * \brief disassembleWidgets , implementation
+     */
     void disassembleWidgets();
 
-    //! implementation
+    /*!
+     * \brief assembleWidgets
+     *  implementation
+     */
     void assembleWidgets();
 
-    //! implementation
+    /*!
+     * \brief draw
+     *  implementation
+     */
     void draw();
 
-    //! implementation
+    /*!
+     * \brief applyGreyScaleColorMode , implementation
+     * \param band , the grey  scale channel
+     */
     void applyGreyScaleColorMode(int band);
 
-    //! implementation
+    /*!
+     * \brief applyRGBColorMode , implementation
+     * \param red , red channel
+     * \param green , green channel
+     * \param blue, blue channel
+     */
     void applyRGBColorMode(int red, int green, int blue);
 
-    //! implementation
+    /*!
+     * \brief applyContrastEnhancementMethod , red channel
+     * \param ce
+     * \param aval
+     * \param bval
+     */
     void applyContrastEnhancementMethod(CC ce, double aval, double bval);
 
-signals:
-    
-public slots:
 
 private:
+    /*!
+     * \brief setupLayout
+     */
     void setupLayout();
 
-    //! The Scrollable QGLWidget
+    /*!
+     * \brief m_pItiOtbRgbaImageWidgetScroll
+     *  The scrollable widgets accepts scroll events and has a helper rectangle which sets the focus region
+     */
     ItiOtbRgbaScrollableWidget *m_pItiOtbRgbaImageWidgetScroll;
 
-    //! The Full QGLWidget
+    /*!
+     * \brief m_pItiOtbRgbaImageWidgetFull , The full widget always shows the whole image extents
+     */
     ItiOtbRgbaFullWidget *m_pItiOtbRgbaImageWidgetFull;
 
-    //! The Zoomable QGLWidget
+    /*!
+     * \brief m_pItiOtbRgbaImageWidgetZoom
+     *  The zoombable widget shows the image in various scales depending on the image zoom properties
+     */
     ItiOtbRgbaZoomableWidget *m_pItiOtbRgbaImageWidgetZoom;
 
-    //! The left vertical layout, needed for assembiling and disassembliing purposes
+    /*!
+     * \brief m_pvBoxLayoutLeft
+     *  The left vertical layout, needed for assembiling and disassembliing purposes
+     *  The left layout contain two view widgets the zoomable and the full widget
+     *  and the metadata widget.
+     */
     QVBoxLayout *m_pvBoxLayoutLeft;
 
-    //! The right vertical layout, needed for assembiling and disassembliing purposes
+    /*!
+     * \brief m_pVboxLayoutRight
+     *  The right vertical layout, needed for assembiling and disassembliing purposes
+     */
     QVBoxLayout *m_pVboxLayoutRight;
 
-    //! The main layout, needed for assembiling and disassembliing purposes
+    /*!
+     * \brief m_pMainLayout
+     *  The main layout, needed for assembiling and disassembliing purposes
+     */
     QVBoxLayout *m_pMainLayout;
 
-    //! The horizontal splitter;
+    /*!
+     * \brief m_pSplitter
+     *  The horizontal splitter , the view is splitted horizontally..
+     */
     QSplitter *m_pSplitter;
 
     //! the following labels were taken from the monteverdi viewer
-    //! a label showing a title for the full resolution view
-    QLabel *m_pLabelFullResolution;
+    //! a label showing a title for the scrollable resolution view
+    QLabel *m_pLabelScrollableResolution;
 
-    //! a label showing a title for the navigation view
-    QLabel *m_pLabelNavigationView;
+    /*!
+     * \brief m_pLabelNavigationView
+     *  a label showing a title for the navigation view
+     */
+    QLabel *m_pLabelFullView;
 
-    //! a label showing a title for the zoom view
+    /*!
+     * \brief m_pLabelZoomView
+     *  a label showing a title for the zoomable view
+     */
     QLabel *m_pLabelZoomView;
 
-    //! a label showing a title for the metadata view
+    /*!
+     * \brief m_pLabelMetadataView
+     *  a label showing a title for the metadata view
+     */
     QLabel *m_pLabelMetadataView;
 
-    //! Container widget
+    /*!
+     * \brief m_pMetadataWidget
+     *  For the moment , a Container widget
+     */
     QWidget *m_pMetadataWidget;
 
     

@@ -36,6 +36,8 @@
 
 namespace itiviewer{
 
+#define ITIOTBIMAGEMANAGER ItiOtbImageManager::instance()
+
 class Command;
 
 /*!
@@ -62,8 +64,8 @@ public:
     static void deleteInstance();
 
     /** Set/Get the image to render */
-    voreen::Port* imagePort() const { return m_pPort; }
-    void setImagePort(voreen::Port* p) { m_pPort = p; }
+    voreen::Port* port() const { return m_pPort; }
+    void setPort(voreen::Port* p) { m_pPort = p; }
 
     /** Set/Get the DEM directory */
     void setDemDirectory(const QString &d) { m_DEMDirectory = d; }

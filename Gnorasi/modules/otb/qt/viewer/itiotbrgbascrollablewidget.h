@@ -55,6 +55,12 @@ public:
      * \param region, the region
      */
     void update(ItiOtbFocusRegion *region);
+
+    /*!
+     * \brief itiOtbRgbaImageWidget
+     * \return the open gl widget
+     */
+    ItiOtbRgbaImageWidget* itiOtbRgbaImageWidget() const { return m_pOpenGlWidget; }
     
 signals:
     
