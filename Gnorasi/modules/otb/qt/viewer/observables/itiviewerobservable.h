@@ -67,9 +67,6 @@ public:
      */
     void notifyObservers();
 
-signals:
-    
-public slots:
 
 private:
     /*!
