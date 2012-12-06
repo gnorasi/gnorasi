@@ -49,8 +49,10 @@ namespace itiviewer{
 /** \class QOtbImageWidget
 *   \brief This class renders an RGB bytes image buffer to the screen.
 *   Rendered data can be loaded using the ReadBuffer() method.
-*   The SetIsotropicZoom() method allows to tune the zooming (zooming
-*   is centered).
+*
+*   This class will not allow zooming functionality
+*   The zoom scale is being calculated in order the image size to be fit in
+*   the window size.
 *
 *   It is also able to display a rectangle on the displayed image.
 *  \ingroup Visualization

@@ -82,6 +82,11 @@ void ItiOtbRgbaQGLWidgetAutoResize::initializeGL()
 
 void ItiOtbRgbaQGLWidgetAutoResize::resizeGL(int w, int h)
 {
+    if(!m_OpenGlBuffer)
+        return;
+
+    m_IsotropicZoom = w < h ? static_cast<double>(w)/ static_cast<double>(m_OpenGlBufferedRegion.GetSize()[0]) : static_cast<double>(h)/ static_cast<double>(m_OpenGlBufferedRegion.GetSize()[1]);
+
     RasterSizeType size;
     size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[0]));
     size [1] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[1]));
