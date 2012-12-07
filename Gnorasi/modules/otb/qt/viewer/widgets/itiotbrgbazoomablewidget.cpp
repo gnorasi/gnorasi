@@ -6,6 +6,7 @@
 #include "../../../ports/otbimageport.h"
 
 #include <QVBoxLayout>
+#include <QWheelEvent>
 
 using namespace itiviewer;
 
@@ -54,4 +55,24 @@ void ItiOtbRgbaZoomableWidget::draw(){
 
     //!
     m_pOpenGlWidget->ReadBuffer(imgType,region);
+}
+
+//!
+void ItiOtbRgbaZoomableWidget::wheelEvent(QWheelEvent *event){
+    float scale = (float)event->delta() / 960.0;
+
+    double iz = m_pOpenGlWidget->isotropicZoom();
+
+    double newSc = iz + scale;
+
+    if(newSc <= 1.0 || newSc >= 50.0){
+        event->ignore();
+        return;
+    }
+
+    m_pOpenGlWidget->setIsotropicZoom(newSc);
+
+    m_pOpenGlWidget->updateGL();
+
+    event->accept();
 }
