@@ -64,6 +64,12 @@ public:
      */
     void draw();
 
+protected:
+    /*!
+     * \brief mousePressEvent
+     */
+    void wheelEvent(QWheelEvent *);
+
 private:
 
     /*!
