@@ -219,6 +219,7 @@ void ItiOtbRgbaImageViewer::applyRGBColorMode(int red, int green, int blue){
  */
 void ItiOtbRgbaImageViewer::applyContrastEnhancementMethod(CC ce, double aval, double bval){
     Q_UNUSED(ce)
+
     Q_UNUSED(aval)
     Q_UNUSED(bval)
 }
@@ -231,5 +232,5 @@ void ItiOtbRgbaImageViewer::setupConnections(){
 
 //!
 void ItiOtbRgbaImageViewer::onScrollableWidgetSizeChanged(const QSize &size){
-    qDebug() << "with : " << size.width() << " height : " << size.height();
+    qDebug() << "width : " << size.width() << " height : " << size.height();
 }
