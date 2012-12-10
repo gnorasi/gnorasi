@@ -113,6 +113,9 @@ public:
               index[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
     }
 
+signals:
+    void visibleAreaChanged(const QSize &size);
+
 protected:
 
     /*!

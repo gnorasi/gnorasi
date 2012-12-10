@@ -96,6 +96,11 @@ void ItiOtbRgbaQGLWidget::resizeGL(int w, int h)
     m_W = (GLint)w;
     m_H = (GLint)h;
 
+    int wt = qMin(static_cast<int>(m_W),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[0]));
+    int ht = qMin(static_cast<int>(m_H),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[1]));
+
+    emit visibleAreaChanged(QSize(wt,ht));
+
     glViewport(0, 0, m_W, m_H);
 
     glMatrixMode(GL_MODELVIEW);

@@ -23,11 +23,17 @@ using namespace voreen;
 ItiOtbRgbaImageViewer::ItiOtbRgbaImageViewer(QWidget *parent) :
     ItiOtbImageViewer(parent)
 {
+    //! set the visual mode to packed
+    m_vmode                             = VMODE_PACKED;
+
     //!
     setupLayout();
 
     //!
     setupObserverMechanism();
+
+    //!
+    setupConnections();
 }
 
 /*!
@@ -143,6 +149,17 @@ void ItiOtbRgbaImageViewer::disassembleWidgets(){
     m_pMetadataWidget->setWindowFlags(Qt::Window);
     m_pMetadataWidget->setWindowTitle(m_pLabelMetadataView->text());
     m_pMetadataWidget->setGeometry(QApplication::desktop()->width()/2 - 80,QApplication::desktop()->height()/2 - 80,200,200);
+
+    //!
+    setupObserverMechanism();
+
+    //!
+    setupConnections();
+
+    //!
+    m_vmode                             = VMODE_SPLITTED;
+
+    //!
     m_pMetadataWidget->show();
 }
 
@@ -155,6 +172,8 @@ void ItiOtbRgbaImageViewer::assembleWidgets(){
     //! Add functionality if needed when assembling operation is handled,
     //! Though it may needed , as  the assembling operation creates a new instance of this class
     //!
+
+    m_vmode                             = VMODE_PACKED;
 }
 
 /*!
@@ -202,4 +221,15 @@ void ItiOtbRgbaImageViewer::applyContrastEnhancementMethod(CC ce, double aval, d
     Q_UNUSED(ce)
     Q_UNUSED(aval)
     Q_UNUSED(bval)
+}
+
+//!
+void ItiOtbRgbaImageViewer::setupConnections(){
+    //!
+    connect(m_pItiOtbRgbaImageWidgetScroll,SIGNAL(visibleAreaChanged(QSize)),this,SLOT(onScrollableWidgetSizeChanged(QSize)));
+}
+
+//!
+void ItiOtbRgbaImageViewer::onScrollableWidgetSizeChanged(const QSize &size){
+    qDebug() << "with : " << size.width() << " height : " << size.height();
 }

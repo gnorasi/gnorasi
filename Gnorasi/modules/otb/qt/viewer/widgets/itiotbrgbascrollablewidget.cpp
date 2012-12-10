@@ -24,6 +24,8 @@ void ItiOtbRgbaScrollableWidget::initialize(){
     layout->addWidget(m_pOpenGlWidget);
 
     setLayout(layout);
+
+    connect(m_pOpenGlWidget,SIGNAL(visibleAreaChanged(QSize)),this,SIGNAL(visibleAreaChanged(QSize)));
 }
 
 //!
@@ -54,3 +56,4 @@ void ItiOtbRgbaScrollableWidget::draw(){
     //!
     m_pOpenGlWidget->ReadBuffer(imgType,region);
 }
+

@@ -36,6 +36,9 @@
 
 namespace itiviewer{
 
+/*!
+ *  A helper MACRO
+ */
 #define ITIOTBIMAGEMANAGER ItiOtbImageManager::instance()
 
 class Command;

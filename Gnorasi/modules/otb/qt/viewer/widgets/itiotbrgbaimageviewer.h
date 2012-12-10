@@ -48,6 +48,7 @@ class ItiViewerObservableRegion;
 /** \class ITIOTBImageViewer
  *   \brief This class implements a standard visualization tool to be
  *   plugged at the end of a pipeline.
+ *  This viewer handles RGBA images .
  *
  *  \ingroup Visualization
  *
@@ -97,8 +98,21 @@ public:
      */
     void applyContrastEnhancementMethod(CC ce, double aval, double bval);
 
+private slots:
+    /*!
+     * \brief onScrollableWidgetSizeChanged
+     * \param size
+     */
+    void onScrollableWidgetSizeChanged(const QSize &size);
+
 
 private:
+
+    /*!
+     * \brief setupConnections , setup the signal and slot mechanims
+     */
+    void setupConnections();
+
     /*!
      * \brief setupObserverMechanism
      */
