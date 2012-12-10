@@ -49,7 +49,13 @@ public:
     //! ctor
     explicit ItiOtbImageViewerFactory(QObject *parent = 0) : QObject(parent) { }
 
-    //! abstract method, every subclass must implement this class
+    /*!
+     * \brief createViewer
+     *
+     *  abstract method, every subclass must implement this class
+     *
+     * \return
+     */
     virtual ItiOtbImageViewer* createViewer() = 0;
 
 protected:

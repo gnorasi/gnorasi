@@ -52,11 +52,12 @@ class Command;
  *
  *  The processing of various slots provided by the GUI of this class is handled
  *  by a commands mechanism. Firstly a client object creates a new command instance.
- *  Then the client connects the newly created command instance slots with signals provided by this class.
+ *  Then the client connects the newly created command object's slots with signals provided by this class.
  *  Finally the client must use the setCommand operation which sets the created command instance
- *  to the apporpriate slot given a slot_key argument.
- *  A SLOT enumeration of the available slots is declared.
- *  For an example usage of the above mechanism please see the QOtbImageViewerWidget class source file.
+ *  to the apporpriate slot given a SLOT_KEY argument.
+ *  A SLOT enumeration of the available slots is declared below.
+ *  For an example usage of the above mechanism please see the QOtbImageViewerWidget class source file
+ *  and especially the setupCommands() function.
  */
 class ItiOtbImageViewerPanel : public QWidget
 {

@@ -2,7 +2,4 @@
 
 using namespace itiviewer;
 
-ItiViewerObservableRegion::ItiViewerObservableRegion(QObject *parent) :
-    ItiViewerObservable(parent)
-{
-}
+

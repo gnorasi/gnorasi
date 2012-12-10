@@ -41,12 +41,24 @@ namespace itiviewer{
  * \brief The ITIImageViewer class
  *
  * \class The ITIImageViewer class is an abstract product that is used by an application
- * where a visualization of images is needed.
+ *  where a visualization of images is needed.
+ *  The viewer has two modes as regards the layout perspective. The First mode is a packed
+ *  mode where all widgets are merged and assembled into one single widget. The second mode
+ *  is a splitted kind of mode , where all widgets have their own window.
  */
 class ItiOtbImageViewer : public QWidget
 {
     Q_OBJECT
 public:
+
+    /*!
+     * \brief The VMODE enum  stands for Visualization mode and has two values, packed and splitted.
+     */
+    enum VMODE{
+        VMODE_PACKED                                                                    = 0,
+        VMODE_SPLITTED                                                                  = 1
+    };
+
     /*!
      * \brief The CC enum stands for the Color Composition mode
      */
@@ -116,6 +128,10 @@ public:
     virtual void applyContrastEnhancementMethod(CC ce, double aval, double bval = 0.0)  = 0;
 
 protected:
+    /*!
+     * \brief m_vmode , a variable holding the VMODE value
+     */
+    VMODE                                                                               m_vmode;
 
 };
 

@@ -52,17 +52,17 @@ public:
      * \brief ItiOtbRgbaFocusRegion
      * \param parent
      */
-    explicit ItiViewerObservableRegion(QObject *parent = 0);
+    explicit ItiViewerObservableRegion(QObject *parent = 0) : ItiViewerObservable(parent) { }
 
     /*!
-     * \brief region
+     * \brief region , getter
      * \return
      */
     RasterRegionType region() const { return m_region; }
 
     /*!
-     * \brief setRegion
-     * \param r
+     * \brief setRegion , setter
+     * \param r , the RasterRegionType
      */
     void setRegion(RasterRegionType r) { m_region = r; }
 

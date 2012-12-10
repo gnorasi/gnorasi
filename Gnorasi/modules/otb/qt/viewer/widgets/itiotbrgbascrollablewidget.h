@@ -38,7 +38,7 @@ class ItiViewerObservable;
 
 /*!
  * \brief The ItiOtbRgbaScrollableWidget class
- *  This class is a container class
+ *  This class is a container class.
  */
 class ItiOtbRgbaScrollableWidget : public ItiViewerObserver
 {
@@ -68,8 +68,15 @@ public:
     void draw();
     
 signals:
+    /*!
+     * \brief sizeChanged
+     * \param size , the size of the widget
+     */
+    void visibleAreaChanged(const QSize &size);
+
     
 public slots:
+
 
 private:
 
@@ -80,7 +87,7 @@ private:
 
     //! The opengl QGLWidget
     ItiOtbRgbaQGLWidget *m_pOpenGlWidget;
-    
+
 };
 
 }

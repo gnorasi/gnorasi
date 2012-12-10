@@ -48,7 +48,7 @@ class ItiViewerObservable : public QObject
     Q_OBJECT
 public:
     //!
-    explicit ItiViewerObservable(QObject *parent = 0);
+    explicit ItiViewerObservable(QObject *parent = 0) : QObject(parent) { }
     
     /*!
      * \brief registerObserver , adds an observer

@@ -4,11 +4,6 @@
 
 using namespace itiviewer;
 
-ItiViewerObservable::ItiViewerObservable(QObject *parent) :
-    QObject(parent)
-{
-}
-
 //!
 void ItiViewerObservable::notifyObservers(){
     QList<ItiViewerObserver*>::const_iterator i;
