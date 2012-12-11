@@ -200,8 +200,8 @@ void ItiOtbRgbaQGLWidgetFullView::paintEvent(QPaintEvent *event){
     painter.setRenderHint(QPainter::Antialiasing);
 
     //! overpainting
-//    painter.setPen(m_pen);
-//    painter.drawRect(m_visibleRegion);
+    painter.setPen(m_pen);
+    painter.drawRect(m_visibleRegion);
 
     painter.end();
 }
@@ -226,12 +226,32 @@ void ItiOtbRgbaQGLWidgetFullView::draw(){
 
 //!
 void ItiOtbRgbaQGLWidgetFullView::updateObserver(ItiViewerObservable *observable){
-//    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
-//    if(!region)
-//        return;
+    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
+    if(!region)
+        return;
 
-//    //! TODO
-//    //! add the functionality here
+    if(m_OpenGlBufferedRegion.GetSize()[0] == 0 || m_OpenGlBufferedRegion.GetSize()[1] == 0)
+        return;
+
+    //! TODO
+    //! add the functionality here
+    QRect rect = region->region();
+    if(rect.x()>=0)
+        m_visibleRegion.setX(m_Extent.GetIndex()[0]);
+    else
+        m_visibleRegion.setX(m_Extent.GetIndex()[0] + qAbs(rect.x()));
+
+    if(rect.y() >= 0)
+        m_visibleRegion.setY(m_Extent.GetIndex()[1]);
+    else
+        m_visibleRegion.setY(m_Extent.GetIndex()[1]+qAbs(rect.y()));
+
+    int nw = (m_Extent.GetSize()[0] * ( m_OpenGlBufferedRegion.GetSize()[0] - qAbs(rect.x()) ) ) / m_OpenGlBufferedRegion.GetSize()[0];
+    int nh = (m_Extent.GetSize()[1] * ( m_OpenGlBufferedRegion.GetSize()[1] - qAbs(rect.y()) ) ) / m_OpenGlBufferedRegion.GetSize()[1];
+
+    m_visibleRegion.setWidth(nw);
+    m_visibleRegion.setHeight(nh);
+
 //    setVisibleRegion(region->region());
 }
 

@@ -235,7 +235,7 @@ void ItiOtbRgbaImageViewer::setupConnections(){
 
 //!
 void ItiOtbRgbaImageViewer::onScrollableWidgetSizeChanged(const QRect &size){
-    qDebug() << "width : " << size.width() << " height : " << size.height();
+//    qDebug() << "width : " << size.width() << " height : " << size.height();
 
     QRect rect = m_pVisibleRegion->region();
     rect.setWidth(size.width());
@@ -246,11 +246,10 @@ void ItiOtbRgbaImageViewer::onScrollableWidgetSizeChanged(const QRect &size){
 
 
 void ItiOtbRgbaImageViewer::onZoomableWidgetSizeChanged(const QRect &size){
-    qDebug() << "width : " << size.width() << " height : " << size.height();
 
     QRect rect = m_pVisibleRegion->region();
     rect.setWidth(size.width());
     rect.setHeight(size.height());
 
-    m_pFocusRegion->setRegion(rect);
+//    m_pFocusRegion->setRegion(rect);
 }

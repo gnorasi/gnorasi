@@ -95,15 +95,20 @@ void ItiOtbRgbaQGLWidgetScrollable::resizeGL(int w, int h)
 {
     setupViewport(w,h);
 
-//    QRect rect;
+    QRect rect;
+    rect.setX(m_Extent.GetIndex()[0]);
+    rect.setY(m_Extent.GetIndex()[1]);
+
+    int wt = qMin(static_cast<int>(w),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[0]));
+    int ht = qMin(static_cast<int>(h),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[1]));
+    rect.setWidth(wt);
+    rect.setHeight(ht);
 //    rect.setWidth(m_Extent.GetSize()[0]);
 //    rect.setHeight(m_Extent.GetSize()[1]);
-//    rect.setX(m_Extent.GetIndex()[0]);
-//    rect.setY(m_Extent.GetIndex()[1]);
 
-//    qDebug() << " rect : " << rect;
+    qDebug() << " rect : " << rect;
 
-//    emit visibleAreaChanged(rect);
+    emit visibleAreaChanged(rect);
 
 }
 
@@ -121,9 +126,6 @@ void ItiOtbRgbaQGLWidgetScrollable::setupViewport(int w, int h){
 
     m_W = (GLint)w;
     m_H = (GLint)h;
-
-//    int wt = qMin(static_cast<int>(w),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[0]));
-//    int ht = qMin(static_cast<int>(h),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[1]));
 
     glViewport(0, 0, m_W, m_H);
 
@@ -240,11 +242,11 @@ void ItiOtbRgbaQGLWidgetScrollable::draw(){
 
 //!
 void ItiOtbRgbaQGLWidgetScrollable::updateObserver(ItiViewerObservable *observable){
-//    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
-//    if(!region)
-//        return;
+    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
+    if(!region)
+        return;
 
-//    m_focusRegion = region->region();
+    m_focusRegion = region->region();
 }
 
 //!
