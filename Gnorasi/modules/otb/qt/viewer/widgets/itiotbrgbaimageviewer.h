@@ -103,7 +103,13 @@ private slots:
      * \brief onScrollableWidgetSizeChanged
      * \param size
      */
-    void onScrollableWidgetSizeChanged(const QSize &size);
+    void onScrollableWidgetSizeChanged(const QRect &size);
+
+    /*!
+     * \brief onZoomableWidgetSizeChanged
+     * \param size
+     */
+    void onZoomableWidgetSizeChanged(const QRect &size);
 
 
 private:

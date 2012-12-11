@@ -27,14 +27,15 @@ void ItiOtbRgbaResizableWidget::initialize(){
 }
 
 //!
-void ItiOtbRgbaResizableWidget::update(ItiViewerObservable *observable){
+void ItiOtbRgbaResizableWidget::updateObserver(ItiViewerObservable *observable){
 
-    ItiViewerObservable *rgbaRegion = qobject_cast<ItiViewerObservable*>(observable);
-    if(!rgbaRegion)
+    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
+    if(!region)
         return;
 
     //! TODO
     //! add the functionality here
+    m_pOpenGlWidget->setVisibleRegion(region->region());
 }
 
 //!

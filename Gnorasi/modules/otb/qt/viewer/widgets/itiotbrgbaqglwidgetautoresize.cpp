@@ -7,7 +7,9 @@ using namespace itiviewer;
 ItiOtbRgbaQGLWidgetAutoResize::ItiOtbRgbaQGLWidgetAutoResize(QWidget *parent) :
     m_IsotropicZoom(1.0), m_OpenGlBuffer(NULL), m_OpenGlBufferedRegion(), m_Extent(), m_SubsamplingRate(1), QGLWidget(parent)
 {
+    setAutoFillBackground(false);
 
+    m_pen = QPen(QBrush(Qt::red),2.0);
 }
 
 //!
@@ -82,6 +84,10 @@ void ItiOtbRgbaQGLWidgetAutoResize::initializeGL()
 
 void ItiOtbRgbaQGLWidgetAutoResize::resizeGL(int w, int h)
 {
+    setupViewport(w,h);
+}
+
+void ItiOtbRgbaQGLWidgetAutoResize::setupViewport(int w, int h){
     if(!m_OpenGlBuffer)
         return;
 
@@ -109,11 +115,67 @@ void ItiOtbRgbaQGLWidgetAutoResize::resizeGL(int w, int h)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0, m_W, 0, m_H, -1, 1);
-
 }
 
-void ItiOtbRgbaQGLWidgetAutoResize::paintGL()
-{
+//void ItiOtbRgbaQGLWidgetAutoResize::paintGL()
+//{
+//    unsigned int nb_displayed_rows;
+//    unsigned int nb_displayed_cols;
+//    unsigned int first_displayed_row;
+//    unsigned int first_displayed_col;
+
+//    if( m_Extent.GetIndex()[0] >= 0 )
+//    {
+//        nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
+//        first_displayed_col = 0;
+//    }
+//    else
+//    {
+//        nb_displayed_cols = m_W / m_IsotropicZoom;
+//        first_displayed_col = (m_OpenGlBufferedRegion.GetSize()[0] - nb_displayed_cols) / 2;
+//    }
+
+//    if( m_Extent.GetIndex()[1] >= 0 )
+//    {
+//        nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
+//        first_displayed_row = 0;
+//    }
+//    else
+//    {
+//        nb_displayed_rows = m_H / m_IsotropicZoom;
+//        first_displayed_row = (m_OpenGlBufferedRegion.GetSize()[1] - nb_displayed_rows) / 2;
+//    }
+
+
+//    RasterIndexType startPosition = m_Extent.GetIndex();
+//    startPosition[0] = startPosition[0] < 0 ? 0 : startPosition[0];
+//    startPosition[1] = startPosition[1] < 0 ? 0 : startPosition[1];
+
+//    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+//    glPixelStorei(GL_UNPACK_ROW_LENGTH, m_OpenGlBufferedRegion.GetSize()[0]);
+//    glPixelStorei(GL_UNPACK_SKIP_PIXELS, first_displayed_col);
+//    glPixelStorei(GL_UNPACK_SKIP_ROWS,first_displayed_row);
+
+//    glClear(GL_COLOR_BUFFER_BIT);
+//    glPixelZoom(m_IsotropicZoom,m_IsotropicZoom);
+
+//    glRasterPos2f(startPosition[0], startPosition[1]);
+//    glDrawPixels(nb_displayed_cols,
+//                nb_displayed_rows,
+//                GL_RGB,
+//                GL_UNSIGNED_BYTE,
+//                m_OpenGlBuffer);
+
+
+//    glFlush();
+//}
+
+void ItiOtbRgbaQGLWidgetAutoResize::paintEvent(QPaintEvent *event){
+    //!
+    makeCurrent();
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+
     unsigned int nb_displayed_rows;
     unsigned int nb_displayed_cols;
     unsigned int first_displayed_row;
@@ -146,6 +208,16 @@ void ItiOtbRgbaQGLWidgetAutoResize::paintGL()
     startPosition[0] = startPosition[0] < 0 ? 0 : startPosition[0];
     startPosition[1] = startPosition[1] < 0 ? 0 : startPosition[1];
 
+    qglClearColor(Qt::black);
+//    glShadeModel(GL_SMOOTH);
+//    glEnable(GL_DEPTH_TEST);
+//    glEnable(GL_CULL_FACE);
+//    glEnable(GL_LIGHTING);
+//    glEnable(GL_LIGHT0);
+//    glEnable(GL_MULTISAMPLE);
+
+    setupViewport(width(), height());
+
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glPixelStorei(GL_UNPACK_ROW_LENGTH, m_OpenGlBufferedRegion.GetSize()[0]);
     glPixelStorei(GL_UNPACK_SKIP_PIXELS, first_displayed_col);
@@ -156,13 +228,28 @@ void ItiOtbRgbaQGLWidgetAutoResize::paintGL()
 
     glRasterPos2f(startPosition[0], startPosition[1]);
     glDrawPixels(nb_displayed_cols,
-                nb_displayed_rows,
-                GL_RGB,
-                GL_UNSIGNED_BYTE,
-                m_OpenGlBuffer);
-
+             nb_displayed_rows,
+             GL_RGB,
+             GL_UNSIGNED_BYTE,
+             m_OpenGlBuffer);
 
     glFlush();
+
+    glShadeModel(GL_FLAT);
+    glDisable(GL_CULL_FACE);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix();
+
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    painter.setPen(m_pen);
+    painter.drawRect(m_visibleRegion);
+
+    painter.end();
 }
 
 

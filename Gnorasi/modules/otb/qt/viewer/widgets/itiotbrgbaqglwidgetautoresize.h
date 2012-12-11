@@ -30,6 +30,7 @@
 #define ITIOTBRGBAQGLWIDGETAUTORESIZE_H
 
 #include <QGLWidget>
+#include <QPen>
 
 #include "itiotbrgbaqglwidget.h"
 
@@ -97,6 +98,10 @@ public:
     //! setter getter, self explanatory
     RasterRegionType extent() { return m_Extent; }
 
+    //! setter getter for the focus region area
+    QRect visibleRegion() const { return m_visibleRegion; }
+    void setVisibleRegion(const QRect &rect) { m_visibleRegion  = rect; }
+
     /** Compute the linear buffer index according to the 2D region and
      * its 2D index.This method is used when OTB_GL_USE_ACCEL is OFF.
      * The resulting buffer will be flipped over the X axis.
@@ -109,7 +114,20 @@ public:
               index[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
     }
 
+signals:
+
+    /*!
+     * \brief sizeChanged
+     */
+    void sizeChanged(const QSize &);
+
 protected:
+
+    /*!
+     * \brief paintEvent
+     * \param event
+     */
+    void paintEvent(QPaintEvent *event);
 
     /*!
      * \brief initializeGL
@@ -127,10 +145,17 @@ protected:
     /*!
      * \brief paintGL , reimplemented method declared in the QGLWidget class
      */
-    void paintGL();
+//    void paintGL();
 
 
 private:
+    /*!
+     * \brief setupViewport
+     * \param width
+     * \param height
+     */
+    void setupViewport(int w, int h);
+
     /** OpenGl zoom factor */
     double m_IsotropicZoom;
 
@@ -152,6 +177,16 @@ private:
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */
     unsigned int m_SubsamplingRate;
+
+    /*!
+     * \brief m_pen
+     */
+    QPen m_pen;
+
+    /*!
+     * \brief m_focusRegion
+     */
+    QRect m_visibleRegion;
 
 };
 

@@ -42,6 +42,7 @@ class ItiViewerObservable;
  */
 class ItiOtbRgbaResizableWidget : public ItiViewerObserver
 {
+    Q_OBJECT
 public:
     /*!
      * \brief ItiOtbRgbaFullWidget
@@ -53,7 +54,7 @@ public:
      * \brief update , implementation from parent class
      * \param region, the region
      */
-    void update(ItiViewerObservable *observable);
+    void updateObserver(ItiViewerObservable *observable);
 
 
     /*!

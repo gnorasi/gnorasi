@@ -227,10 +227,28 @@ void ItiOtbRgbaImageViewer::applyContrastEnhancementMethod(CC ce, double aval, d
 //!
 void ItiOtbRgbaImageViewer::setupConnections(){
     //!
-    connect(m_pItiOtbRgbaImageWidgetScroll,SIGNAL(visibleAreaChanged(QSize)),this,SLOT(onScrollableWidgetSizeChanged(QSize)));
+    connect(m_pItiOtbRgbaImageWidgetScroll,SIGNAL(visibleAreaChanged(QRect)),this,SLOT(onScrollableWidgetSizeChanged(QRect)));
+    connect(m_pItiOtbRgbaImageWidgetZoom,SIGNAL(sizeChanged(QRect)),this,SLOT(onZoomableWidgetSizeChanged(QRect)));
 }
 
 //!
-void ItiOtbRgbaImageViewer::onScrollableWidgetSizeChanged(const QSize &size){
+void ItiOtbRgbaImageViewer::onScrollableWidgetSizeChanged(const QRect &size){
     qDebug() << "width : " << size.width() << " height : " << size.height();
+
+    QRect rect = m_pVisibleRegion->region();
+    rect.setWidth(size.width());
+    rect.setHeight(size.height());
+
+    m_pVisibleRegion->setRegion(rect);
+}
+
+
+void ItiOtbRgbaImageViewer::onZoomableWidgetSizeChanged(const QRect &size){
+    qDebug() << "width : " << size.width() << " height : " << size.height();
+
+    QRect rect = m_pVisibleRegion->region();
+    rect.setWidth(size.width());
+    rect.setHeight(size.height());
+
+    m_pFocusRegion->setRegion(rect);
 }

@@ -26,17 +26,25 @@ void ItiOtbRgbaZoomableWidget::initialize(){
     layout->addWidget(m_pOpenGlWidget);
 
     setLayout(layout);
+
+    connect(m_pOpenGlWidget,SIGNAL(siseChanged(QRect)),this,SIGNAL(sizeChanged(QRect)));
 }
 
 //!
-void ItiOtbRgbaZoomableWidget::update(ItiViewerObservable *observable){
+void ItiOtbRgbaZoomableWidget::updateObserver(ItiViewerObservable *observable){
 
-    ItiViewerObservable *rgbaRegion = qobject_cast<ItiViewerObservable*>(observable);
-    if(!rgbaRegion)
+    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
+    if(!region)
         return;
 
     //! TODO
     //! add the functionality here
+    //! calculate the isotropic zoom and set to the viewer
+    //!
+
+    double zoom = static_cast<double>(m_pOpenGlWidget->size().width()) / static_cast<double>(region->region().width());
+
+    m_pOpenGlWidget->setIsotropicZoom(zoom);
 }
 
 //!
