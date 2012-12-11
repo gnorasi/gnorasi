@@ -230,7 +230,7 @@ void ItiOtbRgbaImageViewer::applyContrastEnhancementMethod(CC ce, double aval, d
 void ItiOtbRgbaImageViewer::setupConnections(){
     //!
     connect(m_pItiOtbRgbaImageWidgetScroll, SIGNAL(visibleAreaChanged(QRect)),this,SLOT(onScrollableWidgetSizeChanged(QRect)));
-    connect(m_pItiOtbRgbaImageWidgetZoomable, SIGNAL(sizeChanged(QRect)),this,SLOT(onZoomableWidgetSizeChanged(QRect)));
+    connect(m_pItiOtbRgbaImageWidgetZoomable, SIGNAL(visibleAreaChanged(QRect)),this,SLOT(onZoomableWidgetSizeChanged(QRect)));
 }
 
 //!

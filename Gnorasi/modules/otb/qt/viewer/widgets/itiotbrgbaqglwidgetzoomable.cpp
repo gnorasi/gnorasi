@@ -9,9 +9,7 @@ using namespace itiviewer;
 ItiOtbRgbaQGLWidgetZoomable::ItiOtbRgbaQGLWidgetZoomable(QWidget *parent) :
     m_IsotropicZoom(1.0), m_OpenGlBuffer(NULL), m_OpenGlBufferedRegion(), m_Extent(), m_SubsamplingRate(1), QGLWidget(parent)
 {
-//    setAutoFillBackground(false);
 
-//    m_pen = QPen(QBrush(Qt::red),2.0);
 }
 
 //!
@@ -118,7 +116,7 @@ void ItiOtbRgbaQGLWidgetZoomable::setupViewport(int w, int h){
     rect.setX(index[0]);
     rect.setY(index[1]);
 
-//    emit visibleAreaChanged(rect);
+    emit visibleAreaChanged(rect);
 
     glViewport(0, 0, m_W, m_H);
 
@@ -204,18 +202,23 @@ void ItiOtbRgbaQGLWidgetZoomable::draw(){
 //!
 void ItiOtbRgbaQGLWidgetZoomable::updateObserver(ItiViewerObservable *observable){
 
-    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
-    if(!region)
-        return;
+//    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
+//    if(!region)
+//        return;
 
-    //! TODO
-    //! add the functionality here
-    //! calculate the isotropic zoom and set to the viewer
-    //!
+//    //! TODO
+//    //! add the functionality here
+//    //! calculate the isotropic zoom and set to the viewer
+//    //!
 
-    double zoom = static_cast<double>(size().width()) / static_cast<double>(region->region().width());
+//    QRect rr = region->region();
 
-    setIsotropicZoom(zoom);
+//    if(!rr.width() || !rr.height())
+//        return;
+
+//    double zoom = static_cast<double>(size().width()) / static_cast<double>(rr.width());
+
+//    setIsotropicZoom(zoom);
 }
 
 //!

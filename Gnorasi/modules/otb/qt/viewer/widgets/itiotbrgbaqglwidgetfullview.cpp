@@ -122,59 +122,7 @@ void ItiOtbRgbaQGLWidgetFullView::setupViewport(int w, int h){
     glOrtho(0, m_W, 0, m_H, -1, 1);
 }
 
-//void ItiOtbRgbaQGLWidgetFullView::paintGL()
-//{
-//    unsigned int nb_displayed_rows;
-//    unsigned int nb_displayed_cols;
-//    unsigned int first_displayed_row;
-//    unsigned int first_displayed_col;
-
-//    if( m_Extent.GetIndex()[0] >= 0 )
-//    {
-//        nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
-//        first_displayed_col = 0;
-//    }
-//    else
-//    {
-//        nb_displayed_cols = m_W / m_IsotropicZoom;
-//        first_displayed_col = (m_OpenGlBufferedRegion.GetSize()[0] - nb_displayed_cols) / 2;
-//    }
-
-//    if( m_Extent.GetIndex()[1] >= 0 )
-//    {
-//        nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
-//        first_displayed_row = 0;
-//    }
-//    else
-//    {
-//        nb_displayed_rows = m_H / m_IsotropicZoom;
-//        first_displayed_row = (m_OpenGlBufferedRegion.GetSize()[1] - nb_displayed_rows) / 2;
-//    }
-
-
-//    RasterIndexType startPosition = m_Extent.GetIndex();
-//    startPosition[0] = startPosition[0] < 0 ? 0 : startPosition[0];
-//    startPosition[1] = startPosition[1] < 0 ? 0 : startPosition[1];
-
-//    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-//    glPixelStorei(GL_UNPACK_ROW_LENGTH, m_OpenGlBufferedRegion.GetSize()[0]);
-//    glPixelStorei(GL_UNPACK_SKIP_PIXELS, first_displayed_col);
-//    glPixelStorei(GL_UNPACK_SKIP_ROWS,first_displayed_row);
-
-//    glClear(GL_COLOR_BUFFER_BIT);
-//    glPixelZoom(m_IsotropicZoom,m_IsotropicZoom);
-
-//    glRasterPos2f(startPosition[0], startPosition[1]);
-//    glDrawPixels(nb_displayed_cols,
-//                nb_displayed_rows,
-//                GL_RGB,
-//                GL_UNSIGNED_BYTE,
-//                m_OpenGlBuffer);
-
-
-//    glFlush();
-//}
-
+//!
 void ItiOtbRgbaQGLWidgetFullView::paintEvent(QPaintEvent *event){
     //!
     makeCurrent();
@@ -251,8 +199,9 @@ void ItiOtbRgbaQGLWidgetFullView::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    painter.setPen(m_pen);
-    painter.drawRect(m_visibleRegion);
+    //! overpainting
+//    painter.setPen(m_pen);
+//    painter.drawRect(m_visibleRegion);
 
     painter.end();
 }
@@ -277,13 +226,13 @@ void ItiOtbRgbaQGLWidgetFullView::draw(){
 
 //!
 void ItiOtbRgbaQGLWidgetFullView::updateObserver(ItiViewerObservable *observable){
-    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
-    if(!region)
-        return;
+//    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
+//    if(!region)
+//        return;
 
-    //! TODO
-    //! add the functionality here
-    setVisibleRegion(region->region());
+//    //! TODO
+//    //! add the functionality here
+//    setVisibleRegion(region->region());
 }
 
 //!
