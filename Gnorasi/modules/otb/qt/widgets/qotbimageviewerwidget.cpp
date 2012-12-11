@@ -90,11 +90,25 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
 //!
 void QGLOtbImageViewerWidget::keyPressEvent(QKeyEvent *event){
 
-    //! check key pressed
-    if(event->key() == Qt::Key_F1){
-        disassembleWidgets();
-    }else if(event->key() == Qt::Key_F9)
-        assembleWidgets();
+    OTBImageViewerProcessor* otbivProcessor = dynamic_cast<OTBImageViewerProcessor*>(processor_);
+
+    if(!otbivProcessor)
+        return;
+
+    std::vector<Port*> l = otbivProcessor->getInports();
+    if(l.empty()){
+        qDebug() << "image port list is empty..";
+
+    }else{
+        Port *pPort = l.at(0);
+        if(pPort->isConnected()){
+            //! check key pressed
+//            if(event->key() == Qt::Key_F1){
+//                disassembleWidgets();
+//            }else if(event->key() == Qt::Key_F9)
+//                assembleWidgets();
+        }
+    }
 
     QWidget::keyPressEvent(event);
 }
