@@ -1,10 +1,15 @@
-#include "itiotbrgbaqglwidgetautoresize.h"
+#include "itiotbrgbaqglwidgetfullview.h"
+
+#include "../observables/itiviewerobservableregion.h"
+
+#include "../utils/itiotbimagemanager.h"
+
 #include "itkImageRegionConstIteratorWithIndex.h"
 
 using namespace otb;
 using namespace itiviewer;
 
-ItiOtbRgbaQGLWidgetAutoResize::ItiOtbRgbaQGLWidgetAutoResize(QWidget *parent) :
+ItiOtbRgbaQGLWidgetFullView::ItiOtbRgbaQGLWidgetFullView(QWidget *parent) :
     m_IsotropicZoom(1.0), m_OpenGlBuffer(NULL), m_OpenGlBufferedRegion(), m_Extent(), m_SubsamplingRate(1), QGLWidget(parent)
 {
     setAutoFillBackground(false);
@@ -13,7 +18,7 @@ ItiOtbRgbaQGLWidgetAutoResize::ItiOtbRgbaQGLWidgetAutoResize(QWidget *parent) :
 }
 
 //!
-void ItiOtbRgbaQGLWidgetAutoResize::ReadBuffer(const RasterImageType *image, const RasterRegionType &region){
+void ItiOtbRgbaQGLWidgetFullView::ReadBuffer(const RasterImageType *image, const RasterRegionType &region){
     // Before doing anything, check if region is inside the buffered
     // region of image
     if (!image->GetBufferedRegion().IsInside(region))
@@ -53,7 +58,7 @@ void ItiOtbRgbaQGLWidgetAutoResize::ReadBuffer(const RasterImageType *image, con
 }
 
 //!
-void ItiOtbRgbaQGLWidgetAutoResize::ClearBuffer(){
+void ItiOtbRgbaQGLWidgetFullView::ClearBuffer(){
     // Delete previous buffer if needed
     if (m_OpenGlBuffer != NULL)
     {
@@ -75,19 +80,19 @@ void ItiOtbRgbaQGLWidgetAutoResize::ClearBuffer(){
 }
 
 
-void ItiOtbRgbaQGLWidgetAutoResize::initializeGL()
+void ItiOtbRgbaQGLWidgetFullView::initializeGL()
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
 }
 
 
-void ItiOtbRgbaQGLWidgetAutoResize::resizeGL(int w, int h)
+void ItiOtbRgbaQGLWidgetFullView::resizeGL(int w, int h)
 {
     setupViewport(w,h);
 }
 
-void ItiOtbRgbaQGLWidgetAutoResize::setupViewport(int w, int h){
+void ItiOtbRgbaQGLWidgetFullView::setupViewport(int w, int h){
     if(!m_OpenGlBuffer)
         return;
 
@@ -117,7 +122,7 @@ void ItiOtbRgbaQGLWidgetAutoResize::setupViewport(int w, int h){
     glOrtho(0, m_W, 0, m_H, -1, 1);
 }
 
-//void ItiOtbRgbaQGLWidgetAutoResize::paintGL()
+//void ItiOtbRgbaQGLWidgetFullView::paintGL()
 //{
 //    unsigned int nb_displayed_rows;
 //    unsigned int nb_displayed_cols;
@@ -170,7 +175,7 @@ void ItiOtbRgbaQGLWidgetAutoResize::setupViewport(int w, int h){
 //    glFlush();
 //}
 
-void ItiOtbRgbaQGLWidgetAutoResize::paintEvent(QPaintEvent *event){
+void ItiOtbRgbaQGLWidgetFullView::paintEvent(QPaintEvent *event){
     //!
     makeCurrent();
     glMatrixMode(GL_MODELVIEW);
@@ -252,8 +257,36 @@ void ItiOtbRgbaQGLWidgetAutoResize::paintEvent(QPaintEvent *event){
     painter.end();
 }
 
+//!
+void ItiOtbRgbaQGLWidgetFullView::draw(){
+    OTBImagePort *port = (OTBImagePort*)ITIOTBIMAGEMANAGER->port();
+
+    if(!port)
+        return;
+
+    //!
+    RasterImageType* imgType =  (RasterImageType*)port->getData();
+    if(!imgType)
+        return;
+
+    RasterRegionType region = imgType->GetLargestPossibleRegion();
+
+    //!
+    ReadBuffer(imgType,region);
+}
 
 //!
-ItiOtbRgbaQGLWidgetAutoResize::~ItiOtbRgbaQGLWidgetAutoResize(){
+void ItiOtbRgbaQGLWidgetFullView::updateObserver(ItiViewerObservable *observable){
+    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
+    if(!region)
+        return;
+
+    //! TODO
+    //! add the functionality here
+    setVisibleRegion(region->region());
+}
+
+//!
+ItiOtbRgbaQGLWidgetFullView::~ItiOtbRgbaQGLWidgetFullView(){
     ClearBuffer();
 }

@@ -26,30 +26,23 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITIOTBRGBAQGLWIDGET_H
-#define ITIOTBRGBAQGLWIDGET_H
+#ifndef ITIOTBRGBAQGLWIDGETZOOMABLE_H
+#define ITIOTBRGBAQGLWIDGETZOOMABLE_H
 
 #include <QGLWidget>
 #include <QPen>
+#include <QWheelEvent>
 
-#include "../../../ports/otbimageport.h"
+#include "../rgba_globaldefs.h"
 
-#include "itkRGBAPixel.h"
-#include "itkFixedArray.h"
-#include "otbGlComponent.h"
-#include "otbObjectList.h"
+
+#include "itiviewerobserver.h"
+
+
 #include "otbImageWidgetController.h"
 
-using namespace otb;
+
 using namespace voreen;
-
-const unsigned int Dimension = 2;
-
-typedef itk::RGBAPixel<unsigned char>           PixelType;
-typedef otb::Image<PixelType, Dimension>        RasterImageType;
-typedef RasterImageType::RegionType             RasterRegionType;
-typedef RasterImageType::IndexType              RasterIndexType;
-typedef RasterImageType::SizeType               RasterSizeType;
 
 namespace itiviewer{
 
@@ -63,13 +56,13 @@ namespace itiviewer{
 *  \ingroup Visualization
  */
 
-class ItiOtbRgbaQGLWidget : public QGLWidget
+class ItiOtbRgbaQGLWidgetZoomable : public QGLWidget, public ItiViewerObserver
 {
     Q_OBJECT
 public:
-    explicit ItiOtbRgbaQGLWidget(QWidget *parent = 0);
+    explicit ItiOtbRgbaQGLWidgetZoomable(QWidget *parent = 0);
 
-    virtual ~ItiOtbRgbaQGLWidget();
+    virtual ~ItiOtbRgbaQGLWidgetZoomable();
 
     /** Reads the OpenGl buffer from an image pointer
      *  \param image The image pointer,
@@ -100,8 +93,8 @@ public:
     void setOpenGLBufferedRegion(RasterRegionType r) { m_OpenGlBufferedRegion = r; }
 
     //! setter getter for the focus region area
-    QRect focusRegion() const { return m_focusRegion; }
-    void setFocusRegion(const QRect &rect) { m_focusRegion  = rect; }
+//    QRect focusRegion() const { return m_focusRegion; }
+//    void setFocusRegion(const QRect &rect) { m_focusRegion  = rect; }
 
     //! setter getter, self explanatory
     RasterRegionType extent() { return m_Extent; }
@@ -118,10 +111,27 @@ public:
               index[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
     }
 
+    /*!
+     * \brief update , implementation from parent class
+     * \param region, the region
+     */
+    void updateObserver(ItiViewerObservable *observable);
+
+    /*!
+     * \brief draw
+     */
+    void draw();
+
 signals:
     void visibleAreaChanged(const QRect &rect);
 
 protected:
+
+    /*!
+     * \brief mousePressEvent
+     */
+    void wheelEvent(QWheelEvent *);
+
 
     /*!
      * \brief initializeGL
@@ -139,13 +149,13 @@ protected:
     /*!
      * \brief paintGL , reimplemented method declared in the QGLWidget class
      */
-//    void paintGL();
+    void paintGL();
 
     /*!
      * \brief paintEvent
      * \param event
      */
-    void paintEvent(QPaintEvent *event);
+//    void paintEvent(QPaintEvent *event);
 
 
 private:
@@ -181,15 +191,15 @@ private:
     /*!
      * \brief m_pen
      */
-    QPen m_pen;
+//    QPen m_pen;
 
     /*!
      * \brief m_focusRegion
      */
-    QRect m_focusRegion;
+//    QRect m_focusRegion;
 
 };
 
 } // end of itiviewer
 
-#endif // ITIOTBRGBAQGLWIDGET
+#endif // ITIOTBRGBAQGLWIDGETZOOMABLE_H

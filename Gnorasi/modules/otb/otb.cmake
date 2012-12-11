@@ -361,8 +361,6 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/qotbprocessorwidgetfactory.cpp
     ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.cpp
     ${MOD_DIR}/qt/viewer/utils/itiotbimagemanager.cpp
-    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetautoresize.cpp
-    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidget.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaimageviewer.cpp
     ${MOD_DIR}/qt/viewer/factories/itiotbimageviewerfactory.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiotbimageviewer.cpp
@@ -377,19 +375,18 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.cpp
     ${MOD_DIR}/qt/viewer/observables/itiviewerobservable.cpp
     ${MOD_DIR}/qt/viewer/observables/itiviewerobservableregion.cpp
-    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbascrollablewidget.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiviewerobserver.cpp
-    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbazoomablewidget.cpp
-    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaresizablewidget.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetscrollable.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetfullview.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetzoomable.cpp
 )
 ################################################################################
 # Qt headers
 ################################################################################
 SET(MOD_QT_HEADERS
+    ${MOD_DIR}/qt/viewer/rgba_globaldefs.h
     ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.h
-    ${MOD_DIR}/qt/viewer/utils/itiotbimagemanager.h/
-    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetautoresize.h
-    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidget.h
+    ${MOD_DIR}/qt/viewer/utils/itiotbimagemanager.h
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaimageviewer.h
     ${MOD_DIR}/qt/viewer/factories/itiotbimageviewerfactory.h
     ${MOD_DIR}/qt/viewer/widgets/itiotbimageviewer.h
@@ -404,10 +401,11 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.h
     ${MOD_DIR}/qt/viewer/observables/itiviewerobservable.h
     ${MOD_DIR}/qt/viewer/observables/itiviewerobservableregion.h
-    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbascrollablewidget.h
     ${MOD_DIR}/qt/viewer/widgets/itiviewerobserver.h
-    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbazoomablewidget.h
-    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaresizablewidget.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetscrollable.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetfullview.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetzoomable.h
+
 )
 
 SET(MOD_QT_HEADERS_NONMOC

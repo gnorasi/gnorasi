@@ -26,23 +26,22 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITIOTBRGBAQGLWIDGETAUTORESIZE_H
-#define ITIOTBRGBAQGLWIDGETAUTORESIZE_H
+#ifndef ITIOTBRGBAQGLWIDGETFULLVIEW_H
+#define ITIOTBRGBAQGLWIDGETFULLVIEW_H
 
 #include <QGLWidget>
 #include <QPen>
 
-#include "itiotbrgbaqglwidget.h"
+#include "itiotbrgbaqglwidgetfullview.h"
 
 #include "../../../ports/otbimageport.h"
 
-#include "itkRGBAPixel.h"
-#include "itkFixedArray.h"
-#include "otbGlComponent.h"
-#include "otbObjectList.h"
-#include "otbImageWidgetController.h"
+#include "itiviewerobserver.h"
 
-using namespace otb;
+#include "../rgba_globaldefs.h"
+
+
+//using namespace otb;
 using namespace voreen;
 
 namespace itiviewer{
@@ -59,13 +58,13 @@ namespace itiviewer{
 *  \ingroup Visualization
  */
 
-class ItiOtbRgbaQGLWidgetAutoResize : public QGLWidget
+class ItiOtbRgbaQGLWidgetFullView : public QGLWidget, public ItiViewerObserver
 {
     Q_OBJECT
 public:
-    explicit ItiOtbRgbaQGLWidgetAutoResize(QWidget *parent = 0);
+    explicit ItiOtbRgbaQGLWidgetFullView(QWidget *parent = 0);
 
-    virtual ~ItiOtbRgbaQGLWidgetAutoResize();
+    virtual ~ItiOtbRgbaQGLWidgetFullView();
 
     /** Reads the OpenGl buffer from an image pointer
      *  \param image The image pointer,
@@ -113,6 +112,17 @@ public:
       return (region.GetSize()[1] - 1 + region.GetIndex()[1] -
               index[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
     }
+
+    /*!
+     * \brief update , implementation from parent class
+     * \param region, the region
+     */
+    void updateObserver(ItiViewerObservable *observable);
+
+    /*!
+     * \brief draw
+     */
+    void draw();
 
 signals:
 
@@ -192,4 +202,4 @@ private:
 
 } // end of itiviewer
 
-#endif // ITIOTBRGBAQGLWIDGETAUTORESIZE
+#endif // ITIOTBRGBAQGLWIDGETFULLVIEW_H

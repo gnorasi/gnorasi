@@ -1,10 +1,12 @@
 #include "itiotbrgbaimageviewer.h"
 
-#include "itiotbrgbaresizablewidget.h"
-#include "itiotbrgbascrollablewidget.h"
-#include "itiotbrgbazoomablewidget.h"
+#include "itiotbrgbaqglwidgetfullview.h"
+#include "itiotbrgbaqglwidgetscrollable.h"
+#include "itiotbrgbaqglwidgetzoomable.h"
 #include "../utils/itiotbimagemanager.h"
-#include "itiotbrgbaqglwidget.h"
+#include "itiotbrgbaqglwidgetscrollable.h"
+#include "itiotbrgbaqglwidgetzoomable.h"
+#include "itiotbrgbaqglwidgetfullview.h"
 #include "../observables/itiviewerobservableregion.h"
 
 #include "../../../ports/otbimageport.h"
@@ -53,13 +55,13 @@ void ItiOtbRgbaImageViewer::setupLayout(){
 
     //!
     // create the views opengl views
-    m_pItiOtbRgbaImageWidgetScroll      = new ItiOtbRgbaScrollableWidget(this);
+    m_pItiOtbRgbaImageWidgetScroll      = new ItiOtbRgbaQGLWidgetScrollable(this);
     m_pItiOtbRgbaImageWidgetScroll->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    m_pItiOtbRgbaImageWidgetResizable   = new ItiOtbRgbaResizableWidget(this);
-    m_pItiOtbRgbaImageWidgetResizable->setMinimumSize(160,160);
+    m_pItiOtbRgbaImageWidgetFullView    = new ItiOtbRgbaQGLWidgetFullView(this);
+    m_pItiOtbRgbaImageWidgetFullView->setMinimumSize(160,160);
     m_pItiOtbRgbaImageWidgetScroll->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-    m_pItiOtbRgbaImageWidgetZoom        = new ItiOtbRgbaZoomableWidget(this);
-    m_pItiOtbRgbaImageWidgetZoom->setMinimumSize(160,160);
+    m_pItiOtbRgbaImageWidgetZoomable    = new ItiOtbRgbaQGLWidgetZoomable(this);
+    m_pItiOtbRgbaImageWidgetZoomable->setMinimumSize(160,160);
     m_pItiOtbRgbaImageWidgetScroll->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
     //! TODO
@@ -73,9 +75,9 @@ void ItiOtbRgbaImageViewer::setupLayout(){
     //! setup the left layout
     m_pvBoxLayoutLeft                   = new QVBoxLayout();
     m_pvBoxLayoutLeft->addWidget(m_pLabelFullView);
-    m_pvBoxLayoutLeft->addWidget(m_pItiOtbRgbaImageWidgetResizable);
+    m_pvBoxLayoutLeft->addWidget(m_pItiOtbRgbaImageWidgetFullView);
     m_pvBoxLayoutLeft->addWidget(m_pLabelZoomView);
-    m_pvBoxLayoutLeft->addWidget(m_pItiOtbRgbaImageWidgetZoom);
+    m_pvBoxLayoutLeft->addWidget(m_pItiOtbRgbaImageWidgetZoomable);
     m_pvBoxLayoutLeft->addWidget(m_pLabelMetadataView);
     m_pvBoxLayoutLeft->addWidget(m_pMetadataWidget);
     QWidget *pWidgetLeft                = new QWidget(this);
@@ -108,10 +110,10 @@ void ItiOtbRgbaImageViewer::setupObserverMechanism(){
     //! setup observer mechanism
     m_pFocusRegion                      = new ItiViewerObservableRegion(this);
     m_pFocusRegion->registerObserver(m_pItiOtbRgbaImageWidgetScroll);
-    m_pFocusRegion->registerObserver(m_pItiOtbRgbaImageWidgetZoom);
+    m_pFocusRegion->registerObserver(m_pItiOtbRgbaImageWidgetZoomable);
     m_pVisibleRegion                    = new ItiViewerObservableRegion(this);
     m_pVisibleRegion->registerObserver(m_pItiOtbRgbaImageWidgetScroll);
-    m_pVisibleRegion->registerObserver(m_pItiOtbRgbaImageWidgetResizable);
+    m_pVisibleRegion->registerObserver(m_pItiOtbRgbaImageWidgetFullView);
 }
 
 /*!
@@ -122,29 +124,29 @@ void ItiOtbRgbaImageViewer::disassembleWidgets(){
 
     //! Due to a lack of removing added itmes functionality on a QSplitter instance
     //! the added widgets must be firstly hidden and then deleted..
-    m_pItiOtbRgbaImageWidgetResizable->hide();
+    m_pItiOtbRgbaImageWidgetFullView->hide();
     m_pItiOtbRgbaImageWidgetScroll->hide();
-    m_pItiOtbRgbaImageWidgetZoom->hide();
-    delete m_pItiOtbRgbaImageWidgetResizable;
+    m_pItiOtbRgbaImageWidgetZoomable->hide();
+    delete m_pItiOtbRgbaImageWidgetFullView;
     delete m_pItiOtbRgbaImageWidgetScroll;
-    delete m_pItiOtbRgbaImageWidgetZoom;
+    delete m_pItiOtbRgbaImageWidgetZoomable;
 
     //! create the widgets
-    m_pItiOtbRgbaImageWidgetScroll      = new ItiOtbRgbaScrollableWidget(this);
+    m_pItiOtbRgbaImageWidgetScroll      = new ItiOtbRgbaQGLWidgetScrollable(this);
     m_pItiOtbRgbaImageWidgetScroll->setWindowFlags(Qt::Window);
     m_pItiOtbRgbaImageWidgetScroll->setWindowTitle(m_pLabelScrollableResolution->text());
     m_pItiOtbRgbaImageWidgetScroll->setGeometry(QApplication::desktop()->width()/2 - 200,QApplication::desktop()->height()/2 - 200,200,200);
     m_pItiOtbRgbaImageWidgetScroll->show();
-    m_pItiOtbRgbaImageWidgetResizable   = new ItiOtbRgbaResizableWidget(this);
-    m_pItiOtbRgbaImageWidgetResizable->setWindowFlags(Qt::Window);
-    m_pItiOtbRgbaImageWidgetResizable->setWindowTitle(m_pLabelFullView->text());
-    m_pItiOtbRgbaImageWidgetResizable->setGeometry(QApplication::desktop()->width()/2 - 160,QApplication::desktop()->height()/2 - 160,200,200);
-    m_pItiOtbRgbaImageWidgetResizable->show();
-    m_pItiOtbRgbaImageWidgetZoom        = new ItiOtbRgbaZoomableWidget(this);
-    m_pItiOtbRgbaImageWidgetZoom->setWindowFlags(Qt::Window);
-    m_pItiOtbRgbaImageWidgetZoom->setWindowTitle(m_pLabelZoomView->text());
-    m_pItiOtbRgbaImageWidgetZoom->show();
-    m_pItiOtbRgbaImageWidgetZoom->setGeometry(QApplication::desktop()->width()/2 - 120,QApplication::desktop()->height()/2 - 120,200,200);
+    m_pItiOtbRgbaImageWidgetFullView    = new ItiOtbRgbaQGLWidgetFullView(this);
+    m_pItiOtbRgbaImageWidgetFullView->setWindowFlags(Qt::Window);
+    m_pItiOtbRgbaImageWidgetFullView->setWindowTitle(m_pLabelFullView->text());
+    m_pItiOtbRgbaImageWidgetFullView->setGeometry(QApplication::desktop()->width()/2 - 160,QApplication::desktop()->height()/2 - 160,200,200);
+    m_pItiOtbRgbaImageWidgetFullView->show();
+    m_pItiOtbRgbaImageWidgetZoomable        = new ItiOtbRgbaQGLWidgetZoomable(this);
+    m_pItiOtbRgbaImageWidgetZoomable->setWindowFlags(Qt::Window);
+    m_pItiOtbRgbaImageWidgetZoomable->setWindowTitle(m_pLabelZoomView->text());
+    m_pItiOtbRgbaImageWidgetZoomable->show();
+    m_pItiOtbRgbaImageWidgetZoomable->setGeometry(QApplication::desktop()->width()/2 - 120,QApplication::desktop()->height()/2 - 120,200,200);
     m_pMetadataWidget                   = new QWidget(this);
     m_pMetadataWidget->setWindowFlags(Qt::Window);
     m_pMetadataWidget->setWindowTitle(m_pLabelMetadataView->text());
@@ -185,10 +187,10 @@ void ItiOtbRgbaImageViewer::draw(){
     m_pItiOtbRgbaImageWidgetScroll->draw();
 
     //!
-    m_pItiOtbRgbaImageWidgetResizable->draw();
+    m_pItiOtbRgbaImageWidgetFullView->draw();
 
     //!
-    m_pItiOtbRgbaImageWidgetZoom->draw();
+    m_pItiOtbRgbaImageWidgetZoomable->draw();
 }
 
 /*!
@@ -227,8 +229,8 @@ void ItiOtbRgbaImageViewer::applyContrastEnhancementMethod(CC ce, double aval, d
 //!
 void ItiOtbRgbaImageViewer::setupConnections(){
     //!
-    connect(m_pItiOtbRgbaImageWidgetScroll,SIGNAL(visibleAreaChanged(QRect)),this,SLOT(onScrollableWidgetSizeChanged(QRect)));
-    connect(m_pItiOtbRgbaImageWidgetZoom,SIGNAL(sizeChanged(QRect)),this,SLOT(onZoomableWidgetSizeChanged(QRect)));
+    connect(m_pItiOtbRgbaImageWidgetScroll, SIGNAL(visibleAreaChanged(QRect)),this,SLOT(onScrollableWidgetSizeChanged(QRect)));
+    connect(m_pItiOtbRgbaImageWidgetZoomable, SIGNAL(sizeChanged(QRect)),this,SLOT(onZoomableWidgetSizeChanged(QRect)));
 }
 
 //!

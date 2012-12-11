@@ -39,9 +39,9 @@
 
 namespace itiviewer{
 
-class ItiOtbRgbaScrollableWidget;
-class ItiOtbRgbaResizableWidget;
-class ItiOtbRgbaZoomableWidget;
+class ItiOtbRgbaQGLWidgetScrollable;
+class ItiOtbRgbaQGLWidgetFullView;
+class ItiOtbRgbaQGLWidgetZoomable;
 class ItiOtbRgbaFocusRegion;
 class ItiViewerObservableRegion;
 
@@ -133,18 +133,18 @@ private:
      * \brief m_pItiOtbRgbaImageWidgetScroll
      *  The scrollable widgets accepts scroll events and has a helper rectangle which sets the focus region
      */
-    ItiOtbRgbaScrollableWidget *m_pItiOtbRgbaImageWidgetScroll;
+    ItiOtbRgbaQGLWidgetScrollable *m_pItiOtbRgbaImageWidgetScroll;
 
     /*!
      * \brief m_pItiOtbRgbaImageWidgetFull , The full widget always shows the whole image extents
      */
-    ItiOtbRgbaResizableWidget *m_pItiOtbRgbaImageWidgetResizable;
+    ItiOtbRgbaQGLWidgetFullView* m_pItiOtbRgbaImageWidgetFullView;
 
     /*!
      * \brief m_pItiOtbRgbaImageWidgetZoom
      *  The zoombable widget shows the image in various scales depending on the image zoom properties
      */
-    ItiOtbRgbaZoomableWidget *m_pItiOtbRgbaImageWidgetZoom;
+    ItiOtbRgbaQGLWidgetZoomable *m_pItiOtbRgbaImageWidgetZoomable;
 
     /*!
      * \brief m_pvBoxLayoutLeft

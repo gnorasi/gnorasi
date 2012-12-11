@@ -14,11 +14,9 @@ class ItiViewerObservable;
  *  an observable item could be a focus region are or the visible area of a widget.
  *  Once the observable item's data has been modified, the function update is called.
  */
-class ItiViewerObserver : public QWidget
+class ItiViewerObserver
 {
-    Q_OBJECT
 public:
-    explicit ItiViewerObserver(QWidget *parent = 0) : QWidget(parent) { }
 
     /*!
      * \brief notify and update appropriate data.
