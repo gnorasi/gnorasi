@@ -30,10 +30,11 @@
 #define ITBVIEWEROBSERVABLEREGION_H
 
 #include <QObject>
+#include <QRect>
 
 #include "itiviewerobservable.h"
 
-#include "../widgets/itiotbrgbaqglwidget.h"
+#include "../rgba_globaldefs.h"
 
 namespace itiviewer{
 
