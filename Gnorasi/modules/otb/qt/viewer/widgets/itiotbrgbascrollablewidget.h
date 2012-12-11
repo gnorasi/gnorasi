@@ -31,6 +31,8 @@
 
 #include "itiviewerobserver.h"
 
+#include <QPen>
+
 namespace itiviewer{
 
 class ItiOtbRgbaQGLWidget;
@@ -54,7 +56,7 @@ public:
      * \brief update , implementation from parent class
      * \param region, the region
      */
-    void update(ItiViewerObservable *observable);
+    void updateObserver(ItiViewerObservable *observable);
 
     /*!
      * \brief itiOtbRgbaImageWidget
@@ -72,7 +74,10 @@ signals:
      * \brief sizeChanged
      * \param size , the size of the widget
      */
-    void visibleAreaChanged(const QSize &size);
+    void visibleAreaChanged(const QRect &size);
+
+
+protected:
 
     
 public slots:

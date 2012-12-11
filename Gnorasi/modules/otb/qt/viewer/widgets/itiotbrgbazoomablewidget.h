@@ -40,6 +40,7 @@ class ItiViewerObservable;
  */
 class ItiOtbRgbaZoomableWidget : public ItiViewerObserver
 {
+    Q_OBJECT
 public:
     /*!
      * \brief ItiOtbRgbaZoomWidget
@@ -51,7 +52,7 @@ public:
      * \brief update , implementation from parent class
      * \param region, the region
      */
-    void update(ItiViewerObservable *observable);
+    void updateObserver(ItiViewerObservable *observable);
 
     /*!
      * \brief itiOtbRgbaImageWidget
@@ -63,6 +64,13 @@ public:
      * \brief draw
      */
     void draw();
+
+signals:
+
+    /*!
+     * \brief sizeChanged
+     */
+    void sizeChanged(const QRect &);
 
 protected:
     /*!

@@ -25,18 +25,17 @@ void ItiOtbRgbaScrollableWidget::initialize(){
 
     setLayout(layout);
 
-    connect(m_pOpenGlWidget,SIGNAL(visibleAreaChanged(QSize)),this,SIGNAL(visibleAreaChanged(QSize)));
+    connect(m_pOpenGlWidget,SIGNAL(visibleAreaChanged(QRect)),this,SIGNAL(visibleAreaChanged(QRect)));
 }
 
 //!
-void ItiOtbRgbaScrollableWidget::update(ItiViewerObservable *observable){
+void ItiOtbRgbaScrollableWidget::updateObserver(ItiViewerObservable *observable){
 
-    ItiViewerObservable *rgbaRegion = qobject_cast<ItiViewerObservable*>(observable);
-    if(!rgbaRegion)
+    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
+    if(!region)
         return;
 
-    //! TODO
-    //! add the functionality here for drawing here
+    m_pOpenGlWidget->setFocusRegion(region->region());
 }
 
 //!
@@ -56,4 +55,3 @@ void ItiOtbRgbaScrollableWidget::draw(){
     //!
     m_pOpenGlWidget->ReadBuffer(imgType,region);
 }
-

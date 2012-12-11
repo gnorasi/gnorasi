@@ -47,6 +47,7 @@ namespace itiviewer{
 class ItiViewerObservableRegion : public ItiViewerObservable
 {
     Q_OBJECT
+    Q_PROPERTY(QRect region   READ region   WRITE setRegion       NOTIFY regionChanged)
 public:
     /*!
      * \brief ItiOtbRgbaFocusRegion
@@ -58,21 +59,25 @@ public:
      * \brief region , getter
      * \return
      */
-    RasterRegionType region() const { return m_region; }
+    QRect region() const { return m_region; }
 
     /*!
      * \brief setRegion , setter
      * \param r , the RasterRegionType
      */
-    void setRegion(RasterRegionType r) { m_region = r; }
+    void setRegion(QRect r) { m_region = r; notifyObservers(); }
+
 
 signals:
+    void regionChanged();
     
 public slots:
 
 private:
-    RasterRegionType m_region;
-
+    /*!
+     * \brief m_region
+     */
+    QRect m_region;
     
 };
 

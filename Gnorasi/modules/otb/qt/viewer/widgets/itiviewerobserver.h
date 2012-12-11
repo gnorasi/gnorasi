@@ -23,7 +23,7 @@ public:
     /*!
      * \brief notify and update appropriate data.
      */
-    virtual void update(ItiViewerObservable* ) = 0;
+    virtual void updateObserver(ItiViewerObservable* ) = 0;
     
 signals:
     

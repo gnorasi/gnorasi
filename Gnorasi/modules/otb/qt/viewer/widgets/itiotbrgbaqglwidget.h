@@ -30,6 +30,7 @@
 #define ITIOTBRGBAQGLWIDGET_H
 
 #include <QGLWidget>
+#include <QPen>
 
 #include "../../../ports/otbimageport.h"
 
@@ -98,6 +99,10 @@ public:
     RasterRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
     void setOpenGLBufferedRegion(RasterRegionType r) { m_OpenGlBufferedRegion = r; }
 
+    //! setter getter for the focus region area
+    QRect focusRegion() const { return m_focusRegion; }
+    void setFocusRegion(const QRect &rect) { m_focusRegion  = rect; }
+
     //! setter getter, self explanatory
     RasterRegionType extent() { return m_Extent; }
 
@@ -114,7 +119,7 @@ public:
     }
 
 signals:
-    void visibleAreaChanged(const QSize &size);
+    void visibleAreaChanged(const QRect &rect);
 
 protected:
 
@@ -134,10 +139,23 @@ protected:
     /*!
      * \brief paintGL , reimplemented method declared in the QGLWidget class
      */
-    void paintGL();
+//    void paintGL();
+
+    /*!
+     * \brief paintEvent
+     * \param event
+     */
+    void paintEvent(QPaintEvent *event);
 
 
 private:
+    /*!
+     * \brief setupViewport
+     * \param width
+     * \param height
+     */
+    void setupViewport(int w, int h);
+
     /** OpenGl zoom factor */
     double m_IsotropicZoom;
 
@@ -159,6 +177,16 @@ private:
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */
     unsigned int m_SubsamplingRate;
+
+    /*!
+     * \brief m_pen
+     */
+    QPen m_pen;
+
+    /*!
+     * \brief m_focusRegion
+     */
+    QRect m_focusRegion;
 
 };
 
