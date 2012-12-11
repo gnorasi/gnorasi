@@ -142,11 +142,6 @@ protected:
     void resizeGL(int w, int h);
 
     /*!
-     * \brief paintGL , reimplemented method declared in the QGLWidget class
-     */
-//    void paintGL();
-
-    /*!
      * \brief paintEvent
      * \param event
      */

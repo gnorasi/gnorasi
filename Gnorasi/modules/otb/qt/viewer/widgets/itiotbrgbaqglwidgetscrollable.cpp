@@ -4,6 +4,8 @@
 
 #include "itkImageRegionConstIteratorWithIndex.h"
 
+#include <QDebug>
+
 using namespace otb;
 using namespace itiviewer;
 
@@ -93,6 +95,16 @@ void ItiOtbRgbaQGLWidgetScrollable::resizeGL(int w, int h)
 {
     setupViewport(w,h);
 
+//    QRect rect;
+//    rect.setWidth(m_Extent.GetSize()[0]);
+//    rect.setHeight(m_Extent.GetSize()[1]);
+//    rect.setX(m_Extent.GetIndex()[0]);
+//    rect.setY(m_Extent.GetIndex()[1]);
+
+//    qDebug() << " rect : " << rect;
+
+//    emit visibleAreaChanged(rect);
+
 }
 
 void ItiOtbRgbaQGLWidgetScrollable::setupViewport(int w, int h){
@@ -110,16 +122,8 @@ void ItiOtbRgbaQGLWidgetScrollable::setupViewport(int w, int h){
     m_W = (GLint)w;
     m_H = (GLint)h;
 
-    int wt = qMin(static_cast<int>(m_W),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[0]));
-    int ht = qMin(static_cast<int>(m_H),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[1]));
-
-    QRect rect;
-    rect.setWidth(wt);
-    rect.setHeight(ht);
-    rect.setX(index[0]);
-    rect.setY(index[1]);
-
-    emit visibleAreaChanged(rect);
+//    int wt = qMin(static_cast<int>(w),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[0]));
+//    int ht = qMin(static_cast<int>(h),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[1]));
 
     glViewport(0, 0, m_W, m_H);
 
@@ -130,60 +134,6 @@ void ItiOtbRgbaQGLWidgetScrollable::setupViewport(int w, int h){
     glLoadIdentity();
     glOrtho(0, m_W, 0, m_H, -1, 1);
 }
-
-//void ItiOtbRgbaQGLWidgetScrollable::paintGL()
-//{
-//    unsigned int nb_displayed_rows;
-//    unsigned int nb_displayed_cols;
-//    unsigned int first_displayed_row;
-//    unsigned int first_displayed_col;
-
-//    if( m_Extent.GetIndex()[0] >= 0 )
-//    {
-//        nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
-//        first_displayed_col = 0;
-//    }
-//    else
-//    {
-//        nb_displayed_cols = m_W / m_IsotropicZoom;
-//        first_displayed_col = (m_OpenGlBufferedRegion.GetSize()[0] - nb_displayed_cols) / 2;
-//    }
-
-//    if( m_Extent.GetIndex()[1] >= 0 )
-//    {
-//        nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
-//        first_displayed_row = 0;
-//    }
-//    else
-//    {
-//        nb_displayed_rows = m_H / m_IsotropicZoom;
-//        first_displayed_row = (m_OpenGlBufferedRegion.GetSize()[1] - nb_displayed_rows) / 2;
-//    }
-
-
-//    RasterIndexType startPosition = m_Extent.GetIndex();
-//    startPosition[0] = startPosition[0] < 0 ? 0 : startPosition[0];
-//    startPosition[1] = startPosition[1] < 0 ? 0 : startPosition[1];
-
-//    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-//    glPixelStorei(GL_UNPACK_ROW_LENGTH, m_OpenGlBufferedRegion.GetSize()[0]);
-//    glPixelStorei(GL_UNPACK_SKIP_PIXELS, first_displayed_col);
-//    glPixelStorei(GL_UNPACK_SKIP_ROWS,first_displayed_row);
-
-//    glClear(GL_COLOR_BUFFER_BIT);
-//    glPixelZoom(m_IsotropicZoom,m_IsotropicZoom);
-
-//    glRasterPos2f(startPosition[0], startPosition[1]);
-//    glDrawPixels(nb_displayed_cols,
-//                nb_displayed_rows,
-//                GL_RGB,
-//                GL_UNSIGNED_BYTE,
-//                m_OpenGlBuffer);
-
-
-//    glFlush();
-//}
-
 
 //!
 void ItiOtbRgbaQGLWidgetScrollable::paintEvent(QPaintEvent *event){
@@ -259,11 +209,12 @@ void ItiOtbRgbaQGLWidgetScrollable::paintEvent(QPaintEvent *event){
     glMatrixMode(GL_MODELVIEW);
     glPopMatrix();
 
+    //! overpainting
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    painter.setPen(m_pen);
-    painter.drawRect(m_focusRegion);
+//    painter.setPen(m_pen);
+//    painter.drawRect(m_focusRegion);
 
     painter.end();
 
@@ -289,7 +240,11 @@ void ItiOtbRgbaQGLWidgetScrollable::draw(){
 
 //!
 void ItiOtbRgbaQGLWidgetScrollable::updateObserver(ItiViewerObservable *observable){
+//    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
+//    if(!region)
+//        return;
 
+//    m_focusRegion = region->region();
 }
 
 //!

@@ -92,10 +92,6 @@ public:
     RasterRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
     void setOpenGLBufferedRegion(RasterRegionType r) { m_OpenGlBufferedRegion = r; }
 
-    //! setter getter for the focus region area
-//    QRect focusRegion() const { return m_focusRegion; }
-//    void setFocusRegion(const QRect &rect) { m_focusRegion  = rect; }
-
     //! setter getter, self explanatory
     RasterRegionType extent() { return m_Extent; }
 
@@ -187,16 +183,6 @@ private:
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */
     unsigned int m_SubsamplingRate;
-
-    /*!
-     * \brief m_pen
-     */
-//    QPen m_pen;
-
-    /*!
-     * \brief m_focusRegion
-     */
-//    QRect m_focusRegion;
 
 };
 
