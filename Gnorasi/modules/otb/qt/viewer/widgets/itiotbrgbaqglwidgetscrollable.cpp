@@ -215,8 +215,8 @@ void ItiOtbRgbaQGLWidgetScrollable::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-//    painter.setPen(m_pen);
-//    painter.drawRect(m_focusRegion);
+    painter.setPen(m_pen);
+    painter.drawRect(m_focusRegion);
 
     painter.end();
 

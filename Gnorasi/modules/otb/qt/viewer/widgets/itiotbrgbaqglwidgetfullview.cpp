@@ -233,26 +233,31 @@ void ItiOtbRgbaQGLWidgetFullView::updateObserver(ItiViewerObservable *observable
     if(m_OpenGlBufferedRegion.GetSize()[0] == 0 || m_OpenGlBufferedRegion.GetSize()[1] == 0)
         return;
 
-    //! TODO
-    //! add the functionality here
+    //! calculate the value of the x scale which equals to this views extent width divided by the image's width
+    double paramX = (double)m_Extent.GetSize()[0] / (double)m_OpenGlBufferedRegion.GetSize()[0];
+    //! calculate the value of the y scale which equals to this views extent height divided by the image's height
+    double paramY = (double)m_Extent.GetSize()[1] / (double)m_OpenGlBufferedRegion.GetSize()[1];
+
     QRect rect = region->region();
+    //! check if the x coordinate of the given rect is greater than zero
     if(rect.x()>=0)
         m_visibleRegion.setX(m_Extent.GetIndex()[0]);
-    else
-        m_visibleRegion.setX(m_Extent.GetIndex()[0] + qAbs(rect.x()));
+    else //! if not , this means that the scrollable view has been resized to a value smaller than the original size of the image
+        m_visibleRegion.setX(m_Extent.GetIndex()[0] + (qAbs(rect.x()*paramX)));
 
+    //! same type of checking as the checking on the previous if statement
     if(rect.y() >= 0)
         m_visibleRegion.setY(m_Extent.GetIndex()[1]);
     else
-        m_visibleRegion.setY(m_Extent.GetIndex()[1]+qAbs(rect.y()));
+        m_visibleRegion.setY(m_Extent.GetIndex()[1]+(qAbs(rect.y()*paramY)));
 
-    int nw = (m_Extent.GetSize()[0] * ( m_OpenGlBufferedRegion.GetSize()[0] - qAbs(rect.x()) ) ) / m_OpenGlBufferedRegion.GetSize()[0];
-    int nh = (m_Extent.GetSize()[1] * ( m_OpenGlBufferedRegion.GetSize()[1] - qAbs(rect.y()) ) ) / m_OpenGlBufferedRegion.GetSize()[1];
+    //! calculate the new width and height value;
+    int nw = paramX * rect.width();
+    int nh = paramY * rect.height();
 
+    //! set the new width and height to the visible region
     m_visibleRegion.setWidth(nw);
     m_visibleRegion.setHeight(nh);
-
-//    setVisibleRegion(region->region());
 }
 
 //!
