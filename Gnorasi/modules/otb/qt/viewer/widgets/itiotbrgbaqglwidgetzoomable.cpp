@@ -3,6 +3,8 @@
 #include "../utils/itiotbimagemanager.h"
 #include "../observables/itiviewerobservableregion.h"
 
+#include <QDebug>
+
 using namespace otb;
 using namespace itiviewer;
 
@@ -107,16 +109,7 @@ void ItiOtbRgbaQGLWidgetZoomable::setupViewport(int w, int h){
     m_W = (GLint)w;
     m_H = (GLint)h;
 
-    int wt = qMin(static_cast<int>(m_W),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[0]));
-    int ht = qMin(static_cast<int>(m_H),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[1]));
-
-    QRect rect;
-    rect.setWidth(wt);
-    rect.setHeight(ht);
-    rect.setX(index[0]);
-    rect.setY(index[1]);
-
-    emit visibleAreaChanged(rect);
+    setupAndSendSignal();
 
     glViewport(0, 0, m_W, m_H);
 
@@ -221,21 +214,54 @@ void ItiOtbRgbaQGLWidgetZoomable::updateObserver(ItiViewerObservable *observable
 //    setIsotropicZoom(zoom);
 }
 
+void ItiOtbRgbaQGLWidgetZoomable::setupAndSendSignal(){
+
+    QRect rect;
+    if(m_Extent.GetIndex()[0] > 0)
+        rect.setX(0);
+    else
+        rect.setX(qAbs(m_Extent.GetIndex()[0]) / m_IsotropicZoom);
+
+    if(m_Extent.GetIndex()[1] > 0)
+        rect.setY(0);
+    else
+        rect.setY(qAbs(m_Extent.GetIndex()[1]) / m_IsotropicZoom);
+
+    int wt = qMin(width(),(int)m_Extent.GetSize()[0]) / m_IsotropicZoom;
+    int ht = qMin(height(),(int)m_Extent.GetSize()[1]) / m_IsotropicZoom;
+
+    rect.setWidth(wt);
+    rect.setHeight(ht);
+
+    qDebug() << "rect : " << rect << " isotropic zoom : " << m_IsotropicZoom;
+
+    emit visibleAreaChanged(rect);
+}
+
 //!
 void ItiOtbRgbaQGLWidgetZoomable::wheelEvent(QWheelEvent *event){
     float scale = (float)event->delta() / 960.0;
 
     double newSc = m_IsotropicZoom + scale;
 
-    if(newSc <= 1.0 || newSc >= 50.0){
+    if(newSc < 1.0 || newSc >= 50.0){
         event->ignore();
         return;
     }
 
+    //! set the new isotropic zoom value
     setIsotropicZoom(newSc);
 
+    //! update the opengl layer
+    setupViewport(width(),height());
+
+    //!
     updateGL();
 
+    //! setup and send signal
+    setupAndSendSignal();
+
+    //! accept the event
     event->accept();
 }
 

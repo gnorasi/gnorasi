@@ -112,8 +112,14 @@ void ItiOtbRgbaImageViewer::setupObserverMechanism(){
     m_pFocusRegion->registerObserver(m_pItiOtbRgbaImageWidgetScroll);
     m_pFocusRegion->registerObserver(m_pItiOtbRgbaImageWidgetZoomable);
     m_pVisibleRegion                    = new ItiViewerObservableRegion(this);
-    m_pVisibleRegion->registerObserver(m_pItiOtbRgbaImageWidgetScroll);
+//    m_pVisibleRegion->registerObserver(m_pItiOtbRgbaImageWidgetScroll);
     m_pVisibleRegion->registerObserver(m_pItiOtbRgbaImageWidgetFullView);
+
+    //! initial setup
+    QRect rect;
+    rect.setWidth(m_pItiOtbRgbaImageWidgetZoomable->width());
+    rect.setHeight(m_pItiOtbRgbaImageWidgetZoomable->height());
+     m_pFocusRegion->setRegion(rect);
 }
 
 /*!
@@ -235,21 +241,12 @@ void ItiOtbRgbaImageViewer::setupConnections(){
 
 //!
 void ItiOtbRgbaImageViewer::onScrollableWidgetSizeChanged(const QRect &size){
-    qDebug() << size;
-
-//    QRect rect = m_pVisibleRegion->region();
-//    rect.setWidth(size.width());
-//    rect.setHeight(size.height());
-
+    //!
     m_pVisibleRegion->setRegion(size);
 }
 
 
 void ItiOtbRgbaImageViewer::onZoomableWidgetSizeChanged(const QRect &size){
-
-    QRect rect = m_pVisibleRegion->region();
-    rect.setWidth(size.width());
-    rect.setHeight(size.height());
-
-    m_pFocusRegion->setRegion(rect);
+    //!
+    m_pFocusRegion->setRegion(size);
 }

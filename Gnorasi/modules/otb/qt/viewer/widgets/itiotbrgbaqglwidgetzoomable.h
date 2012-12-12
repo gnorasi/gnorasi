@@ -124,6 +124,11 @@ signals:
 protected:
 
     /*!
+     * \brief setupAndSendSignal
+     */
+    void setupAndSendSignal();
+
+    /*!
      * \brief mousePressEvent
      */
     void wheelEvent(QWheelEvent *);
