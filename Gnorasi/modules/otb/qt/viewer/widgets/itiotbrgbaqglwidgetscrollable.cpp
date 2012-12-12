@@ -103,10 +103,7 @@ void ItiOtbRgbaQGLWidgetScrollable::resizeGL(int w, int h)
     int ht = qMin(static_cast<int>(h),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[1]));
     rect.setWidth(wt);
     rect.setHeight(ht);
-//    rect.setWidth(m_Extent.GetSize()[0]);
-//    rect.setHeight(m_Extent.GetSize()[1]);
 
-    qDebug() << " rect : " << rect;
 
     emit visibleAreaChanged(rect);
 
@@ -246,23 +243,33 @@ void ItiOtbRgbaQGLWidgetScrollable::updateObserver(ItiViewerObservable *observab
     if(!region)
         return;
 
-    m_focusRegion = region->region();
+    QRect rregion = region->region();
+
+    QRect rect;
+    rect.setX(rregion.x()+qAbs(m_Extent.GetIndex()[0]));
+    rect.setY(rregion.y()+qAbs(m_Extent.GetIndex()[1]));
+    rect.setWidth(rregion.width());
+    rect.setHeight(rregion.height());
+
+    m_focusRegion = rect;
+
+    update();
 }
 
 //!
 void ItiOtbRgbaQGLWidgetScrollable::wheelEvent(QWheelEvent *event){
-    float scale = (float)event->delta() / 960.0;
+//    float scale = (float)event->delta() / 960.0;
 
-    double newSc = m_IsotropicZoom + scale;
+//    double newSc = m_IsotropicZoom + scale;
 
-    if(newSc <= 1.0 || newSc >= 50.0){
-        event->ignore();
-        return;
-    }
+//    if(newSc <= 1.0 || newSc >= 50.0){
+//        event->ignore();
+//        return;
+//    }
 
-    setIsotropicZoom(newSc);
+//    setIsotropicZoom(newSc);
 
-    updateGL();
+//    updateGL();
 
     event->accept();
 }
