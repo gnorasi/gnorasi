@@ -211,14 +211,14 @@ void ItiOtbRgbaQGLWidgetZoomable::updateObserver(ItiViewerObservable *observable
     //! calculate the isotropic zoom and set to the viewer
     //!
 
-    QRect rr = region->region();
+//    QRect rr = region->region();
 
-    if(!rr.width() || !rr.height())
-        return;
+//    if(!rr.width() || !rr.height())
+//        return;
 
-    double zoom = static_cast<double>(size().width()) / static_cast<double>(rr.width());
+//    double zoom = static_cast<double>(size().width()) / static_cast<double>(rr.width());
 
-    setIsotropicZoom(zoom);
+//    setIsotropicZoom(zoom);
 }
 
 //!
