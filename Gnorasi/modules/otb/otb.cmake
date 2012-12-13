@@ -379,6 +379,7 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetscrollable.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetfullview.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetzoomable.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiviewerpixelinfowidget.cpp
 )
 ################################################################################
 # Qt headers
@@ -405,7 +406,7 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetscrollable.h
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetfullview.h
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaqglwidgetzoomable.h
-
+    ${MOD_DIR}/qt/viewer/widgets/itiviewerpixelinfowidget.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

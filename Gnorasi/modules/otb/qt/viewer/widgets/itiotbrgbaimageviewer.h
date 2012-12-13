@@ -44,6 +44,7 @@ class ItiOtbRgbaQGLWidgetFullView;
 class ItiOtbRgbaQGLWidgetZoomable;
 class ItiOtbRgbaFocusRegion;
 class ItiViewerObservableRegion;
+class ItiViewerPixelInfoWidget;
 
 /** \class ITIOTBImageViewer
  *   \brief This class implements a standard visualization tool to be
@@ -189,16 +190,10 @@ private:
     QLabel *m_pLabelZoomView;
 
     /*!
-     * \brief m_pLabelMetadataView
-     *  a label showing a title for the metadata view
-     */
-    QLabel *m_pLabelMetadataView;
-
-    /*!
      * \brief m_pMetadataWidget
      *  For the moment , a Container widget
      */
-    QWidget *m_pMetadataWidget;
+    ItiViewerPixelInfoWidget *m_pItiViewerPixelInfoWidget;
 
     /*!
      * \brief m_focusRegion
@@ -214,6 +209,11 @@ private:
      *  This instance is an observable item
      */
     ItiViewerObservableRegion *m_pVisibleRegion;
+
+    /*!
+     * \brief m_labelCss
+     */
+    QString m_labelCss;
     
 };
 
