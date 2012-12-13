@@ -123,7 +123,7 @@ signals:
     void visibleAreaChanged(const QRect &rect);
 
     //!
-    void resized();
+    void focusRegionTranslated(int dx, int dy);
 
     //!
     void zoomIn();
@@ -157,6 +157,11 @@ protected:
      */
     void paintEvent(QPaintEvent *event);
 
+    /*!
+     * \brief mousePressEvent
+     * \param event
+     */
+    void mousePressEvent(QMouseEvent *event);
 
 private:
     /*!

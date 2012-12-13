@@ -35,6 +35,10 @@ public:
      */
     void setText(const QString &s);
     
+public slots:
+
+    void updateText(const QString &s) { setText(s); }
+
 signals:
     /*!
      * \brief textChanged
