@@ -118,6 +118,18 @@ public:
      */
     void draw();
 
+public slots:
+
+    /*!
+     * \brief zoomIn
+     */
+    void zoomIn();
+
+    /*!
+     * \brief zoomOut
+     */
+    void zoomOut();
+
 signals:
     void visibleAreaChanged(const QRect &rect);
 

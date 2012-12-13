@@ -266,6 +266,37 @@ void ItiOtbRgbaQGLWidgetZoomable::wheelEvent(QWheelEvent *event){
 }
 
 //!
+void ItiOtbRgbaQGLWidgetZoomable::zoomIn(){
+    m_IsotropicZoom = m_IsotropicZoom + 0.125;
+
+    //!
+    setupViewport(width(),height());
+
+    //!
+    updateGL();
+
+    //! setup and send signal
+    setupAndSendSignal();
+}
+
+//!
+void ItiOtbRgbaQGLWidgetZoomable::zoomOut(){
+    if(m_IsotropicZoom< 0.2)
+        return;
+
+    m_IsotropicZoom = m_IsotropicZoom - 0.125;
+
+    //!
+    setupViewport(width(),height());
+
+    //!
+    updateGL();
+
+    //! setup and send signal
+    setupAndSendSignal();
+}
+
+//!
 ItiOtbRgbaQGLWidgetZoomable::~ItiOtbRgbaQGLWidgetZoomable(){
     ClearBuffer();
 }
