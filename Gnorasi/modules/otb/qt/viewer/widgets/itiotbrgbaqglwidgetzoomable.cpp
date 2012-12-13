@@ -296,6 +296,17 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomOut(){
     setupAndSendSignal();
 }
 
+/*!
+ * \brief ItiOtbRgbaQGLWidgetZoomable::translate
+ * \param rect
+ */
+void ItiOtbRgbaQGLWidgetZoomable::translate(int dx, int dy){
+
+    RasterSizeType size;
+//    size[0] =
+//    m_Extent.SetSize();
+}
+
 //!
 ItiOtbRgbaQGLWidgetZoomable::~ItiOtbRgbaQGLWidgetZoomable(){
     ClearBuffer();

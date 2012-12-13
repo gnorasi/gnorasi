@@ -247,6 +247,7 @@ void ItiOtbRgbaImageViewer::setupConnections(){
     connect(m_pItiOtbRgbaImageWidgetScroll, SIGNAL(visibleAreaChanged(QRect)),this,SLOT(onScrollableWidgetSizeChanged(QRect)));
     connect(m_pItiOtbRgbaImageWidgetScroll, SIGNAL(zoomIn()),m_pItiOtbRgbaImageWidgetZoomable,SLOT(zoomIn()));
     connect(m_pItiOtbRgbaImageWidgetScroll, SIGNAL(zoomOut()),m_pItiOtbRgbaImageWidgetZoomable,SLOT(zoomOut()));
+    connect(m_pItiOtbRgbaImageWidgetScroll, SIGNAL(focusRegionTranslated(int,int)),m_pItiOtbRgbaImageWidgetZoomable,SLOT(translate(int,int)));
     connect(m_pItiOtbRgbaImageWidgetZoomable, SIGNAL(visibleAreaChanged(QRect)),this,SLOT(onZoomableWidgetSizeChanged(QRect)));
 }
 
@@ -262,4 +263,42 @@ void ItiOtbRgbaImageViewer::onScrollableWidgetSizeChanged(const QRect &size){
 void ItiOtbRgbaImageViewer::onZoomableWidgetSizeChanged(const QRect &size){
     //!
     m_pFocusRegion->setRegion(size);
+}
+
+//!
+void ItiOtbRgbaImageViewer::onFocusRegionTranslated(const QRect &rect){
+    //!
+    m_pFocusRegion->setRegion(rect);
+}
+
+//!
+QString ItiOtbRgbaImageViewer::constructTextFromImageIndex(RasterIndexType index, RasterImageType* image){
+    QString text;
+
+    text  = QString::fromUtf8("Index : [%1, %2]").arg(QString::number(index[0])).arg(QString::number(index[1]));
+    text += "\n";
+    text += QString::fromUtf8("Layer : ");
+
+    //! region
+    RasterRegionType region = image->GetBufferedRegion();
+    text += QString::fromUtf8("Image size : [%1, %2]").arg(QString::number(region.GetSize()[0])).arg(QString::number(region.GetSize()[1]));
+
+    //! image related
+    text += QString::fromUtf8("Channel selection : ");
+
+    //! index related
+    text += QString::fromUtf8("Pixel value : [%1, %2, %3]");
+    text += QString::fromUtf8("Value computed : [%1, %2, %3]");
+    text += QString::fromUtf8("Value displayed : R %1, G %2, B %3, A %4");
+
+    //! region related
+    text += QString::fromUtf8("Ground spacing (in m): (%1, %2)");
+
+    //! index related
+    text += QString::fromUtf8("Lon: %1, Lat: %2");
+    text += "\n";
+    text += QLatin1String("(precise location)");
+
+    return text;
+
 }

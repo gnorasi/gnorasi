@@ -36,6 +36,8 @@
 
 #include "itiotbimageviewer.h"
 
+#include "../rgba_globaldefs.h"
+
 
 namespace itiviewer{
 
@@ -99,6 +101,14 @@ public:
      */
     void applyContrastEnhancementMethod(CC ce, double aval, double bval);
 
+    /*!
+     * \brief costructTextFromImageIndex
+     * \param index , the index of the image
+     * \return
+     */
+    static QString constructTextFromImageIndex(RasterIndexType index, RasterImageType* image);
+
+
 private slots:
     /*!
      * \brief onScrollableWidgetSizeChanged
@@ -111,6 +121,12 @@ private slots:
      * \param size
      */
     void onZoomableWidgetSizeChanged(const QRect &size);
+
+    /*!
+     * \brief onFocusRegionTranslated
+     * \param rect
+     */
+    void onFocusRegionTranslated(const QRect &rect);
 
 
 private:

@@ -106,9 +106,6 @@ void ItiOtbRgbaQGLWidgetScrollable::resizeGL(int w, int h)
 
 
     emit visibleAreaChanged(rect);
-
-    emit resized();
-
 }
 
 void ItiOtbRgbaQGLWidgetScrollable::setupViewport(int w, int h){
@@ -268,6 +265,39 @@ void ItiOtbRgbaQGLWidgetScrollable::wheelEvent(QWheelEvent *event){
         emit zoomOut();
 
     event->accept();
+}
+
+//!
+void ItiOtbRgbaQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
+
+    if(event->button() == Qt::LeftButton){
+        QPoint previousCenter = m_focusRegion.center();
+        QPoint point = event->pos();
+        QLine line(previousCenter,point);
+        int dx = 0, dy = 0;
+
+        if(point.x()+ m_focusRegion.width()/2 > m_Extent.GetSize()[0] + m_Extent.GetIndex()[0]){
+            dx = m_Extent.GetSize()[0] + m_Extent.GetIndex()[0] - m_focusRegion.width()/2 - previousCenter.x();
+        }else if(point.x()-m_focusRegion.width()/2 < m_Extent.GetIndex()[0]){
+            dx = m_Extent.GetIndex()[0] + m_focusRegion.width()/2 - previousCenter.x();
+        }else
+            dx = line.dx();
+
+        if(point.y()+ m_focusRegion.height()/2 > m_Extent.GetSize()[1] + m_Extent.GetIndex()[1]){
+            dy = m_Extent.GetSize()[1] + m_Extent.GetIndex()[1] - m_focusRegion.height()/2 - previousCenter.y();
+        }else if(point.y()-m_focusRegion.height()/2 < m_Extent.GetIndex()[1]){
+            dy = m_Extent.GetIndex()[1] + m_focusRegion.height()/2 - previousCenter.y();
+        }else
+            dy = line.dy();
+
+        m_focusRegion.translate(dx,dy);
+
+        emit focusRegionTranslated(dx,dy);
+
+        update();
+    }
+
+    QGLWidget::mousePressEvent(event);
 }
 
 //!

@@ -130,6 +130,13 @@ public slots:
      */
     void zoomOut();
 
+    /*!
+     * \brief translate
+     * \param dx
+     * \param dy
+     */
+    void translate(int dx, int dy);
+
 signals:
     void visibleAreaChanged(const QRect &rect);
 
