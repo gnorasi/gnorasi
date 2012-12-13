@@ -8,7 +8,7 @@
 #include "itiotbrgbaqglwidgetzoomable.h"
 #include "itiotbrgbaqglwidgetfullview.h"
 #include "../observables/itiviewerobservableregion.h"
-
+#include "itiviewerpixelinfowidget.h"
 #include "../../../ports/otbimageport.h"
 
 #include "otbImage.h"
@@ -42,11 +42,22 @@ ItiOtbRgbaImageViewer::ItiOtbRgbaImageViewer(QWidget *parent) :
  * \brief ItiOtbRgbaImageViewer::setupLayout
  */
 void ItiOtbRgbaImageViewer::setupLayout(){
+
+    //!
+    m_labelCss = QString("QLabel { color: blue; font: bold 13px; } ");
+
     // initialize instances
     m_pLabelScrollableResolution        = new QLabel(tr("Scrollable View"),this);
     m_pLabelFullView                    = new QLabel(tr("Full View"),this);
     m_pLabelZoomView                    = new QLabel(tr("Zoomable View"),this);
-    m_pLabelMetadataView                = new QLabel(tr("Metadata View"),this);
+
+    //!
+    m_pLabelFullView->setStyleSheet(m_labelCss);
+    m_pLabelScrollableResolution->setStyleSheet(m_labelCss);
+    m_pLabelZoomView->setStyleSheet(m_labelCss);
+    m_pLabelFullView->setAlignment(Qt::AlignHCenter);
+    m_pLabelScrollableResolution->setAlignment(Qt::AlignHCenter);
+    m_pLabelZoomView->setAlignment(Qt::AlignHCenter);
 
     //! setup the resize policy
     m_pLabelScrollableResolution->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
@@ -68,9 +79,9 @@ void ItiOtbRgbaImageViewer::setupLayout(){
     //!
     //! create the metadata widget, also a widget for showing pixel info metadata
     //!
-    m_pMetadataWidget                   = new QWidget(this);
-    m_pMetadataWidget->setGeometry(0,0,160,160);
-    m_pMetadataWidget->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+    m_pItiViewerPixelInfoWidget         = new ItiViewerPixelInfoWidget(this);
+    m_pItiViewerPixelInfoWidget->setGeometry(0,0,160,160);
+    m_pItiViewerPixelInfoWidget->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
 
     //! setup the left layout
     m_pvBoxLayoutLeft                   = new QVBoxLayout();
@@ -78,8 +89,7 @@ void ItiOtbRgbaImageViewer::setupLayout(){
     m_pvBoxLayoutLeft->addWidget(m_pItiOtbRgbaImageWidgetFullView);
     m_pvBoxLayoutLeft->addWidget(m_pLabelZoomView);
     m_pvBoxLayoutLeft->addWidget(m_pItiOtbRgbaImageWidgetZoomable);
-    m_pvBoxLayoutLeft->addWidget(m_pLabelMetadataView);
-    m_pvBoxLayoutLeft->addWidget(m_pMetadataWidget);
+    m_pvBoxLayoutLeft->addWidget(m_pItiViewerPixelInfoWidget);
     QWidget *pWidgetLeft                = new QWidget(this);
     pWidgetLeft->setLayout(m_pvBoxLayoutLeft);
 
@@ -148,15 +158,14 @@ void ItiOtbRgbaImageViewer::disassembleWidgets(){
     m_pItiOtbRgbaImageWidgetFullView->setWindowTitle(m_pLabelFullView->text());
     m_pItiOtbRgbaImageWidgetFullView->setGeometry(QApplication::desktop()->width()/2 - 160,QApplication::desktop()->height()/2 - 160,200,200);
     m_pItiOtbRgbaImageWidgetFullView->show();
-    m_pItiOtbRgbaImageWidgetZoomable        = new ItiOtbRgbaQGLWidgetZoomable(this);
+    m_pItiOtbRgbaImageWidgetZoomable    = new ItiOtbRgbaQGLWidgetZoomable(this);
     m_pItiOtbRgbaImageWidgetZoomable->setWindowFlags(Qt::Window);
     m_pItiOtbRgbaImageWidgetZoomable->setWindowTitle(m_pLabelZoomView->text());
     m_pItiOtbRgbaImageWidgetZoomable->show();
     m_pItiOtbRgbaImageWidgetZoomable->setGeometry(QApplication::desktop()->width()/2 - 120,QApplication::desktop()->height()/2 - 120,200,200);
-    m_pMetadataWidget                   = new QWidget(this);
-    m_pMetadataWidget->setWindowFlags(Qt::Window);
-    m_pMetadataWidget->setWindowTitle(m_pLabelMetadataView->text());
-    m_pMetadataWidget->setGeometry(QApplication::desktop()->width()/2 - 80,QApplication::desktop()->height()/2 - 80,200,200);
+    m_pItiViewerPixelInfoWidget         = new ItiViewerPixelInfoWidget(this);
+    m_pItiViewerPixelInfoWidget->setWindowFlags(Qt::Window);
+    m_pItiViewerPixelInfoWidget->setGeometry(QApplication::desktop()->width()/2 - 80,QApplication::desktop()->height()/2 - 80,200,200);
 
     //!
     setupObserverMechanism();
@@ -168,7 +177,7 @@ void ItiOtbRgbaImageViewer::disassembleWidgets(){
     m_vmode                             = VMODE_SPLITTED;
 
     //!
-    m_pMetadataWidget->show();
+    m_pItiViewerPixelInfoWidget->show();
 }
 
 /*!
@@ -236,8 +245,8 @@ void ItiOtbRgbaImageViewer::applyContrastEnhancementMethod(CC ce, double aval, d
 void ItiOtbRgbaImageViewer::setupConnections(){
     //!
     connect(m_pItiOtbRgbaImageWidgetScroll, SIGNAL(visibleAreaChanged(QRect)),this,SLOT(onScrollableWidgetSizeChanged(QRect)));
-    connect(m_pItiOtbRgbaImageWidgetScroll,SIGNAL(zoomIn()),m_pItiOtbRgbaImageWidgetZoomable,SLOT(zoomIn()));
-    connect(m_pItiOtbRgbaImageWidgetScroll,SIGNAL(zoomOut()),m_pItiOtbRgbaImageWidgetZoomable,SLOT(zoomOut()));
+    connect(m_pItiOtbRgbaImageWidgetScroll, SIGNAL(zoomIn()),m_pItiOtbRgbaImageWidgetZoomable,SLOT(zoomIn()));
+    connect(m_pItiOtbRgbaImageWidgetScroll, SIGNAL(zoomOut()),m_pItiOtbRgbaImageWidgetZoomable,SLOT(zoomOut()));
     connect(m_pItiOtbRgbaImageWidgetZoomable, SIGNAL(visibleAreaChanged(QRect)),this,SLOT(onZoomableWidgetSizeChanged(QRect)));
 }
 
