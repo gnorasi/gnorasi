@@ -119,7 +119,17 @@ public:
     void draw();
 
 signals:
+    //!
     void visibleAreaChanged(const QRect &rect);
+
+    //!
+    void resized();
+
+    //!
+    void zoomIn();
+
+    //!
+    void zoomOut();
 
 protected:
 

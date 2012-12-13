@@ -107,6 +107,8 @@ void ItiOtbRgbaQGLWidgetScrollable::resizeGL(int w, int h)
 
     emit visibleAreaChanged(rect);
 
+    emit resized();
+
 }
 
 void ItiOtbRgbaQGLWidgetScrollable::setupViewport(int w, int h){
@@ -258,18 +260,12 @@ void ItiOtbRgbaQGLWidgetScrollable::updateObserver(ItiViewerObservable *observab
 
 //!
 void ItiOtbRgbaQGLWidgetScrollable::wheelEvent(QWheelEvent *event){
-//    float scale = (float)event->delta() / 960.0;
+    double deltaval = (double)event->delta();
 
-//    double newSc = m_IsotropicZoom + scale;
-
-//    if(newSc <= 1.0 || newSc >= 50.0){
-//        event->ignore();
-//        return;
-//    }
-
-//    setIsotropicZoom(newSc);
-
-//    updateGL();
+    if(deltaval>0)
+        emit zoomIn();
+    else
+        emit zoomOut();
 
     event->accept();
 }
