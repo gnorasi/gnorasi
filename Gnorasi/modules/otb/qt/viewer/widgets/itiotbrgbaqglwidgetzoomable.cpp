@@ -9,7 +9,7 @@ using namespace otb;
 using namespace itiviewer;
 
 ItiOtbRgbaQGLWidgetZoomable::ItiOtbRgbaQGLWidgetZoomable(QWidget *parent) :
-    m_IsotropicZoom(1.0), m_OpenGlBuffer(NULL), m_OpenGlBufferedRegion(), m_Extent(), m_SubsamplingRate(1), QGLWidget(parent)
+    m_IsotropicZoom(1.0), m_OpenGlBuffer(NULL), m_OpenGlBufferedRegion(), m_Extent(), m_SubsamplingRate(1), m_first_displayed_col(0), m_first_displayed_row(0), m_nb_displayed_cols(0), m_nb_displayed_rows(0), QGLWidget(parent)
 {
 
 }
@@ -87,13 +87,17 @@ void ItiOtbRgbaQGLWidgetZoomable::initializeGL()
     glShadeModel(GL_FLAT);
 }
 
-
+//!
 void ItiOtbRgbaQGLWidgetZoomable::resizeGL(int w, int h)
 {
     setupViewport(w,h);
 
+    setupAndSendSignal();
+
+    setupColumnRowParameters();
 }
 
+///!
 void ItiOtbRgbaQGLWidgetZoomable::setupViewport(int w, int h){
     RasterSizeType size;
     size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[0]));
@@ -109,8 +113,6 @@ void ItiOtbRgbaQGLWidgetZoomable::setupViewport(int w, int h){
     m_W = (GLint)w;
     m_H = (GLint)h;
 
-    setupAndSendSignal();
-
     glViewport(0, 0, m_W, m_H);
 
     glMatrixMode(GL_MODELVIEW);
@@ -121,34 +123,62 @@ void ItiOtbRgbaQGLWidgetZoomable::setupViewport(int w, int h){
     glOrtho(0, m_W, 0, m_H, -1, 1);
 }
 
-void ItiOtbRgbaQGLWidgetZoomable::paintGL()
-{
-    unsigned int nb_displayed_rows;
-    unsigned int nb_displayed_cols;
-    unsigned int first_displayed_row;
-    unsigned int first_displayed_col;
-
+//!
+void ItiOtbRgbaQGLWidgetZoomable::setupColumnRowParameters(){
     if( m_Extent.GetIndex()[0] >= 0 )
     {
-        nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
-        first_displayed_col = 0;
+        m_nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
+        m_first_displayed_col = 0;
     }
     else
     {
-        nb_displayed_cols = m_W / m_IsotropicZoom;
-        first_displayed_col = (m_OpenGlBufferedRegion.GetSize()[0] - nb_displayed_cols) / 2;
+        m_nb_displayed_cols = m_W / m_IsotropicZoom;
+        if(m_first_displayed_col == 0)
+            m_first_displayed_col = (m_OpenGlBufferedRegion.GetSize()[0] - m_nb_displayed_cols) / 2;
     }
 
     if( m_Extent.GetIndex()[1] >= 0 )
     {
-        nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
-        first_displayed_row = 0;
+        m_nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
+        m_first_displayed_row = 0;
     }
     else
     {
-        nb_displayed_rows = m_H / m_IsotropicZoom;
-        first_displayed_row = (m_OpenGlBufferedRegion.GetSize()[1] - nb_displayed_rows) / 2;
+        m_nb_displayed_rows = m_H / m_IsotropicZoom;
+        if(m_first_displayed_row == 0)
+            m_first_displayed_row = (m_OpenGlBufferedRegion.GetSize()[1] - m_nb_displayed_rows) / 2;
     }
+}
+
+//!
+void ItiOtbRgbaQGLWidgetZoomable::paintGL()
+{
+//    unsigned int nb_displayed_rows;
+//    unsigned int nb_displayed_cols;
+//    unsigned int first_displayed_row;
+//    unsigned int first_displayed_col;
+
+//    if( m_Extent.GetIndex()[0] >= 0 )
+//    {
+//        nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
+//        first_displayed_col = 0;
+//    }
+//    else
+//    {
+//        nb_displayed_cols = m_W / m_IsotropicZoom;
+//        first_displayed_col = (m_OpenGlBufferedRegion.GetSize()[0] - nb_displayed_cols) / 2;
+//    }
+
+//    if( m_Extent.GetIndex()[1] >= 0 )
+//    {
+//        nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
+//        first_displayed_row = 0;
+//    }
+//    else
+//    {
+//        nb_displayed_rows = m_H / m_IsotropicZoom;
+//        first_displayed_row = (m_OpenGlBufferedRegion.GetSize()[1] - nb_displayed_rows) / 2;
+//    }
 
 
     RasterIndexType startPosition = m_Extent.GetIndex();
@@ -157,15 +187,15 @@ void ItiOtbRgbaQGLWidgetZoomable::paintGL()
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glPixelStorei(GL_UNPACK_ROW_LENGTH, m_OpenGlBufferedRegion.GetSize()[0]);
-    glPixelStorei(GL_UNPACK_SKIP_PIXELS, first_displayed_col);
-    glPixelStorei(GL_UNPACK_SKIP_ROWS,first_displayed_row);
+    glPixelStorei(GL_UNPACK_SKIP_PIXELS, m_first_displayed_col);
+    glPixelStorei(GL_UNPACK_SKIP_ROWS,m_first_displayed_row);
 
     glClear(GL_COLOR_BUFFER_BIT);
     glPixelZoom(m_IsotropicZoom,m_IsotropicZoom);
 
     glRasterPos2f(startPosition[0], startPosition[1]);
-    glDrawPixels(nb_displayed_cols,
-                nb_displayed_rows,
+    glDrawPixels(m_nb_displayed_cols,
+                m_nb_displayed_rows,
                 GL_RGB,
                 GL_UNSIGNED_BYTE,
                 m_OpenGlBuffer);
@@ -186,6 +216,7 @@ void ItiOtbRgbaQGLWidgetZoomable::draw(){
     if(!imgType)
         return;
 
+    //!
     RasterRegionType region = imgType->GetLargestPossibleRegion();
 
     //!
@@ -199,21 +230,9 @@ void ItiOtbRgbaQGLWidgetZoomable::updateObserver(ItiViewerObservable *observable
     if(!region)
         return;
 
-    //! TODO
-    //! add the functionality here
-    //! calculate the isotropic zoom and set to the viewer
-    //!
-
-//    QRect rr = region->region();
-
-//    if(!rr.width() || !rr.height())
-//        return;
-
-//    double zoom = static_cast<double>(size().width()) / static_cast<double>(rr.width());
-
-//    setIsotropicZoom(zoom);
 }
 
+//!
 void ItiOtbRgbaQGLWidgetZoomable::setupAndSendSignal(){
 
     QRect rect;
@@ -254,6 +273,9 @@ void ItiOtbRgbaQGLWidgetZoomable::wheelEvent(QWheelEvent *event){
     setupViewport(width(),height());
 
     //!
+    setupAndSendSignal();
+
+    //!
     updateGL();
 
     //! setup and send signal
@@ -269,6 +291,27 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomIn(){
 
     //!
     setupViewport(width(),height());
+
+    //!
+    setupAndSendSignal();
+
+    if( m_Extent.GetIndex()[0] >= 0 )
+    {
+        m_nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
+    }
+    else
+    {
+        m_nb_displayed_cols = m_W / m_IsotropicZoom;
+    }
+
+    if( m_Extent.GetIndex()[1] >= 0 )
+    {
+        m_nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
+    }
+    else
+    {
+        m_nb_displayed_rows = m_H / m_IsotropicZoom;
+    }
 
     //!
     updateGL();
@@ -288,6 +331,27 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomOut(){
     setupViewport(width(),height());
 
     //!
+    setupAndSendSignal();
+
+    if( m_Extent.GetIndex()[0] >= 0 )
+    {
+        m_nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
+    }
+    else
+    {
+        m_nb_displayed_cols = m_W / m_IsotropicZoom;
+    }
+
+    if( m_Extent.GetIndex()[1] >= 0 )
+    {
+        m_nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
+    }
+    else
+    {
+        m_nb_displayed_rows = m_H / m_IsotropicZoom;
+    }
+
+    //!
     updateGL();
 
     //! setup and send signal
@@ -300,13 +364,19 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomOut(){
  */
 void ItiOtbRgbaQGLWidgetZoomable::translate(int dx, int dy){
 
-    RasterIndexType index;
-    index[0] = m_Extent.GetIndex()[0] + (dx*m_IsotropicZoom);
-    index[1] = m_Extent.GetIndex()[1] + (dy*m_IsotropicZoom);
+//    RasterIndexType index;
+    if(dx<0)
+        m_first_displayed_col += (unsigned int)qAbs(dx)*(unsigned int)m_IsotropicZoom;
+    else
+        m_first_displayed_col += (unsigned int)qAbs(dx)*(unsigned int)m_IsotropicZoom;
+    if(dy < 0)
+        m_first_displayed_row -= (unsigned int)qAbs(dy)*(unsigned int)m_IsotropicZoom;
+    else
+        m_first_displayed_row += (unsigned int)dy*(unsigned int)m_IsotropicZoom;
 
-    m_Extent.SetIndex(index);
+//    m_Extent.SetIndex(index);
 
-    qDebug() << " dx : " << dx << ", dy : " << dy;
+    qDebug() << " m_first_displayed_col : " << m_first_displayed_col << ", m_first_displayed_row : " << m_first_displayed_row;
 
     updateGL();
 }
