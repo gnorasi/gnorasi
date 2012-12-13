@@ -179,6 +179,17 @@ protected:
 
 
 private:
+
+    /*!
+     * \brief setupExtent
+     */
+    void setupExtentSize();
+
+    /*!
+     * \brief initializeViewport
+     */
+    void initializeViewport();
+
     /*!
      * \brief setupViewport
      * \param width

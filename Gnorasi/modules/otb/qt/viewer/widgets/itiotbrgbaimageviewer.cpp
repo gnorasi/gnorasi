@@ -115,23 +115,6 @@ void ItiOtbRgbaImageViewer::setupLayout(){
     setLayout(m_pMainLayout);
 }
 
-//!
-void ItiOtbRgbaImageViewer::setupObserverMechanism(){
-    //! setup observer mechanism
-    m_pFocusRegion                      = new ItiViewerObservableRegion(this);
-    m_pFocusRegion->registerObserver(m_pItiOtbRgbaImageWidgetScroll);
-    m_pFocusRegion->registerObserver(m_pItiOtbRgbaImageWidgetZoomable);
-    m_pVisibleRegion                    = new ItiViewerObservableRegion(this);
-//    m_pVisibleRegion->registerObserver(m_pItiOtbRgbaImageWidgetScroll);
-    m_pVisibleRegion->registerObserver(m_pItiOtbRgbaImageWidgetFullView);
-
-    //! initial setup
-    QRect rect;
-    rect.setWidth(m_pItiOtbRgbaImageWidgetZoomable->width());
-    rect.setHeight(m_pItiOtbRgbaImageWidgetZoomable->height());
-     m_pFocusRegion->setRegion(rect);
-}
-
 /*!
  * \brief ItiOtbRgbaImageViewer::disassembleWidgets
  */
@@ -239,6 +222,23 @@ void ItiOtbRgbaImageViewer::applyContrastEnhancementMethod(CC ce, double aval, d
 
     Q_UNUSED(aval)
     Q_UNUSED(bval)
+}
+
+//!
+void ItiOtbRgbaImageViewer::setupObserverMechanism(){
+    //! setup observer mechanism
+    m_pFocusRegion                      = new ItiViewerObservableRegion(this);
+    m_pFocusRegion->registerObserver(m_pItiOtbRgbaImageWidgetScroll);
+    m_pFocusRegion->registerObserver(m_pItiOtbRgbaImageWidgetZoomable);
+    m_pVisibleRegion                    = new ItiViewerObservableRegion(this);
+//    m_pVisibleRegion->registerObserver(m_pItiOtbRgbaImageWidgetScroll);
+    m_pVisibleRegion->registerObserver(m_pItiOtbRgbaImageWidgetFullView);
+
+    //! initial setup
+    QRect rect;
+    rect.setWidth(m_pItiOtbRgbaImageWidgetZoomable->width());
+    rect.setHeight(m_pItiOtbRgbaImageWidgetZoomable->height());
+     m_pFocusRegion->setRegion(rect);
 }
 
 //!

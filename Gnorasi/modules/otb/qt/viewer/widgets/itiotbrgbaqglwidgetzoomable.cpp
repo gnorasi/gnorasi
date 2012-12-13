@@ -233,8 +233,6 @@ void ItiOtbRgbaQGLWidgetZoomable::setupAndSendSignal(){
     rect.setWidth(wt);
     rect.setHeight(ht);
 
-    qDebug() << "rect : " << rect << " isotropic zoom : " << m_IsotropicZoom;
-
     emit visibleAreaChanged(rect);
 }
 
@@ -302,9 +300,15 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomOut(){
  */
 void ItiOtbRgbaQGLWidgetZoomable::translate(int dx, int dy){
 
-    RasterSizeType size;
-//    size[0] =
-//    m_Extent.SetSize();
+    RasterIndexType index;
+    index[0] = m_Extent.GetIndex()[0] + (dx*m_IsotropicZoom);
+    index[1] = m_Extent.GetIndex()[1] + (dy*m_IsotropicZoom);
+
+    m_Extent.SetIndex(index);
+
+    qDebug() << " dx : " << dx << ", dy : " << dy;
+
+    updateGL();
 }
 
 //!
