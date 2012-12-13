@@ -171,6 +171,7 @@ protected:
      */
     void paintGL();
 
+
     /*!
      * \brief paintEvent
      * \param event
@@ -179,11 +180,15 @@ protected:
 
 
 private:
+    /*!
+     * \brief setupcolumnRowParameters
+     */
+    void setupColumnRowParameters();
 
     /*!
      * \brief setupExtent
      */
-    void setupExtentSize();
+    void setupExtent();
 
     /*!
      * \brief initializeViewport
@@ -218,6 +223,11 @@ private:
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */
     unsigned int m_SubsamplingRate;
+
+    unsigned int m_nb_displayed_rows;
+    unsigned int m_nb_displayed_cols;
+    unsigned int m_first_displayed_row;
+    unsigned int m_first_displayed_col;
 
 };
 
