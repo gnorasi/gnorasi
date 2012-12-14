@@ -163,6 +163,12 @@ protected:
      */
     void mousePressEvent(QMouseEvent *event);
 
+    /*!
+     * \brief mouseMoveEvent
+     * \param event
+     */
+    void mouseMoveEvent(QMouseEvent *event);
+
 private:
     /*!
      * \brief setupViewport

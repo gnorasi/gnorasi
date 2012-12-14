@@ -152,6 +152,12 @@ protected:
      */
     void resizeGL(int w, int h);
 
+    /*!
+     * \brief mouseMoveEvent
+     * \param event
+     */
+    void mouseMoveEvent(QMouseEvent *event);
+
 
 private:
     /*!
