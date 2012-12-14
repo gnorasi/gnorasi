@@ -22,6 +22,9 @@ void ItiViewerPixelInfoWidget::setupLayout(){
     pLabel->setAlignment(Qt::AlignHCenter);
     pLabel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
     m_pTextEdit = new QTextEdit(this);
+    QFont font;
+    font.setPointSize(8);
+    m_pTextEdit->setFont(font);
     m_pTextEdit->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
