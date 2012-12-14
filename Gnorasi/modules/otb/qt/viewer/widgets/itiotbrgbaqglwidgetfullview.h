@@ -131,6 +131,12 @@ signals:
      */
     void sizeChanged(const QSize &);
 
+    /*!
+     * \brief currentIndexChanged
+     * \param text
+     */
+    void currentIndexChanged(const QString &text);
+
 protected:
 
     /*!

@@ -140,6 +140,12 @@ public slots:
 signals:
     void visibleAreaChanged(const QRect &rect);
 
+    /*!
+     * \brief currentIndexChanged
+     * \param text
+     */
+    void currentIndexChanged(const QString &text);
+
 protected:
 
     /*!

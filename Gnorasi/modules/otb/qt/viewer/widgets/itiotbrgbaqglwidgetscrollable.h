@@ -131,6 +131,12 @@ signals:
     //!
     void zoomOut();
 
+    /*!
+     * \brief currentIndexChanged
+     * \param text
+     */
+    void currentIndexChanged(const QString &text);
+
 protected:
 
     /*!
