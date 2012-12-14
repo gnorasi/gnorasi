@@ -2,6 +2,7 @@
 #include "itkImageRegionConstIteratorWithIndex.h"
 #include "../utils/itiotbimagemanager.h"
 #include "../observables/itiviewerobservableregion.h"
+#include "itiotbrgbaimageviewer.h"
 
 #include <QDebug>
 
@@ -11,7 +12,7 @@ using namespace itiviewer;
 ItiOtbRgbaQGLWidgetZoomable::ItiOtbRgbaQGLWidgetZoomable(QWidget *parent) :
     m_IsotropicZoom(1.0), m_OpenGlBuffer(NULL), m_OpenGlBufferedRegion(), m_Extent(), m_SubsamplingRate(1), m_first_displayed_col(0), m_first_displayed_row(0), m_nb_displayed_cols(0), m_nb_displayed_rows(0), QGLWidget(parent)
 {
-
+    setMouseTracking(true);
 }
 
 //!
@@ -202,6 +203,14 @@ void ItiOtbRgbaQGLWidgetZoomable::paintGL()
 
 
     glFlush();
+}
+
+//!
+void ItiOtbRgbaQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
+
+//    QString text = ItiOtbRgbaImageViewer::constructTextFromImageIndex(m_)
+
+    QGLWidget::mouseMoveEvent(event);
 }
 
 //!

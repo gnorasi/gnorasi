@@ -13,6 +13,7 @@ ItiOtbRgbaQGLWidgetScrollable::ItiOtbRgbaQGLWidgetScrollable(QWidget *parent) :
     m_IsotropicZoom(1.0), m_OpenGlBuffer(NULL), m_OpenGlBufferedRegion(), m_Extent(), m_SubsamplingRate(1), QGLWidget(parent)
 {
     setAutoFillBackground(false);
+    setMouseTracking(true);
 
     m_pen = QPen(QBrush(Qt::red),2.0);
 }
@@ -298,6 +299,13 @@ void ItiOtbRgbaQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
     }
 
     QGLWidget::mousePressEvent(event);
+}
+
+//!
+void ItiOtbRgbaQGLWidgetScrollable::mouseMoveEvent(QMouseEvent *event){
+
+
+    QGLWidget::mouseMoveEvent(event);
 }
 
 //!

@@ -171,12 +171,11 @@ protected:
      */
     void paintGL();
 
-
     /*!
-     * \brief paintEvent
+     * \brief mouseMoveEvent
      * \param event
      */
-//    void paintEvent(QPaintEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
 
 
 private:
