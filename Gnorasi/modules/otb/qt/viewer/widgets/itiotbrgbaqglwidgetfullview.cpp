@@ -1,9 +1,7 @@
-#include "itiotbrgbaqglwidgetfullview.h"
-
 #include <QDebug>
 #include <QtGui/QApplication>
 
-
+#include "itiotbrgbaqglwidgetfullview.h"
 #include "../observables/itiviewerobservableregion.h"
 
 #include "../utils/itiotbimagemanager.h"

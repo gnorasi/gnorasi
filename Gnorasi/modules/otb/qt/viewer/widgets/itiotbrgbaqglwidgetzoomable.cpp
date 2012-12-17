@@ -1,9 +1,9 @@
+#include <QDebug>
+
 #include "itiotbrgbaqglwidgetzoomable.h"
 #include "itkImageRegionConstIteratorWithIndex.h"
 #include "../utils/itiotbimagemanager.h"
 #include "../observables/itiviewerobservableregion.h"
-
-#include <QDebug>
 
 using namespace otb;
 using namespace itiviewer;
