@@ -1,15 +1,18 @@
 #include <QDebug>
 #include <QtGui/QApplication>
-
+#include <QMouseEvent>
 #include "itiotbrgbaqglwidgetfullview.h"
 #include "../observables/itiviewerobservableregion.h"
-
+#include "itiotbrgbaimageviewer.h"
 #include "../utils/itiotbimagemanager.h"
+#include "../../../ports/otbimageport.h"
+#include "itiotbrgbaimageviewer.h"
 
 #include "itkImageRegionConstIteratorWithIndex.h"
 
 using namespace otb;
 using namespace itiviewer;
+using namespace voreen;
 
 ItiOtbRgbaQGLWidgetFullView::ItiOtbRgbaQGLWidgetFullView(QWidget *parent) :
     m_IsotropicZoom(1.0), m_OpenGlBuffer(NULL), m_OpenGlBufferedRegion(), m_Extent(), m_SubsamplingRate(1), QGLWidget(parent)
@@ -224,6 +227,9 @@ void ItiOtbRgbaQGLWidgetFullView::draw(){
 
     //!
     ReadBuffer(imgType,region);
+
+    //!
+    setMouseTracking(true);
 }
 
 //!
@@ -263,8 +269,34 @@ void ItiOtbRgbaQGLWidgetFullView::updateObserver(ItiViewerObservable *observable
     //!
     hide();
     show();
-
 }
+
+//!
+void ItiOtbRgbaQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
+
+    OTBImagePort *imgPort = (OTBImagePort*)ITIOTBIMAGEMANAGER->port();
+    if(imgPort && imgPort->isConnected()){
+        RasterImageType* imgType =  (RasterImageType*)imgPort->getData();
+        if(!imgType){
+            QGLWidget::mouseMoveEvent(event);
+            return;
+        }
+
+        //! get the position
+        QPoint point = event->pos();
+
+        RasterIndexType index;
+        index[0] = (point.x() - m_Extent.GetIndex()[0])/m_IsotropicZoom;
+        index[1] = (point.y() - m_Extent.GetIndex()[1])/m_IsotropicZoom;
+
+        QString text = ItiOtbRgbaImageViewer::constructTextFromImageIndex(index,imgType);
+
+        emit currentIndexChanged(text);
+    }
+
+    QGLWidget::mouseMoveEvent(event);
+}
+
 
 //!
 ItiOtbRgbaQGLWidgetFullView::~ItiOtbRgbaQGLWidgetFullView(){

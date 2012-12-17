@@ -249,6 +249,9 @@ void ItiOtbRgbaImageViewer::setupConnections(){
     connect(m_pItiOtbRgbaImageWidgetScroll, SIGNAL(zoomOut()),m_pItiOtbRgbaImageWidgetZoomable,SLOT(zoomOut()));
     connect(m_pItiOtbRgbaImageWidgetScroll, SIGNAL(focusRegionTranslated(int,int)),m_pItiOtbRgbaImageWidgetZoomable,SLOT(translate(int,int)));
     connect(m_pItiOtbRgbaImageWidgetZoomable, SIGNAL(visibleAreaChanged(QRect)),this,SLOT(onZoomableWidgetSizeChanged(QRect)));
+    connect(m_pItiOtbRgbaImageWidgetFullView,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
+    connect(m_pItiOtbRgbaImageWidgetZoomable,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
+    connect(m_pItiOtbRgbaImageWidgetScroll,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
 }
 
 //!
@@ -278,21 +281,28 @@ QString ItiOtbRgbaImageViewer::constructTextFromImageIndex(RasterIndexType index
     text  = QString::fromUtf8("Index : [%1, %2]").arg(QString::number(index[0])).arg(QString::number(index[1]));
     text += "\n";
     text += QString::fromUtf8("Layer : ");
+    text += "\n";
 
     //! region
     RasterRegionType region = image->GetBufferedRegion();
     text += QString::fromUtf8("Image size : [%1, %2]").arg(QString::number(region.GetSize()[0])).arg(QString::number(region.GetSize()[1]));
+    text += "\n";
 
     //! image related
     text += QString::fromUtf8("Channel selection : ");
+    text += "\n";
 
     //! index related
     text += QString::fromUtf8("Pixel value : [%1, %2, %3]");
+    text += "\n";
     text += QString::fromUtf8("Value computed : [%1, %2, %3]");
+    text += "\n";
     text += QString::fromUtf8("Value displayed : R %1, G %2, B %3, A %4");
+    text += "\n";
 
     //! region related
     text += QString::fromUtf8("Ground spacing (in m): (%1, %2)");
+    text += "\n";
 
     //! index related
     text += QString::fromUtf8("Lon: %1, Lat: %2");
