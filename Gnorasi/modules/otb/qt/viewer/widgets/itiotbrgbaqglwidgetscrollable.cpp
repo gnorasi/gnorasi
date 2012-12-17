@@ -218,8 +218,6 @@ void ItiOtbRgbaQGLWidgetScrollable::paintEvent(QPaintEvent *event){
     painter.drawRect(m_focusRegion);
 
     painter.end();
-
-    QGLWidget::paintEvent(event);
 }
 
 //!
