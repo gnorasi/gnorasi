@@ -5,7 +5,7 @@
 #include "itkFixedArray.h"
 #include "otbObjectList.h"
 
-#include "../../../ports/otbimageport.h"
+#include "../../ports/otbimageport.h"
 
 using namespace otb;
 
