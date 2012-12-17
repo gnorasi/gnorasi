@@ -219,6 +219,7 @@ void ItiOtbRgbaQGLWidgetScrollable::paintEvent(QPaintEvent *event){
 
     painter.end();
 
+    QGLWidget::paintEvent(event);
 }
 
 //!
