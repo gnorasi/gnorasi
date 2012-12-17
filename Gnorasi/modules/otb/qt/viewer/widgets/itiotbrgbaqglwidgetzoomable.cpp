@@ -156,32 +156,32 @@ void ItiOtbRgbaQGLWidgetZoomable::setupColumnRowParameters(){
 //!
 void ItiOtbRgbaQGLWidgetZoomable::paintGL()
 {
-//    unsigned int nb_displayed_rows;
-//    unsigned int nb_displayed_cols;
-//    unsigned int first_displayed_row;
-//    unsigned int first_displayed_col;
+    unsigned int nb_displayed_rows;
+    unsigned int nb_displayed_cols;
+    unsigned int first_displayed_row;
+    unsigned int first_displayed_col;
 
-//    if( m_Extent.GetIndex()[0] >= 0 )
-//    {
-//        nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
-//        first_displayed_col = 0;
-//    }
-//    else
-//    {
-//        nb_displayed_cols = m_W / m_IsotropicZoom;
-//        first_displayed_col = (m_OpenGlBufferedRegion.GetSize()[0] - nb_displayed_cols) / 2;
-//    }
+    if( m_Extent.GetIndex()[0] >= 0 )
+    {
+        nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
+        first_displayed_col = 0;
+    }
+    else
+    {
+        nb_displayed_cols = m_W / m_IsotropicZoom;
+        first_displayed_col = (m_OpenGlBufferedRegion.GetSize()[0] - nb_displayed_cols) / 2;
+    }
 
-//    if( m_Extent.GetIndex()[1] >= 0 )
-//    {
-//        nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
-//        first_displayed_row = 0;
-//    }
-//    else
-//    {
-//        nb_displayed_rows = m_H / m_IsotropicZoom;
-//        first_displayed_row = (m_OpenGlBufferedRegion.GetSize()[1] - nb_displayed_rows) / 2;
-//    }
+    if( m_Extent.GetIndex()[1] >= 0 )
+    {
+        nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
+        first_displayed_row = 0;
+    }
+    else
+    {
+        nb_displayed_rows = m_H / m_IsotropicZoom;
+        first_displayed_row = (m_OpenGlBufferedRegion.GetSize()[1] - nb_displayed_rows) / 2;
+    }
 
 
     RasterIndexType startPosition = m_Extent.GetIndex();
@@ -190,15 +190,23 @@ void ItiOtbRgbaQGLWidgetZoomable::paintGL()
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glPixelStorei(GL_UNPACK_ROW_LENGTH, m_OpenGlBufferedRegion.GetSize()[0]);
-    glPixelStorei(GL_UNPACK_SKIP_PIXELS, m_first_displayed_col);
-    glPixelStorei(GL_UNPACK_SKIP_ROWS,m_first_displayed_row);
+//    glPixelStorei(GL_UNPACK_SKIP_PIXELS, m_first_displayed_col);
+//    glPixelStorei(GL_UNPACK_SKIP_ROWS,m_first_displayed_row);
+    glPixelStorei(GL_UNPACK_SKIP_PIXELS, first_displayed_col);
+    glPixelStorei(GL_UNPACK_SKIP_ROWS,first_displayed_row);
+
 
     glClear(GL_COLOR_BUFFER_BIT);
     glPixelZoom(m_IsotropicZoom,m_IsotropicZoom);
 
     glRasterPos2f(startPosition[0], startPosition[1]);
-    glDrawPixels(m_nb_displayed_cols,
-                m_nb_displayed_rows,
+//    glDrawPixels(m_nb_displayed_cols,
+//                m_nb_displayed_rows,
+//                GL_RGB,
+//                GL_UNSIGNED_BYTE,
+//                m_OpenGlBuffer);
+    glDrawPixels(nb_displayed_cols,
+                nb_displayed_rows,
                 GL_RGB,
                 GL_UNSIGNED_BYTE,
                 m_OpenGlBuffer);
@@ -325,24 +333,26 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomIn(){
     setupViewport(width(),height());
 
     //!
-    setupAndSendSignal();
-
     if( m_Extent.GetIndex()[0] >= 0 )
     {
         m_nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
+        m_first_displayed_col = 0;
     }
     else
     {
         m_nb_displayed_cols = m_W / m_IsotropicZoom;
+        m_first_displayed_col += (m_nb_displayed_cols*0.125)/2;
     }
 
     if( m_Extent.GetIndex()[1] >= 0 )
     {
         m_nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
+        m_first_displayed_row = 0;
     }
     else
     {
         m_nb_displayed_rows = m_H / m_IsotropicZoom;
+        m_first_displayed_row += (m_nb_displayed_rows*0.125)/2;
     }
 
     //!
@@ -362,25 +372,26 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomOut(){
     //!
     setupViewport(width(),height());
 
-    //!
-    setupAndSendSignal();
-
     if( m_Extent.GetIndex()[0] >= 0 )
     {
         m_nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
+        m_first_displayed_col = 0;
     }
     else
     {
         m_nb_displayed_cols = m_W / m_IsotropicZoom;
+        m_first_displayed_col -= (m_nb_displayed_cols*0.125)/2;
     }
 
     if( m_Extent.GetIndex()[1] >= 0 )
     {
         m_nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
+        m_first_displayed_row = 0;
     }
     else
     {
         m_nb_displayed_rows = m_H / m_IsotropicZoom;
+        m_first_displayed_row -= (m_nb_displayed_rows*0.125)/2;
     }
 
     //!
@@ -397,16 +408,26 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomOut(){
 void ItiOtbRgbaQGLWidgetZoomable::translate(int dx, int dy){
 
 //    RasterIndexType index;
-    if(dx<0)
-        m_first_displayed_col += (unsigned int)qAbs(dx)*(unsigned int)m_IsotropicZoom;
-    else
-        m_first_displayed_col += (unsigned int)qAbs(dx)*(unsigned int)m_IsotropicZoom;
-    if(dy < 0)
-        m_first_displayed_row -= (unsigned int)qAbs(dy)*(unsigned int)m_IsotropicZoom;
-    else
-        m_first_displayed_row += (unsigned int)dy*(unsigned int)m_IsotropicZoom;
+//    int scaledDX = dx * m_IsotropicZoom;
+//    int scaledDY = dy * m_IsotropicZoom;
 
-//    m_Extent.SetIndex(index);
+    int helperX = m_first_displayed_col + dx;
+    int helperY = m_first_displayed_row + dy;
+
+    if(helperX<0)
+        m_first_displayed_col = 0;
+    else if(helperX + m_nb_displayed_cols > m_Extent.GetSize()[0])
+        m_first_displayed_col = m_OpenGlBufferedRegion.GetSize()[0] - m_nb_displayed_cols;
+    else
+        m_first_displayed_col += dx;
+
+    //!
+    if(helperY < 0)
+        m_first_displayed_row = m_OpenGlBufferedRegion.GetSize()[1] - m_nb_displayed_rows;
+    else if(helperY + m_nb_displayed_rows > m_Extent.GetSize()[1])
+        m_first_displayed_row = 0;
+    else
+        m_first_displayed_row += dy;
 
     qDebug() << " m_first_displayed_col : " << m_first_displayed_col << ", m_first_displayed_row : " << m_first_displayed_row;
 

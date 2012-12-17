@@ -211,6 +211,8 @@ void ItiOtbRgbaQGLWidgetFullView::paintEvent(QPaintEvent *event){
     painter.drawRect(m_visibleRegion);
 
     painter.end();
+
+    QGLWidget::paintEvent(event);
 }
 
 //!
