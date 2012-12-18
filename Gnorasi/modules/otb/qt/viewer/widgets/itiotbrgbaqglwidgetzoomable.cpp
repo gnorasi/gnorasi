@@ -276,6 +276,7 @@ void ItiOtbRgbaQGLWidgetZoomable::updateObserver(ItiViewerObservable *observable
 void ItiOtbRgbaQGLWidgetZoomable::setupAndSendSignal(){
 
     QRect rect;
+
     if(m_Extent.GetIndex()[0] > 0)
         rect.setX(0);
     else
@@ -296,42 +297,7 @@ void ItiOtbRgbaQGLWidgetZoomable::setupAndSendSignal(){
 }
 
 //!
-void ItiOtbRgbaQGLWidgetZoomable::wheelEvent(QWheelEvent *event){
-    float scale = (float)event->delta() / 960.0;
-
-    double newSc = m_IsotropicZoom + scale;
-
-    if(newSc < 1.0 || newSc >= 50.0){
-        event->ignore();
-        return;
-    }
-
-    //! set the new isotropic zoom value
-    setIsotropicZoom(newSc);
-
-    //! update the opengl layer
-    setupViewport(width(),height());
-
-    //!
-    setupAndSendSignal();
-
-    //!
-    updateGL();
-
-    //! setup and send signal
-    setupAndSendSignal();
-
-    //! accept the event
-    event->accept();
-}
-
-//!
-void ItiOtbRgbaQGLWidgetZoomable::zoomIn(){
-    m_IsotropicZoom = m_IsotropicZoom + 0.125;
-
-    //!
-    setupViewport(width(),height());
-
+void ItiOtbRgbaQGLWidgetZoomable::setupRowColumnDisplay(){
     //!
     if( m_Extent.GetIndex()[0] >= 0 )
     {
@@ -354,6 +320,47 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomIn(){
         m_nb_displayed_rows = m_H / m_IsotropicZoom;
         m_first_displayed_row += (m_nb_displayed_rows*0.125)/2;
     }
+}
+
+//!
+void ItiOtbRgbaQGLWidgetZoomable::wheelEvent(QWheelEvent *event){
+    float scale = (float)event->delta() / 960.0;
+
+    double newSc = m_IsotropicZoom + scale;
+
+    if(newSc < 1.0 || newSc >= 50.0){
+        event->ignore();
+        return;
+    }
+
+    //! set the new isotropic zoom value
+    setIsotropicZoom(newSc);
+
+    //! update the opengl layer
+    setupViewport(width(),height());
+
+//    //!
+//    setupAndSendSignal();
+
+    //!
+    updateGL();
+
+    //! setup and send signal
+    setupAndSendSignal();
+
+    //! accept the event
+    event->accept();
+}
+
+//!
+void ItiOtbRgbaQGLWidgetZoomable::zoomIn(){
+    m_IsotropicZoom = m_IsotropicZoom + 0.125;
+
+    //!
+    setupViewport(width(),height());
+
+    //!
+    setupRowColumnDisplay();
 
     //!
     updateGL();
@@ -364,35 +371,19 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomIn(){
 
 //!
 void ItiOtbRgbaQGLWidgetZoomable::zoomOut(){
-    if(m_IsotropicZoom< 0.2)
-        return;
 
     m_IsotropicZoom = m_IsotropicZoom - 0.125;
+
+    if(m_IsotropicZoom < 1.0){
+        m_IsotropicZoom = 1.0;
+        return;
+    }
 
     //!
     setupViewport(width(),height());
 
-    if( m_Extent.GetIndex()[0] >= 0 )
-    {
-        m_nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
-        m_first_displayed_col = 0;
-    }
-    else
-    {
-        m_nb_displayed_cols = m_W / m_IsotropicZoom;
-        m_first_displayed_col -= (m_nb_displayed_cols*0.125)/2;
-    }
-
-    if( m_Extent.GetIndex()[1] >= 0 )
-    {
-        m_nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
-        m_first_displayed_row = 0;
-    }
-    else
-    {
-        m_nb_displayed_rows = m_H / m_IsotropicZoom;
-        m_first_displayed_row -= (m_nb_displayed_rows*0.125)/2;
-    }
+    //!
+    setupRowColumnDisplay();
 
     //!
     updateGL();
@@ -414,17 +405,17 @@ void ItiOtbRgbaQGLWidgetZoomable::translate(int dx, int dy){
     int helperX = m_first_displayed_col + dx;
     int helperY = m_first_displayed_row - dy;
 
-    if(helperX<0)
+    if(helperX<= 0)
         m_first_displayed_col = 0;
-    else if(helperX + m_nb_displayed_cols > m_Extent.GetSize()[0])
+    else if(helperX + m_nb_displayed_cols >= m_Extent.GetSize()[0])
         m_first_displayed_col = m_OpenGlBufferedRegion.GetSize()[0] - m_nb_displayed_cols;
     else
         m_first_displayed_col += dx;
 
     //!
-    if(helperY < 0)
+    if(helperY <= 0)
         m_first_displayed_row = 0;
-    else if(helperY + m_nb_displayed_rows > m_Extent.GetSize()[1])
+    else if(helperY + m_nb_displayed_rows >= m_Extent.GetSize()[1])
         m_first_displayed_row = m_OpenGlBufferedRegion.GetSize()[1] - m_nb_displayed_rows;
     else
         m_first_displayed_row -= dy;
@@ -432,6 +423,9 @@ void ItiOtbRgbaQGLWidgetZoomable::translate(int dx, int dy){
     qDebug() << " m_first_displayed_col : " << m_first_displayed_col << ", m_first_displayed_row : " << m_first_displayed_row;
 
     updateGL();
+
+    //! setup and send signal
+//    setupAndSendSignal();
 }
 
 //!
