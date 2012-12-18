@@ -29,6 +29,9 @@
 #ifndef ITBVIEWEROBSERVABLEREGION_H
 #define ITBVIEWEROBSERVABLEREGION_H
 
+#include <QtCore>
+#include <QtGui>
+#include <QtOpenGL>
 #include <QObject>
 #include <QRect>
 

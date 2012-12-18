@@ -29,9 +29,9 @@
 #ifndef VRN_QGLOTBIMAGEVIEWERWIDGET_H
 #define VRN_QGLOTBIMAGEVIEWERWIDGET_H
 
-#include <QLabel>
-#include <QString>
+#include <QtCore>
 #include <QtGui>
+#include <QtOpenGL>
 
 #include "modules/otb/processors/Visualization/otbimageviewerprocessor.h"
 #include "voreen/core/voreencoreapi.h"
