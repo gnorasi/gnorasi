@@ -140,6 +140,12 @@ public slots:
 signals:
     void visibleAreaChanged(const QRect &rect);
 
+    /*!
+     * \brief currentIndexChanged
+     * \param text
+     */
+    void currentIndexChanged(const QString &text);
+
 protected:
 
     /*!
@@ -171,12 +177,11 @@ protected:
      */
     void paintGL();
 
-
     /*!
-     * \brief paintEvent
+     * \brief mouseMoveEvent
      * \param event
      */
-//    void paintEvent(QPaintEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
 
 
 private:

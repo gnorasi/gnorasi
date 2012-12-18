@@ -131,6 +131,12 @@ signals:
     //!
     void zoomOut();
 
+    /*!
+     * \brief currentIndexChanged
+     * \param text
+     */
+    void currentIndexChanged(const QString &text);
+
 protected:
 
     /*!
@@ -162,6 +168,12 @@ protected:
      * \param event
      */
     void mousePressEvent(QMouseEvent *event);
+
+    /*!
+     * \brief mouseMoveEvent
+     * \param event
+     */
+    void mouseMoveEvent(QMouseEvent *event);
 
 private:
     /*!
