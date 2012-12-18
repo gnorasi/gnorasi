@@ -275,11 +275,16 @@ void ItiOtbRgbaQGLWidgetScrollable::wheelEvent(QWheelEvent *event){
 void ItiOtbRgbaQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
 
     if(event->button() == Qt::LeftButton){
+        //!
         QPoint previousCenter = m_focusRegion.center();
+        //!
         QPoint point = event->pos();
+        //!
         QLine line(previousCenter,point);
+        //!
         int dx = 0, dy = 0;
 
+        //!
         if(point.x()+ m_focusRegion.width()/2 > m_Extent.GetSize()[0] + m_Extent.GetIndex()[0]){
             dx = m_Extent.GetSize()[0] + m_Extent.GetIndex()[0] - m_focusRegion.width()/2 - previousCenter.x();
         }else if(point.x()-m_focusRegion.width()/2 < m_Extent.GetIndex()[0]){
@@ -287,6 +292,7 @@ void ItiOtbRgbaQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
         }else
             dx = line.dx();
 
+        //!
         if(point.y()+ m_focusRegion.height()/2 > m_Extent.GetSize()[1] + m_Extent.GetIndex()[1]){
             dy = m_Extent.GetSize()[1] + m_Extent.GetIndex()[1] - m_focusRegion.height()/2 - previousCenter.y();
         }else if(point.y()-m_focusRegion.height()/2 < m_Extent.GetIndex()[1]){
@@ -294,10 +300,13 @@ void ItiOtbRgbaQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
         }else
             dy = line.dy();
 
+        //!translate the focus region
         m_focusRegion.translate(dx,dy);
 
+        //! emit signal
         emit focusRegionTranslated(dx,dy);
 
+        //! update widget
         update();
     }
 

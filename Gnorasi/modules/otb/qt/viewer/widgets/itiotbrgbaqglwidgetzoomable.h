@@ -146,7 +146,13 @@ signals:
      */
     void currentIndexChanged(const QString &text);
 
+
 protected:
+
+    /*!
+     * \brief setupExtents
+     */
+    void setupRowColumnDisplay();
 
     /*!
      * \brief setupAndSendSignal
