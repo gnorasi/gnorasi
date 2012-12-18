@@ -28,6 +28,9 @@
 
 #include "qotbprocessorwidgetfactory.h"
 
+#include <QtCore>
+#include <QtGui>
+#include <QtOpenGL>
 #include <QWidget>
 #include "voreen/qt/voreenapplicationqt.h"
 #include <QMainWindow>

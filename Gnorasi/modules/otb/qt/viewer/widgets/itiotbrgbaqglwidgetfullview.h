@@ -29,8 +29,9 @@
 #ifndef ITIOTBRGBAQGLWIDGETFULLVIEW_H
 #define ITIOTBRGBAQGLWIDGETFULLVIEW_H
 
-#include <QGLWidget>
-#include <QPen>
+#include <QtCore>
+#include <QtGui>
+#include <QtOpenGL>
 
 #include "itiotbrgbaqglwidgetfullview.h"
 

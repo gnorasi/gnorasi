@@ -361,9 +361,9 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/qotbprocessorwidgetfactory.cpp
     ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.cpp
     ${MOD_DIR}/qt/viewer/utils/itiotbimagemanager.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbimageviewer.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaimageviewer.cpp
     ${MOD_DIR}/qt/viewer/factories/itiotbimageviewerfactory.cpp
-    ${MOD_DIR}/qt/viewer/widgets/itiotbimageviewer.cpp
     ${MOD_DIR}/qt/viewer/factories/itiotbrgbaimageviewerfactory.cpp
     ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanel.cpp
     ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpaneldatatab.cpp
@@ -388,9 +388,9 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/rgba_globaldefs.h
     ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.h
     ${MOD_DIR}/qt/viewer/utils/itiotbimagemanager.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbimageviewer.h
     ${MOD_DIR}/qt/viewer/widgets/itiotbrgbaimageviewer.h
     ${MOD_DIR}/qt/viewer/factories/itiotbimageviewerfactory.h
-    ${MOD_DIR}/qt/viewer/widgets/itiotbimageviewer.h
     ${MOD_DIR}/qt/viewer/factories/itiotbrgbaimageviewerfactory.h
     ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanel.h
     ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpaneldatatab.h
