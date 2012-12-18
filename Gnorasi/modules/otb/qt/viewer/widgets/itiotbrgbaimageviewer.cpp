@@ -1,5 +1,9 @@
 #include "itiotbrgbaimageviewer.h"
 
+#include <QtCore>
+#include <QtGui>
+#include <QtOpenGL>
+
 #include "itiotbrgbaqglwidgetfullview.h"
 #include "itiotbrgbaqglwidgetscrollable.h"
 #include "itiotbrgbaqglwidgetzoomable.h"
@@ -12,12 +16,6 @@
 #include "../../../ports/otbimageport.h"
 
 #include "otbImage.h"
-
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopWidget>
-
-#include <QFileDialog>
-#include <QDebug>
 
 using namespace itiviewer;
 using namespace voreen;

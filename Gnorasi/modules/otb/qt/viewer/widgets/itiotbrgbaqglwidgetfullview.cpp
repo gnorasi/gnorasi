@@ -1,4 +1,7 @@
-#include <QDebug>
+#include <QtCore>
+#include <QtGui>
+#include <QtOpenGL>
+
 #include <QtGui/QApplication>
 #include <QMouseEvent>
 #include "itiotbrgbaqglwidgetfullview.h"

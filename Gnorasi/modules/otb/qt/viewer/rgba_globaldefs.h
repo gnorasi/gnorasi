@@ -1,6 +1,10 @@
 #ifndef RGBA_GLOBALDEFS_H
 #define RGBA_GLOBALDEFS_H
 
+#include <QtCore>
+#include <QtGui>
+#include <QtOpenGL>
+
 #include "itkRGBAPixel.h"
 #include "itkFixedArray.h"
 #include "otbObjectList.h"

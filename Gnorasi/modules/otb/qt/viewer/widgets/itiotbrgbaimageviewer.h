@@ -30,7 +30,8 @@
 #define ITIOTBRGBAIMAGEVIEWER_H
 
 #include <QtCore>
-#include <QWidget>
+#include <QtGui>
+#include <QtOpenGL>
 #include <QVBoxLayout>
 #include <QSplitter>
 
