@@ -131,6 +131,12 @@ signals:
      */
     void sizeChanged(const QSize &);
 
+    /*!
+     * \brief currentIndexChanged
+     * \param text
+     */
+    void currentIndexChanged(const QString &text);
+
 protected:
 
     /*!
@@ -151,6 +157,12 @@ protected:
      * \param h , the height parameter
      */
     void resizeGL(int w, int h);
+
+    /*!
+     * \brief mouseMoveEvent
+     * \param event
+     */
+    void mouseMoveEvent(QMouseEvent *event);
 
 
 private:
