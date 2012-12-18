@@ -1,10 +1,13 @@
-#include <QDebug>
+#include <QtCore>
+#include <QtGui>
+#include <QtOpenGL>
+
+#include "itiotbrgbaimageviewer.h"
 
 #include "itiotbrgbaqglwidgetzoomable.h"
 #include "itkImageRegionConstIteratorWithIndex.h"
 #include "../utils/itiotbimagemanager.h"
 #include "../observables/itiviewerobservableregion.h"
-#include "itiotbrgbaimageviewer.h"
 #include "../../../ports/otbimageport.h"
 #include <QMouseEvent>
 
