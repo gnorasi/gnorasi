@@ -246,19 +246,24 @@ void ItiOtbRgbaQGLWidgetScrollable::draw(){
 
 //!
 void ItiOtbRgbaQGLWidgetScrollable::updateObserver(ItiViewerObservable *observable){
+    if(m_OpenGlBufferedRegion.GetSize()[0] <= 0 || m_OpenGlBufferedRegion.GetSize()[1] <= 0 )
+        return;
+
     ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
     if(!region)
         return;
 
     QRect rregion = region->region();
 
-    QRect rect;
-    rect.setX(rregion.x()+qAbs(m_Extent.GetIndex()[0]));
-    rect.setY(rregion.y()+qAbs(m_Extent.GetIndex()[1]));
-    rect.setWidth(rregion.width());
-    rect.setHeight(rregion.height());
+    int x       = rregion.x();
+    int y       = rregion.y();
+    int width   = rregion.width();
+    int height  = rregion.height();
 
-    m_focusRegion = rect;
+    m_focusRegion.setX(m_Extent.GetIndex()[0] + x);
+    m_focusRegion.setY(m_Extent.GetIndex()[1] + m_Extent.GetSize()[1] - height - y);
+    m_focusRegion.setWidth(width);
+    m_focusRegion.setHeight(height);
 
     update();
 }
