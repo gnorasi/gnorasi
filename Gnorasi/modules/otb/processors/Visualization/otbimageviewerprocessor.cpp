@@ -9,9 +9,9 @@ const std::string OTBImageViewerProcessor::loggerCat_("voreen.OTBImageViewerProc
 OTBImageViewerProcessor::OTBImageViewerProcessor()
     : Processor(),
     inPort_(Port::INPORT, "OTBImage.inport", 0),
-    outPort_(Port::OUTPORT, "OTBImage.outport", 0)
-    ,showImageButton_("showButton", "Show Image")
-    ,loadImageFile_("imageFile", "Load Image", "Load Image", VoreenApplication::app()->getUserDataPath())
+    outPort_(Port::OUTPORT, "OTBImage.outport", 0),
+    showImageButton_("showButton", "Show Image"),
+    loadImageFile_("imageFile", "Load Image", "Load Image", VoreenApplication::app()->getUserDataPath())
 {
     // register ports and properties
     addPort(inPort_);
