@@ -294,18 +294,18 @@ void ItiOtbRgbaQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
         int dx = 0, dy = 0;
 
         //!
-        if(point.x()+ m_focusRegion.width()/2 > m_Extent.GetSize()[0] + m_Extent.GetIndex()[0]){
-            dx = m_Extent.GetSize()[0] + m_Extent.GetIndex()[0] - m_focusRegion.width()/2 - previousCenter.x();
-        }else if(point.x()-m_focusRegion.width()/2 < m_Extent.GetIndex()[0]){
-            dx = m_Extent.GetIndex()[0] + m_focusRegion.width()/2 - previousCenter.x();
+        if(point.x()+ qRound((double)m_focusRegion.width()/2.0) > m_Extent.GetSize()[0] + m_Extent.GetIndex()[0]){
+            dx = m_Extent.GetIndex()[0] + m_Extent.GetSize()[0] - qRound((double)m_focusRegion.width()/2.0) - previousCenter.x();
+        }else if(point.x()- qRound((double)m_focusRegion.width()/2.0) < m_Extent.GetIndex()[0]){
+            dx = m_Extent.GetIndex()[0] + qRound((double)m_focusRegion.width()/2.0) - previousCenter.x();
         }else
             dx = line.dx();
 
         //!
-        if(point.y()+ m_focusRegion.height()/2 > m_Extent.GetSize()[1] + m_Extent.GetIndex()[1]){
-            dy = m_Extent.GetSize()[1] + m_Extent.GetIndex()[1] - m_focusRegion.height()/2 - previousCenter.y();
-        }else if(point.y()-m_focusRegion.height()/2 < m_Extent.GetIndex()[1]){
-            dy = m_Extent.GetIndex()[1] + m_focusRegion.height()/2 - previousCenter.y();
+        if(point.y()+ qRound((double)m_focusRegion.height()/2.0) > m_Extent.GetSize()[1] + m_Extent.GetIndex()[1]){
+            dy = m_Extent.GetSize()[1] + m_Extent.GetIndex()[1] - qRound((double)m_focusRegion.height()/2.0) - previousCenter.y();
+        }else if(point.y()- qRound((double)m_focusRegion.height()/2.0) < m_Extent.GetIndex()[1]){
+            dy = m_Extent.GetIndex()[1] + qRound((double)m_focusRegion.height()/2.0) - previousCenter.y();
         }else
             dy = line.dy();
 
