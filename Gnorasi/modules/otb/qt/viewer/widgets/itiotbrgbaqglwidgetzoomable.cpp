@@ -26,10 +26,9 @@ ItiOtbRgbaQGLWidgetZoomable::ItiOtbRgbaQGLWidgetZoomable(QWidget *parent) :
 void ItiOtbRgbaQGLWidgetZoomable::ReadBuffer(const RasterImageType *image, const RasterRegionType &region){
     // Before doing anything, check if region is inside the buffered
     // region of image
-    if (!image->GetBufferedRegion().IsInside(region))
-      {
+    if (!image->GetBufferedRegion().IsInside(region)){
 //      itkExceptionMacro(<< "Region to read is oustside of the buffered region.");
-      }
+    }
     // Delete previous buffer if needed
     this->ClearBuffer();
 
@@ -42,8 +41,8 @@ void ItiOtbRgbaQGLWidgetZoomable::ReadBuffer(const RasterImageType *image, const
     // Go to begin
     it.GoToBegin();
 
-    while (!it.IsAtEnd())
-    {
+    while (!it.IsAtEnd()){
+
         // Fill the buffer
         unsigned int index = 0;
 
@@ -61,23 +60,25 @@ void ItiOtbRgbaQGLWidgetZoomable::ReadBuffer(const RasterImageType *image, const
     //! Last, updating buffer size
     m_OpenGlBufferedRegion = region;
 
-    //!
+    //! setup the vieport
     setupViewport(width(),height());
 
-    //!
+    //! initialize the column and row related parameters
     initializeColumnRowParameters();
 
-    //!
+    //! emit a signal
     setupAndSendSignal();
 
+    //! update the scene
     update();
 }
 
 //!
 void ItiOtbRgbaQGLWidgetZoomable::ClearBuffer(){
     // Delete previous buffer if needed
-    if (m_OpenGlBuffer != NULL)
-    {
+    if (m_OpenGlBuffer != NULL){
+
+        //!
         delete[] m_OpenGlBuffer;
         m_OpenGlBuffer = NULL;
     }
@@ -109,19 +110,27 @@ void ItiOtbRgbaQGLWidgetZoomable::initializeGL()
 //!
 void ItiOtbRgbaQGLWidgetZoomable::resizeGL(int w, int h)
 {
+    //! firstly setup the viweport with the new width and height
     setupViewport(w,h);
 
-    setupAndSendSignal();
-
+    //!
+    //! setup the number of rows and columns to be visualized
+    //!
+    //! check if the extend's index x value is greater than zero , if yes then the number of columns equals to the number of the buffered region
     if( m_Extent.GetIndex()[0] > 0 )
         m_nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
     else
         m_nb_displayed_cols = m_W / m_IsotropicZoom;
 
+    //!
+    //! check if the extend's index y value is greater than zero , if yes then the number of columns equals to the number of the buffered region
     if( m_Extent.GetIndex()[1] > 0 )
         m_nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
     else
         m_nb_displayed_rows = m_H / m_IsotropicZoom;
+
+    //! emit a signal
+    setupAndSendSignal();
 }
 
 ///!
@@ -152,26 +161,20 @@ void ItiOtbRgbaQGLWidgetZoomable::setupViewport(int w, int h){
 
 //!
 void ItiOtbRgbaQGLWidgetZoomable::initializeColumnRowParameters(){
-    m_first_displayed_col = 0;
 
     if( m_Extent.GetIndex()[0] > 0 )
-    {
         m_nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
-    }
     else
-    {
         m_nb_displayed_cols = m_W / m_IsotropicZoom;
-    }
 
     if( m_Extent.GetIndex()[1] > 0 )
-    {
         m_nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
-    }
     else
-    {
         m_nb_displayed_rows = m_H / m_IsotropicZoom;
-    }
 
+    //!
+    //! the values along the y-axes follow some kind of a transormation matrix [1,-1]
+    //!
     m_first_displayed_row = m_Extent.GetSize()[1] - m_nb_displayed_rows;
 }
 
@@ -216,19 +219,34 @@ void ItiOtbRgbaQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
         //! get the position
         QPoint point = event->pos();
 
+        //! the relative values are helper values in order to calculate the index values on a scaled (zoomed) image
+        int relativeX = qRound((double)point.x()/m_IsotropicZoom);
+        int relativeY = qRound((double)point.y()/m_IsotropicZoom);
+
+        //! create an index
         RasterIndexType index;
+
+        //! check if the extend's index x value is greater than zero
+        //! if yes set the index x value equal to the relativeX value plus the x extend's index value
         if(m_Extent.GetIndex()[0] > 0)
-            index[0] = qRound((double)point.x()/m_IsotropicZoom) + m_Extent.GetIndex()[0];
-        else
-            index[0] = m_first_displayed_col + qRound((double)point.x()/m_IsotropicZoom);
+            index[0] = relativeX + m_Extent.GetIndex()[0];
+        else //! if not the index x value equal to the relativeX plus the m_first_displayed_col value
+            index[0] = m_first_displayed_col + relativeX;
 
+        //! check if the extend's index x value is greater than zero
+        //! check y related value accordingly
+        //!
+        //! Take notice that the y-axes values follow a transformation matrix [1,-1]
+        //! so the y-axes seem to be reversed in order to achieve the right results
         if(m_Extent.GetIndex()[1] > 0)
-            index[1] =  m_Extent.GetIndex()[1] + m_Extent.GetSize()[1] - qRound((double)point.y()/m_IsotropicZoom);
+            index[1] =  m_Extent.GetSize()[1] - m_Extent.GetIndex()[1] + relativeY;
         else
-            index[1] = m_Extent.GetSize()[1] - m_nb_displayed_rows - m_first_displayed_row + qRound((double)point.y()/m_IsotropicZoom);
+            index[1] = m_OpenGlBufferedRegion.GetSize()[1] - m_nb_displayed_rows - m_first_displayed_row + relativeY;
 
+        //! construct the text
         QString text = ItiOtbRgbaImageViewer::constructTextFromImageIndex(index,imgType);
 
+        //! emit the signal
         emit currentIndexChanged(text);
     }
 
@@ -261,24 +279,25 @@ void ItiOtbRgbaQGLWidgetZoomable::draw(){
 //!
 void ItiOtbRgbaQGLWidgetZoomable::updateObserver(ItiViewerObservable *observable){
 
-    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
-    if(!region)
-        return;
-
+    Q_UNUSED(observable);
 }
 
 //!
 void ItiOtbRgbaQGLWidgetZoomable::setupAndSendSignal(){
 
-    //!
+    //! create a helper QRect value
     QRect rect;
 
     //!
+    //! set the display related values
+    //!
+
     rect.setX(m_first_displayed_col);
     rect.setWidth(m_nb_displayed_cols);
     rect.setY(m_first_displayed_row);
     rect.setHeight(m_nb_displayed_rows);
 
+    //! emit the signal
     emit visibleAreaChanged(rect);
 }
 
@@ -296,48 +315,62 @@ void ItiOtbRgbaQGLWidgetZoomable::wheelEvent(QWheelEvent *event){
 //!
 void ItiOtbRgbaQGLWidgetZoomable::zoomIn(){
 
-    //! decrease the zoom level
+    //! advance the zoom level by a fixed zoom scale value
     m_IsotropicZoom = m_IsotropicZoom + ZOOM_VALUE;
 
-    //!
+    //! setup the viewport in order to update the extend values
     setupViewport(width(),height());
 
-    //! setup visualizing properties
-    if( m_Extent.GetIndex()[0] > 0 )
-    {
+    //! calculate displaying - visualizing properties
+
+    //! check if the extend's index x value is greater than zero
+    if( m_Extent.GetIndex()[0] > 0 ){
+        //! the number of columns equal to the buffered regions size along the x-axes
         m_nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
+        //! the first display column equals to zero
         m_first_displayed_col = 0;
     }
-    else
-    {
+    else{
+        //! the number of columns equal to the width of the window divided by the zoom value
         m_nb_displayed_cols = qRound(m_W / m_IsotropicZoom);
 
+        //! create a helper value equal to the current m_first_displayed_col plus a number that occurs due to the fact that the newly created visible rectangle will have less size
         int helperX = m_first_displayed_col + qRound((m_nb_displayed_cols*ZOOM_VALUE)/2);
 
+        //! check that the helperX value is between the extend's x-axes limits
+        //! fistly check that it is less than zero
         if(helperX < 0)
             m_first_displayed_col = 0;
-        else if(helperX > m_Extent.GetSize()[0] - m_nb_displayed_cols)
-            m_first_displayed_col = m_Extent.GetSize()[0] - m_nb_displayed_cols;
-        else
+        else if(helperX > m_OpenGlBufferedRegion.GetSize()[0] - m_nb_displayed_cols) //! then check that it is less that the m_OpenGlBufferedRegion's size x value minus the number of displayable columns
+            m_first_displayed_col = m_OpenGlBufferedRegion.GetSize()[0] - m_nb_displayed_cols;
+        else //! else set the m_first_displayed_col equal to the helper value
             m_first_displayed_col = helperX;
     }
 
-    if( m_Extent.GetIndex()[1] > 0 )
-    {
+
+    //! check if the extend's index y value is greater than zero
+    if( m_Extent.GetIndex()[1] > 0 ){
+        //! set the appropriate values
         m_nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
         m_first_displayed_row = 0;
     }
-    else
-    {
+    else{
+        //! calculate the displayable rows
         m_nb_displayed_rows = qRound(m_H / m_IsotropicZoom);
 
+        //! create a helper value equal to the current m_first_displayed_row minus a number that occurs due to the fact that the newly created visible rectangle will have less size
+        //!
+        //! take notice that the y-axes display rows follow a transformation matrix [1,-1] , and this is the reason why the rounded value is being subtracted by the m_first_displayed_row
+        //!
         int helperY = m_first_displayed_row - qRound((m_nb_displayed_rows*ZOOM_VALUE)/2);
 
+        //! check that the helperY value is between the extend's y-axes limits
+        //! fistly check that it is less than zero
         if(helperY < 0)
             m_first_displayed_row = 0;
-        else if(helperY > m_Extent.GetSize()[1] - m_nb_displayed_rows)
-            m_first_displayed_row = m_Extent.GetSize()[1] - m_nb_displayed_rows;
-        else
+        else if(helperY > m_OpenGlBufferedRegion.GetSize()[1] - m_nb_displayed_rows) //! then check that the helperY value is between the buffered region, if not set it to fit the right border of the image
+            m_first_displayed_row = m_OpenGlBufferedRegion.GetSize()[1] - m_nb_displayed_rows;
+        else // else se the m_first_displayed_row equal to the helperY value
             m_first_displayed_row = helperY;
     }
 
@@ -360,49 +393,62 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomOut(){
         return;
     }
 
-    //!
+    //! setup the viewport in order to update the extend values
     setupViewport(width(),height());
 
-    //! setup visualizing properties
-    if( m_Extent.GetIndex()[0] > 0 )
-    {
+    //! check if the extend's index x value is greater than zero
+    if( m_Extent.GetIndex()[0] > 0 ){
+
+        //! the number of columns equal to the buffered regions size along the x-axes
         m_nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
+        //! the first display column equals to zero
         m_first_displayed_col = 0;
     }
-    else
-    {
+    else{
+        //! the number of columns equal to the width of the window divided by the zoom value
         m_nb_displayed_cols = qRound(m_W / m_IsotropicZoom);
 
+        //! create a helper value equal to the current m_first_displayed_col plus a number that occurs due to the fact that the newly created visible rectangle will have less size
         int helperX = m_first_displayed_col - qRound((m_nb_displayed_cols*ZOOM_VALUE)/2);
 
+        //! check that the helperX value is between the extend's x-axes limits
+        //! fistly check that it is less than zero
         if(helperX < 0)
             m_first_displayed_col = 0;
-        else if(helperX > m_Extent.GetSize()[0] - m_nb_displayed_cols)
-            m_first_displayed_col = m_Extent.GetSize()[0] - m_nb_displayed_cols;
-        else
+        else if(helperX > m_OpenGlBufferedRegion.GetSize()[0] - m_nb_displayed_cols) //! then check that it is less that the m_OpenGlBufferedRegion's size x value minus the number of displayable columns
+            m_first_displayed_col = m_OpenGlBufferedRegion.GetSize()[0] - m_nb_displayed_cols;
+        else //! else set the m_first_displayed_col equal to the helper value
             m_first_displayed_col = helperX;
     }
 
-    if( m_Extent.GetIndex()[1] > 0 )
-    {
+    //! check if the extend's index y value is greater than zero
+    if( m_Extent.GetIndex()[1] > 0 ){
+        //! set the appropriate values
         m_nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
         m_first_displayed_row = 0;
     }
-    else
-    {
+    else{
+        //! calculate the displayable rows
         m_nb_displayed_rows = qRound(m_H / m_IsotropicZoom);
 
+        //! create a helper value equal to the current m_first_displayed_row minus a number that occurs due to the fact that the newly created visible rectangle will have less size
+        //!
+        //! take notice that the y-axes display rows follow a transformation matrix [1,-1] , and this is the reason why the rounded value is being subtracted by the m_first_displayed_row
+        //!
         int helperY = m_first_displayed_row + qRound((m_nb_displayed_rows*ZOOM_VALUE)/2);
 
+
+        //! check that the helperY value is between the extend's y-axes limits
+        //! fistly check that the helperY value is less than zero
         if(helperY < 0)
-            m_first_displayed_row = 0;
-        else if(helperY > m_Extent.GetSize()[1] - m_nb_displayed_rows)
-            m_first_displayed_row = m_Extent.GetSize()[1] - m_nb_displayed_rows;
-        else
+            m_first_displayed_row = 0; //! then check that the helperY value is between the buffered region, if not set it to fit the right border of the image
+        else if(helperY > m_OpenGlBufferedRegion.GetSize()[1] - m_nb_displayed_rows)
+            m_first_displayed_row = m_OpenGlBufferedRegion.GetSize()[1] - m_nb_displayed_rows;
+        else //! else se the m_first_displayed_row equal to the helperY value
             m_first_displayed_row = helperY;
     }
 
-    //!
+    //! update the opengl painting..
     updateGL();
 
     //! setup and send signal
@@ -415,28 +461,31 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomOut(){
  */
 void ItiOtbRgbaQGLWidgetZoomable::translate(int dx, int dy){
 
-    //!
+    //! create a helper value equal to the m_first_displayed_col plus the dx parameter
     int helperX = m_first_displayed_col + dx;
+
+    //! check that the helperX value is less than zero
     if(helperX < 0)
         m_first_displayed_col = 0;
-    else if(helperX > m_Extent.GetSize()[0] - m_nb_displayed_cols)
-        m_first_displayed_col = m_Extent.GetSize()[0] - m_nb_displayed_cols;
+    //! check if it is beween the buffered region extends
+    else if(helperX > m_OpenGlBufferedRegion.GetSize()[0] - m_nb_displayed_cols)
+        m_first_displayed_col = m_OpenGlBufferedRegion.GetSize()[0] - m_nb_displayed_cols;
     else
         m_first_displayed_col = helperX;
 
     //!
     int helperY = m_first_displayed_row - dy;
+
+    //! check that it is less than zero
     if(helperY < 0)
         m_first_displayed_row = 0;
-    else if(helperY > m_Extent.GetSize()[1] - m_nb_displayed_rows)
-        m_first_displayed_row = m_Extent.GetSize()[1] - m_nb_displayed_rows;
-    else
+    //! check that it is between the buffered region's y-axes size
+    else if(helperY > m_OpenGlBufferedRegion.GetSize()[1] - m_nb_displayed_rows)
+        m_first_displayed_row = m_OpenGlBufferedRegion.GetSize()[1] - m_nb_displayed_rows;
+    else //! else set the m_first_displayed_row equal to the helperY value
         m_first_displayed_row = helperY;
 
-    //!
-    qDebug() << " m_first_displayed_col : " << m_first_displayed_col << ", m_first_displayed_row : " << m_first_displayed_row;
-
-    //!
+    //! update painting
     updateGL();
 }
 

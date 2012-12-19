@@ -138,6 +138,10 @@ public slots:
     void translate(int dx, int dy);
 
 signals:
+    /*!
+     * \brief visibleAreaChanged , this signal is emitted uppon the view resizing
+     * \param rect
+     */
     void visibleAreaChanged(const QRect &rect);
 
     /*!
@@ -197,12 +201,7 @@ private:
     void initializeColumnRowParameters();
 
     /*!
-     * \brief initializeViewport
-     */
-    void initializeViewport();
-
-    /*!
-     * \brief setupViewport
+     * \brief setupViewport, basically setup the extends
      * \param width
      * \param height
      */
@@ -223,16 +222,34 @@ private:
     /** OpenGl buffered region */
     RasterRegionType m_OpenGlBufferedRegion;
 
-    /** The display extent */
+    /*!
+     * \brief m_Extent , The display extent handles the visible area's size and index values
+     *  The Extend's values are related to the windows's size values
+     */
     RasterRegionType m_Extent;
 
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */
     unsigned int m_SubsamplingRate;
 
+    /*!
+     * \brief m_nb_displayed_rows , a variable holding the number of rows that are visualized on an image of a fixed size [columns,rows]
+     */
     unsigned int m_nb_displayed_rows;
+
+    /*!
+     * \brief m_nb_displayed_cols , a variable holding the number of columns that are visualized on an image of a fixed size [columns,rows]
+     */
     unsigned int m_nb_displayed_cols;
+
+    /*!
+     * \brief m_nb_displayed_rows , a variable holding the first visualized row on an image of a fixed size [columns,rows]
+     */
     unsigned int m_first_displayed_row;
+
+    /*!
+     * \brief m_nb_displayed_cols , a variable holding the first visualized column on an image of a fixed size [columns,rows]
+     */
     unsigned int m_first_displayed_col;
 
 };
