@@ -217,8 +217,15 @@ void ItiOtbRgbaQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
         QPoint point = event->pos();
 
         RasterIndexType index;
-        index[0] = (point.x() - m_Extent.GetIndex()[0])/m_IsotropicZoom;
-        index[1] = (point.y() - m_Extent.GetIndex()[1])/m_IsotropicZoom;
+        if(m_Extent.GetIndex()[0] > 0)
+            index[0] = qRound((double)point.x()/m_IsotropicZoom) + m_Extent.GetIndex()[0];
+        else
+            index[0] = m_first_displayed_col + qRound((double)point.x()/m_IsotropicZoom);
+
+        if(m_Extent.GetIndex()[1] > 0)
+            index[1] =  m_Extent.GetIndex()[1] + m_Extent.GetSize()[1] - qRound((double)point.y()/m_IsotropicZoom);
+        else
+            index[1] = m_Extent.GetSize()[1] - m_nb_displayed_rows - m_first_displayed_row + qRound((double)point.y()/m_IsotropicZoom);
 
         QString text = ItiOtbRgbaImageViewer::constructTextFromImageIndex(index,imgType);
 
