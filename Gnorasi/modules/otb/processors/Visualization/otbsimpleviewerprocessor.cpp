@@ -69,7 +69,7 @@ bool OTBSimpleViewerProcessor::isReady() const {
 }
 
 std::string OTBSimpleViewerProcessor::getProcessorInfo() const {
-    return "Saves Image Data after Performing Processing";
+    return "Displays Image Data";
 }
 
 void OTBSimpleViewerProcessor::initialize() throw (VoreenException) {

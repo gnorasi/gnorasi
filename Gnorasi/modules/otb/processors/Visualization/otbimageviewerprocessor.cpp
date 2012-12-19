@@ -44,7 +44,7 @@ bool OTBImageViewerProcessor::isReady() const {
 }
 
 std::string OTBImageViewerProcessor::getProcessorInfo() const {
-    return "Saves Image Data after Performing Processing";
+    return "Displays Image Data";
 }
 
 void OTBImageViewerProcessor::initialize() throw (VoreenException) {
