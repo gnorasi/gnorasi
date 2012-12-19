@@ -194,12 +194,7 @@ private:
     /*!
      * \brief setupcolumnRowParameters
      */
-    void setupColumnRowParameters();
-
-    /*!
-     * \brief setupExtent
-     */
-    void setupExtent();
+    void initializeColumnRowParameters();
 
     /*!
      * \brief initializeViewport
