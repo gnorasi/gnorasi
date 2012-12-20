@@ -204,6 +204,8 @@ void ItiOtbRgbaQGLWidgetFullView::paintEvent(QPaintEvent *event){
     glMatrixMode(GL_MODELVIEW);
     glPopMatrix();
 
+//    DebugOpenGL();
+
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 

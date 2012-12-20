@@ -155,6 +155,11 @@ private slots:
 private:
 
     /*!
+     * \brief resetObserverMechanism
+     */
+    void resetObserverMechanism();
+
+    /*!
      * \brief setupConnections , setup the signal and slot mechanims
      */
     void setupConnections();

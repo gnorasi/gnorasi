@@ -104,10 +104,10 @@ void QGLOtbImageViewerWidget::keyPressEvent(QKeyEvent *event){
         Port *pPort = l.at(0);
         if(pPort->isConnected()){
             //! check key pressed
-//            if(event->key() == Qt::Key_F1){
-//                disassembleWidgets();
-//            }else if(event->key() == Qt::Key_F9)
-//                assembleWidgets();
+            if(event->key() == Qt::Key_F1){
+                disassembleWidgets();
+            }else if(event->key() == Qt::Key_F9)
+                assembleWidgets();
         }
     }
 

@@ -32,6 +32,7 @@
 #include <QtCore>
 #include <QtGui>
 #include <QtOpenGL>
+# include <GL/glu.h>
 
 #include "itiotbrgbaqglwidgetfullview.h"
 
@@ -112,6 +113,19 @@ public:
      * \brief draw
      */
     void draw();
+
+    //!
+    static void DebugOpenGL()
+    {
+//    #ifdef _DEBUG
+        GLenum error;
+        while ((error = glGetError()) != GL_NO_ERROR)
+        {
+            qDebug("OpenGL Error: %s\n", (char *)
+            gluErrorString(error));
+        }
+//    #endif
+    }
 
 signals:
 
