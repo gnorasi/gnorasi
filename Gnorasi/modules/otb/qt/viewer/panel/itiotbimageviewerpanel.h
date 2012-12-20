@@ -43,6 +43,7 @@ class ItiOtbImageViewerPanelPixelDescriptionTab;
 class ItiOtbImageViewer;
 
 class Command;
+class ItiOtbImageChannelProvider;
 
 /*!
  *  \class The ItiOtbImageViewerPanel class
@@ -85,6 +86,17 @@ public:
      * \param pC the Command instance
      */
     void setCommand(SLOT_KEY cmdk, Command *pC);
+
+    /*!
+     * \brief setupChannels,
+     */
+    void setupChannels();
+
+    /*!
+     * \brief setProvider
+     * \param p
+     */
+    void setProvider(ItiOtbImageChannelProvider *p) { m_pItiOtbImageChannelProvider = p; }
 
 signals:
     /*!
@@ -141,7 +153,11 @@ private:
      *  keys are SLOT_KEY enum values
      */
     QHash<int,Command*> m_commandHash;
-    
+
+    /*!
+     * \brief m_pItiOtbImageChannelProvider
+     */
+    ItiOtbImageChannelProvider *m_pItiOtbImageChannelProvider;
 };
 
 } // end of namespace itiviewer

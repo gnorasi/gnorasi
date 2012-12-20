@@ -14,6 +14,7 @@
 #include "../viewer/panel/itiotbimageviewerpanel.h"
 #include "../viewer/commands/commandcolorcomposition.h"
 #include "../viewer/commands/commandcontrastenhancement.h"
+#include "../viewer/utils/itiotbimagergbachannelprovider.h"
 
 using namespace otb;
 using namespace itiviewer;
@@ -204,11 +205,32 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! Here should be established incoming image data usage protocol
     //!
 
+    //! type case checking
+    if(dynamic_cast<OTBImagePort*>(port)){ // set here the raster image port
+
+        //! cast it ot OTBImagePort
+        OTBImagePort *pOtbImagePort = dynamic_cast<OTBImagePort*>(port);
+
+        //! get the image
+        RasterImageType *rImgType = (RasterImageType*)pOtbImagePort->getData();
+        if(!rImgType)
+            return;
+
+        //! create the specialized factory item
+        m_pItiOtbImageFactory = new ItiOtbRgbaImageViewerFactory(this);
+
+        //! create the specialized provider
+        m_pItiOtbImageViewerPanel->setProvider(new ItiOtbImageRgbaChannelProvider(rImgType,this));
+    }
+    else if(dynamic_cast<OTBVectorImagePort*>(port)){ // set here the vector image factory
+
+    }
+
     //! set the port to the image manager
     ITIOTBIMAGEMANAGER->setPort(port);
 
     //! create the appropriate viewer
-    createViewer(port);
+    createViewer();
 
     //! draw stuff
     m_pItiOtbImageViewer->draw();
@@ -217,14 +239,7 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! END OF INCOMING DATA USAGE
 }
 
-void QGLOtbImageViewerWidget::createViewer(Port *pPort){
-    //! type case checking
-    if(dynamic_cast<OTBImagePort*>(pPort)){ // set here the raster image port
-        m_pItiOtbImageFactory = new ItiOtbRgbaImageViewerFactory(this);
-    }
-    else if(dynamic_cast<OTBVectorImagePort*>(pPort)){ // set here the vector image factory
-
-    }
+void QGLOtbImageViewerWidget::createViewer(){
 
     //! In order to un set a QSplitter the objects contained need to be hidden and deleted first
 
