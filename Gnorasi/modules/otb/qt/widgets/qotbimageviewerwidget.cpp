@@ -2,19 +2,18 @@
 
 #include "voreen/qt/voreenapplicationqt.h"
 
-#include "otbImageFileReader.h"
-
 #include "../../ports/otbimageport.h"
 #include "../../ports/otbvectorimageport.h"
-
 
 #include "../viewer/utils/itiotbimagemanager.h"
 #include "../viewer/widgets/itiotbimageviewer.h"
 #include "../viewer/factories/itiotbrgbaimageviewerfactory.h"
+#include "../viewer/factories/itiotbvectorimageviewerfactory.h"
 #include "../viewer/panel/itiotbimageviewerpanel.h"
 #include "../viewer/commands/commandcolorcomposition.h"
 #include "../viewer/commands/commandcontrastenhancement.h"
 #include "../viewer/utils/itiotbimagergbachannelprovider.h"
+#include "../viewer/utils/itiotbimagevectorchannelprovider.h"
 
 using namespace otb;
 using namespace itiviewer;
@@ -223,7 +222,19 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
         m_pItiOtbImageViewerPanel->setProvider(new ItiOtbImageRgbaChannelProvider(rImgType,this));
     }
     else if(dynamic_cast<OTBVectorImagePort*>(port)){ // set here the vector image factory
+        //! cast it ot OTBImagePort
+        OTBVectorImagePort *pOtbVectorImagePort = dynamic_cast<OTBVectorImagePort*>(port);
 
+        //! get the image
+        VectorImageType *vImgType = (VectorImageType*)pOtbVectorImagePort->getData();
+        if(!vImgType)
+            return;
+
+        //! create the specialized factory item
+        m_pItiOtbImageFactory = new ItiOtbVectorImageViewerFactory(this);
+
+        //! create the specialized provider
+        m_pItiOtbImageViewerPanel->setProvider(new ItiOtbImageVectorChannelProvider(vImgType,this));
     }
 
     //! set the port to the image manager

@@ -382,6 +382,12 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/widgets/itiviewerpixelinfowidget.cpp
     ${MOD_DIR}/qt/viewer/utils/itiotbimagechannelprovider.cpp
     ${MOD_DIR}/qt/viewer/utils/itiotbimagergbachannelprovider.cpp
+    ${MOD_DIR}/qt/viewer/factories/itiotbvectorimageviewerfactory.cpp
+    ${MOD_DIR}/qt/viewer/utils/itiotbimagevectorchannelprovider.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbvectorimageviewer.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbvectorqglwidgetscrollable.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbvectorqglwidgetfullview.cpp
+    ${MOD_DIR}/qt/viewer/widgets/itiotbvectorqglwidgetzoomable.cpp
 )
 ################################################################################
 # Qt headers
@@ -411,6 +417,13 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/widgets/itiviewerpixelinfowidget.h
     ${MOD_DIR}/qt/viewer/utils/itiotbimagechannelprovider.h
     ${MOD_DIR}/qt/viewer/utils/itiotbimagergbachannelprovider.h
+    ${MOD_DIR}/qt/viewer/factories/itiotbvectorimageviewerfactory.h
+    ${MOD_DIR}/qt/viewer/vector_globaldefs.h
+    ${MOD_DIR}/qt/viewer/utils/itiotbimagevectorchannelprovider.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbvectorimageviewer.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbvectorqglwidgetscrollable.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbvectorqglwidgetfullview.h
+    ${MOD_DIR}/qt/viewer/widgets/itiotbvectorqglwidgetzoomable.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC
