@@ -117,17 +117,35 @@ void ItiOtbRgbaQGLWidgetZoomable::resizeGL(int w, int h)
     //! setup the number of rows and columns to be visualized
     //!
     //! check if the extend's index x value is greater than zero , if yes then the number of columns equals to the number of the buffered region
-    if( m_Extent.GetIndex()[0] > 0 )
+    if( m_Extent.GetIndex()[0] > 0 ){
         m_nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
-    else
+        m_first_displayed_col = 0;
+    } else {
+
         m_nb_displayed_cols = m_W / m_IsotropicZoom;
+
+        //!
+        //! setup the fisrt display column
+        //!
+        if(m_first_displayed_col + m_nb_displayed_cols > m_OpenGlBufferedRegion.GetSize()[0])
+            m_first_displayed_col = m_OpenGlBufferedRegion.GetSize()[0] - m_nb_displayed_cols;
+    }
 
     //!
     //! check if the extend's index y value is greater than zero , if yes then the number of columns equals to the number of the buffered region
-    if( m_Extent.GetIndex()[1] > 0 )
+    if( m_Extent.GetIndex()[1] > 0 ){
         m_nb_displayed_rows = m_OpenGlBufferedRegion.GetSize()[1];
-    else
+        m_first_displayed_row = m_Extent.GetSize()[1] - m_nb_displayed_rows;
+    } else {
         m_nb_displayed_rows = m_H / m_IsotropicZoom;
+
+        //!
+        //! setup first display row
+        //!
+        if(m_first_displayed_row + m_nb_displayed_rows > m_OpenGlBufferedRegion.GetSize()[1])
+            m_first_displayed_row = m_OpenGlBufferedRegion.GetSize()[0] - m_nb_displayed_rows;
+
+    }
 
     //! emit a signal
     setupAndSendSignal();
@@ -204,6 +222,8 @@ void ItiOtbRgbaQGLWidgetZoomable::paintGL()
 
 
     glFlush();
+
+    DebugOpenGL();
 }
 
 //!
