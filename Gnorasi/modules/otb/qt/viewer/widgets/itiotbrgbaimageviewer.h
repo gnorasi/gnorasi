@@ -105,9 +105,9 @@ public:
     /*!
      * \brief costructTextFromImageIndex
      * \param index , the index of the image
-     * \return
+     * \return , return a QString containing pixel info data in order to show it on the respective widget
      */
-    static QString constructTextFromImageIndex(RasterIndexType index, RasterImageType* image);
+    static inline QString constructTextFromImageIndex(RasterIndexType index, RasterImageType* image);
 
     /** Compute the linear buffer index according to the 2D region and
      * its 2D index.This method is used when OTB_GL_USE_ACCEL is OFF.
@@ -255,6 +255,45 @@ private:
     QString m_labelCss;
     
 };
+
+//!
+QString ItiOtbRgbaImageViewer::constructTextFromImageIndex(RasterIndexType index, RasterImageType* image){
+    QString text;
+
+    text  = QString::fromUtf8("Index : [%1, %2]").arg(QString::number(index[0])).arg(QString::number(index[1]));
+    text += "\n";
+    text += QString::fromUtf8("Layer : ");
+    text += "\n";
+
+    //! region
+    RasterRegionType region = image->GetBufferedRegion();
+    text += QString::fromUtf8("Image size : [%1, %2]").arg(QString::number(region.GetSize()[0])).arg(QString::number(region.GetSize()[1]));
+    text += "\n";
+
+    //! image related
+    text += QString::fromUtf8("Channel selection : ");
+    text += "\n";
+
+    //! index related
+    text += QString::fromUtf8("Pixel value : [%1, %2, %3]");
+    text += "\n";
+    text += QString::fromUtf8("Value computed : [%1, %2, %3]");
+    text += "\n";
+    text += QString::fromUtf8("Value displayed : R %1, G %2, B %3, A %4");
+    text += "\n";
+
+    //! region related
+    text += QString::fromUtf8("Ground spacing (in m): (%1, %2)");
+    text += "\n";
+
+    //! index related
+    text += QString::fromUtf8("Lon: %1, Lat: %2");
+    text += "\n";
+    text += QLatin1String("(precise location)");
+
+    return text;
+
+}
 
 } // end of namespace itiviewer
 
