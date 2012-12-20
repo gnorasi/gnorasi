@@ -49,6 +49,9 @@ namespace itiviewer{
 *   is centered).
 *
 *   It is also able to display a rectangle on the displayed image.
+*
+*   This class uses the overpainting on a QGLWidget paradeigm from the Qt examples
+*
 *  \ingroup Visualization
  */
 
@@ -95,18 +98,6 @@ public:
     //! setter getter, self explanatory
     RasterRegionType extent() { return m_Extent; }
 
-    /** Compute the linear buffer index according to the 2D region and
-     * its 2D index.This method is used when OTB_GL_USE_ACCEL is OFF.
-     * The resulting buffer will be flipped over the X axis.
-     * \param index 2D index
-     * \param region 2D region
-     */
-    static inline unsigned int ComputeXAxisFlippedBufferIndex(const RasterIndexType& index, const RasterRegionType& region)
-    {
-      return (region.GetSize()[1] - 1 + region.GetIndex()[1] -
-              index[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
-    }
-
     /*!
      * \brief update , implementation from parent class
      * \param region, the region
@@ -119,16 +110,27 @@ public:
     void draw();
 
 signals:
-    //!
+    /*!
+     * \brief visibleAreaChanged , this signal is emitted uppon the view resizing
+     * \param rect
+     */
     void visibleAreaChanged(const QRect &rect);
 
-    //!
+    /*!
+     * \brief focusRegionTranslated, this signal is emitted on mouse press events
+     * \param dx
+     * \param dy
+     */
     void focusRegionTranslated(int dx, int dy);
 
-    //!
+    /*!
+     * \brief zoomIn , this signal is emitterd uppon wheel events
+     */
     void zoomIn();
 
-    //!
+    /*!
+     * \brief zoomIn , this signal is emitterd uppon wheel events
+     */
     void zoomOut();
 
     /*!
@@ -211,7 +213,9 @@ private:
     QPen m_pen;
 
     /*!
-     * \brief m_focusRegion
+     * \brief m_focusRegion, this rectangle is synchronized with the windows of the zoom view
+     *  This rectangle is a helper variable in order to full setup the observer mechanism between
+     *  An observalble region and the observer classes which in this case are the views(scrollable,zoombable,full view)
      */
     QRect m_focusRegion;
 

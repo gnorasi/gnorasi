@@ -52,7 +52,7 @@ void ItiOtbRgbaQGLWidgetFullView::ReadBuffer(const RasterImageType *image, const
 
         // compute the linear index (buffer is flipped around X axis
         // when gl acceleration is disabled
-        index = ComputeXAxisFlippedBufferIndex(it.GetIndex(), region);
+        index = ItiOtbRgbaImageViewer::ComputeXAxisFlippedBufferIndex(it.GetIndex(), region);
 
         // Fill the buffer
         m_OpenGlBuffer[index]  = it.Get()[0];

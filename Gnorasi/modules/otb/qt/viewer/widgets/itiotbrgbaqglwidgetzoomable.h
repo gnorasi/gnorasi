@@ -95,17 +95,6 @@ public:
     //! setter getter, self explanatory
     RasterRegionType extent() { return m_Extent; }
 
-    /** Compute the linear buffer index according to the 2D region and
-     * its 2D index.This method is used when OTB_GL_USE_ACCEL is OFF.
-     * The resulting buffer will be flipped over the X axis.
-     * \param index 2D index
-     * \param region 2D region
-     */
-    static inline unsigned int ComputeXAxisFlippedBufferIndex(const RasterIndexType& index, const RasterRegionType& region)
-    {
-      return (region.GetSize()[1] - 1 + region.GetIndex()[1] -
-              index[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
-    }
 
     /*!
      * \brief update , implementation from parent class

@@ -30,7 +30,7 @@ void ItiOtbRgbaQGLWidgetScrollable::ReadBuffer(const RasterImageType *image, con
     // region of image
     if (!image->GetBufferedRegion().IsInside(region))
       {
-//      itkExceptionMacro(<< "Region to read is oustside of the buffered region.");
+        qDebug() << "Region to read is oustside of the buffered region.";
       }
     // Delete previous buffer if needed
     this->ClearBuffer();
@@ -51,12 +51,12 @@ void ItiOtbRgbaQGLWidgetScrollable::ReadBuffer(const RasterImageType *image, con
 
         // compute the linear index (buffer is flipped around X axis
         // when gl acceleration is disabled
-        index = ComputeXAxisFlippedBufferIndex(it.GetIndex(), region);
+        index = ItiOtbRgbaImageViewer::ComputeXAxisFlippedBufferIndex(it.GetIndex(), region);
 
         // Fill the buffer
-        m_OpenGlBuffer[index]  = it.Get()[0];
-        m_OpenGlBuffer[index + 1] = it.Get()[1];
-        m_OpenGlBuffer[index + 2] = it.Get()[2];
+        m_OpenGlBuffer[index]       = it.Get()[0];
+        m_OpenGlBuffer[index + 1]   = it.Get()[1];
+        m_OpenGlBuffer[index + 2]   = it.Get()[2];
         ++it;
     }
 
@@ -90,7 +90,9 @@ void ItiOtbRgbaQGLWidgetScrollable::ClearBuffer(){
     update();
 }
 
-
+/*!
+ * \brief ItiOtbRgbaQGLWidgetScrollable::initializeGL
+ */
 void ItiOtbRgbaQGLWidgetScrollable::initializeGL()
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -100,21 +102,28 @@ void ItiOtbRgbaQGLWidgetScrollable::initializeGL()
 
 void ItiOtbRgbaQGLWidgetScrollable::resizeGL(int w, int h)
 {
+    //! firstly setup the viweport with the new width and height
     setupViewport(w,h);
 
+    //! create a rect
     QRect rect;
+
     rect.setX(m_Extent.GetIndex()[0]);
     rect.setY(m_Extent.GetIndex()[1]);
 
+    //! create helper integer values
     int wt = qMin(static_cast<int>(w),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[0]));
     int ht = qMin(static_cast<int>(h),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[1]));
+
+    //! set the helper values
     rect.setWidth(wt);
     rect.setHeight(ht);
 
-
+    //! emit the signal
     emit visibleAreaChanged(rect);
 }
 
+//!
 void ItiOtbRgbaQGLWidgetScrollable::setupViewport(int w, int h){
     RasterSizeType size;
     size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[0]));
@@ -226,6 +235,7 @@ void ItiOtbRgbaQGLWidgetScrollable::paintEvent(QPaintEvent *event){
 
 //!
 void ItiOtbRgbaQGLWidgetScrollable::draw(){
+    //! get the current port from the manager
     OTBImagePort *port = (OTBImagePort*)ITIOTBIMAGEMANAGER->port();
 
     if(!port)
@@ -236,35 +246,45 @@ void ItiOtbRgbaQGLWidgetScrollable::draw(){
     if(!imgType)
         return;
 
+    //! get the biggest available region
     RasterRegionType region = imgType->GetLargestPossibleRegion();
 
-    //!
+    //! read the buffer
     ReadBuffer(imgType,region);
 
+    //! mouse tracking is disabled on startup, set it on
     setMouseTracking(true);
 }
 
-//!
+//! The observer gets notified on a zoomable view's change ( either zooming or resizing events)
 void ItiOtbRgbaQGLWidgetScrollable::updateObserver(ItiViewerObservable *observable){
-    if(m_OpenGlBufferedRegion.GetSize()[0] <= 0 || m_OpenGlBufferedRegion.GetSize()[1] <= 0 )
+    //!
+    if(!m_OpenGlBuffer)
         return;
 
     ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
     if(!region)
         return;
 
+    //! get the current rect from the region
     QRect rregion = region->region();
 
+    //! create helper values from the rect's parameters
     int x       = rregion.x();
     int y       = rregion.y();
     int width   = rregion.width();
     int height  = rregion.height();
 
     m_focusRegion.setX(m_Extent.GetIndex()[0] + x);
+    //!
+    //! Take notice that the y-axes is inverted [1,-1]. That's why the focus resion's y value equals to
+    //! the following calculated value
+    //!
     m_focusRegion.setY(m_Extent.GetIndex()[1] + m_Extent.GetSize()[1] - height - y);
     m_focusRegion.setWidth(width);
     m_focusRegion.setHeight(height);
 
+    //! finally update the view
     update();
 }
 
@@ -272,6 +292,7 @@ void ItiOtbRgbaQGLWidgetScrollable::updateObserver(ItiViewerObservable *observab
 void ItiOtbRgbaQGLWidgetScrollable::wheelEvent(QWheelEvent *event){
     double deltaval = (double)event->delta();
 
+    //! check the delta value if is more than zero, if yes zoomin, else zoomout
     if(deltaval>0)
         emit zoomIn();
     else
@@ -283,36 +304,42 @@ void ItiOtbRgbaQGLWidgetScrollable::wheelEvent(QWheelEvent *event){
 //!
 void ItiOtbRgbaQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
 
+    //! setup translating functionality only on left button pressed mouse events
     if(event->button() == Qt::LeftButton){
-        //!
+        //! create a helper point value
         QPoint previousCenter = m_focusRegion.center();
-        //!
+
+        //! get the position of the event
         QPoint point = event->pos();
-        //!
+
+        //! create a helper line object
         QLine line(previousCenter,point);
-        //!
+
+        //! create helper values
         int dx = 0, dy = 0;
 
-        //!
+        //! check if the new rect right border exceeds the extends' width value
         if(point.x()+ qRound((double)m_focusRegion.width()/2.0) > m_Extent.GetSize()[0] + m_Extent.GetIndex()[0]){
             dx = m_Extent.GetIndex()[0] + m_Extent.GetSize()[0] - qRound((double)m_focusRegion.width()/2.0) - previousCenter.x();
-        }else if(point.x()- qRound((double)m_focusRegion.width()/2.0) < m_Extent.GetIndex()[0]){
+        } //! check if the new rect left border exceeds the extend's index x value
+        else if(point.x()- qRound((double)m_focusRegion.width()/2.0) < m_Extent.GetIndex()[0]){
             dx = m_Extent.GetIndex()[0] + qRound((double)m_focusRegion.width()/2.0) - previousCenter.x();
-        }else
+        }else //! else set the dx value equal to the line dx value
             dx = line.dx();
 
-        //!
+        //! check if the new rect right border exceeds the extends' height value
         if(point.y()+ qRound((double)m_focusRegion.height()/2.0) > m_Extent.GetSize()[1] + m_Extent.GetIndex()[1]){
             dy = m_Extent.GetSize()[1] + m_Extent.GetIndex()[1] - qRound((double)m_focusRegion.height()/2.0) - previousCenter.y();
-        }else if(point.y()- qRound((double)m_focusRegion.height()/2.0) < m_Extent.GetIndex()[1]){
+        } //! check if the new rect left border exceeds the extend's index y value
+        else if(point.y()- qRound((double)m_focusRegion.height()/2.0) < m_Extent.GetIndex()[1]){
             dy = m_Extent.GetIndex()[1] + qRound((double)m_focusRegion.height()/2.0) - previousCenter.y();
-        }else
+        }else //! else set the dy value equal to the line dy value
             dy = line.dy();
 
         //!translate the focus region
         m_focusRegion.translate(dx,dy);
 
-        //! emit signal
+        //! emit signal in order to update the zoomable view
         emit focusRegionTranslated(dx,dy);
 
         //! update widget
@@ -324,8 +351,12 @@ void ItiOtbRgbaQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
 
 //!
 void ItiOtbRgbaQGLWidgetScrollable::mouseMoveEvent(QMouseEvent *event){
+    //! get the current image port from the manager
     OTBImagePort *imgPort = (OTBImagePort*)ITIOTBIMAGEMANAGER->port();
+
+    //! check if the image port is valid and connected with other ports
     if(imgPort && imgPort->isConnected()){
+        //! get the image from the port
         RasterImageType* imgType =  (RasterImageType*)imgPort->getData();
         if(!imgType){
             QGLWidget::mouseMoveEvent(event);
@@ -339,12 +370,14 @@ void ItiOtbRgbaQGLWidgetScrollable::mouseMoveEvent(QMouseEvent *event){
         index[0] = (point.x() - m_Extent.GetIndex()[0])/m_IsotropicZoom;
         index[1] = (point.y() - m_Extent.GetIndex()[1])/m_IsotropicZoom;
 
+        //! construct a text value related to pixel info data
         QString text = ItiOtbRgbaImageViewer::constructTextFromImageIndex(index,imgType);
 
+        //! emit the signal
         emit currentIndexChanged(text);
     }
 
-
+    //! call the parent's class method
     QGLWidget::mouseMoveEvent(event);
 }
 
