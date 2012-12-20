@@ -82,8 +82,9 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
         //! get the first port
         Port *pPort = l.at(0);
 
-        //!
-        setupByPort(pPort);
+        //! check if the port is connected, only then setup the viewer by the port
+        if(pPort->isConnected())
+            setupByPort(pPort);
     }
 }
 
@@ -206,6 +207,7 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! set the port to the image manager
     ITIOTBIMAGEMANAGER->setPort(port);
 
+    //! create the appropriate viewer
     createViewer(port);
 
     //! draw stuff
@@ -224,6 +226,8 @@ void QGLOtbImageViewerWidget::createViewer(Port *pPort){
 
     }
 
+    //! In order to un set a QSplitter the objects contained need to be hidden and deleted first
+
     //!
     m_pItiOtbImageViewer->hide();
     delete m_pItiOtbImageViewer;
@@ -231,14 +235,14 @@ void QGLOtbImageViewerWidget::createViewer(Port *pPort){
     //! create a new ItiOtbImageViewer instance
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->createViewer();
 
-    //! setup commands
-    setupCommands();
-
-    //!
+    //! set this widget as viewer's parent
     m_pItiOtbImageViewer->setParent(this);
     m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
 
-    //!
+    //! setup commands
+    setupCommands();
+
+    //! finally add the widget to the splitter
     m_pvSplitter->insertWidget(0,m_pItiOtbImageViewer);
 }
 
