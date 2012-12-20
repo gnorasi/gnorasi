@@ -138,8 +138,9 @@ private:
 
     /*!
      * \brief m_commandHash , a has holding the command objects
+     *  keys are SLOT_KEY enum values
      */
-    QHash<QString,Command*> m_commandHash;
+    QHash<int,Command*> m_commandHash;
     
 };
 

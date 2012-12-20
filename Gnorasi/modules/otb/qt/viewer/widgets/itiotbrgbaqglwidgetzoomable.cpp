@@ -332,10 +332,10 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomIn(){
     }
     else{
         //! the number of columns equal to the width of the window divided by the zoom value
-        m_nb_displayed_cols = qRound(m_W / m_IsotropicZoom);
+        m_nb_displayed_cols = qRound((double)m_W / m_IsotropicZoom);
 
         //! create a helper value equal to the current m_first_displayed_col plus a number that occurs due to the fact that the newly created visible rectangle will have less size
-        int helperX = m_first_displayed_col + qRound((m_nb_displayed_cols*ZOOM_VALUE)/2);
+        int helperX = m_first_displayed_col + qRound(((double)m_nb_displayed_cols*ZOOM_VALUE)/2.0);
 
         //! check that the helperX value is between the extend's x-axes limits
         //! fistly check that it is less than zero
@@ -356,13 +356,13 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomIn(){
     }
     else{
         //! calculate the displayable rows
-        m_nb_displayed_rows = qRound(m_H / m_IsotropicZoom);
+        m_nb_displayed_rows = qRound((double)m_H / m_IsotropicZoom);
 
         //! create a helper value equal to the current m_first_displayed_row minus a number that occurs due to the fact that the newly created visible rectangle will have less size
         //!
         //! take notice that the y-axes display rows follow a transformation matrix [1,-1] , and this is the reason why the rounded value is being subtracted by the m_first_displayed_row
         //!
-        int helperY = m_first_displayed_row - qRound((m_nb_displayed_rows*ZOOM_VALUE)/2);
+        int helperY = m_first_displayed_row - qRound(((double)m_nb_displayed_rows*ZOOM_VALUE)/2.0);
 
         //! check that the helperY value is between the extend's y-axes limits
         //! fistly check that it is less than zero
