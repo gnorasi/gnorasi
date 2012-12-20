@@ -156,21 +156,32 @@ void ItiOtbRgbaImageViewer::disassembleWidgets(){
     m_pItiViewerPixelInfoWidget->setWindowFlags(Qt::Window);
     m_pItiViewerPixelInfoWidget->setGeometry(QApplication::desktop()->width()/2 - 80,QApplication::desktop()->height()/2 - 80,200,200);
 
+    //!
+    //! Because of a bug causing crashes when the viewer was set in split mode, we create container widgets for each seperate view
+    //!
+
+    //! setup the zoom viewe
     QWidget *phelperWidgetScroll = new QWidget(this,Qt::Window);
     phelperWidgetScroll->setWindowTitle(m_pLabelScrollableResolution->text());
+    phelperWidgetScroll->setMinimumSize(QSize(150,150));
     phelperWidgetScroll->setGeometry(QApplication::desktop()->width()/2 - 200,QApplication::desktop()->height()/2 - 200,200,200);
     QVBoxLayout *vboxLayout = new QVBoxLayout();
     vboxLayout->addWidget(m_pItiOtbRgbaImageWidgetScroll);
     phelperWidgetScroll->setLayout(vboxLayout);
 
+    //! setup the full viewe
     QWidget *phelperWidgetFullView = new QWidget(this,Qt::Window);
+    phelperWidgetFullView->setMinimumSize(QSize(150,150));
     phelperWidgetFullView->setWindowTitle(m_pLabelFullView->text());
     phelperWidgetFullView->setGeometry(QApplication::desktop()->width()/2 - 160,QApplication::desktop()->height()/2 - 160,200,200);
     QVBoxLayout *vboxLayout1 = new QVBoxLayout();
     vboxLayout1->addWidget(m_pItiOtbRgbaImageWidgetFullView);
     phelperWidgetFullView->setLayout(vboxLayout1);
 
+
+    //! setup the zoom viewe
     QWidget *phelperWidgetZoomView = new QWidget(this,Qt::Window);
+    phelperWidgetZoomView->setMinimumSize(QSize(150,150));
     phelperWidgetZoomView->setWindowTitle(m_pLabelZoomView->text());
     phelperWidgetZoomView->setGeometry(QApplication::desktop()->width()/2 - 120,QApplication::desktop()->height()/2 - 120,200,200);
     QVBoxLayout *vboxLayout2 = new QVBoxLayout();

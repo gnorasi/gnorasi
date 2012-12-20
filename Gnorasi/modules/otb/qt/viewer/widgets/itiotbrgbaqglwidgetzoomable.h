@@ -32,6 +32,7 @@
 #include <QGLWidget>
 #include <QPen>
 #include <QWheelEvent>
+#include <GL/GLU.h>
 
 #include "../rgba_globaldefs.h"
 
@@ -125,6 +126,19 @@ public slots:
      * \param dy
      */
     void translate(int dx, int dy);
+
+    //!
+    static void DebugOpenGL()
+    {
+//    #ifdef _DEBUG
+        GLenum error;
+        while ((error = glGetError()) != GL_NO_ERROR)
+        {
+            qDebug("OpenGL Error: %s\n", (char *)
+            gluErrorString(error));
+        }
+//    #endif
+    }
 
 signals:
     /*!
