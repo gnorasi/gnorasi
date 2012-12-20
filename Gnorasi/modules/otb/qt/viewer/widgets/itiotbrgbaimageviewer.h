@@ -109,6 +109,28 @@ public:
      */
     static QString constructTextFromImageIndex(RasterIndexType index, RasterImageType* image);
 
+    /** Compute the linear buffer index according to the 2D region and
+     * its 2D index.This method is used when OTB_GL_USE_ACCEL is OFF.
+     * The resulting buffer will be flipped over the X axis.
+     * \param index 2D index
+     * \param region 2D region
+     */
+    static inline unsigned int ComputeXAxisFlippedBufferIndex(const RasterIndexType& index, const RasterRegionType& region)
+    {
+      return (region.GetSize()[1] - 1 + region.GetIndex()[1] -
+              index[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
+    }
+
+    /** Compute the linear buffer index according to the 2D region and
+    * its 2D index.This method is used when OTB_GL_USE_ACCEL is ON.
+    * \param index 2D index
+    * \param region 2D region
+    */
+    static inline unsigned int ComputeBufferIndex(const RasterIndexType& index, const RasterRegionType& region)
+    {
+      return (index[1] - region.GetIndex()[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
+    }
+
 
 private slots:
     /*!

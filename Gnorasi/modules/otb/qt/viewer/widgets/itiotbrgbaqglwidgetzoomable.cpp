@@ -27,7 +27,7 @@ void ItiOtbRgbaQGLWidgetZoomable::ReadBuffer(const RasterImageType *image, const
     // Before doing anything, check if region is inside the buffered
     // region of image
     if (!image->GetBufferedRegion().IsInside(region)){
-//      itkExceptionMacro(<< "Region to read is oustside of the buffered region.");
+        qDebug() << "Region to read is oustside of the buffered region.";
     }
     // Delete previous buffer if needed
     this->ClearBuffer();
@@ -48,7 +48,7 @@ void ItiOtbRgbaQGLWidgetZoomable::ReadBuffer(const RasterImageType *image, const
 
         // compute the linear index (buffer is flipped around X axis
         // when gl acceleration is disabled
-        index = ComputeXAxisFlippedBufferIndex(it.GetIndex(), region);
+        index = ItiOtbRgbaImageViewer::ComputeXAxisFlippedBufferIndex(it.GetIndex(), region);
 
         // Fill the buffer
         m_OpenGlBuffer[index]  = it.Get()[0];
@@ -256,6 +256,7 @@ void ItiOtbRgbaQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
 
 //!
 void ItiOtbRgbaQGLWidgetZoomable::draw(){
+    //! get the current port from the manager
     OTBImagePort *port = (OTBImagePort*)ITIOTBIMAGEMANAGER->port();
 
     if(!port)
@@ -266,13 +267,13 @@ void ItiOtbRgbaQGLWidgetZoomable::draw(){
     if(!imgType)
         return;
 
-    //!
+    //! get the biggest available region
     RasterRegionType region = imgType->GetLargestPossibleRegion();
 
-    //!
+    //! read the buffer
     ReadBuffer(imgType,region);
 
-    //!
+    //! mouse tracking is disabled on startup, set it on
     setMouseTracking(true);
 }
 
