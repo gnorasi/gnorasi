@@ -45,28 +45,19 @@ void ItiOtbImageViewerPanel::initialize(){
 
 //!
 void ItiOtbImageViewerPanel::applyColorComposition(){
-    Command *pCommand = m_commandHash["CMD_CC"];
+    Command *pCommand = m_commandHash[(int)SLOT_CC];
     if(pCommand)
         pCommand->execute();
 }
 
 //!
 void ItiOtbImageViewerPanel::applyConstrastEnhancement(){
-    Command *pCommand = m_commandHash["CMD_CE"];
+    Command *pCommand = m_commandHash[(int)SLOT_CE];
     if(pCommand)
         pCommand->execute();
 }
 
 //!
 void ItiOtbImageViewerPanel::setCommand(SLOT_KEY cmdk, Command *pC){
-    switch(cmdk){
-        case SLOT_CC:
-            m_commandHash["CMD_CC"] = pC;
-            break;
-        case SLOT_CE:
-            m_commandHash["CMD_CE"] = pC;
-            break;
-        default:
-            break;
-    }
+    m_commandHash[(int)cmdk] = pC;
 }
