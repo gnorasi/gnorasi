@@ -44,6 +44,7 @@ namespace itiviewer{
     class ItiOtbImageViewer;
     class ItiOtbImageViewerFactory;
     class ItiOtbImageViewerPanel;
+    class ItiOtbImageChannelProvider;
 }
 
 using namespace otb;
@@ -102,7 +103,7 @@ private:
      * \brief createViewer
      * \param port
      */
-    void createViewer(voreen::Port* port);
+    void createViewer();
 
     /*!
      * \brief setupByPort
