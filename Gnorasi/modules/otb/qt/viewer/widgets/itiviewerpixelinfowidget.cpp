@@ -9,13 +9,14 @@ using namespace itiviewer;
 ItiViewerPixelInfoWidget::ItiViewerPixelInfoWidget(QWidget *parent) :
     QWidget(parent)
 {
+    m_title = tr("Pixel Information");
     //!
     setupLayout();
 }
 
 //!
 void ItiViewerPixelInfoWidget::setupLayout(){
-    QLabel *pLabel = new QLabel(tr("Pixel Information"),this);
+    QLabel *pLabel = new QLabel(m_title,this);
     QString css;
     css = QString("QLabel { color: blue; font: bold 13px; } ");
     pLabel->setStyleSheet(css);

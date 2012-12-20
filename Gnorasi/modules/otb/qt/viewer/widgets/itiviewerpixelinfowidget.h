@@ -15,6 +15,7 @@ class ItiViewerPixelInfoWidget : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(QString text     READ text   WRITE setText   NOTIFY textChanged)
+    Q_PROPERTY(QString title    READ title  WRITE setTitle  NOTIFY titleChanged)
 
 public:
     /*!
@@ -34,6 +35,18 @@ public:
      * \param s , the new text
      */
     void setText(const QString &s);
+
+    /*!
+     * \brief title
+     * \return
+     */
+    QString title() const { return m_title; }
+
+    /*!
+     * \brief setTitle
+     * \param t
+     */
+    void setTitle(const QString &t) { m_title = t; }
     
 public slots:
 
@@ -45,8 +58,22 @@ signals:
      */
     void textChanged();
 
+
+    /*!
+     * \brief titleChanged
+     */
+    void titleChanged();
+
 private:
 
+    /*!
+     * \brief m_title
+     */
+    QString m_title;
+
+    /*!
+     * \brief m_pTextEdit
+     */
     QTextEdit *m_pTextEdit;
 
     /*!
