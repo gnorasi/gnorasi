@@ -202,6 +202,9 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! TODO
     //!
     //! Here should be established incoming image data usage protocol
+    //! Do some fancy image port data casting like Angelos said
+    //! Maybe will use only vector data on the viewers..
+    //! not sure yet
     //!
 
     //! type case checking

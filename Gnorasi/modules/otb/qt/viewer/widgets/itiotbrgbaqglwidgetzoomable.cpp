@@ -222,8 +222,6 @@ void ItiOtbRgbaQGLWidgetZoomable::paintGL()
 
 
     glFlush();
-
-    DebugOpenGL();
 }
 
 //!

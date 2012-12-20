@@ -32,7 +32,6 @@
 #include <QGLWidget>
 #include <QPen>
 #include <QWheelEvent>
-# include <GL/glu.h>
 
 #include "itiviewerobserver.h"
 
@@ -109,18 +108,6 @@ public:
      * \brief draw
      */
     void draw();
-
-    static void DebugOpenGL()
-    {
-//    #ifdef _DEBUG
-        GLenum error;
-        while ((error = glGetError()) != GL_NO_ERROR)
-        {
-            qDebug("OpenGL Error: %s\n", (char *)
-            gluErrorString(error));
-        }
-//    #endif
-    }
 
 signals:
     /*!

@@ -222,8 +222,6 @@ void ItiOtbVectorQGLWidgetZoomable::paintGL()
 
 
     glFlush();
-
-    DebugOpenGL();
 }
 
 //!
