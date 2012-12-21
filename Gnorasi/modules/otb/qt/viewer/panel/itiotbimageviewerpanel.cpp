@@ -6,8 +6,11 @@
 #include "itiotbimageviewerpanelpixeldescriptiontab.h"
 #include "../widgets/itiotbimageviewer.h"
 #include "../commands/command.h"
+#include "../vector_globaldefs.h"
+#include "../utils/itiotbimagemanager.h"
 
 #include <QVBoxLayout>
+
 
 using namespace itiviewer;
 
@@ -60,4 +63,11 @@ void ItiOtbImageViewerPanel::applyConstrastEnhancement(){
 //!
 void ItiOtbImageViewerPanel::setCommand(SLOT_KEY cmdk, Command *pC){
     m_commandHash[(int)cmdk] = pC;
+}
+
+//!
+void ItiOtbImageViewerPanel::setupChannels(){
+    VectorImageType *img = ITIOTBIMAGEMANAGER->image();
+    if(!img)
+        return;
 }

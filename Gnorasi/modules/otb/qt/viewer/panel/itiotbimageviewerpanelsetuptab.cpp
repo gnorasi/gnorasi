@@ -35,6 +35,17 @@ void ItiOtbImageViewerPanelSetupTab::setupColorCompositionGroupBox(){
     m_pRadioButtonGrayscaleMode->setText(tr("Greyscale mode"));
     m_pRadioButtonRGBCompositionMode->setText(tr("RGB composition mode"));
     m_pButtonApplyColorComposition->setText(tr("Apply"));
+    m_pLabelRedChannel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+    m_pLabelGreenChannel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+    m_pLabelBlueChannel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+    m_pLabelGreyChannel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+    m_pSpinBoxBlueChannel->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    m_pSpinBoxGreenChannel->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    m_pSpinBoxGreyscaleChannel->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    m_pSpinBoxRedChannel->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    m_pSpinBoxRedChannel->setValue(1);
+    m_pSpinBoxGreenChannel->setValue(2);
+    m_pSpinBoxBlueChannel->setValue(3);
 
     //!
     QHBoxLayout *hboxLayout = new QHBoxLayout;
@@ -70,6 +81,9 @@ void ItiOtbImageViewerPanelSetupTab::setupColorCompositionGroupBox(){
 
     connect(m_pRadioButtonGrayscaleMode,SIGNAL(clicked()),this,SLOT(onRadioButtonColorCompositionChanged()));
     connect(m_pRadioButtonRGBCompositionMode,SIGNAL(clicked()),this,SLOT(onRadioButtonColorCompositionChanged()));
+
+    m_pRadioButtonGrayscaleMode->toggle();
+    onRadioButtonColorCompositionChanged();
 }
 
 //!
