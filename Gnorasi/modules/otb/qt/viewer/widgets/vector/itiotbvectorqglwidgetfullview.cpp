@@ -2,14 +2,11 @@
 #include <QtGui>
 #include <QtOpenGL>
 
-#include <QtGui/QApplication>
-#include <QMouseEvent>
-#include "itiotbrgbaqglwidgetfullview.h"
-#include "../observables/itiviewerobservableregion.h"
-#include "itiotbrgbaimageviewer.h"
-#include "../utils/itiotbimagemanager.h"
-#include "../../../ports/otbimageport.h"
-#include "itiotbrgbaimageviewer.h"
+#include "itiotbvectorqglwidgetfullview.h"
+#include "../../observables/itiviewerobservableregion.h"
+#include "itiotbvectorimageviewer.h"
+#include "../../utils/itiotbimagemanager.h"
+#include "../../../ports/otbvectorimageport.h"
 
 #include "itkImageRegionConstIteratorWithIndex.h"
 
@@ -17,7 +14,7 @@ using namespace otb;
 using namespace itiviewer;
 using namespace voreen;
 
-ItiOtbRgbaQGLWidgetFullView::ItiOtbRgbaQGLWidgetFullView(QWidget *parent) :
+ItiOtbVectorQGLWidgetFullView::ItiOtbVectorQGLWidgetFullView(QWidget *parent) :
     m_IsotropicZoom(1.0), m_OpenGlBuffer(NULL), m_OpenGlBufferedRegion(), m_Extent(), m_SubsamplingRate(1), QGLWidget(parent)
 {
     setAutoFillBackground(false);
@@ -26,7 +23,7 @@ ItiOtbRgbaQGLWidgetFullView::ItiOtbRgbaQGLWidgetFullView(QWidget *parent) :
 }
 
 //!
-void ItiOtbRgbaQGLWidgetFullView::ReadBuffer(const RasterImageType *image, const RasterRegionType &region){
+void ItiOtbVectorQGLWidgetFullView::ReadBuffer(const VectorImageType *image, const VectorRegionType &region){
     // Before doing anything, check if region is inside the buffered
     // region of image
     if (!image->GetBufferedRegion().IsInside(region))
@@ -40,7 +37,7 @@ void ItiOtbRgbaQGLWidgetFullView::ReadBuffer(const RasterImageType *image, const
     m_OpenGlBuffer = new unsigned char[3 * region.GetNumberOfPixels()];
 
     // Declare the iterator
-    itk::ImageRegionConstIteratorWithIndex<RasterImageType> it(image, region);
+    itk::ImageRegionConstIteratorWithIndex<VectorImageType> it(image, region);
 
     // Go to begin
     it.GoToBegin();
@@ -52,12 +49,12 @@ void ItiOtbRgbaQGLWidgetFullView::ReadBuffer(const RasterImageType *image, const
 
         // compute the linear index (buffer is flipped around X axis
         // when gl acceleration is disabled
-        index = ItiOtbRgbaImageViewer::ComputeXAxisFlippedBufferIndex(it.GetIndex(), region);
+//        index = ItiOtbVectorImageViewer::ComputeXAxisFlippedBufferIndex(it.GetIndex(), region);
 
         // Fill the buffer
-        m_OpenGlBuffer[index]  = it.Get()[0];
-        m_OpenGlBuffer[index + 1] = it.Get()[1];
-        m_OpenGlBuffer[index + 2] = it.Get()[2];
+//        m_OpenGlBuffer[index]  = it.Get()[0];
+//        m_OpenGlBuffer[index + 1] = it.Get()[1];
+//        m_OpenGlBuffer[index + 2] = it.Get()[2];
         ++it;
     }
 
@@ -66,7 +63,7 @@ void ItiOtbRgbaQGLWidgetFullView::ReadBuffer(const RasterImageType *image, const
 }
 
 //!
-void ItiOtbRgbaQGLWidgetFullView::ClearBuffer(){
+void ItiOtbVectorQGLWidgetFullView::ClearBuffer(){
     // Delete previous buffer if needed
     if (m_OpenGlBuffer != NULL)
     {
@@ -74,9 +71,9 @@ void ItiOtbRgbaQGLWidgetFullView::ClearBuffer(){
         m_OpenGlBuffer = NULL;
     }
 
-    RasterRegionType region;
-    RasterIndexType index;
-    RasterSizeType  size;
+    VectorRegionType region;
+    VectorIndexType index;
+    VectorSizeType  size;
 
     size.Fill(0);
     index.Fill(0);
@@ -88,29 +85,29 @@ void ItiOtbRgbaQGLWidgetFullView::ClearBuffer(){
 }
 
 
-void ItiOtbRgbaQGLWidgetFullView::initializeGL()
+void ItiOtbVectorQGLWidgetFullView::initializeGL()
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
 }
 
 
-void ItiOtbRgbaQGLWidgetFullView::resizeGL(int w, int h)
+void ItiOtbVectorQGLWidgetFullView::resizeGL(int w, int h)
 {
     setupViewport(w,h);
 }
 
-void ItiOtbRgbaQGLWidgetFullView::setupViewport(int w, int h){
+void ItiOtbVectorQGLWidgetFullView::setupViewport(int w, int h){
     if(!m_OpenGlBuffer)
         return;
 
     m_IsotropicZoom = w < h ? static_cast<double>(w)/ static_cast<double>(m_OpenGlBufferedRegion.GetSize()[0]) : static_cast<double>(h)/ static_cast<double>(m_OpenGlBufferedRegion.GetSize()[1]);
 
-    RasterSizeType size;
+    VectorSizeType size;
     size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[0]));
     size [1] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[1]));
 
-    RasterRegionType::IndexType index;
+    VectorRegionType::IndexType index;
     index[0] = (w - static_cast<int>(size[0])) / 2;
     index[1] = (h - static_cast<int>(size[1])) / 2;
 
@@ -131,7 +128,7 @@ void ItiOtbRgbaQGLWidgetFullView::setupViewport(int w, int h){
 }
 
 //!
-void ItiOtbRgbaQGLWidgetFullView::paintEvent(QPaintEvent *event){
+void ItiOtbVectorQGLWidgetFullView::paintEvent(QPaintEvent *event){
     //!
     makeCurrent();
     glMatrixMode(GL_MODELVIEW);
@@ -165,7 +162,7 @@ void ItiOtbRgbaQGLWidgetFullView::paintEvent(QPaintEvent *event){
     }
 
 
-    RasterIndexType startPosition = m_Extent.GetIndex();
+    VectorIndexType startPosition = m_Extent.GetIndex();
     startPosition[0] = startPosition[0] < 0 ? 0 : startPosition[0];
     startPosition[1] = startPosition[1] < 0 ? 0 : startPosition[1];
 
@@ -217,18 +214,18 @@ void ItiOtbRgbaQGLWidgetFullView::paintEvent(QPaintEvent *event){
 }
 
 //!
-void ItiOtbRgbaQGLWidgetFullView::draw(){
-    OTBImagePort *port = (OTBImagePort*)ITIOTBIMAGEMANAGER->port();
+void ItiOtbVectorQGLWidgetFullView::draw(){
+    OTBVectorImagePort *port = (OTBVectorImagePort*)ITIOTBIMAGEMANAGER->port();
 
     if(!port)
         return;
 
     //!
-    RasterImageType* imgType =  (RasterImageType*)port->getData();
+    VectorImageType* imgType =  (VectorImageType*)port->getData();
     if(!imgType)
         return;
 
-    RasterRegionType region = imgType->GetLargestPossibleRegion();
+    VectorRegionType region = imgType->GetLargestPossibleRegion();
 
     //!
     ReadBuffer(imgType,region);
@@ -238,7 +235,7 @@ void ItiOtbRgbaQGLWidgetFullView::draw(){
 }
 
 //!
-void ItiOtbRgbaQGLWidgetFullView::updateObserver(ItiViewerObservable *observable){
+void ItiOtbVectorQGLWidgetFullView::updateObserver(ItiViewerObservable *observable){
     ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
     if(!region)
         return;
@@ -277,11 +274,11 @@ void ItiOtbRgbaQGLWidgetFullView::updateObserver(ItiViewerObservable *observable
 }
 
 //!
-void ItiOtbRgbaQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
+void ItiOtbVectorQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
 
-    OTBImagePort *imgPort = (OTBImagePort*)ITIOTBIMAGEMANAGER->port();
+    OTBVectorImagePort *imgPort = (OTBVectorImagePort*)ITIOTBIMAGEMANAGER->port();
     if(imgPort && imgPort->isConnected()){
-        RasterImageType* imgType =  (RasterImageType*)imgPort->getData();
+        VectorImageType* imgType =  (VectorImageType*)imgPort->getData();
         if(!imgType){
             QGLWidget::mouseMoveEvent(event);
             return;
@@ -290,11 +287,11 @@ void ItiOtbRgbaQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
         //! get the position
         QPoint point = event->pos();
 
-        RasterIndexType index;
+        VectorIndexType index;
         index[0] = (point.x() - m_Extent.GetIndex()[0])/m_IsotropicZoom;
         index[1] = (point.y() - m_Extent.GetIndex()[1])/m_IsotropicZoom;
 
-        QString text = ItiOtbRgbaImageViewer::constructTextFromImageIndex(index,imgType);
+        QString text = ItiOtbVectorImageViewer::constructTextFromImageIndex(index,imgType);
 
         emit currentIndexChanged(text);
     }
@@ -304,6 +301,6 @@ void ItiOtbRgbaQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
 
 
 //!
-ItiOtbRgbaQGLWidgetFullView::~ItiOtbRgbaQGLWidgetFullView(){
+ItiOtbVectorQGLWidgetFullView::~ItiOtbVectorQGLWidgetFullView(){
     ClearBuffer();
 }

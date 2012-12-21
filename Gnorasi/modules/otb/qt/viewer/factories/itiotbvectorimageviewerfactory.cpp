@@ -1,6 +1,6 @@
 #include "itiotbvectorimageviewerfactory.h"
 
-#include "../widgets/itiotbvectorimageviewer.h"
+#include "../widgets/vector/itiotbvectorimageviewer.h"
 
 
 using namespace itiviewer;

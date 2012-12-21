@@ -26,22 +26,21 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITIOTBVECTORQGLWIDGETZOOMABLE_H
-#define ITIOTBVECTORQGLWIDGETZOOMABLE_H
+#ifndef ITIOTBVECTORQGLWIDGETFULLVIEW_H
+#define ITIOTBVECTORQGLWIDGETFULLVIEW_H
 
-#include <QGLWidget>
-#include <QPen>
-#include <QWheelEvent>
+#include <QtCore>
+#include <QtGui>
+#include <QtOpenGL>
 
-#include "../vector_globaldefs.h"
+#include "../../../ports/otbimageport.h"
 
+#include "../itiviewerobserver.h"
 
-#include "itiviewerobserver.h"
-
-
-#include "otbImageWidgetController.h"
+#include "../../vector_globaldefs.h"
 
 
+//using namespace otb;
 using namespace voreen;
 
 namespace itiviewer{
@@ -49,20 +48,22 @@ namespace itiviewer{
 /** \class QOtbImageWidget
 *   \brief This class renders an RGB bytes image buffer to the screen.
 *   Rendered data can be loaded using the ReadBuffer() method.
-*   The SetIsotropicZoom() method allows to tune the zooming (zooming
-*   is centered).
+*
+*   This class will not allow zooming functionality
+*   The zoom scale is being calculated in order the image size to be fit in
+*   the window size.
 *
 *   It is also able to display a rectangle on the displayed image.
 *  \ingroup Visualization
  */
 
-class ItiOtbVectorQGLWidgetZoomable : public QGLWidget, public ItiViewerObserver
+class ItiOtbVectorQGLWidgetFullView : public QGLWidget, public ItiViewerObserver
 {
     Q_OBJECT
 public:
-    explicit ItiOtbVectorQGLWidgetZoomable(QWidget *parent = 0);
+    explicit ItiOtbVectorQGLWidgetFullView(QWidget *parent = 0);
 
-    virtual ~ItiOtbVectorQGLWidgetZoomable();
+    virtual ~ItiOtbVectorQGLWidgetFullView();
 
     /** Reads the OpenGl buffer from an image pointer
      *  \param image The image pointer,
@@ -95,6 +96,9 @@ public:
     //! setter getter, self explanatory
     VectorRegionType extent() { return m_Extent; }
 
+    //! setter getter for the focus region area
+    QRect visibleRegion() const { return m_visibleRegion; }
+    void setVisibleRegion(const QRect &rect) { m_visibleRegion  = rect; }
 
     /*!
      * \brief update , implementation from parent class
@@ -107,31 +111,12 @@ public:
      */
     void draw();
 
-public slots:
-
-    /*!
-     * \brief zoomIn
-     */
-    void zoomIn();
-
-    /*!
-     * \brief zoomOut
-     */
-    void zoomOut();
-
-    /*!
-     * \brief translate
-     * \param dx
-     * \param dy
-     */
-    void translate(int dx, int dy);
-
 signals:
+
     /*!
-     * \brief visibleAreaChanged , this signal is emitted uppon the view resizing
-     * \param rect
+     * \brief sizeChanged
      */
-    void visibleAreaChanged(const QRect &rect);
+    void sizeChanged(const QSize &);
 
     /*!
      * \brief currentIndexChanged
@@ -139,24 +124,13 @@ signals:
      */
     void currentIndexChanged(const QString &text);
 
-
 protected:
 
     /*!
-     * \brief setupExtents
+     * \brief paintEvent
+     * \param event
      */
-    void setupRowColumnDisplay();
-
-    /*!
-     * \brief setupAndSendSignal
-     */
-    void setupAndSendSignal();
-
-    /*!
-     * \brief mousePressEvent
-     */
-    void wheelEvent(QWheelEvent *);
-
+    void paintEvent(QPaintEvent *event);
 
     /*!
      * \brief initializeGL
@@ -172,11 +146,6 @@ protected:
     void resizeGL(int w, int h);
 
     /*!
-     * \brief paintGL , reimplemented method declared in the QGLWidget class
-     */
-    void paintGL();
-
-    /*!
      * \brief mouseMoveEvent
      * \param event
      */
@@ -185,12 +154,7 @@ protected:
 
 private:
     /*!
-     * \brief setupcolumnRowParameters
-     */
-    void initializeColumnRowParameters();
-
-    /*!
-     * \brief setupViewport, basically setup the extends
+     * \brief setupViewport
      * \param width
      * \param height
      */
@@ -211,10 +175,7 @@ private:
     /** OpenGl buffered region */
     VectorRegionType m_OpenGlBufferedRegion;
 
-    /*!
-     * \brief m_Extent , The display extent handles the visible area's size and index values
-     *  The Extend's values are related to the windows's size values
-     */
+    /** The display extent */
     VectorRegionType m_Extent;
 
     /** If the image is subsampled with respect to the original image,
@@ -222,27 +183,17 @@ private:
     unsigned int m_SubsamplingRate;
 
     /*!
-     * \brief m_nb_displayed_rows , a variable holding the number of rows that are visualized on an image of a fixed size [columns,rows]
+     * \brief m_pen
      */
-    unsigned int m_nb_displayed_rows;
+    QPen m_pen;
 
     /*!
-     * \brief m_nb_displayed_cols , a variable holding the number of columns that are visualized on an image of a fixed size [columns,rows]
+     * \brief m_focusRegion
      */
-    unsigned int m_nb_displayed_cols;
-
-    /*!
-     * \brief m_nb_displayed_rows , a variable holding the first visualized row on an image of a fixed size [columns,rows]
-     */
-    unsigned int m_first_displayed_row;
-
-    /*!
-     * \brief m_nb_displayed_cols , a variable holding the first visualized column on an image of a fixed size [columns,rows]
-     */
-    unsigned int m_first_displayed_col;
+    QRect m_visibleRegion;
 
 };
 
 } // end of itiviewer
 
-#endif // ITIOTBVECTORQGLWIDGETZOOMABLE_H
+#endif // ITIOTBVECTORQGLWIDGETFULLVIEW_H

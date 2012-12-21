@@ -2,28 +2,27 @@
 #include <QtGui>
 #include <QtOpenGL>
 
-#include "itiotbrgbaimageviewer.h"
+#include "itiotbvectorimageviewer.h"
 
-#include "itiotbrgbaqglwidgetzoomable.h"
+#include "itiotbvectorqglwidgetzoomable.h"
 #include "itkImageRegionConstIteratorWithIndex.h"
-#include "../utils/itiotbimagemanager.h"
-#include "../observables/itiviewerobservableregion.h"
-#include "../../../ports/otbimageport.h"
-#include <QMouseEvent>
+#include "../../utils/itiotbimagemanager.h"
+#include "../../observables/itiviewerobservableregion.h"
+#include "../../../ports/otbvectorimageport.h"
 
 using namespace otb;
 using namespace itiviewer;
 
 const double ZOOM_VALUE = 0.125;
 
-ItiOtbRgbaQGLWidgetZoomable::ItiOtbRgbaQGLWidgetZoomable(QWidget *parent) :
+ItiOtbVectorQGLWidgetZoomable::ItiOtbVectorQGLWidgetZoomable(QWidget *parent) :
     m_IsotropicZoom(1.0), m_OpenGlBuffer(NULL), m_OpenGlBufferedRegion(), m_Extent(), m_SubsamplingRate(1), m_first_displayed_col(0), m_first_displayed_row(0), m_nb_displayed_cols(0), m_nb_displayed_rows(0), QGLWidget(parent)
 {
 
 }
 
 //!
-void ItiOtbRgbaQGLWidgetZoomable::ReadBuffer(const RasterImageType *image, const RasterRegionType &region){
+void ItiOtbVectorQGLWidgetZoomable::ReadBuffer(const VectorImageType *image, const VectorRegionType &region){
     // Before doing anything, check if region is inside the buffered
     // region of image
     if (!image->GetBufferedRegion().IsInside(region)){
@@ -36,7 +35,7 @@ void ItiOtbRgbaQGLWidgetZoomable::ReadBuffer(const RasterImageType *image, const
     m_OpenGlBuffer = new unsigned char[3 * region.GetNumberOfPixels()];
 
     // Declare the iterator
-    itk::ImageRegionConstIteratorWithIndex<RasterImageType> it(image, region);
+    itk::ImageRegionConstIteratorWithIndex<VectorImageType> it(image, region);
 
     // Go to begin
     it.GoToBegin();
@@ -48,12 +47,12 @@ void ItiOtbRgbaQGLWidgetZoomable::ReadBuffer(const RasterImageType *image, const
 
         // compute the linear index (buffer is flipped around X axis
         // when gl acceleration is disabled
-        index = ItiOtbRgbaImageViewer::ComputeXAxisFlippedBufferIndex(it.GetIndex(), region);
+        index = ItiOtbVectorImageViewer::ComputeXAxisFlippedBufferIndex(it.GetIndex(), region);
 
         // Fill the buffer
-        m_OpenGlBuffer[index]  = it.Get()[0];
-        m_OpenGlBuffer[index + 1] = it.Get()[1];
-        m_OpenGlBuffer[index + 2] = it.Get()[2];
+//        m_OpenGlBuffer[index]  = it.Get()[0];
+//        m_OpenGlBuffer[index + 1] = it.Get()[1];
+//        m_OpenGlBuffer[index + 2] = it.Get()[2];
         ++it;
     }
 
@@ -74,7 +73,7 @@ void ItiOtbRgbaQGLWidgetZoomable::ReadBuffer(const RasterImageType *image, const
 }
 
 //!
-void ItiOtbRgbaQGLWidgetZoomable::ClearBuffer(){
+void ItiOtbVectorQGLWidgetZoomable::ClearBuffer(){
     // Delete previous buffer if needed
     if (m_OpenGlBuffer != NULL){
 
@@ -83,9 +82,9 @@ void ItiOtbRgbaQGLWidgetZoomable::ClearBuffer(){
         m_OpenGlBuffer = NULL;
     }
 
-    RasterRegionType region;
-    RasterIndexType index;
-    RasterSizeType  size;
+    VectorRegionType region;
+    VectorIndexType index;
+    VectorSizeType  size;
 
     size.Fill(0);
     index.Fill(0);
@@ -101,14 +100,14 @@ void ItiOtbRgbaQGLWidgetZoomable::ClearBuffer(){
 }
 
 
-void ItiOtbRgbaQGLWidgetZoomable::initializeGL()
+void ItiOtbVectorQGLWidgetZoomable::initializeGL()
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
 }
 
 //!
-void ItiOtbRgbaQGLWidgetZoomable::resizeGL(int w, int h)
+void ItiOtbVectorQGLWidgetZoomable::resizeGL(int w, int h)
 {
     //! firstly setup the viweport with the new width and height
     setupViewport(w,h);
@@ -152,12 +151,12 @@ void ItiOtbRgbaQGLWidgetZoomable::resizeGL(int w, int h)
 }
 
 ///!
-void ItiOtbRgbaQGLWidgetZoomable::setupViewport(int w, int h){
-    RasterSizeType size;
+void ItiOtbVectorQGLWidgetZoomable::setupViewport(int w, int h){
+    VectorSizeType size;
     size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[0]));
     size [1] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[1]));
 
-    RasterRegionType::IndexType index;
+    VectorRegionType::IndexType index;
     index[0] = (w - static_cast<int>(size[0])) / 2;
     index[1] = (h - static_cast<int>(size[1])) / 2;
 
@@ -178,7 +177,7 @@ void ItiOtbRgbaQGLWidgetZoomable::setupViewport(int w, int h){
 }
 
 //!
-void ItiOtbRgbaQGLWidgetZoomable::initializeColumnRowParameters(){
+void ItiOtbVectorQGLWidgetZoomable::initializeColumnRowParameters(){
 
     if( m_Extent.GetIndex()[0] > 0 )
         m_nb_displayed_cols = m_OpenGlBufferedRegion.GetSize()[0];
@@ -197,10 +196,10 @@ void ItiOtbRgbaQGLWidgetZoomable::initializeColumnRowParameters(){
 }
 
 //!
-void ItiOtbRgbaQGLWidgetZoomable::paintGL()
+void ItiOtbVectorQGLWidgetZoomable::paintGL()
 {
 
-    RasterIndexType startPosition = m_Extent.GetIndex();
+    VectorIndexType startPosition = m_Extent.GetIndex();
     startPosition[0] = startPosition[0] < 0 ? 0 : startPosition[0];
     startPosition[1] = startPosition[1] < 0 ? 0 : startPosition[1];
 
@@ -225,10 +224,10 @@ void ItiOtbRgbaQGLWidgetZoomable::paintGL()
 }
 
 //!
-void ItiOtbRgbaQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
-    OTBImagePort *imgPort = (OTBImagePort*)ITIOTBIMAGEMANAGER->port();
+void ItiOtbVectorQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
+    OTBVectorImagePort *imgPort = (OTBVectorImagePort*)ITIOTBIMAGEMANAGER->port();
     if(imgPort && imgPort->isConnected()){
-        RasterImageType* imgType =  (RasterImageType*)imgPort->getData();
+        VectorImageType* imgType =  (VectorImageType*)imgPort->getData();
         if(!imgType){
             QGLWidget::mouseMoveEvent(event);
             return;
@@ -242,7 +241,7 @@ void ItiOtbRgbaQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
         int relativeY = qRound((double)point.y()/m_IsotropicZoom);
 
         //! create an index
-        RasterIndexType index;
+        VectorIndexType index;
 
         //! check if the extend's index x value is greater than zero
         //! if yes set the index x value equal to the relativeX value plus the x extend's index value
@@ -262,7 +261,7 @@ void ItiOtbRgbaQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
             index[1] = m_OpenGlBufferedRegion.GetSize()[1] - m_nb_displayed_rows - m_first_displayed_row + relativeY;
 
         //! construct the text
-        QString text = ItiOtbRgbaImageViewer::constructTextFromImageIndex(index,imgType);
+        QString text = ItiOtbVectorImageViewer::constructTextFromImageIndex(index,imgType);
 
         //! emit the signal
         emit currentIndexChanged(text);
@@ -273,20 +272,20 @@ void ItiOtbRgbaQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
 }
 
 //!
-void ItiOtbRgbaQGLWidgetZoomable::draw(){
+void ItiOtbVectorQGLWidgetZoomable::draw(){
     //! get the current port from the manager
-    OTBImagePort *port = (OTBImagePort*)ITIOTBIMAGEMANAGER->port();
+    OTBVectorImagePort *port = (OTBVectorImagePort*)ITIOTBIMAGEMANAGER->port();
 
     if(!port)
         return;
 
     //!
-    RasterImageType* imgType =  (RasterImageType*)port->getData();
+    VectorImageType* imgType =  (VectorImageType*)port->getData();
     if(!imgType)
         return;
 
     //! get the biggest available region
-    RasterRegionType region = imgType->GetLargestPossibleRegion();
+    VectorRegionType region = imgType->GetLargestPossibleRegion();
 
     //! read the buffer
     ReadBuffer(imgType,region);
@@ -296,13 +295,13 @@ void ItiOtbRgbaQGLWidgetZoomable::draw(){
 }
 
 //!
-void ItiOtbRgbaQGLWidgetZoomable::updateObserver(ItiViewerObservable *observable){
+void ItiOtbVectorQGLWidgetZoomable::updateObserver(ItiViewerObservable *observable){
 
     Q_UNUSED(observable);
 }
 
 //!
-void ItiOtbRgbaQGLWidgetZoomable::setupAndSendSignal(){
+void ItiOtbVectorQGLWidgetZoomable::setupAndSendSignal(){
 
     //! create a helper QRect value
     QRect rect;
@@ -321,7 +320,7 @@ void ItiOtbRgbaQGLWidgetZoomable::setupAndSendSignal(){
 }
 
 //!
-void ItiOtbRgbaQGLWidgetZoomable::wheelEvent(QWheelEvent *event){
+void ItiOtbVectorQGLWidgetZoomable::wheelEvent(QWheelEvent *event){
     if(event->delta() > 0)
         zoomIn();
     else
@@ -332,7 +331,7 @@ void ItiOtbRgbaQGLWidgetZoomable::wheelEvent(QWheelEvent *event){
 }
 
 //!
-void ItiOtbRgbaQGLWidgetZoomable::zoomIn(){
+void ItiOtbVectorQGLWidgetZoomable::zoomIn(){
 
     //! advance the zoom level by a fixed zoom scale value
     m_IsotropicZoom = m_IsotropicZoom + ZOOM_VALUE;
@@ -401,7 +400,7 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomIn(){
 }
 
 //!
-void ItiOtbRgbaQGLWidgetZoomable::zoomOut(){
+void ItiOtbVectorQGLWidgetZoomable::zoomOut(){
 
     //! decrease the zoom level
     m_IsotropicZoom = m_IsotropicZoom - ZOOM_VALUE;
@@ -475,10 +474,10 @@ void ItiOtbRgbaQGLWidgetZoomable::zoomOut(){
 }
 
 /*!
- * \brief ItiOtbRgbaQGLWidgetZoomable::translate
+ * \brief ItiOtbVectorQGLWidgetZoomable::translate
  * \param rect
  */
-void ItiOtbRgbaQGLWidgetZoomable::translate(int dx, int dy){
+void ItiOtbVectorQGLWidgetZoomable::translate(int dx, int dy){
 
     //! create a helper value equal to the m_first_displayed_col plus the dx parameter
     int helperX = m_first_displayed_col + dx;
@@ -509,6 +508,6 @@ void ItiOtbRgbaQGLWidgetZoomable::translate(int dx, int dy){
 }
 
 //!
-ItiOtbRgbaQGLWidgetZoomable::~ItiOtbRgbaQGLWidgetZoomable(){
+ItiOtbVectorQGLWidgetZoomable::~ItiOtbVectorQGLWidgetZoomable(){
     ClearBuffer();
 }
