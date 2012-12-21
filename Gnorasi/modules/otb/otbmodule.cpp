@@ -70,7 +70,7 @@
 #ifdef WIN32
 
 //#include "processors/ImageIO/otbvectorimagewriterprocessor.h"
-//#include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
+#include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 //#include "processors/Visualization/otbsimpleviewerprocessor.h"
 
 #else
@@ -96,7 +96,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBImageWriterProcessor());
 #ifdef WIN32
     //registerProcessor(new OTBVectorImageWriterProcessor());
-    //registerProcessor(new OTBImageToVectorImageCastProcessor());
+    registerProcessor(new OTBImageToVectorImageCastProcessor());
     //registerProcessor(new OTBSimpleViewerProcessor());
 #else
     registerProcessor(new OTBVectorImageWriterProcessor());

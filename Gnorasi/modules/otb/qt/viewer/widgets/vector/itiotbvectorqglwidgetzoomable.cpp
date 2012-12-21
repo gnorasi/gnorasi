@@ -50,9 +50,9 @@ void ItiOtbVectorQGLWidgetZoomable::ReadBuffer(const VectorImageType *image, con
         index = ItiOtbVectorImageViewer::ComputeXAxisFlippedBufferIndex(it.GetIndex(), region);
 
         // Fill the buffer
-//        m_OpenGlBuffer[index]  = it.Get()[0];
-//        m_OpenGlBuffer[index + 1] = it.Get()[1];
-//        m_OpenGlBuffer[index + 2] = it.Get()[2];
+        m_OpenGlBuffer[index]  = it.Get()[0];
+        m_OpenGlBuffer[index + 1] = it.Get()[1];
+        m_OpenGlBuffer[index + 2] = it.Get()[2];
         ++it;
     }
 
