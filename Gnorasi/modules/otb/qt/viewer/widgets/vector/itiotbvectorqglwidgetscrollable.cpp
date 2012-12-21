@@ -10,6 +10,7 @@
 #include "../../../../ports/otbvectorimageport.h"
 
 #include "itkImageRegionConstIteratorWithIndex.h"
+#include "otbVectorRescaleIntensityImageFilter.h"
 
 using namespace otb;
 using namespace itiviewer;
@@ -33,12 +34,38 @@ void ItiOtbVectorQGLWidgetScrollable::ReadBuffer(const VectorImageType *image, c
       }
     // Delete previous buffer if needed
     this->ClearBuffer();
+    
+    //test to strech image in 8bit
+    typedef double                   DoublePixelType;
+    typedef otb::VectorImage<DoublePixelType, 2> DoubleImageType;
+    typedef unsigned char             BytePixelType;
+    typedef otb::VectorImage<BytePixelType, 2> ByteImageType;
+    typedef otb::VectorRescaleIntensityImageFilter<
+	DoubleImageType, ByteImageType>    ByteRescalerFilterType;
+    ByteRescalerFilterType::Pointer  byterescaler;
+    byterescaler = ByteRescalerFilterType::New();
+    //image->UpdateOutputInformation();
+    ByteImageType::PixelType minimum, maximum;
+    int bands = image->GetNumberOfComponentsPerPixel();
+    minimum.SetSize(bands);
+    maximum.SetSize(bands);
+    minimum.Fill(0);
+    maximum.Fill(255);
+    byterescaler->SetInput(image);
+    byterescaler->SetOutputMinimum(minimum);
+    byterescaler->SetOutputMaximum(maximum);
+    byterescaler->SetClampThreshold(0.00);
+    ByteImageType::Pointer image8;
+    image8 = byterescaler->GetOutput();
+    byterescaler->Update();
+    //end test
 
     // Allocate new memory
     m_OpenGlBuffer = new unsigned char[3 * region.GetNumberOfPixels()];
 
     // Declare the iterator
-    itk::ImageRegionConstIteratorWithIndex<VectorImageType> it(image, region);
+    //itk::ImageRegionConstIteratorWithIndex<VectorImageType> it(image, region);
+    itk::ImageRegionConstIteratorWithIndex<ByteImageType> it(image8, region);
 
     // Go to begin
     it.GoToBegin();
