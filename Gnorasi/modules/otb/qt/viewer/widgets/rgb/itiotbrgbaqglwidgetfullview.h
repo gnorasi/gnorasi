@@ -34,10 +34,6 @@
 #include <QtOpenGL>
 # include <GL/glu.h>
 
-#include "itiotbrgbaqglwidgetfullview.h"
-
-#include "../../../ports/otbimageport.h"
-
 #include "../itiviewerobserver.h"
 
 #include "../../rgba_globaldefs.h"
