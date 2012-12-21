@@ -13,7 +13,7 @@
 #include "itiotbrgbaqglwidgetfullview.h"
 #include "../../observables/itiviewerobservableregion.h"
 #include "../itiviewerpixelinfowidget.h"
-#include "../../../ports/otbimageport.h"
+#include "../../../../ports/otbimageport.h"
 
 #include "otbImage.h"
 

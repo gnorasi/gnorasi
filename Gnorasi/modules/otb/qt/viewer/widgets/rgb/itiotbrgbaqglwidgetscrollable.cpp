@@ -7,7 +7,7 @@
 #include "itiotbrgbaqglwidgetscrollable.h"
 #include "../../utils/itiotbimagemanager.h"
 #include "../../observables/itiviewerobservableregion.h"
-#include "../../../ports/otbimageport.h"
+#include "../../../../ports/otbimageport.h"
 #include "itkImageRegionConstIteratorWithIndex.h"
 
 using namespace otb;
