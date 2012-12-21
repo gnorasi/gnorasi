@@ -200,14 +200,6 @@ void QGLOtbImageViewerWidget::setupCommands(){
 void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! START OF INCOMING DATA USAGE
 
-    //! TODO
-    //!
-    //! Here should be established incoming image data usage protocol
-    //! Do some fancy image port data casting like Angelos said
-    //! Maybe will use only vector data on the viewers..
-    //! not sure yet
-    //!
-
     //! set the port to the image manager
     ITIOTBIMAGEMANAGER->setPort(port);
 

@@ -58,6 +58,8 @@ void ItiOtbImageManager::setupImage(){
 
         m_pImgType = filter->GetOutput();
 
+        filter->Update();
+
     }
     else if(dynamic_cast<OTBVectorImagePort*>(m_pPort)){ // set here the vector image factory
         OTBVectorImagePort *pOtbVectorImagePort = dynamic_cast<OTBVectorImagePort*>(m_pPort);
