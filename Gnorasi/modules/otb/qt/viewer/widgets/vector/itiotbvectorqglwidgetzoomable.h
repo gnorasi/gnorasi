@@ -35,11 +35,7 @@
 
 #include "../../vector_globaldefs.h"
 
-
 #include "../itiviewerobserver.h"
-
-
-#include "otbImageWidgetController.h"
 
 
 using namespace voreen;

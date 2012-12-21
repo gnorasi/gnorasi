@@ -33,8 +33,6 @@
 #include <QtGui>
 #include <QtOpenGL>
 
-#include "../../../ports/otbimageport.h"
-
 #include "../itiviewerobserver.h"
 
 #include "../../vector_globaldefs.h"
