@@ -26,17 +26,17 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITIOTBRGBAQGLWIDGETZOOMABLE_H
-#define ITIOTBRGBAQGLWIDGETZOOMABLE_H
+#ifndef ITIOTBVECTORQGLWIDGETZOOMABLE_H
+#define ITIOTBVECTORQGLWIDGETZOOMABLE_H
 
 #include <QGLWidget>
 #include <QPen>
 #include <QWheelEvent>
 
-#include "../rgba_globaldefs.h"
+#include "../../vector_globaldefs.h"
 
 
-#include "itiviewerobserver.h"
+#include "../itiviewerobserver.h"
 
 
 #include "otbImageWidgetController.h"
@@ -56,13 +56,13 @@ namespace itiviewer{
 *  \ingroup Visualization
  */
 
-class ItiOtbRgbaQGLWidgetZoomable : public QGLWidget, public ItiViewerObserver
+class ItiOtbVectorQGLWidgetZoomable : public QGLWidget, public ItiViewerObserver
 {
     Q_OBJECT
 public:
-    explicit ItiOtbRgbaQGLWidgetZoomable(QWidget *parent = 0);
+    explicit ItiOtbVectorQGLWidgetZoomable(QWidget *parent = 0);
 
-    virtual ~ItiOtbRgbaQGLWidgetZoomable();
+    virtual ~ItiOtbVectorQGLWidgetZoomable();
 
     /** Reads the OpenGl buffer from an image pointer
      *  \param image The image pointer,
@@ -72,7 +72,7 @@ public:
      * This method fills the m_OpenGl buffer according to the region
      *  size. Buffer in flipped over X axis if OTB_USE_GL_ACCEL is OFF.
      */
-    virtual void ReadBuffer(const RasterImageType * image, const RasterRegionType& region);
+    virtual void ReadBuffer(const VectorImageType * image, const VectorRegionType& region);
 
     /** Clear the OpenGl buffer */
     void ClearBuffer();
@@ -89,11 +89,11 @@ public:
     unsigned char * openGLBuffer() { return m_OpenGlBuffer;}
 
     //! setter getter, self explanatory
-    RasterRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
-    void setOpenGLBufferedRegion(RasterRegionType r) { m_OpenGlBufferedRegion = r; }
+    VectorRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
+    void setOpenGLBufferedRegion(VectorRegionType r) { m_OpenGlBufferedRegion = r; }
 
     //! setter getter, self explanatory
-    RasterRegionType extent() { return m_Extent; }
+    VectorRegionType extent() { return m_Extent; }
 
 
     /*!
@@ -209,13 +209,13 @@ private:
     unsigned char * m_OpenGlBuffer;
 
     /** OpenGl buffered region */
-    RasterRegionType m_OpenGlBufferedRegion;
+    VectorRegionType m_OpenGlBufferedRegion;
 
     /*!
      * \brief m_Extent , The display extent handles the visible area's size and index values
      *  The Extend's values are related to the windows's size values
      */
-    RasterRegionType m_Extent;
+    VectorRegionType m_Extent;
 
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */
@@ -245,4 +245,4 @@ private:
 
 } // end of itiviewer
 
-#endif // ITIOTBRGBAQGLWIDGETZOOMABLE_H
+#endif // ITIOTBVECTORQGLWIDGETZOOMABLE_H

@@ -26,18 +26,21 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITIOTBVECTORQGLWIDGETFULLVIEW_H
-#define ITIOTBVECTORQGLWIDGETFULLVIEW_H
+#ifndef ITIOTBRGBAQGLWIDGETFULLVIEW_H
+#define ITIOTBRGBAQGLWIDGETFULLVIEW_H
 
 #include <QtCore>
 #include <QtGui>
 #include <QtOpenGL>
+# include <GL/glu.h>
+
+#include "itiotbrgbaqglwidgetfullview.h"
 
 #include "../../../ports/otbimageport.h"
 
-#include "itiviewerobserver.h"
+#include "../itiviewerobserver.h"
 
-#include "../vector_globaldefs.h"
+#include "../../rgba_globaldefs.h"
 
 
 //using namespace otb;
@@ -57,13 +60,13 @@ namespace itiviewer{
 *  \ingroup Visualization
  */
 
-class ItiOtbVectorQGLWidgetFullView : public QGLWidget, public ItiViewerObserver
+class ItiOtbRgbaQGLWidgetFullView : public QGLWidget, public ItiViewerObserver
 {
     Q_OBJECT
 public:
-    explicit ItiOtbVectorQGLWidgetFullView(QWidget *parent = 0);
+    explicit ItiOtbRgbaQGLWidgetFullView(QWidget *parent = 0);
 
-    virtual ~ItiOtbVectorQGLWidgetFullView();
+    virtual ~ItiOtbRgbaQGLWidgetFullView();
 
     /** Reads the OpenGl buffer from an image pointer
      *  \param image The image pointer,
@@ -73,7 +76,7 @@ public:
      * This method fills the m_OpenGl buffer according to the region
      *  size. Buffer in flipped over X axis if OTB_USE_GL_ACCEL is OFF.
      */
-    virtual void ReadBuffer(const VectorImageType * image, const VectorRegionType& region);
+    virtual void ReadBuffer(const RasterImageType * image, const RasterRegionType& region);
 
     /** Clear the OpenGl buffer */
     void ClearBuffer();
@@ -90,11 +93,11 @@ public:
     unsigned char * openGLBuffer() { return m_OpenGlBuffer;}
 
     //! setter getter, self explanatory
-    VectorRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
-    void setOpenGLBufferedRegion(VectorRegionType r) { m_OpenGlBufferedRegion = r; }
+    RasterRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
+    void setOpenGLBufferedRegion(RasterRegionType r) { m_OpenGlBufferedRegion = r; }
 
     //! setter getter, self explanatory
-    VectorRegionType extent() { return m_Extent; }
+    RasterRegionType extent() { return m_Extent; }
 
     //! setter getter for the focus region area
     QRect visibleRegion() const { return m_visibleRegion; }
@@ -110,6 +113,19 @@ public:
      * \brief draw
      */
     void draw();
+
+    //!
+    static void DebugOpenGL()
+    {
+//    #ifdef _DEBUG
+        GLenum error;
+        while ((error = glGetError()) != GL_NO_ERROR)
+        {
+            qDebug("OpenGL Error: %s\n", (char *)
+            gluErrorString(error));
+        }
+//    #endif
+    }
 
 signals:
 
@@ -173,10 +189,10 @@ private:
     unsigned char * m_OpenGlBuffer;
 
     /** OpenGl buffered region */
-    VectorRegionType m_OpenGlBufferedRegion;
+    RasterRegionType m_OpenGlBufferedRegion;
 
     /** The display extent */
-    VectorRegionType m_Extent;
+    RasterRegionType m_Extent;
 
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */
@@ -196,4 +212,4 @@ private:
 
 } // end of itiviewer
 
-#endif // ITIOTBVECTORQGLWIDGETFULLVIEW_H
+#endif // ITIOTBRGBAQGLWIDGETFULLVIEW_H

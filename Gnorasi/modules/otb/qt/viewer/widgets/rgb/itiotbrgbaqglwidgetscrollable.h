@@ -33,9 +33,9 @@
 #include <QPen>
 #include <QWheelEvent>
 
-#include "itiviewerobserver.h"
+#include "../itiviewerobserver.h"
 
-#include "../rgba_globaldefs.h"
+#include "../../rgba_globaldefs.h"
 
 //using namespace otb;
 using namespace voreen;

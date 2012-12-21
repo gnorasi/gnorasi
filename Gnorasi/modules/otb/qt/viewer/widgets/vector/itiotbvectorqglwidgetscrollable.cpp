@@ -1,17 +1,15 @@
 #include <QtCore>
 #include <QtGui>
 #include <QtOpenGL>
-#include <QDebug>
 
 #include "itiotbvectorimageviewer.h"
 
 #include "itiotbvectorqglwidgetscrollable.h"
-#include "../utils/itiotbimagemanager.h"
-#include "../observables/itiviewerobservableregion.h"
+#include "../../utils/itiotbimagemanager.h"
+#include "../../observables/itiviewerobservableregion.h"
 #include "../../../ports/otbvectorimageport.h"
 
 #include "itkImageRegionConstIteratorWithIndex.h"
-#include <QMouseEvent>
 
 using namespace otb;
 using namespace itiviewer;

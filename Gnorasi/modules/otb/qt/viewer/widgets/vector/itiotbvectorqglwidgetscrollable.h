@@ -26,22 +26,16 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITIOTBRGBAQGLWIDGETFULLVIEW_H
-#define ITIOTBRGBAQGLWIDGETFULLVIEW_H
+#ifndef ITIOTBVECTORQGLWIDGETSCROLLABLE_H
+#define ITIOTBVECTORQGLWIDGETSCROLLABLE_H
 
-#include <QtCore>
-#include <QtGui>
-#include <QtOpenGL>
-# include <GL/glu.h>
+#include <QGLWidget>
+#include <QPen>
+#include <QWheelEvent>
 
-#include "itiotbrgbaqglwidgetfullview.h"
+#include "../itiviewerobserver.h"
 
-#include "../../../ports/otbimageport.h"
-
-#include "itiviewerobserver.h"
-
-#include "../rgba_globaldefs.h"
-
+#include "../../vector_globaldefs.h"
 
 //using namespace otb;
 using namespace voreen;
@@ -51,22 +45,23 @@ namespace itiviewer{
 /** \class QOtbImageWidget
 *   \brief This class renders an RGB bytes image buffer to the screen.
 *   Rendered data can be loaded using the ReadBuffer() method.
-*
-*   This class will not allow zooming functionality
-*   The zoom scale is being calculated in order the image size to be fit in
-*   the window size.
+*   The SetIsotropicZoom() method allows to tune the zooming (zooming
+*   is centered).
 *
 *   It is also able to display a rectangle on the displayed image.
+*
+*   This class uses the overpainting on a QGLWidget paradeigm from the Qt examples
+*
 *  \ingroup Visualization
  */
 
-class ItiOtbRgbaQGLWidgetFullView : public QGLWidget, public ItiViewerObserver
+class ItiOtbVectorQGLWidgetScrollable : public QGLWidget, public ItiViewerObserver
 {
     Q_OBJECT
 public:
-    explicit ItiOtbRgbaQGLWidgetFullView(QWidget *parent = 0);
+    explicit ItiOtbVectorQGLWidgetScrollable(QWidget *parent = 0);
 
-    virtual ~ItiOtbRgbaQGLWidgetFullView();
+    virtual ~ItiOtbVectorQGLWidgetScrollable();
 
     /** Reads the OpenGl buffer from an image pointer
      *  \param image The image pointer,
@@ -76,7 +71,7 @@ public:
      * This method fills the m_OpenGl buffer according to the region
      *  size. Buffer in flipped over X axis if OTB_USE_GL_ACCEL is OFF.
      */
-    virtual void ReadBuffer(const RasterImageType * image, const RasterRegionType& region);
+    virtual void ReadBuffer(const VectorImageType * image, const VectorRegionType& region);
 
     /** Clear the OpenGl buffer */
     void ClearBuffer();
@@ -93,15 +88,15 @@ public:
     unsigned char * openGLBuffer() { return m_OpenGlBuffer;}
 
     //! setter getter, self explanatory
-    RasterRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
-    void setOpenGLBufferedRegion(RasterRegionType r) { m_OpenGlBufferedRegion = r; }
-
-    //! setter getter, self explanatory
-    RasterRegionType extent() { return m_Extent; }
+    VectorRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
+    void setOpenGLBufferedRegion(VectorRegionType r) { m_OpenGlBufferedRegion = r; }
 
     //! setter getter for the focus region area
-    QRect visibleRegion() const { return m_visibleRegion; }
-    void setVisibleRegion(const QRect &rect) { m_visibleRegion  = rect; }
+    QRect focusRegion() const { return m_focusRegion; }
+    void setFocusRegion(const QRect &rect) { m_focusRegion  = rect; }
+
+    //! setter getter, self explanatory
+    VectorRegionType extent() { return m_Extent; }
 
     /*!
      * \brief update , implementation from parent class
@@ -114,25 +109,29 @@ public:
      */
     void draw();
 
-    //!
-    static void DebugOpenGL()
-    {
-//    #ifdef _DEBUG
-        GLenum error;
-        while ((error = glGetError()) != GL_NO_ERROR)
-        {
-            qDebug("OpenGL Error: %s\n", (char *)
-            gluErrorString(error));
-        }
-//    #endif
-    }
-
 signals:
+    /*!
+     * \brief visibleAreaChanged , this signal is emitted uppon the view resizing
+     * \param rect
+     */
+    void visibleAreaChanged(const QRect &rect);
 
     /*!
-     * \brief sizeChanged
+     * \brief focusRegionTranslated, this signal is emitted on mouse press events
+     * \param dx
+     * \param dy
      */
-    void sizeChanged(const QSize &);
+    void focusRegionTranslated(int dx, int dy);
+
+    /*!
+     * \brief zoomIn , this signal is emitterd uppon wheel events
+     */
+    void zoomIn();
+
+    /*!
+     * \brief zoomIn , this signal is emitterd uppon wheel events
+     */
+    void zoomOut();
 
     /*!
      * \brief currentIndexChanged
@@ -143,10 +142,9 @@ signals:
 protected:
 
     /*!
-     * \brief paintEvent
-     * \param event
+     * \brief mousePressEvent
      */
-    void paintEvent(QPaintEvent *event);
+    void wheelEvent(QWheelEvent *);
 
     /*!
      * \brief initializeGL
@@ -162,11 +160,22 @@ protected:
     void resizeGL(int w, int h);
 
     /*!
+     * \brief paintEvent
+     * \param event
+     */
+    void paintEvent(QPaintEvent *event);
+
+    /*!
+     * \brief mousePressEvent
+     * \param event
+     */
+    void mousePressEvent(QMouseEvent *event);
+
+    /*!
      * \brief mouseMoveEvent
      * \param event
      */
     void mouseMoveEvent(QMouseEvent *event);
-
 
 private:
     /*!
@@ -189,10 +198,10 @@ private:
     unsigned char * m_OpenGlBuffer;
 
     /** OpenGl buffered region */
-    RasterRegionType m_OpenGlBufferedRegion;
+    VectorRegionType m_OpenGlBufferedRegion;
 
     /** The display extent */
-    RasterRegionType m_Extent;
+    VectorRegionType m_Extent;
 
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */
@@ -204,12 +213,14 @@ private:
     QPen m_pen;
 
     /*!
-     * \brief m_focusRegion
+     * \brief m_focusRegion, this rectangle is synchronized with the windows of the zoom view
+     *  This rectangle is a helper variable in order to full setup the observer mechanism between
+     *  An observalble region and the observer classes which in this case are the views(scrollable,zoombable,full view)
      */
-    QRect m_visibleRegion;
+    QRect m_focusRegion;
 
 };
 
 } // end of itiviewer
 
-#endif // ITIOTBRGBAQGLWIDGETFULLVIEW_H
+#endif // ITIOTBVECTORQGLWIDGETSCROLLABLE_H

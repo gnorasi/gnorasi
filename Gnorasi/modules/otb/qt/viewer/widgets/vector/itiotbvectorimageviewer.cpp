@@ -7,12 +7,10 @@
 #include "itiotbvectorqglwidgetfullview.h"
 #include "itiotbvectorqglwidgetscrollable.h"
 #include "itiotbvectorqglwidgetzoomable.h"
-#include "../utils/itiotbimagemanager.h"
-#include "../observables/itiviewerobservableregion.h"
-#include "itiviewerpixelinfowidget.h"
+#include "../../utils/itiotbimagemanager.h"
+#include "../../observables/itiviewerobservableregion.h"
+#include "../itiviewerpixelinfowidget.h"
 #include "../../../ports/otbvectorimageport.h"
-
-#include "otbImage.h"
 
 using namespace itiviewer;
 using namespace voreen;

@@ -26,18 +26,22 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITIOTBVECTORQGLWIDGETSCROLLABLE_H
-#define ITIOTBVECTORQGLWIDGETSCROLLABLE_H
+#ifndef ITIOTBRGBAQGLWIDGETZOOMABLE_H
+#define ITIOTBRGBAQGLWIDGETZOOMABLE_H
 
 #include <QGLWidget>
 #include <QPen>
 #include <QWheelEvent>
 
-#include "itiviewerobserver.h"
+#include "../../rgba_globaldefs.h"
 
-#include "../vector_globaldefs.h"
 
-//using namespace otb;
+#include "../itiviewerobserver.h"
+
+
+#include "otbImageWidgetController.h"
+
+
 using namespace voreen;
 
 namespace itiviewer{
@@ -49,19 +53,16 @@ namespace itiviewer{
 *   is centered).
 *
 *   It is also able to display a rectangle on the displayed image.
-*
-*   This class uses the overpainting on a QGLWidget paradeigm from the Qt examples
-*
 *  \ingroup Visualization
  */
 
-class ItiOtbVectorQGLWidgetScrollable : public QGLWidget, public ItiViewerObserver
+class ItiOtbRgbaQGLWidgetZoomable : public QGLWidget, public ItiViewerObserver
 {
     Q_OBJECT
 public:
-    explicit ItiOtbVectorQGLWidgetScrollable(QWidget *parent = 0);
+    explicit ItiOtbRgbaQGLWidgetZoomable(QWidget *parent = 0);
 
-    virtual ~ItiOtbVectorQGLWidgetScrollable();
+    virtual ~ItiOtbRgbaQGLWidgetZoomable();
 
     /** Reads the OpenGl buffer from an image pointer
      *  \param image The image pointer,
@@ -71,7 +72,7 @@ public:
      * This method fills the m_OpenGl buffer according to the region
      *  size. Buffer in flipped over X axis if OTB_USE_GL_ACCEL is OFF.
      */
-    virtual void ReadBuffer(const VectorImageType * image, const VectorRegionType& region);
+    virtual void ReadBuffer(const RasterImageType * image, const RasterRegionType& region);
 
     /** Clear the OpenGl buffer */
     void ClearBuffer();
@@ -88,15 +89,12 @@ public:
     unsigned char * openGLBuffer() { return m_OpenGlBuffer;}
 
     //! setter getter, self explanatory
-    VectorRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
-    void setOpenGLBufferedRegion(VectorRegionType r) { m_OpenGlBufferedRegion = r; }
-
-    //! setter getter for the focus region area
-    QRect focusRegion() const { return m_focusRegion; }
-    void setFocusRegion(const QRect &rect) { m_focusRegion  = rect; }
+    RasterRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
+    void setOpenGLBufferedRegion(RasterRegionType r) { m_OpenGlBufferedRegion = r; }
 
     //! setter getter, self explanatory
-    VectorRegionType extent() { return m_Extent; }
+    RasterRegionType extent() { return m_Extent; }
+
 
     /*!
      * \brief update , implementation from parent class
@@ -109,6 +107,25 @@ public:
      */
     void draw();
 
+public slots:
+
+    /*!
+     * \brief zoomIn
+     */
+    void zoomIn();
+
+    /*!
+     * \brief zoomOut
+     */
+    void zoomOut();
+
+    /*!
+     * \brief translate
+     * \param dx
+     * \param dy
+     */
+    void translate(int dx, int dy);
+
 signals:
     /*!
      * \brief visibleAreaChanged , this signal is emitted uppon the view resizing
@@ -117,34 +134,29 @@ signals:
     void visibleAreaChanged(const QRect &rect);
 
     /*!
-     * \brief focusRegionTranslated, this signal is emitted on mouse press events
-     * \param dx
-     * \param dy
-     */
-    void focusRegionTranslated(int dx, int dy);
-
-    /*!
-     * \brief zoomIn , this signal is emitterd uppon wheel events
-     */
-    void zoomIn();
-
-    /*!
-     * \brief zoomIn , this signal is emitterd uppon wheel events
-     */
-    void zoomOut();
-
-    /*!
      * \brief currentIndexChanged
      * \param text
      */
     void currentIndexChanged(const QString &text);
 
+
 protected:
+
+    /*!
+     * \brief setupExtents
+     */
+    void setupRowColumnDisplay();
+
+    /*!
+     * \brief setupAndSendSignal
+     */
+    void setupAndSendSignal();
 
     /*!
      * \brief mousePressEvent
      */
     void wheelEvent(QWheelEvent *);
+
 
     /*!
      * \brief initializeGL
@@ -160,16 +172,9 @@ protected:
     void resizeGL(int w, int h);
 
     /*!
-     * \brief paintEvent
-     * \param event
+     * \brief paintGL , reimplemented method declared in the QGLWidget class
      */
-    void paintEvent(QPaintEvent *event);
-
-    /*!
-     * \brief mousePressEvent
-     * \param event
-     */
-    void mousePressEvent(QMouseEvent *event);
+    void paintGL();
 
     /*!
      * \brief mouseMoveEvent
@@ -177,9 +182,15 @@ protected:
      */
     void mouseMoveEvent(QMouseEvent *event);
 
+
 private:
     /*!
-     * \brief setupViewport
+     * \brief setupcolumnRowParameters
+     */
+    void initializeColumnRowParameters();
+
+    /*!
+     * \brief setupViewport, basically setup the extends
      * \param width
      * \param height
      */
@@ -198,29 +209,40 @@ private:
     unsigned char * m_OpenGlBuffer;
 
     /** OpenGl buffered region */
-    VectorRegionType m_OpenGlBufferedRegion;
+    RasterRegionType m_OpenGlBufferedRegion;
 
-    /** The display extent */
-    VectorRegionType m_Extent;
+    /*!
+     * \brief m_Extent , The display extent handles the visible area's size and index values
+     *  The Extend's values are related to the windows's size values
+     */
+    RasterRegionType m_Extent;
 
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */
     unsigned int m_SubsamplingRate;
 
     /*!
-     * \brief m_pen
+     * \brief m_nb_displayed_rows , a variable holding the number of rows that are visualized on an image of a fixed size [columns,rows]
      */
-    QPen m_pen;
+    unsigned int m_nb_displayed_rows;
 
     /*!
-     * \brief m_focusRegion, this rectangle is synchronized with the windows of the zoom view
-     *  This rectangle is a helper variable in order to full setup the observer mechanism between
-     *  An observalble region and the observer classes which in this case are the views(scrollable,zoombable,full view)
+     * \brief m_nb_displayed_cols , a variable holding the number of columns that are visualized on an image of a fixed size [columns,rows]
      */
-    QRect m_focusRegion;
+    unsigned int m_nb_displayed_cols;
+
+    /*!
+     * \brief m_nb_displayed_rows , a variable holding the first visualized row on an image of a fixed size [columns,rows]
+     */
+    unsigned int m_first_displayed_row;
+
+    /*!
+     * \brief m_nb_displayed_cols , a variable holding the first visualized column on an image of a fixed size [columns,rows]
+     */
+    unsigned int m_first_displayed_col;
 
 };
 
 } // end of itiviewer
 
-#endif // ITIOTBVECTORQGLWIDGETSCROLLABLE_H
+#endif // ITIOTBRGBAQGLWIDGETZOOMABLE_H

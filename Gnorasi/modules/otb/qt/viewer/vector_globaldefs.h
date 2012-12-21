@@ -15,8 +15,8 @@ using namespace otb;
 
 const unsigned int VDimension = 2;
 
-typedef itk::RGBAPixel<unsigned char>               PixelType;
-typedef otb::VectorImage<PixelType, VDimension>     VectorImageType;
+typedef unsigned char                               VPixelType;
+typedef otb::VectorImage<VPixelType, VDimension>    VectorImageType;
 typedef VectorImageType::RegionType                 VectorRegionType;
 typedef VectorImageType::IndexType                  VectorIndexType;
 typedef VectorImageType::SizeType                   VectorSizeType;

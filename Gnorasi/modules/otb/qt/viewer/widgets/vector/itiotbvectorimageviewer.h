@@ -26,42 +26,39 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITIOTBRGBAIMAGEVIEWER_H
-#define ITIOTBRGBAIMAGEVIEWER_H
+#ifndef ITIOTBVECTORIMAGEVIEWER_H
+#define ITIOTBVECTORIMAGEVIEWER_H
 
 #include <QtCore>
 #include <QtGui>
 #include <QtOpenGL>
-#include <QVBoxLayout>
-#include <QSplitter>
 
-#include "itiotbimageviewer.h"
+#include "../itiotbimageviewer.h"
 
-#include "../rgba_globaldefs.h"
+#include "../../vector_globaldefs.h"
 
 
 namespace itiviewer{
 
-class ItiOtbRgbaQGLWidgetScrollable;
-class ItiOtbRgbaQGLWidgetFullView;
-class ItiOtbRgbaQGLWidgetZoomable;
-class ItiOtbRgbaFocusRegion;
+class ItiOtbVectorQGLWidgetScrollable;
+class ItiOtbVectorQGLWidgetFullView;
+class ItiOtbVectorQGLWidgetZoomable;
 class ItiViewerObservableRegion;
 class ItiViewerPixelInfoWidget;
 
 /** \class ITIOTBImageViewer
  *   \brief This class implements a standard visualization tool to be
  *   plugged at the end of a pipeline.
- *  This viewer handles RGBA images coming from ImagePorts which are specialized data IO classes handling OTB Images.
+ *  This viewer handles Vector images coming from ImagePorts which are specialized data IO classes handling OTB Images.
  *
  *  \ingroup Visualization
  *
  */
-class ItiOtbRgbaImageViewer : public ItiOtbImageViewer
+class ItiOtbVectorImageViewer : public ItiOtbImageViewer
 {
     Q_OBJECT
 public:
-    explicit ItiOtbRgbaImageViewer(QWidget *parent = 0);
+    explicit ItiOtbVectorImageViewer(QWidget *parent = 0);
 
     /*!
      * \brief disassembleWidgets , implementation
@@ -107,7 +104,7 @@ public:
      * \param index , the index of the image
      * \return , return a QString containing pixel info data in order to show it on the respective widget
      */
-    static inline QString constructTextFromImageIndex(RasterIndexType index, RasterImageType* image);
+    static inline QString constructTextFromImageIndex(VectorIndexType index, VectorImageType* image);
 
     /** Compute the linear buffer index according to the 2D region and
      * its 2D index.This method is used when OTB_GL_USE_ACCEL is OFF.
@@ -115,7 +112,7 @@ public:
      * \param index 2D index
      * \param region 2D region
      */
-    static inline unsigned int ComputeXAxisFlippedBufferIndex(const RasterIndexType& index, const RasterRegionType& region)
+    static inline unsigned int ComputeXAxisFlippedBufferIndex(const VectorIndexType& index, const VectorRegionType& region)
     {
       return (region.GetSize()[1] - 1 + region.GetIndex()[1] -
               index[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
@@ -126,7 +123,7 @@ public:
     * \param index 2D index
     * \param region 2D region
     */
-    static inline unsigned int ComputeBufferIndex(const RasterIndexType& index, const RasterRegionType& region)
+    static inline unsigned int ComputeBufferIndex(const VectorIndexType& index, const VectorRegionType& region)
     {
       return (index[1] - region.GetIndex()[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
     }
@@ -175,21 +172,21 @@ private:
     void setupLayout();
 
     /*!
-     * \brief m_pItiOtbRgbaImageWidgetScroll
+     * \brief m_pItiOtbVectorImageWidgetScroll
      *  The scrollable widgets accepts scroll events and has a helper rectangle which sets the focus region
      */
-    ItiOtbRgbaQGLWidgetScrollable *m_pItiOtbRgbaImageWidgetScroll;
+    ItiOtbVectorQGLWidgetScrollable *m_pItiOtbVectorImageWidgetScroll;
 
     /*!
-     * \brief m_pItiOtbRgbaImageWidgetFull , The full widget always shows the whole image extents
+     * \brief m_pItiOtbVectorImageWidgetFull , The full widget always shows the whole image extents
      */
-    ItiOtbRgbaQGLWidgetFullView* m_pItiOtbRgbaImageWidgetFullView;
+    ItiOtbVectorQGLWidgetFullView* m_pItiOtbVectorImageWidgetFullView;
 
     /*!
-     * \brief m_pItiOtbRgbaImageWidgetZoom
+     * \brief m_pItiOtbVectorImageWidgetZoom
      *  The zoombable widget shows the image in various scales depending on the image zoom properties
      */
-    ItiOtbRgbaQGLWidgetZoomable *m_pItiOtbRgbaImageWidgetZoomable;
+    ItiOtbVectorQGLWidgetZoomable *m_pItiOtbVectorImageWidgetZoomable;
 
     /*!
      * \brief m_pvBoxLayoutLeft
@@ -262,7 +259,7 @@ private:
 };
 
 //!
-QString ItiOtbRgbaImageViewer::constructTextFromImageIndex(RasterIndexType index, RasterImageType* image){
+QString ItiOtbVectorImageViewer::constructTextFromImageIndex(VectorIndexType index, VectorImageType* image){
     QString text;
 
     text  = QString::fromUtf8("Index : [%1, %2]").arg(QString::number(index[0])).arg(QString::number(index[1]));
@@ -271,7 +268,7 @@ QString ItiOtbRgbaImageViewer::constructTextFromImageIndex(RasterIndexType index
     text += "\n";
 
     //! region
-    RasterRegionType region = image->GetBufferedRegion();
+    VectorRegionType region = image->GetBufferedRegion();
     text += QString::fromUtf8("Image size : [%1, %2]").arg(QString::number(region.GetSize()[0])).arg(QString::number(region.GetSize()[1]));
     text += "\n";
 
@@ -302,4 +299,4 @@ QString ItiOtbRgbaImageViewer::constructTextFromImageIndex(RasterIndexType index
 
 } // end of namespace itiviewer
 
-#endif // ITIOTBRGBAIMAGEVIEWER_H
+#endif // ITIOTBVECTORIMAGEVIEWER_H
