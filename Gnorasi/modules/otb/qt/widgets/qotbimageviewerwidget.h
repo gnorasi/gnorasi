@@ -37,7 +37,6 @@
 #include "voreen/core/voreencoreapi.h"
 #include "voreen/qt/voreenmoduleqt.h"
 #include "voreen/qt/widgets/processor/qprocessorwidget.h"
-#include "../../ports/otbimageport.h"
 
 
 namespace itiviewer{

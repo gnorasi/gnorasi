@@ -7,13 +7,14 @@
 
 #include "../viewer/utils/itiotbimagemanager.h"
 #include "../viewer/widgets/itiotbimageviewer.h"
-#include "../viewer/factories/itiotbrgbaimageviewerfactory.h"
+//#include "../viewer/factories/itiotbrgbaimageviewerfactory.h"
 #include "../viewer/factories/itiotbvectorimageviewerfactory.h"
 #include "../viewer/panel/itiotbimageviewerpanel.h"
 #include "../viewer/commands/commandcolorcomposition.h"
 #include "../viewer/commands/commandcontrastenhancement.h"
-#include "../viewer/utils/itiotbimagergbachannelprovider.h"
+//#include "../viewer/utils/itiotbimagergbachannelprovider.h"
 #include "../viewer/utils/itiotbimagevectorchannelprovider.h"
+#include "../viewer/rgba_globaldefs.h"
 
 using namespace otb;
 using namespace itiviewer;
@@ -38,7 +39,7 @@ void QGLOtbImageViewerWidget::initialize(){
     QProcessorWidget::initialize();
 
     //!
-    m_pItiOtbImageFactory = new ItiOtbRgbaImageViewerFactory(this);
+    m_pItiOtbImageFactory = new ItiOtbVectorImageViewerFactory(this);
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->createViewer();
     m_pItiOtbImageViewer->setParent(this);
     m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
@@ -207,41 +208,17 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! not sure yet
     //!
 
-    //! type case checking
-    if(dynamic_cast<OTBImagePort*>(port)){ // set here the raster image port
-
-        //! cast it ot OTBImagePort
-        OTBImagePort *pOtbImagePort = dynamic_cast<OTBImagePort*>(port);
-
-        //! get the image
-        RasterImageType *rImgType = (RasterImageType*)pOtbImagePort->getData();
-        if(!rImgType)
-            return;
-
-        //! create the specialized factory item
-        m_pItiOtbImageFactory = new ItiOtbRgbaImageViewerFactory(this);
-
-        //! create the specialized provider
-        m_pItiOtbImageViewerPanel->setProvider(new ItiOtbImageRgbaChannelProvider(rImgType,this));
-    }
-    else if(dynamic_cast<OTBVectorImagePort*>(port)){ // set here the vector image factory
-        //! cast it ot OTBImagePort
-        OTBVectorImagePort *pOtbVectorImagePort = dynamic_cast<OTBVectorImagePort*>(port);
-
-        //! get the image
-        VectorImageType *vImgType = (VectorImageType*)pOtbVectorImagePort->getData();
-        if(!vImgType)
-            return;
-
-        //! create the specialized factory item
-        m_pItiOtbImageFactory = new ItiOtbVectorImageViewerFactory(this);
-
-        //! create the specialized provider
-        m_pItiOtbImageViewerPanel->setProvider(new ItiOtbImageVectorChannelProvider(vImgType,this));
-    }
-
     //! set the port to the image manager
     ITIOTBIMAGEMANAGER->setPort(port);
+
+    //! setup the image
+    ITIOTBIMAGEMANAGER->setupImage();
+
+    //! create the specialized factory item
+    m_pItiOtbImageFactory = new ItiOtbVectorImageViewerFactory(this);
+
+    //! create the specialized provider
+    m_pItiOtbImageViewerPanel->setProvider(new ItiOtbImageVectorChannelProvider(ITIOTBIMAGEMANAGER->image(),this));
 
     //! create the appropriate viewer
     createViewer();

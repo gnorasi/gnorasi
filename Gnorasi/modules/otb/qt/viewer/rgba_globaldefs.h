@@ -15,7 +15,7 @@ using namespace otb;
 
 const unsigned int Dimension = 2;
 
-typedef itk::RGBAPixel<unsigned char>           PixelType;
+typedef double                                  PixelType;
 typedef otb::Image<PixelType, Dimension>        RasterImageType;
 typedef RasterImageType::RegionType             RasterRegionType;
 typedef RasterImageType::IndexType              RasterIndexType;

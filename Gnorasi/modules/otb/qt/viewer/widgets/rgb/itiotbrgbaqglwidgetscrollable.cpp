@@ -235,14 +235,9 @@ void ItiOtbRgbaQGLWidgetScrollable::paintEvent(QPaintEvent *event){
 
 //!
 void ItiOtbRgbaQGLWidgetScrollable::draw(){
-    //! get the current port from the manager
-    OTBImagePort *port = (OTBImagePort*)ITIOTBIMAGEMANAGER->port();
-
-    if(!port)
-        return;
 
     //!
-    RasterImageType* imgType =  (RasterImageType*)port->getData();
+    RasterImageType* imgType =  (RasterImageType*)ITIOTBIMAGEMANAGER->image();
     if(!imgType)
         return;
 

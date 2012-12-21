@@ -4,7 +4,12 @@
 
 #include "../commands/command.h"
 
+//#include "../../../ports/otbimageport.h"
+//#include "../../../ports/otbvectorimageport.h"
+
 using namespace itiviewer;
+using namespace otb;
+using namespace voreen;
 
 //! initialize the unique instance to null
 ItiOtbImageManager* ItiOtbImageManager::m_pInstance = NULL;
@@ -12,7 +17,7 @@ ItiOtbImageManager* ItiOtbImageManager::m_pInstance = NULL;
 //!
 ItiOtbImageManager::ItiOtbImageManager()
 {
-
+    filter = ImageToVectorImageCastFilterType::New();
 }
 
 //!
@@ -33,6 +38,38 @@ void ItiOtbImageManager::deleteInstance(){
     }
 }
 
+
+//!
+void ItiOtbImageManager::setupImage(){
+
+    //! type case checking
+    if(dynamic_cast<OTBImagePort*>(m_pPort)){ // set here the raster image port
+        //! cast it ot OTBImagePort
+        OTBImagePort *pOtbImagePort = dynamic_cast<OTBImagePort*>(m_pPort);
+
+        if(!pOtbImagePort)
+            return;
+
+        RasterImageType *rImgType = (RasterImageType*)pOtbImagePort->getData();
+        if(!rImgType)
+            return;
+
+        filter->SetInput(rImgType);
+
+        m_pImgType = filter->GetOutput();
+
+    }
+    else if(dynamic_cast<OTBVectorImagePort*>(m_pPort)){ // set here the vector image factory
+        OTBVectorImagePort *pOtbVectorImagePort = dynamic_cast<OTBVectorImagePort*>(m_pPort);
+
+        //! get the image
+        VectorImageType *vImgType = (VectorImageType*)pOtbVectorImagePort->getData();
+        if(!vImgType)
+            return;
+
+        m_pImgType = vImgType;
+    }
+}
 
 //!
 ItiOtbImageManager::~ItiOtbImageManager(){
