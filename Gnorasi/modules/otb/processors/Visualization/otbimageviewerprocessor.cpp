@@ -10,12 +10,16 @@ OTBImageViewerProcessor::OTBImageViewerProcessor()
     : Processor(),
     inPort_(Port::INPORT, "OTBImage.inport", 0),
     outPort_(Port::OUTPORT, "OTBImage.outport", 0),
+    inPort2_(Port::INPORT, "OTBVectorImage.inport", 0),
+    outPort2_(Port::OUTPORT, "OTBVectorImage.outport",0),
     showImageButton_("showButton", "Show Image"),
     loadImageFile_("imageFile", "Load Image", "Load Image", VoreenApplication::app()->getUserDataPath())
 {
     // register ports and properties
     addPort(inPort_);
     addPort(outPort_);
+    addPort(inPort2_);
+    addPort(outPort2_);
     showImageButton_.onChange(CallMemberAction<OTBImageViewerProcessor>(this, &OTBImageViewerProcessor::showImage));
     loadImageFile_.onChange(CallMemberAction<OTBImageViewerProcessor>(this, &OTBImageViewerProcessor::loadImage));
     addProperty(showImageButton_);
@@ -58,6 +62,7 @@ void OTBImageViewerProcessor::deinitialize() throw (VoreenException) {
 void OTBImageViewerProcessor::process() {
     if(!isEndProcessor()){
         outPort_.setData(inPort_.getData());
+        outPort2_.setData(inPort2_.getData());
     }
 
     updateView();

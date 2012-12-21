@@ -7,6 +7,7 @@
 #include "voreen/core/properties/buttonproperty.h"
 
 #include "../../ports/otbimageport.h"
+#include "../../ports/otbvectorimageport.h"
 
 namespace voreen {
 
@@ -53,6 +54,10 @@ private:
   
     OTBImagePort inPort_;
     OTBImagePort outPort_;		///< passes the image directly to a next processor
+
+    OTBVectorImagePort inPort2_;
+    OTBVectorImagePort outPort2_;
+
     ButtonProperty showImageButton_;    ///< shows the image.
 
     FileDialogProperty loadImageFile_;  ///< Path of the RDF file.
