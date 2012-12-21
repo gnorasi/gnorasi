@@ -10,7 +10,7 @@
 #include "../../utils/itiotbimagemanager.h"
 #include "../../observables/itiviewerobservableregion.h"
 #include "../itiviewerpixelinfowidget.h"
-#include "../../../ports/otbvectorimageport.h"
+#include "../../../../ports/otbvectorimageport.h"
 
 using namespace itiviewer;
 using namespace voreen;

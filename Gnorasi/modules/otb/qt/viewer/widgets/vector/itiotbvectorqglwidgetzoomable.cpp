@@ -8,7 +8,7 @@
 #include "itkImageRegionConstIteratorWithIndex.h"
 #include "../../utils/itiotbimagemanager.h"
 #include "../../observables/itiviewerobservableregion.h"
-#include "../../../ports/otbvectorimageport.h"
+#include "../../../../ports/otbvectorimageport.h"
 
 using namespace otb;
 using namespace itiviewer;

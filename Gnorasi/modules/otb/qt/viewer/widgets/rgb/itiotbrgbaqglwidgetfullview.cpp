@@ -6,7 +6,7 @@
 #include "../../observables/itiviewerobservableregion.h"
 #include "itiotbrgbaimageviewer.h"
 #include "../../utils/itiotbimagemanager.h"
-#include "../../../ports/otbimageport.h"
+#include "../../../../ports/otbimageport.h"
 #include "itiotbrgbaimageviewer.h"
 
 #include "itkImageRegionConstIteratorWithIndex.h"

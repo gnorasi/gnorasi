@@ -8,8 +8,7 @@
 #include "itkImageRegionConstIteratorWithIndex.h"
 #include "../../utils/itiotbimagemanager.h"
 #include "../../observables/itiviewerobservableregion.h"
-#include "../../../ports/otbimageport.h"
-#include <QMouseEvent>
+#include "../../../../ports/otbimageport.h"
 
 using namespace otb;
 using namespace itiviewer;
