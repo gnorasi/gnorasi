@@ -236,14 +236,9 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
 
 //!
 void ItiOtbVectorQGLWidgetScrollable::draw(){
-    //! get the current port from the manager
-    OTBVectorImagePort *port = (OTBVectorImagePort*)ITIOTBIMAGEMANAGER->port();
-
-    if(!port)
-        return;
 
     //!
-    VectorImageType* imgType =  (VectorImageType*)port->getData();
+    VectorImageType* imgType =  (VectorImageType*)ITIOTBIMAGEMANAGER->image();
     if(!imgType)
         return;
 
@@ -353,12 +348,12 @@ void ItiOtbVectorQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
 //!
 void ItiOtbVectorQGLWidgetScrollable::mouseMoveEvent(QMouseEvent *event){
     //! get the current image port from the manager
-    OTBVectorImagePort *imgPort = (OTBVectorImagePort*)ITIOTBIMAGEMANAGER->port();
+    Port *port = ITIOTBIMAGEMANAGER->port();
 
     //! check if the image port is valid and connected with other ports
-    if(imgPort && imgPort->isConnected()){
+    if(port && port->isConnected()){
         //! get the image from the port
-        VectorImageType* imgType =  (VectorImageType*)imgPort->getData();
+        VectorImageType* imgType =  (VectorImageType*)ITIOTBIMAGEMANAGER->image();
         if(!imgType){
             QGLWidget::mouseMoveEvent(event);
             return;

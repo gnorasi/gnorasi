@@ -273,14 +273,9 @@ void ItiOtbVectorQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
 
 //!
 void ItiOtbVectorQGLWidgetZoomable::draw(){
-    //! get the current port from the manager
-    OTBVectorImagePort *port = (OTBVectorImagePort*)ITIOTBIMAGEMANAGER->port();
-
-    if(!port)
-        return;
 
     //!
-    VectorImageType* imgType =  (VectorImageType*)port->getData();
+    VectorImageType* imgType =  (VectorImageType*)ITIOTBIMAGEMANAGER->image();
     if(!imgType)
         return;
 

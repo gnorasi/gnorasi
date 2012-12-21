@@ -33,6 +33,8 @@
 
 #include "voreen/core/ports/port.h"
 
+#include "../vector_globaldefs.h"
+
 
 namespace itiviewer{
 
@@ -53,8 +55,8 @@ class Command;
  *  used as an interface - console item , accessible from everywhere in
  *  the project.
  *
- *  This class has a voreen Port as member variable, this port holds data related to the image
- *  The concrete ItiOtbImageViewer class knows which kind of port is used a raster or vector port
+ *  This class has a vetore image as member variable,
+ *  The concrete ItiOtbImageViewer class handles vector image data
  *
  */
 class ItiOtbImageManager
@@ -78,6 +80,17 @@ public:
     void setGeoidFile(const QString &fp) { m_GeoidFile = fp; }
     QString geoidFile() const { return m_GeoidFile; }
 
+
+    ///! getter setters
+    VectorImageType *image() const { return m_pImgType; }
+    void setImage(VectorImageType *i) { m_pImgType = i; }
+
+    /*!
+     * \brief setupImage, setup the image , cast the image to vector
+     *  This function should be called after setting the port to the manager , namely call the setPort function
+     */
+    void setupImage();
+
 private:
     //! ctor
     ItiOtbImageManager();
@@ -88,6 +101,9 @@ private:
     //! this is the unique instance
     static ItiOtbImageManager* m_pInstance;
 
+    //! this is the image
+    VectorImageType *m_pImgType;
+
     /*! Pointer to the image , the port holds image related data.*/
     voreen::Port *m_pPort;
 
@@ -96,6 +112,8 @@ private:
 
     /*! GeoidFile filename (used if a VectorData is rendered */
     QString m_GeoidFile;
+
+    ImageToVectorImageCastFilterType::Pointer filter;
 };
 
 } // end of namespace itiviewer

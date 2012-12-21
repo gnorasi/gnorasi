@@ -215,13 +215,8 @@ void ItiOtbVectorQGLWidgetFullView::paintEvent(QPaintEvent *event){
 
 //!
 void ItiOtbVectorQGLWidgetFullView::draw(){
-    OTBVectorImagePort *port = (OTBVectorImagePort*)ITIOTBIMAGEMANAGER->port();
-
-    if(!port)
-        return;
-
     //!
-    VectorImageType* imgType =  (VectorImageType*)port->getData();
+    VectorImageType* imgType =  ITIOTBIMAGEMANAGER->image();
     if(!imgType)
         return;
 

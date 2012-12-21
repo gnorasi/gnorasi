@@ -362,9 +362,9 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.cpp
     ${MOD_DIR}/qt/viewer/utils/itiotbimagemanager.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiotbimageviewer.cpp
-    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaimageviewer.cpp
+#    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaimageviewer.cpp
     ${MOD_DIR}/qt/viewer/factories/itiotbimageviewerfactory.cpp
-    ${MOD_DIR}/qt/viewer/factories/itiotbrgbaimageviewerfactory.cpp
+#    ${MOD_DIR}/qt/viewer/factories/itiotbrgbaimageviewerfactory.cpp
     ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanel.cpp
     ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpaneldatatab.cpp
     ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanelsetuptab.cpp
@@ -376,12 +376,12 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/observables/itiviewerobservable.cpp
     ${MOD_DIR}/qt/viewer/observables/itiviewerobservableregion.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiviewerobserver.cpp
-    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaqglwidgetscrollable.cpp
-    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaqglwidgetfullview.cpp
-    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaqglwidgetzoomable.cpp
+#    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaqglwidgetscrollable.cpp
+#    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaqglwidgetfullview.cpp
+#    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaqglwidgetzoomable.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiviewerpixelinfowidget.cpp
     ${MOD_DIR}/qt/viewer/utils/itiotbimagechannelprovider.cpp
-    ${MOD_DIR}/qt/viewer/utils/itiotbimagergbachannelprovider.cpp
+#    ${MOD_DIR}/qt/viewer/utils/itiotbimagergbachannelprovider.cpp
     ${MOD_DIR}/qt/viewer/factories/itiotbvectorimageviewerfactory.cpp
     ${MOD_DIR}/qt/viewer/utils/itiotbimagevectorchannelprovider.cpp
     ${MOD_DIR}/qt/viewer/widgets/vector/itiotbvectorimageviewer.cpp
@@ -397,9 +397,9 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/widgets/qotbimageviewerwidget.h
     ${MOD_DIR}/qt/viewer/utils/itiotbimagemanager.h
     ${MOD_DIR}/qt/viewer/widgets/itiotbimageviewer.h
-    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaimageviewer.h
+#    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaimageviewer.h
     ${MOD_DIR}/qt/viewer/factories/itiotbimageviewerfactory.h
-    ${MOD_DIR}/qt/viewer/factories/itiotbrgbaimageviewerfactory.h
+#    ${MOD_DIR}/qt/viewer/factories/itiotbrgbaimageviewerfactory.h
     ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanel.h
     ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpaneldatatab.h
     ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanelsetuptab.h
@@ -411,12 +411,12 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/observables/itiviewerobservable.h
     ${MOD_DIR}/qt/viewer/observables/itiviewerobservableregion.h
     ${MOD_DIR}/qt/viewer/widgets/itiviewerobserver.h
-    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaqglwidgetscrollable.h
-    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaqglwidgetfullview.h
-    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaqglwidgetzoomable.h
+#    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaqglwidgetscrollable.h
+#    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaqglwidgetfullview.h
+#    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaqglwidgetzoomable.h
     ${MOD_DIR}/qt/viewer/widgets/itiviewerpixelinfowidget.h
     ${MOD_DIR}/qt/viewer/utils/itiotbimagechannelprovider.h
-    ${MOD_DIR}/qt/viewer/utils/itiotbimagergbachannelprovider.h
+#    ${MOD_DIR}/qt/viewer/utils/itiotbimagergbachannelprovider.h
     ${MOD_DIR}/qt/viewer/factories/itiotbvectorimageviewerfactory.h
     ${MOD_DIR}/qt/viewer/vector_globaldefs.h
     ${MOD_DIR}/qt/viewer/utils/itiotbimagevectorchannelprovider.h
