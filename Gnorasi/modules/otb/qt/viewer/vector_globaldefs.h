@@ -11,10 +11,9 @@
 #include "otbImage.h"
 #include "otbVectorImage.h"
 #include "otbImageToVectorImageCastFilter.h"
-#include "../../../ports/otbimageport.h"
-#include "../../../ports/otbvectorimageport.h"
-#include "rgba_globaldefs.h"
+#include "../../ports/otbimageport.h"
 #include "../../ports/otbvectorimageport.h"
+#include "rgba_globaldefs.h"
 
 using namespace otb;
 
