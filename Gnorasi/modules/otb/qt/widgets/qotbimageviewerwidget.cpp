@@ -212,6 +212,9 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! create the specialized provider
     m_pItiOtbImageViewerPanel->setProvider(new ItiOtbImageVectorChannelProvider(ITIOTBIMAGEMANAGER->image(),this));
 
+    //! setup the channels , get number etc..
+    m_pItiOtbImageViewerPanel->setupChannels();
+
     //! create the appropriate viewer
     createViewer();
 
