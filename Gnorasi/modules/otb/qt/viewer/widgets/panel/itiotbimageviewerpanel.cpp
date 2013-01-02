@@ -4,10 +4,8 @@
 #include "itiotbimageviewerpanelsetuptab.h"
 #include "itiotbimageviewerpanelhistogramtab.h"
 #include "itiotbimageviewerpanelpixeldescriptiontab.h"
-#include "../widgets/itiotbimageviewer.h"
-#include "../commands/command.h"
-#include "../vector_globaldefs.h"
-#include "../utils/itiotbimagemanager.h"
+
+#include "../../commands/command.h"
 
 #include <QVBoxLayout>
 
@@ -67,7 +65,5 @@ void ItiOtbImageViewerPanel::setCommand(SLOT_KEY cmdk, Command *pC){
 
 //!
 void ItiOtbImageViewerPanel::setupChannels(){
-    VectorImageType *img = ITIOTBIMAGEMANAGER->image();
-    if(!img)
-        return;
+    m_pSetupTab->setupChannels();
 }

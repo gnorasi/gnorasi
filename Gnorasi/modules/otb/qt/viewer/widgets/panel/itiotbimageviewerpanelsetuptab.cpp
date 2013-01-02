@@ -1,5 +1,9 @@
 #include "itiotbimageviewerpanelsetuptab.h"
 
+#include "../../vector_globaldefs.h"
+
+#include "../../utils/itiotbimagemanager.h"
+
 #include <QVBoxLayout>
 
 using namespace itiviewer;
@@ -240,4 +244,20 @@ void ItiOtbImageViewerPanelSetupTab::onRadioButtonColorCompositionChanged(){
 
         emit rgbColorCompositionChannelsChanged(m_pSpinBoxRedChannel->value(),m_pSpinBoxGreenChannel->value(),m_pSpinBoxBlueChannel->value());
     }
+}
+
+
+void ItiOtbImageViewerPanelSetupTab::setupChannels(){
+    VectorImageType *img = ITIOTBIMAGEMANAGER->image();
+    if(!img)
+        return;
+
+    img->UpdateOutputInformation();
+
+    unsigned int nbBands = img->GetNumberOfComponentsPerPixel();
+
+    m_pSpinBoxBlueChannel->setMaximum(nbBands);
+    m_pSpinBoxGreenChannel->setMaximum(nbBands);
+    m_pSpinBoxGreyscaleChannel->setMaximum(nbBands);
+    m_pSpinBoxRedChannel->setMaximum(nbBands);
 }
