@@ -9,7 +9,7 @@
 #include "../viewer/widgets/itiotbimageviewer.h"
 //#include "../viewer/factories/itiotbrgbaimageviewerfactory.h"
 #include "../viewer/factories/itiotbvectorimageviewerfactory.h"
-#include "../viewer/panel/itiotbimageviewerpanel.h"
+#include "../viewer/widgets/panel/itiotbimageviewerpanel.h"
 #include "../viewer/commands/commandcolorcomposition.h"
 #include "../viewer/commands/commandcontrastenhancement.h"
 //#include "../viewer/utils/itiotbimagergbachannelprovider.h"
@@ -211,6 +211,9 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
 
     //! create the specialized provider
     m_pItiOtbImageViewerPanel->setProvider(new ItiOtbImageVectorChannelProvider(ITIOTBIMAGEMANAGER->image(),this));
+
+    //! setup the channels , get number etc..
+    m_pItiOtbImageViewerPanel->setupChannels();
 
     //! create the appropriate viewer
     createViewer();

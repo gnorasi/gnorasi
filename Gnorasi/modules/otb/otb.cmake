@@ -365,11 +365,11 @@ SET(MOD_QT_SOURCES
 #    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaimageviewer.cpp
     ${MOD_DIR}/qt/viewer/factories/itiotbimageviewerfactory.cpp
 #    ${MOD_DIR}/qt/viewer/factories/itiotbrgbaimageviewerfactory.cpp
-    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanel.cpp
-    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpaneldatatab.cpp
-    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanelsetuptab.cpp
-    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanelhistogramtab.cpp
-    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanelpixeldescriptiontab.cpp
+    ${MOD_DIR}/qt/viewer/widgets/panel/itiotbimageviewerpanel.cpp
+    ${MOD_DIR}/qt/viewer/widgets/panel/itiotbimageviewerpaneldatatab.cpp
+    ${MOD_DIR}/qt/viewer/widgets/panel/itiotbimageviewerpanelsetuptab.cpp
+    ${MOD_DIR}/qt/viewer/widgets/panel/itiotbimageviewerpanelhistogramtab.cpp
+    ${MOD_DIR}/qt/viewer/widgets/panel/itiotbimageviewerpanelpixeldescriptiontab.cpp
     ${MOD_DIR}/qt/viewer/commands/command.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcolorcomposition.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.cpp
@@ -400,11 +400,11 @@ SET(MOD_QT_HEADERS
 #    ${MOD_DIR}/qt/viewer/widgets/rgb/itiotbrgbaimageviewer.h
     ${MOD_DIR}/qt/viewer/factories/itiotbimageviewerfactory.h
 #    ${MOD_DIR}/qt/viewer/factories/itiotbrgbaimageviewerfactory.h
-    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanel.h
-    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpaneldatatab.h
-    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanelsetuptab.h
-    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanelhistogramtab.h
-    ${MOD_DIR}/qt/viewer/panel/itiotbimageviewerpanelpixeldescriptiontab.h
+    ${MOD_DIR}/qt/viewer/widgets/panel/itiotbimageviewerpanel.h
+    ${MOD_DIR}/qt/viewer/widgets/panel/itiotbimageviewerpaneldatatab.h
+    ${MOD_DIR}/qt/viewer/widgets/panel/itiotbimageviewerpanelsetuptab.h
+    ${MOD_DIR}/qt/viewer/widgets/panel/itiotbimageviewerpanelhistogramtab.h
+    ${MOD_DIR}/qt/viewer/widgets/panel/itiotbimageviewerpanelpixeldescriptiontab.h
     ${MOD_DIR}/qt/viewer/commands/command.h
     ${MOD_DIR}/qt/viewer/commands/commandcolorcomposition.h
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.h

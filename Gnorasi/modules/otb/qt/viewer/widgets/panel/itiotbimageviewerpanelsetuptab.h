@@ -50,7 +50,8 @@ public:
     //! ctor
     explicit ItiOtbImageViewerPanelSetupTab(QWidget *parent = 0);
 
-
+    //!
+    void setupChannels();
     
 signals:
     //! emitted when the apply button for color composition has been clicked
