@@ -11,8 +11,12 @@
 #include "otbImage.h"
 #include "otbVectorImage.h"
 #include "otbImageToVectorImageCastFilter.h"
+#include "otbImageFileReader.h"
+
 #include "../../ports/otbimageport.h"
 #include "../../ports/otbvectorimageport.h"
+
+
 #include "rgba_globaldefs.h"
 
 using namespace otb;
@@ -26,5 +30,6 @@ typedef VectorImageType::IndexType                                          Vect
 typedef VectorImageType::SizeType                                           VectorSizeType;
 
 typedef otb::ImageToVectorImageCastFilter<RasterImageType, VectorImageType> ImageToVectorImageCastFilterType;
+typedef otb::ImageFileReader<VectorImageType> ReaderType;
 
 #endif // VECTOR_GLOBALDEFS_H
