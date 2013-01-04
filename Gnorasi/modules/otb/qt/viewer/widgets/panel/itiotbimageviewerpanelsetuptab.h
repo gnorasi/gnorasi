@@ -69,14 +69,40 @@ signals:
     //! emitted when the contrast enhancement method has been changed
     void contrastEnhancementChanged(int method, double aval, double bval);
 
-    //!
+    /*!
+     * \brief deviationChanged
+     */
     void deviationChanged(double );
 
-
+    /*!
+     * \brief upperQuantileChanged
+     */
     void upperQuantileChanged(double );
 
-
+    /*!
+     * \brief lowerQuantileChanged
+     */
     void lowerQuantileChanged(double );
+
+    /*!
+     * \brief applyContrastEnhancementGaussian
+     */
+    void applyContrastEnhancementGaussian();
+
+    /*!
+     * \brief applyContrastEnhancementLinear0255
+     */
+    void applyContrastEnhancementLinear0255();
+
+    /*!
+     * \brief applyContrastEnhancementLinearXPerc
+     */
+    void applyContrastEnhancementLinearXPerc();
+
+    /*!
+     * \brief applyContrastEnhancementSquareRoot
+     */
+    void applyContrastEnhancementSquareRoot();
     
 public slots:
     //!
@@ -101,6 +127,11 @@ private slots:
     void onLowerQuantileLineEditChanged(const QString &);
 
     void onStandardDeviationLineEdiitChanged(const QString &);
+
+    /*!
+     * \brief onContrastEnhancementApplyButtonClicked
+     */
+    void onContrastEnhancementApplyButtonClicked();
 
 private:
     void initialize();

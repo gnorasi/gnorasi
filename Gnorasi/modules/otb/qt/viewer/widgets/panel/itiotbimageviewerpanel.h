@@ -143,6 +143,26 @@ private slots:
      */
     void applyConstrastEnhancement();
 
+    /*!
+     * \brief applyContrastEnhancementGaussian
+     */
+    void applyContrastEnhancementGaussian();
+
+    /*!
+     * \brief applyContrastEnhancementLinear0_255
+     */
+    void applyContrastEnhancementLinear0_255();
+
+    /*!
+     * \brief applyContrastEnhancementLinearXPerc
+     */
+    void applyContrastEnhancementLinearXPerc();
+
+    /*!
+     * \brief applyContrastEnhancementSquareRoot
+     */
+    void applyContrastEnhancementSquareRoot();
+
 private:
     /*!
      * \brief initialize, inititializing stuff
