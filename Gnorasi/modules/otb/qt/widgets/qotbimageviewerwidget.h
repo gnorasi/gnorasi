@@ -111,12 +111,6 @@ private:
     void setupByPort(voreen::Port* port) ;
 
     /*!
-     * \brief setupCommands
-     *  setup connections between commands and panel properties
-     */
-//    void setupCommands();
-
-    /*!
      * \brief assembleWidgets
      *  this function creates and assembles all the widgets into one single widget
      */
