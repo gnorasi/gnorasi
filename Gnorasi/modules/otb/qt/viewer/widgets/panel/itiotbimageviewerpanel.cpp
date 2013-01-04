@@ -37,6 +37,10 @@ void ItiOtbImageViewerPanel::initialize(){
     connect(m_pSetupTab,SIGNAL(contrastEnhancementChanged(int,double,double)),this,SIGNAL(contrastEnhancementChanged(int,double,double)));
     connect(m_pSetupTab,SIGNAL(greyScaleColorCompositionChannelChanged(int)),SIGNAL(greyScaleColorCompositionChannelChanged(int)));
     connect(m_pSetupTab,SIGNAL(rgbColorCompositionChannelsChanged(int,int,int)),SIGNAL(rgbColorCompositionChannelsChanged(int,int,int)));
+    connect(m_pSetupTab,SIGNAL(applyContrastEnhancementGaussian()),this,SLOT(applyContrastEnhancementGaussian()));
+    connect(m_pSetupTab,SIGNAL(applyContrastEnhancementLinear0255()),this,SLOT(applyContrastEnhancementLinear0_255()));
+    connect(m_pSetupTab,SIGNAL(applyContrastEnhancementLinearXPerc()),this,SLOT(applyContrastEnhancementLinearXPerc()));
+    connect(m_pSetupTab,SIGNAL(applyContrastEnhancementSquareRoot()),this,SLOT(applyContrastEnhancementSquareRoot()));
 
     //! setup layout
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -61,6 +65,30 @@ void ItiOtbImageViewerPanel::applyConstrastEnhancement(){
 //!
 void ItiOtbImageViewerPanel::setCommand(SLOT_KEY cmdk, Command *pC){
     m_commandHash[(int)cmdk] = pC;
+}
+
+void ItiOtbImageViewerPanel::applyContrastEnhancementGaussian(){
+    Command *pCommand = m_commandHash[(int)SLOT_CE_GAUSSIAN];
+    if(pCommand)
+        pCommand->execute();
+}
+
+void ItiOtbImageViewerPanel::applyContrastEnhancementLinear0_255(){
+    Command *pCommand = m_commandHash[(int)SLOT_CE_LINEAR_0_255];
+    if(pCommand)
+        pCommand->execute();
+}
+
+void ItiOtbImageViewerPanel::applyContrastEnhancementLinearXPerc(){
+    Command *pCommand = m_commandHash[(int)SLOT_CE_LINEARXPERC];
+    if(pCommand)
+        pCommand->execute();
+}
+
+void ItiOtbImageViewerPanel::applyContrastEnhancementSquareRoot(){
+    Command *pCommand = m_commandHash[(int)SLOT_CE_SQUAREROOT];
+    if(pCommand)
+        pCommand->execute();
 }
 
 //!

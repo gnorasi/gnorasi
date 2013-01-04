@@ -151,6 +151,7 @@ void ItiOtbImageViewerPanelSetupTab::setupContrastEnhancememtGroupBox(){
     m_pGroupBoxContrastEnhancement->setLayout(layout);
 
     connect(m_pComboBoxMethod,SIGNAL(currentIndexChanged(int)),this,SLOT(onComboBoxContrastEnhancementMethodCurrentIndexChanged(int)));
+    connect(m_pButtonApplyContrastEnhancement,SIGNAL(clicked()),this,SLOT(onContrastEnhancementApplyButtonClicked()));
 }
 
 //!
@@ -279,4 +280,26 @@ void ItiOtbImageViewerPanelSetupTab::setupChannels(){
     m_pSpinBoxGreenChannel->setMaximum(nbBands);
     m_pSpinBoxGreyscaleChannel->setMaximum(nbBands);
     m_pSpinBoxRedChannel->setMaximum(nbBands);
+}
+
+
+void ItiOtbImageViewerPanelSetupTab::onContrastEnhancementApplyButtonClicked(){
+    int index = m_pComboBoxMethod->currentIndex();
+
+    switch(index){
+    case 0:
+        emit applyContrastEnhancementLinear0255();
+        break;
+    case 1:
+        emit applyContrastEnhancementLinearXPerc();
+        break;
+    case 2:
+        emit applyContrastEnhancementGaussian();
+        break;
+    case 3:
+        break;
+        emit applyContrastEnhancementSquareRoot();
+    default:
+        break;
+    }
 }
