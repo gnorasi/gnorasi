@@ -106,7 +106,6 @@ public:
       return (index[1] - region.GetIndex()[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
     }
 
-
     /*!
      * \brief fullView
      * \return

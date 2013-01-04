@@ -53,9 +53,6 @@ void QGLOtbImageViewerWidget::initialize(){
     m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
     m_pvSplitter->setChildrenCollapsible(false);
 
-    //! setup commands
-//    setupCommands();
-
     //! create a vertical box layout and add the splitter on it
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(m_pvSplitter);
@@ -139,9 +136,6 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
     m_pItiOtbImageViewer->setParent(this);
     m_pItiOtbImageViewer->disassembleWidgets();
 
-    //! setup commands
-//    setupCommands();
-
     //!
     m_pItiOtbImageViewer->draw();
 }
@@ -174,29 +168,9 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
     m_pvSplitter->setChildrenCollapsible(false);
 
-    //! setup commands
-//    setupCommands();
-
     //!
     m_pItiOtbImageViewer->draw();
 }
-
-//!
-//void QGLOtbImageViewerWidget::setupCommands(){
-//    Q_ASSERT(m_pItiOtbImageViewer);
-//    Q_ASSERT(m_pItiOtbImageViewerPanel);
-
-//    //! create command color composition
-//    CommandColorComposition *pCmdCC = new CommandColorComposition(m_pItiOtbImageViewer,this);
-//    connect(m_pItiOtbImageViewerPanel,SIGNAL(greyScaleColorCompositionChannelChanged(int)),pCmdCC,SLOT(setGreyScaleMethod(int)));
-//    connect(m_pItiOtbImageViewerPanel,SIGNAL(rgbColorCompositionChannelsChanged(int,int,int)),pCmdCC,SLOT(setRGBMethod(int,int,int)));
-//    m_pItiOtbImageViewerPanel->setCommand(ItiOtbImageViewerPanel::SLOT_CC, pCmdCC);
-
-//    //! create command for contrast enhancenment
-//    CommandContrastEnhancement *pCmdCE = new CommandContrastEnhancement(m_pItiOtbImageViewer,this);
-//    connect(m_pItiOtbImageViewerPanel,SIGNAL(contrastEnhancementChanged(int,double,double)),pCmdCE,SLOT(setContrastEnhancementMethod(int,double,double)));
-//    m_pItiOtbImageViewerPanel->setCommand(ItiOtbImageViewerPanel::SLOT_CE,pCmdCE);
-//}
 
 //!
 void QGLOtbImageViewerWidget::setupByPort(Port *port){

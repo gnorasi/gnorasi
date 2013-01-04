@@ -59,24 +59,6 @@ public:
         VMODE_SPLITTED                                                                  = 1
     };
 
-    /*!
-     * \brief The CC enum stands for the Color Composition mode
-     */
-    enum CC{
-        CC_GREYSCALE                                                                    = 0,
-        CC_RGBA                                                                         = 1
-    };
-
-    /*!
-     * \brief The CE enum stands for the Contrast Enhancement method
-     */
-    enum CE{
-        CELINEAR_0_255                                                                  = 0,
-        CE_LINEAR_X_PERC                                                                = 1,
-        CE_GAUSSIAN                                                                     = 2,
-        CE_SQUARE_ROOT                                                                  = 3
-    };
-
     //!
     //! ctor
     //!
