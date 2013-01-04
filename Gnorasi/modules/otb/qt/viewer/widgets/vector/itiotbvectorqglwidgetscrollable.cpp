@@ -54,7 +54,7 @@ void ItiOtbVectorQGLWidgetScrollable::ReadBuffer(const VectorImageType *image, c
     byterescaler->SetInput(image);
     byterescaler->SetOutputMinimum(minimum);
     byterescaler->SetOutputMaximum(maximum);
-    byterescaler->SetClampThreshold(0.00);
+    byterescaler->SetClampThreshold(0.01);
     ByteImageType::Pointer image8;
     image8 = byterescaler->GetOutput();
     byterescaler->Update();
@@ -78,6 +78,8 @@ void ItiOtbVectorQGLWidgetScrollable::ReadBuffer(const VectorImageType *image, c
         // compute the linear index (buffer is flipped around X axis
         // when gl acceleration is disabled
         index = ItiOtbVectorImageViewer::ComputeXAxisFlippedBufferIndex(it.GetIndex(), region);
+
+//        qDebug() << "index value 0 : " << it.Get()[0] << "\t index value 1: " << it.Get()[1] << "\t index value 2 : " << it.Get()[2];
 
         // Fill the buffer
         m_OpenGlBuffer[index]       = it.Get()[0];

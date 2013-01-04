@@ -34,6 +34,7 @@
 namespace itiviewer{
 
 class ItiOtbImageViewer;
+class ItiOtbImageViewerPanel;
 
 /*!
  * \brief The ITIImageViewerFactory class
@@ -51,15 +52,19 @@ public:
 
     /*!
      * \brief createViewer
-     *
      *  abstract method, every subclass must implement this class
-     *
-     * \return
+     * \param panel , the panel user to control the viewer, the panel item is used to create the appropriate commands
      */
-    virtual ItiOtbImageViewer* createViewer() = 0;
+    virtual void createViewer(ItiOtbImageViewerPanel *panel) = 0;
+
+    /*!
+     * \brief viewer
+     * \return the viewer
+     */
+    ItiOtbImageViewer* viewer() { return m_pItiOtbImageViewer; }
 
 protected:
-
+    ItiOtbImageViewer* m_pItiOtbImageViewer;
     
 };
 

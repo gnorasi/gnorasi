@@ -35,7 +35,9 @@
 
 namespace itiviewer{
 
+class Command;
 class ItiOtbImageViewer;
+class ItiOtbImageViewerPanelSetupTab;
 
 /*!
  * \brief The ItiOtbRgbaImageViewerFactory class
@@ -52,8 +54,35 @@ public:
     //! dtor
     ~ItiOtbVectorImageViewerFactory();
 
-    //!
-    ItiOtbImageViewer* createViewer();
+    /*!
+     * \brief createViewer
+     */
+    void createViewer(ItiOtbImageViewerPanel *panel);
+
+    /*!
+     * \brief createCommandContrastEnhancementGaussian
+     * \param sTab
+     */
+    Command* createCommandContrastEnhancementGaussian(ItiOtbImageViewerPanelSetupTab *sTab);
+
+    /*!
+     * \brief createCommandContrastEnhancementLinear0_255
+     * \param sTab
+     */
+    Command* createCommandContrastEnhancementLinear0_255(ItiOtbImageViewerPanelSetupTab *sTab);
+
+    /*!
+     * \brief createCommandContrastEnhancementLinearXPerc
+     * \param sTab
+     */
+    Command* createCommandContrastEnhancementLinearXPerc(ItiOtbImageViewerPanelSetupTab *sTab);
+
+    /*!
+     * \brief createCommandContrastEnhancementSquareRoot
+     * \param sTab
+     */
+    Command* createCommandContrastEnhancementSquareRoot(ItiOtbImageViewerPanelSetupTab *sTab);
+
 };
 
 } // end of namespace itiviewer

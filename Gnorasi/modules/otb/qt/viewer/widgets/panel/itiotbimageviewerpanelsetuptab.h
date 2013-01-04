@@ -68,6 +68,15 @@ signals:
 
     //! emitted when the contrast enhancement method has been changed
     void contrastEnhancementChanged(int method, double aval, double bval);
+
+    //!
+    void deviationChanged(double );
+
+
+    void upperQuantileChanged(double );
+
+
+    void lowerQuantileChanged(double );
     
 public slots:
     //!
@@ -84,6 +93,14 @@ public slots:
 
     //!
     void onSpinBoxBlueChannelChanged(int val);
+
+
+private slots:
+    void onUpperQuantileLineEditChanged(const QString &);
+
+    void onLowerQuantileLineEditChanged(const QString &);
+
+    void onStandardDeviationLineEdiitChanged(const QString &);
 
 private:
     void initialize();

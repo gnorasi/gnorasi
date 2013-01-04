@@ -51,7 +51,7 @@ void ItiOtbVectorQGLWidgetZoomable::ReadBuffer(const VectorImageType *image, con
     byterescaler->SetInput(image);
     byterescaler->SetOutputMinimum(minimum);
     byterescaler->SetOutputMaximum(maximum);
-    byterescaler->SetClampThreshold(0.00);
+    byterescaler->SetClampThreshold(0.01);
     ByteImageType::Pointer image8;
     image8 = byterescaler->GetOutput();
     byterescaler->Update();

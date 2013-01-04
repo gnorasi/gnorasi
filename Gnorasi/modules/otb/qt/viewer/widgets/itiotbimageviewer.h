@@ -104,29 +104,6 @@ public:
      */
     virtual void draw()                                                                 = 0;
 
-    /*!
-     * \brief setGreyScaleColorMode
-     *  This is a virtual method for abstracting the setting the color mode functionality
-     * \param band,  sets the band channel will be used to draw the image
-     */
-    virtual void applyGreyScaleColorMode(int band)                                      = 0;
-
-    /*!
-     * \brief setRGBColorMode, This is a virtual method for abstracting the setting the color mode functionality
-     * \param red, sets the band channel to be used to visualize the red part
-     * \param green, sets the band channel to be used to visualize the green part
-     * \param blue, sets the band channel to be used to visualize the blue part
-     */
-    virtual void applyRGBColorMode(int red, int green, int blue)                        = 0;
-
-    /*!
-     * \brief setContrastEnhancementMethod, This is a virtual function for abstracting the contrast enhancement method
-     * \param ce, sets the method to be set
-     * \param aval, sets the lower quantile value or the standard deviation value if the ce param equals to CE_GAUSSIAN
-     * \param bval equals to the upper quantile value
-     */
-    virtual void applyContrastEnhancementMethod(CC ce, double aval, double bval = 0.0)  = 0;
-
 protected:
     /*!
      * \brief m_vmode , a variable holding the VMODE value

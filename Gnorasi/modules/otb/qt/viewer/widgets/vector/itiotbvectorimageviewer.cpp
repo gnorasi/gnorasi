@@ -224,39 +224,6 @@ void ItiOtbVectorImageViewer::draw(){
     m_pItiOtbVectorImageWidgetZoomable->draw();
 }
 
-/*!
- * \brief ItiOtbVectorImageViewer::applyGreyScaleColorMode
- * \param band
- */
-void ItiOtbVectorImageViewer::applyGreyScaleColorMode(int band){
-    Q_UNUSED(band)
-}
-
-/*!
- * \brief ItiOtbVectorImageViewer::applyRGBColorMode
- * \param red
- * \param green
- * \param blue
- */
-void ItiOtbVectorImageViewer::applyRGBColorMode(int red, int green, int blue){
-    Q_UNUSED(red)
-    Q_UNUSED(green)
-    Q_UNUSED(blue)
-}
-
-/*!
- * \brief ItiOtbVectorImageViewer::applyContrastEnhancementMethod
- * \param ce
- * \param aval
- * \param bval
- */
-void ItiOtbVectorImageViewer::applyContrastEnhancementMethod(CC ce, double aval, double bval){
-    Q_UNUSED(ce)
-
-    Q_UNUSED(aval)
-    Q_UNUSED(bval)
-}
-
 //!
 void ItiOtbVectorImageViewer::resetObserverMechanism(){
     m_pFocusRegion->unRegisterObserver(m_pItiOtbVectorImageWidgetScroll);
