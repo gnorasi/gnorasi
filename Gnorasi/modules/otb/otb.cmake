@@ -272,6 +272,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/otbvectorimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
+
 )
 
 SET(MOD_CORE_HEADERS
@@ -371,8 +372,6 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/widgets/panel/itiotbimageviewerpanelhistogramtab.cpp
     ${MOD_DIR}/qt/viewer/widgets/panel/itiotbimageviewerpanelpixeldescriptiontab.cpp
     ${MOD_DIR}/qt/viewer/commands/command.cpp
-    ${MOD_DIR}/qt/viewer/commands/commandcolorcomposition.cpp
-    ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.cpp
     ${MOD_DIR}/qt/viewer/observables/itiviewerobservable.cpp
     ${MOD_DIR}/qt/viewer/observables/itiviewerobservableregion.cpp
     ${MOD_DIR}/qt/viewer/widgets/itiviewerobserver.cpp
@@ -388,6 +387,10 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/widgets/vector/itiotbvectorqglwidgetscrollable.cpp
     ${MOD_DIR}/qt/viewer/widgets/vector/itiotbvectorqglwidgetfullview.cpp
     ${MOD_DIR}/qt/viewer/widgets/vector/itiotbvectorqglwidgetzoomable.cpp
+    ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementgaussian.cpp
+    ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementlinear0255.cpp
+    ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementlinearxperc.cpp
+    ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementsquareroot.cpp
 )
 ################################################################################
 # Qt headers
@@ -406,8 +409,6 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/widgets/panel/itiotbimageviewerpanelhistogramtab.h
     ${MOD_DIR}/qt/viewer/widgets/panel/itiotbimageviewerpanelpixeldescriptiontab.h
     ${MOD_DIR}/qt/viewer/commands/command.h
-    ${MOD_DIR}/qt/viewer/commands/commandcolorcomposition.h
-    ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancement.h
     ${MOD_DIR}/qt/viewer/observables/itiviewerobservable.h
     ${MOD_DIR}/qt/viewer/observables/itiviewerobservableregion.h
     ${MOD_DIR}/qt/viewer/widgets/itiviewerobserver.h
@@ -424,6 +425,10 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/widgets/vector/itiotbvectorqglwidgetscrollable.h
     ${MOD_DIR}/qt/viewer/widgets/vector/itiotbvectorqglwidgetfullview.h
     ${MOD_DIR}/qt/viewer/widgets/vector/itiotbvectorqglwidgetzoomable.h
+    ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementgaussian.h
+    ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementlinear0255.h
+    ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementlinearxperc.h
+    ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementsquareroot.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

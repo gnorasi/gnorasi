@@ -114,7 +114,7 @@ private:
      * \brief setupCommands
      *  setup connections between commands and panel properties
      */
-    void setupCommands();
+//    void setupCommands();
 
     /*!
      * \brief assembleWidgets

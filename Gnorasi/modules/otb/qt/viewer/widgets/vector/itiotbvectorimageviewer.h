@@ -78,28 +78,6 @@ public:
     void draw();
 
     /*!
-     * \brief applyGreyScaleColorMode , implementation
-     * \param band , the grey  scale channel
-     */
-    void applyGreyScaleColorMode(int band);
-
-    /*!
-     * \brief applyRGBColorMode , implementation
-     * \param red , red channel
-     * \param green , green channel
-     * \param blue, blue channel
-     */
-    void applyRGBColorMode(int red, int green, int blue);
-
-    /*!
-     * \brief applyContrastEnhancementMethod , red channel
-     * \param ce
-     * \param aval
-     * \param bval
-     */
-    void applyContrastEnhancementMethod(CC ce, double aval, double bval);
-
-    /*!
      * \brief costructTextFromImageIndex
      * \param index , the index of the image
      * \return , return a QString containing pixel info data in order to show it on the respective widget
@@ -128,6 +106,24 @@ public:
       return (index[1] - region.GetIndex()[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
     }
 
+
+    /*!
+     * \brief fullView
+     * \return
+     */
+    ItiOtbVectorQGLWidgetFullView *fullView()       const { return m_pItiOtbVectorImageWidgetFullView; }
+
+    /*!
+     * \brief scrollView
+     * \return
+     */
+    ItiOtbVectorQGLWidgetScrollable *scrollView()   const {return m_pItiOtbVectorImageWidgetScroll; }
+
+    /*!
+     * \brief zoomView
+     * \return
+     */
+    ItiOtbVectorQGLWidgetZoomable *zoomView()       const {return m_pItiOtbVectorImageWidgetZoomable; }
 
 private slots:
     /*!

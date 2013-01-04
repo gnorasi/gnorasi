@@ -65,8 +65,12 @@ class ItiOtbImageViewerPanel : public QWidget
     Q_OBJECT
 public:
     enum SLOT_KEY{
-        SLOT_CC  = 0,    //! color composition
-        SLOT_CE  = 1     //! contrast enhancement
+        SLOT_CC                 = 0,    //! color composition
+        SLOT_CE                 = 1,    //! contrast enhancement
+        SLOT_CE_GAUSSIAN        = 2,    //! gaussian filter
+        SLOT_CE_LINEAR_0_255    = 3,    //! linear, the default
+        SLOT_CE_LINEARXPERC     = 4,    //! linear X %
+        SLOT_CE_SQUAREROOT      = 5     //! square root
     };
 
     /*!
@@ -97,6 +101,13 @@ public:
      * \param p
      */
     void setProvider(ItiOtbImageChannelProvider *p) { m_pItiOtbImageChannelProvider = p; }
+
+
+    /*!
+     * \brief setupTab
+     * \return
+     */
+    ItiOtbImageViewerPanelSetupTab *setupTab() { return m_pSetupTab; }
 
 signals:
     /*!

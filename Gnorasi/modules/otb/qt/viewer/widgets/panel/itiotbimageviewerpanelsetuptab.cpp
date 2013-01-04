@@ -246,6 +246,25 @@ void ItiOtbImageViewerPanelSetupTab::onRadioButtonColorCompositionChanged(){
     }
 }
 
+void ItiOtbImageViewerPanelSetupTab::onLowerQuantileLineEditChanged(const QString &text){
+    double val = text.toDouble();
+
+    emit lowerQuantileChanged(val);
+}
+
+
+void ItiOtbImageViewerPanelSetupTab::onStandardDeviationLineEdiitChanged(const QString &text){
+    double val = text.toDouble();
+
+    emit deviationChanged(val);
+}
+
+
+void ItiOtbImageViewerPanelSetupTab::onUpperQuantileLineEditChanged(const QString &text){
+    double val = text.toDouble();
+
+    emit upperQuantileChanged(val);
+}
 
 void ItiOtbImageViewerPanelSetupTab::setupChannels(){
     VectorImageType *img = ITIOTBIMAGEMANAGER->image();
