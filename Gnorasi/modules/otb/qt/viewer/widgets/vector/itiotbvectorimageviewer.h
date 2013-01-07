@@ -255,6 +255,9 @@ private:
 
 //!
 QString ItiOtbVectorImageViewer::constructTextFromImageIndex(VectorIndexType index, VectorImageType* image){
+    if(!image)
+        return QString();
+
     QString text;
 
     text  = QString::fromUtf8("Index : [%1, %2]").arg(QString::number(index[0])).arg(QString::number(index[1]));
