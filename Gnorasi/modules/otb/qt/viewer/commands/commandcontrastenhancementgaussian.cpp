@@ -20,83 +20,87 @@ CommandContrastEnhancementGaussian::CommandContrastEnhancementGaussian(ItiOtbVec
 }
 
 void CommandContrastEnhancementGaussian::execute(){
-    //! TODO
-    //! apply the filter here
 
     //!
-    VectorImageType* imgType =  (VectorImageType*)ITIOTBIMAGEMANAGER->image();
-    if(!imgType)
+//    VectorImageType* imgType =  (VectorImageType*)ITIOTBIMAGEMANAGER->image();
+//    if(!imgType)
+//        return;
+
+//    VectorImageToImageListType::Pointer imageList = VectorImageToImageListType::New();
+//    imageList->SetInput(imgType);
+
+//    imageList->UpdateOutputInformation();
+
+//    const unsigned int nbBands = imgType->GetNumberOfComponentsPerPixel();
+
+//    for(unsigned int j = 0; j < nbBands; ++j){
+//        RasterImageType *input = (RasterImageType*)imageList->GetOutput()->GetNthElement(j);
+
+    voreen::OTBImagePort *pPort = dynamic_cast<voreen::OTBImagePort*>(ITIOTBIMAGEMANAGER->port());
+
+    if(!pPort)
         return;
 
-    //! get the biggest available region
-    VectorRegionType region = imgType->GetRequestedRegion();
+    RasterImageType *input = (RasterImageType*)pPort->getData();
+    if(!input)
+        return;
 
-    VectorImageToImageListType::Pointer imageList = VectorImageToImageListType::New();
-    imageList->SetInput(imgType);
+    RasterImageType::Pointer output = RasterImageType::New();
+    output->SetRegions(input->GetRequestedRegion());
+    output->Allocate();
 
-    imageList->UpdateOutputInformation();
+    itk::NeighborhoodInnerProduct<RasterImageType> innerProduct;
 
-    const unsigned int nbBands = imgType->GetNumberOfComponentsPerPixel();
+    FaceCalculatorType                         faceCalculator;
+    FaceCalculatorType::FaceListType           faceList;
+    FaceCalculatorType::FaceListType::iterator fit;
 
-    for(unsigned int j = 0; j < nbBands; ++j){
-        RasterImageType *input = (RasterImageType*)imageList->GetOutput()->GetNthElement(j);
+    IteratorType             out;
+    NeighborhoodIteratorType it;
 
-        RasterImageType::Pointer output = RasterImageType::New();
-        output->SetRegions(region);
-        output->Allocate();
+    itk::GaussianOperator<PixelType, Dimension> gaussianOperator;
+    gaussianOperator.SetVariance(m_deviation);
 
-        itk::NeighborhoodInnerProduct<RasterImageType> innerProduct;
+    for (unsigned int i = 0; i < RasterImageType::ImageDimension; ++i)
+    {
+        gaussianOperator.SetDirection(i);
+        gaussianOperator.CreateDirectional();
 
-        FaceCalculatorType                         faceCalculator;
-        FaceCalculatorType::FaceListType           faceList;
-        FaceCalculatorType::FaceListType::iterator fit;
+        faceList = faceCalculator(input, output->GetRequestedRegion(),
+                                gaussianOperator.GetRadius());
 
-        IteratorType             out;
-        NeighborhoodIteratorType it;
-
-        itk::GaussianOperator<VPixelType, VDimension> gaussianOperator;
-        gaussianOperator.SetVariance(m_deviation);
-
-        for (unsigned int i = 0; i < RasterImageType::ImageDimension; ++i)
+        for (fit = faceList.begin(); fit != faceList.end(); ++fit)
         {
-            gaussianOperator.SetDirection(i);
-            gaussianOperator.CreateDirectional();
+            it = NeighborhoodIteratorType(gaussianOperator.GetRadius(),
+                                          input, *fit);
 
-            faceList = faceCalculator(input, output->GetRequestedRegion(),
-                                    gaussianOperator.GetRadius());
+            out = IteratorType(output, *fit);
 
-            for (fit = faceList.begin(); fit != faceList.end(); ++fit)
+            for (it.GoToBegin(), out.GoToBegin(); !it.IsAtEnd(); ++it, ++out)
             {
-                it = NeighborhoodIteratorType(gaussianOperator.GetRadius(),
-                                              input, *fit);
-
-                out = IteratorType(output, *fit);
-
-                for (it.GoToBegin(), out.GoToBegin(); !it.IsAtEnd(); ++it, ++out)
-                {
-                    out.Set(innerProduct(it, gaussianOperator));
-                }
-            }
-
-            // Swap the input and output buffers
-            if (i != RasterImageType::ImageDimension - 1)
-            {
-                RasterImageType::Pointer tmp = input;
-                input = output;
-                output = tmp;
+                out.Set(innerProduct(it, gaussianOperator));
             }
         }
 
-        ImageToVectorImageCastFilterType::Pointer filter = ImageToVectorImageCastFilterType::New();
-
-        filter->SetInput(output);
-
-        VectorImageType* vImage = filter->GetOutput();
-
-        filter->Update();
-
-        ITIOTBIMAGEMANAGER->setImage(vImage);
+        // Swap the input and output buffers
+        if (i != RasterImageType::ImageDimension - 1)
+        {
+            RasterImageType::Pointer tmp = input;
+            input = output;
+            output = tmp;
+        }
     }
+
+    ImageToVectorImageCastFilterType::Pointer filter = ImageToVectorImageCastFilterType::New();
+
+    filter->SetInput(output);
+
+    VectorImageType* vImage = filter->GetOutput();
+
+    filter->Update();
+
+    ITIOTBIMAGEMANAGER->setImage(vImage);
+//    }
 
     m_pItiOtbVectorImageViewer->draw();
 }
