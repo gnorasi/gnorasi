@@ -42,6 +42,11 @@ using namespace voreen;
 
 namespace itiviewer{
 
+//
+// Internal classes pre-declaration.
+class ImageModelRenderer;
+class ImageViewManipulator;
+
 /** \class QOtbImageWidget
 *   \brief This class renders an RGB bytes image buffer to the screen.
 *   Rendered data can be loaded using the ReadBuffer() method.
@@ -60,19 +65,6 @@ public:
 
     virtual ~ItiOtbVectorQGLWidgetZoomable();
 
-    /** Reads the OpenGl buffer from an image pointer
-     *  \param image The image pointer,
-     *  \param region The region to read.
-     *  Potential exception thrown if region is outside of the buffered
-     *  region.
-     * This method fills the m_OpenGl buffer according to the region
-     *  size. Buffer in flipped over X axis if OTB_USE_GL_ACCEL is OFF.
-     */
-    virtual void ReadBuffer(const VectorImageType * image, const VectorRegionType& region);
-
-    /** Clear the OpenGl buffer */
-    void ClearBuffer();
-
     //! setter getter, self explanatory
     double isotropicZoom() const { return m_IsotropicZoom; }
     void setIsotropicZoom(double z) { m_IsotropicZoom = z; }
@@ -80,16 +72,6 @@ public:
     //! setter getter, self explanatory
     unsigned int subSamplingRate() const { return m_SubsamplingRate; }
     void setSubSamplingRate(unsigned int ss) { m_SubsamplingRate = ss; }
-
-    //! setter getter, self explanatory
-    unsigned char * openGLBuffer() { return m_OpenGlBuffer;}
-
-    //! setter getter, self explanatory
-    VectorRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
-    void setOpenGLBufferedRegion(VectorRegionType r) { m_OpenGlBufferedRegion = r; }
-
-    //! setter getter, self explanatory
-    VectorRegionType extent() { return m_Extent; }
 
 
     /*!
@@ -106,21 +88,10 @@ public:
 public slots:
 
     /*!
-     * \brief zoomIn
+     * \brief onLargestPossibleRegionChanged
+     * \param largestRegion
      */
-    void zoomIn();
-
-    /*!
-     * \brief zoomOut
-     */
-    void zoomOut();
-
-    /*!
-     * \brief translate
-     * \param dx
-     * \param dy
-     */
-    void translate(int dx, int dy);
+    void onLargestPossibleRegionChanged(const ImageRegionType& largestRegion);
 
 signals:
     /*!
@@ -185,57 +156,19 @@ private:
      */
     void initializeColumnRowParameters();
 
-    /*!
-     * \brief setupViewport, basically setup the extends
-     * \param width
-     * \param height
-     */
-    void setupViewport(int w, int h);
-
     /** OpenGl zoom factor */
     double m_IsotropicZoom;
 
-    /** The interpolation method */
-    GLint m_InterpolationMethod;
+    /** Event handler pointer */
+    ImageViewManipulator* m_ImageViewManipulator;
 
-    //! helper values
-    GLint m_W, m_H;
-
-    /** OpenGl buffer      */
-    unsigned char * m_OpenGlBuffer;
-
-    /** OpenGl buffered region */
-    VectorRegionType m_OpenGlBufferedRegion;
-
-    /*!
-     * \brief m_Extent , The display extent handles the visible area's size and index values
-     *  The Extend's values are related to the windows's size values
-     */
-    VectorRegionType m_Extent;
+    /** Model Renderer pointer */
+    ImageModelRenderer* m_ImageModelRenderer;
 
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */
     unsigned int m_SubsamplingRate;
 
-    /*!
-     * \brief m_nb_displayed_rows , a variable holding the number of rows that are visualized on an image of a fixed size [columns,rows]
-     */
-    unsigned int m_nb_displayed_rows;
-
-    /*!
-     * \brief m_nb_displayed_cols , a variable holding the number of columns that are visualized on an image of a fixed size [columns,rows]
-     */
-    unsigned int m_nb_displayed_cols;
-
-    /*!
-     * \brief m_nb_displayed_rows , a variable holding the first visualized row on an image of a fixed size [columns,rows]
-     */
-    unsigned int m_first_displayed_row;
-
-    /*!
-     * \brief m_nb_displayed_cols , a variable holding the first visualized column on an image of a fixed size [columns,rows]
-     */
-    unsigned int m_first_displayed_col;
 
 };
 

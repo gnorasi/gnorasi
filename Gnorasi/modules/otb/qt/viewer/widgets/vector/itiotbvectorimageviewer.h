@@ -146,6 +146,8 @@ private slots:
 
 private:
 
+    void setupModel();
+
     /*!
      * \brief resetObserverMechanism
      */
@@ -250,6 +252,7 @@ private:
      * \brief m_labelCss
      */
     QString m_labelCss;
+
     
 };
 

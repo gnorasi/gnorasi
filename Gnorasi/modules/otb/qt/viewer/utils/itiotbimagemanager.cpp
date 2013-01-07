@@ -74,6 +74,21 @@ void ItiOtbImageManager::setupImage(){
 }
 
 //!
+QString ItiOtbImageManager::imageFile() const {
+    OTBImagePort *iPort = (OTBImagePort*)m_pPort;
+
+    if(iPort){
+        std::string text = iPort->imagePath();
+        for(int i = 0;i < text.size(); i++){
+            qDebug() << text[i];
+        }
+        return QString::fromStdString(text);
+    }
+
+    return QString();
+}
+
+//!
 ItiOtbImageManager::~ItiOtbImageManager(){
 
 }

@@ -10,6 +10,8 @@
 #include "../commands/commandcontrastenhancementlinearxperc.h"
 #include "../commands/commandcontrastenhancementsquareroot.h"
 
+#include "../models/itiotbVectorImageModel.h"
+
 using namespace itiviewer;
 
 ItiOtbVectorImageViewerFactory::ItiOtbVectorImageViewerFactory(QObject *parent)
@@ -20,6 +22,10 @@ ItiOtbVectorImageViewerFactory::ItiOtbVectorImageViewerFactory(QObject *parent)
 //!
 void ItiOtbVectorImageViewerFactory::createViewer(ItiOtbImageViewerPanel *panel){
     m_pItiOtbImageViewer = new ItiOtbVectorImageViewer();
+
+    VectorImageModel *model = new VectorImageModel(this);
+
+    m_pItiOtbImageViewer->setModel(model);
 
     ItiOtbImageViewerPanelSetupTab *sTab = panel->setupTab();
 
