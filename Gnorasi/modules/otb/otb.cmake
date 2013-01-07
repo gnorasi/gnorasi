@@ -391,6 +391,11 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementlinear0255.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementlinearxperc.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementsquareroot.cpp
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageModelRenderer.cpp
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageViewManipulator.cpp
+    ${MOD_DIR}/qt/viewer/models/itiotbAbstractImageModel.cpp
+    ${MOD_DIR}/qt/viewer/models/itiotbAbstractModel.cpp
+    ${MOD_DIR}/qt/viewer/models/itiotbVectorImageModel.cpp
 )
 ################################################################################
 # Qt headers
@@ -429,6 +434,11 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementlinear0255.h
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementlinearxperc.h
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementsquareroot.h
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageModelRenderer.h
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageViewManipulator.h
+    ${MOD_DIR}/qt/viewer/models/itiotbAbstractImageModel.h
+    ${MOD_DIR}/qt/viewer/models/itiotbAbstractModel.h
+    ${MOD_DIR}/qt/viewer/models/itiotbVectorImageModel.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

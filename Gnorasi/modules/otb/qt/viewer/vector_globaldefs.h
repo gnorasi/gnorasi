@@ -28,6 +28,23 @@ const unsigned int VDimension = 2;
 
 typedef double                                                              VPixelType;
 typedef otb::VectorImage<VPixelType, VDimension>                            VectorImageType;
+
+/**
+ */
+typedef itk::RGBAPixel< unsigned char >                                     RGBAPixelType;
+/**
+ */
+typedef otb::Image< RGBAPixelType, VDimension >                             RGBAImageType;
+
+/**
+ */
+typedef itk::ImageRegion<VDimension >                                       ImageRegionType;
+
+/**
+ */
+typedef itk::Index< VDimension >                                            IndexType;
+
+typedef VectorImageType                                                     DefaultImageType;
 typedef VectorImageType::RegionType                                         VectorRegionType;
 typedef VectorImageType::IndexType                                          VectorIndexType;
 typedef VectorImageType::SizeType                                           VectorSizeType;
@@ -43,5 +60,15 @@ typedef otb::ImageFileReader<VectorImageType> ReaderType;
 
 typedef otb::ImageList<RasterImageType>                                     ImageListType;
 typedef otb::VectorImageToImageListFilter<VectorImageType, ImageListType>   VectorImageToImageListType;
+
+/**
+ */
+typedef otb::ImageFileReader< VectorImageType >                             VectorImageFileReaderType;
+
+/**
+ */
+typedef VectorImageFileReaderType                                           DefaultImageFileReaderType;
+
+
 
 #endif // VECTOR_GLOBALDEFS_H
