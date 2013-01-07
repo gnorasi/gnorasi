@@ -91,6 +91,18 @@ public:
      */
     void setupImage();
 
+    /*!
+     * \brief imageFile
+     * \return
+     */
+    QString imageFile() const ;
+
+    /*!
+     * \brief getNextPort
+     * \return
+     */
+    voreen::Port* nextPort(voreen::Port* ) const;
+
 private:
     //! ctor
     ItiOtbImageManager();

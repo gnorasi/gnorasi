@@ -12,6 +12,8 @@
 #include "../itiviewerpixelinfowidget.h"
 #include "../../../../ports/otbvectorimageport.h"
 
+#include "../../models/itiotbVectorImageModel.h"
+
 using namespace itiviewer;
 using namespace voreen;
 
@@ -222,6 +224,8 @@ void ItiOtbVectorImageViewer::draw(){
 
     //!
     m_pItiOtbVectorImageWidgetZoomable->draw();
+
+    setupModel();
 }
 
 //!
@@ -237,7 +241,7 @@ void ItiOtbVectorImageViewer::setupObserverMechanism(){
     //! setup observer mechanism
     m_pFocusRegion                      = new ItiViewerObservableRegion(this);
     m_pFocusRegion->registerObserver(m_pItiOtbVectorImageWidgetScroll);
-    m_pFocusRegion->registerObserver(m_pItiOtbVectorImageWidgetZoomable);
+//    m_pFocusRegion->registerObserver(m_pItiOtbVectorImageWidgetZoomable);
     m_pVisibleRegion                    = new ItiViewerObservableRegion(this);
 //    m_pVisibleRegion->registerObserver(m_pItiOtbVectorImageWidgetScroll);
     m_pVisibleRegion->registerObserver(m_pItiOtbVectorImageWidgetFullView);
@@ -280,4 +284,17 @@ void ItiOtbVectorImageViewer::onZoomableWidgetSizeChanged(const QRect &size){
 void ItiOtbVectorImageViewer::onFocusRegionTranslated(const QRect &rect){
     //!
     m_pFocusRegion->setRegion(rect);
+}
+
+
+void ItiOtbVectorImageViewer::setupModel(){
+    QString path = ITIOTBIMAGEMANAGER->imageFile();
+
+    if(path.isEmpty())
+        return;
+
+    VectorImageModel *model = qobject_cast<VectorImageModel*>(m_pAbstractImageModel);
+
+    if(model)
+        model->loadFile(path);
 }

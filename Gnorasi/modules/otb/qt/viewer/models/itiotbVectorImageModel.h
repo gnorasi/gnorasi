@@ -39,8 +39,7 @@ namespace itiviewer
 /** \class VectorImageModel
  *
  */
-class  VectorImageModel :
-    public AbstractImageModel
+class  VectorImageModel : public AbstractImageModel
 {
   Q_OBJECT
 

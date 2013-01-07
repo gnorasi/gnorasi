@@ -65,6 +65,18 @@ void OTBImageViewerProcessor::process() {
         outPort2_.setData(inPort2_.getData());
     }
 
+    if(inPort_.isConnected()){
+        std::vector<const OTBImagePort*> list = inPort_.getConnected();
+        if(!list.empty())
+        {
+            const OTBImagePort *iPort  = list.at(0);
+
+            if(iPort){
+                inPort_.setImagePath(iPort->imagePath());
+            }
+        }
+    }
+
     updateView();
 
     pTextData_.clear();

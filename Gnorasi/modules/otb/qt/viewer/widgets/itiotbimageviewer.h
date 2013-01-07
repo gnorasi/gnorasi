@@ -37,6 +37,10 @@
 
 namespace itiviewer{
 
+//
+// Class declaration.
+class AbstractModel;
+
 /*!
  * \brief The ITIImageViewer class
  *
@@ -86,11 +90,29 @@ public:
      */
     virtual void draw()                                                                 = 0;
 
+    /**
+     */
+    // Method could be inline but it's better not new/delete in inline
+    // methods (heap and memory-alignment contexts).
+    void setModel( AbstractModel* model );
+
+    /**
+     */
+    inline AbstractModel* model()
+    {
+        return m_pAbstractImageModel;
+    }
+
 protected:
     /*!
      * \brief m_vmode , a variable holding the VMODE value
      */
     VMODE                                                                               m_vmode;
+
+    /*!
+     * \brief m_pAbstractImageModel
+     */
+    AbstractModel*                                                                      m_pAbstractImageModel;
 
 };
 
