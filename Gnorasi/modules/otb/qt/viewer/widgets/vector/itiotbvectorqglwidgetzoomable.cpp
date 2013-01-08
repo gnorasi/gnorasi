@@ -12,6 +12,7 @@
 #include "../../../../ports/otbvectorimageport.h"
 
 
+#include "../../models/itiotbVectorImageModel.h"
 //
 // Monteverdi includes (sorted by alphabetic order)
 #include "../../models/itiotbAbstractImageModel.h"
@@ -24,15 +25,16 @@ using namespace itiviewer;
 
 const double ZOOM_VALUE = 0.125;
 
-ItiOtbVectorQGLWidgetZoomable::ItiOtbVectorQGLWidgetZoomable(QWidget *parent) :
+ItiOtbVectorQGLWidgetZoomable::ItiOtbVectorQGLWidgetZoomable(ItiOtbVectorImageViewer *parent) :
     m_IsotropicZoom(1.0),
     m_SubsamplingRate(1),
-    m_ImageViewManipulator( NULL ),
-    m_ImageModelRenderer( NULL ),
+    m_pImageViewManipulator( NULL ),
+    m_pImageModelRenderer( NULL ),
+    m_pItiOtbVectorImageViewer(parent),
     QGLWidget(parent)
 {
-    m_ImageViewManipulator = new ImageViewManipulator( this );
-    m_ImageModelRenderer   = new ImageModelRenderer( this );
+    m_pImageViewManipulator = new ImageViewManipulator( this );
+    m_pImageModelRenderer   = new ImageModelRenderer( this );
 }
 
 
@@ -65,14 +67,10 @@ void ItiOtbVectorQGLWidgetZoomable::paintGL(){
     // Get the region to draw from the ImageViewManipulator navigation
     // context
     const ImageRegionType region(
-      m_ImageViewManipulator->GetViewportImageRegion() );
-
-    ItiOtbVectorImageViewer *viewer = qobject_cast<ItiOtbVectorImageViewer*>(parent());
-    if(!viewer)
-        return;
+      m_pImageViewManipulator->GetViewportImageRegion() );
 
     // Set the new rendering context to be known in the ModelRendere
-    const AbstractImageModel* aiModel=  qobject_cast<AbstractImageModel*>(viewer->model());
+    const AbstractImageModel* aiModel=  qobject_cast<AbstractImageModel*>(m_pItiOtbVectorImageViewer->model());
 
     if(!aiModel)
         return;
@@ -83,7 +81,7 @@ void ItiOtbVectorQGLWidgetZoomable::paintGL(){
       ImageModelRenderer::RenderingContext context(aiModel, region, this->width(), this->height());
 
       // use the model renderer to paint the requested region of the image
-      m_ImageModelRenderer->paintGL( context );
+      m_pImageModelRenderer->paintGL( context );
     }
 }
 
@@ -93,7 +91,7 @@ void ItiOtbVectorQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
     dragCursor.setShape(Qt::ClosedHandCursor) ;
     this->setCursor(dragCursor);
 
-    m_ImageViewManipulator->mouseMoveEvent(event);
+    m_pImageViewManipulator->mouseMoveEvent(event);
 
 
     QGLWidget::mouseMoveEvent(event);
@@ -104,6 +102,16 @@ void ItiOtbVectorQGLWidgetZoomable::draw(){
 
     //! mouse tracking is disabled on startup, set it on
     setMouseTracking(true);
+
+    // Set the new rendering context to be known in the ModelRendere
+    const VectorImageModel* vModel=  qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
+
+    if(!vModel)
+        return;
+
+    m_pImageViewManipulator->InitializeContext(width(),height());
+
+    m_pImageViewManipulator->SetImageLargestRegion(vModel->GetLargestPossibleRegion());
 }
 
 //!
@@ -120,7 +128,7 @@ void ItiOtbVectorQGLWidgetZoomable::wheelEvent(QWheelEvent *event){
 
 void ItiOtbVectorQGLWidgetZoomable::onLargestPossibleRegionChanged(const ImageRegionType& largestRegion)
 {
-  m_ImageViewManipulator->SetImageLargestRegion(largestRegion);
+  m_pImageViewManipulator->SetImageLargestRegion(largestRegion);
 }
 
 //!

@@ -323,6 +323,10 @@ VectorImageModel
     m_RegionsToLoadVector.push_back(rightRegion);
 }
 
+ImageRegionType VectorImageModel::GetLargestPossibleRegion() const{
+    return m_ImageFileReader->GetOutput()->GetLargestPossibleRegion();
+}
+
 /*******************************************************************************/
 /* SLOTS                                                                       */
 /*******************************************************************************/

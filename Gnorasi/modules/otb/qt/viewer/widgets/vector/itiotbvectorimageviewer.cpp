@@ -222,10 +222,10 @@ void ItiOtbVectorImageViewer::draw(){
     //!
     m_pItiOtbVectorImageWidgetFullView->draw();
 
+    setupModel();
+
     //!
     m_pItiOtbVectorImageWidgetZoomable->draw();
-
-    setupModel();
 }
 
 //!

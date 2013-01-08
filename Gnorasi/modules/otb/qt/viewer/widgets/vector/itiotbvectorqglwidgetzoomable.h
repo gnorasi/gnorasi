@@ -46,6 +46,7 @@ namespace itiviewer{
 // Internal classes pre-declaration.
 class ImageModelRenderer;
 class ImageViewManipulator;
+class ItiOtbVectorImageViewer;
 
 /** \class QOtbImageWidget
 *   \brief This class renders an RGB bytes image buffer to the screen.
@@ -61,7 +62,7 @@ class ItiOtbVectorQGLWidgetZoomable : public QGLWidget, public ItiViewerObserver
 {
     Q_OBJECT
 public:
-    explicit ItiOtbVectorQGLWidgetZoomable(QWidget *parent = 0);
+    explicit ItiOtbVectorQGLWidgetZoomable(ItiOtbVectorImageViewer *parent = 0);
 
     virtual ~ItiOtbVectorQGLWidgetZoomable();
 
@@ -160,14 +161,16 @@ private:
     double m_IsotropicZoom;
 
     /** Event handler pointer */
-    ImageViewManipulator* m_ImageViewManipulator;
+    ImageViewManipulator* m_pImageViewManipulator;
 
     /** Model Renderer pointer */
-    ImageModelRenderer* m_ImageModelRenderer;
+    ImageModelRenderer* m_pImageModelRenderer;
 
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */
     unsigned int m_SubsamplingRate;
+
+    ItiOtbVectorImageViewer *m_pItiOtbVectorImageViewer;
 
 
 };
