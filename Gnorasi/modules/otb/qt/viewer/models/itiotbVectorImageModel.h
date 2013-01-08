@@ -53,6 +53,9 @@ public:
   /** Destructor */
   virtual ~VectorImageModel();
 
+
+  ImageRegionType GetLargestPossibleRegion() const;
+
   /**
    * TEMPORARY!
    */
