@@ -35,6 +35,11 @@
 // Monteverdi includes (sorted by alphabetic order)
 #include "itiotbVectorImageModel.h"
 
+#include "../vector_globaldefs.h"
+
+
+using namespace otb;
+
 
 using namespace itiviewer;
 /*
@@ -52,6 +57,8 @@ VectorImageModel
   m_RasterizedBuffer( NULL ),
   m_PreviousRegion(ImageRegionType())
 {
+    m_ExtractFilter = ExtractFilterType::New();
+    m_RenderingFilter = RenderingFilterType::New();
 }
 
 /*******************************************************************************/
@@ -216,12 +223,12 @@ VectorImageModel
     }
   
   // Extract the region of interest in the image
-  m_ExtractFilter = ExtractFilterType::New();
+//  m_ExtractFilter = ExtractFilterType::New();
   m_ExtractFilter->SetInput(image);
   m_ExtractFilter->SetExtractionRegion(region);
   
   // Use the rendering filter to get
-  m_RenderingFilter = RenderingFilterType::New();
+//  m_RenderingFilter = RenderingFilterType::New();
   m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());
   m_RenderingFilter->GetRenderingFunction()->SetAutoMinMax(false);
   m_RenderingFilter->GetRenderingFunction()->SetChannelList(m_Channels);
@@ -325,9 +332,17 @@ VectorImageModel
     m_RegionsToLoadVector.push_back(rightRegion);
 }
 
+
 ImageRegionType VectorImageModel::GetLargestPossibleRegion() const{
     return m_ImageFileReader->GetOutput()->GetLargestPossibleRegion();
 }
+
+
+void VectorImageModel::setRenderingFuction(RenderingFunctionType *rType){
+
+    m_RenderingFilter->SetRenderingFunction(rType);
+}
+
 
 /*******************************************************************************/
 /* SLOTS                                                                       */

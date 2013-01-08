@@ -58,7 +58,7 @@ namespace itiviewer{
 
 //
 // Internal classes pre-declaration.
-class ImageModelRenderer;
+class ImageModelRendererAlt;
 class ImageViewManipulator;
 class ItiOtbVectorImageViewer;
 
@@ -156,6 +156,12 @@ protected:
      */
     void mouseMoveEvent(QMouseEvent *event);
 
+    /*!
+     * \brief resizeEvent
+     * \param event
+     */
+//    void resizeEvent(QResizeEvent* event);
+
 
 private:
     /*!
@@ -172,7 +178,7 @@ private:
     ImageViewManipulator* m_pImageViewManipulator;
 
     /** Model Renderer pointer */
-    ImageModelRenderer* m_pImageModelRenderer;
+    ImageModelRendererAlt* m_pImageModelRenderer;
 
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */

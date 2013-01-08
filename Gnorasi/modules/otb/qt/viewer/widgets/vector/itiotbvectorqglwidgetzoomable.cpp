@@ -13,10 +13,11 @@
 
 
 #include "../../models/itiotbVectorImageModel.h"
+
 //
 // Monteverdi includes (sorted by alphabetic order)
 #include "../../models/itiotbAbstractImageModel.h"
-//#include "mvdApplication.h"
+
 #include "../../utils/itiotbImageModelRenderer.h"
 #include "../../utils/itiotbImageViewManipulator.h"
 
@@ -123,6 +124,11 @@ void ItiOtbVectorQGLWidgetZoomable::updateObserver(ItiViewerObservable *observab
 //!
 void ItiOtbVectorQGLWidgetZoomable::wheelEvent(QWheelEvent *event){
 
+}
+
+
+void ItiOtbVectorQGLWidgetZoomable::resizeEvent(QResizeEvent *event){
+    m_pImageViewManipulator->resizeEvent(event);
 }
 
 
