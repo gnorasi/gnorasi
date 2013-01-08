@@ -25,6 +25,8 @@
 // OTB includes (sorted by alphabetic order)
 #include "otbRenderingImageFilter.h"
 
+#include "otbGaussianRenderingFunction.h"
+
 //
 // External classes pre-declaration.
 namespace
@@ -96,6 +98,13 @@ public:
     return m_Channels;
   }
 
+  /*!
+   * \brief filter
+   * \return
+   */
+  RenderingFilterType* filter() { return m_RenderingFilter; }
+
+
 //
 // SIGNALS.
 signals:
@@ -124,6 +133,7 @@ private:
 //  typedef RGBAImageType DisplayImageType;
   typedef RGBAImageType DisplayImageType;
 
+
   /**
    * Extract filter.
    */
@@ -131,13 +141,6 @@ private:
     itk::ExtractImageFilter< SourceImageType, SourceImageType >
     ExtractFilterType;
 
-  /**
-   * Rendering filter.
-   */
-  // 
-  typedef
-    otb::RenderingImageFilter< SourceImageType, DisplayImageType >
-    RenderingFilterType;
 
 //
 // Private methods.
@@ -228,6 +231,13 @@ private:
 //
 // SLOTS.
 private slots:
+
+
+public:
+  /*!
+   * \brief setRenderingFuction
+   */
+  void setRenderingFuction(RenderingFunctionType* );
 };
 
 } // end namespace 'mvd'

@@ -150,6 +150,12 @@ protected:
      */
     void mouseMoveEvent(QMouseEvent *event);
 
+    /*!
+     * \brief resizeEvent
+     * \param event
+     */
+    void resizeEvent(QResizeEvent* event);
+
 
 private:
     /*!

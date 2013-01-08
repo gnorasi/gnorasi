@@ -3,6 +3,12 @@
 
 #include "command.h"
 
+#include "otbGaussianRenderingFunction.h"
+
+#include "../vector_globaldefs.h"
+
+using namespace otb;
+
 namespace itiviewer{
 
 class ItiOtbVectorImageViewer;
@@ -18,6 +24,10 @@ class CommandContrastEnhancementGaussian : public Command
     Q_PROPERTY(double deviation READ deviation WRITE setDeviation   NOTIFY deviationChanged)
 
 public:
+
+    typedef Function::GaussianRenderingFunction<VPixelType,
+                                                RGBAPixelType> GaussianRenderingFunctionType;
+
     explicit                CommandContrastEnhancementGaussian(ItiOtbVectorImageViewer *viewer, QObject *parent = 0);
     
     double                  deviation() const           { return m_deviation; }

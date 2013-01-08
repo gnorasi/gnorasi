@@ -15,9 +15,12 @@
 #include "otbImageFileReader.h"
 #include "itkConstNeighborhoodIterator.h"
 #include "itkNeighborhoodAlgorithm.h"
+#include "otbStandardRenderingFunction.h"
+#include "otbRenderingImageFilter.h"
 
 #include "../../ports/otbimageport.h"
 #include "../../ports/otbvectorimageport.h"
+
 
 
 #include "rgba_globaldefs.h"
@@ -64,6 +67,17 @@ typedef otb::VectorImageToImageListFilter<VectorImageType, ImageListType>   Vect
 /**
  */
 typedef otb::ImageFileReader< VectorImageType >                             VectorImageFileReaderType;
+
+
+/**
+ * Rendering filter.
+ */
+//
+typedef
+  otb::RenderingImageFilter< VectorImageType, RGBAImageType >               RenderingFilterType;
+
+  //!
+  typedef RenderingFilterType::RenderingFunctionType                        RenderingFunctionType;
 
 /**
  */
