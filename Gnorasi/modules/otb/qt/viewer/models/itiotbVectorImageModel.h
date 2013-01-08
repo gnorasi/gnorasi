@@ -121,6 +121,7 @@ private:
   /**
    * Display type of source image (to OpenGL).
    */
+//  typedef RGBAImageType DisplayImageType;
   typedef RGBAImageType DisplayImageType;
 
   /**

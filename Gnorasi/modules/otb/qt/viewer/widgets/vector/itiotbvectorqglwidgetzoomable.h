@@ -62,7 +62,7 @@ class ItiOtbVectorQGLWidgetZoomable : public QGLWidget, public ItiViewerObserver
 {
     Q_OBJECT
 public:
-    explicit ItiOtbVectorQGLWidgetZoomable(ItiOtbVectorImageViewer *parent = 0);
+    explicit ItiOtbVectorQGLWidgetZoomable(ItiOtbVectorImageViewer *parent);
 
     virtual ~ItiOtbVectorQGLWidgetZoomable();
 
