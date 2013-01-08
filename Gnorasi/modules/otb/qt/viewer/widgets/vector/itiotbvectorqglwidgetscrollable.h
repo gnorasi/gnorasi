@@ -55,11 +55,17 @@ namespace itiviewer{
 *  \ingroup Visualization
  */
 
+//
+// Internal classes pre-declaration.
+class ImageModelRenderer;
+class ImageViewManipulator;
+class ItiOtbVectorImageViewer;
+
 class ItiOtbVectorQGLWidgetScrollable : public QGLWidget, public ItiViewerObserver
 {
     Q_OBJECT
 public:
-    explicit ItiOtbVectorQGLWidgetScrollable(QWidget *parent = 0);
+    explicit ItiOtbVectorQGLWidgetScrollable(ItiOtbVectorImageViewer *parent);
 
     virtual ~ItiOtbVectorQGLWidgetScrollable();
 
@@ -71,10 +77,10 @@ public:
      * This method fills the m_OpenGl buffer according to the region
      *  size. Buffer in flipped over X axis if OTB_USE_GL_ACCEL is OFF.
      */
-    virtual void ReadBuffer(const VectorImageType * image, const VectorRegionType& region);
+//    virtual void ReadBuffer(const VectorImageType * image, const VectorRegionType& region);
 
     /** Clear the OpenGl buffer */
-    void ClearBuffer();
+//    void ClearBuffer();
 
     //! setter getter, self explanatory
     double isotropicZoom() const { return m_IsotropicZoom; }
@@ -85,18 +91,18 @@ public:
     void setSubSamplingRate(unsigned int ss) { m_SubsamplingRate = ss; }
 
     //! setter getter, self explanatory
-    unsigned char * openGLBuffer() { return m_OpenGlBuffer;}
+//    unsigned char * openGLBuffer() { return m_OpenGlBuffer;}
 
     //! setter getter, self explanatory
-    VectorRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
-    void setOpenGLBufferedRegion(VectorRegionType r) { m_OpenGlBufferedRegion = r; }
+//    VectorRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
+//    void setOpenGLBufferedRegion(VectorRegionType r) { m_OpenGlBufferedRegion = r; }
 
     //! setter getter for the focus region area
     QRect focusRegion() const { return m_focusRegion; }
     void setFocusRegion(const QRect &rect) { m_focusRegion  = rect; }
 
     //! setter getter, self explanatory
-    VectorRegionType extent() { return m_Extent; }
+//    VectorRegionType extent() { return m_Extent; }
 
     /*!
      * \brief update , implementation from parent class
@@ -126,12 +132,12 @@ signals:
     /*!
      * \brief zoomIn , this signal is emitterd uppon wheel events
      */
-    void zoomIn();
+//    void zoomIn();
 
     /*!
      * \brief zoomIn , this signal is emitterd uppon wheel events
      */
-    void zoomOut();
+//    void zoomOut();
 
     /*!
      * \brief currentIndexChanged
@@ -188,24 +194,17 @@ private:
     /** OpenGl zoom factor */
     double m_IsotropicZoom;
 
-    /** The interpolation method */
-    GLint m_InterpolationMethod;
+    /** Event handler pointer */
+    ImageViewManipulator* m_pImageViewManipulator;
 
-    //! helper values
-    GLint m_W, m_H;
-
-    /** OpenGl buffer      */
-    unsigned char * m_OpenGlBuffer;
-
-    /** OpenGl buffered region */
-    VectorRegionType m_OpenGlBufferedRegion;
-
-    /** The display extent */
-    VectorRegionType m_Extent;
+    /** Model Renderer pointer */
+    ImageModelRenderer* m_pImageModelRenderer;
 
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */
     unsigned int m_SubsamplingRate;
+
+    ItiOtbVectorImageViewer *m_pItiOtbVectorImageViewer;
 
     /*!
      * \brief m_pen

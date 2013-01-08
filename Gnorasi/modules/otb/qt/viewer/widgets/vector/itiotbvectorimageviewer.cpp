@@ -217,12 +217,13 @@ void ItiOtbVectorImageViewer::assembleWidgets(){
  */
 void ItiOtbVectorImageViewer::draw(){
     //!
+    setupModel();
+
+    //!
     m_pItiOtbVectorImageWidgetScroll->draw();
 
     //!
     m_pItiOtbVectorImageWidgetFullView->draw();
-
-    setupModel();
 
     //!
     m_pItiOtbVectorImageWidgetZoomable->draw();

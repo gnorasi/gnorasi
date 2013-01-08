@@ -220,7 +220,7 @@ VectorImageModel
   m_ExtractFilter->SetInput(image);
   m_ExtractFilter->SetExtractionRegion(region);
   
-  // Use the rendering filter to get 
+  // Use the rendering filter to get
   m_RenderingFilter = RenderingFilterType::New();
   m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());
   m_RenderingFilter->GetRenderingFunction()->SetAutoMinMax(false);
@@ -240,6 +240,8 @@ VectorImageModel
     // Fill the buffer
     unsigned int index = 0;
     index = ComputeXAxisFlippedBufferIndex(it.GetIndex(), m_Region);
+
+    qDebug() << "index0: " << it.Get()[0] << "\tindex1 :  " << it.Get()[1] << "\tindex2 : " << it.Get()[2];
 
     // Fill the buffer
     m_RasterizedBuffer[index]  = it.Get()[0];
