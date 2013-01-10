@@ -229,7 +229,7 @@ VectorImageModel
   
   // Use the rendering filter to get
   m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());
-  m_RenderingFilter->GetRenderingFunction()->SetChannelList(m_Channels);
+//  m_RenderingFilter->GetRenderingFunction()->SetChannelList(m_Channels);
   m_RenderingFilter->GetOutput()->SetRequestedRegion(region);
   m_RenderingFilter->Update();
 

@@ -48,7 +48,8 @@ void CommandContrastEnhancementLinearXPerc::execute(){
     if(!vModel)
         return;
 
-    RenderingFunctionType::Pointer renderer = NoStretchRenderingFunctionType::New();
+    RenderingFunctionType::Pointer renderer;
+    renderer = NoStretchRenderingFunctionType::New();
 
     if(vModel){
         std::vector<unsigned int> l = vModel->GetChannelList();
