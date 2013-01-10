@@ -50,7 +50,8 @@ void CommandContrastEnhancementGaussian::execute(){
     if(!vModel)
         return;
 
-    RenderingFunctionType::Pointer renderer = GaussianRenderingFunctionType::New();
+    RenderingFunctionType::Pointer renderer;
+    renderer = GaussianRenderingFunctionType::New();
 
     if(vModel){
         std::vector<unsigned int> l = vModel->GetChannelList();

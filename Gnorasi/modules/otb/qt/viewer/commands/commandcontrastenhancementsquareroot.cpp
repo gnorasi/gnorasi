@@ -48,7 +48,8 @@ void CommandContrastEnhancementSquareRoot::execute(){
     if(!vModel)
         return;
 
-    RenderingFunctionType::Pointer renderer = SquareRootRenderingFunctionType::New();
+    RenderingFunctionType::Pointer renderer;
+    renderer = SquareRootRenderingFunctionType::New();
 
     if(vModel){
         std::vector<unsigned int> l = vModel->GetChannelList();
