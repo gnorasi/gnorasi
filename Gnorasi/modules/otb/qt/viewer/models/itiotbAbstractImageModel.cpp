@@ -14,8 +14,6 @@
 //
 // OTB includes (sorted by alphabetic order)
 
-//
-// Monteverdi includes (sorted by alphabetic order)
 
 using namespace itiviewer;
 /*
