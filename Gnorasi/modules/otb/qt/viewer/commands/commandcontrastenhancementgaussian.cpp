@@ -52,8 +52,12 @@ void CommandContrastEnhancementGaussian::execute(){
 
     RenderingFunctionType::Pointer renderer = GaussianRenderingFunctionType::New();
 
-    if(vModel)
+    if(vModel){
+        std::vector<unsigned int> l = vModel->GetChannelList();
+        renderer->SetAutoMinMax(false);
+        renderer->SetChannelList(l);
         vModel->setRenderingFunction(renderer);
+    }
 
     m_pItiOtbVectorImageViewer->draw();
 }

@@ -50,8 +50,12 @@ void CommandContrastEnhancementLinearXPerc::execute(){
 
     RenderingFunctionType::Pointer renderer = NoStretchRenderingFunctionType::New();
 
-    if(vModel)
+    if(vModel){
+        std::vector<unsigned int> l = vModel->GetChannelList();
+        renderer->SetAutoMinMax(false);
+        renderer->SetChannelList(l);
         vModel->setRenderingFunction(renderer);
+    }
 
     m_pItiOtbVectorImageViewer->draw();
 }
