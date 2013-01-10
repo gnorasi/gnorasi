@@ -83,6 +83,10 @@ typedef
  */
 typedef VectorImageFileReaderType                                           DefaultImageFileReaderType;
 
+/**
+*/
+typedef std::vector< std::string > StringVector;
+
 
 
 #endif // VECTOR_GLOBALDEFS_H
