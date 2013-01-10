@@ -83,6 +83,18 @@ public:
      */
     Command* createCommandContrastEnhancementSquareRoot(ItiOtbImageViewerPanelSetupTab *sTab);
 
+    /*!
+     * \brief createCommandColorCompositionGreyscale
+     * \return
+     */
+    Command* createCommandColorCompositionGreyscale(ItiOtbImageViewerPanelSetupTab* );
+
+    /*!
+     * \brief createCommandColorCompositionRGB
+     * \return
+     */
+    Command* createCommandColorCompositionRGB(ItiOtbImageViewerPanelSetupTab* );
+
 };
 
 } // end of namespace itiviewer

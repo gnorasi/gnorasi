@@ -9,6 +9,8 @@
 #include "../commands/commandcontrastenhancementlinear0255.h"
 #include "../commands/commandcontrastenhancementlinearxperc.h"
 #include "../commands/commandcontrastenhancementsquareroot.h"
+#include "../commands/commandcolorcompositiongreyscale.h"
+#include "../commands/commandcolorcompositionrgb.h"
 
 #include "../models/itiotbVectorImageModel.h"
 
@@ -45,6 +47,14 @@ void ItiOtbVectorImageViewerFactory::createViewer(ItiOtbImageViewerPanel *panel)
         Command *cmdSquareRoot      = createCommandContrastEnhancementSquareRoot(sTab);
         if(cmdSquareRoot)
             panel->setCommand(ItiOtbImageViewerPanel::SLOT_CE_SQUAREROOT,cmdSquareRoot);
+
+        Command *cmdSquareGreyscale = createCommandColorCompositionGreyscale(sTab);
+        if(cmdSquareRoot)
+            panel->setCommand(ItiOtbImageViewerPanel::SLOT_CC_GREYSCALE,cmdSquareGreyscale);
+
+        Command *cmdSquareRGB = createCommandColorCompositionRGB(sTab);
+        if(cmdSquareRoot)
+            panel->setCommand(ItiOtbImageViewerPanel::SLOT_CC_RGB,cmdSquareRGB);
     }
 }
 
@@ -104,6 +114,32 @@ Command* ItiOtbVectorImageViewerFactory::createCommandContrastEnhancementSquareR
     return cs;
 }
 
+
+Command* ItiOtbVectorImageViewerFactory::createCommandColorCompositionGreyscale(ItiOtbImageViewerPanelSetupTab *sTab){
+    ItiOtbVectorImageViewer *vv  = qobject_cast<ItiOtbVectorImageViewer*>(m_pItiOtbImageViewer);
+
+    if(!vv)
+        return 0;
+
+    CommandColorCompositionGreyscale *cg = new CommandColorCompositionGreyscale(vv,this);
+
+    connect(sTab,SIGNAL(greyScaleColorCompositionChannelChanged(int)),cg,SLOT(updateChannel(int)));
+
+    return cg;
+}
+
+Command* ItiOtbVectorImageViewerFactory::createCommandColorCompositionRGB(ItiOtbImageViewerPanelSetupTab *sTab){
+    ItiOtbVectorImageViewer *vv  = qobject_cast<ItiOtbVectorImageViewer*>(m_pItiOtbImageViewer);
+
+    if(!vv)
+        return 0;
+
+    CommandColorCompositionRGB *cg = new CommandColorCompositionRGB(vv,this);
+
+    connect(sTab,SIGNAL(rgbColorCompositionChannelsChanged(int,int,int)),cg,SLOT(updateChannels(int,int,int)));
+
+    return cg;
+}
 
 ItiOtbVectorImageViewerFactory::~ItiOtbVectorImageViewerFactory(){
 

@@ -29,7 +29,7 @@
 #include <QtCore>
 #include <QtGui>
 
-#include "commandcontrastenhancementgaussian.h"
+#include "commandcolorcompositionrgb.h"
 
 #include "../widgets/vector/itiotbvectorimageviewer.h"
 #include "../models/itiotbVectorImageModel.h"
@@ -39,25 +39,41 @@
 using namespace itiviewer;
 using namespace otb;
 
-CommandContrastEnhancementGaussian::CommandContrastEnhancementGaussian(ItiOtbVectorImageViewer *viewer, QObject *parent) :
-    m_deviation(1.0), m_pItiOtbVectorImageViewer(viewer), Command(parent)
+CommandColorCompositionRGB::CommandColorCompositionRGB(ItiOtbVectorImageViewer *viewer, QObject *parent) :
+    m_red(1), m_green(2), m_blue(3), m_pItiOtbVectorImageViewer(viewer), Command(parent)
 {
 }
 
-void CommandContrastEnhancementGaussian::execute(){
-
+void CommandColorCompositionRGB::execute(){
     VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
     if(!vModel)
         return;
 
-    RenderingFunctionType::Pointer renderer = GaussianRenderingFunctionType::New();
+    RenderingFilterType *filter = vModel->filter();
+    if(!filter)
+        return;
 
-    if(vModel){
-        std::vector<unsigned int> l = vModel->GetChannelList();
-        renderer->SetChannelList(l);
-        renderer->SetAutoMinMax(false);
-        vModel->setRenderingFunction(renderer);
-    }
+    // Select the current rendering function
+    RenderingFunctionType::Pointer renderer = filter->GetRenderingFunction();
 
-    m_pItiOtbVectorImageViewer->draw();
+    if(!renderer)
+        return;
+
+    // Build the appropriate rendering function
+    ChannelListType channels;
+
+    channels.resize(3);
+    channels[0] = m_red;
+    channels[1] = m_green;
+    channels[2] = m_blue;
+    renderer->SetChannelList(channels);
+
+    // Apply the new rendering function to the Image layer
+    renderer->SetAutoMinMax(false);
+
+    vModel->setRenderingFunction(renderer);
+
+    DefaultImageType *img = vModel->GetOutput(0);
+
+    renderer->Initialize(img->GetMetaDataDictionary());
 }

@@ -59,6 +59,7 @@ VectorImageModel
 {
     m_ExtractFilter = ExtractFilterType::New();
     m_RenderingFilter = RenderingFilterType::New();
+    m_RenderingFilter->GetRenderingFunction()->SetAutoMinMax(false);
 }
 
 /*******************************************************************************/
@@ -223,14 +224,11 @@ VectorImageModel
     }
   
   // Extract the region of interest in the image
-//  m_ExtractFilter = ExtractFilterType::New();
   m_ExtractFilter->SetInput(image);
   m_ExtractFilter->SetExtractionRegion(region);
   
   // Use the rendering filter to get
-//  m_RenderingFilter = RenderingFilterType::New();
   m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());
-  m_RenderingFilter->GetRenderingFunction()->SetAutoMinMax(false);
   m_RenderingFilter->GetRenderingFunction()->SetChannelList(m_Channels);
   m_RenderingFilter->GetOutput()->SetRequestedRegion(region);
   m_RenderingFilter->Update();

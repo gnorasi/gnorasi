@@ -85,6 +85,7 @@ void ItiOtbImageViewerPanelSetupTab::setupColorCompositionGroupBox(){
 
     connect(m_pRadioButtonGrayscaleMode,SIGNAL(clicked()),this,SLOT(onRadioButtonColorCompositionChanged()));
     connect(m_pRadioButtonRGBCompositionMode,SIGNAL(clicked()),this,SLOT(onRadioButtonColorCompositionChanged()));
+    connect(m_pButtonApplyColorComposition,SIGNAL(clicked()),this,SLOT(onColorCompositionApplyButtonClicked()));
 
     m_pRadioButtonGrayscaleMode->toggle();
     onRadioButtonColorCompositionChanged();
@@ -302,4 +303,15 @@ void ItiOtbImageViewerPanelSetupTab::onContrastEnhancementApplyButtonClicked(){
     default:
         break;
     }
+}
+
+void ItiOtbImageViewerPanelSetupTab::onColorCompositionApplyButtonClicked(){
+    int index = m_pComboBoxMethod->currentIndex();
+
+    if(!index) {
+        emit applyColorCompositionGreyscale();
+    }else {
+        emit applyColorCompositionRGB();
+    }
+
 }
