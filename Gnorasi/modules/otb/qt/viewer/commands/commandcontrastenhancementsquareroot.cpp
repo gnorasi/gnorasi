@@ -48,13 +48,11 @@ void CommandContrastEnhancementSquareRoot::execute(){
     if(!vModel)
         return;
 
-    RenderingFilterType *filter = vModel->filter();
+    RenderingFunctionType::Pointer renderer = SquareRootRenderingFunctionType::New();
 
-    RenderingFunctionType *renderer = dynamic_cast<RenderingFunctionType*>(SquareRootRenderingFunctionType::New().GetPointer());
+    if(vModel)
+        vModel->setRenderingFunction(renderer);
 
-    if(filter && renderer){
-        filter->SetRenderingFunction(renderer);
-        m_pItiOtbVectorImageViewer->draw();
-    }
+    m_pItiOtbVectorImageViewer->draw();
 
 }

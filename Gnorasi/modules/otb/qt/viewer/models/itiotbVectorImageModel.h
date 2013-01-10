@@ -122,6 +122,10 @@ public:
    */
   RenderingFilterType* filter() { return m_RenderingFilter; }
 
+  void setRenderingFunction(RenderingFunctionType * function){
+      m_RenderingFilter->SetRenderingFunction(function);
+  }
+
 
 //
 // SIGNALS.
@@ -217,6 +221,7 @@ private:
   * \param region 2D region
   */
   void ComputeRegionsToLoad(const ImageRegionType& region);
+
 
 //
 // Private attributes.

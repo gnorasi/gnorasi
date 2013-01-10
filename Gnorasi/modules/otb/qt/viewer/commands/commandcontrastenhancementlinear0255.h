@@ -36,8 +36,6 @@
 
 #include "../vector_globaldefs.h"
 
-#include "otbStandardRenderingFunction.h"
-
 using namespace otb;
 
 namespace itiviewer{
@@ -54,8 +52,6 @@ class CommandContrastEnhancementLinear0255 : public Command
     Q_OBJECT
 
 public:
-    typedef Function::StandardRenderingFunction<VPixelType,
-                                                RGBAPixelType> StandardRenderingFunctionType;
 
     explicit                CommandContrastEnhancementLinear0255(ItiOtbVectorImageViewer *viewer, QObject *parent = 0);
 

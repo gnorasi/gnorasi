@@ -56,8 +56,6 @@ class CommandContrastEnhancementLinearXPerc : public Command
     Q_PROPERTY(double lowerQuantile READ lowerQuantile WRITE setLowerQuantile   NOTIFY lowerQuantileChanged)
 
 public:
-    typedef Function::NoStretchRenderingFunction<VPixelType,
-                                                 RGBAPixelType> NoStretchRenderingFunctionType;
 
     explicit                CommandContrastEnhancementLinearXPerc(ItiOtbVectorImageViewer *viewer, QObject *parent = 0);
     

@@ -34,8 +34,6 @@
 
 #include "command.h"
 
-#include "otbSquareRootRenderingFunction.h"
-
 #include "../vector_globaldefs.h"
 
 namespace itiviewer{
@@ -54,8 +52,6 @@ class CommandContrastEnhancementSquareRoot : public Command
     Q_PROPERTY(double lowerQuantile READ lowerQuantile WRITE setLowerQuantile   NOTIFY lowerQuantileChanged)
 
 public:
-    typedef Function::SquareRootRenderingFunction<VPixelType,
-                                                RGBAPixelType> SquareRootRenderingFunctionType;
 
     explicit                CommandContrastEnhancementSquareRoot(ItiOtbVectorImageViewer *viewer, QObject *parent = 0);
     

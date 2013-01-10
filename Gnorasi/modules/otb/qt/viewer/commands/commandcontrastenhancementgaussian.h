@@ -34,8 +34,6 @@
  *                                                                              *
  ********************************************************************************/
 
-#include "otbGaussianRenderingFunction.h"
-
 #include "../vector_globaldefs.h"
 
 using namespace otb;
@@ -55,9 +53,6 @@ class CommandContrastEnhancementGaussian : public Command
     Q_PROPERTY(double deviation READ deviation WRITE setDeviation   NOTIFY deviationChanged)
 
 public:
-
-    typedef Function::GaussianRenderingFunction<VPixelType,
-                                                RGBAPixelType> GaussianRenderingFunctionType;
 
     explicit                CommandContrastEnhancementGaussian(ItiOtbVectorImageViewer *viewer, QObject *parent = 0);
     
