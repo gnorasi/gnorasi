@@ -1,19 +1,10 @@
+#include <QtCore>
+#include <QtGui>
+
 #include "commandcontrastenhancementgaussian.h"
 
 #include "../widgets/vector/itiotbvectorimageviewer.h"
-
-#include "itkImageRegionIterator.h"
-#include "itkNeighborhoodInnerProduct.h"
-#include "itkGaussianOperator.h"
-
-#include "otbVectorImageToImageListFilter.h"
-
-#include "../utils/itiotbimagemanager.h"
-
-#include "otbImageFileReader.h"
-
 #include "../models/itiotbVectorImageModel.h"
-
 #include "../vector_globaldefs.h"
 
 #include "otbGaussianRenderingFunction.h"
