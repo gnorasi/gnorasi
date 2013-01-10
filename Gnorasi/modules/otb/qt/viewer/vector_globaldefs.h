@@ -15,8 +15,11 @@
 #include "otbImageFileReader.h"
 #include "itkConstNeighborhoodIterator.h"
 #include "itkNeighborhoodAlgorithm.h"
-#include "otbStandardRenderingFunction.h"
 #include "otbRenderingImageFilter.h"
+#include "otbStandardRenderingFunction.h"
+#include "otbNoStretchRenderingFunction.h"
+#include "otbSquareRootRenderingFunction.h"
+#include "otbGaussianRenderingFunction.h"
 
 #include "../../ports/otbimageport.h"
 #include "../../ports/otbvectorimageport.h"
@@ -68,16 +71,27 @@ typedef otb::VectorImageToImageListFilter<VectorImageType, ImageListType>   Vect
  */
 typedef otb::ImageFileReader< VectorImageType >                             VectorImageFileReaderType;
 
+/** Rendering filter */
+/** Rendering part */
+typedef RenderingImageFilter<VectorImageType, RGBAImageType>          RenderingFilterType;
 
-/**
- * Rendering filter.
- */
-//
-typedef
-  otb::RenderingImageFilter< VectorImageType, RGBAImageType >               RenderingFilterType;
 
-  //!
-  typedef RenderingFilterType::RenderingFunctionType                        RenderingFunctionType;
+/** Rendering function */
+typedef Function::RenderingFunction<VectorImageType::PixelType, RGBAPixelType> RenderingFunctionType;
+
+typedef Function::StandardRenderingFunction<VectorImageType::PixelType,
+                                            RGBAPixelType> StandardRenderingFunctionType;
+typedef StandardRenderingFunctionType::ChannelListType    ChannelListType;
+typedef StandardRenderingFunctionType::ParametersType     ParametersType;
+
+typedef Function::NoStretchRenderingFunction<VectorImageType::PixelType,
+                                             RGBAPixelType> NoStretchRenderingFunctionType;
+
+typedef Function::SquareRootRenderingFunction<VectorImageType::PixelType,
+                                              RGBAPixelType> SquareRootRenderingFunctionType;
+
+typedef Function::GaussianRenderingFunction<VectorImageType::PixelType,
+                                            RGBAPixelType> GaussianRenderingFunctionType;
 
 /**
  */

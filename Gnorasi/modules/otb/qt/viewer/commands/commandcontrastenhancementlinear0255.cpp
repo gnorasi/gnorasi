@@ -48,12 +48,10 @@ void CommandContrastEnhancementLinear0255::execute(){
     if(!vModel)
         return;
 
-    RenderingFilterType *filter = vModel->filter();
+    RenderingFunctionType::Pointer renderer = StandardRenderingFunctionType::New();
 
-    RenderingFunctionType *renderer = dynamic_cast<RenderingFunctionType*>(StandardRenderingFunctionType::New().GetPointer());
-
-    if(filter)
-        filter->SetRenderingFunction(renderer);
+    if(vModel)
+        vModel->setRenderingFunction(renderer);
 
     m_pItiOtbVectorImageViewer->draw();
 }

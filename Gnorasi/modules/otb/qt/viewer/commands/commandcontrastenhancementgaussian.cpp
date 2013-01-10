@@ -35,8 +35,6 @@
 #include "../models/itiotbVectorImageModel.h"
 #include "../vector_globaldefs.h"
 
-#include "otbGaussianRenderingFunction.h"
-
 
 using namespace itiviewer;
 using namespace otb;
@@ -52,12 +50,10 @@ void CommandContrastEnhancementGaussian::execute(){
     if(!vModel)
         return;
 
-    RenderingFilterType *filter = vModel->filter();
+    RenderingFunctionType::Pointer renderer = GaussianRenderingFunctionType::New();
 
-    RenderingFunctionType *renderer = dynamic_cast<RenderingFunctionType*>(GaussianRenderingFunctionType::New().GetPointer());
-
-    if(filter)
-        filter->SetRenderingFunction(renderer);
+    if(vModel)
+        vModel->setRenderingFunction(renderer);
 
     m_pItiOtbVectorImageViewer->draw();
 }
