@@ -1,6 +1,9 @@
 #ifndef COMMANDCONTRASTENHANCEMENTGAUSSIAN_H
 #define COMMANDCONTRASTENHANCEMENTGAUSSIAN_H
 
+#include <QtCore>
+#include <QtGui>
+
 #include "command.h"
 
 #include "otbGaussianRenderingFunction.h"
