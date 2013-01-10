@@ -26,38 +26,56 @@
  *                                                                              *
  ********************************************************************************/
 
+#ifndef COMMANDCOLORCOMPOSITIONGREYSCALE_H
+#define COMMANDCOLORCOMPOSITIONGREYSCALE_H
+
 #include <QtCore>
 #include <QtGui>
 
-#include "commandcontrastenhancementgaussian.h"
+#include "command.h"
 
-#include "../widgets/vector/itiotbvectorimageviewer.h"
-#include "../models/itiotbVectorImageModel.h"
 #include "../vector_globaldefs.h"
 
-
-using namespace itiviewer;
 using namespace otb;
 
-CommandContrastEnhancementGaussian::CommandContrastEnhancementGaussian(ItiOtbVectorImageViewer *viewer, QObject *parent) :
-    m_deviation(1.0), m_pItiOtbVectorImageViewer(viewer), Command(parent)
+namespace itiviewer{
+
+class ItiOtbVectorImageViewer;
+
+/*!
+ * \brief The CommandColorCompositionGreyscale class
+ *
+ */
+class CommandColorCompositionGreyscale : public Command
 {
-}
+    Q_OBJECT
+    Q_PROPERTY(int channel  READ channel    WRITE setChannel    NOTIFY channelChanged)
 
-void CommandContrastEnhancementGaussian::execute(){
+public:
 
-    VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
-    if(!vModel)
-        return;
+    explicit                CommandColorCompositionGreyscale(ItiOtbVectorImageViewer *viewer, QObject *parent = 0);
 
-    RenderingFunctionType::Pointer renderer = GaussianRenderingFunctionType::New();
+    int                     channel() const {return m_channel; }
+    void                    setChannel(int c) { m_channel = c; }
 
-    if(vModel){
-        std::vector<unsigned int> l = vModel->GetChannelList();
-        renderer->SetChannelList(l);
-        renderer->SetAutoMinMax(false);
-        vModel->setRenderingFunction(renderer);
-    }
+    /*!
+     * \brief execute
+     */
+    void                    execute();
 
-    m_pItiOtbVectorImageViewer->draw();
-}
+signals:
+    void                    channelChanged();
+
+public slots:
+    void                    updateChannel(int c) { setChannel(c); }
+
+private:
+    int                     m_channel;
+
+    ItiOtbVectorImageViewer *m_pItiOtbVectorImageViewer;
+    
+};
+
+} // end of namespace itiviewer
+
+#endif // COMMANDCOLORCOMPOSITIONGREYSCALE_H

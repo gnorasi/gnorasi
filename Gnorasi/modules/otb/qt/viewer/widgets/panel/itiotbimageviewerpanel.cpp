@@ -41,6 +41,8 @@ void ItiOtbImageViewerPanel::initialize(){
     connect(m_pSetupTab,SIGNAL(applyContrastEnhancementLinear0255()),this,SLOT(applyContrastEnhancementLinear0_255()));
     connect(m_pSetupTab,SIGNAL(applyContrastEnhancementLinearXPerc()),this,SLOT(applyContrastEnhancementLinearXPerc()));
     connect(m_pSetupTab,SIGNAL(applyContrastEnhancementSquareRoot()),this,SLOT(applyContrastEnhancementSquareRoot()));
+    connect(m_pSetupTab,SIGNAL(applyColorCompositionGreyscale()),this,SLOT(applyColorCompositionGreyscale()));
+    connect(m_pSetupTab,SIGNAL(applyColorCompositionRGB()),this,SLOT(applyColorCompositionRGB()));
 
     //! setup layout
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -50,9 +52,7 @@ void ItiOtbImageViewerPanel::initialize(){
 
 //!
 void ItiOtbImageViewerPanel::applyColorComposition(){
-    Command *pCommand = m_commandHash[(int)SLOT_CC];
-    if(pCommand)
-        pCommand->execute();
+
 }
 
 //!
@@ -87,6 +87,19 @@ void ItiOtbImageViewerPanel::applyContrastEnhancementLinearXPerc(){
 
 void ItiOtbImageViewerPanel::applyContrastEnhancementSquareRoot(){
     Command *pCommand = m_commandHash[(int)SLOT_CE_SQUAREROOT];
+    if(pCommand)
+        pCommand->execute();
+}
+
+void ItiOtbImageViewerPanel::applyColorCompositionGreyscale(){
+    Command *pCommand = m_commandHash[(int)SLOT_CC_GREYSCALE];
+    if(pCommand)
+        pCommand->execute();
+}
+
+
+void ItiOtbImageViewerPanel::applyColorCompositionRGB(){
+    Command *pCommand = m_commandHash[(int)SLOT_CC_RGB];
     if(pCommand)
         pCommand->execute();
 }

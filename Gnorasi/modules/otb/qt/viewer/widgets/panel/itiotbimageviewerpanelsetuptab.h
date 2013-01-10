@@ -85,6 +85,11 @@ signals:
     void lowerQuantileChanged(double );
 
     /*!
+     * \brief greyscaleChannelChanged
+     */
+    void greyscaleChannelChanged(int );
+
+    /*!
      * \brief applyContrastEnhancementGaussian
      */
     void applyContrastEnhancementGaussian();
@@ -103,6 +108,16 @@ signals:
      * \brief applyContrastEnhancementSquareRoot
      */
     void applyContrastEnhancementSquareRoot();
+
+    /*!
+     * \brief applyColorCompositionGreyscale
+     */
+    void applyColorCompositionGreyscale();
+
+    /*!
+     * \brief applyColorCompostionRGB
+     */
+    void applyColorCompositionRGB();
     
 public slots:
     //!
@@ -132,6 +147,11 @@ private slots:
      * \brief onContrastEnhancementApplyButtonClicked
      */
     void onContrastEnhancementApplyButtonClicked();
+
+    /*!
+     * \brief onColorCompositionApplyButtonClicked
+     */
+    void onColorCompositionApplyButtonClicked();
 
 private:
     void initialize();

@@ -397,6 +397,8 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/models/itiotbAbstractImageModel.cpp
     ${MOD_DIR}/qt/viewer/models/itiotbAbstractModel.cpp
     ${MOD_DIR}/qt/viewer/models/itiotbVectorImageModel.cpp
+    ${MOD_DIR}/qt/viewer/commands/commandcolorcompositiongreyscale.cpp
+    ${MOD_DIR}/qt/viewer/commands/commandcolorcompositionrgb.cpp
 )
 ################################################################################
 # Qt headers
@@ -441,6 +443,8 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/models/itiotbAbstractImageModel.h
     ${MOD_DIR}/qt/viewer/models/itiotbAbstractModel.h
     ${MOD_DIR}/qt/viewer/models/itiotbVectorImageModel.h
+    ${MOD_DIR}/qt/viewer/commands/commandcolorcompositiongreyscale.h
+    ${MOD_DIR}/qt/viewer/commands/commandcolorcompositionrgb.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

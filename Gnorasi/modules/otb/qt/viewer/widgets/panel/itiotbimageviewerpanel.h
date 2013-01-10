@@ -70,7 +70,9 @@ public:
         SLOT_CE_GAUSSIAN        = 2,    //! gaussian filter
         SLOT_CE_LINEAR_0_255    = 3,    //! linear, the default
         SLOT_CE_LINEARXPERC     = 4,    //! linear X %
-        SLOT_CE_SQUAREROOT      = 5     //! square root
+        SLOT_CE_SQUAREROOT      = 5,     //! square root
+        SLOT_CC_GREYSCALE       = 6,    //! grey scale
+        SLOT_CC_RGB             = 7
     };
 
     /*!
@@ -162,6 +164,16 @@ private slots:
      * \brief applyContrastEnhancementSquareRoot
      */
     void applyContrastEnhancementSquareRoot();
+
+    /*!
+     * \brief applyColorCompositionGreyscale
+     */
+    void applyColorCompositionGreyscale();
+
+    /*!
+     * \brief applyColorCompositionRGB
+     */
+    void applyColorCompositionRGB();
 
 private:
     /*!
