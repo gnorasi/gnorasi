@@ -59,7 +59,7 @@ public:
     /*!
      * \brief parseImage , this is a pure virtual function, every sub class must implement this function
      */
-    virtual void parseImage() = 0;
+    virtual void parse() = 0;
     
 signals:
     /*!
@@ -69,7 +69,7 @@ signals:
     
 public slots:
 
-private:
+protected:
     /*!
      * \brief m_channelList
      */

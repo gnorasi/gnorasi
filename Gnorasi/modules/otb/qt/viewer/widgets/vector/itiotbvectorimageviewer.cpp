@@ -298,4 +298,6 @@ void ItiOtbVectorImageViewer::setupModel(){
 
     if(model)
         model->loadFile(path);
+
+    emit modelChanged();
 }

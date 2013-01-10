@@ -94,11 +94,6 @@ public:
     void setCommand(SLOT_KEY cmdk, Command *pC);
 
     /*!
-     * \brief setupChannels,
-     */
-    void setupChannels();
-
-    /*!
      * \brief setProvider
      * \param p
      */
@@ -106,10 +101,24 @@ public:
 
 
     /*!
+     * \brief provider
+     * \return
+     */
+    ItiOtbImageChannelProvider* provider() { return m_pItiOtbImageChannelProvider; }
+
+
+    /*!
      * \brief setupTab
      * \return
      */
     ItiOtbImageViewerPanelSetupTab *setupTab() { return m_pSetupTab; }
+
+
+public slots:
+    /*!
+     * \brief setupChannels,
+     */
+    void setupChannels();
 
 signals:
     /*!

@@ -130,6 +130,10 @@ public:
 //
 // SIGNALS.
 signals:
+  /*!
+   * \brief changed
+   */
+  void changed();
 
 //
 // Protected methods.

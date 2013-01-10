@@ -12,6 +12,8 @@
 #include "../commands/commandcolorcompositiongreyscale.h"
 #include "../commands/commandcolorcompositionrgb.h"
 
+#include "../utils/itiotbimagevectorchannelprovider.h"
+
 #include "../models/itiotbVectorImageModel.h"
 
 using namespace itiviewer;
@@ -28,6 +30,9 @@ void ItiOtbVectorImageViewerFactory::createViewer(ItiOtbImageViewerPanel *panel)
     VectorImageModel *model = new VectorImageModel(this);
 
     m_pItiOtbImageViewer->setModel(model);
+
+    ItiOtbImageVectorChannelProvider *provider = new ItiOtbImageVectorChannelProvider(model,this);
+    panel->setProvider(provider);
 
     ItiOtbImageViewerPanelSetupTab *sTab = panel->setupTab();
 
@@ -55,6 +60,8 @@ void ItiOtbVectorImageViewerFactory::createViewer(ItiOtbImageViewerPanel *panel)
         Command *cmdSquareRGB = createCommandColorCompositionRGB(sTab);
         if(cmdSquareRoot)
             panel->setCommand(ItiOtbImageViewerPanel::SLOT_CC_RGB,cmdSquareRGB);
+
+        connect(provider,SIGNAL(channelsChanged()),panel,SLOT(setupChannels()));
     }
 }
 

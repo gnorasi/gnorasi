@@ -1,4 +1,6 @@
 #include "itiotbimageviewerpanelsetuptab.h"
+#include "itiotbimageviewerpanel.h"
+#include "../../utils/itiotbimagechannelprovider.h"
 
 #include "../../vector_globaldefs.h"
 
@@ -8,8 +10,8 @@
 
 using namespace itiviewer;
 
-ItiOtbImageViewerPanelSetupTab::ItiOtbImageViewerPanelSetupTab(QWidget *parent) :
-    QWidget(parent)
+ItiOtbImageViewerPanelSetupTab::ItiOtbImageViewerPanelSetupTab(ItiOtbImageViewerPanel *panel, QWidget *parent) :
+    m_pItiOtbImageViewerPanel(panel), QWidget(parent)
 {
     setWindowTitle(tr("Setup"));
 
@@ -269,18 +271,20 @@ void ItiOtbImageViewerPanelSetupTab::onUpperQuantileLineEditChanged(const QStrin
 }
 
 void ItiOtbImageViewerPanelSetupTab::setupChannels(){
-    VectorImageType *img = ITIOTBIMAGEMANAGER->image();
-    if(!img)
+    ItiOtbImageChannelProvider *provider = m_pItiOtbImageViewerPanel->provider();
+
+    if(!provider)
         return;
 
-    img->UpdateOutputInformation();
+    QList<int> list = provider->channels();
 
-    unsigned int nbBands = img->GetNumberOfComponentsPerPixel();
+    if(list.size()<3)
+        return;
 
-    m_pSpinBoxBlueChannel->setMaximum(nbBands);
-    m_pSpinBoxGreenChannel->setMaximum(nbBands);
-    m_pSpinBoxGreyscaleChannel->setMaximum(nbBands);
-    m_pSpinBoxRedChannel->setMaximum(nbBands);
+    m_pSpinBoxGreyscaleChannel->setValue(list.at(0));
+    m_pSpinBoxRedChannel->setValue(list.at(0));
+    m_pSpinBoxGreenChannel->setValue(list.at(1));
+    m_pSpinBoxBlueChannel->setValue(list.at(2));
 }
 
 
