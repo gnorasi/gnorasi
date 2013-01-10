@@ -99,6 +99,8 @@ VectorImageModel
     m_Channels[1]  = 1;
     m_Channels[2]  = 2;
     }
+
+  emit changed();
 }
 
 void

@@ -30,12 +30,26 @@
 
 using namespace itiviewer;
 
-ItiOtbImageVectorChannelProvider::ItiOtbImageVectorChannelProvider(VectorImageType *imgType, QObject *parent) :
-    m_pVectorImageType(imgType), ItiOtbImageChannelProvider(parent)
+ItiOtbImageVectorChannelProvider::ItiOtbImageVectorChannelProvider(VectorImageModel *m, QObject *parent) :
+    m_pVectorImageModel(m), ItiOtbImageChannelProvider(parent)
 {
+    connect(m_pVectorImageModel,SIGNAL(changed()),this,SLOT(onModelJChanged()));
+}
+
+void ItiOtbImageVectorChannelProvider::onModelJChanged(){
+    parse();
 }
 
 //!
-void ItiOtbImageVectorChannelProvider::parseImage(){
-    //! TODO parse the image
+void ItiOtbImageVectorChannelProvider::parse(){
+    std::vector<unsigned int> list = m_pVectorImageModel->GetChannelList();
+
+    m_channelList.clear();
+    for(std::vector<unsigned int>::const_iterator it = list.begin(); it != list.end(); ++it) {
+        unsigned int val = *it;
+
+        qDebug() << val;
+        m_channelList.append(val);
+    }
+
 }

@@ -40,6 +40,8 @@
 
 namespace itiviewer{
 
+class ItiOtbImageViewerPanel;
+
 /*!
  * \brief The ItiOtbImageViewerPanelSetupTab class
  */
@@ -48,7 +50,7 @@ class ItiOtbImageViewerPanelSetupTab : public QWidget
     Q_OBJECT
 public:
     //! ctor
-    explicit ItiOtbImageViewerPanelSetupTab(QWidget *parent = 0);
+    explicit ItiOtbImageViewerPanelSetupTab(ItiOtbImageViewerPanel *panel, QWidget *parent = 0);
 
     //!
     void setupChannels();
@@ -187,6 +189,8 @@ private:
     QLineEdit       *m_pLineEditUpperQuantileValue;
     QLineEdit       *m_pLineEditLowerQuantileValue;
     QLineEdit       *m_pLineEditStandardDeviationValue;
+
+    ItiOtbImageViewerPanel* m_pItiOtbImageViewerPanel;
 };
 
 }

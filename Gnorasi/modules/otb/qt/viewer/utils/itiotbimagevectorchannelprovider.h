@@ -33,25 +33,31 @@
 
 #include "../vector_globaldefs.h"
 
+#include "../models/itiotbVectorImageModel.h"
+
 namespace itiviewer{
 
 class ItiOtbImageVectorChannelProvider : public ItiOtbImageChannelProvider
 {
     Q_OBJECT
 public:
-    explicit ItiOtbImageVectorChannelProvider(VectorImageType *imgT, QObject *parent = 0);
+    explicit ItiOtbImageVectorChannelProvider(VectorImageModel *m, QObject *parent = 0);
     
     /*!
      * \brief parseImage, implementation
      */
-    void parseImage();
+    void parse();
 
 signals:
     
 public slots:
+    /*!
+     * \brief onModelJChanged
+     */
+    void onModelJChanged();
 
 private:
-    VectorImageType *m_pVectorImageType;
+    VectorImageModel *m_pVectorImageModel;
     
 };
 

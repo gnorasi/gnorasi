@@ -144,6 +144,12 @@ private slots:
     void onFocusRegionTranslated(const QRect &rect);
 
 
+signals:
+    /*!
+     * \brief modelChanged
+     */
+    void modelChanged();
+
 private:
 
     void setupModel();

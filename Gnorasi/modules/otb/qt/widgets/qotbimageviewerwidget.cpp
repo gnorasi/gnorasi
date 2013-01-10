@@ -185,14 +185,11 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! create the specialized factory item
     m_pItiOtbImageFactory = new ItiOtbVectorImageViewerFactory(this);
 
-    //! create the specialized provider
-    m_pItiOtbImageViewerPanel->setProvider(new ItiOtbImageVectorChannelProvider(ITIOTBIMAGEMANAGER->image(),this));
+    //! create the appropriate viewer
+    createViewer();
 
     //! setup the channels , get number etc..
     m_pItiOtbImageViewerPanel->setupChannels();
-
-    //! create the appropriate viewer
-    createViewer();
 
     //! draw stuff
     m_pItiOtbImageViewer->draw();
@@ -220,6 +217,7 @@ void QGLOtbImageViewerWidget::createViewer(){
     //! finally add the widget to the splitter
     m_pvSplitter->insertWidget(0,m_pItiOtbImageViewer);
 }
+
 
 QGLOtbImageViewerWidget::~QGLOtbImageViewerWidget(){
     ItiOtbImageManager::deleteInstance();
