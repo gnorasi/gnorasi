@@ -132,12 +132,12 @@ signals:
     /*!
      * \brief zoomIn , this signal is emitterd uppon wheel events
      */
-//    void zoomIn();
+    void zoomIn();
 
     /*!
      * \brief zoomIn , this signal is emitterd uppon wheel events
      */
-//    void zoomOut();
+    void zoomOut();
 
     /*!
      * \brief currentIndexChanged

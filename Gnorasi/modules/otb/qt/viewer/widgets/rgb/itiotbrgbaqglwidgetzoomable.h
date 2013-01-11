@@ -217,26 +217,6 @@ private:
      * this indicates the subsampling rate */
     unsigned int m_SubsamplingRate;
 
-    /*!
-     * \brief m_nb_displayed_rows , a variable holding the number of rows that are visualized on an image of a fixed size [columns,rows]
-     */
-    unsigned int m_nb_displayed_rows;
-
-    /*!
-     * \brief m_nb_displayed_cols , a variable holding the number of columns that are visualized on an image of a fixed size [columns,rows]
-     */
-    unsigned int m_nb_displayed_cols;
-
-    /*!
-     * \brief m_nb_displayed_rows , a variable holding the first visualized row on an image of a fixed size [columns,rows]
-     */
-    unsigned int m_first_displayed_row;
-
-    /*!
-     * \brief m_nb_displayed_cols , a variable holding the first visualized column on an image of a fixed size [columns,rows]
-     */
-    unsigned int m_first_displayed_col;
-
 };
 
 } // end of itiviewer
