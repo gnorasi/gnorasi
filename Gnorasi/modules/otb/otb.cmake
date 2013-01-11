@@ -391,9 +391,12 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementlinear0255.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementlinearxperc.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementsquareroot.cpp
-    ${MOD_DIR}/qt/viewer/utils/itiotbImageModelRenderer.cpp
-    ${MOD_DIR}/qt/viewer/utils/itiotbImageModelRendererAlt.cpp
-    ${MOD_DIR}/qt/viewer/utils/itiotbImageViewManipulator.cpp
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageModelRendererScrollable.cpp
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageModelRendererZoomable.cpp
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageModelRendererFullView.cpp
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageViewManipulatorZoomable.cpp
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageViewManipulatorFullView.cpp
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageViewManipulatorScrollable.cpp
     ${MOD_DIR}/qt/viewer/models/itiotbAbstractImageModel.cpp
     ${MOD_DIR}/qt/viewer/models/itiotbAbstractModel.cpp
     ${MOD_DIR}/qt/viewer/models/itiotbVectorImageModel.cpp
@@ -437,9 +440,12 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementlinear0255.h
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementlinearxperc.h
     ${MOD_DIR}/qt/viewer/commands/commandcontrastenhancementsquareroot.h
-    ${MOD_DIR}/qt/viewer/utils/itiotbImageModelRenderer.h
-    ${MOD_DIR}/qt/viewer/utils/itiotbImageModelRendererAlt.h
-    ${MOD_DIR}/qt/viewer/utils/itiotbImageViewManipulator.h
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageModelRendererScrollable.h
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageModelRendererZoomable.h
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageModelRendererFullView.h
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageViewManipulatorZoomable.h
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageViewManipulatorFullView.h
+    ${MOD_DIR}/qt/viewer/utils/itiotbImageViewManipulatorScrollable.h
     ${MOD_DIR}/qt/viewer/models/itiotbAbstractImageModel.h
     ${MOD_DIR}/qt/viewer/models/itiotbAbstractModel.h
     ${MOD_DIR}/qt/viewer/models/itiotbVectorImageModel.h

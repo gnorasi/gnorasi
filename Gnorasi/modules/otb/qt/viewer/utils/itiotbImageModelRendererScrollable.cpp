@@ -34,7 +34,7 @@
 
 //
 // Monteverdi includes (sorted by alphabetic order)
-#include "itiotbImageModelRenderer.h"
+#include "itiotbImageModelRendererScrollable.h"
 #include "../models/itiotbVectorImageModel.h"
 
 using namespace itiviewer;
@@ -47,20 +47,20 @@ using namespace itiviewer;
 */
 
 /*****************************************************************************/
-ImageModelRenderer
-::ImageModelRenderer( QObject* parent ) :
+ImageModelRendererScrollable
+::ImageModelRendererScrollable( QObject* parent ) :
   QObject( parent )
 {
 }
 
 /*****************************************************************************/
-ImageModelRenderer
-::~ImageModelRenderer()
+ImageModelRendererScrollable
+::~ImageModelRendererScrollable()
 {
 }
 
 /*****************************************************************************/
-void ImageModelRenderer::paintGL( const RenderingContext& context )
+void ImageModelRendererScrollable::paintGL( const RenderingContext& context )
 {
   // the VectorImageModel used for the rendering
   VectorImageModel * viModel = dynamic_cast<  VectorImageModel *>(

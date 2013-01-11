@@ -44,8 +44,8 @@ namespace itiviewer{
 
 //
 // Internal classes pre-declaration.
-class ImageModelRenderer;
-class ImageViewManipulator;
+class ImageModelRendererZoomable;
+class ImageViewManipulatorZoomable;
 class ItiOtbVectorImageViewer;
 
 /** \class QOtbImageWidget
@@ -167,10 +167,10 @@ private:
     double m_IsotropicZoom;
 
     /** Event handler pointer */
-    ImageViewManipulator* m_pImageViewManipulator;
+    ImageViewManipulatorZoomable* m_pImageViewManipulator;
 
     /** Model Renderer pointer */
-    ImageModelRenderer* m_pImageModelRenderer;
+    ImageModelRendererZoomable* m_pImageModelRenderer;
 
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */

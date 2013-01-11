@@ -18,8 +18,8 @@
 // Monteverdi includes (sorted by alphabetic order)
 #include "../../models/itiotbAbstractImageModel.h"
 
-#include "../../utils/itiotbImageModelRenderer.h"
-#include "../../utils/itiotbImageViewManipulator.h"
+#include "../../utils/itiotbImageModelRendererZoomable.h"
+#include "../../utils/itiotbImageViewManipulatorZoomable.h"
 
 using namespace otb;
 using namespace itiviewer;
@@ -34,8 +34,8 @@ ItiOtbVectorQGLWidgetZoomable::ItiOtbVectorQGLWidgetZoomable(ItiOtbVectorImageVi
     m_pItiOtbVectorImageViewer(parent),
     QGLWidget(parent)
 {
-    m_pImageViewManipulator = new ImageViewManipulator( this );
-    m_pImageModelRenderer   = new ImageModelRenderer( this );
+    m_pImageViewManipulator = new ImageViewManipulatorZoomable( this );
+    m_pImageModelRenderer   = new ImageModelRendererZoomable( this );
 }
 
 
@@ -79,7 +79,7 @@ void ItiOtbVectorQGLWidgetZoomable::paintGL(){
     // setup the rendering context
     if (aiModel)
     {
-      ImageModelRenderer::RenderingContext context(aiModel, region, this->width(), this->height());
+      ImageModelRendererZoomable::RenderingContext context(aiModel, region, this->width(), this->height());
 
       // use the model renderer to paint the requested region of the image
       m_pImageModelRenderer->paintGL( context );

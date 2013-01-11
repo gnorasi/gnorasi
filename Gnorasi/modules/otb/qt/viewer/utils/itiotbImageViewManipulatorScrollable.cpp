@@ -17,7 +17,7 @@
 
 =========================================================================*/
 
-#include "itiotbImageViewManipulator.h"
+#include "itiotbImageViewManipulatorScrollable.h"
 
 //
 // Qt includes (sorted by alphabetic order)
@@ -45,8 +45,8 @@ using namespace itiviewer;
 */
 
 /*****************************************************************************/
-ImageViewManipulator
-::ImageViewManipulator( QObject* parent ) :
+ImageViewManipulatorScrollable
+::ImageViewManipulatorScrollable( QObject* parent ) :
   QObject( parent ),
   m_NavigationContext(),
   m_MouseContext()
@@ -56,14 +56,14 @@ ImageViewManipulator
 }
 
 /*****************************************************************************/
-ImageViewManipulator
-::~ImageViewManipulator()
+ImageViewManipulatorScrollable
+::~ImageViewManipulatorScrollable()
 {
 }
 
 /*******************************************************************************/
 void
-ImageViewManipulator
+ImageViewManipulatorScrollable
 ::InitializeContext(int width, int height)
 {
   ImageRegionType::SizeType  initialSize;
@@ -76,7 +76,7 @@ ImageViewManipulator
 
 /******************************************************************************/
 void
-ImageViewManipulator
+ImageViewManipulatorScrollable
 ::mousePressEvent(QMouseEvent * event)
 {
   // Update the context with the pressed position
@@ -90,7 +90,7 @@ ImageViewManipulator
 
 /******************************************************************************/
 void
-ImageViewManipulator
+ImageViewManipulatorScrollable
 ::mouseMoveEvent( QMouseEvent * event)
 {
   // Update the mouse context
@@ -120,7 +120,7 @@ ImageViewManipulator
 
 /******************************************************************************/
 void
-ImageViewManipulator
+ImageViewManipulatorScrollable
 ::mouseReleaseEvent(  QMouseEvent * event)
 {
   //TODO: Implement mouseReleaseEvent.
@@ -128,7 +128,7 @@ ImageViewManipulator
 }
 
 /******************************************************************************/
-void ImageViewManipulator
+void ImageViewManipulatorScrollable
 ::resizeEvent( QResizeEvent * event )
 {
   // Update the navigation context
@@ -148,7 +148,7 @@ void ImageViewManipulator
 
 /******************************************************************************/
 void
-ImageViewManipulator
+ImageViewManipulatorScrollable
 ::ConstrainRegion( ImageRegionType& region, const ImageRegionType& largest)
 {
   ImageRegionType::SizeType zeroSize;

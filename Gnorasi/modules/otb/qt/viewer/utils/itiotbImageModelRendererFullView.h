@@ -17,8 +17,8 @@
 
 =========================================================================*/
 
-#ifndef itiotbImageModelRendererAlt_h
-#define itiotbImageModelRendererAlt_h
+#ifndef itiotbImageModelRendererFullView_h
+#define itiotbImageModelRendererFullView_h
 
 
 //
@@ -54,7 +54,7 @@ class AbstractImageModel;
 /** \class ImageModelRenderer
  *
  */
-class ImageModelRendererAlt :
+class ImageModelRendererFullView :
     public QObject
 {
   Q_OBJECT
@@ -89,10 +89,10 @@ public:
 // Public methods.
 public:
   /** Constructor */
-  ImageModelRendererAlt( QObject* parent = NULL );
+  ImageModelRendererFullView( QObject* parent = NULL );
 
   /** Destructor */
-  virtual ~ImageModelRendererAlt();
+  virtual ~ImageModelRendererFullView();
 
   /** */
   virtual void paintGL( const RenderingContext& context );
@@ -124,4 +124,4 @@ private slots:
 
 } // end namespace itiviewer
 
-#endif // itiotbImageModelRendererAlt_h
+#endif // itiotbImageModelRendererFullView_h

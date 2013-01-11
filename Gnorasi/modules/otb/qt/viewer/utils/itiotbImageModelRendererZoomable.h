@@ -17,8 +17,8 @@
 
 =========================================================================*/
 
-#ifndef itiotbImageModelRenderer_h
-#define itiotbImageModelRenderer_h
+#ifndef itiotbImageModelRendererZoomable_h
+#define itiotbImageModelRendererZoomable_h
 
 
 //
@@ -54,7 +54,7 @@ class AbstractImageModel;
 /** \class ImageModelRenderer
  *
  */
-class ImageModelRenderer :
+class ImageModelRendererZoomable :
     public QObject
 {
   Q_OBJECT
@@ -68,11 +68,13 @@ public:
      RenderingContext( const AbstractImageModel* model =NULL,
                        const ImageRegionType& region =ImageRegionType(),
                        unsigned int width = 0,
-                       unsigned int height = 0) :
+                       unsigned int height = 0,
+                       double iz = 1.0) :
        m_AbstractImageModel( model ),
        m_ImageRegion( region ),
        m_WidgetWidth(width),
-       m_WidgetHeight(height)
+       m_WidgetHeight(height),
+       m_isotropicZoom(iz)
     {
     }
 
@@ -80,16 +82,17 @@ public:
     ImageRegionType m_ImageRegion;
     unsigned int m_WidgetWidth;
     unsigned int m_WidgetHeight;
+    double m_isotropicZoom;
   };
 
 //
 // Public methods.
 public:
   /** Constructor */
-  ImageModelRenderer( QObject* parent = NULL );
+  ImageModelRendererZoomable( QObject* parent = NULL );
 
   /** Destructor */
-  virtual ~ImageModelRenderer();
+  virtual ~ImageModelRendererZoomable();
 
   /** */
   virtual void paintGL( const RenderingContext& context );
@@ -121,4 +124,4 @@ private slots:
 
 } // end namespace itiviewer
 
-#endif // itiotbImageModelRenderer_h
+#endif // itiotbImageModelRendererZoomable_h
