@@ -67,11 +67,13 @@ public:
      inline
      RenderingContext( const AbstractImageModel* model =NULL,
                        const ImageRegionType& region =ImageRegionType(),
+                       const ImageRegionType& ext = ImageRegionType(),
                        unsigned int width = 0,
                        unsigned int height = 0,
                        double iz = 1.0) :
        m_AbstractImageModel( model ),
        m_ImageRegion( region ),
+       m_extent(ext),
        m_WidgetWidth(width),
        m_WidgetHeight(height),
        m_isotropicZoom(iz)
@@ -83,6 +85,7 @@ public:
     unsigned int m_WidgetWidth;
     unsigned int m_WidgetHeight;
     double m_isotropicZoom;
+    ImageRegionType m_extent;
   };
 
 //
@@ -96,6 +99,24 @@ public:
 
   /** */
   virtual void paintGL( const RenderingContext& context );
+
+  //! getters
+  unsigned int nbDisplayColumns()   const { return m_nb_displayed_cols; }
+  unsigned int nbDisplayRows()      const { return m_nb_displayed_rows; }
+  unsigned int firstDisplayColumn() const { return m_first_displayed_col; }
+  unsigned int firstDisplayRow()    const { return m_first_displayed_row; }
+
+
+  void setPaintingParameters(
+          unsigned int nb_d_cs,
+          unsigned int nb_d_rs,
+          unsigned int f_d_c,
+          unsigned int f_d_r){
+        m_nb_displayed_cols     = nb_d_cs;
+        m_nb_displayed_rows     = nb_d_rs;
+        m_first_displayed_col   = f_d_c;
+        m_first_displayed_row   = f_d_r;
+  }
 
 //
 // SIGNALS.
@@ -116,6 +137,26 @@ private:
 //
 // Private attributes.
 private:
+
+  /*!
+   * \brief m_nb_displayed_rows , a variable holding the number of rows that are visualized on an image of a fixed size [columns,rows]
+   */
+  unsigned int m_nb_displayed_rows;
+
+  /*!
+   * \brief m_nb_displayed_cols , a variable holding the number of columns that are visualized on an image of a fixed size [columns,rows]
+   */
+  unsigned int m_nb_displayed_cols;
+
+  /*!
+   * \brief m_nb_displayed_rows , a variable holding the first visualized row on an image of a fixed size [columns,rows]
+   */
+  unsigned int m_first_displayed_row;
+
+  /*!
+   * \brief m_nb_displayed_cols , a variable holding the first visualized column on an image of a fixed size [columns,rows]
+   */
+  unsigned int m_first_displayed_col;
 
 //
 // SLOTS.

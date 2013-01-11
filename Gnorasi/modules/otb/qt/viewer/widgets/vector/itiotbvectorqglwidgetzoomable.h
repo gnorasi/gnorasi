@@ -137,7 +137,7 @@ protected:
      * \param w , the width parameter
      * \param h , the height parameter
      */
-    void resizeGL(int w, int h);
+//    void resizeGL(int w, int h);
 
     /*!
      * \brief paintGL , reimplemented method declared in the QGLWidget class
@@ -162,6 +162,13 @@ private:
      * \brief setupcolumnRowParameters
      */
     void initializeColumnRowParameters();
+
+    /*!
+     * \brief setupViewport, basically setup the extends
+     * \param width
+     * \param height
+     */
+    void setupViewport(int w, int h);
 
     /** OpenGl zoom factor */
     double m_IsotropicZoom;

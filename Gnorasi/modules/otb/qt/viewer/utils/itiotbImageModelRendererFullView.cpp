@@ -62,26 +62,14 @@ ImageModelRendererFullView
 /*****************************************************************************/
 void ImageModelRendererFullView::paintGL( const RenderingContext& context )
 {
-    // the VectorImageModel used for the rendering
+    //! the VectorImageModel used for the rendering
     VectorImageModel * viModel = dynamic_cast<  VectorImageModel *>(
     const_cast<AbstractImageModel*>(context.m_AbstractImageModel)
     );
 
-    // the region of the image to render
-    const ImageRegionType&    region = context.m_ImageRegion;
-    unsigned char* buffer = viModel->RasterizeRegion(region);
-
-    VectorSizeType size;
-    size [0] = static_cast<unsigned int>(context.m_isotropicZoom * static_cast<double>(region.GetSize()[0]));
-    size [1] = static_cast<unsigned int>(context.m_isotropicZoom * static_cast<double>(region.GetSize()[1]));
-
-    ImageRegionType::IndexType index;
-    index[0] = (context.m_WidgetWidth - static_cast<int>(size[0])) / 2;
-    index[1] = (context.m_WidgetHeight - static_cast<int>(size[1])) / 2;
-
-    ImageRegionType extent;
-    extent.SetIndex(index);
-    extent.SetSize(size);
+    ImageRegionType extent = context.m_extent;
+    ImageRegionType bufferedRegion = context.m_ImageRegion;
+    unsigned char* buffer = viModel->RasterizeRegion(bufferedRegion);
 
     unsigned int nb_displayed_rows;
     unsigned int nb_displayed_cols;
@@ -90,24 +78,24 @@ void ImageModelRendererFullView::paintGL( const RenderingContext& context )
 
     if( extent.GetIndex()[0] >= 0 )
     {
-        nb_displayed_cols = region.GetSize()[0];
+        nb_displayed_cols = bufferedRegion.GetSize()[0];
         first_displayed_col = 0;
     }
     else
     {
         nb_displayed_cols = context.m_WidgetWidth / context.m_isotropicZoom;
-        first_displayed_col = (region.GetSize()[0] - nb_displayed_cols) / 2;
+        first_displayed_col = (bufferedRegion.GetSize()[0] - nb_displayed_cols) / 2;
     }
 
     if( extent.GetIndex()[1] >= 0 )
     {
-        nb_displayed_rows = region.GetSize()[1];
+        nb_displayed_rows = bufferedRegion.GetSize()[1];
         first_displayed_row = 0;
     }
     else
     {
         nb_displayed_rows = context.m_WidgetHeight / context.m_isotropicZoom;
-        first_displayed_row = (region.GetSize()[1] - nb_displayed_rows) / 2;
+        first_displayed_row = (bufferedRegion.GetSize()[1] - nb_displayed_rows) / 2;
     }
 
 
@@ -118,7 +106,7 @@ void ImageModelRendererFullView::paintGL( const RenderingContext& context )
 //    setupViewport(width(), height());
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glPixelStorei(GL_UNPACK_ROW_LENGTH, region.GetSize()[0]);
+    glPixelStorei(GL_UNPACK_ROW_LENGTH, bufferedRegion.GetSize()[0]);
     glPixelStorei(GL_UNPACK_SKIP_PIXELS, first_displayed_col);
     glPixelStorei(GL_UNPACK_SKIP_ROWS,first_displayed_row);
 
