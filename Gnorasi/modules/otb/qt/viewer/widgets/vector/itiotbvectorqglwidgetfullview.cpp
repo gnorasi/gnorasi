@@ -12,8 +12,8 @@
 #include "otbVectorRescaleIntensityImageFilter.h"
 
 
-#include "../../utils/itiotbImageModelRendererAlt.h"
-#include "../../utils/itiotbImageViewManipulator.h"
+#include "../../utils/itiotbImageModelRendererFullView.h"
+#include "../../utils/itiotbImageViewManipulatorFullView.h"
 
 #include "../../models/itiotbVectorImageModel.h"
 //
@@ -34,8 +34,8 @@ ItiOtbVectorQGLWidgetFullView::ItiOtbVectorQGLWidgetFullView(ItiOtbVectorImageVi
 {
     setAutoFillBackground(false);
 
-    m_pImageViewManipulator = new ImageViewManipulator( this );
-    m_pImageModelRenderer   = new ImageModelRendererAlt( this );
+    m_pImageViewManipulator = new ImageViewManipulatorFullView( this );
+    m_pImageModelRenderer   = new ImageModelRendererFullView( this );
 
     m_pen = QPen(QBrush(Qt::red),2.0);
 }
@@ -57,23 +57,25 @@ void ItiOtbVectorQGLWidgetFullView::setupViewport(int w, int h){
 //    if(!m_OpenGlBuffer)
 //        return;
 
-//    m_IsotropicZoom = w < h ? static_cast<double>(w)/ static_cast<double>(m_OpenGlBufferedRegion.GetSize()[0]) : static_cast<double>(h)/ static_cast<double>(m_OpenGlBufferedRegion.GetSize()[1]);
 
-//    VectorSizeType size;
-//    size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[0]));
-//    size [1] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[1]));
+    ImageRegionType bufferedRegion = m_pImageViewManipulator->modelRegion();
 
-//    VectorRegionType::IndexType index;
-//    index[0] = (w - static_cast<int>(size[0])) / 2;
-//    index[1] = (h - static_cast<int>(size[1])) / 2;
+    m_IsotropicZoom = w < h ? static_cast<double>(w)/ static_cast<double>(bufferedRegion.GetSize()[0]) : static_cast<double>(h)/ static_cast<double>(bufferedRegion.GetSize()[1]);
 
-//    m_Extent.SetIndex(index);
-//    m_Extent.SetSize(size);
+    VectorSizeType size;
+    size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(bufferedRegion.GetSize()[0]));
+    size [1] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(bufferedRegion.GetSize()[1]));
 
-//    m_W = (GLint)w;
-//    m_H = (GLint)h;
+    ImageRegionType::IndexType index;
+    index[0] = (w - static_cast<int>(size[0])) / 2;
+    index[1] = (h - static_cast<int>(size[1])) / 2;
 
-//    m_pImageViewManipulator->InitializeContext(w,h);
+    ImageRegionType extent;
+
+    extent.SetIndex(index);
+    extent.SetSize(size);
+
+    m_pImageViewManipulator->setExtent(extent);
 
     glViewport(0, 0, (GLint)w, (GLint)h);
 
@@ -111,7 +113,7 @@ void ItiOtbVectorQGLWidgetFullView::paintEvent(QPaintEvent *event){
     // setup the rendering context
     if (aiModel)
     {
-      ImageModelRendererAlt::RenderingContext context(aiModel, region, this->width(), this->height());
+      ImageModelRendererFullView::RenderingContext context(aiModel, region, this->width(), this->height());
 
       // use the model renderer to paint the requested region of the image
       m_pImageModelRenderer->paintGL( context );
@@ -132,15 +134,6 @@ void ItiOtbVectorQGLWidgetFullView::paintEvent(QPaintEvent *event){
 
 //!
 void ItiOtbVectorQGLWidgetFullView::draw(){
-    //!
-//    VectorImageType* imgType =  ITIOTBIMAGEMANAGER->image();
-//    if(!imgType)
-//        return;
-
-//    VectorRegionType region = imgType->GetLargestPossibleRegion();
-
-//    //!
-//    ReadBuffer(imgType,region);
 
     // Set the new rendering context to be known in the ModelRendere
     const VectorImageModel* vModel=  qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
@@ -158,33 +151,35 @@ void ItiOtbVectorQGLWidgetFullView::draw(){
 
 //!
 void ItiOtbVectorQGLWidgetFullView::updateObserver(ItiViewerObservable *observable){
-//    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
-//    if(!region)
-//        return;
+    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
+    if(!region)
+        return;
 
-//    QRect rect = region->region();
-//    //! check if the x coordinate of the given rect is greater than zero
-//    if(rect.x()>=0)
-//        m_visibleRegion.setX(m_Extent.GetIndex()[0]);
-//    else //! if not , this means that the scrollable view has been resized to a value smaller than the original size of the image
-//        m_visibleRegion.setX(m_Extent.GetIndex()[0] + (qAbs(rect.x()*m_IsotropicZoom)));
+    ImageRegionType extent = m_pImageViewManipulator->extent();
 
-//    //! same type of checking as the checking on the previous if statement
-//    if(rect.y() >= 0)
-//        m_visibleRegion.setY(m_Extent.GetIndex()[1]);
-//    else
-//        m_visibleRegion.setY(m_Extent.GetIndex()[1]+(qAbs(rect.y()*m_IsotropicZoom) ));
+    QRect rect = region->region();
+    //! check if the x coordinate of the given rect is greater than zero
+    if(rect.x()>=0)
+        m_visibleRegion.setX(extent.GetIndex()[0]);
+    else //! if not , this means that the scrollable view has been resized to a value smaller than the original size of the image
+        m_visibleRegion.setX(extent.GetIndex()[0] + (qAbs(rect.x()*m_IsotropicZoom)));
 
-//    //! calculate the new width and height value;
-//    int nw = m_IsotropicZoom * rect.width();
-//    int nh = m_IsotropicZoom * rect.height();
+    //! same type of checking as the checking on the previous if statement
+    if(rect.y() >= 0)
+        m_visibleRegion.setY(extent.GetIndex()[1]);
+    else
+        m_visibleRegion.setY(extent.GetIndex()[1]+(qAbs(rect.y()*m_IsotropicZoom) ));
 
-//    //! set the new width and height to the visible region
-//    m_visibleRegion.setWidth(nw);
-//    m_visibleRegion.setHeight(nh);
+    //! calculate the new width and height value;
+    int nw = m_IsotropicZoom * rect.width();
+    int nh = m_IsotropicZoom * rect.height();
 
-//    //! update the widget
-//    update();
+    //! set the new width and height to the visible region
+    m_visibleRegion.setWidth(nw);
+    m_visibleRegion.setHeight(nh);
+
+    //! update the widget
+    update();
 
 //    //!
 //    //! The following code is dummy,

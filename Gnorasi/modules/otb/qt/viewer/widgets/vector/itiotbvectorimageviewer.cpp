@@ -251,7 +251,7 @@ void ItiOtbVectorImageViewer::setupObserverMechanism(){
     QRect rect;
     rect.setWidth(m_pItiOtbVectorImageWidgetZoomable->width());
     rect.setHeight(m_pItiOtbVectorImageWidgetZoomable->height());
-     m_pFocusRegion->setRegion(rect);
+     m_pFocusRegion->updateRegion(rect);
 }
 
 //!
@@ -267,24 +267,24 @@ void ItiOtbVectorImageViewer::setupConnections(){
     connect(m_pItiOtbVectorImageWidgetScroll,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
 }
 
-//!
+//! update regions to notify observers
 void ItiOtbVectorImageViewer::onScrollableWidgetSizeChanged(const QRect &size){
     //!
-    m_pVisibleRegion->setRegion(size);
+    m_pVisibleRegion->updateRegion(size);
 
-    m_pFocusRegion->setRegion(m_pFocusRegion->region());
+    m_pFocusRegion->updateRegion(m_pFocusRegion->region());
 }
 
-//!
+//! update regions to notify observers
 void ItiOtbVectorImageViewer::onZoomableWidgetSizeChanged(const QRect &size){
     //!
-    m_pFocusRegion->setRegion(size);
+    m_pFocusRegion->updateRegion(size);
 }
 
-//!
+//! update regions to notify observers
 void ItiOtbVectorImageViewer::onFocusRegionTranslated(const QRect &rect){
     //!
-    m_pFocusRegion->setRegion(rect);
+    m_pFocusRegion->updateRegion(rect);
 }
 
 

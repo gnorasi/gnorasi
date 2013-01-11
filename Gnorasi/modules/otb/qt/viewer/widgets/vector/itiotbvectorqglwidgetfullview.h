@@ -58,8 +58,8 @@ namespace itiviewer{
 
 //
 // Internal classes pre-declaration.
-class ImageModelRendererAlt;
-class ImageViewManipulator;
+class ImageModelRendererFullView;
+class ImageViewManipulatorFullView;
 class ItiOtbVectorImageViewer;
 
 class ItiOtbVectorQGLWidgetFullView : public QGLWidget, public ItiViewerObserver
@@ -175,10 +175,10 @@ private:
     double m_IsotropicZoom;
 
     /** Event handler pointer */
-    ImageViewManipulator* m_pImageViewManipulator;
+    ImageViewManipulatorFullView* m_pImageViewManipulator;
 
     /** Model Renderer pointer */
-    ImageModelRendererAlt* m_pImageModelRenderer;
+    ImageModelRendererFullView* m_pImageModelRenderer;
 
     /** If the image is subsampled with respect to the original image,
      * this indicates the subsampling rate */

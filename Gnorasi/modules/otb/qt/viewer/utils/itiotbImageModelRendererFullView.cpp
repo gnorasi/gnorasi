@@ -34,12 +34,12 @@
 
 //
 // Monteverdi includes (sorted by alphabetic order)
-#include "itiotbImageModelRendererAlt.h"
+#include "itiotbImageModelRendererFullView.h"
 #include "../models/itiotbVectorImageModel.h"
 
 using namespace itiviewer;
 /*
-  TRANSLATOR itiviewer::ImageModelRendererAlt
+  TRANSLATOR itiviewer::ImageModelRendererFullView
 
   Necessary for lupdate to be aware of C++ namespaces.
 
@@ -47,20 +47,20 @@ using namespace itiviewer;
 */
 
 /*****************************************************************************/
-ImageModelRendererAlt
-::ImageModelRendererAlt( QObject* parent ) :
+ImageModelRendererFullView
+::ImageModelRendererFullView( QObject* parent ) :
   QObject( parent )
 {
 }
 
 /*****************************************************************************/
-ImageModelRendererAlt
-::~ImageModelRendererAlt()
+ImageModelRendererFullView
+::~ImageModelRendererFullView()
 {
 }
 
 /*****************************************************************************/
-void ImageModelRendererAlt::paintGL( const RenderingContext& context )
+void ImageModelRendererFullView::paintGL( const RenderingContext& context )
 {
     // the VectorImageModel used for the rendering
     VectorImageModel * viModel = dynamic_cast<  VectorImageModel *>(

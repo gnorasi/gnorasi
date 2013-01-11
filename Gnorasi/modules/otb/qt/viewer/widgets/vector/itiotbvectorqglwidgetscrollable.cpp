@@ -13,8 +13,8 @@
 #include "otbVectorRescaleIntensityImageFilter.h"
 
 
-#include "../../utils/itiotbImageModelRendererAlt.h"
-#include "../../utils/itiotbImageViewManipulator.h"
+#include "../../utils/itiotbImageModelRendererScrollable.h"
+#include "../../utils/itiotbImageViewManipulatorScrollable.h"
 
 #include "../../models/itiotbVectorImageModel.h"
 //
@@ -36,8 +36,8 @@ ItiOtbVectorQGLWidgetScrollable::ItiOtbVectorQGLWidgetScrollable(ItiOtbVectorIma
 {
     setAutoFillBackground(false);
 
-    m_pImageViewManipulator = new ImageViewManipulator( this );
-    m_pImageModelRenderer   = new ImageModelRendererAlt( this );
+    m_pImageViewManipulator = new ImageViewManipulatorScrollable( this );
+    m_pImageModelRenderer   = new ImageModelRendererScrollable( this );
 
     m_pen = QPen(QBrush(Qt::red),2.0);
 }
@@ -58,41 +58,42 @@ void ItiOtbVectorQGLWidgetScrollable::resizeGL(int w, int h)
     //! firstly setup the viweport with the new width and height
     setupViewport(w,h);
 
-//    //! create a rect
-//    QRect rect;
+    ImageRegionType extent = m_pImageViewManipulator->extent();
+    ImageRegionType bufferRegion = m_pImageViewManipulator->modelRegion();
 
-//    rect.setX(m_Extent.GetIndex()[0]);
-//    rect.setY(m_Extent.GetIndex()[1]);
+    //! create a rect
+    QRect rect;
 
-//    //! create helper integer values
-//    int wt = qMin(static_cast<int>(w),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[0]));
-//    int ht = qMin(static_cast<int>(h),static_cast<int>(m_OpenGlBufferedRegion.GetSize()[1]));
+    rect.setX(extent.GetIndex()[0]);
+    rect.setY(extent.GetIndex()[1]);
 
-//    //! set the helper values
-//    rect.setWidth(wt);
-//    rect.setHeight(ht);
+    //! create helper integer values
+    int wt = qMin(static_cast<int>(w),static_cast<int>(bufferRegion.GetSize()[0]));
+    int ht = qMin(static_cast<int>(h),static_cast<int>(bufferRegion.GetSize()[1]));
 
-//    //! emit the signal
-//    emit visibleAreaChanged(rect);
+    //! set the helper values
+    rect.setWidth(wt);
+    rect.setHeight(ht);
+
+    //! emit the signal
+    emit visibleAreaChanged(rect);
 }
 
 //!
 void ItiOtbVectorQGLWidgetScrollable::setupViewport(int w, int h){
-//    VectorSizeType size;
-//    size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[0]));
-//    size [1] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(m_OpenGlBufferedRegion.GetSize()[1]));
+    ImageRegionType extent;
+    ImageRegionType bufferRegion = m_pImageViewManipulator->modelRegion();
+    ImageRegionType::SizeType size;
 
-//    VectorRegionType::IndexType index;
-//    index[0] = (w - static_cast<int>(size[0])) / 2;
-//    index[1] = (h - static_cast<int>(size[1])) / 2;
+    size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(bufferRegion.GetSize()[0]));
+    size [1] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(bufferRegion.GetSize()[1]));
 
-//    m_Extent.SetIndex(index);
-//    m_Extent.SetSize(size);
+    ImageRegionType::IndexType index;
+    index[0] = (w - static_cast<int>(size[0])) / 2;
+    index[1] = (h - static_cast<int>(size[1])) / 2;
 
-//    m_W = (GLint)w;
-//    m_H = (GLint)h;
-
-//    m_pImageViewManipulator->InitializeContext(w,h);
+    extent.SetIndex(index);
+    extent.SetSize(size);
 
     glViewport(0, 0, (GLint)w, (GLint)h);
 
@@ -128,7 +129,7 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
     // setup the rendering context
     if (aiModel)
     {
-      ImageModelRendererAlt::RenderingContext context(aiModel, region, this->width(), this->height());
+      ImageModelRendererScrollable::RenderingContext context(aiModel, region, this->width(), this->height());
 
       // use the model renderer to paint the requested region of the image
       m_pImageModelRenderer->paintGL( context );

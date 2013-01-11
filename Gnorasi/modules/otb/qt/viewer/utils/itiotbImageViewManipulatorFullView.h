@@ -17,8 +17,8 @@
 
 =========================================================================*/
 
-#ifndef itiotbImageViewManipulator_h
-#define itiotbImageViewManipulator_h
+#ifndef itiotbImageViewManipulatorFullView_h
+#define itiotbImageViewManipulatorFullView_h
 
 
 //
@@ -49,7 +49,7 @@ namespace itiviewer
 //
 // Internal classes pre-declaration.
 
-/** \class ImageViewManipulator
+/** \class ImageViewManipulatorFullView
  *  Brief this class handles the event related to a QGLWidget. It also
  *  handles :
  *    - NavigationContext : to store the region of the image to be
@@ -59,7 +59,7 @@ namespace itiviewer
  *  
  *   WIP
  */
-class ImageViewManipulator :
+class ImageViewManipulatorFullView :
     public QObject
 {
   Q_OBJECT
@@ -69,10 +69,10 @@ class ImageViewManipulator :
 public:
 
   /** Constructor */
-  ImageViewManipulator( QObject* parent =NULL );
+  ImageViewManipulatorFullView( QObject* parent =NULL );
 
   /** Destructor */
-  virtual ~ImageViewManipulator();
+  virtual ~ImageViewManipulatorFullView();
 
   /** */
   void mouseMoveEvent ( QMouseEvent * event );
@@ -113,6 +113,31 @@ public:
     );
   }
 
+  /*!
+   * \brief setExtent
+   * \param extent
+   */
+  void setExtent(const ImageRegionType &extent){
+      m_NavigationContext.m_ExtentRegion = extent;
+  }
+
+
+  /*!
+   * \brief extent
+   * \return
+   */
+  ImageRegionType extent() const {
+      return m_NavigationContext.m_ExtentRegion;
+  }
+
+  /*!
+   * \brief modelRegion
+   * \return
+   */
+  ImageRegionType modelRegion() const {
+      return m_NavigationContext.m_ModelImageRegion;
+  }
+
 //
 // SIGNALS.
 signals:
@@ -139,6 +164,7 @@ private:
   {
     ImageRegionType m_ViewportImageRegion;
     ImageRegionType m_ModelImageRegion;
+    ImageRegionType m_ExtentRegion;
   };
 
   /** Mouse context */
@@ -180,4 +206,4 @@ private slots:
 
 } // end namespace itiviewer
 
-#endif // itiotbImageViewManipulator_h
+#endif // itiotbImageViewManipulatorFullView_h
