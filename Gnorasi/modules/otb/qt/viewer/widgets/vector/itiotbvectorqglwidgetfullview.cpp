@@ -99,24 +99,23 @@ void ItiOtbVectorQGLWidgetFullView::paintEvent(QPaintEvent *event){
     //
     // TEST
 
-    // Get the region to draw from the ImageViewManipulator navigation
-    // context
-    const ImageRegionType region(
-      m_pImageViewManipulator->GetViewportImageRegion() );
-
     // Set the new rendering context to be known in the ModelRendere
     const AbstractImageModel* aiModel=  qobject_cast<AbstractImageModel*>(m_pItiOtbVectorImageViewer->model());
-
-    if(!aiModel)
-        return;
 
     // setup the rendering context
     if (aiModel)
     {
-      ImageModelRendererFullView::RenderingContext context(aiModel, region, this->width(), this->height());
+        const ImageRegionType extent(m_pImageViewManipulator->extent());
 
-      // use the model renderer to paint the requested region of the image
-      m_pImageModelRenderer->paintGL( context );
+        // Get the region to draw from the ImageViewManipulator navigation
+        // context
+        const ImageRegionType region(
+          m_pImageViewManipulator->modelRegion());
+
+        ImageModelRendererFullView::RenderingContext context(aiModel, region, extent, this->width(), this->height(), m_IsotropicZoom);
+
+        // use the model renderer to paint the requested region of the image
+        m_pImageModelRenderer->paintGL( context );
     }
 
     //

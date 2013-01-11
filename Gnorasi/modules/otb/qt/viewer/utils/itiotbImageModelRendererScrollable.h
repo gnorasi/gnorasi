@@ -67,12 +67,16 @@ public:
      inline
      RenderingContext( const AbstractImageModel* model =NULL,
                        const ImageRegionType& region =ImageRegionType(),
+                       const ImageRegionType& ext = ImageRegionType(),
                        unsigned int width = 0,
-                       unsigned int height = 0) :
+                       unsigned int height = 0,
+                       double iz = 1.0) :
        m_AbstractImageModel( model ),
        m_ImageRegion( region ),
+       m_extent(ext),
        m_WidgetWidth(width),
-       m_WidgetHeight(height)
+       m_WidgetHeight(height),
+       m_isotropicZoom(iz)
     {
     }
 
@@ -80,6 +84,8 @@ public:
     ImageRegionType m_ImageRegion;
     unsigned int m_WidgetWidth;
     unsigned int m_WidgetHeight;
+    double m_isotropicZoom;
+    ImageRegionType m_extent;
   };
 
 //

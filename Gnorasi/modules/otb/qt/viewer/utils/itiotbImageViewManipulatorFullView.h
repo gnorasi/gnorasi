@@ -114,6 +114,14 @@ public:
   }
 
   /*!
+   * \brief modelRegion
+   * \return
+   */
+  ImageRegionType modelRegion() const {
+      return m_NavigationContext.m_ModelImageRegion;
+  }
+
+  /*!
    * \brief setExtent
    * \param extent
    */
@@ -128,14 +136,6 @@ public:
    */
   ImageRegionType extent() const {
       return m_NavigationContext.m_ExtentRegion;
-  }
-
-  /*!
-   * \brief modelRegion
-   * \return
-   */
-  ImageRegionType modelRegion() const {
-      return m_NavigationContext.m_ModelImageRegion;
   }
 
 //

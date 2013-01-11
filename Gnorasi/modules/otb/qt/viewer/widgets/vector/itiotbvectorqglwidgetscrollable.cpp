@@ -95,6 +95,14 @@ void ItiOtbVectorQGLWidgetScrollable::setupViewport(int w, int h){
     extent.SetIndex(index);
     extent.SetSize(size);
 
+    m_pImageViewManipulator->setExtent(extent);
+
+    // initialize with the given size
+    if(w && h)
+        m_pImageViewManipulator->InitializeContext(w,h);
+    else
+        m_pImageViewManipulator->InitializeContext(100,100);
+
     glViewport(0, 0, (GLint)w, (GLint)h);
 
     glMatrixMode(GL_MODELVIEW);
@@ -115,26 +123,24 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
     //
     // TEST
 
-    // Get the region to draw from the ImageViewManipulator navigation
-    // context
-    const ImageRegionType region(
-      m_pImageViewManipulator->GetViewportImageRegion() );
-
     // Set the new rendering context to be known in the ModelRendere
     const AbstractImageModel* aiModel=  qobject_cast<AbstractImageModel*>(m_pItiOtbVectorImageViewer->model());
-
-    if(!aiModel)
-        return;
 
     // setup the rendering context
     if (aiModel)
     {
-      ImageModelRendererScrollable::RenderingContext context(aiModel, region, this->width(), this->height());
+        // Get the region to draw from the ImageViewManipulator navigation
+        // context
+        const ImageRegionType region(
+          m_pImageViewManipulator->modelRegion());
 
-      // use the model renderer to paint the requested region of the image
-      m_pImageModelRenderer->paintGL( context );
+        ImageRegionType extent(m_pImageViewManipulator->extent());
+
+        ImageModelRendererScrollable::RenderingContext context(aiModel, region, extent, this->width(), this->height(), m_IsotropicZoom);
+
+        // use the model renderer to paint the requested region of the image
+        m_pImageModelRenderer->paintGL( context );
     }
-
 
     //
     // END OF TEST
@@ -167,32 +173,31 @@ void ItiOtbVectorQGLWidgetScrollable::draw(){
 }
 
 //! The observer gets notified on a zoomable view's change ( either zooming or resizing events)
-void ItiOtbVectorQGLWidgetScrollable::updateObserver(ItiViewerObservable *observable){
+void ItiOtbVectorQGLWidgetScrollable::updateObserver(ItiViewerObservable *observable){    
+
+    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
+    if(!region)
+        return;
+
+    ImageRegionType extent(m_pImageViewManipulator->extent());
+
+    //! get the current rect from the region
+    QRect rregion = region->region();
+
+    //! create helper values from the rect's parameters
+    int x       = rregion.x();
+    int y       = rregion.y();
+    int width   = rregion.width();
+    int height  = rregion.height();
+
+    m_focusRegion.setX(extent.GetIndex()[0] + x);
     //!
-//    if(!m_OpenGlBuffer)
-//        return;
-
-//    ItiViewerObservableRegion *region = qobject_cast<ItiViewerObservableRegion*>(observable);
-//    if(!region)
-//        return;
-
-//    //! get the current rect from the region
-//    QRect rregion = region->region();
-
-//    //! create helper values from the rect's parameters
-//    int x       = rregion.x();
-//    int y       = rregion.y();
-//    int width   = rregion.width();
-//    int height  = rregion.height();
-
-//    m_focusRegion.setX(m_Extent.GetIndex()[0] + x);
-//    //!
-//    //! Take notice that the y-axes is inverted [1,-1]. That's why the focus resion's y value equals to
-//    //! the following calculated value
-//    //!
-//    m_focusRegion.setY(m_Extent.GetIndex()[1] + m_Extent.GetSize()[1] - height - y);
-//    m_focusRegion.setWidth(width);
-//    m_focusRegion.setHeight(height);
+    //! Take notice that the y-axes is inverted [1,-1]. That's why the focus resion's y value equals to
+    //! the following calculated value
+    //!
+    m_focusRegion.setY(extent.GetIndex()[1] + extent.GetSize()[1] - height - y);
+    m_focusRegion.setWidth(width);
+    m_focusRegion.setHeight(height);
 
     //! finally update the view
     update();

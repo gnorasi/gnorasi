@@ -242,7 +242,7 @@ void ItiOtbVectorImageViewer::setupObserverMechanism(){
     //! setup observer mechanism
     m_pFocusRegion                      = new ItiViewerObservableRegion(this);
     m_pFocusRegion->registerObserver(m_pItiOtbVectorImageWidgetScroll);
-//    m_pFocusRegion->registerObserver(m_pItiOtbVectorImageWidgetZoomable);
+    m_pFocusRegion->registerObserver(m_pItiOtbVectorImageWidgetZoomable);
     m_pVisibleRegion                    = new ItiViewerObservableRegion(this);
 //    m_pVisibleRegion->registerObserver(m_pItiOtbVectorImageWidgetScroll);
     m_pVisibleRegion->registerObserver(m_pItiOtbVectorImageWidgetFullView);
