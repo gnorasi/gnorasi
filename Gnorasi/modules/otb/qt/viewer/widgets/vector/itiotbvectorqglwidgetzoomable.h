@@ -94,6 +94,23 @@ public slots:
      */
     void onLargestPossibleRegionChanged(const ImageRegionType& largestRegion);
 
+    /*!
+     * \brief zoomIn
+     */
+    void zoomIn();
+
+    /*!
+     * \brief zoomOut
+     */
+    void zoomOut();
+
+    /*!
+     * \brief translate
+     * \param dx
+     * \param dy
+     */
+    void translate(int dx, int dy);
+
 signals:
     /*!
      * \brief visibleAreaChanged , this signal is emitted uppon the view resizing

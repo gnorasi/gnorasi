@@ -72,9 +72,9 @@ void ImageModelRendererZoomable::paintGL( const RenderingContext& context )
     );
 
     // the region of the image to render
-    const ImageRegionType&    region = context.m_ImageRegion;
-    const ImageRegionType&    extent = context.m_extent;
-    unsigned char* buffer = viModel->RasterizeRegion(region);
+    const ImageRegionType&  region = context.m_ImageRegion;
+    const ImageRegionType&  extent = context.m_extent;
+    unsigned char*          buffer = viModel->RasterizeRegion(region);
 
 
     VectorIndexType startPosition = extent.GetIndex();

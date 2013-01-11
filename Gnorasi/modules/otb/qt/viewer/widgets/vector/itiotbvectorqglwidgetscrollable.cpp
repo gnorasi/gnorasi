@@ -208,10 +208,10 @@ void ItiOtbVectorQGLWidgetScrollable::wheelEvent(QWheelEvent *event){
     double deltaval = (double)event->delta();
 
     //! check the delta value if is more than zero, if yes zoomin, else zoomout
-//    if(deltaval>0)
-//        emit zoomIn();
-//    else
-//        emit zoomOut();
+    if(deltaval>0)
+        emit zoomIn();
+    else
+        emit zoomOut();
 
     event->accept();
 }
@@ -221,44 +221,46 @@ void ItiOtbVectorQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
 
     //! setup translating functionality only on left button pressed mouse events
     if(event->button() == Qt::LeftButton){
-//        //! create a helper point value
-//        QPoint previousCenter = m_focusRegion.center();
+        //! create a helper point value
+        QPoint previousCenter = m_focusRegion.center();
 
-//        //! get the position of the event
-//        QPoint point = event->pos();
+        //! get the position of the event
+        QPoint point = event->pos();
 
-//        //! create a helper line object
-//        QLine line(previousCenter,point);
+        //! create a helper line object
+        QLine line(previousCenter,point);
 
-//        //! create helper values
-//        int dx = 0, dy = 0;
+        ImageRegionType extent = m_pImageViewManipulator->extent();
 
-//        //! check if the new rect right border exceeds the extends' width value
-//        if(point.x()+ qRound((double)m_focusRegion.width()/2.0) > m_Extent.GetSize()[0] + m_Extent.GetIndex()[0]){
-//            dx = m_Extent.GetIndex()[0] + m_Extent.GetSize()[0] - qRound((double)m_focusRegion.width()/2.0) - previousCenter.x();
-//        } //! check if the new rect left border exceeds the extend's index x value
-//        else if(point.x()- qRound((double)m_focusRegion.width()/2.0) < m_Extent.GetIndex()[0]){
-//            dx = m_Extent.GetIndex()[0] + qRound((double)m_focusRegion.width()/2.0) - previousCenter.x();
-//        }else //! else set the dx value equal to the line dx value
-//            dx = line.dx();
+        //! create helper values
+        int dx = 0, dy = 0;
 
-//        //! check if the new rect right border exceeds the extends' height value
-//        if(point.y()+ qRound((double)m_focusRegion.height()/2.0) > m_Extent.GetSize()[1] + m_Extent.GetIndex()[1]){
-//            dy = m_Extent.GetSize()[1] + m_Extent.GetIndex()[1] - qRound((double)m_focusRegion.height()/2.0) - previousCenter.y();
-//        } //! check if the new rect left border exceeds the extend's index y value
-//        else if(point.y()- qRound((double)m_focusRegion.height()/2.0) < m_Extent.GetIndex()[1]){
-//            dy = m_Extent.GetIndex()[1] + qRound((double)m_focusRegion.height()/2.0) - previousCenter.y();
-//        }else //! else set the dy value equal to the line dy value
-//            dy = line.dy();
+        //! check if the new rect right border exceeds the extends' width value
+        if(point.x()+ qRound((double)m_focusRegion.width()/2.0) > extent.GetSize()[0] + extent.GetIndex()[0]){
+            dx = extent.GetIndex()[0] + extent.GetSize()[0] - qRound((double)m_focusRegion.width()/2.0) - previousCenter.x();
+        } //! check if the new rect left border exceeds the extend's index x value
+        else if(point.x()- qRound((double)m_focusRegion.width()/2.0) < extent.GetIndex()[0]){
+            dx = extent.GetIndex()[0] + qRound((double)m_focusRegion.width()/2.0) - previousCenter.x();
+        }else //! else set the dx value equal to the line dx value
+            dx = line.dx();
 
-//        //!translate the focus region
-//        m_focusRegion.translate(dx,dy);
+        //! check if the new rect right border exceeds the extends' height value
+        if(point.y()+ qRound((double)m_focusRegion.height()/2.0) > extent.GetSize()[1] + extent.GetIndex()[1]){
+            dy = extent.GetSize()[1] + extent.GetIndex()[1] - qRound((double)m_focusRegion.height()/2.0) - previousCenter.y();
+        } //! check if the new rect left border exceeds the extend's index y value
+        else if(point.y()- qRound((double)m_focusRegion.height()/2.0) < extent.GetIndex()[1]){
+            dy = extent.GetIndex()[1] + qRound((double)m_focusRegion.height()/2.0) - previousCenter.y();
+        }else //! else set the dy value equal to the line dy value
+            dy = line.dy();
 
-//        //! emit signal in order to update the zoomable view
-//        emit focusRegionTranslated(dx,dy);
+        //!translate the focus region
+        m_focusRegion.translate(dx,dy);
 
-//        //! update widget
-//        update();
+        //! emit signal in order to update the zoomable view
+        emit focusRegionTranslated(dx,dy);
+
+        //! update widget
+        update();
     }
 
     QGLWidget::mousePressEvent(event);
