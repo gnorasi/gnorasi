@@ -147,6 +147,26 @@ void ImageViewManipulatorZoomable
 }
 
 /******************************************************************************/
+void ImageViewManipulatorZoomable
+::resize( int w, int h)
+{
+  // Update the navigation context
+  ImageRegionType & currentRegion = m_NavigationContext.m_ViewportImageRegion;
+
+  // Get the new widget size
+  ImageRegionType::SizeType size;
+  size[0] = w;
+  size[1] = h;
+
+  // Update the stored region with the new size
+  currentRegion.SetSize(size);
+
+  // Constraint this region to the LargestPossibleRegion
+  this->ConstrainRegion(currentRegion, m_NavigationContext.m_ModelImageRegion);
+}
+
+
+/******************************************************************************/
 void
 ImageViewManipulatorZoomable
 ::ConstrainRegion( ImageRegionType& region, const ImageRegionType& largest)

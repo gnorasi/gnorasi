@@ -80,6 +80,15 @@ public:
   void mouseReleaseEvent ( QMouseEvent * event );
   void resizeEvent ( QResizeEvent * event );
 
+
+  /*!
+   * \brief resize
+   * \param w
+   * \param h
+   */
+  void resize(int w, int h);
+
+
   /** Methods to access to the context */
   /**
   const NavigationContextType& GetNavigationContext() const

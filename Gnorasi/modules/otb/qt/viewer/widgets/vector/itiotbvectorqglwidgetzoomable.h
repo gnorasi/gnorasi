@@ -154,7 +154,7 @@ protected:
      * \param w , the width parameter
      * \param h , the height parameter
      */
-//    void resizeGL(int w, int h);
+    void resizeGL(int w, int h);
 
     /*!
      * \brief paintGL , reimplemented method declared in the QGLWidget class
@@ -171,7 +171,7 @@ protected:
      * \brief resizeEvent
      * \param event
      */
-    void resizeEvent(QResizeEvent* event);
+//    void resizeEvent(QResizeEvent* event);
 
 
 private:

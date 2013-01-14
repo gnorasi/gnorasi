@@ -74,6 +74,8 @@ void ImageModelRendererZoomable::paintGL( const RenderingContext& context )
     // the region of the image to render
     const ImageRegionType&  region = context.m_ImageRegion;
     const ImageRegionType&  extent = context.m_extent;
+
+    // the buffer will be painted
     unsigned char*          buffer = viModel->RasterizeRegion(region);
 
 
