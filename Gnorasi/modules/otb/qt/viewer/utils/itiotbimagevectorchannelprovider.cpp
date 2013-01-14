@@ -52,4 +52,6 @@ void ItiOtbImageVectorChannelProvider::parse(){
         m_channelList.append(val);
     }
 
+    emit channelsChanged();
+
 }

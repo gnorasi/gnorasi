@@ -43,6 +43,8 @@ void QGLOtbImageViewerWidget::initialize(){
     //!
     m_pItiOtbImageFactory = new ItiOtbVectorImageViewerFactory(this);
     m_pItiOtbImageFactory->createViewer(m_pItiOtbImageViewerPanel);
+
+    //!
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->viewer();
     m_pItiOtbImageViewer->setParent(this);
     m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
