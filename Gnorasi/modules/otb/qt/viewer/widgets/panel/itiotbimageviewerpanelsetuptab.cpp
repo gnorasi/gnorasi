@@ -89,7 +89,7 @@ void ItiOtbImageViewerPanelSetupTab::setupColorCompositionGroupBox(){
     connect(m_pRadioButtonRGBCompositionMode,SIGNAL(clicked()),this,SLOT(onRadioButtonColorCompositionChanged()));
     connect(m_pButtonApplyColorComposition,SIGNAL(clicked()),this,SLOT(onColorCompositionApplyButtonClicked()));
 
-    m_pRadioButtonGrayscaleMode->toggle();
+    m_pRadioButtonRGBCompositionMode->toggle();
     onRadioButtonColorCompositionChanged();
 }
 
@@ -281,10 +281,10 @@ void ItiOtbImageViewerPanelSetupTab::setupChannels(){
     if(list.size()<3)
         return;
 
-    m_pSpinBoxGreyscaleChannel->setValue(list.at(0));
-    m_pSpinBoxRedChannel->setValue(list.at(0));
-    m_pSpinBoxGreenChannel->setValue(list.at(1));
-    m_pSpinBoxBlueChannel->setValue(list.at(2));
+    m_pSpinBoxGreyscaleChannel->setValue(list.at(0)+1);
+    m_pSpinBoxRedChannel->setValue(list.at(0)+1);
+    m_pSpinBoxGreenChannel->setValue(list.at(1)+1);
+    m_pSpinBoxBlueChannel->setValue(list.at(2)+1);
 }
 
 

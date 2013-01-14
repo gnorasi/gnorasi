@@ -56,7 +56,9 @@ void CommandContrastEnhancementLinear0255::execute(){
         renderer->SetAutoMinMax(false);
         renderer->SetChannelList(l);
         vModel->setRenderingFunction(renderer);
+
+        vModel->resetData();
     }
 
-    m_pItiOtbVectorImageViewer->draw();
+//    m_pItiOtbVectorImageViewer->draw();
 }

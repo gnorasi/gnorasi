@@ -55,8 +55,36 @@ void CommandContrastEnhancementLinearXPerc::execute(){
         std::vector<unsigned int> l = vModel->GetChannelList();
         renderer->SetAutoMinMax(false);
         renderer->SetChannelList(l);
+
+        ReaderType::Pointer reader = ReaderType::New();
+        reader->SetFileName(vModel->lastPath().toLatin1().data());
+        reader->Update();
+
+        SampleListType::Pointer sampleList = SampleListType::New();
+        sampleList->SetMeasurementVectorSize(reader->GetOutput()->GetVectorLength());
+
+        itk::ImageRegionIterator<VectorImageType> imgIter (reader->GetOutput(),
+                                                   reader->GetOutput()->
+                                                   GetBufferedRegion());
+        imgIter.GoToBegin();
+
+        itk::ImageRegionIterator<VectorImageType> imgIterEnd (reader->GetOutput(),
+                                                      reader->GetOutput()->
+                                                      GetBufferedRegion());
+
+        do
+        {
+            sampleList->PushBack(imgIter.Get());
+            ++imgIter;
+        }
+        while (imgIter != imgIterEnd);
+
+        renderer->SetListSample(sampleList);
+
         vModel->setRenderingFunction(renderer);
+
+        vModel->resetData();
     }
 
-    m_pItiOtbVectorImageViewer->draw();
+//    m_pItiOtbVectorImageViewer->draw();
 }
