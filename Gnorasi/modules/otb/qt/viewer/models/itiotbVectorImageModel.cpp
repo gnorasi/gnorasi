@@ -38,6 +38,8 @@
 #include "../vector_globaldefs.h"
 
 
+#include "itkImageRegionConstIteratorWithIndex.h"
+
 using namespace otb;
 
 
@@ -233,18 +235,50 @@ VectorImageModel
     //itkExceptionMacro(<< "Region to read is oustside of the buffered region.");
     }
   
-  // Extract the region of interest in the image
-  m_ExtractFilter->SetInput(image);
-  m_ExtractFilter->SetExtractionRegion(region);
+//  // Extract the region of interest in the image
+//  m_ExtractFilter->SetInput(image);
+//  m_ExtractFilter->SetExtractionRegion(region);
   
+//  // Use the rendering filter to get
+//  m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());
+//  m_RenderingFilter->GetOutput()->SetRequestedRegion(region);
+//  m_RenderingFilter->Update();
+
+  //test to strech image in 8bit
+  ByteRescalerFilterType::Pointer  byterescaler;
+  byterescaler = ByteRescalerFilterType::New();
+  //image->UpdateOutputInformation();
+  ByteImageType::PixelType minimum, maximum;
+  int bands = image->GetNumberOfComponentsPerPixel();
+  minimum.SetSize(bands);
+  maximum.SetSize(bands);
+  minimum.Fill(0);
+  maximum.Fill(255);
+//  byterescaler->SetInput(filter->GetOutput());
+  byterescaler->SetInput(image);
+  byterescaler->SetOutputMinimum(minimum);
+  byterescaler->SetOutputMaximum(maximum);
+  byterescaler->SetClampThreshold(0.01);
+  ByteImageType::Pointer image8;
+  image8 = byterescaler->GetOutput();
+  byterescaler->Update();
+  //end test
+
+  // Extract the region of interest in the image
+  m_ExtractFilter->SetInput(image8);
+  m_ExtractFilter->SetExtractionRegion(region);
+
   // Use the rendering filter to get
   m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());
   m_RenderingFilter->GetOutput()->SetRequestedRegion(region);
   m_RenderingFilter->Update();
 
+
   // Declare the iterator
   itk::ImageRegionConstIteratorWithIndex< RenderingFilterType::OutputImageType >
     it(m_RenderingFilter->GetOutput(), region);
+
+//    itk::ImageRegionConstIteratorWithIndex<ByteImageType> it(image8, region);
 
   // Go to begin
   it.GoToBegin();

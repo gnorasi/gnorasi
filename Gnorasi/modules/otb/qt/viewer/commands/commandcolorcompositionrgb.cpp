@@ -63,9 +63,9 @@ void CommandColorCompositionRGB::execute(){
     ChannelListType channels;
 
     channels.resize(3);
-    channels[0] = m_red;
-    channels[1] = m_green;
-    channels[2] = m_blue;
+    channels[0] = m_red-1;
+    channels[1] = m_green-1;
+    channels[2] = m_blue-1;
     renderer->SetChannelList(channels);
 
     // Apply the new rendering function to the Image layer
