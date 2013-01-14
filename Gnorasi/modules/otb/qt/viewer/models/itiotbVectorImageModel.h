@@ -126,6 +126,12 @@ public:
       m_RenderingFilter->SetRenderingFunction(function);
   }
 
+  /*!
+   * \brief buffer
+   * \return
+   */
+  unsigned char* buffer() const { return m_RasterizedBuffer; }
+
 
 //
 // SIGNALS.
