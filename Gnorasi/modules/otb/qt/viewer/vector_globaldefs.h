@@ -64,6 +64,9 @@ typedef itk::NeighborhoodAlgorithm
 typedef otb::ImageToVectorImageCastFilter<RasterImageType, VectorImageType> ImageToVectorImageCastFilterType;
 typedef otb::ImageFileReader<VectorImageType> ReaderType;
 
+
+typedef itk::Statistics::ListSample<VectorImageType::PixelType>             SampleListType;
+
 typedef otb::ImageList<RasterImageType>                                     ImageListType;
 typedef otb::VectorImageToImageListFilter<VectorImageType, ImageListType>   VectorImageToImageListType;
 
