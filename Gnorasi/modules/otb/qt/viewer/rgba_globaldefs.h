@@ -17,6 +17,7 @@ const unsigned int Dimension = 2;
 
 typedef double                                  PixelType;
 typedef otb::Image<PixelType, Dimension>        RasterImageType;
+typedef otb::Image<unsigned char,Dimension>     RasterByteImageType;
 typedef RasterImageType::RegionType             RasterRegionType;
 typedef RasterImageType::IndexType              RasterIndexType;
 typedef RasterImageType::SizeType               RasterSizeType;

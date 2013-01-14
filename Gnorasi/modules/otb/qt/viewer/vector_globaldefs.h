@@ -20,6 +20,8 @@
 #include "otbNoStretchRenderingFunction.h"
 #include "otbSquareRootRenderingFunction.h"
 #include "otbGaussianRenderingFunction.h"
+#include "otbVectorRescaleIntensityImageFilter.h"
+
 
 #include "../../ports/otbimageport.h"
 #include "../../ports/otbvectorimageport.h"
@@ -55,13 +57,23 @@ typedef VectorImageType::RegionType                                         Vect
 typedef VectorImageType::IndexType                                          VectorIndexType;
 typedef VectorImageType::SizeType                                           VectorSizeType;
 
+typedef unsigned char                                                       BytePixelType;
+typedef otb::VectorImage<BytePixelType, 2>                                  ByteImageType;
+
 typedef itk::ConstNeighborhoodIterator<RasterImageType>                     NeighborhoodIteratorType;
 typedef itk::ImageRegionIterator<RasterImageType>                           IteratorType;
 
 typedef itk::NeighborhoodAlgorithm
 ::ImageBoundaryFacesCalculator<RasterImageType>                             FaceCalculatorType;
 
-typedef otb::ImageToVectorImageCastFilter<RasterImageType, VectorImageType> ImageToVectorImageCastFilterType;
+typedef otb::ImageToVectorImageCastFilter<RasterImageType,
+VectorImageType>                                                            ImageToVectorImageCastFilterType;
+
+typedef otb::VectorImage<RGBAImageType::PixelType,VDimension>               ByteVectorImageType;
+
+typedef otb::ImageToVectorImageCastFilter<RGBAImageType,
+ByteVectorImageType>                                                        ByteImageToVectorImageCastFilterType;
+
 typedef otb::ImageFileReader<VectorImageType> ReaderType;
 
 
@@ -76,29 +88,49 @@ typedef otb::ImageFileReader< VectorImageType >                             Vect
 
 /** Rendering filter */
 /** Rendering part */
-typedef RenderingImageFilter<VectorImageType, RGBAImageType>          RenderingFilterType;
+//typedef RenderingImageFilter<VectorImageType, RGBAImageType>                RenderingFilterType;
+typedef RenderingImageFilter<ByteImageType, RGBAImageType>                  RenderingFilterType;
 
 
 /** Rendering function */
-typedef Function::RenderingFunction<VectorImageType::PixelType, RGBAPixelType> RenderingFunctionType;
+//typedef Function::RenderingFunction<VectorImageType::PixelType, RGBAPixelType> RenderingFunctionType;
+typedef Function::RenderingFunction<ByteImageType::PixelType, RGBAPixelType> RenderingFunctionType;
 
-typedef Function::StandardRenderingFunction<VectorImageType::PixelType,
+//typedef Function::StandardRenderingFunction<VectorImageType::PixelType,
+//                                            RGBAPixelType> StandardRenderingFunctionType;
+//typedef StandardRenderingFunctionType::ChannelListType    ChannelListType;
+//typedef StandardRenderingFunctionType::ParametersType     ParametersType;
+
+//typedef Function::NoStretchRenderingFunction<VectorImageType::PixelType,
+//                                             RGBAPixelType> NoStretchRenderingFunctionType;
+
+//typedef Function::SquareRootRenderingFunction<VectorImageType::PixelType,
+//                                              RGBAPixelType> SquareRootRenderingFunctionType;
+
+//typedef Function::GaussianRenderingFunction<VectorImageType::PixelType,
+//                                            RGBAPixelType> GaussianRenderingFunctionType;
+typedef Function::StandardRenderingFunction<ByteImageType::PixelType,
                                             RGBAPixelType> StandardRenderingFunctionType;
 typedef StandardRenderingFunctionType::ChannelListType    ChannelListType;
 typedef StandardRenderingFunctionType::ParametersType     ParametersType;
 
-typedef Function::NoStretchRenderingFunction<VectorImageType::PixelType,
+typedef Function::NoStretchRenderingFunction<ByteImageType::PixelType,
                                              RGBAPixelType> NoStretchRenderingFunctionType;
 
-typedef Function::SquareRootRenderingFunction<VectorImageType::PixelType,
+typedef Function::SquareRootRenderingFunction<ByteImageType::PixelType,
                                               RGBAPixelType> SquareRootRenderingFunctionType;
 
-typedef Function::GaussianRenderingFunction<VectorImageType::PixelType,
+typedef Function::GaussianRenderingFunction<ByteImageType::PixelType,
                                             RGBAPixelType> GaussianRenderingFunctionType;
 
 /**
  */
 typedef VectorImageFileReaderType                                           DefaultImageFileReaderType;
+
+
+typedef otb::VectorRescaleIntensityImageFilter<
+DefaultImageType, ByteImageType>                                            ByteRescalerFilterType;
+
 
 /**
 */
