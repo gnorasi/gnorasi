@@ -234,15 +234,7 @@ VectorImageModel
     {
     //itkExceptionMacro(<< "Region to read is oustside of the buffered region.");
     }
-  
-//  // Extract the region of interest in the image
-//  m_ExtractFilter->SetInput(image);
-//  m_ExtractFilter->SetExtractionRegion(region);
-  
-//  // Use the rendering filter to get
-//  m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());
-//  m_RenderingFilter->GetOutput()->SetRequestedRegion(region);
-//  m_RenderingFilter->Update();
+
 
   //test to strech image in 8bit
   ByteRescalerFilterType::Pointer  byterescaler;
@@ -254,7 +246,6 @@ VectorImageModel
   maximum.SetSize(bands);
   minimum.Fill(0);
   maximum.Fill(255);
-//  byterescaler->SetInput(filter->GetOutput());
   byterescaler->SetInput(image);
   byterescaler->SetOutputMinimum(minimum);
   byterescaler->SetOutputMaximum(maximum);
@@ -278,8 +269,6 @@ VectorImageModel
   itk::ImageRegionConstIteratorWithIndex< RenderingFilterType::OutputImageType >
     it(m_RenderingFilter->GetOutput(), region);
 
-//    itk::ImageRegionConstIteratorWithIndex<ByteImageType> it(image8, region);
-
   // Go to begin
   it.GoToBegin();
 
@@ -288,8 +277,6 @@ VectorImageModel
     // Fill the buffer
     unsigned int index = 0;
     index = ComputeXAxisFlippedBufferIndex(it.GetIndex(), m_Region);
-
-//    qDebug() << "index0: " << it.Get()[0] << "\tindex1 :  " << it.Get()[1] << "\tindex2 : " << it.Get()[2];
 
     // Fill the buffer
     m_RasterizedBuffer[index]  = it.Get()[0];
