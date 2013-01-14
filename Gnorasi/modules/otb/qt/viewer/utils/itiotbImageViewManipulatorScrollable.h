@@ -131,10 +131,10 @@ public:
   }
 
   /*!
-   * \brief modelRegion
+   * \brief bufferRegion
    * \return
    */
-  ImageRegionType modelRegion() const {
+  ImageRegionType bufferRegion() const {
       return m_NavigationContext.m_ModelImageRegion;
   }
 
