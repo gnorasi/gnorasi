@@ -48,7 +48,7 @@ void ItiOtbVectorQGLWidgetZoomable::initializeGL()
 ///!
 void ItiOtbVectorQGLWidgetZoomable::setupViewport(int w, int h){
     ImageRegionType extent;
-    ImageRegionType bufferRegion = m_pImageViewManipulator->modelRegion();
+    ImageRegionType bufferRegion = m_pImageViewManipulator->bufferRegion();
     ImageRegionType::SizeType size;
 
     size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(bufferRegion.GetSize()[0]));
@@ -95,7 +95,7 @@ void ItiOtbVectorQGLWidgetZoomable::paintGL(){
     {
         // Get the region to draw from the ImageViewManipulator navigation
         // context
-        const ImageRegionType region(m_pImageViewManipulator->modelRegion() );
+        const ImageRegionType region(m_pImageViewManipulator->bufferRegion() );
 
         const ImageRegionType extent(m_pImageViewManipulator->extent());
 
@@ -143,7 +143,13 @@ void ItiOtbVectorQGLWidgetZoomable::updateObserver(ItiViewerObservable *observab
 
 //!
 void ItiOtbVectorQGLWidgetZoomable::wheelEvent(QWheelEvent *event){
+    if(event->delta() > 0)
+        zoomIn();
+    else
+        zoomOut();
 
+    //! accept the event
+    event->accept();
 }
 
 
@@ -158,7 +164,7 @@ void ItiOtbVectorQGLWidgetZoomable::resizeEvent(QResizeEvent *event){
     unsigned int f_d_r = m_pImageModelRenderer->firstDisplayRow();
 
     ImageRegionType extent          = m_pImageViewManipulator->extent();
-    ImageRegionType bufferedRegion  = m_pImageViewManipulator->modelRegion();
+    ImageRegionType bufferedRegion  = m_pImageViewManipulator->bufferRegion();
 
     //!
     //! setup the number of rows and columns to be visualized
@@ -240,7 +246,7 @@ void ItiOtbVectorQGLWidgetZoomable::zoomIn(){
 
     //!
     ImageRegionType extent          = m_pImageViewManipulator->extent();
-    ImageRegionType bufferedRegion  = m_pImageViewManipulator->modelRegion();
+    ImageRegionType bufferedRegion  = m_pImageViewManipulator->bufferRegion();
 
     //! calculate displaying - visualizing properties
 
@@ -322,7 +328,7 @@ void ItiOtbVectorQGLWidgetZoomable::zoomOut(){
     unsigned int f_d_r = m_pImageModelRenderer->firstDisplayRow();
 
     ImageRegionType extent = m_pImageViewManipulator->extent();
-    ImageRegionType bufferedRegion  = m_pImageViewManipulator->modelRegion();
+    ImageRegionType bufferedRegion  = m_pImageViewManipulator->bufferRegion();
 
     //! setup the viewport in order to update the extend values
     setupViewport(width(),height());
@@ -399,7 +405,7 @@ void ItiOtbVectorQGLWidgetZoomable::translate(int dx, int dy){
     unsigned int f_d_c = m_pImageModelRenderer->firstDisplayColumn();
     unsigned int f_d_r = m_pImageModelRenderer->firstDisplayRow();
 
-    ImageRegionType bufferedRegion  = m_pImageViewManipulator->modelRegion();
+    ImageRegionType bufferedRegion  = m_pImageViewManipulator->bufferRegion();
 
     //! create a helper value equal to the f_d_c plus the dx parameter
     int helperX = f_d_c + dx;

@@ -58,7 +58,7 @@ void ItiOtbVectorQGLWidgetFullView::setupViewport(int w, int h){
 //        return;
 
 
-    ImageRegionType bufferedRegion = m_pImageViewManipulator->modelRegion();
+    ImageRegionType bufferedRegion = m_pImageViewManipulator->bufferRegion();
 
     m_IsotropicZoom = w < h ? static_cast<double>(w)/ static_cast<double>(bufferedRegion.GetSize()[0]) : static_cast<double>(h)/ static_cast<double>(bufferedRegion.GetSize()[1]);
 
@@ -110,7 +110,7 @@ void ItiOtbVectorQGLWidgetFullView::paintEvent(QPaintEvent *event){
         // Get the region to draw from the ImageViewManipulator navigation
         // context
         const ImageRegionType region(
-          m_pImageViewManipulator->modelRegion());
+          m_pImageViewManipulator->bufferRegion());
 
         ImageModelRendererFullView::RenderingContext context(aiModel, region, extent, this->width(), this->height(), m_IsotropicZoom);
 

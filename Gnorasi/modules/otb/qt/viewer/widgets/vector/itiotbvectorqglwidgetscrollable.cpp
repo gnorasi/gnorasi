@@ -59,7 +59,7 @@ void ItiOtbVectorQGLWidgetScrollable::resizeGL(int w, int h)
     setupViewport(w,h);
 
     ImageRegionType extent = m_pImageViewManipulator->extent();
-    ImageRegionType bufferRegion = m_pImageViewManipulator->modelRegion();
+    ImageRegionType bufferRegion = m_pImageViewManipulator->bufferRegion();
 
     //! create a rect
     QRect rect;
@@ -82,7 +82,7 @@ void ItiOtbVectorQGLWidgetScrollable::resizeGL(int w, int h)
 //!
 void ItiOtbVectorQGLWidgetScrollable::setupViewport(int w, int h){
     ImageRegionType extent;
-    ImageRegionType bufferRegion = m_pImageViewManipulator->modelRegion();
+    ImageRegionType bufferRegion = m_pImageViewManipulator->bufferRegion();
     ImageRegionType::SizeType size;
 
     size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(bufferRegion.GetSize()[0]));
@@ -132,7 +132,7 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
         // Get the region to draw from the ImageViewManipulator navigation
         // context
         const ImageRegionType region(
-          m_pImageViewManipulator->modelRegion());
+          m_pImageViewManipulator->bufferRegion());
 
         ImageRegionType extent(m_pImageViewManipulator->extent());
 
