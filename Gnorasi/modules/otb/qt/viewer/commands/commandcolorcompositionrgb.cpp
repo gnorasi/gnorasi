@@ -71,9 +71,13 @@ void CommandColorCompositionRGB::execute(){
     // Apply the new rendering function to the Image layer
     renderer->SetAutoMinMax(false);
 
-    vModel->setRenderingFunction(renderer);
+//    vModel->setRenderingFunction(renderer);
+
+    vModel->resetData();
 
     DefaultImageType *img = vModel->GetOutput(0);
 
     renderer->Initialize(img->GetMetaDataDictionary());
+
+//    m_pItiOtbVectorImageViewer->draw();
 }
