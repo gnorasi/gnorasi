@@ -74,10 +74,11 @@ typedef otb::VectorImage<RGBAImageType::PixelType,VDimension>               Byte
 typedef otb::ImageToVectorImageCastFilter<RGBAImageType,
 ByteVectorImageType>                                                        ByteImageToVectorImageCastFilterType;
 
-typedef otb::ImageFileReader<VectorImageType> ReaderType;
+typedef otb::ImageFileReader<VectorImageType>                               ReaderType;
 
 
-typedef itk::Statistics::ListSample<VectorImageType::PixelType>             SampleListType;
+//typedef itk::Statistics::ListSample<VectorImageType::PixelType>             SampleListType;
+typedef itk::Statistics::ListSample<ByteImageType::PixelType>               SampleListType;
 
 typedef otb::ImageList<RasterImageType>                                     ImageListType;
 typedef otb::VectorImageToImageListFilter<VectorImageType, ImageListType>   VectorImageToImageListType;
