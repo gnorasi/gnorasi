@@ -138,6 +138,11 @@ public:
    */
   void resetData();
 
+  /*!
+   * \brief lastPath
+   * \return
+   */
+  QString lastPath() const { return m_lastPath; }
 
 //
 // SIGNALS.
@@ -266,6 +271,11 @@ private:
 
   // Vector storing the region to load
   std::vector<VectorRegionType >        m_RegionsToLoadVector;
+
+  /*!
+   * \brief m_lastPath
+   */
+  QString                               m_lastPath;
 
 //
 // SLOTS.

@@ -78,6 +78,8 @@ VectorImageModel
     DefaultImageFileReaderType::New()
   );
 
+  m_lastPath = filename;
+
   imageFileReader->SetFileName( filename.toLatin1().data() );
   imageFileReader->UpdateOutputInformation();
 
