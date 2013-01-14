@@ -133,6 +133,12 @@ public:
   unsigned char* buffer() const { return m_RasterizedBuffer; }
 
 
+  /*!
+   * \brief resetData
+   */
+  void resetData();
+
+
 //
 // SIGNALS.
 signals:

@@ -100,7 +100,13 @@ VectorImageModel
     m_Channels[2]  = 2;
     }
 
+  m_RenderingFilter->GetRenderingFunction()->SetChannelList(m_Channels);
+
   emit changed();
+}
+
+void VectorImageModel::resetData(){
+    DumpImagePixelsWithinRegionIntoBuffer(m_Region);
 }
 
 void
@@ -231,7 +237,6 @@ VectorImageModel
   
   // Use the rendering filter to get
   m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());
-//  m_RenderingFilter->GetRenderingFunction()->SetChannelList(m_Channels);
   m_RenderingFilter->GetOutput()->SetRequestedRegion(region);
   m_RenderingFilter->Update();
 

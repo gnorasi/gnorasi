@@ -72,7 +72,9 @@ void CommandColorCompositionGreyscale::execute(){
     // Apply the new rendering function to the Image layer
     renderer->SetAutoMinMax(false);
 
-    vModel->setRenderingFunction(renderer);
+    vModel->resetData();
+
+//    vModel->setRenderingFunction(renderer);
 
     DefaultImageType *img = vModel->GetOutput(0);
 

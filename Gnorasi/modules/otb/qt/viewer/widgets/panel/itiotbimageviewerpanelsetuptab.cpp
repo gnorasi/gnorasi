@@ -310,9 +310,8 @@ void ItiOtbImageViewerPanelSetupTab::onContrastEnhancementApplyButtonClicked(){
 }
 
 void ItiOtbImageViewerPanelSetupTab::onColorCompositionApplyButtonClicked(){
-    int index = m_pComboBoxMethod->currentIndex();
 
-    if(!index) {
+    if(m_pRadioButtonGrayscaleMode->isChecked()) {
         emit applyColorCompositionGreyscale();
     }else {
         emit applyColorCompositionRGB();
