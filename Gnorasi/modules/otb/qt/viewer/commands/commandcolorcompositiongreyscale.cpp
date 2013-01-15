@@ -47,7 +47,7 @@ CommandColorCompositionGreyscale::CommandColorCompositionGreyscale(ItiOtbVectorI
 void CommandColorCompositionGreyscale::execute(){
 
     VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
-    if(!vModel)
+    if(!vModel || !vModel->buffer())
         return;
 
     RenderingFilterType *filter = vModel->filter();

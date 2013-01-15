@@ -45,7 +45,7 @@ CommandContrastEnhancementLinearXPerc::CommandContrastEnhancementLinearXPerc(Iti
 
 void CommandContrastEnhancementLinearXPerc::execute(){
     VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
-    if(!vModel)
+    if(!vModel || !vModel->buffer())
         return;
 
     RenderingFunctionType::Pointer renderer;
