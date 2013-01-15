@@ -85,12 +85,12 @@ void ItiOtbImageViewerPanelSetupTab::setupColorCompositionGroupBox(){
 
     m_pGroupBoxColorComposition->setLayout(layout);
 
+    m_pRadioButtonRGBCompositionMode->toggle();
+    onRadioButtonColorCompositionChanged();
+
     connect(m_pRadioButtonGrayscaleMode,SIGNAL(clicked()),this,SLOT(onRadioButtonColorCompositionChanged()));
     connect(m_pRadioButtonRGBCompositionMode,SIGNAL(clicked()),this,SLOT(onRadioButtonColorCompositionChanged()));
     connect(m_pButtonApplyColorComposition,SIGNAL(clicked()),this,SLOT(onColorCompositionApplyButtonClicked()));
-
-    m_pRadioButtonRGBCompositionMode->toggle();
-    onRadioButtonColorCompositionChanged();
 }
 
 //!
@@ -168,9 +168,6 @@ void ItiOtbImageViewerPanelSetupTab::initialize(){
     hboxLayout->addWidget(m_pGroupBoxContrastEnhancement);
     hboxLayout->addSpacerItem(new QSpacerItem(100,100,QSizePolicy::Expanding,QSizePolicy::Fixed));
     setLayout(hboxLayout);
-
-    m_pRadioButtonGrayscaleMode->toggle();
-    onRadioButtonColorCompositionChanged();
 }
 
 //!
