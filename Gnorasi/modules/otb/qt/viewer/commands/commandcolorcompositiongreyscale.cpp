@@ -74,10 +74,9 @@ void CommandColorCompositionGreyscale::execute(){
 
     vModel->resetData();
 
-//    vModel->setRenderingFunction(renderer);
-
     DefaultImageType *img = vModel->GetOutput(0);
 
     renderer->Initialize(img->GetMetaDataDictionary());
 
+    m_pItiOtbVectorImageViewer->update();
 }
