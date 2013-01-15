@@ -69,19 +69,6 @@ public:
 
     virtual ~ItiOtbVectorQGLWidgetScrollable();
 
-    /** Reads the OpenGl buffer from an image pointer
-     *  \param image The image pointer,
-     *  \param region The region to read.
-     *  Potential exception thrown if region is outside of the buffered
-     *  region.
-     * This method fills the m_OpenGl buffer according to the region
-     *  size. Buffer in flipped over X axis if OTB_USE_GL_ACCEL is OFF.
-     */
-//    virtual void ReadBuffer(const VectorImageType * image, const VectorRegionType& region);
-
-    /** Clear the OpenGl buffer */
-//    void ClearBuffer();
-
     //! setter getter, self explanatory
     double isotropicZoom() const { return m_IsotropicZoom; }
     void setIsotropicZoom(double z) { m_IsotropicZoom = z; }
@@ -90,19 +77,9 @@ public:
     unsigned int subSamplingRate() const { return m_SubsamplingRate; }
     void setSubSamplingRate(unsigned int ss) { m_SubsamplingRate = ss; }
 
-    //! setter getter, self explanatory
-//    unsigned char * openGLBuffer() { return m_OpenGlBuffer;}
-
-    //! setter getter, self explanatory
-//    VectorRegionType openGLBufferedRegion() { return m_OpenGlBufferedRegion; }
-//    void setOpenGLBufferedRegion(VectorRegionType r) { m_OpenGlBufferedRegion = r; }
-
     //! setter getter for the focus region area
     QRect focusRegion() const { return m_focusRegion; }
     void setFocusRegion(const QRect &rect) { m_focusRegion  = rect; }
-
-    //! setter getter, self explanatory
-//    VectorRegionType extent() { return m_Extent; }
 
     /*!
      * \brief update , implementation from parent class

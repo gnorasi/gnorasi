@@ -182,6 +182,8 @@ void ItiOtbVectorQGLWidgetFullView::updateObserver(ItiViewerObservable *observab
     if(!region)
         return;
 
+    setupViewport(width(),height());
+
     ImageRegionType extent = m_pImageViewManipulator->extent();
 
     QRect rect = region->region();
@@ -205,16 +207,13 @@ void ItiOtbVectorQGLWidgetFullView::updateObserver(ItiViewerObservable *observab
     m_visibleRegion.setWidth(nw);
     m_visibleRegion.setHeight(nh);
 
-    //! update the widget
-    update();
-
 //    //!
 //    //! The following code is dummy,
 //    //! There was a problem of not updating the widget correctly
 //    //! Forcing the widget to be updated by hiding and showing is a tweek to be updated correctly
 //    //!
-//    hide();
-//    show();
+    hide();
+    show();
 }
 
 //!
