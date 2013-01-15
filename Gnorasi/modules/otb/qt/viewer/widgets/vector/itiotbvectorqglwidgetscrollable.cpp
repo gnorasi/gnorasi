@@ -129,6 +129,8 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
     // setup the rendering context
     if (aiModel)
     {
+        setupViewport(width(), height());
+
         // Get the region to draw from the ImageViewManipulator navigation
         // context
         const ImageRegionType region(
