@@ -10,8 +10,8 @@ OTBImageViewerProcessor::OTBImageViewerProcessor()
     : Processor(),
     inPort_(Port::INPORT, "OTBImage.inport", 0),
     outPort_(Port::OUTPORT, "OTBImage.outport", 0),
-    inPort2_(Port::INPORT, "OTBVectorImage.inport", 0),
-    outPort2_(Port::OUTPORT, "OTBVectorImage.outport",0),
+    inPort2_(Port::INPORT, "IN Multi Band Image", 0),
+    outPort2_(Port::OUTPORT, "OUT Multi Band Image",0),
     showImageButton_("showButton", "Show Image"),
     loadImageFile_("imageFile", "Load Image", "Load Image", VoreenApplication::app()->getUserDataPath())
 {
@@ -44,7 +44,12 @@ bool OTBImageViewerProcessor::isEndProcessor() const {
 }
 
 bool OTBImageViewerProcessor::isReady() const {
-    return (inPort_.isConnected());
+    if (!isInitialized())
+        return false;
+
+    if(!inPort_.isConnected() && !inPort2_.isConnected()) return false;
+
+    return true;
 }
 
 std::string OTBImageViewerProcessor::getProcessorInfo() const {
@@ -65,14 +70,20 @@ void OTBImageViewerProcessor::process() {
         outPort2_.setData(inPort2_.getData());
     }
 
-    if(inPort_.isConnected()){
+    if(inPort_.isConnected() || inPort2_.isConnected()){
         std::vector<const OTBImagePort*> list = inPort_.getConnected();
         if(!list.empty())
         {
             const OTBImagePort *iPort  = list.at(0);
 
-            if(iPort){
-                inPort_.setImagePath(iPort->imagePath());
+            inPort_.setImagePath(iPort->imagePath());
+        }else {
+            std::vector<const OTBVectorImagePort*> list = inPort2_.getConnected();
+            if(!list.empty())
+            {
+                const OTBVectorImagePort *vPort  = list.at(0);
+
+                inPort2_.setImagePath(vPort->imagePath());
             }
         }
     }

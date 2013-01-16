@@ -157,6 +157,8 @@ void OTBVectorImageReaderProcessor::loadImage() {
     // necessary since the passed string reference might be changed during clearImage/invalidate,
     std::string filename = imageFile_.get();
 
+    outPort_.setImagePath(filename);
+
     // check for empty filename
     
     if (filename.empty())
