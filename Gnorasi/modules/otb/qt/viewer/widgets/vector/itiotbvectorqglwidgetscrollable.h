@@ -201,6 +201,9 @@ private:
      */
     QRect m_focusRegion;
 
+
+    int m_currentLevelId;
+
 };
 
 } // end of itiviewer

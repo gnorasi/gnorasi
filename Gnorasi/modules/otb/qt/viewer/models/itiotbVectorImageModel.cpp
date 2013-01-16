@@ -110,6 +110,14 @@ VectorImageModel
 }
 
 void VectorImageModel::resetData(){
+
+    // Clear the previous buffer
+    this->ClearBuffer();
+
+    // Allocate new memory
+    unsigned int nbPixels = 3 * m_Region.GetNumberOfPixels();
+    m_RasterizedBuffer = new unsigned char[nbPixels];
+
     DumpImagePixelsWithinRegionIntoBuffer(m_Region);
 }
 

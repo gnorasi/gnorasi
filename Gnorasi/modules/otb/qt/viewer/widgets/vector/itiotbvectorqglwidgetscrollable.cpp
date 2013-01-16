@@ -43,6 +43,9 @@
 
 #include "../../utils/itiotbImageModelRendererScrollable.h"
 #include "../../utils/itiotbImageViewManipulatorScrollable.h"
+#include "../../utils/itiotblevelutility.h"
+#include "../../utils/itiotblevel.h"
+#include "../../utils/itiotbregion.h"
 
 #include "../../models/itiotbVectorImageModel.h"
 //
@@ -148,9 +151,6 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
 
-    //
-    // TEST
-
     // Set the new rendering context to be known in the ModelRendere
     const AbstractImageModel* aiModel=  qobject_cast<AbstractImageModel*>(m_pItiOtbVectorImageViewer->model());
 
@@ -172,15 +172,33 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
         m_pImageModelRenderer->paintGL( context );
     }
 
-    //
-    // END OF TEST
-
     //! overpainting
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-
     painter.setPen(m_pen);
+
+    //! draw focus region
     painter.drawRect(m_focusRegion);
+
+    //!
+    // START OF TEST
+    //!
+
+    Level *pLevel = LEVELUTILITY->levelById(m_currentLevelId);
+    if(pLevel){
+        QList<Region*> regions = pLevel->regions();
+        QList<Region*>::const_iterator i;
+        for(i = regions.constBegin(); i != regions.constEnd(); i++){
+            Region *pRegion = *i;
+//            QRectF rectF(event->rect());
+//            if(pRegion->area().intersected(QPolygonF(rectF)))
+                pRegion->drawRegion(&painter);
+        }
+    }
+
+    //!
+    // END OF TEST
+    //!
 
     painter.end();
 }
