@@ -60,8 +60,16 @@ public:
      */
     virtual bool isReady() const;
 
+    //!
+    std::string imagePath() const { return m_imagePath; }
+
+    //!
+    void setImagePath(const std::string p) { m_imagePath = p; }
+
 protected:
     ImagePointer portData_;
+
+    std::string m_imagePath;
 
     static const std::string loggerCat_; ///< category used in logging
 };

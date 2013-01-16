@@ -84,6 +84,11 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
         //! check if the port is connected, only then setup the viewer by the port
         if(pPort->isConnected())
             setupByPort(pPort);
+        else if(l.size()>1){
+            pPort = l.at(1);
+            if(pPort->isConnected())
+                setupByPort(pPort);
+        }
     }
 }
 

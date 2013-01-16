@@ -75,10 +75,14 @@ void ItiOtbImageManager::setupImage(){
 
 //!
 QString ItiOtbImageManager::imageFile() const {
-    OTBImagePort *iPort = (OTBImagePort*)m_pPort;
 
-    if(iPort){
+    if((OTBImagePort*)m_pPort){
+        OTBImagePort *iPort = (OTBImagePort*)m_pPort;
         std::string text = iPort->imagePath();
+        return QString::fromStdString(text);
+    }else if((OTBVectorImagePort*)m_pPort){
+        OTBVectorImagePort *vPort = (OTBVectorImagePort*)m_pPort;
+        std::string text = vPort->imagePath();
         return QString::fromStdString(text);
     }
 
