@@ -26,58 +26,68 @@
  *                                                                              *
  ********************************************************************************/
 
-#include <QtCore>
-#include <QtGui>
+#ifndef LEVELUTILITY_H
+#define LEVELUTILITY_H
 
-#include "commandcolorcompositionrgb.h"
+#include <QObject>
 
-#include "../widgets/vector/itiotbvectorimageviewer.h"
-#include "../models/itiotbVectorImageModel.h"
-#include "../vector_globaldefs.h"
+namespace itiviewer{
 
+class Level;
 
-using namespace itiviewer;
-using namespace otb;
+/*!
+ *  A helper MACRO
+ */
+#define LEVELUTILITY LevelUtility::instance()
 
-CommandColorCompositionRGB::CommandColorCompositionRGB(ItiOtbVectorImageViewer *viewer, QObject *parent) :
-    m_red(1), m_green(2), m_blue(3), m_pItiOtbVectorImageViewer(viewer), Command(parent)
+/*!
+ *
+ *  This is a singleton class in order the unique instance of this class to be
+ *  used as an interface - console item , accessible from everywhere in
+ *  the project.
+ *
+ */
+class LevelUtility : public QObject
 {
-}
+    Q_OBJECT
+public:
 
-void CommandColorCompositionRGB::execute(){
-    VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
-    if(!vModel || !vModel->buffer())
-        return;
+    /*!
+     * \brief instance , this is a getter function
+     * \return
+     */
+    static LevelUtility* instance();
 
-    RenderingFilterType *filter = vModel->filter();
-    if(!filter)
-        return;
+    /*!
+     * \brief deleteInstance , remember to call this function on a destruction constructor of a root widget
+     */
+    static void deleteInstance();
 
-    // Select the current rendering function
-    RenderingFunctionType::Pointer renderer = filter->GetRenderingFunction();
 
-    if(!renderer)
-        return;
+    /*!
+     * \brief levelById
+     * \param id
+     * \return
+     */
+    Level* levelById(int id);
+    
+signals:
+    
+public slots:
+    
 
-    // Build the appropriate rendering function
-    ChannelListType channels;
+private:
+    explicit LevelUtility(QObject *parent = 0);
 
-    channels.resize(3);
-    channels[0] = m_red-1;
-    channels[1] = m_green-1;
-    channels[2] = m_blue-1;
-    renderer->SetChannelList(channels);
+    //! this is the unique instance
+    static LevelUtility *m_pInstance;
 
-    // Apply the new rendering function to the Image layer
-    renderer->SetAutoMinMax(false);
+    /*!
+     * \brief m_levelList
+     */
+    QList<Level*> m_levelList;
+};
 
-//    vModel->setRenderingFuction(renderer);
+} // end of namespace itiviewer
 
-    vModel->resetData();
-
-    DefaultImageType *img = vModel->GetOutput(0);
-
-    renderer->Initialize(img->GetMetaDataDictionary());
-
-    m_pItiOtbVectorImageViewer->update();
-}
+#endif // LEVELUTILITY_H
