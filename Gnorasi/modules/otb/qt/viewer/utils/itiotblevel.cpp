@@ -3,6 +3,6 @@
 using namespace itiviewer;
 
 Level::Level(QObject *parent) :
-    QObject(parent)
+    m_id(1), QObject(parent)
 {
 }

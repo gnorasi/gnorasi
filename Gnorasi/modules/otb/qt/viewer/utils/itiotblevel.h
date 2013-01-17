@@ -25,7 +25,7 @@ public:
     void setId(int i) { m_id = i; }
 
     QList<Region*> regions() const { return m_regionList; }
-    void setRegion(QList<Region*> rl) { m_regionList = rl; }
+    void setRegions(QList<Region*> rl) { m_regionList = rl; }
 
 
 signals:
