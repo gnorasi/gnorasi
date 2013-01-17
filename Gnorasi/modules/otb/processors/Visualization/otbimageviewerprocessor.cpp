@@ -12,6 +12,7 @@ OTBImageViewerProcessor::OTBImageViewerProcessor()
     outPort_(Port::OUTPORT, "OTBImage.outport", 0),
     inPort2_(Port::INPORT, "IN Multi Band Image", 0),
     outPort2_(Port::OUTPORT, "OUT Multi Band Image",0),
+    lblMapPort_(Port::INPORT, "Object Map Port",0),
     showImageButton_("showButton", "Show Image"),
     loadImageFile_("imageFile", "Load Image", "Load Image", VoreenApplication::app()->getUserDataPath())
 {
@@ -20,6 +21,7 @@ OTBImageViewerProcessor::OTBImageViewerProcessor()
     addPort(outPort_);
     addPort(inPort2_);
     addPort(outPort2_);
+    addPort(lblMapPort_);
     showImageButton_.onChange(CallMemberAction<OTBImageViewerProcessor>(this, &OTBImageViewerProcessor::showImage));
     loadImageFile_.onChange(CallMemberAction<OTBImageViewerProcessor>(this, &OTBImageViewerProcessor::loadImage));
     addProperty(showImageButton_);
