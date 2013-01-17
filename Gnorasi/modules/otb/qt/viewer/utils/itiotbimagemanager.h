@@ -32,6 +32,7 @@
 #include <QObject>
 
 #include "voreen/core/ports/port.h"
+#include "voreen/core/processors/processor.h"
 
 #include "../vector_globaldefs.h"
 
@@ -95,7 +96,7 @@ public:
      * \brief imageFile
      * \return
      */
-    QString imageFile() const ;
+    QString imageFile() ;
 
     /*!
      * \brief getNextPort
@@ -126,6 +127,17 @@ private:
     QString m_GeoidFile;
 
     ImageToVectorImageCastFilterType::Pointer filter;
+
+
+    //! test
+    std::vector<voreen::Processor*> nextConnectedProcessor(voreen::Port* ) const;
+
+    bool isReader(voreen::Processor* ) const;
+
+    QString getPathFromReaderProcessor(voreen::Processor*) const ;
+
+
+    void checkNext(voreen::Processor*, QString& );
 };
 
 } // end of namespace itiviewer

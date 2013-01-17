@@ -4,6 +4,8 @@
 
 #include "../commands/command.h"
 
+#include "../../../processors/ImageIO/otbvectorimagereaderprocessor.h"
+
 //#include "../../../ports/otbimageport.h"
 //#include "../../../ports/otbvectorimageport.h"
 
@@ -74,16 +76,86 @@ void ItiOtbImageManager::setupImage(){
 }
 
 //!
-QString ItiOtbImageManager::imageFile() const {
+QString ItiOtbImageManager::imageFile() {
 
-    if((OTBImagePort*)m_pPort){
-        OTBImagePort *iPort = (OTBImagePort*)m_pPort;
-        std::string text = iPort->imagePath();
-        return QString::fromStdString(text);
-    }else if((OTBVectorImagePort*)m_pPort){
-        OTBVectorImagePort *vPort = (OTBVectorImagePort*)m_pPort;
-        std::string text = vPort->imagePath();
-        return QString::fromStdString(text);
+    QString path;
+
+    std::vector<voreen::Processor*> list = nextConnectedProcessor(m_pPort);
+    if(list.size()){
+        Processor *proc = list.at(0);
+
+        if(isReader(proc)){
+            path = getPathFromReaderProcessor(proc);
+        }else
+            checkNext(proc, path);
+    }
+
+    return path;
+}
+
+void ItiOtbImageManager::checkNext(voreen::Processor* proc, QString &path ){
+    std::vector<voreen::Port*> portlist = proc->getPorts();
+    if(portlist.size()){
+        voreen::Port *port = portlist.at(0);
+
+        std::vector<voreen::Processor*> proclist = nextConnectedProcessor(port);
+
+        for(int i = 0; i < proclist.size(); i++){
+            proc = proclist.at(i);
+
+            if(isReader(proc)){
+                path = getPathFromReaderProcessor(proc);
+                break;
+            }
+            else if( proc->getInports().size()){
+                checkNext(proc, path);
+            }
+        }
+    }
+}
+
+std::vector<voreen::Processor*> ItiOtbImageManager::nextConnectedProcessor(voreen::Port *port) const{
+    std::vector<voreen::Processor*> proclist;
+
+    const std::vector<const voreen::Port*> list = port->getConnected();
+    for(int i = 0; i < list.size(); i++){
+        const Port *port = list.at(i);
+        Processor *proc = port->getProcessor();
+
+        proclist.push_back(proc);
+    }
+
+    return proclist;
+}
+
+
+bool ItiOtbImageManager::isReader(voreen::Processor* proc) const{
+    std::string text = proc->getClassName();
+    QString className = QString::fromStdString(text);
+
+    if(!className.compare(QLatin1String("Image File Reader")))
+        return true;
+    else if(!className.compare(QLatin1String("MultiBand Image File Reader")))
+        return true;
+
+    return false;
+}
+
+QString ItiOtbImageManager::getPathFromReaderProcessor(voreen::Processor *proc) const{
+    const std::vector<voreen::Port*> list = proc->getPorts();
+
+    for(int i = 0; i < list.size(); i++){
+        voreen::Port* port = list.at(i);
+
+        if(dynamic_cast<voreen::OTBImagePort*>(port)){
+            OTBImagePort *iPort = dynamic_cast<voreen::OTBImagePort*>(port);
+            return QString::fromStdString(iPort->imagePath());
+        }
+
+        if(dynamic_cast<voreen::OTBVectorImagePort*>(port)){
+            OTBVectorImagePort *vPort = dynamic_cast<voreen::OTBVectorImagePort*>(port);
+            return QString::fromStdString(vPort->imagePath());
+        }
     }
 
     return QString();
