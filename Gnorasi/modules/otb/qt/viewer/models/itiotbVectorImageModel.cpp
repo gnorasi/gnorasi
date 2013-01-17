@@ -370,7 +370,11 @@ VectorImageModel
 
 
 ImageRegionType VectorImageModel::GetLargestPossibleRegion() const{
-    return m_ImageFileReader->GetOutput()->GetLargestPossibleRegion();
+    ImageRegionType region;
+    if(!lastPath().isEmpty())
+        region = m_ImageFileReader->GetOutput()->GetLargestPossibleRegion();
+
+    return region;
 }
 
 
