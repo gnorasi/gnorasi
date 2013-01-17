@@ -79,15 +79,14 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
 
     }else{
         //! get the first port
-        Port *pPort = l.at(0);
-
-        //! check if the port is connected, only then setup the viewer by the port
-        if(pPort->isConnected())
-            setupByPort(pPort);
-        else if(l.size()>1){
-            pPort = l.at(1);
-            if(pPort->isConnected())
-                setupByPort(pPort);
+        for(int i = 0 ; i < l.size(); i++)
+        {
+            Port *port = l.at(i);
+            QString className = QString::fromStdString(port->getName());
+            if(port->isConnected() && ( !className.compare(QLatin1String("IN Multi Band Image")) || !className.compare(QLatin1String("OTBImage.inport")))){
+                setupByPort(port);
+                break;
+            }
         }
     }
 }
@@ -105,8 +104,15 @@ void QGLOtbImageViewerWidget::keyPressEvent(QKeyEvent *event){
         qDebug() << "image port list is empty..";
 
     }else{
-        Port *pPort = l.at(0);
-        if(pPort->isConnected()){
+        bool val = false;
+        for(int i = 0 ; i < l.size(); i++)
+        {
+            Port *port = l.at(i);
+            QString className = QString::fromStdString(port->getName());
+            if(port->isConnected() && ( !className.compare(QLatin1String("IN Multi Band Image")) || !className.compare(QLatin1String("OTBImage.inport"))))
+                val = true;
+        }
+        if(val){
             //! check key pressed
             if(event->key() == Qt::Key_F1){
                 disassembleWidgets();
