@@ -45,6 +45,7 @@ namespace itiviewer{
 #define ITIOTBIMAGEMANAGER ItiOtbImageManager::instance()
 
 class Command;
+class Level;
 
 /*!
  *
@@ -60,8 +61,9 @@ class Command;
  *  The concrete ItiOtbImageViewer class handles vector image data
  *
  */
-class ItiOtbImageManager
+class ItiOtbImageManager : public QObject
 {
+    Q_OBJECT
 public:
     //!
     static ItiOtbImageManager* instance();
@@ -111,6 +113,9 @@ private:
     //!dtor
     ~ItiOtbImageManager();
 
+    //!
+    void createRegions();
+
     //! this is the unique instance
     static ItiOtbImageManager* m_pInstance;
 
@@ -128,6 +133,8 @@ private:
 
     ImageToVectorImageCastFilterType::Pointer filter;
 
+    //!
+    QList<Level*> m_levelList;
 
     //! test
     std::vector<voreen::Processor*> nextConnectedProcessor(voreen::Port* ) const;

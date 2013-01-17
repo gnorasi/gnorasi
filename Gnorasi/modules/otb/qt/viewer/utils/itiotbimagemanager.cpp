@@ -6,6 +6,10 @@
 
 #include "../../../processors/ImageIO/otbvectorimagereaderprocessor.h"
 
+#include "itiotblabelmapparser.h"
+#include "itiotblevel.h"
+#include "itiotbregion.h"
+
 //#include "../../../ports/otbimageport.h"
 //#include "../../../ports/otbvectorimageport.h"
 
@@ -20,6 +24,8 @@ ItiOtbImageManager* ItiOtbImageManager::m_pInstance = NULL;
 ItiOtbImageManager::ItiOtbImageManager()
 {
     filter = ImageToVectorImageCastFilterType::New();
+
+    m_levelList.append(new Level(this));
 }
 
 //!
@@ -62,6 +68,8 @@ void ItiOtbImageManager::setupImage(){
 
         filter->Update();
 
+        createRegions();
+
     }
     else if(dynamic_cast<OTBVectorImagePort*>(m_pPort)){ // set here the vector image factory
         OTBVectorImagePort *pOtbVectorImagePort = dynamic_cast<OTBVectorImagePort*>(m_pPort);
@@ -72,6 +80,8 @@ void ItiOtbImageManager::setupImage(){
             return;
 
         m_pImgType = vImgType;
+
+        createRegions();
     }
 }
 
@@ -161,7 +171,51 @@ QString ItiOtbImageManager::getPathFromReaderProcessor(voreen::Processor *proc) 
     return QString();
 }
 
+
+void ItiOtbImageManager::createRegions(){
+
+    qDeleteAll(m_levelList);
+    m_levelList.clear();
+
+    typedef unsigned long                         LabelType;
+    typedef otb::Polygon<double> PolygonType;
+    typedef itk::ShapeLabelObject<LabelType, 2> LabelObjectType;
+    typedef itk::LabelMap<LabelObjectType>        LabelMapType;
+
+    m_levelList << new Level(this);
+
+    voreen::Processor *proc = m_pPort->getProcessor();
+    const std::vector<voreen::Port*> list = proc->getPorts();
+
+    for(int i = 0; i < list.size(); i++){
+        voreen::Port* port = list.at(i);
+
+        QString className = QString::fromStdString(port->getName());
+
+        if(!className.compare(QLatin1String("Object Map Port"))){
+
+            OTBLabelMapPort *lblPort = dynamic_cast<OTBLabelMapPort*>(port);
+            if(lblPort && lblPort->isConnected()){
+                LabelMapType *mapT = (LabelMapType*)lblPort->getData();
+
+                if(mapT){
+
+                    LabelMapParser *parser = new LabelMapParser(this);
+
+                    QList<Region*> regionList = parser->parse(mapT);
+
+                    Level *pLevel = m_levelList.last();
+                    pLevel->setRegions(regionList);
+                }
+            }
+
+            break;
+        }
+    }
+}
+
 //!
 ItiOtbImageManager::~ItiOtbImageManager(){
-
+//    qDeleteAll(m_levelList);
+//    m_levelList.clear();
 }
