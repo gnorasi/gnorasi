@@ -406,6 +406,7 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/utils/itiotblevel.cpp
     ${MOD_DIR}/qt/viewer/utils/itiotbregion.cpp
     ${MOD_DIR}/qt/viewer/utils/itiotblabelmapparser.cpp
+    ${MOD_DIR}/qt/viewer/utils/itiotblabelimageparser.cpp
 )
 ################################################################################
 # Qt headers
@@ -459,6 +460,7 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/utils/itiotblevel.h
     ${MOD_DIR}/qt/viewer/utils/itiotbregion.h
     ${MOD_DIR}/qt/viewer/utils/itiotblabelmapparser.h
+    ${MOD_DIR}/qt/viewer/utils/itiotblabelimageparser.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC
