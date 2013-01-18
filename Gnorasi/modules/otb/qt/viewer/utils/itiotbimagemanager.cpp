@@ -7,8 +7,11 @@
 #include "../../../processors/ImageIO/otbvectorimagereaderprocessor.h"
 
 #include "itiotblabelmapparser.h"
+#include "itiotblabelimageparser.h"
 #include "itiotblevel.h"
 #include "itiotbregion.h"
+
+#include "../../../ports/otblabelimageport.h"
 
 //#include "../../../ports/otbimageport.h"
 //#include "../../../ports/otbvectorimageport.h"
@@ -177,10 +180,7 @@ void ItiOtbImageManager::createRegions(){
     qDeleteAll(m_levelList);
     m_levelList.clear();
 
-    typedef unsigned long                         LabelType;
-    typedef otb::Polygon<double> PolygonType;
-    typedef itk::ShapeLabelObject<LabelType, 2> LabelObjectType;
-    typedef itk::LabelMap<LabelObjectType>        LabelMapType;
+    typedef otb::Image<unsigned long, 2> LabelImageType;
 
     m_levelList << new Level(this);
 
@@ -192,15 +192,16 @@ void ItiOtbImageManager::createRegions(){
 
         QString className = QString::fromStdString(port->getName());
 
-        if(!className.compare(QLatin1String("Object Map Port"))){
+        if(!className.compare(QLatin1String("Label Image Port"))){
 
-            OTBLabelMapPort *lblPort = dynamic_cast<OTBLabelMapPort*>(port);
+            OTBLabelImagePort *lblPort = dynamic_cast<OTBLabelImagePort*>(port);
             if(lblPort && lblPort->isConnected()){
-                LabelMapType *mapT = (LabelMapType*)lblPort->getData();
+                LabelImageType *mapT = (LabelImageType*)lblPort->getData();
 
                 if(mapT){
 
-                    LabelMapParser *parser = new LabelMapParser(this);
+//                    LabelMapParser *parser = new LabelMapParser(this);
+                    LabelImageParser *parser = new LabelImageParser(this);
 
                     QList<Region*> regionList = parser->parse(mapT);
 

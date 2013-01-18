@@ -9,6 +9,7 @@
 #include "../../ports/otbimageport.h"
 #include "../../ports/otbvectorimageport.h"
 #include "../../ports/otblabelmapport.h"
+#include "../../ports/otblabelimageport.h"
 
 namespace voreen {
 
@@ -59,7 +60,8 @@ private:
     OTBVectorImagePort inPort2_;
     OTBVectorImagePort outPort2_;
 
-    OTBLabelMapPort lblMapPort_;
+//    OTBLabelMapPort lblMapPort_;
+    OTBLabelImagePort lblImagePort_;
 
     ButtonProperty showImageButton_;    ///< shows the image.
 
