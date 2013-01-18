@@ -28,6 +28,9 @@
 
 #include "../vector_globaldefs.h"
 
+
+#include "../utils/itiotbimagemanager.h"
+
 //
 // Qt includes (sorted by alphabetic order)
 //// Must be included before system/custom includes.
@@ -80,11 +83,16 @@ public:
    * TEMPORARY!
    */
   // TODO: Remove getter onto internal type when interface is designed.
+//  inline
+//    DefaultImageType*
+//    GetOutput( int index )
+//  {
+//    return m_ImageFileReader->GetOutput( index );
+//  }
+
   inline
-    DefaultImageType*
-    GetOutput( int index )
-  {
-    return m_ImageFileReader->GetOutput( index );
+    DefaultImageType* GetOutput( int index ){
+      return ITIOTBIMAGEMANAGER->image();
   }
 
   /**

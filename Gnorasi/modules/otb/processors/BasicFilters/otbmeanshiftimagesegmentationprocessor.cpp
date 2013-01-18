@@ -112,8 +112,13 @@ void OTBMeanShiftSegmentationProcessor::process() {
 	filter->SetMinimumRegionSize(minRegionSize_.get());
 	filter->SetScale(scale_.get());
 	filter->SetNumberOfThreads(1);
-	filter->SetInput(inPort_.getData());
-	outPort_.setData(filter->GetOutput());
+    filter->SetInput(inPort_.getData());
+
+    // test
+    filter->GetOutput()->UpdateOutputInformation();
+    // end of test
+
+    outPort_.setData(filter->GetOutput());
 	outPort2_.setData(filter->GetClusteredOutput());
 	outPort3_.setData(filter->GetLabeledClusteredOutput());
 	outPort4_.setData(filter->GetClusterBoundariesOutput());

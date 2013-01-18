@@ -40,6 +40,7 @@
 
 #include "itkImageRegionConstIteratorWithIndex.h"
 
+
 using namespace otb;
 
 
