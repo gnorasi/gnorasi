@@ -8,6 +8,8 @@
 #include "otbAttributesMapLabelObjectWithClassLabel.h"
 
 #include "itkShapeLabelObject.h"
+#include "itkPolyLineParametricPath.h"
+#include "itkVectorContainer.h"
 
 using namespace itiviewer;
 using namespace otb;
@@ -23,26 +25,28 @@ QList<Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
     QStringList slist;
 
+    const unsigned int VDimension = 2;
+    typedef itk::ContinuousIndex<double,VDimension>    ContinuousIndexType;
+    typedef itk::Index<  VDimension >                  IndexType;
+    typedef itk::Offset< VDimension >                  OffsetType;
+    typedef itk::Point<double,VDimension>              PointType;
+    typedef itk::Vector<double,VDimension>             VectorType;
+    typedef ContinuousIndexType                   VertexType;
+    typedef itk::VectorContainer<unsigned, VertexType> VertexListType;
+
     for(unsigned int i = 1; i < lblmap->GetNumberOfLabelObjects(); i++){
         LabelObjectType* lblObject = lblmap->GetLabelObject(i);
 
-//        lblObject->GetCentroid();
+        PolygonType *pol = lblObject->GetPolygon();
 
-//        PolygonType *pol = lblObject->GetPolygon();
+        const VertexListType *vList = pol->GetVertexList();
 
-//        QStringList slist;
+        VertexListType::const_iterator point = vList->begin();
 
-//        std::vector<std::string> list = lblObject->GetAvailableAttributes();
-//        for(int l = 0; l < list.size(); l++)
-//            slist << QString::fromStdString(list.at(l));
-
-//        qDebug() << i << "\t" << slist.join("\t") << "\n";
-
-//        qDebug() << i << "\tLength: " << pol->GetLength() << "\tArea : " << pol->GetArea() << "\n";
-
-         QString line = QString("%1\t%2\t%3").arg(QString::number(i)).arg(QString::number(lblObject->GetCentroid()[0],'f',2)).arg(QString::number(lblObject->GetCentroid()[1],'f',2));
-
-        slist << line;
+        while(point != vList->end())
+        {
+            point++;
+        }
     }
 
     QString path = QFileDialog::getSaveFileName(0,QLatin1String("Save"),QDir::homePath());

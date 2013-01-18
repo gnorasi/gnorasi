@@ -180,8 +180,6 @@ void ItiOtbImageManager::createRegions(){
     qDeleteAll(m_levelList);
     m_levelList.clear();
 
-    typedef otb::Image<unsigned long, 2> LabelImageType;
-
     m_levelList << new Level(this);
 
     voreen::Processor *proc = m_pPort->getProcessor();
@@ -192,16 +190,16 @@ void ItiOtbImageManager::createRegions(){
 
         QString className = QString::fromStdString(port->getName());
 
-        if(!className.compare(QLatin1String("Label Image Port"))){
+        if(!className.compare(QLatin1String("Label Map Port"))){
 
-            OTBLabelImagePort *lblPort = dynamic_cast<OTBLabelImagePort*>(port);
+            OTBLabelMapPort *lblPort = dynamic_cast<OTBLabelMapPort*>(port);
             if(lblPort && lblPort->isConnected()){
-                LabelImageType *mapT = (LabelImageType*)lblPort->getData();
+                LabelMapParser::LabelMapType *mapT = (LabelMapParser::LabelMapType*)lblPort->getData();
 
                 if(mapT){
 
-//                    LabelMapParser *parser = new LabelMapParser(this);
-                    LabelImageParser *parser = new LabelImageParser(this);
+                    LabelMapParser *parser = new LabelMapParser(this);
+//                    LabelImageParser *parser = new LabelImageParser(this);
 
                     QList<Region*> regionList = parser->parse(mapT);
 
