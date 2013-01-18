@@ -82,8 +82,10 @@ void OTBShapeAttributesLabelMapProcessor::process() {
     try
     {
 	shapeLabelMapFilter->SetInput(inPort_.getData());
-	(reducedProperties_.get()) ? shapeLabelMapFilter->ReducedAttributeSetOn() : 
-				     shapeLabelMapFilter->ReducedAttributeSetOff();
+    shapeLabelMapFilter->SetReducedAttributeSet(false);
+    shapeLabelMapFilter->SetComputePerimeter(true);
+//	(reducedProperties_.get()) ? shapeLabelMapFilter->ReducedAttributeSetOn() :
+//				     shapeLabelMapFilter->ReducedAttributeSetOff();
 	outPort_.setData(shapeLabelMapFilter->GetOutput());
 	LINFO("Shape Properties on Object Map Processed");
     }
