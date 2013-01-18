@@ -5,7 +5,9 @@
 
 #include "../../../ports/otblabelmapport.h"
 
-#include "itkShapeLabelObject.h"
+//#include "itkShapeLabelObject.h"
+
+#include "otbAttributesMapLabelObjectWithClassLabel.h"
 
 using namespace voreen;
 
@@ -21,7 +23,7 @@ public:
 
     typedef unsigned long                         LabelType;
     typedef otb::Polygon<double> PolygonType;
-    typedef itk::ShapeLabelObject<LabelType, 2> LabelObjectType;
+    typedef otb::AttributesMapLabelObjectWithClassLabel<LabelType, 2, double, unsigned short> LabelObjectType;
     typedef itk::LabelMap<LabelObjectType>        LabelMapType;
     
     /*!

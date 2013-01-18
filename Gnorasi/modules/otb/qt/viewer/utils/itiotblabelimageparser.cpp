@@ -26,12 +26,12 @@ QList<Region*> LabelImageParser::parse(LabelImageType *lblimage){
     QStringList slist;
 
 
-//    typedef otb::LabelImageToVectorDataFilter<LabelImageType> LabelFilterType;
+    typedef otb::LabelImageToVectorDataFilter<LabelImageType> LabelFilterType;
 
-//    LabelFilterType::Pointer filter = LabelFilterType::New();
+    LabelFilterType::Pointer filter = LabelFilterType::New();
 
-//    filter->SetInput(lblimage);
-//    filter->Update();
+    filter->SetInput(lblimage);
+    filter->Update();
 
 
 
