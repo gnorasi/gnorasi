@@ -35,6 +35,9 @@ void Region::modifyPolygonByExtent(ImageRegionType &extent){
         hp.setX(point.x() + (int)extent.GetIndex()[0]);
         hp.setY(point.y() + (int)extent.GetIndex()[1]);
 
+        if(hp.x() < extent.GetIndex()[0] || hp.x() > extent.GetSize()[0] || hp.y() < extent.GetIndex()[1] || hp.y() > extent.GetSize()[1])
+            qDebug() << "outside extent.. region id : " << m_segmentationId;
+
         m_paintedArea.replace(idx,hp);
     }
 }

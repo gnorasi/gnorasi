@@ -25,8 +25,6 @@ LabelMapParser::LabelMapParser(QObject *parent) :
 QList<Region*> LabelMapParser::parse(LabelMapType *lblmap){
     QList<Region*> list;
 
-    QStringList slist;
-
     const unsigned int VDimension = 2;
     typedef itk::ContinuousIndex<double,VDimension>    ContinuousIndexType;
     typedef itk::Index<  VDimension >                  IndexType;
