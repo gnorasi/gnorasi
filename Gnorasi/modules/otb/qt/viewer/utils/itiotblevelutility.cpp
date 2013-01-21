@@ -38,4 +38,20 @@ Level* LevelUtility::levelById(int id){
         if(pLevel->id() == id)
             return pLevel;
     }
+
+    return 0;
+}
+
+
+void LevelUtility::appendLevel(Level *pLevel){
+    m_levelList << pLevel;
+}
+
+void LevelUtility::deleteLevel(Level *pLevel){
+    m_levelList.removeOne(pLevel);
+}
+
+void LevelUtility::clearLevels(){
+    qDeleteAll(m_levelList);
+    m_levelList.clear();
 }

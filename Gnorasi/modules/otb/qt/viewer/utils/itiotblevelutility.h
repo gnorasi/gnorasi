@@ -64,6 +64,15 @@ public:
     static void deleteInstance();
 
 
+    void clearLevels();
+
+
+    void appendLevel(Level *pLevel);
+
+
+    void deleteLevel(Level *pLevel);
+
+
     /*!
      * \brief levelById
      * \param id
