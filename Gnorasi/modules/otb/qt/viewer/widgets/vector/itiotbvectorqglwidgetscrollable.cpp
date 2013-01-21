@@ -63,6 +63,7 @@ ItiOtbVectorQGLWidgetScrollable::ItiOtbVectorQGLWidgetScrollable(ItiOtbVectorIma
     m_pImageViewManipulator( NULL ),
     m_pImageModelRenderer( NULL ),
     m_pItiOtbVectorImageViewer(parent),
+    m_currentLevelId(1),
     QGLWidget(parent)
 {
     setAutoFillBackground(false);
@@ -177,28 +178,35 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(m_pen);
 
-    //! draw focus region
-    painter.drawRect(m_focusRegion);
-
     //!
     // START OF TEST
     //!
+    m_pen.setWidth(1.0);
+    m_pen.setColor(Qt::green);
+    painter.setPen(m_pen);
 
-    Level *pLevel = LEVELUTILITY->levelById(m_currentLevelId);
+    Level *pLevel = ITIOTBIMAGEMANAGER->levelById(m_currentLevelId);
     if(pLevel){
+
         QList<Region*> regions = pLevel->regions();
         QList<Region*>::const_iterator i;
+
         for(i = regions.constBegin(); i != regions.constEnd(); i++){
             Region *pRegion = *i;
 //            QRectF rectF(event->rect());
 //            if(pRegion->area().intersected(QPolygonF(rectF)))
-                pRegion->drawRegion(&painter);
+                pRegion->drawRegion(&painter, m_pImageViewManipulator->extent());
         }
     }
 
     //!
     // END OF TEST
     //!
+
+    //! draw focus region
+    m_pen.setWidth(2.0);
+    m_pen.setColor(Qt::red);
+    painter.drawRect(m_focusRegion);
 
     painter.end();
 }

@@ -7,6 +7,8 @@
 
 #include <QPainter>
 
+#include "../vector_globaldefs.h"
+
 namespace itiviewer {
 
 /*!
@@ -17,7 +19,7 @@ class Region : public QObject
     Q_OBJECT
     Q_PROPERTY(int          segmentationId      READ segmentationId     WRITE setSegmentationId     NOTIFY  segmentationIdChanged)
     Q_PROPERTY(int          classificationId    READ classificationId   WRITE setClassificationId   NOTIFY  classificationIdChanged)
-    Q_PROPERTY(QPolygonF    area                READ area               WRITE setArea               NOTIFY  areaChanged)
+    Q_PROPERTY(QPolygon     area                READ area               WRITE setArea               NOTIFY  areaChanged)
     Q_PROPERTY(QColor       color               READ color              WRITE setColor              NOTIFY  colorChanged)
 public:
     /*!
@@ -32,13 +34,13 @@ public:
     int         classificationId() const { return m_classificationId; }
     void        setClassificationId(int i) { m_classificationId = i; }
 
-    QPolygonF   area() const { return m_area; }
-    void        setArea(QPolygonF p) { m_area = p ; }
+    QPolygon    area() const { return m_area; }
+    void        setArea(QPolygon p);
 
     QColor      color() const { return m_color; }
     void        setColor(QColor c) { m_color = c; }
 
-    void        drawRegion(QPainter * painter);
+    void        drawRegion(QPainter * painter, ImageRegionType &extent);
 
 signals:
     void        segmentationIdChanged();
@@ -49,10 +51,14 @@ signals:
 public slots:
 
 private:
+    void        modifyPolygonByExtent(ImageRegionType &);
+
     int         m_segmentationId;
     int         m_classificationId;
-    QPolygonF   m_area;
+    QPolygon    m_area;
     QColor      m_color;
+
+    QPolygon    m_paintedArea;
     
 };
 

@@ -10,6 +10,7 @@
 #include "itiotblabelimageparser.h"
 #include "itiotblevel.h"
 #include "itiotbregion.h"
+#include "itiotblevelutility.h"
 
 #include "../../../ports/otblabelimageport.h"
 
@@ -27,8 +28,6 @@ ItiOtbImageManager* ItiOtbImageManager::m_pInstance = NULL;
 ItiOtbImageManager::ItiOtbImageManager()
 {
     filter = ImageToVectorImageCastFilterType::New();
-
-    m_levelList.append(new Level(this));
 }
 
 //!
@@ -177,10 +176,7 @@ QString ItiOtbImageManager::getPathFromReaderProcessor(voreen::Processor *proc) 
 
 void ItiOtbImageManager::createRegions(){
 
-    qDeleteAll(m_levelList);
-    m_levelList.clear();
-
-    m_levelList << new Level(this);
+    clearLevels();
 
     voreen::Processor *proc = m_pPort->getProcessor();
     const std::vector<voreen::Port*> list = proc->getPorts();
@@ -199,18 +195,46 @@ void ItiOtbImageManager::createRegions(){
                 if(mapT){
 
                     LabelMapParser *parser = new LabelMapParser(this);
-//                    LabelImageParser *parser = new LabelImageParser(this);
+
+                    Level *pLevel = new Level(this);
 
                     QList<Region*> regionList = parser->parse(mapT);
 
-                    Level *pLevel = m_levelList.last();
                     pLevel->setRegions(regionList);
+
+                    appendLevel(pLevel);
                 }
             }
 
             break;
         }
     }
+}
+
+Level* ItiOtbImageManager::levelById(int id){
+    QList<Level*>::const_iterator i;
+    for(i = m_levelList.constBegin(); i != m_levelList.constEnd(); i++){
+        Level *pLevel = *i;
+
+        if(pLevel->id() == id)
+            return pLevel;
+    }
+
+    return 0;
+}
+
+
+void ItiOtbImageManager::appendLevel(Level *pLevel){
+    m_levelList << pLevel;
+}
+
+void ItiOtbImageManager::deleteLevel(Level *pLevel){
+    m_levelList.removeOne(pLevel);
+}
+
+void ItiOtbImageManager::clearLevels(){
+    qDeleteAll(m_levelList);
+    m_levelList.clear();
 }
 
 //!

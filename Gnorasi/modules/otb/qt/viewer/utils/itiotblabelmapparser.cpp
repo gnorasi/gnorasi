@@ -11,6 +11,8 @@
 #include "itkPolyLineParametricPath.h"
 #include "itkVectorContainer.h"
 
+#include "itiotbimagemanager.h"
+
 using namespace itiviewer;
 using namespace otb;
 
@@ -34,6 +36,17 @@ QList<Region*> LabelMapParser::parse(LabelMapType *lblmap){
     typedef ContinuousIndexType                   VertexType;
     typedef itk::VectorContainer<unsigned, VertexType> VertexListType;
 
+    double x = 0;
+    double y = 0;
+
+    int counter = 0;
+
+    VectorImageType *img = ITIOTBIMAGEMANAGER->image();
+    if(!img)
+        return list;
+
+    QList<QPolygon> pollist;
+
     for(unsigned int i = 1; i < lblmap->GetNumberOfLabelObjects(); i++){
         LabelObjectType* lblObject = lblmap->GetLabelObject(i);
 
@@ -43,10 +56,33 @@ QList<Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
         VertexListType::const_iterator point = vList->begin();
 
+        QPolygon plgon;
+
         while(point != vList->end())
         {
+            ContinuousIndexType cit = *point;
+
+            VectorIndexType index;
+
+            bool val = img->TransformPhysicalPointToIndex(cit,index);
+
+            if(val){
+                x = index[0];
+                y = index[1];
+
+                plgon << QPoint(x,y);
+            }
+
             point++;
         }
+
+        pollist.append(plgon);
+
+        Region *pRegion = new Region(this);
+        pRegion->setArea(plgon);
+        pRegion->setSegmentationId(counter++);
+
+        list << pRegion;
     }
 
     QString path = QFileDialog::getSaveFileName(0,QLatin1String("Save"),QDir::homePath());
@@ -58,7 +94,7 @@ QList<Region*> LabelMapParser::parse(LabelMapType *lblmap){
         return list;
 
     QTextStream out(&file);
-    out << slist.join("\n");
+    out << LabelMapParser::contructTextFromPolygonList(pollist);
 
     file.close();
 

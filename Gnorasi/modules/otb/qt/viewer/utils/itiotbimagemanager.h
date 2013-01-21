@@ -106,6 +106,23 @@ public:
      */
     voreen::Port* nextPort(voreen::Port* ) const;
 
+
+    void clearLevels();
+
+
+    void appendLevel(Level *pLevel);
+
+
+    void deleteLevel(Level *pLevel);
+
+
+    /*!
+     * \brief levelById
+     * \param id
+     * \return
+     */
+    Level* levelById(int id);
+
 private:
     //! ctor
     ItiOtbImageManager();
@@ -133,9 +150,6 @@ private:
 
     ImageToVectorImageCastFilterType::Pointer filter;
 
-    //!
-    QList<Level*> m_levelList;
-
     //! test
     std::vector<voreen::Processor*> nextConnectedProcessor(voreen::Port* ) const;
 
@@ -145,6 +159,11 @@ private:
 
 
     void checkNext(voreen::Processor*, QString& );
+
+    /*!
+     * \brief m_levelList
+     */
+    QList<Level*> m_levelList;
 };
 
 } // end of namespace itiviewer
