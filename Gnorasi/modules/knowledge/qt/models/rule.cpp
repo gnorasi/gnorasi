@@ -2,6 +2,8 @@
 #include "ruleitem.h"
 #include "ontologyclassitem.h"
 
+using namespace voreen;
+
 Rule::Rule(const QString &headec, QObject *parent) :
     m_headClass(headec), m_confidence(0.0), QObject(parent)
 {

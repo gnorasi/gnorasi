@@ -9,6 +9,7 @@
 
 #include <QtCore/QDebug>
 
+using namespace voreen;
 
 OntologyClassView::OntologyClassView(QWidget *parent)
     : QTreeView(parent)

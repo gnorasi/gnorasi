@@ -33,8 +33,11 @@
 #include <QVariant>
 #include <QVector>
 
+namespace voreen {
 
-//!
+/*!
+ * \brief The RuleItem class
+ *
 //! The rule item represents a record on the rules table view
 //! A rule is a set of conditions applied to an ontology class look in Rule class for more..
 //! An ontology class is defined in the ontology process context
@@ -47,7 +50,7 @@
 //!  ** In case of the GeoClassification processor the ruleitem is a region **
 //!     This class could be used as the abstract class from where all subclasses could inherit.
 //!
-
+ */
 class RuleItem : public QObject
 {
     Q_OBJECT
@@ -73,5 +76,7 @@ private:
 
     QVector<QVariant> itemData;
 };
+
+} // end of namespace voreen
 
 #endif // RULEITEM_H

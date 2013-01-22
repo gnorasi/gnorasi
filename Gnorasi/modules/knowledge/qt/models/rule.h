@@ -31,6 +31,7 @@
 
 #include <QObject>
 
+namespace voreen {
 
 class                   RuleItem;
 class                   OntologyClassItem;
@@ -38,8 +39,9 @@ class                   RuleUtility;
 class                   PersistentRuleItem;
 
 //!
-//! The Rule class contains information about Rules the user can set through
-//! the related processors example GeoClassification processor
+//! \brief The Rule class contains information about Rules the user can set through
+//! the related processors example GeoClassification processor.
+//!
 //! A Rule is always attributed to a reference Ontology Class
 //! A Rule has a confidence number ( ask Babis for more )
 //! A Rule has a unique if possible id
@@ -105,5 +107,7 @@ private:
     QString             m_headClass;
     double              m_confidence;
 };
+
+} // end of namespace voreen
 
 #endif // RULE_H

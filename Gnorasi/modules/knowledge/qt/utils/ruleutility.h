@@ -31,6 +31,8 @@
 
 #include <QObject>
 
+namespace voreen {
+
 
 class Rule;
 class OntologyClassItem;
@@ -107,5 +109,6 @@ private:
 
 };
 
+}  // end of namespace voreen
 
 #endif // RULEUTILITY_H

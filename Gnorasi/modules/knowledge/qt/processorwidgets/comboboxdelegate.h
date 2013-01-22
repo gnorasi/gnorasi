@@ -3,6 +3,8 @@
 
 #include <QItemDelegate>
 
+namespace voreen {
+
 class ComboBoxDelegate : public QItemDelegate
 {
     Q_OBJECT
@@ -27,5 +29,7 @@ private:
     QStringList m_data;
     
 };
+
+} // end of namespace voreen
 
 #endif // COMBOBOXDELEGATE_H

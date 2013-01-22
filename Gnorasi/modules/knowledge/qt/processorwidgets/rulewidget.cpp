@@ -20,6 +20,7 @@
 #include <QStandardItemModel>
 #include <QListView>
 
+using namespace voreen;
 
 RuleWidget::RuleWidget(const QString &ocid, QWidget *parent) :
     m_ontologyClassId(ocid), QWidget(parent)

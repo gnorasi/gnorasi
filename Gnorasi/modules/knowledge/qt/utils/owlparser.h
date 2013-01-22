@@ -33,6 +33,7 @@
 
 #include <QtXml/QDomDocument>
 
+namespace voreen {
 
 class OWLHelperItem;
 
@@ -73,5 +74,6 @@ private:
 
 }; // OWLPARSER_H
 
+} // end of namespace voreen
 
 #endif

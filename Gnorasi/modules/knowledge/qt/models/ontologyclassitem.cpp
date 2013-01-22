@@ -2,6 +2,7 @@
 
 #include "ontologyclassitem.h"
 
+using namespace voreen;
 
 OntologyClassItem::OntologyClassItem(const QVector<QVariant> &data, OntologyClassItem *parent)
 {

@@ -33,6 +33,7 @@
 
 #include <QItemSelectionModel>
 
+
 class QLabel;
 class QLineEdit;
 class QComboBox;
@@ -43,6 +44,8 @@ class QTableWidget;
 class QStandardItem;
 class QListView;
 class QModelIndex;
+
+namespace voreen {
 
 class RuleItemView;
 class Rule;
@@ -140,5 +143,7 @@ private:
     //! holds the list of the availabel property values
     QStringList m_propertyFeatureList;
 };
+
+} // end of namespace voreen
 
 #endif // RULEWIDGET_H

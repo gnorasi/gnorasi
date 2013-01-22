@@ -35,6 +35,8 @@
 
 #include "voreen/qt/voreenmoduleqt.h"
 
+namespace voreen {
+
 
 class OWLHelperItem : public QObject
 {
@@ -74,5 +76,7 @@ private:
     QString m_comment;
     QString m_id;
 };
+
+} // end of namepsace voreen
 
 #endif // OWLHELPERITEM_H

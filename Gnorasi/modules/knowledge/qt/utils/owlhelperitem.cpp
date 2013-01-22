@@ -1,5 +1,6 @@
 #include "owlhelperitem.h"
 
+using namespace voreen;
 
 OWLHelperItem::OWLHelperItem(const QString &id, const QString &lbl, const QString &cmt, QObject *parent) :
     m_id(id),

@@ -203,6 +203,8 @@ void ItiOtbImageManager::createRegions(){
                     pLevel->setRegions(regionList);
 
                     appendLevel(pLevel);
+
+                    setupColors();
                 }
             }
 
@@ -235,6 +237,50 @@ void ItiOtbImageManager::deleteLevel(Level *pLevel){
 void ItiOtbImageManager::clearLevels(){
     qDeleteAll(m_levelList);
     m_levelList.clear();
+}
+
+//!
+void ItiOtbImageManager::setupColors(){
+    m_colorHash.clear();
+
+    //! parse once to extract classfication and color information
+    QList<Level*>::const_iterator i;
+    for(i = m_levelList.constBegin(); i != m_levelList.constEnd(); i++){
+        Level *pLevel = *i;
+
+        QList<Region*> rList = pLevel->regions();
+
+        QList<Region*>::const_iterator o;
+        for(o = rList.constBegin(); o != rList.constEnd(); o++){
+            Region *pRegion = *o;
+
+            int clfId = pRegion->classificationId();
+
+            if(!m_colorHash.contains(clfId)){
+                int r = Region::randInt(0,255);
+                int g = Region::randInt(0,255);
+                int b = Region::randInt(0,255);
+                m_colorHash[clfId] = QColor(r,g,b);
+            }
+        }
+    }
+
+
+    //! parse a second time to set the color property to the regions
+    QList<Level*>::const_iterator z;
+    for(z = m_levelList.constBegin(); z != m_levelList.constEnd(); z++){
+        Level *pLevel  = *z;
+
+        QList<Region*> rList = pLevel->regions();
+        QList<Region*>::const_iterator x;
+        for(x = rList.constBegin(); x != rList.constEnd(); x++){
+            Region *pRegion = *x;
+
+            int clfId = pRegion->classificationId();
+
+            pRegion->setColor(m_colorHash.value(clfId));
+        }
+    }
 }
 
 //!

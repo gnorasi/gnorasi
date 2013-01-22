@@ -164,6 +164,12 @@ private:
      * \brief m_levelList
      */
     QList<Level*> m_levelList;
+
+    //!
+    void setupColors();
+
+    //! a container where the key value is the class if from the segmentation
+    QHash<int, QColor> m_colorHash;
 };
 
 } // end of namespace itiviewer

@@ -34,8 +34,10 @@
 #include <QVector>
 
 
+namespace voreen {
+
 //!
-//! This class stores data related to OntologyClass items handled by the OntologyClassModel
+//! \brief This class stores data related to OntologyClass items handled by the OntologyClassModel
 //!
 class OntologyClassItem
 {
@@ -67,5 +69,7 @@ private:
 
     QString m_id;
 };
+
+} // end of namespace voreen
 
 #endif // ONTOLOGYCLASSITEM_H

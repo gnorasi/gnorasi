@@ -31,6 +31,8 @@
 
 #include <QTableView>
 
+namespace voreen {
+
 class ContextMenuEvent;
 
 class Rule;
@@ -60,5 +62,6 @@ private:
     QString m_rule_id;
 };
 
+} // end of namespace voreen
 
 #endif // RULEITEMVIEW_H
