@@ -150,6 +150,8 @@ void ItiOtbVectorQGLWidgetScrollable::setupViewport(int w, int h){
 
 //!
 void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
+    Q_UNUSED(event);
+
     //!
     makeCurrent();
     glMatrixMode(GL_MODELVIEW);
@@ -179,15 +181,8 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
     //! overpainting
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(m_pen);
 
     //!
-    // START OF TEST
-    //!
-    m_pen.setWidth(1.0);
-    m_pen.setColor(Qt::green);
-    painter.setPen(m_pen);
-
     Level *pLevel = ITIOTBIMAGEMANAGER->levelById(m_currentLevelId);
     if(pLevel){
 
@@ -199,10 +194,6 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
             pRegion->drawRegion(&painter, m_pImageViewManipulator->extent(),m_IsotropicZoom);
         }
     }
-
-    //!
-    // END OF TEST
-    //!
 
     //! draw focus region
     m_pen.setWidth(2.0);
