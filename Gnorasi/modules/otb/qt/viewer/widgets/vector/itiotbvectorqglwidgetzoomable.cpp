@@ -242,12 +242,17 @@ void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(m_pen);
 
-    //!
-    // START OF TEST
-    //!
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    //                                                                                          //
+    //                                                                                          //
+    //                                  START OF TEST                                           //
+    //                                                                                          //
+    //                                                                                          //
+
     m_pen.setWidth(1.0);
     m_pen.setColor(Qt::green);
     painter.setPen(m_pen);
+    painter.setRenderHint(QPainter::Antialiasing);
 
     Level *pLevel = ITIOTBIMAGEMANAGER->levelById(m_currentLevelId);
     if(pLevel){
@@ -261,14 +266,12 @@ void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
         }
     }
 
-    //!
-    // END OF TEST
-    //!
-
-    //! draw focus region
-//    m_pen.setWidth(2.0);
-//    m_pen.setColor(Qt::red);
-//    painter.drawRect(m_focusRegion);
+    //                                                                                          //
+    //                                                                                          //
+    //                                  END OF TEST                                             //
+    //                                                                                          //
+    //                                                                                          //
+    //////////////////////////////////////////////////////////////////////////////////////////////
 
     painter.end();
 }

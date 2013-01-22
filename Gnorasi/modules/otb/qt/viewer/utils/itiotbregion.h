@@ -42,6 +42,12 @@ public:
 
     void        drawRegion(QPainter * painter, ImageRegionType &extent, double iz = 1.0);
 
+    static int randInt(int low, int high)
+    {
+        // Random number between low and high
+        return qrand() % ((high + 1) - low) + low;
+    }
+
 signals:
     void        segmentationIdChanged();
     void        classificationIdChanged();
@@ -57,7 +63,8 @@ private:
     int         m_classificationId;
     QPolygon    m_area;
     QColor      m_color;
-
+    QPen        m_pen;
+    QBrush      m_brush;
     QPolygon    m_paintedArea;
     
 };

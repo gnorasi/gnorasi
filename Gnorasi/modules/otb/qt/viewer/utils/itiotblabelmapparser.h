@@ -44,6 +44,8 @@ private:
 
     static inline QString contructTextFromPolygonList(const QList<QPolygon> &list);
 
+    static inline bool validatePolygon(const QPolygon &pol);
+
 };
 
 QString LabelMapParser::contructTextFromPolygon(const QPolygon &pol){
@@ -70,6 +72,23 @@ QString LabelMapParser::contructTextFromPolygonList(const QList<QPolygon> &list)
     }
 
     return textList.join("\n");
+}
+
+bool LabelMapParser::validatePolygon(const QPolygon &pol){
+    QList<QPoint> helperlist;
+
+    QPolygon::const_iterator i;
+
+    for(i = pol.constBegin(); i != pol.constEnd(); i++){
+        QPoint p = *i;
+
+        if(helperlist.contains(p))
+            return false;
+
+        helperlist.append(p);
+    }
+
+    return true;
 }
 
 } // end of namespace itiviewer

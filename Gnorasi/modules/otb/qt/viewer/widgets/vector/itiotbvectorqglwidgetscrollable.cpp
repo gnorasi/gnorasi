@@ -72,6 +72,9 @@ ItiOtbVectorQGLWidgetScrollable::ItiOtbVectorQGLWidgetScrollable(ItiOtbVectorIma
     m_pImageModelRenderer   = new ImageModelRendererScrollable( this );
 
     m_pen = QPen(QBrush(Qt::red),2.0);
+
+    QTime time = QTime::currentTime();
+    qsrand((uint)time.msec());
 }
 
 
@@ -204,6 +207,8 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
     //! draw focus region
     m_pen.setWidth(2.0);
     m_pen.setColor(Qt::red);
+    painter.setPen(m_pen);
+    painter.setBrush(QBrush(Qt::transparent));
     painter.drawRect(m_focusRegion);
 
     painter.end();
