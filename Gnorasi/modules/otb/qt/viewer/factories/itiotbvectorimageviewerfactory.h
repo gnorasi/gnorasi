@@ -40,9 +40,9 @@ class ItiOtbImageViewer;
 class ItiOtbImageViewerPanelSetupTab;
 
 /*!
- * \brief The ItiOtbRgbaImageViewerFactory class
+ * \brief The ItiOtbVectorImageViewerFactory class
  *
- *  \class A factory class for creating viewers visualizing RGBA type of images
+ *  A factory class for creating viewers visualizing Vector type of images
  *
  */
 class ItiOtbVectorImageViewerFactory : public ItiOtbImageViewerFactory

@@ -42,10 +42,11 @@ namespace itiviewer{
 class AbstractModel;
 
 /*!
- * \brief The ITIImageViewer class
+ * \class ItiOtbImageViewer
  *
- * \class The ITIImageViewer class is an abstract product that is used by an application
+ *  \brief The ITIImageViewer class is an abstract product that is used by an application
  *  where a visualization of images is needed.
+ *
  *  The viewer has two modes as regards the layout perspective. The First mode is a packed
  *  mode where all widgets are merged and assembled into one single widget. The second mode
  *  is a splitted kind of mode , where all widgets have their own window.

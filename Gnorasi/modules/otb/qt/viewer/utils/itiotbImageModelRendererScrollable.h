@@ -51,7 +51,7 @@ namespace itiviewer
 // Internal classes pre-declaration.
 class AbstractImageModel;
 
-/** \class ImageModelRenderer
+/** \brief ImageModelRenderer
  *
  */
 class ImageModelRendererScrollable :

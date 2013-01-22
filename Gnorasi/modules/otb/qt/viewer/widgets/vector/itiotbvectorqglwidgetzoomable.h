@@ -48,16 +48,17 @@ class ImageModelRendererZoomable;
 class ImageViewManipulatorZoomable;
 class ItiOtbVectorImageViewer;
 
-/** \class QOtbImageWidget
-*   \brief This class renders an RGB bytes image buffer to the screen.
+/** \brief The ItiOtbVectorQGLWidgetZoomable class
+ *
+*   This class renders an RGB bytes image buffer to the screen.
 *   Rendered data can be loaded using the ReadBuffer() method.
 *   The SetIsotropicZoom() method allows to tune the zooming (zooming
 *   is centered).
 *
 *   It is also able to display a rectangle on the displayed image.
+*
 *  \ingroup Visualization
- */
-
+*/
 class ItiOtbVectorQGLWidgetZoomable : public QGLWidget, public ItiViewerObserver
 {
     Q_OBJECT

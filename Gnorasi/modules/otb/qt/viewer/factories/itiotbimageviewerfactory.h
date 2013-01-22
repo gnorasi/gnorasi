@@ -39,7 +39,7 @@ class ItiOtbImageViewerPanel;
 /*!
  * \brief The ITIImageViewerFactory class
  *
- * \class The ITIImageViewerFactory class is an abstract factory which is responsible for creating ITIImageViewer instances
+ * The ITIImageViewerFactory class is an abstract factory which is responsible for creating ITIImageViewer instances
  * Each subclass of this class must reimplement the create method.
  *
  */

@@ -40,7 +40,7 @@ public:
     QColor      color() const { return m_color; }
     void        setColor(QColor c) { m_color = c; }
 
-    void        drawRegion(QPainter * painter, ImageRegionType &extent);
+    void        drawRegion(QPainter * painter, ImageRegionType &extent, double iz = 1.0);
 
 signals:
     void        segmentationIdChanged();
@@ -51,7 +51,7 @@ signals:
 public slots:
 
 private:
-    void        modifyPolygonByExtent(ImageRegionType &);
+    void        modifyPolygonByExtent(ImageRegionType &, double);
 
     int         m_segmentationId;
     int         m_classificationId;

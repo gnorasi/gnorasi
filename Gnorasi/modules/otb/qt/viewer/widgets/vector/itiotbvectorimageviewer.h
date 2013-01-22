@@ -46,12 +46,11 @@ class ItiOtbVectorQGLWidgetZoomable;
 class ItiViewerObservableRegion;
 class ItiViewerPixelInfoWidget;
 
-/** \class ITIOTBImageViewer
- *   \brief This class implements a standard visualization tool to be
- *   plugged at the end of a pipeline.
- *  This viewer handles Vector images coming from ImagePorts which are specialized data IO classes handling OTB Images.
+/** \brief The ItiOtbVectorImageViewer class
  *
- *  \ingroup Visualization
+ *  This class implements a standard visualization tool to be
+ *  plugged at the end of a pipeline.
+ *  This viewer handles Vector images coming from ImagePorts which are specialized data IO classes handling OTB Images.
  *
  */
 class ItiOtbVectorImageViewer : public ItiOtbImageViewer

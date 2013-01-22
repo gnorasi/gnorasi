@@ -7,12 +7,9 @@ Region::Region(QObject *parent) :
 {
 }
 
-void Region::drawRegion(QPainter *painter, ImageRegionType &extent){
-    modifyPolygonByExtent(extent);
-    //!
-    //! TODO
-    //! add painting functionality here
-    //!
+void Region::drawRegion(QPainter *painter, ImageRegionType &extent, double iz){
+    modifyPolygonByExtent(extent,iz);
+
     painter->drawPolygon(m_paintedArea);
 }
 
@@ -22,7 +19,7 @@ void Region::setArea(QPolygon p){
     m_paintedArea = p;
 }
 
-void Region::modifyPolygonByExtent(ImageRegionType &extent){
+void Region::modifyPolygonByExtent(ImageRegionType &extent, double iz){
 
     QPolygon::const_iterator i;
     for(i = m_area.constBegin(); i != m_area.constEnd(); i++){
@@ -32,11 +29,8 @@ void Region::modifyPolygonByExtent(ImageRegionType &extent){
 
         QPoint hp;
 
-        hp.setX(point.x() + (int)extent.GetIndex()[0]);
-        hp.setY(point.y() + (int)extent.GetIndex()[1]);
-
-        if(hp.x() < extent.GetIndex()[0] || hp.x() > extent.GetSize()[0] || hp.y() < extent.GetIndex()[1] || hp.y() > extent.GetSize()[1])
-            qDebug() << "outside extent.. region id : " << m_segmentationId;
+        hp.setX(point.x()*iz + (int)extent.GetIndex()[0]);
+        hp.setY(point.y()*iz + (int)extent.GetIndex()[1]);
 
         m_paintedArea.replace(idx,hp);
     }

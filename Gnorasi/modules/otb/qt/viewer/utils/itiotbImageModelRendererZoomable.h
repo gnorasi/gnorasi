@@ -47,12 +47,12 @@ namespace
 
 namespace itiviewer
 {
-//
-// Internal classes pre-declaration.
+
+
 class AbstractImageModel;
 
-/** \class ImageModelRenderer
- *
+/*!
+ * \brief The ImageModelRendererZoomable class
  */
 class ImageModelRendererZoomable :
     public QObject
