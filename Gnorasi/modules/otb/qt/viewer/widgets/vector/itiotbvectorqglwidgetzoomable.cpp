@@ -213,11 +213,6 @@ void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
     glPushMatrix();
 
 
-
-    // Clear back-buffer(s) before rendering sub-components.
-//    glClear( GL_COLOR_BUFFER_BIT );
-
-
     // Set the new rendering context to be known in the ModelRendere
     const AbstractImageModel* aiModel=  qobject_cast<AbstractImageModel*>(m_pItiOtbVectorImageViewer->model());
 
@@ -240,19 +235,6 @@ void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
     //! overpainting
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(m_pen);
-
-    //////////////////////////////////////////////////////////////////////////////////////////////
-    //                                                                                          //
-    //                                                                                          //
-    //                                  START OF TEST                                           //
-    //                                                                                          //
-    //                                                                                          //
-
-    m_pen.setWidth(1.0);
-    m_pen.setColor(Qt::green);
-    painter.setPen(m_pen);
-    painter.setRenderHint(QPainter::Antialiasing);
 
     Level *pLevel = ITIOTBIMAGEMANAGER->levelById(m_currentLevelId);
     if(pLevel){
@@ -265,13 +247,6 @@ void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
             pRegion->drawRegion(&painter, m_pImageViewManipulator->extent(),m_IsotropicZoom);
         }
     }
-
-    //                                                                                          //
-    //                                                                                          //
-    //                                  END OF TEST                                             //
-    //                                                                                          //
-    //                                                                                          //
-    //////////////////////////////////////////////////////////////////////////////////////////////
 
     painter.end();
 }

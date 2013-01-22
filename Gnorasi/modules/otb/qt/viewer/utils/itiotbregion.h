@@ -38,7 +38,7 @@ public:
     void        setArea(QPolygon p);
 
     QColor      color() const { return m_color; }
-    void        setColor(QColor c) { m_color = c; }
+    void        setColor(QColor c) { m_color = c; m_brush.setColor(m_color); }
 
     void        drawRegion(QPainter * painter, ImageRegionType &extent, double iz = 1.0);
 
