@@ -66,11 +66,18 @@ QList<Region*> LabelMapParser::parse(LabelMapType *lblmap){
                 x = index[0];
                 y = index[1];
 
-                plgon << QPoint(x,y);
+                QPoint p(x,y);
+
+                plgon.append(p);
             }
 
             point++;
         }
+
+        plgon.remove(plgon.size()-1);
+
+        if(!LabelMapParser::validatePolygon(plgon))
+            continue;
 
         pollist.append(plgon);
 

@@ -36,7 +36,7 @@ const std::string OTBMeanShiftSegmentationProcessor::loggerCat_("voreen.OTBMeanS
 OTBMeanShiftSegmentationProcessor::OTBMeanShiftSegmentationProcessor()
     : OTBImageFilterProcessor(),
     spatialRadius_("spatialRadius", "Spatial Radius", 1),
-    rangeRadius_("rangeRadius", "Range Radius", 30.0f, 0.0f, 10000.0f),
+    rangeRadius_("rangeRadius", "Range Radius", 180.0f, 0.0f, 10000.0f),
     minRegionSize_("minRegionSize", "Min Region Size", 20),
     scale_("scale", "Scale", 1.0f, 0.0f, 10000.0f),
     inPort_(Port::INPORT, "MultiBand Image", 0),
