@@ -101,6 +101,14 @@ void ImageModelRendererZoomable::paintGL( const RenderingContext& context )
 
 
     glFlush();
+
+    glShadeModel(GL_FLAT);
+    glDisable(GL_CULL_FACE);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix();
 }
 
 /*****************************************************************************/
