@@ -48,6 +48,8 @@
 
 #include "../../utils/itiotbImageModelRendererZoomable.h"
 #include "../../utils/itiotbImageViewManipulatorZoomable.h"
+#include "../../utils/itiotblevel.h"
+#include "../../utils/itiotbregion.h"
 
 using namespace otb;
 using namespace itiviewer;
@@ -60,10 +62,15 @@ ItiOtbVectorQGLWidgetZoomable::ItiOtbVectorQGLWidgetZoomable(ItiOtbVectorImageVi
     m_pImageViewManipulator( NULL ),
     m_pImageModelRenderer( NULL ),
     m_pItiOtbVectorImageViewer(parent),
+    m_currentLevelId(1),
     QGLWidget(parent)
 {
+    setAutoFillBackground(false);
+
     m_pImageViewManipulator = new ImageViewManipulatorZoomable( this );
     m_pImageModelRenderer   = new ImageModelRendererZoomable( this );
+
+    m_pen = QPen(QBrush(Qt::green),1.0);
 }
 
 
@@ -198,10 +205,17 @@ void ItiOtbVectorQGLWidgetZoomable::initializeColumnRowParameters(){
 }
 
 //!
-void ItiOtbVectorQGLWidgetZoomable::paintGL(){
+void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
+
+    //!
+    makeCurrent();
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+
+
 
     // Clear back-buffer(s) before rendering sub-components.
-    glClear( GL_COLOR_BUFFER_BIT );
+//    glClear( GL_COLOR_BUFFER_BIT );
 
 
     // Set the new rendering context to be known in the ModelRendere
@@ -221,6 +235,42 @@ void ItiOtbVectorQGLWidgetZoomable::paintGL(){
         // use the model renderer to paint the requested region of the image
         m_pImageModelRenderer->paintGL( context );
     }
+
+
+    //! overpainting
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(m_pen);
+
+    //!
+    // START OF TEST
+    //!
+    m_pen.setWidth(1.0);
+    m_pen.setColor(Qt::green);
+    painter.setPen(m_pen);
+
+    Level *pLevel = ITIOTBIMAGEMANAGER->levelById(m_currentLevelId);
+    if(pLevel){
+
+        QList<Region*> regions = pLevel->regions();
+        QList<Region*>::const_iterator i;
+
+        for(i = regions.constBegin(); i != regions.constEnd(); i++){
+            Region *pRegion = *i;
+            pRegion->drawRegion(&painter, m_pImageViewManipulator->extent(),m_IsotropicZoom);
+        }
+    }
+
+    //!
+    // END OF TEST
+    //!
+
+    //! draw focus region
+//    m_pen.setWidth(2.0);
+//    m_pen.setColor(Qt::red);
+//    painter.drawRect(m_focusRegion);
+
+    painter.end();
 }
 
 //!
@@ -425,7 +475,8 @@ void ItiOtbVectorQGLWidgetZoomable::zoomIn(){
     m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
 
     //!
-    updateGL();
+//    updateGL();
+    update();
 
     //! setup and send signal
     setupAndSendSignal();
@@ -509,7 +560,8 @@ void ItiOtbVectorQGLWidgetZoomable::zoomOut(){
     m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
 
     //! update the opengl painting..
-    updateGL();
+//    updateGL();
+    update();
 
     //! setup and send signal
     setupAndSendSignal();
@@ -556,7 +608,8 @@ void ItiOtbVectorQGLWidgetZoomable::translate(int dx, int dy){
     m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
 
     //! update painting
-    updateGL();
+//    updateGL();
+    update();
 }
 
 //!

@@ -160,7 +160,13 @@ protected:
     /*!
      * \brief paintGL , reimplemented method declared in the QGLWidget class
      */
-    void paintGL();
+//    void paintGL();
+
+    /*!
+     * \brief paintEvent
+     * \param event
+     */
+    void paintEvent(QPaintEvent *event);
 
     /*!
      * \brief mouseMoveEvent
@@ -202,6 +208,13 @@ private:
     unsigned int m_SubsamplingRate;
 
     ItiOtbVectorImageViewer *m_pItiOtbVectorImageViewer;
+
+    /*!
+     * \brief m_pen
+     */
+    QPen m_pen;
+
+    int m_currentLevelId;
 
 
 };
