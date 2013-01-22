@@ -33,6 +33,7 @@
 
 #include <QDomDocument>
 
+namespace voreen {
 
 class RuleItem;
 
@@ -67,6 +68,8 @@ private:
     QDomElement rootElement;
     
 };
+
+} // end of namespace voreen
 
 
 #endif // RULEWRITER_H

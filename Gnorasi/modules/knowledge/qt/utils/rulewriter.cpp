@@ -26,6 +26,8 @@
 #define KEY_NAMESPACEXMLNS      "nsxmlns"
 #define KEY_NAMESPACEXMLBASE    "nsxmlbase"
 
+using namespace voreen;
+
 //
 RuleWriter::RuleWriter(QObject *parent) :
     helperCounter(0), QObject(parent)

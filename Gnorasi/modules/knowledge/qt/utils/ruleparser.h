@@ -33,6 +33,7 @@
 
 #include <QDomDocument>
 
+namespace voreen {
 
 //!
 //! Functionality, parses xml data related to rules
@@ -60,6 +61,8 @@ private:
     bool validateNamespaces(const QDomDocument& );
     
 };
+
+} // end of namespace voreen
 
 
 #endif // RULEPARSER_H

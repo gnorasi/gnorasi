@@ -35,6 +35,7 @@
 
 #include "voreen/qt/voreenmoduleqt.h"
 
+namespace voreen {
 
 class OntologyClassItem;
 
@@ -82,5 +83,6 @@ private:
     QDomElement rootElement;
 }; // OWLWRITER_H
 
+} // end of namespace voreen
 
 #endif

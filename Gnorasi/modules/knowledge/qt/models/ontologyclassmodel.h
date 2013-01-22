@@ -33,11 +33,13 @@
 #include <QModelIndex>
 #include <QVariant>
 
+namespace voreen {
+
 class OntologyClassItem;
 class OWLHelperItem;
 
 //!
-//! Models the Ontology Class hierrarchy
+//! \brief Models the Ontology Class hierrarchy
 //!
 class  OntologyClassModel : public QAbstractItemModel
 {
@@ -103,6 +105,8 @@ private:
 
     bool m_editable;
 };
+
+} // end of namespace voreen
 
 
 #endif // ONTOLOGYMODEL_H

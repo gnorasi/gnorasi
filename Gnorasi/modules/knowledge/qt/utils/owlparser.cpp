@@ -17,6 +17,7 @@
 #define XMLNS_KEY       "xmlns"
 #define XMLNS_BASEKEY   "xml:base"
 
+using namespace voreen;
 
 OWLParser::OWLParser(QObject *parent)
     : QObject(parent)

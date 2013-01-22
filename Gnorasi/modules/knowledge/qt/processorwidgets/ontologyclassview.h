@@ -31,6 +31,8 @@
 
 #include <QtGui/QTreeView>
 
+namespace voreen {
+
 class OntologyClassView : public QTreeView{
     Q_OBJECT
 
@@ -58,5 +60,7 @@ private:
     QString getUniqueNameFromIndex(const QModelIndex& );
 
 };
+
+} // end of namespace voreen
 
 #endif // VRN_ONTOLOGYCLASSVIEW_H
