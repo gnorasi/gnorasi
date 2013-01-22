@@ -43,7 +43,16 @@ using namespace voreen;
 
 namespace itiviewer{
 
-/** \class QOtbImageWidget
+
+//
+// Internal classes pre-declaration.
+class ImageModelRendererFullView;
+class ImageViewManipulatorFullView;
+class ItiOtbVectorImageViewer;
+
+
+/** \class ItiOtbVectorQGLWidgetFullView
+*
 *   \brief This class renders an RGB bytes image buffer to the screen.
 *   Rendered data can be loaded using the ReadBuffer() method.
 *
@@ -52,16 +61,9 @@ namespace itiviewer{
 *   the window size.
 *
 *   It is also able to display a rectangle on the displayed image.
+*
 *  \ingroup Visualization
  */
-
-
-//
-// Internal classes pre-declaration.
-class ImageModelRendererFullView;
-class ImageViewManipulatorFullView;
-class ItiOtbVectorImageViewer;
-
 class ItiOtbVectorQGLWidgetFullView : public QGLWidget, public ItiViewerObserver
 {
     Q_OBJECT

@@ -41,9 +41,16 @@
 using namespace voreen;
 
 namespace itiviewer{
+//
+// Internal classes pre-declaration.
+class ImageModelRendererScrollable;
+class ImageViewManipulatorScrollable;
+class ItiOtbVectorImageViewer;
 
-/** \class QOtbImageWidget
-*   \brief This class renders an RGB bytes image buffer to the screen.
+/*!
+*   \brief The ItiOtbVectorQGLWidgetScrollable class
+*
+*   This class renders an RGB bytes image buffer to the screen.
 *   Rendered data can be loaded using the ReadBuffer() method.
 *   The SetIsotropicZoom() method allows to tune the zooming (zooming
 *   is centered).
@@ -52,15 +59,7 @@ namespace itiviewer{
 *
 *   This class uses the overpainting on a QGLWidget paradeigm from the Qt examples
 *
-*  \ingroup Visualization
- */
-
-//
-// Internal classes pre-declaration.
-class ImageModelRendererScrollable;
-class ImageViewManipulatorScrollable;
-class ItiOtbVectorImageViewer;
-
+*/
 class ItiOtbVectorQGLWidgetScrollable : public QGLWidget, public ItiViewerObserver
 {
     Q_OBJECT

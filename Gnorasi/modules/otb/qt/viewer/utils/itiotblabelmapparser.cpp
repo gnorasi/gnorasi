@@ -23,7 +23,6 @@ LabelMapParser::LabelMapParser(QObject *parent) :
 
 
 QList<Region*> LabelMapParser::parse(LabelMapType *lblmap){
-    QList<Region*> list;
 
     const unsigned int VDimension = 2;
     typedef itk::ContinuousIndex<double,VDimension>    ContinuousIndexType;
@@ -34,14 +33,15 @@ QList<Region*> LabelMapParser::parse(LabelMapType *lblmap){
     typedef ContinuousIndexType                   VertexType;
     typedef itk::VectorContainer<unsigned, VertexType> VertexListType;
 
-    double x = 0;
-    double y = 0;
-
-    int counter = 0;
+    QList<Region*> list;
 
     VectorImageType *img = ITIOTBIMAGEMANAGER->image();
     if(!img)
         return list;
+
+    int x       = 0;
+    int y       = 0;
+    int counter = 0;
 
     QList<QPolygon> pollist;
 
@@ -50,12 +50,10 @@ QList<Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
         PolygonType *pol = lblObject->GetPolygon();
 
-        const VertexListType *vList = pol->GetVertexList();
-
-        VertexListType::const_iterator point = vList->begin();
-
         QPolygon plgon;
 
+        const VertexListType *vList = pol->GetVertexList();
+        VertexListType::const_iterator point = vList->begin();
         while(point != vList->end())
         {
             ContinuousIndexType cit = *point;

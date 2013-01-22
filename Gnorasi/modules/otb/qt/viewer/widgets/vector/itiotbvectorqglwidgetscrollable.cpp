@@ -193,9 +193,7 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
 
         for(i = regions.constBegin(); i != regions.constEnd(); i++){
             Region *pRegion = *i;
-//            QRectF rectF(event->rect());
-//            if(pRegion->area().intersected(QPolygonF(rectF)))
-                pRegion->drawRegion(&painter, m_pImageViewManipulator->extent());
+            pRegion->drawRegion(&painter, m_pImageViewManipulator->extent(),m_IsotropicZoom);
         }
     }
 

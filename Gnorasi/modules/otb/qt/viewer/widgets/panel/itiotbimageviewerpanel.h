@@ -46,9 +46,10 @@ class Command;
 class ItiOtbImageChannelProvider;
 
 /*!
- *  \class The ItiOtbImageViewerPanel class
- *  This is the widget handling the various parameters of the
- *  ItiOtbImageViewer.
+ *  \class ItiOtbImageViewerPanel
+ *
+ *  \brief This is the widget handling the various parameters of the ItiOtbImageViewer.
+ *
  *  The tab widget will have 4 tabs , as the Monteverdi application has..
  *
  *  The processing of various slots provided by the GUI of this class is handled

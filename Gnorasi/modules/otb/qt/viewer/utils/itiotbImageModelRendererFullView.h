@@ -51,8 +51,8 @@ namespace itiviewer
 // Internal classes pre-declaration.
 class AbstractImageModel;
 
-/** \class ImageModelRenderer
- *
+/*!
+ * \brief The ImageModelRendererFullView class
  */
 class ImageModelRendererFullView :
     public QObject
