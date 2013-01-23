@@ -239,12 +239,13 @@ void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
     Level *pLevel = ITIOTBIMAGEMANAGER->levelById(m_currentLevelId);
     if(pLevel){
 
+        ImageRegionType extent = m_pImageViewManipulator->extent();
+
         QList<Region*> regions = pLevel->regions();
         QList<Region*>::const_iterator i;
-
         for(i = regions.constBegin(); i != regions.constEnd(); i++){
             Region *pRegion = *i;
-            pRegion->drawRegion(&painter, m_pImageViewManipulator->extent(),m_IsotropicZoom);
+            pRegion->drawRegion(&painter, extent, m_IsotropicZoom);
         }
     }
 

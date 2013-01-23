@@ -1,6 +1,6 @@
 #include "itiotbregion.h"
 
-using namespace itiviewer;
+namespace itiviewer {
 
 Region::Region(QObject *parent) :
     m_segmentationId(1),
@@ -22,7 +22,7 @@ void Region::drawRegion(QPainter *painter, ImageRegionType &extent, double iz){
 
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
-    painter->setOpacity(0.2);
+    painter->setOpacity(0.3);
 
     painter->drawPolygon(m_paintedArea);
 }
@@ -52,4 +52,6 @@ void Region::modifyPolygonByExtent(ImageRegionType &extent, double iz){
 
         m_paintedArea.replace(idx,hp);
     }
+}
+
 }
