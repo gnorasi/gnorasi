@@ -87,6 +87,8 @@ public:
      */
     void draw();
 
+    QRect visibleArea() const;
+
 public slots:
 
     /*!

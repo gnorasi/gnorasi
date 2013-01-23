@@ -290,23 +290,23 @@ void ItiOtbVectorImageViewer::setupConnections(){
     connect(m_pItiOtbVectorImageWidgetScroll, SIGNAL(zoomOut()),m_pItiOtbVectorImageWidgetZoomable,SLOT(zoomOut()));
     connect(m_pItiOtbVectorImageWidgetScroll, SIGNAL(focusRegionTranslated(int,int)),m_pItiOtbVectorImageWidgetZoomable,SLOT(translate(int,int)));
     connect(m_pItiOtbVectorImageWidgetZoomable, SIGNAL(visibleAreaChanged(QRect)),this,SLOT(onZoomableWidgetSizeChanged(QRect)));
-    connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
-    connect(m_pItiOtbVectorImageWidgetZoomable,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
-    connect(m_pItiOtbVectorImageWidgetScroll,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
+//    connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
+//    connect(m_pItiOtbVectorImageWidgetZoomable,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
+//    connect(m_pItiOtbVectorImageWidgetScroll,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
 }
 
 //! update regions to notify observers
-void ItiOtbVectorImageViewer::onScrollableWidgetSizeChanged(const QRect &size){
+void ItiOtbVectorImageViewer::onScrollableWidgetSizeChanged(const QRect &rect){
     //!
-    m_pVisibleRegion->updateRegion(size);
+    m_pVisibleRegion->updateRegion(rect);
 
-    m_pFocusRegion->updateRegion(m_pFocusRegion->region());
+    m_pFocusRegion->updateRegion(m_pItiOtbVectorImageWidgetZoomable->visibleArea());
 }
 
 //! update regions to notify observers
-void ItiOtbVectorImageViewer::onZoomableWidgetSizeChanged(const QRect &size){
+void ItiOtbVectorImageViewer::onZoomableWidgetSizeChanged(const QRect &rect){
     //!
-    m_pFocusRegion->updateRegion(size);
+    m_pFocusRegion->updateRegion(rect);
 }
 
 //! update regions to notify observers

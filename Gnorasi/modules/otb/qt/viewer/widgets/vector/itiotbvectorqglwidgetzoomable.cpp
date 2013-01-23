@@ -373,6 +373,23 @@ void ItiOtbVectorQGLWidgetZoomable::setupAndSendSignal(){
     emit visibleAreaChanged(rect);
 }
 
+QRect ItiOtbVectorQGLWidgetZoomable::visibleArea() const{
+    //! create a helper QRect value
+    QRect rect;
+
+    //!
+    //! set the display related values
+    //!
+
+    rect.setX(m_pImageModelRenderer->firstDisplayColumn());
+    rect.setWidth(m_pImageModelRenderer->nbDisplayColumns());
+    rect.setY(m_pImageModelRenderer->firstDisplayRow());
+    rect.setHeight(m_pImageModelRenderer->nbDisplayRows());
+
+    //! emit the signal
+    return rect;
+}
+
 
 void ItiOtbVectorQGLWidgetZoomable::onLargestPossibleRegionChanged(const ImageRegionType& largestRegion)
 {
