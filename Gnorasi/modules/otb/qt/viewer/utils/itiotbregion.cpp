@@ -46,10 +46,6 @@ void Region::modifyPolygonByExtent(ImageRegionType &extent, double iz){
         hp.setX(point.x()*iz + (int)extent.GetIndex()[0]);
         hp.setY(point.y()*iz + (int)extent.GetIndex()[1]);
 
-        if(hp.x() < (int)extent.GetIndex()[0]){
-            qDebug() << "wtf!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
-        }
-
         m_paintedArea.replace(idx,hp);
     }
 }

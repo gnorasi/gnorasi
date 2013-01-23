@@ -14,6 +14,8 @@
 #include "../viewer/utils/itiotbimagevectorchannelprovider.h"
 #include "../viewer/rgba_globaldefs.h"
 
+#include "../viewer/utils/itiotblevel.h"
+
 using namespace otb;
 using namespace itiviewer;
 
@@ -189,6 +191,16 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
 void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! START OF INCOMING DATA USAGE
 
+    //
+    //                          STATISTICS
+
+    QTime time;
+    qDebug() << "Start of incoming image data , setting up the image...";
+    time.restart();
+
+    //
+    //                          STATISTICS
+
     //! set the port to the image manager
     ITIOTBIMAGEMANAGER->setPort(port);
 
@@ -206,6 +218,16 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
 
     //! draw stuff
     m_pItiOtbImageViewer->draw();
+
+
+    //
+    //                          STATISTICS
+
+    qDebug() << "End of image setup \nmilliseconds elapsed : " << time.elapsed()
+             << "\nRegions created : " << ITIOTBIMAGEMANAGER->levels().last()->regions().size();
+
+    //
+    //                          STATISTICS
 
     //!
     //! END OF INCOMING DATA USAGE
