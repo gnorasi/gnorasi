@@ -108,6 +108,11 @@ signals:
      */
     void currentIndexChanged(const QString &text);
 
+    /*!
+     * \brief visibleAreaTranslated
+     */
+    void visibleAreaTranslated(int, int);
+
 protected:
 
     /*!
@@ -140,6 +145,12 @@ protected:
      * \param event
      */
 //    void resizeEvent(QResizeEvent* event);
+
+    /*!
+     * \brief mousePressEvent
+     * \param event
+     */
+    void mousePressEvent(QMouseEvent *event);
 
 
 private:

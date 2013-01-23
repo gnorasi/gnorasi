@@ -274,12 +274,6 @@ void ItiOtbVectorImageViewer::setupObserverMechanism(){
     m_pVisibleRegion                    = new ItiViewerObservableRegion(this);
 //    m_pVisibleRegion->registerObserver(m_pItiOtbVectorImageWidgetScroll);
     m_pVisibleRegion->registerObserver(m_pItiOtbVectorImageWidgetFullView);
-
-    //! initial setup
-    QRect rect;
-    rect.setWidth(m_pItiOtbVectorImageWidgetZoomable->width());
-    rect.setHeight(m_pItiOtbVectorImageWidgetZoomable->height());
-     m_pFocusRegion->updateRegion(rect);
 }
 
 //!
@@ -290,6 +284,8 @@ void ItiOtbVectorImageViewer::setupConnections(){
     connect(m_pItiOtbVectorImageWidgetScroll, SIGNAL(zoomOut()),m_pItiOtbVectorImageWidgetZoomable,SLOT(zoomOut()));
     connect(m_pItiOtbVectorImageWidgetScroll, SIGNAL(focusRegionTranslated(int,int)),m_pItiOtbVectorImageWidgetZoomable,SLOT(translate(int,int)));
     connect(m_pItiOtbVectorImageWidgetZoomable, SIGNAL(visibleAreaChanged(QRect)),this,SLOT(onZoomableWidgetSizeChanged(QRect)));
+    connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(visibleAreaTranslated(int,int)),m_pItiOtbVectorImageWidgetScroll,SLOT(translate(int,int)));
+    connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(visibleAreaTranslated(int,int)),m_pItiOtbVectorImageWidgetZoomable,SLOT(translate(int,int)));
 //    connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
 //    connect(m_pItiOtbVectorImageWidgetZoomable,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
 //    connect(m_pItiOtbVectorImageWidgetScroll,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));

@@ -51,6 +51,10 @@ ImageModelRendererScrollable
 ::ImageModelRendererScrollable( QObject* parent ) :
   QObject( parent )
 {
+    m_first_displayed_col   = 0;
+    m_first_displayed_row   = 0;
+    m_nb_displayed_cols     = 0;
+    m_nb_displayed_rows     = 0;
 }
 
 /*****************************************************************************/
@@ -71,33 +75,6 @@ void ImageModelRendererScrollable::paintGL( const RenderingContext& context )
     ImageRegionType bufferedRegion = context.m_ImageRegion;
     unsigned char* buffer = viModel->RasterizeRegion(bufferedRegion);
 
-    unsigned int nb_displayed_rows;
-    unsigned int nb_displayed_cols;
-    unsigned int first_displayed_row;
-    unsigned int first_displayed_col;
-
-    if( extent.GetIndex()[0] >= 0 )
-    {
-        nb_displayed_cols = bufferedRegion.GetSize()[0];
-        first_displayed_col = 0;
-    }
-    else
-    {
-        nb_displayed_cols = context.m_WidgetWidth / context.m_isotropicZoom;
-        first_displayed_col = (bufferedRegion.GetSize()[0] - nb_displayed_cols) / 2;
-    }
-
-    if( extent.GetIndex()[1] >= 0 )
-    {
-        nb_displayed_rows = bufferedRegion.GetSize()[1];
-        first_displayed_row = 0;
-    }
-    else
-    {
-        nb_displayed_rows = context.m_WidgetHeight / context.m_isotropicZoom;
-        first_displayed_row = (bufferedRegion.GetSize()[1] - nb_displayed_rows) / 2;
-    }
-
 
     VectorIndexType startPosition = extent.GetIndex();
     startPosition[0] = startPosition[0] < 0 ? 0 : startPosition[0];
@@ -105,15 +82,15 @@ void ImageModelRendererScrollable::paintGL( const RenderingContext& context )
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glPixelStorei(GL_UNPACK_ROW_LENGTH, bufferedRegion.GetSize()[0]);
-    glPixelStorei(GL_UNPACK_SKIP_PIXELS, first_displayed_col);
-    glPixelStorei(GL_UNPACK_SKIP_ROWS,first_displayed_row);
+    glPixelStorei(GL_UNPACK_SKIP_PIXELS, m_first_displayed_col);
+    glPixelStorei(GL_UNPACK_SKIP_ROWS,m_first_displayed_row);
 
     glClear(GL_COLOR_BUFFER_BIT);
     glPixelZoom(context.m_isotropicZoom,context.m_isotropicZoom);
 
     glRasterPos2f(startPosition[0], startPosition[1]);
-    glDrawPixels(nb_displayed_cols,
-       nb_displayed_rows,
+    glDrawPixels(m_nb_displayed_cols,
+       m_nb_displayed_rows,
        GL_RGB,
        GL_UNSIGNED_BYTE,
        buffer);
