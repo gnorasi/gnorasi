@@ -96,19 +96,49 @@ void ItiOtbVectorQGLWidgetScrollable::resizeGL(int w, int h)
     ImageRegionType extent = m_pImageViewManipulator->extent();
     ImageRegionType bufferRegion = m_pImageViewManipulator->bufferRegion();
 
+    //!
+    //! setup the number of rows and columns to be visualized
+    unsigned int nb_d_cs = m_pImageModelRenderer->nbDisplayColumns();
+    unsigned int nb_d_rs = m_pImageModelRenderer->nbDisplayRows();
+    unsigned int f_d_c = m_pImageModelRenderer->firstDisplayColumn();
+    unsigned int f_d_r = m_pImageModelRenderer->firstDisplayRow();
+
+    //!
+    //! check if the extend's index x value is greater than zero , if yes then the number of columns equals to the number of the buffered region
+    if( extent.GetIndex()[0] > 0 ){
+        nb_d_cs = bufferRegion.GetSize()[0];
+        f_d_c = 0;
+    } else {
+
+        nb_d_cs = w / m_IsotropicZoom;
+
+        //!
+        //! setup the fisrt display column
+        //!
+        if(f_d_c + nb_d_cs > bufferRegion.GetSize()[0])
+            f_d_c = bufferRegion.GetSize()[0] - nb_d_cs;
+    }
+
+    //!
+    //! check if the extend's index y value is greater than zero , if yes then the number of columns equals to the number of the buffered region
+    if( extent.GetIndex()[1] > 0 ){
+        nb_d_rs = bufferRegion.GetSize()[1];
+        f_d_r = extent.GetSize()[1] - nb_d_rs;
+    } else {
+        nb_d_rs = h / m_IsotropicZoom;
+
+        //!
+        //! setup first display row
+        //!
+        if(f_d_r + nb_d_rs > bufferRegion.GetSize()[1])
+            f_d_r = bufferRegion.GetSize()[0] - nb_d_rs;
+    }
+
+    m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
+
+
     //! create a rect
-    QRect rect;
-
-    rect.setX(extent.GetIndex()[0]);
-    rect.setY(extent.GetIndex()[1]);
-
-    //! create helper integer values
-    int wt = qMin(static_cast<int>(w),static_cast<int>(bufferRegion.GetSize()[0]));
-    int ht = qMin(static_cast<int>(h),static_cast<int>(bufferRegion.GetSize()[1]));
-
-    //! set the helper values
-    rect.setWidth(wt);
-    rect.setHeight(ht);
+    QRect rect(f_d_c,bufferRegion.GetSize()[0] - nb_d_rs - f_d_r,nb_d_cs,nb_d_rs);
 
     //! emit the signal
     emit visibleAreaChanged(rect);
@@ -146,6 +176,38 @@ void ItiOtbVectorQGLWidgetScrollable::setupViewport(int w, int h){
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0, (GLint)w, 0, (GLint)h, -1, 1);
+}
+
+//!
+void ItiOtbVectorQGLWidgetScrollable::initializeColumnRowParameters(){
+
+    setupViewport(width(),height());
+
+    ImageRegionType extent = m_pImageViewManipulator->extent();
+    ImageRegionType bufferedRegion = m_pImageViewManipulator->bufferRegion();
+
+    unsigned int nb_d_cs    = 0;
+    unsigned int nb_d_rs    = 0;
+    unsigned int f_d_c      = 0;
+    unsigned int f_d_r      = 0;
+
+    if( extent.GetIndex()[0] > 0 )
+        nb_d_cs = bufferedRegion.GetSize()[0];
+    else
+        nb_d_cs = width() / m_IsotropicZoom;
+
+    if( extent.GetIndex()[1] > 0 )
+        nb_d_rs = bufferedRegion.GetSize()[1];
+    else
+        nb_d_rs = height() / m_IsotropicZoom;
+
+    //!
+    //! the values along the y-axes follow some kind of a transormation matrix [1,-1]
+    //!
+    f_d_r = extent.GetSize()[1] - nb_d_rs;
+
+    //!
+    m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
 }
 
 //!
@@ -222,6 +284,9 @@ void ItiOtbVectorQGLWidgetScrollable::draw(){
 
     //! mouse tracking is disabled on startup, set it on
     setMouseTracking(true);
+
+    //! initialize the column and row related parameters
+    initializeColumnRowParameters();
 }
 
 //! The observer gets notified on a zoomable view's change ( either zooming or resizing events)
@@ -350,10 +415,57 @@ void ItiOtbVectorQGLWidgetScrollable::mouseMoveEvent(QMouseEvent *event){
     QGLWidget::mouseMoveEvent(event);
 }
 
+/*!
+ * \brief ItiOtbVectorQGLWidgetScrollable::translate
+ * \param rect
+ */
+void ItiOtbVectorQGLWidgetScrollable::translate(int dx, int dy){
 
-//void ItiOtbVectorQGLWidgetScrollable::resizeEvent(QResizeEvent *event){
-//    m_pImageViewManipulator->resizeEvent(event);
-//}
+    unsigned int nb_d_cs = m_pImageModelRenderer->nbDisplayColumns();
+    unsigned int nb_d_rs = m_pImageModelRenderer->nbDisplayRows();
+    unsigned int f_d_c = m_pImageModelRenderer->firstDisplayColumn();
+    unsigned int f_d_r = m_pImageModelRenderer->firstDisplayRow();
+
+    ImageRegionType bufferedRegion  = m_pImageViewManipulator->bufferRegion();
+
+    //! create a helper value equal to the f_d_c plus the dx parameter
+    int helperX = f_d_c + dx;
+
+    //! check that the helperX value is less than zero
+    if(helperX < 0)
+        f_d_c = 0;
+    //! check if it is beween the buffered region extends
+    else if(helperX > bufferedRegion.GetSize()[0] - nb_d_cs)
+        f_d_c = bufferedRegion.GetSize()[0] - nb_d_cs;
+    else
+        f_d_c = helperX;
+
+    //!
+    int helperY = f_d_r - dy;
+
+    //! check that it is less than zero
+    if(helperY < 0)
+        f_d_r = 0;
+    //! check that it is between the buffered region's y-axes size
+    else if(helperY > bufferedRegion.GetSize()[1] - nb_d_rs)
+        f_d_r = bufferedRegion.GetSize()[1] - nb_d_rs;
+    else //! else set the f_d_r equal to the helperY value
+        f_d_r = helperY;
+
+    //!
+    m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
+
+    //! update painting
+//    updateGL();
+    update();
+}
+
+void ItiOtbVectorQGLWidgetScrollable::showEvent(QShowEvent *event){
+    Q_UNUSED(event);
+
+    resizeGL(width(),height());
+}
+
 
 //!
 ItiOtbVectorQGLWidgetScrollable::~ItiOtbVectorQGLWidgetScrollable(){

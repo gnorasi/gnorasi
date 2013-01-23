@@ -91,6 +91,14 @@ public:
      */
     void draw();
 
+public slots:
+    /*!
+     * \brief translate
+     * \param dx
+     * \param dy
+     */
+    void translate(int dx, int dy);
+
 signals:
     /*!
      * \brief visibleAreaChanged , this signal is emitted uppon the view resizing
@@ -160,12 +168,16 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
 
     /*!
-     * \brief resizeEvent
-     * \param event
+     * \brief showEvent
      */
-//    void resizeEvent(QResizeEvent* event);
+    void showEvent(QShowEvent *);
 
 private:
+    /*!
+     * \brief setupcolumnRowParameters
+     */
+    void initializeColumnRowParameters();
+
     /*!
      * \brief setupViewport
      * \param width
