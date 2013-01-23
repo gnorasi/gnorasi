@@ -123,6 +123,9 @@ public:
      */
     Level* levelById(int id);
 
+
+    QList<Level*> levels() const { return m_levelList; }
+
 private:
     //! ctor
     ItiOtbImageManager();
