@@ -1,6 +1,8 @@
 #ifndef ITIOTBLABELMAPPARSER_H
 #define ITIOTBLABELMAPPARSER_H
 
+#include <QtCore>
+#include <QtGui>
 #include <QObject>
 #include <QPolygon>
 #include <QStringList>
@@ -33,7 +35,7 @@ public:
      * \param lblmap
      * \return
      */
-    QList<Region*> parse(LabelMapType* lblmap);
+    QList<itiviewer::Region*> parse(LabelMapType* lblmap);
 
 signals:
     

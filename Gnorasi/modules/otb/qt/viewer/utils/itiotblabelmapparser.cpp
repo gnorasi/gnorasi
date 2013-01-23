@@ -22,7 +22,7 @@ LabelMapParser::LabelMapParser(QObject *parent) :
 }
 
 
-QList<Region*> LabelMapParser::parse(LabelMapType *lblmap){
+QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
     const unsigned int VDimension = 2;
     typedef itk::ContinuousIndex<double,VDimension>    ContinuousIndexType;
@@ -87,19 +87,19 @@ QList<Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
         list << pRegion;
     }
+    //    QString path = QFileDialog::getSaveFileName(0,QLatin1String("Save"),QDir::homePath());
+    //    if(!path.contains(".csv"))
+    //        path.append(".csv");
 
-    QString path = QFileDialog::getSaveFileName(0,QLatin1String("Save"),QDir::homePath());
-    if(!path.contains(".csv"))
-        path.append(".csv");
+    //    QFile file(path);
+    //    if(!file.open(QIODevice::WriteOnly))
+    //        return list;
 
-    QFile file(path);
-    if(!file.open(QIODevice::WriteOnly))
-        return list;
+    //    QTextStream out(&file);
+    //    out << LabelMapParser::contructTextFromPolygonList(pollist);
 
-    QTextStream out(&file);
-    out << LabelMapParser::contructTextFromPolygonList(pollist);
+    //    file.close();
 
-    file.close();
 
     return list;
 }
