@@ -111,7 +111,7 @@ signals:
      * \param dx
      * \param dy
      */
-    void focusRegionTranslated(int dx, int dy);
+    void focusRegionChanged(const QRect& );
 
     /*!
      * \brief zoomIn , this signal is emitterd uppon wheel events
@@ -173,6 +173,12 @@ protected:
     void showEvent(QShowEvent *);
 
 private:
+    /*!
+     * \brief focusRegionExtents
+     * \return
+     */
+    void setupFocusRegionAndSendNotification() ;
+
     /*!
      * \brief setupcolumnRowParameters
      */

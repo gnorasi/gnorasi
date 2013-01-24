@@ -112,7 +112,7 @@ public slots:
      * \param dx
      * \param dy
      */
-    void translate(int dx, int dy);
+    void translate(const QRect &);
 
 signals:
     /*!

@@ -77,6 +77,44 @@ ItiOtbVectorQGLWidgetScrollable::ItiOtbVectorQGLWidgetScrollable(ItiOtbVectorIma
     qsrand((uint)time.msec());
 }
 
+//
+void ItiOtbVectorQGLWidgetScrollable::setupFocusRegionAndSendNotification() {
+
+    //!
+    //! setup the number of rows and columns to be visualized
+    unsigned int f_d_c = m_pImageModelRenderer->firstDisplayColumn();
+    unsigned int f_d_r = m_pImageModelRenderer->firstDisplayRow();
+    ImageRegionType extent = m_pImageViewManipulator->extent();
+
+    int _x = f_d_c + m_focusRegion.x();
+    int _y = f_d_r + height() - m_focusRegion.y() - m_focusRegion.height();
+    int _w = m_focusRegion.width();
+    int _h = m_focusRegion.height();
+
+    if(_x < 0)
+        _x = 0;
+    if(_y - _h < 0)
+        _y  = 0;
+    if(_w < 0)
+        _w = 0;
+    if(_h < 0)
+        _h = 0;
+
+    if(_x + _w > extent.GetSize()[0])
+        _x = extent.GetSize()[0] - _w;
+    if(_y + _h > extent.GetSize()[1])
+        _y  = extent.GetSize()[1] - _h;
+
+    QRect rect;
+    rect.setX(_x);
+    rect.setY(_y);
+    rect.setWidth(_w);
+    rect.setHeight(_h);
+
+    //! emit signal in order to update the zoomable view
+    emit focusRegionChanged(rect);
+}
+
 
 /*!
  * \brief ItiOtbVectorQGLWidgetScrollable::initializeGL
@@ -373,8 +411,7 @@ void ItiOtbVectorQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
         //!translate the focus region
         m_focusRegion.translate(dx,dy);
 
-        //! emit signal in order to update the zoomable view
-        emit focusRegionTranslated(dx,dy);
+        setupFocusRegionAndSendNotification();
 
         //! update widget
         update();
