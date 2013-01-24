@@ -140,7 +140,7 @@ private slots:
      * \brief onFocusRegionTranslated
      * \param rect
      */
-    void onFocusRegionTranslated(const QRect &rect);
+    void onFocusRegionChanged(const QRect &rect);
 
 
 signals:

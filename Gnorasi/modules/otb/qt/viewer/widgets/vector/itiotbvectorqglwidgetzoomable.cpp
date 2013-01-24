@@ -567,38 +567,45 @@ void ItiOtbVectorQGLWidgetZoomable::zoomOut(){
  * \brief ItiOtbVectorQGLWidgetZoomable::translate
  * \param rect
  */
-void ItiOtbVectorQGLWidgetZoomable::translate(int dx, int dy){
+void ItiOtbVectorQGLWidgetZoomable::translate(const QRect &rect){
 
     unsigned int nb_d_cs = m_pImageModelRenderer->nbDisplayColumns();
     unsigned int nb_d_rs = m_pImageModelRenderer->nbDisplayRows();
     unsigned int f_d_c = m_pImageModelRenderer->firstDisplayColumn();
     unsigned int f_d_r = m_pImageModelRenderer->firstDisplayRow();
 
-    ImageRegionType bufferedRegion  = m_pImageViewManipulator->bufferRegion();
+    ImageRegionType extent = m_pImageViewManipulator->extent();
 
-    //! create a helper value equal to the f_d_c plus the dx parameter
-    int helperX = f_d_c + dx;
+    f_d_c = rect.x() * m_IsotropicZoom;
+    nb_d_cs = rect.width() * m_IsotropicZoom;
+    nb_d_rs = rect.height() * m_IsotropicZoom;
+    f_d_r = rect.y() * m_IsotropicZoom;
 
-    //! check that the helperX value is less than zero
-    if(helperX < 0)
-        f_d_c = 0;
-    //! check if it is beween the buffered region extends
-    else if(helperX > bufferedRegion.GetSize()[0] - nb_d_cs)
-        f_d_c = bufferedRegion.GetSize()[0] - nb_d_cs;
-    else
-        f_d_c = helperX;
+//    ImageRegionType bufferedRegion  = m_pImageViewManipulator->bufferRegion();
 
-    //!
-    int helperY = f_d_r - dy;
+//    //! create a helper value equal to the f_d_c plus the dx parameter
+//    int helperX = f_d_c + dx;
 
-    //! check that it is less than zero
-    if(helperY < 0)
-        f_d_r = 0;
-    //! check that it is between the buffered region's y-axes size
-    else if(helperY > bufferedRegion.GetSize()[1] - nb_d_rs)
-        f_d_r = bufferedRegion.GetSize()[1] - nb_d_rs;
-    else //! else set the f_d_r equal to the helperY value
-        f_d_r = helperY;
+//    //! check that the helperX value is less than zero
+//    if(helperX < 0)
+//        f_d_c = 0;
+//    //! check if it is beween the buffered region extends
+//    else if(helperX > bufferedRegion.GetSize()[0] - nb_d_cs)
+//        f_d_c = bufferedRegion.GetSize()[0] - nb_d_cs;
+//    else
+//        f_d_c = helperX;
+
+//    //!
+//    int helperY = f_d_r - dy;
+
+//    //! check that it is less than zero
+//    if(helperY < 0)
+//        f_d_r = 0;
+//    //! check that it is between the buffered region's y-axes size
+//    else if(helperY > bufferedRegion.GetSize()[1] - nb_d_rs)
+//        f_d_r = bufferedRegion.GetSize()[1] - nb_d_rs;
+//    else //! else set the f_d_r equal to the helperY value
+//        f_d_r = helperY;
 
     //!
     m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
