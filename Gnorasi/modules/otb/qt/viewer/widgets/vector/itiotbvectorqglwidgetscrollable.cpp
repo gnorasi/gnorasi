@@ -93,7 +93,7 @@ void ItiOtbVectorQGLWidgetScrollable::setupFocusRegionAndSendNotification() {
 
     if(_x < 0)
         _x = 0;
-    if(_y - _h < 0)
+    if(_y < 0)
         _y  = 0;
     if(_w < 0)
         _w = 0;
