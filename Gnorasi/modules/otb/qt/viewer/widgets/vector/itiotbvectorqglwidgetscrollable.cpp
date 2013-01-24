@@ -174,12 +174,12 @@ void ItiOtbVectorQGLWidgetScrollable::resizeGL(int w, int h)
 
     m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
 
-
     //! create a rect
     QRect rect(f_d_c,bufferRegion.GetSize()[0] - nb_d_rs - f_d_r,nb_d_cs,nb_d_rs);
 
     //! emit the signal
     emit visibleAreaChanged(rect);
+
 }
 
 //!
@@ -364,9 +364,9 @@ void ItiOtbVectorQGLWidgetScrollable::wheelEvent(QWheelEvent *event){
 
     //! check the delta value if is more than zero, if yes zoomin, else zoomout
     if(deltaval>0)
-        emit zoomIn();
+        zoomIn();
     else
-        emit zoomOut();
+        zoomOut();
 
     event->accept();
 }
@@ -497,10 +497,35 @@ void ItiOtbVectorQGLWidgetScrollable::translate(int dx, int dy){
     update();
 }
 
-void ItiOtbVectorQGLWidgetScrollable::showEvent(QShowEvent *event){
-    Q_UNUSED(event);
 
-    resizeGL(width(),height());
+void ItiOtbVectorQGLWidgetScrollable::zoomIn(){
+
+    int prevWidth = m_focusRegion.width();
+    int prevHeight = m_focusRegion.height();
+
+    m_focusRegion.setWidth(prevWidth - prevWidth * ZOOM_VALUE );
+    m_focusRegion.setHeight(prevHeight  - prevHeight * ZOOM_VALUE);
+
+    m_focusRegion.translate((prevWidth - m_focusRegion.width())/2,(prevHeight - m_focusRegion.height())/2);
+
+    update();
+
+    setupFocusRegionAndSendNotification();
+}
+
+
+void ItiOtbVectorQGLWidgetScrollable::zoomOut(){
+    int prevWidth = m_focusRegion.width();
+    int prevHeight = m_focusRegion.height();
+
+    m_focusRegion.setWidth(prevWidth + prevWidth * ZOOM_VALUE );
+    m_focusRegion.setHeight(prevHeight + prevHeight * ZOOM_VALUE);
+
+    m_focusRegion.translate((prevWidth - m_focusRegion.width())/2,(prevHeight - m_focusRegion.height())/2);
+
+    update();
+
+    setupFocusRegionAndSendNotification();
 }
 
 
