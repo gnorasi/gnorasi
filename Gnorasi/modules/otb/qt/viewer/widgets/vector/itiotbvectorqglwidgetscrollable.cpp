@@ -390,12 +390,18 @@ void ItiOtbVectorQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
         //! create helper values
         int dx = 0, dy = 0;
 
+        int val = (int)m_pImageModelRenderer->firstDisplayColumn() + m_focusRegion.x() + line.dx() - m_focusRegion.width()/2;
+
         //! check if the new rect right border exceeds the extends' width value
-        if(point.x()+ qRound((double)m_focusRegion.width()/2.0) > extent.GetSize()[0] + extent.GetIndex()[0]){
-            dx = extent.GetIndex()[0] + extent.GetSize()[0] - qRound((double)m_focusRegion.width()/2.0) - previousCenter.x();
+        if(line.dx() > 0 && m_pImageModelRenderer->firstDisplayColumn() + m_focusRegion.x() + line.dx() + m_focusRegion.width() > extent.GetSize()[0] ){
+            dx = extent.GetSize()[0] - m_pImageModelRenderer->firstDisplayColumn() - m_focusRegion.width() - m_focusRegion.x();
+            if(extent.GetIndex()[0] > 0)
+                dx += extent.GetIndex()[0];
         } //! check if the new rect left border exceeds the extend's index x value
-        else if(point.x()- qRound((double)m_focusRegion.width()/2.0) < extent.GetIndex()[0]){
-            dx = extent.GetIndex()[0] + qRound((double)m_focusRegion.width()/2.0) - previousCenter.x();
+        else if( line.dx() < 0 && (int)m_pImageModelRenderer->firstDisplayColumn() + m_focusRegion.x() + line.dx() < 0){
+            dx = -m_focusRegion.x();
+            if(extent.GetIndex()[0] > 0)
+                dx += extent.GetIndex()[0];
         }else //! else set the dx value equal to the line dx value
             dx = line.dx();
 
