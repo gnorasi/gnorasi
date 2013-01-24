@@ -390,8 +390,6 @@ void ItiOtbVectorQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
         //! create helper values
         int dx = 0, dy = 0;
 
-        int val = (int)m_pImageModelRenderer->firstDisplayColumn() + m_focusRegion.x() + line.dx() - m_focusRegion.width()/2;
-
         //! check if the new rect right border exceeds the extends' width value
         if(line.dx() > 0 && m_pImageModelRenderer->firstDisplayColumn() + m_focusRegion.x() + line.dx() + m_focusRegion.width() > extent.GetSize()[0] ){
             dx = extent.GetSize()[0] - m_pImageModelRenderer->firstDisplayColumn() - m_focusRegion.width() - m_focusRegion.x();
@@ -405,12 +403,19 @@ void ItiOtbVectorQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
         }else //! else set the dx value equal to the line dx value
             dx = line.dx();
 
+        int val = m_pImageModelRenderer->firstDisplayRow() + height() - m_focusRegion.y() - line.dy();
         //! check if the new rect right border exceeds the extends' height value
-        if(point.y()+ qRound((double)m_focusRegion.height()/2.0) > extent.GetSize()[1] + extent.GetIndex()[1]){
-            dy = extent.GetSize()[1] + extent.GetIndex()[1] - qRound((double)m_focusRegion.height()/2.0) - previousCenter.y();
+//        if(line.dy() > 0 && point.y()+ qRound((double)m_focusRegion.height()/2.0) > extent.GetSize()[1] + extent.GetIndex()[1]){
+        if(line.dy() > 0 && extent.GetSize()[1] - m_pImageModelRenderer->nbDisplayRows() - m_pImageModelRenderer->firstDisplayRow() + m_focusRegion.y() + m_focusRegion.height() + line.dy() > extent.GetSize()[1]){
+//            dy = extent.GetSize()[1] + extent.GetIndex()[1] - qRound((double)m_focusRegion.height()/2.0) - previousCenter.y();
+            dy = height() - m_focusRegion.y() - m_focusRegion.height();
+            if(extent.GetIndex()[1] > 0)
+                dy += extent.GetIndex()[1];
         } //! check if the new rect left border exceeds the extend's index y value
-        else if(point.y()- qRound((double)m_focusRegion.height()/2.0) < extent.GetIndex()[1]){
-            dy = extent.GetIndex()[1] + qRound((double)m_focusRegion.height()/2.0) - previousCenter.y();
+        else if( line.dy() < 0 && m_pImageModelRenderer->firstDisplayRow() + height() - m_focusRegion.y() - line.dy() > extent.GetSize()[1]){
+            dy = -m_focusRegion.y();
+            if(extent.GetIndex()[1] > 0)
+                dy += extent.GetIndex()[1];
         }else //! else set the dy value equal to the line dy value
             dy = line.dy();
 
