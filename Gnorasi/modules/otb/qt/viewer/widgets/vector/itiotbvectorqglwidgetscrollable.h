@@ -116,12 +116,12 @@ signals:
     /*!
      * \brief zoomIn , this signal is emitterd uppon wheel events
      */
-    void zoomIn();
+//    void zoomIn();
 
     /*!
      * \brief zoomIn , this signal is emitterd uppon wheel events
      */
-    void zoomOut();
+//    void zoomOut();
 
     /*!
      * \brief currentIndexChanged
@@ -167,12 +167,18 @@ protected:
      */
     void mouseMoveEvent(QMouseEvent *event);
 
-    /*!
-     * \brief showEvent
-     */
-    void showEvent(QShowEvent *);
-
 private:
+
+    /*!
+     * \brief zoomIn
+     */
+    void zoomIn();
+
+    /*!
+     * \brief zoomOut
+     */
+    void zoomOut();
+
     /*!
      * \brief focusRegionExtents
      * \return

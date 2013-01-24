@@ -32,6 +32,8 @@
 
 using namespace otb;
 
+const double ZOOM_VALUE = 0.125;
+
 const unsigned int VDimension = 2;
 
 typedef double                                                              VPixelType;

@@ -87,6 +87,10 @@ public:
      */
     void draw();
 
+    /*!
+     * \brief visibleArea
+     * \return
+     */
     QRect visibleArea() const;
 
 public slots:
@@ -112,7 +116,7 @@ public slots:
      * \param dx
      * \param dy
      */
-    void translate(const QRect &);
+    void onFocusRegionChanged(const QRect &);
 
 signals:
     /*!
