@@ -119,8 +119,6 @@ std::string RetrieveClassificationDataWidget::invokeWebService(std::string input
                         "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" \
                         "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n";
 
-        LINFO("All data sent");
-
         //issue query to get regions
         QString query = "SELECT ?regionID ?objectClassID " \
                         "WHERE { " \
@@ -157,6 +155,7 @@ std::string RetrieveClassificationDataWidget::invokeWebService(std::string input
         return csv.toStdString();
     }
 
+    LINFO("Classification data retrieval failed");
     return "Classification data retrieval failed";
 }
 
