@@ -94,6 +94,9 @@ void ItiOtbVectorQGLWidgetScrollable::setupFocusRegionAndSendNotification() {
     int _w = m_focusRegion.width();
     int _h = m_focusRegion.height();
 
+    if(extent.GetIndex()[1] > 0)
+        _y -= extent.GetIndex()[1];
+
     if(_x < 0)
         _x = 0;
     if(_y < 0)
@@ -351,7 +354,7 @@ void ItiOtbVectorQGLWidgetScrollable::updateObserver(ItiViewerObservable *observ
     if(extent.GetIndex()[0] > 0)
         x += extent.GetIndex()[0];
     if(extent.GetIndex()[1] > 0)
-        y += extent.GetIndex()[1];
+        y -= extent.GetIndex()[1];
 
     m_focusRegion.setX(x);
     m_focusRegion.setY(y);
@@ -395,10 +398,13 @@ void ItiOtbVectorQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
         int dx = 0, dy = 0;
 
 
-        if(line.dx() > 0 && m_pImageModelRenderer->firstDisplayColumn() + m_focusRegion.x() + line.dx() + m_focusRegion.width() > extent.GetSize()[0] ){
+        if(line.dx() > 0 && extent.GetIndex()[0] < 0 && m_pImageModelRenderer->firstDisplayColumn() + m_focusRegion.x() + line.dx() + m_focusRegion.width() > extent.GetSize()[0] ){
             dx = extent.GetSize()[0] - m_pImageModelRenderer->firstDisplayColumn() - m_focusRegion.width() - m_focusRegion.x();
             if(extent.GetIndex()[0] > 0)
                 dx += extent.GetIndex()[0];
+        }
+        else if(line.dx() > 0 && extent.GetIndex()[0] >= 0 && m_focusRegion.x() + line.dx() + m_focusRegion.width() - extent.GetIndex()[0] > extent.GetSize()[0] ){
+            dx = extent.GetSize()[0] - m_focusRegion.width() - m_focusRegion.x() + extent.GetIndex()[0];
         }
         else if( line.dx() < 0 && (int)m_pImageModelRenderer->firstDisplayColumn() + m_focusRegion.x() + line.dx() < 0){
             dx = -m_focusRegion.x();
@@ -412,16 +418,23 @@ void ItiOtbVectorQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
 
         //
 
-        if(line.dy() > 0 && extent.GetSize()[1] - m_pImageModelRenderer->nbDisplayRows() - m_pImageModelRenderer->firstDisplayRow() + m_focusRegion.y() + m_focusRegion.height() + line.dy() > extent.GetSize()[1]){
+        if(line.dy() > 0 && extent.GetIndex()[1] < 0 && extent.GetSize()[1] - m_pImageModelRenderer->nbDisplayRows() - m_pImageModelRenderer->firstDisplayRow() + m_focusRegion.y() + m_focusRegion.height() + line.dy() > extent.GetSize()[1]){
             dy = height() - m_focusRegion.y() - m_focusRegion.height();
             if(extent.GetIndex()[1] > 0)
-                dy += extent.GetIndex()[1];
+                dy -= extent.GetIndex()[1];
         }
-        else if( line.dy() < 0 && m_pImageModelRenderer->firstDisplayRow() + height() - m_focusRegion.y() - line.dy() > extent.GetSize()[1]){
+        else if(line.dy() > 0 && extent.GetIndex()[1] >= 0 && extent.GetSize()[1] -extent.GetIndex()[1] - m_pImageModelRenderer->nbDisplayRows() + m_focusRegion.y() + m_focusRegion.height() + line.dy() > extent.GetSize()[1] ){
+            dy = height() - m_focusRegion.y() - m_focusRegion.height() - extent.GetIndex()[1];
+        }
+        else if( line.dy() < 0 && extent.GetIndex()[1] < 0 && m_pImageModelRenderer->firstDisplayRow() + height() - m_focusRegion.y() - line.dy() > extent.GetSize()[1]){
             dy = -m_focusRegion.y();
             if(extent.GetIndex()[1] > 0)
-                dy += extent.GetIndex()[1];
-        }else
+                dy -= extent.GetIndex()[1];
+        }
+        else if( line.dy() < 0 && extent.GetIndex()[1] >= 0 && m_focusRegion.y() + line.dy() < extent.GetIndex()[1]){
+            dy = -m_focusRegion.y() + extent.GetIndex()[1];
+        }
+        else
             dy = line.dy();
 
 
