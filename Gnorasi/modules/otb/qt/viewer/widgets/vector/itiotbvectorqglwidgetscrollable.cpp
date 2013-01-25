@@ -64,6 +64,7 @@ ItiOtbVectorQGLWidgetScrollable::ItiOtbVectorQGLWidgetScrollable(ItiOtbVectorIma
     m_pImageModelRenderer( NULL ),
     m_pItiOtbVectorImageViewer(parent),
     m_currentLevelId(1),
+    m_helperZoomCounter(1.0),
     QGLWidget(parent)
 {
     setAutoFillBackground(false);
@@ -517,13 +518,24 @@ void ItiOtbVectorQGLWidgetScrollable::translate(int dx, int dy){
 
 void ItiOtbVectorQGLWidgetScrollable::zoomIn(){
 
+    m_helperZoomCounter += ZOOM_VALUE;
+
     int prevWidth = m_focusRegion.width();
     int prevHeight = m_focusRegion.height();
 
-    m_focusRegion.setWidth(prevWidth - prevWidth * ZOOM_VALUE );
-    m_focusRegion.setHeight(prevHeight  - prevHeight * ZOOM_VALUE);
+    double newWidth = (double)prevWidth - (double)prevWidth * ZOOM_VALUE ;
+    if(newWidth > m_pImageModelRenderer->nbDisplayColumns())
+        return;
 
-    m_focusRegion.translate((prevWidth - m_focusRegion.width())/2,(prevHeight - m_focusRegion.height())/2);
+    double newHeight = prevHeight  - prevHeight * ZOOM_VALUE;
+    if(newHeight > m_pImageModelRenderer->nbDisplayRows())
+        return;
+
+
+    m_focusRegion.setWidth(qRound(newWidth));
+    m_focusRegion.setHeight(qRound(newHeight));
+
+    m_focusRegion.translate(qRound((prevWidth - (double)m_focusRegion.width())/2.0),qRound((prevHeight - (double)m_focusRegion.height())/2.0));
 
     update();
 
@@ -532,13 +544,27 @@ void ItiOtbVectorQGLWidgetScrollable::zoomIn(){
 
 
 void ItiOtbVectorQGLWidgetScrollable::zoomOut(){
+    if(m_helperZoomCounter -ZOOM_VALUE < 1.0){
+        return;
+    }
+
+    m_helperZoomCounter -= ZOOM_VALUE;
+
     int prevWidth = m_focusRegion.width();
     int prevHeight = m_focusRegion.height();
 
-    m_focusRegion.setWidth(prevWidth + prevWidth * ZOOM_VALUE );
-    m_focusRegion.setHeight(prevHeight + prevHeight * ZOOM_VALUE);
+    double newWidth = (double)prevWidth + (double)prevWidth * ZOOM_VALUE ;
+    if(newWidth > m_pImageModelRenderer->nbDisplayColumns())
+        return;
 
-    m_focusRegion.translate((prevWidth - m_focusRegion.width())/2,(prevHeight - m_focusRegion.height())/2);
+    double newHeight = prevHeight + prevHeight * ZOOM_VALUE;
+    if(newHeight > m_pImageModelRenderer->nbDisplayRows())
+        return;
+
+    m_focusRegion.setWidth(qRound(newWidth));
+    m_focusRegion.setHeight(qRound(newHeight));
+
+    m_focusRegion.translate(qRound((prevWidth - (double)m_focusRegion.width())/2.0),qRound((prevHeight - (double)m_focusRegion.height())/2.0));
 
     update();
 

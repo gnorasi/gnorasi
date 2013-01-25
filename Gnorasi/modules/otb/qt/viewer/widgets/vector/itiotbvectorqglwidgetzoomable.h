@@ -131,6 +131,11 @@ signals:
      */
     void currentIndexChanged(const QString &text);
 
+    /*!
+     * \brief readyToClearZoom
+     */
+    void readyToClearZoom();
+
 
 protected:
 
@@ -159,11 +164,6 @@ protected:
     void resizeGL(int w, int h);
 
     /*!
-     * \brief paintGL , reimplemented method declared in the QGLWidget class
-     */
-//    void paintGL();
-
-    /*!
      * \brief paintEvent
      * \param event
      */
@@ -174,12 +174,6 @@ protected:
      * \param event
      */
     void mouseMoveEvent(QMouseEvent *event);
-
-    /*!
-     * \brief resizeEvent
-     * \param event
-     */
-//    void resizeEvent(QResizeEvent* event);
 
 
 private:

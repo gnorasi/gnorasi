@@ -99,6 +99,11 @@ public slots:
      */
     void translate(int dx, int dy);
 
+    /*!
+     * \brief resetZoom
+     */
+    void resetZoom() { m_helperZoomCounter = 1.0; }
+
 signals:
     /*!
      * \brief visibleAreaChanged , this signal is emitted uppon the view resizing
@@ -112,16 +117,6 @@ signals:
      * \param dy
      */
     void focusRegionChanged(const QRect& );
-
-    /*!
-     * \brief zoomIn , this signal is emitterd uppon wheel events
-     */
-//    void zoomIn();
-
-    /*!
-     * \brief zoomIn , this signal is emitterd uppon wheel events
-     */
-//    void zoomOut();
 
     /*!
      * \brief currentIndexChanged
@@ -226,6 +221,8 @@ private:
 
 
     int m_currentLevelId;
+
+    double m_helperZoomCounter;
 
 };
 
