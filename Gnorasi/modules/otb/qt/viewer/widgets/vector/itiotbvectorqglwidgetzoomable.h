@@ -123,7 +123,7 @@ signals:
      * \brief visibleAreaChanged , this signal is emitted uppon the view resizing
      * \param rect
      */
-    void visibleAreaChanged(const QRect &rect);
+    void focucAreaChanged(const QRect &rect);
 
     /*!
      * \brief currentIndexChanged
@@ -133,11 +133,6 @@ signals:
 
 
 protected:
-
-    /*!
-     * \brief setupExtents
-     */
-    void setupRowColumnDisplay();
 
     /*!
      * \brief setupAndSendSignal
