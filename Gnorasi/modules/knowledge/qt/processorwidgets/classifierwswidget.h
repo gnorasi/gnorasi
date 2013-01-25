@@ -53,6 +53,7 @@ public:
     virtual std::string invokeWebService(std::string input);
     virtual QVector<QVector<QString> > parseHeaders(QStringList headers);
     virtual QDomDocument readMappings(QString mapFile, QString* error, int* line, int *col);
+    virtual void clearData(std::string serverUpdate, QVector<QVector<QString> > headersList, QDomDocument doc);
 
 private:
     static const std::string loggerCat_;
