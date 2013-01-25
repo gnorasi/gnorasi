@@ -78,7 +78,8 @@
     # Service part.
     # This processor will not allow either the protocol,
     # nor the query, to specify the datset.
-    joseki:processor    joseki:ProcessorSPARQL_FixedDS ;
+    #joseki:processor    joseki:ProcessorSPARQL_FixedDS ;
+	joseki:processor    joseki:ProcessorSPARQL ;
     .
 	
 #Gnorasi SPARQL Update service
@@ -89,8 +90,6 @@
      # dataset part
      joseki:dataset      <#gnorasiDataset>;
      # Service part.
-     # This processor will not allow either the protocol,
-     # nor the query, to specify the dataset.
      joseki:processor    joseki:ProcessorSPARQLUpdate
      .
 

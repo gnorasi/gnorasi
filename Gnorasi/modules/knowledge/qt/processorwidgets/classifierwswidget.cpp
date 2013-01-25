@@ -136,7 +136,10 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
 
     QString error;
     int lineNum,col;
-    QDomDocument doc = readMappings("../data/mapping/mappings.xml", &error, &lineNum, &col);
+    //QDomDocument doc = readMappings("../data/mapping/mappings.xml", &error, &lineNum, &col);
+    QString mapFile = qApp->applicationDirPath() + "/mappings.xml";
+    LINFO(mapFile.toStdString());
+    QDomDocument doc = readMappings(mapFile, &error, &lineNum, &col);
 
     if (!doc.isDocument()) {
         QString ret = "Error in file \"mappings.xml\" in line "+ QString::number(lineNum) + ", column " + QString::number(col) + ": " + error;
@@ -157,6 +160,9 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
     long count = 0;
     QString updateString = "";\
 
+    LINFO("Clearing old data...");
+    clearData(serverUpdate, headersList, doc);
+
     LINFO("Sending data to knowledge web service...");
 
     while (!stream.atEnd()) {
@@ -174,6 +180,8 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
             QString part = parts[i];
 
             QVector<QString> headerAtI = headersList[i];
+
+            //
 
             if (headerAtI[0] == "ID") {
                 id = part;
@@ -205,6 +213,7 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
         if ((count-1)%batch == 0) {
             url.setUrl(QString::fromStdString(serverUpdate));
             params.addQueryItem("request",prefix+"INSERT DATA {"+updateString+"}");
+            //params.addQueryItem("request",prefix+"INSERT DATA { GRAPH <"+context+"> {"+updateString+"} }");
 
             //LINFO(updateString.toStdString());
 
@@ -232,6 +241,7 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
     if (updateString != "") {
         url.setUrl(QString::fromStdString(serverUpdate));
         params.addQueryItem("request",prefix+"INSERT DATA {"+updateString+"}");
+        //params.addQueryItem("request",prefix+"INSERT DATA { GRAPH <"+context+"> {"+updateString+"} }");
 
         request.setUrl(url);
 
@@ -291,6 +301,69 @@ QDomDocument ClassifierWSWidget::readMappings(QString mapFile, QString* error, i
     file.close();
 
     return doc;
+}
+
+void ClassifierWSWidget::clearData(std::string serverUpdate, QVector<QVector<QString> > headersList, QDomDocument doc) {
+    QNetworkAccessManager *manager = new QNetworkAccessManager();
+    QNetworkRequest request;
+    QNetworkReply *reply;
+    QEventLoop loop;
+    QUrl url;
+    QUrl params;
+
+    QString prefix = "PREFIX gno: <http://www.gnorasi.gr/ontology#>\n" \
+                    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" \
+                    "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" \
+                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" \
+                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n";
+
+    //clearing old data --
+    for (int i=0;i<headersList.size();i++) {
+        QString deleteString = "";
+        QVector<QString> headerAtI = headersList[i];
+        deleteString = "?x rdf:type gno:Region . ?x gno:hasID ?id . ?x gno:hasFeature ?feat . ";
+        if (headerAtI[0] != "ID") {
+            QDomNodeList nodeList = doc.elementsByTagName("feature").at(0).toElement().elementsByTagName(headerAtI[0]); //STATS
+            QString featureType = nodeList.at(0).attributes().namedItem("type").nodeValue();
+            QString featureProperty = nodeList.at(0).attributes().namedItem("property").nodeValue();
+            deleteString += "?feat gno:"+featureProperty+" gno:"+featureType+" . \n";
+            for (int j=1;j<headerAtI.size();j++) {
+                QDomNode node = nodeList.at(0).toElement().elementsByTagName(headerAtI[j]).at(0);
+                QString property = node.attributes().namedItem("property").nodeValue();
+                QString propertyType = node.toElement().text();
+
+                deleteString += "?feat gno:"+property+" gno:"+propertyType+" . \n";
+            }
+            deleteString += "?feat gno:featureHasValue ?val . \n";
+        }
+        url.setUrl(QString::fromStdString(serverUpdate));
+        params.addQueryItem("request",prefix + "DELETE {"+deleteString+"} WHERE {"+deleteString+"}");
+        request.setUrl(url);
+        reply = manager->post(request, params.encodedQuery());
+        QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+        loop.exec();
+        if (reply->error() != QNetworkReply::NoError) {
+            LWARNING("Error in connection for DELETE");
+        }
+        reply->close();
+        url.clear();
+        params.clear();
+    }
+
+    QString deleteString = "DELETE {?x gno:depictsObject ?obj} WHERE {?x gno:depictsObject ?obj}";
+    url.setUrl(QString::fromStdString(serverUpdate));
+    params.addQueryItem("request",prefix + deleteString);
+    request.setUrl(url);
+    reply = manager->post(request, params.encodedQuery());
+    QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+    if (reply->error() != QNetworkReply::NoError) {
+        LWARNING("Error in connection for DELETE");
+    }
+    reply->close();
+    url.clear();
+    params.clear();
+    //--
 }
 
 
