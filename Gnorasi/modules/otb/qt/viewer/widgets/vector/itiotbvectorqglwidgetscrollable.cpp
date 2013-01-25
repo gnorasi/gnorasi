@@ -342,10 +342,10 @@ void ItiOtbVectorQGLWidgetScrollable::updateObserver(ItiViewerObservable *observ
     QRect rregion = region->region();
 
     //! create helper values from the rect's parameters
-    int x       = rregion.x();
-    int y       = rregion.y();
-    int width   = rregion.width();
-    int height  = rregion.height();
+    int w       = rregion.width();
+    int h       = rregion.height();
+    int x       = rregion.x() - m_pImageModelRenderer->firstDisplayColumn();
+    int y       = m_pImageModelRenderer->firstDisplayRow() + height() - rregion.y() - h;
 
     if(extent.GetIndex()[0] > 0)
         x += extent.GetIndex()[0];
@@ -354,8 +354,8 @@ void ItiOtbVectorQGLWidgetScrollable::updateObserver(ItiViewerObservable *observ
 
     m_focusRegion.setX(x);
     m_focusRegion.setY(y);
-    m_focusRegion.setWidth(width);
-    m_focusRegion.setHeight(height);
+    m_focusRegion.setWidth(w);
+    m_focusRegion.setHeight(h);
 
     //! finally update the view
     update();
@@ -409,6 +409,7 @@ void ItiOtbVectorQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
         }else
             dx = line.dx();
 
+        //
 
         if(line.dy() > 0 && extent.GetSize()[1] - m_pImageModelRenderer->nbDisplayRows() - m_pImageModelRenderer->firstDisplayRow() + m_focusRegion.y() + m_focusRegion.height() + line.dy() > extent.GetSize()[1]){
             dy = height() - m_focusRegion.y() - m_focusRegion.height();
@@ -421,6 +422,7 @@ void ItiOtbVectorQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
                 dy += extent.GetIndex()[1];
         }else
             dy = line.dy();
+
 
         //!translate the focus region
         m_focusRegion.translate(dx,dy);

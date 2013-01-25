@@ -356,18 +356,9 @@ void ItiOtbVectorQGLWidgetZoomable::wheelEvent(QWheelEvent *event){
 void ItiOtbVectorQGLWidgetZoomable::setupAndSendSignal(){
 
     //! create a helper QRect value
-    QRect rect;
-
-    //!
-    //! set the display related values
-    //!
-    rect.setX(m_pImageModelRenderer->firstDisplayColumn());
-    rect.setWidth(m_pImageModelRenderer->nbDisplayColumns());
-    rect.setY(m_pImageModelRenderer->firstDisplayRow());
-    rect.setHeight(m_pImageModelRenderer->nbDisplayRows());
-
+    QRect rect = visibleArea();
     //! emit the signal
-    emit focucAreaChanged(rect);
+    emit focusAreaChanged(rect);
 }
 
 QRect ItiOtbVectorQGLWidgetZoomable::visibleArea() const{
@@ -377,11 +368,15 @@ QRect ItiOtbVectorQGLWidgetZoomable::visibleArea() const{
     //!
     //! set the display related values
     //!
-
     rect.setX(m_pImageModelRenderer->firstDisplayColumn());
     rect.setWidth(m_pImageModelRenderer->nbDisplayColumns());
     rect.setY(m_pImageModelRenderer->firstDisplayRow());
     rect.setHeight(m_pImageModelRenderer->nbDisplayRows());
+
+
+//    int helper = m_pImageViewManipulator->extent().GetSize()[1] - m_pImageModelRenderer->firstDisplayRow() - m_pImageModelRenderer->nbDisplayRows();
+
+//    rect.setY(helper);
 
     //! emit the signal
     return rect;
