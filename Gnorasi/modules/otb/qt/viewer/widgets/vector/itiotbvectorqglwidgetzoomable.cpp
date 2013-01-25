@@ -367,7 +367,7 @@ void ItiOtbVectorQGLWidgetZoomable::setupAndSendSignal(){
     rect.setHeight(m_pImageModelRenderer->nbDisplayRows());
 
     //! emit the signal
-    emit visibleAreaChanged(rect);
+    emit focucAreaChanged(rect);
 }
 
 QRect ItiOtbVectorQGLWidgetZoomable::visibleArea() const{

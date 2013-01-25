@@ -87,6 +87,8 @@ void ItiOtbVectorQGLWidgetScrollable::setupFocusRegionAndSendNotification() {
     ImageRegionType extent = m_pImageViewManipulator->extent();
 
     int _x = f_d_c + m_focusRegion.x();
+    if(extent.GetIndex()[0] > 0)
+        _x -= extent.GetIndex()[0];
     int _y = f_d_r + height() - m_focusRegion.y() - m_focusRegion.height();
     int _w = m_focusRegion.width();
     int _h = m_focusRegion.height();
@@ -345,12 +347,13 @@ void ItiOtbVectorQGLWidgetScrollable::updateObserver(ItiViewerObservable *observ
     int width   = rregion.width();
     int height  = rregion.height();
 
-    m_focusRegion.setX(extent.GetIndex()[0] + x);
-    //!
-    //! Take notice that the y-axes is inverted [1,-1]. That's why the focus resion's y value equals to
-    //! the following calculated value
-    //!
-    m_focusRegion.setY(extent.GetIndex()[1] + extent.GetSize()[1] - height - y);
+    if(extent.GetIndex()[0] > 0)
+        x += extent.GetIndex()[0];
+    if(extent.GetIndex()[1] > 0)
+        y += extent.GetIndex()[1];
+
+    m_focusRegion.setX(x);
+    m_focusRegion.setY(y);
     m_focusRegion.setWidth(width);
     m_focusRegion.setHeight(height);
 
@@ -390,38 +393,39 @@ void ItiOtbVectorQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
         //! create helper values
         int dx = 0, dy = 0;
 
-        //! check if the new rect right border exceeds the extends' width value
+
         if(line.dx() > 0 && m_pImageModelRenderer->firstDisplayColumn() + m_focusRegion.x() + line.dx() + m_focusRegion.width() > extent.GetSize()[0] ){
             dx = extent.GetSize()[0] - m_pImageModelRenderer->firstDisplayColumn() - m_focusRegion.width() - m_focusRegion.x();
             if(extent.GetIndex()[0] > 0)
                 dx += extent.GetIndex()[0];
-        } //! check if the new rect left border exceeds the extend's index x value
+        }
         else if( line.dx() < 0 && (int)m_pImageModelRenderer->firstDisplayColumn() + m_focusRegion.x() + line.dx() < 0){
             dx = -m_focusRegion.x();
             if(extent.GetIndex()[0] > 0)
                 dx += extent.GetIndex()[0];
-        }else //! else set the dx value equal to the line dx value
+        }
+        else if( line.dx() < 0 && extent.GetIndex()[0] > 0 && (int)m_pImageModelRenderer->firstDisplayColumn() + m_focusRegion.x() + line.dx() < extent.GetIndex()[0]){
+            dx = -m_focusRegion.x() + extent.GetIndex()[0];
+        }else
             dx = line.dx();
 
-        int val = m_pImageModelRenderer->firstDisplayRow() + height() - m_focusRegion.y() - line.dy();
-        //! check if the new rect right border exceeds the extends' height value
-//        if(line.dy() > 0 && point.y()+ qRound((double)m_focusRegion.height()/2.0) > extent.GetSize()[1] + extent.GetIndex()[1]){
+
         if(line.dy() > 0 && extent.GetSize()[1] - m_pImageModelRenderer->nbDisplayRows() - m_pImageModelRenderer->firstDisplayRow() + m_focusRegion.y() + m_focusRegion.height() + line.dy() > extent.GetSize()[1]){
-//            dy = extent.GetSize()[1] + extent.GetIndex()[1] - qRound((double)m_focusRegion.height()/2.0) - previousCenter.y();
             dy = height() - m_focusRegion.y() - m_focusRegion.height();
             if(extent.GetIndex()[1] > 0)
                 dy += extent.GetIndex()[1];
-        } //! check if the new rect left border exceeds the extend's index y value
+        }
         else if( line.dy() < 0 && m_pImageModelRenderer->firstDisplayRow() + height() - m_focusRegion.y() - line.dy() > extent.GetSize()[1]){
             dy = -m_focusRegion.y();
             if(extent.GetIndex()[1] > 0)
                 dy += extent.GetIndex()[1];
-        }else //! else set the dy value equal to the line dy value
+        }else
             dy = line.dy();
 
         //!translate the focus region
         m_focusRegion.translate(dx,dy);
 
+        //
         setupFocusRegionAndSendNotification();
 
         //! update widget
