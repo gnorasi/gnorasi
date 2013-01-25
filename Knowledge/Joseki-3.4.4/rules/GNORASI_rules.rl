@@ -26,6 +26,15 @@ greaterThan(?val, 0.0)
 lessThan(?val, 0.0)
 ]
 
+[rule3: (?reg gno:depictsObject gno:ins_sea)
+<-
+(?reg gno:hasFeature ?feat)
+(?feat gno:featureRelatedTo gno:Band1)
+(?feat gno:featureHasMeasure gno:Mean)
+(?feat gno:featureHasValue ?val)
+greaterThan(?val, 400.0)
+]
+
 
 #[rule11: (?reg gno:depictsObject gno:ins_building)
 #<-
