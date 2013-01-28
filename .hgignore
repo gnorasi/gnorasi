@@ -66,3 +66,4 @@ Gnorasi/modules/otb/ext
 CMakeLists.txt.user
 Gnorasi/data/voreensettings.xml
 Gnorasi/data/voreenve-log.html
+data
