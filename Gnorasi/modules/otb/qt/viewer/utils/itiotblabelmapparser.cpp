@@ -45,6 +45,8 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
     QList<QPolygon> pollist;
 
+    qDebug() << "number of labelobjects in labelmap : " << lblmap->GetNumberOfLabelObjects();
+
     for(unsigned int i = 1; i < lblmap->GetNumberOfLabelObjects(); i++){
         LabelObjectType* lblObject = lblmap->GetLabelObject(i);
 
@@ -74,6 +76,9 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
             point++;
         }
 
+        if(plgon.isEmpty())
+            continue;
+
         plgon.remove(plgon.size()-1);
 
         if(!LabelMapParser::validatePolygon(plgon))
@@ -81,9 +86,12 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
         pollist.append(plgon);
 
+        int classificationId = (int)lblObject->GetClassLabel();
+
         Region *pRegion = new Region(this);
         pRegion->setArea(plgon);
         pRegion->setSegmentationId(counter++);
+        pRegion->setClassificationId(classificationId);
 
         list << pRegion;
     }
