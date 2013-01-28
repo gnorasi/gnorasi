@@ -31,7 +31,6 @@
 #include "voreen/core/processors/processorwidget.h"
 #include "voreen/core/processors/processorwidgetfactory.h"
 
-
 namespace voreen {
 const std::string ClassifierWSProcessor::loggerCat_("voreen.ClassifierWSProcessor");
 
@@ -40,6 +39,7 @@ ClassifierWSProcessor::ClassifierWSProcessor()
     , inPort_(Port::INPORT, "inport", 0)
     , outPort_(Port::OUTPORT, "outport", 0)
     , serverURLupdate_("serverURLupdate_", "URL for sending data to ontology", "http://localhost:2020/update/gnorasi")
+    , update_("updateButton", "Update")
     , pTextData_("")
     , pTextDataOut_("")
 {
@@ -47,8 +47,8 @@ ClassifierWSProcessor::ClassifierWSProcessor()
     addPort(inPort_);
     addPort(outPort_);
     addProperty(serverURLupdate_);
-
-
+    update_.onChange(CallMemberAction<ClassifierWSProcessor>(this, &ClassifierWSProcessor::updateView));
+    addProperty(update_);
 }
 
 ClassifierWSProcessor::~ClassifierWSProcessor() {}

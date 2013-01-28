@@ -28,7 +28,7 @@
 
 #include "classifierwswidget.h"
 #include "voreen/qt/voreenapplicationqt.h"
-
+#include "voreen/core/io/progressbar.h"
 
 #include <QGridLayout>
 #include <QMainWindow>
@@ -105,8 +105,6 @@ void ClassifierWSWidget::updateFromProcessor() {
         editor_->appendPlainText(result.c_str());
         classifierWSProcessor->setTextDataOut(result);
     }
-
-
 }
 
 std::string ClassifierWSWidget::invokeWebService(std::string input) {
@@ -164,6 +162,24 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
     clearData(serverUpdate, headersList, doc);
 
     LINFO("Sending data to knowledge web service...");
+    // create progress bar
+    QTextStream in(&qinput);
+    int total_region_count=0;
+    in.readLine();
+    while( !in.atEnd())
+    {
+        in.readLine();
+        total_region_count++;
+    }
+    ProgressBar* progressDialog = 0;
+    progressDialog = VoreenApplication::app()->createProgressDialog();
+    if (progressDialog) {
+        progressDialog->setTitle("Network transfer...");
+        progressDialog->setMessage("Sending data to classification web service...");
+        progressDialog->show();
+        progressDialog->setProgress(0.f);
+        progressDialog->forceUpdate();
+    }
 
     while (!stream.atEnd()) {
         line = stream.readLine();
@@ -234,6 +250,8 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
             params.clear();
 
             updateString = "";
+            if (progressDialog)
+                progressDialog->setProgress(static_cast<float>(count) / static_cast<float>(total_region_count));
         }
     }
 
@@ -262,6 +280,12 @@ std::string ClassifierWSWidget::invokeWebService(std::string input) {
         updateString = "";
     }
     LINFO("All data sent");
+    // clear progress
+    if (progressDialog) {
+        progressDialog->hide();
+        delete progressDialog;
+        progressDialog = 0;
+    }
 
     url.clear();
     reply->deleteLater();
@@ -316,6 +340,8 @@ void ClassifierWSWidget::clearData(std::string serverUpdate, QVector<QVector<QSt
                     "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" \
                     "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" \
                     "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n";
+
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
     //clearing old data --
     for (int i=0;i<headersList.size();i++) {
