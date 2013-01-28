@@ -123,7 +123,7 @@ signals:
      * \brief visibleAreaChanged , this signal is emitted uppon the view resizing
      * \param rect
      */
-    void visibleAreaChanged(const QRect &rect);
+    void focusAreaChanged(const QRect &rect);
 
     /*!
      * \brief currentIndexChanged
@@ -131,13 +131,13 @@ signals:
      */
     void currentIndexChanged(const QString &text);
 
+    /*!
+     * \brief readyToClearZoom
+     */
+    void readyToClearZoom();
+
 
 protected:
-
-    /*!
-     * \brief setupExtents
-     */
-    void setupRowColumnDisplay();
 
     /*!
      * \brief setupAndSendSignal
@@ -164,11 +164,6 @@ protected:
     void resizeGL(int w, int h);
 
     /*!
-     * \brief paintGL , reimplemented method declared in the QGLWidget class
-     */
-//    void paintGL();
-
-    /*!
      * \brief paintEvent
      * \param event
      */
@@ -179,12 +174,6 @@ protected:
      * \param event
      */
     void mouseMoveEvent(QMouseEvent *event);
-
-    /*!
-     * \brief resizeEvent
-     * \param event
-     */
-//    void resizeEvent(QResizeEvent* event);
 
 
 private:

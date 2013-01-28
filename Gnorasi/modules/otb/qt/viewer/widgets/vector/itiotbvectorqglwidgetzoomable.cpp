@@ -130,6 +130,9 @@ void ItiOtbVectorQGLWidgetZoomable::resizeGL(int w, int h)
 
     m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
 
+    //
+    emit readyToClearZoom();
+
     //! emit a signal
     setupAndSendSignal();
 }
@@ -299,75 +302,13 @@ void ItiOtbVectorQGLWidgetZoomable::wheelEvent(QWheelEvent *event){
     event->accept();
 }
 
-
-//void ItiOtbVectorQGLWidgetZoomable::resizeEvent(QResizeEvent *event){
-//    m_pImageViewManipulator->resizeEvent(event);
-
-//    setupViewport(event->size().width(), event->size().height());
-
-//    unsigned int nb_d_cs = m_pImageModelRenderer->nbDisplayColumns();
-//    unsigned int nb_d_rs = m_pImageModelRenderer->nbDisplayRows();
-//    unsigned int f_d_c = m_pImageModelRenderer->firstDisplayColumn();
-//    unsigned int f_d_r = m_pImageModelRenderer->firstDisplayRow();
-
-//    ImageRegionType extent          = m_pImageViewManipulator->extent();
-//    ImageRegionType bufferedRegion  = m_pImageViewManipulator->bufferRegion();
-
-//    //!
-//    //! setup the number of rows and columns to be visualized
-//    //!
-//    //! check if the extend's index x value is greater than zero , if yes then the number of columns equals to the number of the buffered region
-//    if( extent.GetIndex()[0] > 0 ){
-//        nb_d_cs = bufferedRegion.GetSize()[0];
-//        f_d_c = 0;
-//    } else {
-
-//        nb_d_cs = event->size().width() / m_IsotropicZoom;
-
-//        //!
-//        //! setup the fisrt display column
-//        //!
-//        if(f_d_c + nb_d_cs > bufferedRegion.GetSize()[0])
-//            f_d_c = bufferedRegion.GetSize()[0] - nb_d_cs;
-//    }
-
-//    //!
-//    //! check if the extend's index y value is greater than zero , if yes then the number of columns equals to the number of the buffered region
-//    if( extent.GetIndex()[1] > 0 ){
-//        nb_d_rs = bufferedRegion.GetSize()[1];
-//        f_d_r = extent.GetSize()[1] - nb_d_rs;
-//    } else {
-//        nb_d_rs = event->size().height() / m_IsotropicZoom;
-
-//        //!
-//        //! setup first display row
-//        //!
-//        if(f_d_r + nb_d_rs > bufferedRegion.GetSize()[1])
-//            f_d_r = bufferedRegion.GetSize()[0] - nb_d_rs;
-//    }
-
-//    m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
-
-//    //! emit a signal
-//    setupAndSendSignal();
-//}
-
 //!
 void ItiOtbVectorQGLWidgetZoomable::setupAndSendSignal(){
 
     //! create a helper QRect value
-    QRect rect;
-
-    //!
-    //! set the display related values
-    //!
-    rect.setX(m_pImageModelRenderer->firstDisplayColumn());
-    rect.setWidth(m_pImageModelRenderer->nbDisplayColumns());
-    rect.setY(m_pImageModelRenderer->firstDisplayRow());
-    rect.setHeight(m_pImageModelRenderer->nbDisplayRows());
-
+    QRect rect = visibleArea();
     //! emit the signal
-    emit visibleAreaChanged(rect);
+    emit focusAreaChanged(rect);
 }
 
 QRect ItiOtbVectorQGLWidgetZoomable::visibleArea() const{
@@ -377,11 +318,15 @@ QRect ItiOtbVectorQGLWidgetZoomable::visibleArea() const{
     //!
     //! set the display related values
     //!
-
     rect.setX(m_pImageModelRenderer->firstDisplayColumn());
     rect.setWidth(m_pImageModelRenderer->nbDisplayColumns());
     rect.setY(m_pImageModelRenderer->firstDisplayRow());
     rect.setHeight(m_pImageModelRenderer->nbDisplayRows());
+
+
+//    int helper = m_pImageViewManipulator->extent().GetSize()[1] - m_pImageModelRenderer->firstDisplayRow() - m_pImageModelRenderer->nbDisplayRows();
+
+//    rect.setY(helper);
 
     //! emit the signal
     return rect;
