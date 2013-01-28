@@ -280,7 +280,11 @@ void ItiOtbImageManager::setupColors(){
 
             pRegion->setColor(m_colorHash.value(clfId));
         }
+
+        qDebug() << "Number of regions created : " << rList.size();
     }
+
+    qDebug() << "Number of classification ids : " << m_colorHash.uniqueKeys().size();
 }
 
 //!

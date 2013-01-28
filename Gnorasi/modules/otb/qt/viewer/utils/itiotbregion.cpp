@@ -22,7 +22,7 @@ void Region::drawRegion(QPainter *painter, ImageRegionType &extent, double iz){
 
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
-    painter->setOpacity(0.3);
+    painter->setOpacity(0.9);
 
     painter->drawPolygon(m_paintedArea);
 }
