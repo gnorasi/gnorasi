@@ -32,10 +32,12 @@
 
 #include "voreen/core/processors/processor.h"
 #include "voreen/core/properties/stringproperty.h"
+#include "voreen/core/properties/buttonproperty.h"
 #include "voreen/core/ports/textport.h"
 
 
 namespace voreen {
+
 
 class VRN_CORE_API ClassifierWSProcessor : public Processor {
 public:
@@ -78,6 +80,8 @@ private:
     std::string pTextDataOut_;
 
     StringProperty serverURLupdate_;
+
+    ButtonProperty update_;
 
     static const std::string loggerCat_; ///< category used in logging
 };
