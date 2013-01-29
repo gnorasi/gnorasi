@@ -120,11 +120,12 @@ std::string RetrieveClassificationDataWidget::invokeWebService(std::string input
                         "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n";
 
         //issue query to get regions
-        QString query = "SELECT ?regionID ?objectClassID " \
+        QString query = "SELECT ?regionID ?objectClassID ?NAME " \
                         "WHERE { " \
                             "?region gno:depictsObject ?y ; " \
                             "gno:hasID ?regionID . ?y gno:hasObjectClassID ?objectClassID . " \
-                        "}";
+                            "?y gno:hasName ?NAME . " \
+                        "} ORDER BY ?regionID";
 
         url.clear();
         url.setUrl(QString::fromStdString(serverQuery));
@@ -140,7 +141,7 @@ std::string RetrieveClassificationDataWidget::invokeWebService(std::string input
         if (reply->error() != QNetworkReply::NoError) {
             LWARNING("Error in connection while retrieving data");
             return "Error in connection while retrieving data";
-         }
+        }
 
         QString replyBody = reply->readAll();
 
@@ -189,6 +190,7 @@ QString RetrieveClassificationDataWidget::parseResults(QString resultString) {
         QDomNodeList bindings = nodeList.at(i).toElement().elementsByTagName("binding");
         //position 0 is the ID
         //position 1 is the class ID
+        //position 2 is the class name
         //the rest are undefined
         QDomNodeList IDs = bindings.at(0).toElement().elementsByTagName("literal");
         if (IDs.size() > 0) {
