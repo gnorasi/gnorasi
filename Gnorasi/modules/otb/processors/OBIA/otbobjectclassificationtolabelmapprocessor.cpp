@@ -120,7 +120,7 @@ void OTBObjectClassificationToLabelMapProcessor::update() {
 		
 	    }
 	    
-            outPort_.setData(labelmap);
+        outPort_.setData(labelmap);
 	    
 	}
 	catch(itk::ExceptionObject& err)

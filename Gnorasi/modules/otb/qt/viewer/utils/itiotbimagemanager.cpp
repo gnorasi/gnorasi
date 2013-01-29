@@ -261,6 +261,7 @@ void ItiOtbImageManager::setupColors(){
                 int g = Region::randInt(0,255);
                 int b = Region::randInt(0,255);
                 m_colorHash[clfId] = QColor(r,g,b);
+                m_classficationNamesIds[clfId] = QString::number(clfId);
             }
         }
     }
@@ -280,7 +281,11 @@ void ItiOtbImageManager::setupColors(){
 
             pRegion->setColor(m_colorHash.value(clfId));
         }
+
+        qDebug() << "Number of regions created : " << rList.size();
     }
+
+    qDebug() << "Number of classification ids : " << m_colorHash.uniqueKeys().size();
 }
 
 //!

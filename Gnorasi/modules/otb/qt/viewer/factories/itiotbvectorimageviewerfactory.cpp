@@ -11,6 +11,7 @@
 #include "../commands/commandcontrastenhancementsquareroot.h"
 #include "../commands/commandcolorcompositiongreyscale.h"
 #include "../commands/commandcolorcompositionrgb.h"
+#include "../commands/commandtoggleclassificationlabelvisibiltiy.h"
 
 #include "../utils/itiotbimagevectorchannelprovider.h"
 
@@ -60,6 +61,10 @@ void ItiOtbVectorImageViewerFactory::createViewer(ItiOtbImageViewerPanel *panel)
         Command *cmdSquareRGB = createCommandColorCompositionRGB(sTab);
         if(cmdSquareRoot)
             panel->setCommand(ItiOtbImageViewerPanel::SLOT_CC_RGB,cmdSquareRGB);
+
+        Command *cmdTV              = createCommandToggleClassLabelVisible(sTab);
+        if(cmdTV)
+            panel->setCommand(ItiOtbImageViewerPanel::SLOT_CL_TOGGLEVISIBLE,cmdTV);
 
         connect(provider,SIGNAL(channelsChanged()),panel,SLOT(setupChannels()));
     }
@@ -146,6 +151,21 @@ Command* ItiOtbVectorImageViewerFactory::createCommandColorCompositionRGB(ItiOtb
     connect(sTab,SIGNAL(rgbColorCompositionChannelsChanged(int,int,int)),cg,SLOT(updateChannels(int,int,int)));
 
     return cg;
+}
+
+
+Command* ItiOtbVectorImageViewerFactory::createCommandToggleClassLabelVisible(ItiOtbImageViewerPanelSetupTab *sTab){
+    ItiOtbVectorImageViewer *vv  = qobject_cast<ItiOtbVectorImageViewer*>(m_pItiOtbImageViewer);
+
+    if(!vv)
+        return 0;
+
+    CommandToggleClassificationLabelVisibiltiy *cd = new CommandToggleClassificationLabelVisibiltiy(vv,this);
+
+    connect(sTab,SIGNAL(classLabelToggled(bool,int)),cd,SLOT(updateData(bool,int)));
+
+    return cd;
+
 }
 
 ItiOtbVectorImageViewerFactory::~ItiOtbVectorImageViewerFactory(){

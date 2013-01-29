@@ -223,8 +223,10 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //
     //                          STATISTICS
 
-    qDebug() << "End of image setup \nmilliseconds elapsed : " << time.elapsed()
-             << "\nRegions created : " << ITIOTBIMAGEMANAGER->levels().last()->regions().size();
+    if(!ITIOTBIMAGEMANAGER->levels().isEmpty()){
+        qDebug() << "End of image setup \nmilliseconds elapsed : " << time.elapsed()
+                 << "\nRegions created : " << ITIOTBIMAGEMANAGER->levels().last()->regions().size();
+    }
 
     //
     //                          STATISTICS
