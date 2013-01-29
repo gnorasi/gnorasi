@@ -13,6 +13,8 @@
 
 @prefix tdb:    <http://jena.hpl.hp.com/2008/tdb#> .
 
+[] ja:loadClass "gr.iti.gnorasi.reasoner.ForwardGenericReasonerFactory" .
+
 ## --------------------------------------------------------------
 ## This file is written in N3 / Turtle
 ## It is an RDF graph - order of RDF triples does not matter
@@ -158,9 +160,10 @@
 		ja:defaultGraph [
 			a ja:InfModel ;
 			rdfs:label "GNORASI model" ;
-			ja:content [ja:externalContent <file:Data/gnorasi/demo_ontology_v2.owl>] ; 
+			ja:content [ja:externalContent <file:Data/gnorasi/demo_ontology_v3.owl>] ; 
 			ja:reasoner [  
-				ja:reasonerURL <http://jena.hpl.hp.com/2003/GenericRuleReasoner> ;
+				ja:reasonerClass "gr.iti.gnorasi.reasoner.ForwardGenericReasonerFactory" ;
+				#ja:reasonerURL <http://jena.hpl.hp.com/2003/GenericRuleReasoner> ;
 				ja:rulesFrom <file:rules/GNORASI_rules.rl>;
 			];
 		]
