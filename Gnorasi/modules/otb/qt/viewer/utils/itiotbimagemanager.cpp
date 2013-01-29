@@ -199,6 +199,7 @@ void ItiOtbImageManager::createRegions(){
                     Level *pLevel = new Level(this);
 
                     QList<Region*> regionList = parser->parse(mapT);
+                    m_classficationNamesIds = parser->classLabelIdsNames();
 
                     pLevel->setRegions(regionList);
 
@@ -243,27 +244,14 @@ void ItiOtbImageManager::clearLevels(){
 void ItiOtbImageManager::setupColors(){
     m_colorHash.clear();
 
-    //! parse once to extract classfication and color information
-    QList<Level*>::const_iterator i;
-    for(i = m_levelList.constBegin(); i != m_levelList.constEnd(); i++){
-        Level *pLevel = *i;
+    QHash<int,QString>::const_iterator i;
+    for(i = m_classficationNamesIds.constBegin(); i != m_classficationNamesIds.constEnd(); i++){
+        int clid = i.key();
 
-        QList<Region*> rList = pLevel->regions();
-
-        QList<Region*>::const_iterator o;
-        for(o = rList.constBegin(); o != rList.constEnd(); o++){
-            Region *pRegion = *o;
-
-            int clfId = pRegion->classificationId();
-
-            if(!m_colorHash.contains(clfId)){
-                int r = Region::randInt(0,255);
-                int g = Region::randInt(0,255);
-                int b = Region::randInt(0,255);
-                m_colorHash[clfId] = QColor(r,g,b);
-                m_classficationNamesIds[clfId] = QString::number(clfId);
-            }
-        }
+        int r = Region::randInt(0,255);
+        int g = Region::randInt(0,255);
+        int b = Region::randInt(0,255);
+        m_colorHash[clid] = QColor(r,g,b);
     }
 
 
@@ -284,8 +272,6 @@ void ItiOtbImageManager::setupColors(){
 
         qDebug() << "Number of regions created : " << rList.size();
     }
-
-    qDebug() << "Number of classification ids : " << m_colorHash.uniqueKeys().size();
 }
 
 //!

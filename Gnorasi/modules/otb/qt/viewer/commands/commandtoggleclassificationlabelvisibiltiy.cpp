@@ -20,8 +20,8 @@ void CommandToggleClassificationLabelVisibiltiy::execute(){
 
         QList<Region*> rList = pLevel->regions();
 
-        QList<Region*>::const_iterator o;
-        for(o = rList.constBegin(); o != rList.constEnd(); o++){
+        QList<Region*>::iterator o;
+        for(o = rList.begin(); o != rList.end(); o++){
             Region *pRegion = *o;
 
             int clfId = pRegion->classificationId();

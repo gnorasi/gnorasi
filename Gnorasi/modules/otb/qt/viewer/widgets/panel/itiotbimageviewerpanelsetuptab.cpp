@@ -377,10 +377,12 @@ void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
         Level *pLevel  = *j;
 
         QList<Region*> regionlist = pLevel->regions();
-        text += tr("Level %1. Number of regions created : %2").arg(QString::number(pLevel->id())).arg(QString::number(regionlist.size()));
+        text += tr("Level %1. Number of segmentation regions : %2").arg(QString::number(pLevel->id())).arg(QString::number(regionlist.size()));
         text += "<br/>";
 
     }
+
+    m_pLabelClassificationOutput->setText(text);
 
     if(cdata.isEmpty())
         m_pGroupBoxClassification->setVisible(false);
