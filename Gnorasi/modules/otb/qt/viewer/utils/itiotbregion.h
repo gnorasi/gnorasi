@@ -21,6 +21,7 @@ class Region : public QObject
     Q_PROPERTY(int          classificationId    READ classificationId   WRITE setClassificationId   NOTIFY  classificationIdChanged)
     Q_PROPERTY(QPolygon     area                READ area               WRITE setArea               NOTIFY  areaChanged)
     Q_PROPERTY(QColor       color               READ color              WRITE setColor              NOTIFY  colorChanged)
+    Q_PROPERTY(bool         visible             READ visible            WRITE setVisible            NOTIFY  visibleChanged)
 public:
     /*!
      * \brief Region
@@ -40,6 +41,9 @@ public:
     QColor      color() const { return m_color; }
     void        setColor(QColor c) { m_color = c; m_brush.setColor(m_color); }
 
+    bool        visible() const {return m_visible; }
+    void        setVisible(bool v) { m_visible = v; }
+
     void        drawRegion(QPainter * painter, ImageRegionType &extent, double iz = 1.0);
 
     static int randInt(int low, int high)
@@ -53,6 +57,7 @@ signals:
     void        classificationIdChanged();
     void        areaChanged();
     void        colorChanged();
+    void        visibleChanged();
 
 public slots:
 
@@ -66,6 +71,7 @@ private:
     QPen        m_pen;
     QBrush      m_brush;
     QPolygon    m_paintedArea;
+    bool        m_visible;
     
 };
 

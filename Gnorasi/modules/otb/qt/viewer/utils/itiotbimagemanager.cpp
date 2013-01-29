@@ -261,6 +261,7 @@ void ItiOtbImageManager::setupColors(){
                 int g = Region::randInt(0,255);
                 int b = Region::randInt(0,255);
                 m_colorHash[clfId] = QColor(r,g,b);
+                m_classficationNamesIds[clfId] = QString::number(clfId);
             }
         }
     }

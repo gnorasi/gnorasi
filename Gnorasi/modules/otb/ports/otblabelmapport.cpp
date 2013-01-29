@@ -39,6 +39,7 @@ OTBLabelMapPort::OTBLabelMapPort(PortDirection direction, const std::string& nam
                    bool allowMultipleConnections, Processor::InvalidationLevel invalidationLevel)
     : Port(name, direction, allowMultipleConnections, invalidationLevel)
 {
+    portData_ = NULL;
 }
 
 OTBLabelMapPort::~OTBLabelMapPort() {

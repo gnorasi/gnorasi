@@ -5,8 +5,12 @@
 #include "../../vector_globaldefs.h"
 
 #include "../../utils/itiotbimagemanager.h"
+#include "../../utils/itiotbregion.h"
+#include "../../utils/itiotblevel.h"
 
 #include <QVBoxLayout>
+#include <QHash>
+
 
 using namespace itiviewer;
 
@@ -52,6 +56,7 @@ void ItiOtbImageViewerPanelSetupTab::setupColorCompositionGroupBox(){
     m_pSpinBoxRedChannel->setValue(1);
     m_pSpinBoxGreenChannel->setValue(2);
     m_pSpinBoxBlueChannel->setValue(3);
+
 
     //!
     QHBoxLayout *hboxLayout = new QHBoxLayout;
@@ -157,15 +162,40 @@ void ItiOtbImageViewerPanelSetupTab::setupContrastEnhancememtGroupBox(){
     connect(m_pButtonApplyContrastEnhancement,SIGNAL(clicked()),this,SLOT(onContrastEnhancementApplyButtonClicked()));
 }
 
+void ItiOtbImageViewerPanelSetupTab::setupClassficationGroupBox(){
+    //
+    m_pGroupBoxClassification = new QGroupBox(this);
+    m_pGroupBoxClassification->setTitle(tr("Classification"));
+    m_pListViewClassfication = new QListView(this);
+    m_pClassificationModel = new QStandardItemModel(this);
+    m_pClassificationModel->setHorizontalHeaderLabels(QStringList()<<tr("Class name"));
+    m_pListViewClassfication->setModel(m_pClassificationModel);
+    m_pLabelClassificationOutput = new QLabel(this);
+    m_pLabelClassificationListHeader = new QLabel(tr("Class labels"),this);
+
+
+    QVBoxLayout *clVBoxLayout = new QVBoxLayout;
+    clVBoxLayout->addWidget(m_pLabelClassificationListHeader);
+    clVBoxLayout->addWidget(m_pListViewClassfication);
+    clVBoxLayout->addWidget(m_pLabelClassificationOutput);
+
+    m_pGroupBoxClassification->setLayout(clVBoxLayout);
+
+    connect(m_pClassificationModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(onClassLabelCheckstateToggled(QStandardItem*)));
+}
+
 //!
 void ItiOtbImageViewerPanelSetupTab::initialize(){
     setupColorCompositionGroupBox();
 
     setupContrastEnhancememtGroupBox();
 
+    setupClassficationGroupBox();
+
     QHBoxLayout *hboxLayout = new QHBoxLayout(this);
     hboxLayout->addWidget(m_pGroupBoxColorComposition);
     hboxLayout->addWidget(m_pGroupBoxContrastEnhancement);
+    hboxLayout->addWidget(m_pGroupBoxClassification);
     hboxLayout->addSpacerItem(new QSpacerItem(100,100,QSizePolicy::Expanding,QSizePolicy::Fixed));
     setLayout(hboxLayout);
 }
@@ -282,6 +312,8 @@ void ItiOtbImageViewerPanelSetupTab::setupChannels(){
     m_pSpinBoxRedChannel->setValue(list.at(0)+1);
     m_pSpinBoxGreenChannel->setValue(list.at(1)+1);
     m_pSpinBoxBlueChannel->setValue(list.at(2)+1);
+
+    setupClassificationData();
 }
 
 
@@ -314,4 +346,54 @@ void ItiOtbImageViewerPanelSetupTab::onColorCompositionApplyButtonClicked(){
         emit applyColorCompositionRGB();
     }
 
+}
+
+void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
+    m_pClassificationModel->clear();
+
+    QHash<int ,QColor> cdata = ITIOTBIMAGEMANAGER->classificationColorsIds();
+
+    QHash<int,QString> data = ITIOTBIMAGEMANAGER->classficationNamesIds();
+    QHash<int,QString>::const_iterator i;
+    for(i = data.constBegin(); i != data.constEnd(); i++){
+        QString name = i.value();
+        int id = i.key();
+
+        QStandardItem *pItem = new QStandardItem(name);
+        QColor c = cdata.value(id);
+        pItem->setData(c, Qt::DecorationRole);
+        pItem->setData(id,Qt::UserRole);
+        pItem->setData(Qt::Checked,Qt::CheckStateRole);
+        pItem->setFlags(pItem->flags() | Qt::ItemIsUserCheckable);
+        m_pClassificationModel->setItem(m_pClassificationModel->rowCount(),pItem);
+    }
+
+    QString text;
+    text += tr("<h3>Classification statistics</h3><br/>");
+
+    QList<Level*> levellist = ITIOTBIMAGEMANAGER->levels();
+    QList<Level*>::const_iterator j;
+    for(j = levellist.constBegin(); j != levellist.constEnd();j++){
+        Level *pLevel  = *j;
+
+        QList<Region*> regionlist = pLevel->regions();
+        text += tr("Level %1. Number of regions created : %2").arg(QString::number(pLevel->id())).arg(QString::number(regionlist.size()));
+        text += "<br/>";
+
+    }
+
+    if(cdata.isEmpty())
+        m_pGroupBoxClassification->setVisible(false);
+    else
+        m_pGroupBoxClassification->setVisible(true);
+}
+
+
+void ItiOtbImageViewerPanelSetupTab::onClassLabelCheckstateToggled(QStandardItem *item){
+    int cid = item->data(Qt::UserRole).toInt();
+    bool checked = item->data(Qt::CheckStateRole).toBool();
+
+    emit classLabelToggled(checked,cid);
+
+    emit classLabelChanged();
 }

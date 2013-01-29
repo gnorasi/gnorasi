@@ -86,6 +86,9 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
         pollist.append(plgon);
 
+        if(!lblObject->HasClassLabel())
+            continue;
+
         int classificationId = (int)lblObject->GetClassLabel();
 
         Region *pRegion = new Region(this);

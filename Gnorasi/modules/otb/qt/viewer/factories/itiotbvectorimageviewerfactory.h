@@ -95,6 +95,12 @@ public:
      */
     Command* createCommandColorCompositionRGB(ItiOtbImageViewerPanelSetupTab* );
 
+    /*!
+     * \brief createCommandToggleClassLabelVisible
+     * \return
+     */
+    Command* createCommandToggleClassLabelVisible(ItiOtbImageViewerPanelSetupTab* );
+
 };
 
 } // end of namespace itiviewer
