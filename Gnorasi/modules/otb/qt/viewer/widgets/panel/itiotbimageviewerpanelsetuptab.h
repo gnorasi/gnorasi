@@ -37,6 +37,9 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QLineEdit>
+#include <QListView>
+#include <QStandardItemModel>
+#include <QTextEdit>
 
 namespace itiviewer{
 
@@ -70,6 +73,12 @@ signals:
 
     //! emitted when the contrast enhancement method has been changed
     void contrastEnhancementChanged(int method, double aval, double bval);
+
+    //!
+    void classLabelChanged();
+
+    //!
+    void classLabelToggled(bool, int);
 
     /*!
      * \brief deviationChanged
@@ -155,7 +164,14 @@ private slots:
      */
     void onColorCompositionApplyButtonClicked();
 
+    /*!
+     * \brief onClassLabelCheckstateToggled
+     */
+    void onClassLabelCheckstateToggled(QStandardItem*);
+
 private:
+    void setupClassificationData();
+
     void initialize();
 
     //!
@@ -163,6 +179,9 @@ private:
 
     //!
     void setupContrastEnhancememtGroupBox();
+
+    //!
+    void setupClassficationGroupBox();
 
     //! Classes declarations for color composition group box
     QGroupBox       *m_pGroupBoxColorComposition;
@@ -181,6 +200,7 @@ private:
     //! Classes declarations for contrast enhancement group box
     QGroupBox       *m_pGroupBoxContrastEnhancement;
     QGroupBox       *m_pGroupBoxMethod;
+    QGroupBox       *m_pGroupBoxClassification;
     QComboBox       *m_pComboBoxMethod;
     QPushButton     *m_pButtonApplyContrastEnhancement;
     QLabel          *m_pLabelUpperQuantile;
@@ -189,6 +209,11 @@ private:
     QLineEdit       *m_pLineEditUpperQuantileValue;
     QLineEdit       *m_pLineEditLowerQuantileValue;
     QLineEdit       *m_pLineEditStandardDeviationValue;
+    QListView       *m_pListViewClassfication;
+    QLabel          *m_pLabelClassificationListHeader;
+    QLabel          *m_pLabelClassificationOutput;
+
+    QStandardItemModel *m_pClassificationModel;
 
     ItiOtbImageViewerPanel* m_pItiOtbImageViewerPanel;
 };

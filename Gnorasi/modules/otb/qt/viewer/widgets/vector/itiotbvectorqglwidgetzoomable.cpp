@@ -246,7 +246,8 @@ void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
         QList<Region*>::const_iterator i;
         for(i = regions.constBegin(); i != regions.constEnd(); i++){
             Region *pRegion = *i;
-            pRegion->drawRegion(&painter, extent, m_IsotropicZoom);
+            if(pRegion->visible())
+                pRegion->drawRegion(&painter, extent, m_IsotropicZoom);
         }
     }
 
