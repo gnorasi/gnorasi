@@ -73,7 +73,8 @@ public:
         SLOT_CE_LINEARXPERC     = 4,    //! linear X %
         SLOT_CE_SQUAREROOT      = 5,     //! square root
         SLOT_CC_GREYSCALE       = 6,    //! grey scale
-        SLOT_CC_RGB             = 7
+        SLOT_CC_RGB             = 7,
+        SLOT_CL_TOGGLEVISIBLE   = 11    //! toggle the visibility of class label
     };
 
     /*!
@@ -184,6 +185,11 @@ private slots:
      * \brief applyColorCompositionRGB
      */
     void applyColorCompositionRGB();
+
+    /*!
+     * \brief applyToggleClassLabelVisible
+     */
+    void applyToggleClassLabelVisible();
 
 private:
     /*!

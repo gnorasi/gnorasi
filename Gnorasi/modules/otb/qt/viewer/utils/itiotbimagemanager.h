@@ -123,8 +123,14 @@ public:
      */
     Level* levelById(int id);
 
-
+    //!
     QList<Level*> levels() const { return m_levelList; }
+
+    //!
+    QHash<int ,QString> classficationNamesIds() const {return m_classficationNamesIds; }
+
+    //!
+    QHash<int,QColor> classificationColorsIds() const { return m_colorHash ; }
 
 private:
     //! ctor
@@ -173,6 +179,9 @@ private:
 
     //! a container where the key value is the class if from the segmentation
     QHash<int, QColor> m_colorHash;
+
+    //! a container holding the clasficaiton ids and a string values for names
+    QHash<int ,QString> m_classficationNamesIds;
 };
 
 } // end of namespace itiviewer
