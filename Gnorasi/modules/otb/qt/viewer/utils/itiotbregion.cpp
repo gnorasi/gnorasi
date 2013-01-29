@@ -4,7 +4,7 @@ namespace itiviewer {
 
 Region::Region(QObject *parent) :
     m_segmentationId(1),
-    m_classificationId(1),
+    m_classificationId(1001),
     QObject(parent)
 {
 //    int r = randInt(0,255);

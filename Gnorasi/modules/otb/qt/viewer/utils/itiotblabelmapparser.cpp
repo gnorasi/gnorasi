@@ -47,6 +47,9 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
     qDebug() << "number of labelobjects in labelmap : " << lblmap->GetNumberOfLabelObjects();
 
+    m_classLabelIdsNames.clear();
+    m_classLabelIdsNames[1001] = tr("Unclassified");
+
     for(unsigned int i = 1; i < lblmap->GetNumberOfLabelObjects(); i++){
         LabelObjectType* lblObject = lblmap->GetLabelObject(i);
 
@@ -86,18 +89,47 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
         pollist.append(plgon);
 
-        if(!lblObject->HasClassLabel())
-            continue;
-
-        int classificationId = (int)lblObject->GetClassLabel();
-
         Region *pRegion = new Region(this);
         pRegion->setArea(plgon);
         pRegion->setSegmentationId(counter++);
-        pRegion->setClassificationId(classificationId);
+
+        if(lblObject->HasClassLabel()){
+
+            int classificationId = (int)lblObject->GetClassLabel();
+
+            if(!m_classLabelIdsNames.contains(classificationId)){
+
+
+                std::vector<std::string> attrList = lblObject->GetAvailableAttributes();
+                if(!attrList.empty()){
+                    qDebug() << QString("The following id does not exist on the hash map : ").append(QString::number(classificationId));
+
+                    std::string clname = attrList.at(attrList.size()-1);
+                    QString cname = QString::fromStdString(clname);
+                    double val = lblObject->GetAttribute(cname.toUtf8().constData());
+                    if(val - 666.666 < 0.1 )
+                        m_classLabelIdsNames[classificationId] = cname;
+                    else{
+                        clname = attrList.at(0);
+                        cname = QString::fromStdString(clname);
+                        val = lblObject->GetAttribute(cname.toUtf8().constData());
+                        if(val - 666.666 < 0.1 )
+                            m_classLabelIdsNames[classificationId] = cname;
+                    }
+                }
+                else{
+                    qDebug() << QString("The following id does not exist on the hash map but the attributes vector is a empty : ").append(QString::number(classificationId));
+                }
+            }
+
+            pRegion->setClassificationId(classificationId);
+        }
 
         list << pRegion;
     }
+
+    qDebug() << "Number of classification ids : " << m_classLabelIdsNames.size();
+
     //    QString path = QFileDialog::getSaveFileName(0,QLatin1String("Save"),QDir::homePath());
     //    if(!path.contains(".csv"))
     //        path.append(".csv");

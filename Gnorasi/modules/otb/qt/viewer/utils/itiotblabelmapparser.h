@@ -37,6 +37,9 @@ public:
      */
     QList<itiviewer::Region*> parse(LabelMapType* lblmap);
 
+
+    QHash<int,QString> classLabelIdsNames() const {return m_classLabelIdsNames; }
+
 signals:
     
 public slots:
@@ -47,6 +50,8 @@ private:
     static inline QString contructTextFromPolygonList(const QList<QPolygon> &list);
 
     static inline bool validatePolygon(const QPolygon &pol);
+
+    QHash<int,QString> m_classLabelIdsNames;
 
 };
 
