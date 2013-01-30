@@ -362,6 +362,7 @@ void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
 
     QStandardItem *pRootItem = new QStandardItem(tr("Level %1").arg(QString::number(pLevel->id())));
     pRootItem->setFlags(pRootItem->flags() | Qt::ItemIsUserCheckable);
+    pRootItem->setData(Qt::Checked,Qt::CheckStateRole);
     m_pClassificationModel->setItem(m_pClassificationModel->rowCount(),pRootItem);
 
     QHash<int,QString> data = ITIOTBIMAGEMANAGER->classficationNamesIds();
@@ -380,6 +381,8 @@ void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
         pRootItem->appendRow(pItem);
 //        m_pClassificationModel->setItem(pRootItem->rowCount(),pItem);
     }
+
+    m_pTreeViewClassfication->expandAll();
 
     QString text;
     text += tr("<h3>Classification statistics</h3><br/>");
