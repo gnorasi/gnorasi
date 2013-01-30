@@ -166,17 +166,18 @@ void ItiOtbImageViewerPanelSetupTab::setupClassficationGroupBox(){
     //
     m_pGroupBoxClassification = new QGroupBox(this);
     m_pGroupBoxClassification->setTitle(tr("Classification"));
-    m_pListViewClassfication = new QListView(this);
+    m_pTreeViewClassfication = new QTreeView(this);
     m_pClassificationModel = new QStandardItemModel(this);
     m_pClassificationModel->setHorizontalHeaderLabels(QStringList()<<tr("Class name"));
-    m_pListViewClassfication->setModel(m_pClassificationModel);
+    m_pTreeViewClassfication->setModel(m_pClassificationModel);
     m_pLabelClassificationOutput = new QLabel(this);
     m_pLabelClassificationListHeader = new QLabel(tr("Class labels"),this);
+    m_pTreeViewClassfication->header()->setVisible(false);
 
 
     QVBoxLayout *clVBoxLayout = new QVBoxLayout;
     clVBoxLayout->addWidget(m_pLabelClassificationListHeader);
-    clVBoxLayout->addWidget(m_pListViewClassfication);
+    clVBoxLayout->addWidget(m_pTreeViewClassfication);
     clVBoxLayout->addWidget(m_pLabelClassificationOutput);
 
     m_pGroupBoxClassification->setLayout(clVBoxLayout);
@@ -353,6 +354,16 @@ void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
 
     QHash<int ,QColor> cdata = ITIOTBIMAGEMANAGER->classificationColorsIds();
 
+    QList<Level*> rlist = ITIOTBIMAGEMANAGER->levels();
+    if(rlist.isEmpty())
+        return;
+
+    Level *pLevel = rlist.first();
+
+    QStandardItem *pRootItem = new QStandardItem(tr("Level %1").arg(QString::number(pLevel->id())));
+    pRootItem->setFlags(pRootItem->flags() | Qt::ItemIsUserCheckable);
+    m_pClassificationModel->setItem(m_pClassificationModel->rowCount(),pRootItem);
+
     QHash<int,QString> data = ITIOTBIMAGEMANAGER->classficationNamesIds();
     QHash<int,QString>::const_iterator i;
     for(i = data.constBegin(); i != data.constEnd(); i++){
@@ -365,7 +376,9 @@ void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
         pItem->setData(id,Qt::UserRole);
         pItem->setData(Qt::Checked,Qt::CheckStateRole);
         pItem->setFlags(pItem->flags() | Qt::ItemIsUserCheckable);
-        m_pClassificationModel->setItem(m_pClassificationModel->rowCount(),pItem);
+
+        pRootItem->appendRow(pItem);
+//        m_pClassificationModel->setItem(pRootItem->rowCount(),pItem);
     }
 
     QString text;
@@ -395,7 +408,14 @@ void ItiOtbImageViewerPanelSetupTab::onClassLabelCheckstateToggled(QStandardItem
     int cid = item->data(Qt::UserRole).toInt();
     bool checked = item->data(Qt::CheckStateRole).toBool();
 
-    emit classLabelToggled(checked,cid);
+    if(item->hasChildren()){
+        for(int i = 0; i < item->rowCount(); i++){
+            QStandardItem *citem = item->child(i,0);
+            citem->setData(checked,Qt::CheckStateRole);
+        }
+    }else{
+        emit classLabelToggled(checked,cid);
 
-    emit classLabelChanged();
+        emit classLabelChanged();
+    }
 }

@@ -17,8 +17,8 @@ Region::Region(QObject *parent) :
     m_pen = QPen(QBrush(Qt::black),2.0);
 }
 
-void Region::drawRegion(QPainter *painter, ImageRegionType &extent, double iz){
-    modifyPolygonByExtent(extent,iz);
+void Region::drawRegion(QPainter *painter, ImageRegionType &extent, const QRectF &rect, double iz){
+    modifyPolygonByExtent(extent, rect, iz);
 
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
@@ -33,7 +33,7 @@ void Region::setArea(QPolygon p){
     m_paintedArea = p;
 }
 
-void Region::modifyPolygonByExtent(ImageRegionType &extent, double iz){
+void Region::modifyPolygonByExtent(ImageRegionType &extent, const QRectF &rect, double iz){
 
     QPolygon::const_iterator i;
     for(i = m_area.constBegin(); i != m_area.constEnd(); i++){
@@ -43,8 +43,17 @@ void Region::modifyPolygonByExtent(ImageRegionType &extent, double iz){
 
         QPoint hp;
 
-        hp.setX(point.x()*iz + (int)extent.GetIndex()[0]);
-        hp.setY(point.y()*iz + (int)extent.GetIndex()[1]);
+        hp.setX(point.x()*iz - rect.x());
+        hp.setY(point.y()*iz - rect.y());
+
+        if(extent.GetIndex()[0] > 0)
+            hp.setX(hp.x()+extent.GetIndex()[0]);
+
+        if(extent.GetIndex()[1] > 0)
+            hp.setY(hp.y()+extent.GetIndex()[1]);
+
+//        hp.setX(point.x()*iz + (int)extent.GetIndex()[0]);
+//        hp.setY(point.y()*iz + (int)extent.GetIndex()[1]);
 
         m_paintedArea.replace(idx,hp);
     }

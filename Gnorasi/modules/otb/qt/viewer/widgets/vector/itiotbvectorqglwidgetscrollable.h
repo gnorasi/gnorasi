@@ -126,6 +126,8 @@ signals:
 
 protected:
 
+    QRectF constructHelperRect() const;
+
     /*!
      * \brief mousePressEvent
      */

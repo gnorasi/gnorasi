@@ -44,7 +44,7 @@ public:
     bool        visible() const {return m_visible; }
     void        setVisible(bool v) { m_visible = v; }
 
-    void        drawRegion(QPainter * painter, ImageRegionType &extent, double iz = 1.0);
+    void        drawRegion(QPainter * painter, ImageRegionType &extent, const QRectF&, double iz = 1.0);
 
     static int randInt(int low, int high)
     {
@@ -62,7 +62,7 @@ signals:
 public slots:
 
 private:
-    void        modifyPolygonByExtent(ImageRegionType &, double);
+    void        modifyPolygonByExtent(ImageRegionType &, const QRectF &, double);
 
     int         m_segmentationId;
     int         m_classificationId;

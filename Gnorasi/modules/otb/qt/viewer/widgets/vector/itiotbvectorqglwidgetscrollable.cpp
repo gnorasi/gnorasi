@@ -288,6 +288,8 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
+    QRectF rect = constructHelperRect();
+
     //!
     Level *pLevel = ITIOTBIMAGEMANAGER->levelById(m_currentLevelId);
     if(pLevel){
@@ -299,7 +301,7 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
         for(i = regions.constBegin(); i != regions.constEnd(); i++){
             Region *pRegion = *i;
             if(pRegion->visible())
-                pRegion->drawRegion(&painter, extent, m_IsotropicZoom);
+                pRegion->drawRegion(&painter, extent, rect,  m_IsotropicZoom);
         }
     }
 
@@ -583,6 +585,23 @@ void ItiOtbVectorQGLWidgetScrollable::zoomOut(){
     update();
 
     setupFocusRegionAndSendNotification();
+}
+
+QRectF ItiOtbVectorQGLWidgetScrollable::constructHelperRect() const {
+    ImageRegionType extent = m_pImageViewManipulator->extent();
+
+    QRectF rect;
+    rect.setX(m_pImageModelRenderer->firstDisplayColumn());
+    if(extent.GetIndex()[1] > 0)
+        rect.setY(0);
+    else
+        rect.setY(extent.GetSize()[1] - m_pImageModelRenderer->firstDisplayRow()-m_pImageModelRenderer->nbDisplayRows());
+
+    rect.setWidth(m_pImageModelRenderer->nbDisplayColumns());
+    rect.setHeight(m_pImageModelRenderer->nbDisplayRows());
+
+    return rect;
+
 }
 
 
