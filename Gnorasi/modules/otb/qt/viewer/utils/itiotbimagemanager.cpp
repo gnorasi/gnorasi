@@ -66,9 +66,9 @@ void ItiOtbImageManager::setupImage(){
 
         filter->SetInput(rImgType);
 
-        m_pImgType = filter->GetOutput();
-
         filter->Update();
+
+        m_pImgType = filter->GetOutput();
 
         createRegions();
 

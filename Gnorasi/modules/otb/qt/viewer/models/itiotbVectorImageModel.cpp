@@ -88,11 +88,19 @@ VectorImageModel
 
   m_ImageFileReader = imageFileReader;
 
+  // Before doing anything, check if region is inside the buffered
+  // region of image
+  unsigned int currentIndex = 0;
+  const DefaultImageType* image =  this->GetOutput(currentIndex);
+  if(!image)
+      return;
+
   // initialize the channel list for the rendering needs following the
   // input image
   // TODO : See if if needs to be moved somewhere else
   // TODO : use the default display
-  if (m_ImageFileReader->GetOutput()->GetNumberOfComponentsPerPixel()  < 3)
+//  if (m_ImageFileReader->GetOutput()->GetNumberOfComponentsPerPixel()  < 3)
+  if(image->GetNumberOfComponentsPerPixel() < 3)
     {
     m_Channels.resize(1);
     m_Channels[0]  = 0;
