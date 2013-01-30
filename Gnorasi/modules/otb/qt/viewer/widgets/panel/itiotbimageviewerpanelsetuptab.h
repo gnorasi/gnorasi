@@ -37,7 +37,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QLineEdit>
-#include <QListView>
+#include <QTreeView>
 #include <QStandardItemModel>
 #include <QTextEdit>
 
@@ -209,7 +209,7 @@ private:
     QLineEdit       *m_pLineEditUpperQuantileValue;
     QLineEdit       *m_pLineEditLowerQuantileValue;
     QLineEdit       *m_pLineEditStandardDeviationValue;
-    QListView       *m_pListViewClassfication;
+    QTreeView       *m_pTreeViewClassfication;
     QLabel          *m_pLabelClassificationListHeader;
     QLabel          *m_pLabelClassificationOutput;
 

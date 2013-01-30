@@ -205,6 +205,19 @@ void ItiOtbVectorQGLWidgetZoomable::initializeColumnRowParameters(){
     m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
 }
 
+bool ItiOtbVectorQGLWidgetZoomable::isRegionPolygonInsideVisibleArea(const QPolygonF &pol) const{
+//    ImageRegionType bufferedRegion = m_pImageViewManipulator->bufferRegion();
+    ImageRegionType extentRegion = m_pImageViewManipulator->extent();
+
+    QRectF rect = constructHelperRect();
+
+    QRectF brect = pol.boundingRect();
+
+//    return rect.contains(brect);
+    return true;
+}
+
+
 //!
 void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
 
@@ -237,6 +250,8 @@ void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
+    QRectF rect = constructHelperRect();
+
     Level *pLevel = ITIOTBIMAGEMANAGER->levelById(m_currentLevelId);
     if(pLevel){
 
@@ -246,8 +261,8 @@ void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
         QList<Region*>::const_iterator i;
         for(i = regions.constBegin(); i != regions.constEnd(); i++){
             Region *pRegion = *i;
-            if(pRegion->visible())
-                pRegion->drawRegion(&painter, extent, m_IsotropicZoom);
+            if(pRegion->visible() && isRegionPolygonInsideVisibleArea(pRegion->area()))
+                pRegion->drawRegion(&painter, extent, rect, m_IsotropicZoom);
         }
     }
 
@@ -538,6 +553,23 @@ void ItiOtbVectorQGLWidgetZoomable::onFocusRegionChanged(const QRect &rect){
 
     //
     update();
+}
+
+QRectF ItiOtbVectorQGLWidgetZoomable::constructHelperRect() const {
+    ImageRegionType extent = m_pImageViewManipulator->extent();
+
+    QRectF rect;
+    rect.setX(m_pImageModelRenderer->firstDisplayColumn());
+    if(extent.GetIndex()[1] > 0)
+        rect.setY(0);
+    else
+        rect.setY(extent.GetSize()[1] - m_pImageModelRenderer->firstDisplayRow()-m_pImageModelRenderer->nbDisplayRows());
+
+    rect.setWidth(m_pImageModelRenderer->nbDisplayColumns());
+    rect.setHeight(m_pImageModelRenderer->nbDisplayRows());
+
+    return rect;
+
 }
 
 //!

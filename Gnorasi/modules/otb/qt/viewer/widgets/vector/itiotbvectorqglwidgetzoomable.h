@@ -139,6 +139,8 @@ signals:
 
 protected:
 
+    QRectF constructHelperRect() const;
+
     /*!
      * \brief setupAndSendSignal
      */
@@ -177,6 +179,8 @@ protected:
 
 
 private:
+
+    bool isRegionPolygonInsideVisibleArea(const QPolygonF &) const;
     /*!
      * \brief setupcolumnRowParameters
      */
