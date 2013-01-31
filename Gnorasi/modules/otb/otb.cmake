@@ -407,7 +407,7 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/utils/itiotbregion.cpp
     ${MOD_DIR}/qt/viewer/utils/itiotblabelmapparser.cpp
 #    ${MOD_DIR}/qt/viewer/utils/itiotblabelimageparser.cpp
-    ${MOD_DIR}/qt/viewer/commands/commandtoggleclassificationLabelvisibiltiy.cpp
+    ${MOD_DIR}/qt/viewer/commands/commandtoggleclassificationlabelvisibiltiy.cpp
 )
 ################################################################################
 # Qt headers
@@ -461,7 +461,7 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/utils/itiotblevel.h
     ${MOD_DIR}/qt/viewer/utils/itiotbregion.h
     ${MOD_DIR}/qt/viewer/utils/itiotblabelmapparser.h
-    ${MOD_DIR}/qt/viewer/commands/commandtoggleclassificationLabelvisibiltiy.h
+    ${MOD_DIR}/qt/viewer/commands/commandtoggleclassificationlabelvisibiltiy.h
 #    ${MOD_DIR}/qt/viewer/utils/itiotblabelimageparser.h
 )
 
