@@ -64,6 +64,7 @@
 #include "processors/Radiometry/otbndwiprocessor.h"
 #include "processors/Radiometry/otbvectorimagebandmathprocessor.h"
 #include "processors/Radiometry/otbtwoimagebandmathprocessor.h"
+#include "processors/BasicFilters/OTBLeeImageFilterProcessor.h"
 
 #include "processors/Visualization/otbimageviewerprocessor.h"
 
@@ -135,6 +136,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBVectorImageBandMathProcessor());
     registerProcessor(new OTBTwoVectorImagesBandMathProcessor());
     registerProcessor(new OTBFFTConvolutionImageFilterProcessor());
+    registerProcessor(new OTBLeeImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 }

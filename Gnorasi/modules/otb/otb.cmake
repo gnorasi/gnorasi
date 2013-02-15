@@ -273,6 +273,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
 
+	${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.cpp
 )
 
 SET(MOD_CORE_HEADERS
@@ -319,6 +320,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Radiometry/otbvectorimagebandmathprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.h
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
+	${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.h
 )
 
 #
