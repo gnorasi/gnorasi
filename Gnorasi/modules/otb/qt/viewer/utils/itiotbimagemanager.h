@@ -98,7 +98,7 @@ public:
      * \brief imageFile
      * \return
      */
-    QString imageFile() ;
+    QString imageFile(voreen::Port *port = 0) ;
 
     /*!
      * \brief getNextPort

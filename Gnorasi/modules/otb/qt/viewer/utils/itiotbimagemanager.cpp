@@ -88,11 +88,18 @@ void ItiOtbImageManager::setupImage(){
 }
 
 //!
-QString ItiOtbImageManager::imageFile() {
+QString ItiOtbImageManager::imageFile(voreen::Port *port) {
 
     QString path;
 
-    std::vector<voreen::Processor*> list = nextConnectedProcessor(m_pPort);
+    std::vector<voreen::Processor*> list;
+
+    if(port){
+        list = nextConnectedProcessor(port);
+    }else{
+        list = nextConnectedProcessor(m_pPort);
+    }
+
     if(list.size()){
         Processor *proc = list.at(0);
 
