@@ -239,6 +239,11 @@ void
 VectorImageModel
 ::DumpImagePixelsWithinRegionIntoBuffer(const ImageRegionType& region)
 {
+
+//    QTime time;
+//    qDebug() << "Start of DumpImagePixelsWithinRegionIntoBuffer...";
+//    time.restart();
+
   // Before doing anything, check if region is inside the buffered
   // region of image
   unsigned int currentIndex = 0;
@@ -269,7 +274,7 @@ VectorImageModel
   byterescaler->SetClampThreshold(0.01);
   ByteImageType::Pointer image8;
   image8 = byterescaler->GetOutput();
-  byterescaler->Update();
+//  byterescaler->Update();
   //end test
 
   // Extract the region of interest in the image
@@ -280,6 +285,8 @@ VectorImageModel
   m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());
   m_RenderingFilter->GetOutput()->SetRequestedRegion(region);
   m_RenderingFilter->Update();
+
+//  qDebug() << "End of m_RenderingFilter \nmilliseconds elapsed : " << time.elapsed();
 
 
   // Declare the iterator
@@ -301,6 +308,9 @@ VectorImageModel
     m_RasterizedBuffer[index + 2] = it.Get()[2];
     ++it;
     }
+
+
+//    qDebug() << "End of DumpImagePixelsWithinRegionIntoBuffer \nmilliseconds elapsed : " << time.elapsed();
 }
 
 
