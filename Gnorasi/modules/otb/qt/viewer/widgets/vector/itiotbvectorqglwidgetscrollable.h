@@ -164,6 +164,11 @@ protected:
      */
     void mouseMoveEvent(QMouseEvent *event);
 
+    /*!
+     * \brief mouseReleaseEvent
+     */
+    void mouseReleaseEvent(QMouseEvent *);
+
 private:
 
     /*!
@@ -220,6 +225,9 @@ private:
      *  An observalble region and the observer classes which in this case are the views(scrollable,zoombable,full view)
      */
     QRect m_focusRegion;
+
+
+    bool m_moving;
 
 
     int m_currentLevelId;
