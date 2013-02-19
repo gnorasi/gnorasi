@@ -271,9 +271,6 @@ void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
 
 //!
 void ItiOtbVectorQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
-    QCursor dragCursor;
-    dragCursor.setShape(Qt::ClosedHandCursor) ;
-    this->setCursor(dragCursor);
 
     m_pImageViewManipulator->mouseMoveEvent(event);
 

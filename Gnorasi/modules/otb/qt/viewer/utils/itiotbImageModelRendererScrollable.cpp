@@ -75,6 +75,9 @@ void ImageModelRendererScrollable::paintGL( const RenderingContext& context )
     ImageRegionType bufferedRegion = context.m_ImageRegion;
     unsigned char* buffer = viModel->RasterizeRegion(bufferedRegion);
 
+    int s = strlen((char*)buffer);
+
+    qDebug() << "strlen of buffer : " << s;
 
     VectorIndexType startPosition = extent.GetIndex();
     startPosition[0] = startPosition[0] < 0 ? 0 : startPosition[0];

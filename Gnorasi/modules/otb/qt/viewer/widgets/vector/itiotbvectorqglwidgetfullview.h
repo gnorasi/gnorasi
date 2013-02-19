@@ -152,6 +152,12 @@ protected:
      */
     void mousePressEvent(QMouseEvent *event);
 
+    /*!
+     * \brief mouseReleaseEvent
+     * \param event
+     */
+    void mouseReleaseEvent(QMouseEvent *event);
+
 
 private:
     /*!
@@ -163,6 +169,8 @@ private:
 
     /** OpenGl zoom factor */
     double m_IsotropicZoom;
+
+    void translate(const QPoint& , const QPoint&);
 
     /** Event handler pointer */
     ImageViewManipulatorFullView* m_pImageViewManipulator;
@@ -185,6 +193,9 @@ private:
      * \brief m_focusRegion
      */
     QRect m_visibleRegion;
+
+
+    bool m_moving;
 
 };
 
