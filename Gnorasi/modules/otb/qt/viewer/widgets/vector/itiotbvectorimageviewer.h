@@ -134,7 +134,7 @@ private slots:
      * \brief onZoomableWidgetSizeChanged
      * \param size
      */
-    void onZoomableWidgetSizeChanged(const QRect &size);
+    void onZoomableWidgetSizeChanged(const QRect &size, double z = 1.0);
 
     /*!
      * \brief onFocusRegionTranslated

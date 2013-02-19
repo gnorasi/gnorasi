@@ -321,7 +321,7 @@ void ItiOtbVectorQGLWidgetZoomable::setupAndSendSignal(){
     //! create a helper QRect value
     QRect rect = visibleArea();
     //! emit the signal
-    emit focusAreaChanged(rect);
+    emit focusAreaChanged(rect,m_IsotropicZoom);
 }
 
 QRect ItiOtbVectorQGLWidgetZoomable::visibleArea() const{

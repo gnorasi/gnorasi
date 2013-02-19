@@ -123,7 +123,7 @@ signals:
      * \brief visibleAreaChanged , this signal is emitted uppon the view resizing
      * \param rect
      */
-    void focusAreaChanged(const QRect &rect);
+    void focusAreaChanged(const QRect &rect, double z);
 
     /*!
      * \brief currentIndexChanged

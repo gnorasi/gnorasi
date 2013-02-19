@@ -349,6 +349,9 @@ void ItiOtbVectorQGLWidgetScrollable::updateObserver(ItiViewerObservable *observ
     //! get the current rect from the region
     QRect rregion = region->region();
 
+    // update the zoom value
+    m_helperZoomCounter = region->zoom();
+
     //! create helper values from the rect's parameters
     int w       = rregion.width();
     int h       = rregion.height();
