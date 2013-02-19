@@ -590,6 +590,8 @@ void ItiOtbVectorQGLWidgetScrollable::translate(int dx, int dy){
     //! update painting
 //    updateGL();
     update();
+
+    setupFocusRegionAndSendNotification();
 }
 
 
