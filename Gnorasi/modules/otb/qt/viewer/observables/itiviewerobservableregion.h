@@ -51,7 +51,8 @@ namespace itiviewer{
 class ItiViewerObservableRegion : public ItiViewerObservable
 {
     Q_OBJECT
-    Q_PROPERTY(QRect region   READ region   WRITE updateRegion       NOTIFY regionChanged)
+    Q_PROPERTY(QRect    region  READ region WRITE updateRegion  NOTIFY regionChanged)
+    Q_PROPERTY(double   zoom    READ zoom   WRITE setZoom       NOTIFY zoomChanged)
 public:
     /*!
      * \brief ItiOtbRgbaFocusRegion
@@ -69,11 +70,15 @@ public:
      * \brief setRegion , setter
      * \param r , the RasterRegionType
      */
-    void updateRegion(QRect r) { m_region = r; notifyObservers(); }
+    void updateRegion(QRect r, double z = 1.0) { m_region = r; notifyObservers(); m_zoom = z; }
 
+
+    double zoom() const { return m_zoom; }
+    void setZoom(double z) { m_zoom = z; }
 
 signals:
     void regionChanged();
+    void zoomChanged();
     
 public slots:
 
@@ -82,6 +87,11 @@ private:
      * \brief m_region
      */
     QRect m_region;
+
+    /*!
+     * \brief m_zoom
+     */
+    double m_zoom;
     
 };
 
