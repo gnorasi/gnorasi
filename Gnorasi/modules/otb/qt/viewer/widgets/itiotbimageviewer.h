@@ -104,6 +104,12 @@ public:
         return m_pAbstractImageModel;
     }
 
+    /*!
+     * \brief vmode
+     * \return
+     */
+    VMODE vmode() const                                                                { return m_vmode; }
+
 protected:
     /*!
      * \brief m_vmode , a variable holding the VMODE value

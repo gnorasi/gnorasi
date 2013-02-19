@@ -198,6 +198,10 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     qDebug() << "Start of incoming image data , setting up the image...";
     time.restart();
 
+    int vmode = 0;
+    if(m_pItiOtbImageViewer)
+        vmode = m_pItiOtbImageViewer->vmode();
+
     //
     //                          STATISTICS
 
@@ -218,6 +222,9 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
 
     //! draw stuff
     m_pItiOtbImageViewer->draw();
+
+    if(vmode)
+        disassembleWidgets();
 
 
     //
