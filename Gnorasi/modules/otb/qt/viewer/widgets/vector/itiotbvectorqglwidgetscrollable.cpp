@@ -648,9 +648,27 @@ void ItiOtbVectorQGLWidgetScrollable::zoomOut(){
 
     m_focusRegion.translate(qRound((prevWidth - (double)m_focusRegion.width())/2.0),qRound((prevHeight - (double)m_focusRegion.height())/2.0));
 
+    // start of test
+
+//    unsigned int f_d_c = m_pImageModelRenderer->firstDisplayColumn();
+//    unsigned int f_d_r = m_pImageModelRenderer->firstDisplayRow();
+    ImageRegionType extent = m_pImageViewManipulator->extent();
+
+    if(m_focusRegion.x() < extent.GetIndex()[0])
+        m_focusRegion.translate(extent.GetIndex()[0]-m_focusRegion.x(),0);
+    else if(m_focusRegion.x() + m_focusRegion.width() > extent.GetSize()[0] + extent.GetIndex()[0])
+        m_focusRegion.translate(extent.GetSize()[0]+extent.GetIndex()[0]-m_focusRegion.x() - m_focusRegion.width(),0);
+
+    if(m_focusRegion.y() < extent.GetIndex()[1])
+        m_focusRegion.translate(0,extent.GetIndex()[1]-m_focusRegion.y());
+    else if( m_focusRegion.y() + m_focusRegion.height() > extent.GetSize()[1]+ extent.GetIndex()[1])
+        m_focusRegion.translate(0,extent.GetSize()[1]+extent.GetIndex()[1]-m_focusRegion.y()-m_focusRegion.height());
+
+    // end of test
+
     update();
 
-    setupFocusRegionAndSendNotification();
+        setupFocusRegionAndSendNotification();
 }
 
 QRectF ItiOtbVectorQGLWidgetScrollable::constructHelperRect() const {
