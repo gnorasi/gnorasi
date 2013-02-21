@@ -107,7 +107,6 @@ void ImageModelRendererFullView::paintGL( const RenderingContext& context )
     startPosition[0] = startPosition[0] < 0 ? 0 : startPosition[0];
     startPosition[1] = startPosition[1] < 0 ? 0 : startPosition[1];
 
-//    setupViewport(width(), height());
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glPixelStorei(GL_UNPACK_ROW_LENGTH, bufferedRegion.GetSize()[0]);

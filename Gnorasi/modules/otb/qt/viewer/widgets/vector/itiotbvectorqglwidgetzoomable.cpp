@@ -207,11 +207,11 @@ void ItiOtbVectorQGLWidgetZoomable::initializeColumnRowParameters(){
 
 bool ItiOtbVectorQGLWidgetZoomable::isRegionPolygonInsideVisibleArea(const QPolygonF &pol) const{
 //    ImageRegionType bufferedRegion = m_pImageViewManipulator->bufferRegion();
-    ImageRegionType extentRegion = m_pImageViewManipulator->extent();
+//    ImageRegionType extentRegion = m_pImageViewManipulator->extent();
 
-    QRectF rect = constructHelperRect();
+//    QRectF rect = constructHelperRect();
 
-    QRectF brect = pol.boundingRect();
+//    QRectF brect = pol.boundingRect();
 
 //    return rect.contains(brect);
     return true;
@@ -339,10 +339,6 @@ QRect ItiOtbVectorQGLWidgetZoomable::visibleArea() const{
     rect.setHeight(m_pImageModelRenderer->nbDisplayRows());
 
 
-//    int helper = m_pImageViewManipulator->extent().GetSize()[1] - m_pImageModelRenderer->firstDisplayRow() - m_pImageModelRenderer->nbDisplayRows();
-
-//    rect.setY(helper);
-
     //! emit the signal
     return rect;
 }
@@ -428,7 +424,6 @@ void ItiOtbVectorQGLWidgetZoomable::zoomIn(){
     m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
 
     //!
-//    updateGL();
     update();
 
     //! setup and send signal
@@ -513,7 +508,6 @@ void ItiOtbVectorQGLWidgetZoomable::zoomOut(){
     m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
 
     //! update the opengl painting..
-//    updateGL();
     update();
 
     //! setup and send signal

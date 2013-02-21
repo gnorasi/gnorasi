@@ -122,9 +122,6 @@ void ItiOtbVectorQGLWidgetFullView::paintEvent(QPaintEvent *event){
 
     qglClearColor(Qt::black);
 
-    //
-    // TEST
-
     // Set the new rendering context to be known in the ModelRendere
     const AbstractImageModel* aiModel=  qobject_cast<AbstractImageModel*>(m_pItiOtbVectorImageViewer->model());
 
@@ -143,9 +140,6 @@ void ItiOtbVectorQGLWidgetFullView::paintEvent(QPaintEvent *event){
         // use the model renderer to paint the requested region of the image
         m_pImageModelRenderer->paintGL( context );
     }
-
-    //
-    // END OF TEST
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
@@ -188,17 +182,9 @@ void ItiOtbVectorQGLWidgetFullView::updateObserver(ItiViewerObservable *observab
     ImageRegionType extent = m_pImageViewManipulator->extent();
 
     QRect rect = region->region();
-    //! check if the x coordinate of the given rect is greater than zero
-//    if(rect.x()>=0)
-//        m_visibleRegion.setX(extent.GetIndex()[0]);
-//    else //! if not , this means that the scrollable view has been resized to a value smaller than the original size of the image
-        m_visibleRegion.setX(extent.GetIndex()[0] + (qAbs(rect.x()*m_IsotropicZoom)));
 
-    //! same type of checking as the checking on the previous if statement
-//    if(rect.y() >= 0)
-//        m_visibleRegion.setY(extent.GetIndex()[1]);
-//    else
-        m_visibleRegion.setY(extent.GetIndex()[1]+(qAbs(rect.y()*m_IsotropicZoom) ));
+    m_visibleRegion.setX(extent.GetIndex()[0] + (qAbs(rect.x()*m_IsotropicZoom)));
+    m_visibleRegion.setY(extent.GetIndex()[1]+(qAbs(rect.y()*m_IsotropicZoom) ));
 
     //! calculate the new width and height value;
     int nw = m_IsotropicZoom * rect.width();
