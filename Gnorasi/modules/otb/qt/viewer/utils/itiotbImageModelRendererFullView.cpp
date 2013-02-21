@@ -98,6 +98,10 @@ void ImageModelRendererFullView::paintGL( const RenderingContext& context )
         first_displayed_row = (bufferedRegion.GetSize()[1] - nb_displayed_rows) / 2;
     }
 
+    // margin validation checks
+    if(first_displayed_col+nb_displayed_cols > bufferedRegion.GetSize()[0]
+            || first_displayed_row + nb_displayed_rows > bufferedRegion.GetSize()[1])
+        return;
 
     VectorIndexType startPosition = extent.GetIndex();
     startPosition[0] = startPosition[0] < 0 ? 0 : startPosition[0];

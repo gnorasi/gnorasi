@@ -296,6 +296,8 @@ void ItiOtbVectorQGLWidgetZoomable::draw(){
 
     //! initialize the column and row related parameters
     initializeColumnRowParameters();
+
+    setupAndSendSignal();
 }
 
 //!

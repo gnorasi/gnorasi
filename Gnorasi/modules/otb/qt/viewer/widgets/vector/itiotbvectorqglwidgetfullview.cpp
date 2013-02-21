@@ -83,9 +83,6 @@ void ItiOtbVectorQGLWidgetFullView::resizeGL(int w, int h)
 }
 
 void ItiOtbVectorQGLWidgetFullView::setupViewport(int w, int h){
-//    if(!m_OpenGlBuffer)
-//        return;
-
 
     ImageRegionType bufferedRegion = m_pImageViewManipulator->bufferRegion();
 
@@ -172,6 +169,9 @@ void ItiOtbVectorQGLWidgetFullView::draw(){
     m_pImageViewManipulator->InitializeContext(width(),height());
 
     m_pImageViewManipulator->SetImageLargestRegion(vModel->GetLargestPossibleRegion());
+
+    //! initialize the column and row related parameters
+    setupViewport(width(),height());
 
     //!
     setMouseTracking(true);
