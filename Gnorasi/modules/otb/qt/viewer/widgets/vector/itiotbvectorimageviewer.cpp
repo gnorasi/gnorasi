@@ -280,8 +280,6 @@ void ItiOtbVectorImageViewer::setupObserverMechanism(){
 void ItiOtbVectorImageViewer::setupConnections(){
     //!
     connect(m_pItiOtbVectorImageWidgetScroll, SIGNAL(visibleAreaChanged(QRect)),this,SLOT(onScrollableWidgetSizeChanged(QRect)));
-//    connect(m_pItiOtbVectorImageWidgetScroll, SIGNAL(zoomIn()),m_pItiOtbVectorImageWidgetZoomable,SLOT(zoomIn()));
-//    connect(m_pItiOtbVectorImageWidgetScroll, SIGNAL(zoomOut()),m_pItiOtbVectorImageWidgetZoomable,SLOT(zoomOut()));
     connect(m_pItiOtbVectorImageWidgetScroll, SIGNAL(focusRegionChanged(QRect)),m_pItiOtbVectorImageWidgetZoomable,SLOT(onFocusRegionChanged(QRect)));
     connect(m_pItiOtbVectorImageWidgetZoomable, SIGNAL(focusAreaChanged(QRect,double)),this,SLOT(onZoomableWidgetSizeChanged(QRect,double)));
     connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(visibleAreaTranslated(int,int)),m_pItiOtbVectorImageWidgetScroll,SLOT(translate(int,int)));
