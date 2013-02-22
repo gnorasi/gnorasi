@@ -299,8 +299,6 @@ QString ItiOtbImageManager::constructInfoByIndex(ImageRegionType::IndexType idx)
     text += "\n";
     text += QString("Image Size : [%1, %2]").arg(QString::number(region.GetSize()[0])).arg(QString::number(region.GetSize()[1]));
     text += "\n";
-    text += QString("Channel selection : %1, %2, %3").arg(1).arg(2).arg(3);
-    text += "\n";
     text += QString("Pixel value : [%1, %2, %3]").arg(QString::number(pixelValue[0])).arg(QString::number(pixelValue[1])).arg(QString::number(pixelValue[2]));
     text += "\n";
     text += QString("Value computed : [%1, %2, %3]").arg(QString::number(pixelValue[0])).arg(QString::number(pixelValue[1])).arg(QString::number(pixelValue[2]));
