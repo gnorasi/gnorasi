@@ -77,6 +77,8 @@ ItiOtbVectorQGLWidgetScrollable::ItiOtbVectorQGLWidgetScrollable(ItiOtbVectorIma
 
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
+
+    connect(m_pImageModelRenderer,SIGNAL(ready()),this,SLOT(enableMouseTracking()));
 }
 
 //
@@ -332,9 +334,6 @@ void ItiOtbVectorQGLWidgetScrollable::draw(){
 
     //! initialize the column and row related parameters
     initializeColumnRowParameters();
-
-    //! mouse tracking is disabled on startup, set it on
-    setMouseTracking(true);
 }
 
 //! The observer gets notified on a zoomable view's change ( either zooming or resizing events)
@@ -728,6 +727,12 @@ ImageRegionType::IndexType ItiOtbVectorQGLWidgetScrollable::indexFromPoint(const
     idx[1] = region.GetSize()[1] - nb_d_rs - f_d_r + p.y();
 
     return idx;
+}
+
+
+void ItiOtbVectorQGLWidgetScrollable::enableMouseTracking(){
+    //! mouse tracking is disabled on startup, set it on
+    setMouseTracking(true);
 }
 
 //!
