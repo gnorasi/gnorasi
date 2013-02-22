@@ -330,10 +330,14 @@ void ItiOtbImageViewerPanelSetupTab::setupChannels(){
             m_pSpinBoxBlueChannel->setValue(list.at(2)+1);
         else
             m_pSpinBoxBlueChannel->setValue(list.at(1)+1);
+
+        m_pRadioButtonRGBCompositionMode->setChecked(true);
     }
     else{
         m_pSpinBoxGreenChannel->setValue(list.at(0)+1);
         m_pSpinBoxBlueChannel->setValue(list.at(0)+1);
+
+        m_pRadioButtonGrayscaleMode->setChecked(true);
     }
 
 
