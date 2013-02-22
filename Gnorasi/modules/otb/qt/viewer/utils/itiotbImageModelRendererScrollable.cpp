@@ -78,6 +78,8 @@ void ImageModelRendererScrollable::paintGL( const RenderingContext& context )
             || m_first_displayed_row + m_nb_displayed_rows > bufferedRegion.GetSize()[1])
         return;
 
+    emit ready();
+
     unsigned char* buffer = viModel->RasterizeRegion(bufferedRegion);
 
     ImageRegionType extent = context.m_extent;
