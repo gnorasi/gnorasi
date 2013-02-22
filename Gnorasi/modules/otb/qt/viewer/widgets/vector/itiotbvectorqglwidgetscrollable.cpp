@@ -330,11 +330,11 @@ void ItiOtbVectorQGLWidgetScrollable::draw(){
 
     m_pImageViewManipulator->SetImageLargestRegion(vModel->GetLargestPossibleRegion());
 
-    //! mouse tracking is disabled on startup, set it on
-    setMouseTracking(true);
-
     //! initialize the column and row related parameters
     initializeColumnRowParameters();
+
+    //! mouse tracking is disabled on startup, set it on
+    setMouseTracking(true);
 }
 
 //! The observer gets notified on a zoomable view's change ( either zooming or resizing events)
@@ -535,6 +535,37 @@ void ItiOtbVectorQGLWidgetScrollable::mouseMoveEvent(QMouseEvent *event){
         update();
     }
 
+    // pixel info related functionality follows
+
+    QString text;
+
+    ImageRegionType extent = m_pImageViewManipulator->extent();
+
+    // check if both x y extent values are negative then this means that the
+    // mouse position is definetely inside the image boundaries
+    if(extent.GetIndex()[0] < 0 && extent.GetIndex()[1] < 0){
+        ImageRegionType::IndexType idx  = indexFromPoint(event->pos());
+
+        text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx);
+    }else{
+        QPoint point(event->pos().x()- extent.GetIndex()[0],event->pos().y()- extent.GetIndex()[1]);
+
+        ImageRegionType::IndexType idx;
+        idx[0] = point.x();
+        idx[1] = point.y();
+
+        // check whether the point is inside the image boundaries
+        if(!ItiOtbImageManager::isInsideTheImage(extent,point))
+            text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
+        else{
+            text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx);
+        }
+    }
+
+    // emit the signal containing the text of the pixel info
+    emit currentIndexChanged(text);
+
+    // now call the parent widget class mousemoveevent
     QGLWidget::mouseMoveEvent(event);
 }
 
@@ -683,6 +714,21 @@ QRectF ItiOtbVectorQGLWidgetScrollable::constructHelperRect() const {
 
 }
 
+
+ImageRegionType::IndexType ItiOtbVectorQGLWidgetScrollable::indexFromPoint(const QPoint &p){
+    ImageRegionType::IndexType idx;
+
+    ImageRegionType region = m_pImageViewManipulator->bufferRegion();
+
+    unsigned int f_d_c      = m_pImageModelRenderer->firstDisplayColumn();
+    unsigned int f_d_r      = m_pImageModelRenderer->firstDisplayRow();
+    unsigned int nb_d_rs    = m_pImageModelRenderer->nbDisplayRows();
+
+    idx[0] = f_d_c + p.x();
+    idx[1] = region.GetSize()[1] - nb_d_rs - f_d_r + p.y();
+
+    return idx;
+}
 
 //!
 ItiOtbVectorQGLWidgetScrollable::~ItiOtbVectorQGLWidgetScrollable(){

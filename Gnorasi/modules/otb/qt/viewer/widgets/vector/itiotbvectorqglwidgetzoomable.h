@@ -180,6 +180,13 @@ protected:
 
 private:
 
+    /*!
+     * \brief indexFromPoint
+     * \return
+     */
+    ImageRegionType::IndexType indexFromPoint(const QPoint& );
+
+
     bool isRegionPolygonInsideVisibleArea(const QPolygonF &) const;
     /*!
      * \brief setupcolumnRowParameters

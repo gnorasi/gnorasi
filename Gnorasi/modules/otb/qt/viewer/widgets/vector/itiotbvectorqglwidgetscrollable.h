@@ -170,6 +170,11 @@ protected:
     void mouseReleaseEvent(QMouseEvent *);
 
 private:
+    /*!
+     * \brief indexFromPoint
+     * \return
+     */
+    ImageRegionType::IndexType indexFromPoint(const QPoint& );
 
     /*!
      * \brief zoomIn
