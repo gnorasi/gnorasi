@@ -146,15 +146,6 @@ signals:
     void contrastEnhancementChanged(int method, double aval, double bval = -1.0);
     
 private slots:
-    /*!
-     * \brief applyColorComposition
-     */
-    void applyColorComposition();
-
-    /*!
-     * \brief applyConstrastEnhancement
-     */
-    void applyConstrastEnhancement();
 
     /*!
      * \brief applyContrastEnhancementGaussian

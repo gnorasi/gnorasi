@@ -59,11 +59,6 @@ public:
     void setupChannels();
     
 signals:
-    //! emitted when the apply button for color composition has been clicked
-    void colorCompositionApplyButtonClicked();
-
-    //! emitted when the apply button for contrast enhancement has been clicked
-    void contrastEnhancementApplyButtonClicked();
 
     //! emitted when the grey scale channel selection has been altered
     void greyScaleColorCompositionChannelChanged(int);
@@ -148,10 +143,13 @@ public slots:
 
 
 private slots:
+    //
     void onUpperQuantileLineEditChanged(const QString &);
 
+    //
     void onLowerQuantileLineEditChanged(const QString &);
 
+    //
     void onStandardDeviationLineEdiitChanged(const QString &);
 
     /*!
@@ -170,8 +168,10 @@ private slots:
     void onClassLabelCheckstateToggled(QStandardItem*);
 
 private:
+    //
     void setupClassificationData();
 
+    //
     void initialize();
 
     //!
