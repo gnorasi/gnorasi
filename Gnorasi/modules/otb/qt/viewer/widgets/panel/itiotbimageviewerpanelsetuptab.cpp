@@ -182,6 +182,8 @@ void ItiOtbImageViewerPanelSetupTab::setupClassficationGroupBox(){
 
     m_pGroupBoxClassification->setLayout(clVBoxLayout);
 
+    m_pGroupBoxClassification->setVisible(false);
+
     connect(m_pClassificationModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(onClassLabelCheckstateToggled(QStandardItem*)));
 }
 

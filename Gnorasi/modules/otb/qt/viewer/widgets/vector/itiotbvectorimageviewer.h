@@ -123,6 +123,14 @@ public:
      */
     ItiOtbVectorQGLWidgetZoomable *zoomView()       const {return m_pItiOtbVectorImageWidgetZoomable; }
 
+
+public slots:
+
+    /*!
+     * \brief updatePixelInfoWithChannelData
+     */
+    void updatePixelInfoWithChannelData(const QString& );
+
 private slots:
     /*!
      * \brief onScrollableWidgetSizeChanged
