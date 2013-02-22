@@ -160,8 +160,10 @@ void ItiOtbVectorQGLWidgetFullView::draw(){
     if(!vModel)
         return;
 
+    //
     m_pImageViewManipulator->InitializeContext(width(),height());
 
+    //
     m_pImageViewManipulator->SetImageLargestRegion(vModel->GetLargestPossibleRegion());
 
     //! initialize the column and row related parameters
@@ -215,6 +217,29 @@ void ItiOtbVectorQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
 
         translate(previousCenter,point);
     }
+
+    // pixel info related functionality follows
+
+    ImageRegionType extent = m_pImageViewManipulator->extent();
+
+    QPoint point((event->pos().x()- extent.GetIndex()[0])/m_IsotropicZoom,(event->pos().y()- extent.GetIndex()[1])/m_IsotropicZoom);
+
+    ImageRegionType::IndexType idx;
+    idx[0] = point.x();
+    idx[1] = point.y();
+
+    QString text;
+
+    // check whether the point is inside the image boundaries
+    if(!ItiOtbImageManager::isInsideTheImage(extent,point,m_IsotropicZoom))
+        text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
+    else{
+        text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx);
+    }
+
+    emit currentIndexChanged(text);
+
+    // now call the parent widget class mousemoveevent
 
     QGLWidget::mouseMoveEvent(event);
 }

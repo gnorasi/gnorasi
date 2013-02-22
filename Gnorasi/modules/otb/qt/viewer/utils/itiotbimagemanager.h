@@ -132,6 +132,27 @@ public:
     //!
     QHash<int,QColor> classificationColorsIds() const { return m_colorHash ; }
 
+    /*!
+     * \brief constructInfoByIndex
+     * \param idx
+     * \return
+     */
+    QString constructInfoByIndex(ImageRegionType::IndexType idx);
+
+    /*!
+     * \brief constructInfoByIndexAlt
+     * \param idx
+     * \return
+     */
+    QString constructInfoByIndexAlt(ImageRegionType::IndexType idx);
+
+    /*!
+     * \brief isInsideTheImage
+     * \param point
+     * \return
+     */
+    static inline bool isInsideTheImage(const ImageRegionType region, const QPoint &point, double z = 1.);
+
 private:
     //! ctor
     ItiOtbImageManager();
@@ -183,6 +204,34 @@ private:
     //! a container holding the clasficaiton ids and a string values for names
     QHash<int ,QString> m_classficationNamesIds;
 };
+
+
+bool ItiOtbImageManager::isInsideTheImage(const ImageRegionType extent, const QPoint &point, double z){
+
+    if(point.x() < 0 || point.y() < 0)
+        return false;
+
+    if(point.x() > ( extent.GetSize()[0]-1 ) / z || point.y() > (extent.GetSize()[1]-1) / z)
+        return false;
+
+    return true;
+
+//    QRect rect;
+//    rect.setX(extent.GetIndex()[0]);
+//    rect.setWidth(extent.GetSize()[0]);
+//    if(rect.x()<0){
+//        rect.setX(-rect.x());
+//        rect.setWidth(rect.width()+extent.GetIndex()[0]);
+//    }
+//    rect.setY(extent.GetIndex()[1]);
+//    rect.setHeight(extent.GetSize()[1]);
+//    if(rect.y() < 0){
+//        rect.setY(-rect.y());
+//        rect.setHeight(extent.GetSize()[1]-extent.GetIndex()[1]);
+//    }
+
+//    return rect.contains(point);
+}
 
 } // end of namespace itiviewer
 

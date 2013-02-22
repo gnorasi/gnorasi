@@ -285,9 +285,9 @@ void ItiOtbVectorImageViewer::setupConnections(){
     connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(visibleAreaTranslated(int,int)),m_pItiOtbVectorImageWidgetScroll,SLOT(translate(int,int)));
     connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(visibleAreaTranslated(int,int)),m_pItiOtbVectorImageWidgetZoomable,SLOT(translate(int,int)));
     connect(m_pItiOtbVectorImageWidgetZoomable,SIGNAL(readyToClearZoom()),m_pItiOtbVectorImageWidgetScroll,SLOT(resetZoom()));
-//    connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
-//    connect(m_pItiOtbVectorImageWidgetZoomable,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
-//    connect(m_pItiOtbVectorImageWidgetScroll,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
+    connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
+    connect(m_pItiOtbVectorImageWidgetZoomable,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
+    connect(m_pItiOtbVectorImageWidgetScroll,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
 }
 
 //! update regions to notify observers
