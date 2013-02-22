@@ -308,13 +308,34 @@ void ItiOtbImageViewerPanelSetupTab::setupChannels(){
 
     QList<int> list = provider->channels();
 
-    if(list.size()<3)
+    if(list.isEmpty())
         return;
+
+    m_pSpinBoxGreenChannel->setMinimum(1);
+    m_pSpinBoxRedChannel->setMinimum(1);
+    m_pSpinBoxGreenChannel->setMinimum(1);
+    m_pSpinBoxBlueChannel->setMinimum(1);
+    m_pSpinBoxRedChannel->setMaximum(list.size());
+    m_pSpinBoxGreenChannel->setMaximum(list.size());
+    m_pSpinBoxBlueChannel->setMaximum(list.size());
+    m_pSpinBoxGreyscaleChannel->setMaximum(list.size());
 
     m_pSpinBoxGreyscaleChannel->setValue(list.at(0)+1);
     m_pSpinBoxRedChannel->setValue(list.at(0)+1);
-    m_pSpinBoxGreenChannel->setValue(list.at(1)+1);
-    m_pSpinBoxBlueChannel->setValue(list.at(2)+1);
+
+    if(list.size()>1){
+        m_pSpinBoxGreenChannel->setValue(list.at(1)+1);
+
+        if(list.size() > 2)
+            m_pSpinBoxBlueChannel->setValue(list.at(2)+1);
+        else
+            m_pSpinBoxBlueChannel->setValue(list.at(1)+1);
+    }
+    else{
+        m_pSpinBoxGreenChannel->setValue(list.at(0)+1);
+        m_pSpinBoxBlueChannel->setValue(list.at(0)+1);
+    }
+
 
     setupClassificationData();
 }
