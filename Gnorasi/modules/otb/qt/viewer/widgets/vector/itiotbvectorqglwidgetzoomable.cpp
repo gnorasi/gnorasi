@@ -277,33 +277,37 @@ void ItiOtbVectorQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
     // pixel info related functionality follows
 
     if(hasMouseTracking()){
-        QString text;
 
-        ImageRegionType extent = m_pImageViewManipulator->extent();
+        VectorImageModel *vModel = m_pItiOtbVectorImageViewer->vModel();
+        if(vModel){
+            QString text;
 
-        // check if both x y extent values are negative then this means that the
-        // mouse position is definetely inside the image boundaries
-        if(extent.GetIndex()[0] < 0 && extent.GetIndex()[1] < 0){
-            ImageRegionType::IndexType idx  = indexFromPoint(event->pos());
+            ImageRegionType extent = m_pImageViewManipulator->extent();
 
-            text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx);
-        }else{
-            QPoint point(event->pos().x()- extent.GetIndex()[0],event->pos().y()- extent.GetIndex()[1]);
+            // check if both x y extent values are negative then this means that the
+            // mouse position is definetely inside the image boundaries
+            if(extent.GetIndex()[0] < 0 && extent.GetIndex()[1] < 0){
+                ImageRegionType::IndexType idx  = indexFromPoint(event->pos());
 
-            ImageRegionType::IndexType idx;
-            idx[0] = point.x();
-            idx[1] = point.y();
+                text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx,vModel);
+            }else{
+                QPoint point(event->pos().x()- extent.GetIndex()[0],event->pos().y()- extent.GetIndex()[1]);
 
-            // check whether the point is inside the image boundaries
-            if(!ItiOtbImageManager::isInsideTheImage(extent,point))
-                text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
-            else{
-                text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx);
+                ImageRegionType::IndexType idx;
+                idx[0] = point.x();
+                idx[1] = point.y();
+
+                // check whether the point is inside the image boundaries
+                if(!ItiOtbImageManager::isInsideTheImage(extent,point))
+                    text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
+                else{
+                    text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx,vModel);
+                }
             }
-        }
 
-        // emit the signal containing the text of the pixel info
-        emit currentIndexChanged(text);
+            // emit the signal containing the text of the pixel info
+            emit currentIndexChanged(text);
+        }
     }
 
     // now call the parent widget class mousemoveevent

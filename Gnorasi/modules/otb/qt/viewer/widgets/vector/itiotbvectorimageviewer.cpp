@@ -40,8 +40,6 @@
 #include "../itiviewerpixelinfowidget.h"
 #include "../../../../ports/otbvectorimageport.h"
 
-#include "../../models/itiotbVectorImageModel.h"
-
 using namespace itiviewer;
 using namespace voreen;
 

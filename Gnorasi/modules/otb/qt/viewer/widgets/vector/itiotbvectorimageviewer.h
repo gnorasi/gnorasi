@@ -37,6 +37,8 @@
 
 #include "../../vector_globaldefs.h"
 
+#include "../../models/itiotbVectorImageModel.h"
+
 
 namespace itiviewer{
 
@@ -122,6 +124,13 @@ public:
      * \return
      */
     ItiOtbVectorQGLWidgetZoomable *zoomView()       const {return m_pItiOtbVectorImageWidgetZoomable; }
+
+
+    /*!
+     * \brief vModel
+     * \return
+     */
+    VectorImageModel* vModel()                      const { return qobject_cast<VectorImageModel*>(m_pAbstractImageModel); }
 
 
 public slots:

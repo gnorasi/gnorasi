@@ -46,6 +46,7 @@ namespace itiviewer{
 
 class Command;
 class Level;
+class VectorImageModel;
 
 /*!
  *
@@ -137,7 +138,7 @@ public:
      * \param idx
      * \return
      */
-    QString constructInfoByIndex(ImageRegionType::IndexType idx);
+    QString constructInfoByIndex(ImageRegionType::IndexType idx, VectorImageModel* );
 
     /*!
      * \brief constructInfoByIndexAlt
