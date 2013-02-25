@@ -118,6 +118,11 @@ public slots:
      */
     void onFocusRegionChanged(const QRect &);
 
+    /*!
+     * \brief enableMouseTracking
+     */
+    void enableMouseTracking();
+
 signals:
     /*!
      * \brief visibleAreaChanged , this signal is emitted uppon the view resizing

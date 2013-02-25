@@ -322,6 +322,10 @@ void ItiOtbVectorImageViewer::setupModel(){
     if(model)
         model->loadFile(path);
 
+    m_pItiOtbVectorImageWidgetFullView->enableMouseTracking();
+    m_pItiOtbVectorImageWidgetScroll->enableMouseTracking();
+    m_pItiOtbVectorImageWidgetZoomable->enableMouseTracking();
+
     emit modelChanged();
 }
 

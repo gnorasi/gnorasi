@@ -168,9 +168,6 @@ void ItiOtbVectorQGLWidgetFullView::draw(){
 
     //! initialize the column and row related parameters
     setupViewport(width(),height());
-
-    //!
-    setMouseTracking(true);
 }
 
 //!
@@ -220,24 +217,26 @@ void ItiOtbVectorQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
 
     // pixel info related functionality follows
 
-    ImageRegionType extent = m_pImageViewManipulator->extent();
+    if(hasMouseTracking()){
+        ImageRegionType extent = m_pImageViewManipulator->extent();
 
-    QPoint point((event->pos().x()- extent.GetIndex()[0])/m_IsotropicZoom,(event->pos().y()- extent.GetIndex()[1])/m_IsotropicZoom);
+        QPoint point((event->pos().x()- extent.GetIndex()[0])/m_IsotropicZoom,(event->pos().y()- extent.GetIndex()[1])/m_IsotropicZoom);
 
-    ImageRegionType::IndexType idx;
-    idx[0] = point.x();
-    idx[1] = point.y();
+        ImageRegionType::IndexType idx;
+        idx[0] = point.x();
+        idx[1] = point.y();
 
-    QString text;
+        QString text;
 
-    // check whether the point is inside the image boundaries
-    if(!ItiOtbImageManager::isInsideTheImage(extent,point,m_IsotropicZoom))
-        text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
-    else{
-        text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx);
+        // check whether the point is inside the image boundaries
+        if(!ItiOtbImageManager::isInsideTheImage(extent,point,m_IsotropicZoom))
+            text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
+        else{
+            text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx);
+        }
+
+        emit currentIndexChanged(text);
     }
-
-    emit currentIndexChanged(text);
 
     // now call the parent widget class mousemoveevent
 
@@ -249,6 +248,13 @@ void ItiOtbVectorQGLWidgetFullView::mousePressEvent(QMouseEvent *event){
 
     //! setup translating functionality only on left button pressed mouse events
     if(event->button() == Qt::LeftButton){
+
+        ImageRegionType region = m_pImageViewManipulator->bufferRegion();
+
+        if(!region.GetSize()[0] || !region.GetSize()[1]){
+            QGLWidget::mousePressEvent(event);
+            return;
+        }
 
         m_moving = true;
 
@@ -321,6 +327,11 @@ void ItiOtbVectorQGLWidgetFullView::mouseReleaseEvent(QMouseEvent *event){
 //void ItiOtbVectorQGLWidgetFullView::resizeEvent(QResizeEvent *event){
 //    m_pImageViewManipulator->resizeEvent(event);
 //}
+
+void ItiOtbVectorQGLWidgetFullView::enableMouseTracking(){
+    //! mouse tracking is disabled on startup, set it on
+    setMouseTracking(true);
+}
 
 
 //!

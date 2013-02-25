@@ -95,6 +95,12 @@ public:
      */
     void draw();
 
+public slots:
+    /*!
+     * \brief enableMouseTracking
+     */
+    void enableMouseTracking();
+
 signals:
 
     /*!
