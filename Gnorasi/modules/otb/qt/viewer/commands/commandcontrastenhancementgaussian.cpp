@@ -59,26 +59,22 @@ void CommandContrastEnhancementGaussian::execute(){
 
         ReaderType::Pointer reader = ReaderType::New();
         reader->SetFileName(vModel->lastPath().toLatin1().data());
-        reader->Update();
+        reader->UpdateOutputInformation();
 
         SampleListType::Pointer sampleList = SampleListType::New();
         sampleList->SetMeasurementVectorSize(reader->GetOutput()->GetVectorLength());
 
-        itk::ImageRegionIterator<VectorImageType> imgIter (reader->GetOutput(),
-                                                   reader->GetOutput()->
-                                                   GetBufferedRegion());
-        imgIter.GoToBegin();
+        VectorImageType *vimg = ITIOTBIMAGEMANAGER->image();
 
-        itk::ImageRegionIterator<VectorImageType> imgIterEnd (reader->GetOutput(),
-                                                      reader->GetOutput()->
-                                                      GetBufferedRegion());
+        itk::ImageRegionIterator<VectorImageType> imgIter (vimg,vimg->GetBufferedRegion());
+        imgIter.GoToBegin();
 
         do
         {
             sampleList->PushBack(imgIter.Get());
             ++imgIter;
         }
-        while (imgIter != imgIterEnd);
+        while (!imgIter.IsAtEnd());
 
         renderer->SetListSample(sampleList);
 
