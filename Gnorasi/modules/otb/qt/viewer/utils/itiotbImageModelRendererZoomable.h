@@ -122,6 +122,7 @@ public:
 // SIGNALS.
 signals:
 
+
 //
 // Protected methods.
 protected:

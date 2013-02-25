@@ -77,8 +77,6 @@ ItiOtbVectorQGLWidgetScrollable::ItiOtbVectorQGLWidgetScrollable(ItiOtbVectorIma
 
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
-
-    connect(m_pImageModelRenderer,SIGNAL(ready()),this,SLOT(enableMouseTracking()));
 }
 
 //
@@ -390,6 +388,13 @@ void ItiOtbVectorQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
     //! setup translating functionality only on left button pressed mouse events
     if(event->button() == Qt::LeftButton){
 
+        ImageRegionType bregion = m_pImageViewManipulator->bufferRegion();
+
+        if(!bregion.GetSize()[0] || !bregion.GetSize()[1]){
+            QGLWidget::mousePressEvent(event);
+            return;
+        }
+
         QCursor dragCursor;
         dragCursor.setShape(Qt::ClosedHandCursor) ;
         this->setCursor(dragCursor);
@@ -536,35 +541,37 @@ void ItiOtbVectorQGLWidgetScrollable::mouseMoveEvent(QMouseEvent *event){
 
     // pixel info related functionality follows
 
-    QString text;
+    if(hasMouseTracking()){
+        QString text;
 
-    ImageRegionType extent = m_pImageViewManipulator->extent();
+        ImageRegionType extent = m_pImageViewManipulator->extent();
 
-    // check if both x y extent values are negative then this means that the
-    // mouse position is definetely inside the image boundaries
-    if(extent.GetIndex()[0] < 0 && extent.GetIndex()[1] < 0){
-        ImageRegionType::IndexType idx  = indexFromPoint(event->pos());
+        // check if both x y extent values are negative then this means that the
+        // mouse position is definetely inside the image boundaries
+        if(extent.GetIndex()[0] < 0 && extent.GetIndex()[1] < 0){
+            ImageRegionType::IndexType idx  = indexFromPoint(event->pos());
 
-        qDebug() << "idx[0] : " << idx[0] << "\t" << "idx[1] : " << idx[1];
+            qDebug() << "idx[0] : " << idx[0] << "\t" << "idx[1] : " << idx[1];
 
-        text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx);
-    }else{
-        QPoint point(event->pos().x()- extent.GetIndex()[0],event->pos().y()- extent.GetIndex()[1]);
-
-        ImageRegionType::IndexType idx;
-        idx[0] = point.x();
-        idx[1] = point.y();
-
-        // check whether the point is inside the image boundaries
-        if(!ItiOtbImageManager::isInsideTheImage(extent,point))
-            text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
-        else{
             text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx);
-        }
-    }
+        }else{
+            QPoint point(event->pos().x()- extent.GetIndex()[0],event->pos().y()- extent.GetIndex()[1]);
 
-    // emit the signal containing the text of the pixel info
-    emit currentIndexChanged(text);
+            ImageRegionType::IndexType idx;
+            idx[0] = point.x();
+            idx[1] = point.y();
+
+            // check whether the point is inside the image boundaries
+            if(!ItiOtbImageManager::isInsideTheImage(extent,point))
+                text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
+            else{
+                text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx);
+            }
+        }
+
+        // emit the signal containing the text of the pixel info
+        emit currentIndexChanged(text);
+    }
 
     // now call the parent widget class mousemoveevent
     QGLWidget::mouseMoveEvent(event);

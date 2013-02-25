@@ -121,7 +121,7 @@ public:
 //
 // SIGNALS.
 signals:
-  void ready();
+
 //
 // Protected methods.
 protected:

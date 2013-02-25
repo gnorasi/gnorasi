@@ -79,6 +79,7 @@ void ImageModelRendererZoomable::paintGL( const RenderingContext& context )
             || m_first_displayed_row + m_nb_displayed_rows > region.GetSize()[1])
         return;
 
+
     const ImageRegionType&  extent = context.m_extent;
 
     // the buffer will be painted
