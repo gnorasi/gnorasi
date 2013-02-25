@@ -348,15 +348,24 @@ void ItiOtbVectorImageViewer::updatePixelInfoWithChannelData(const QString &text
     // Build the appropriate rendering function
     ChannelListType channels = renderer->GetChannelList();
 
-    if(channels.size() <3 )
-        return;
-
     QString utext = text;
 
-    int index = utext.indexOf("\n");
-    index = utext.indexOf("\n",index+1);
+    if(channels.size() >2 ){
+        int index = utext.indexOf("\n");
+        index = utext.indexOf("\n",index+1);
 
-    utext = utext.insert(index,QString("\nChannel selection : %1, %2, %3").arg(QString::number(channels[0]+1)).arg(QString::number(channels[1]+1)).arg(QString::number(channels[2]+1)));
+        utext = utext.insert(index,QString("\nChannel selection : %1, %2, %3").arg(QString::number(channels[0]+1)).arg(QString::number(channels[1]+1)).arg(QString::number(channels[2]+1)));
+    }else if(channels.size() == 2){
+        int index = utext.indexOf("\n");
+        index = utext.indexOf("\n",index+1);
+
+        utext = utext.insert(index,QString("\nChannel selection : %1, %2, %3").arg(QString::number(channels[0]+1)).arg(QString::number(channels[1]+1)).arg(QString::number(channels[1]+1)));
+    }else if(channels.size() == 1){
+        int index = utext.indexOf("\n");
+        index = utext.indexOf("\n",index+1);
+
+        utext = utext.insert(index,QString("\nChannel selection : %1, %2, %3").arg(QString::number(channels[0]+1)).arg(QString::number(channels[0]+1)).arg(QString::number(channels[0]+1)));
+    }
 
     m_pItiViewerPixelInfoWidget->updateText(utext);
 }
