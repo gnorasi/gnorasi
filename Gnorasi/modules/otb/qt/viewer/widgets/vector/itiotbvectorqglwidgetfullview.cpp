@@ -218,24 +218,28 @@ void ItiOtbVectorQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
     // pixel info related functionality follows
 
     if(hasMouseTracking()){
-        ImageRegionType extent = m_pImageViewManipulator->extent();
+        VectorImageModel *vModel = m_pItiOtbVectorImageViewer->vModel();
+        if(vModel){
+            ImageRegionType extent = m_pImageViewManipulator->extent();
 
-        QPoint point((event->pos().x()- extent.GetIndex()[0])/m_IsotropicZoom,(event->pos().y()- extent.GetIndex()[1])/m_IsotropicZoom);
+            QPoint point((event->pos().x()- extent.GetIndex()[0])/m_IsotropicZoom,(event->pos().y()- extent.GetIndex()[1])/m_IsotropicZoom);
 
-        ImageRegionType::IndexType idx;
-        idx[0] = point.x();
-        idx[1] = point.y();
+            ImageRegionType::IndexType idx;
+            idx[0] = point.x();
+            idx[1] = point.y();
 
-        QString text;
+            QString text;
 
-        // check whether the point is inside the image boundaries
-        if(!ItiOtbImageManager::isInsideTheImage(extent,point,m_IsotropicZoom))
-            text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
-        else{
-            text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx);
+            // check whether the point is inside the image boundaries
+            if(!ItiOtbImageManager::isInsideTheImage(extent,point,m_IsotropicZoom))
+                text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
+            else{
+                text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx,vModel);
+            }
+
+
+            emit currentIndexChanged(text);
         }
-
-        emit currentIndexChanged(text);
     }
 
     // now call the parent widget class mousemoveevent
