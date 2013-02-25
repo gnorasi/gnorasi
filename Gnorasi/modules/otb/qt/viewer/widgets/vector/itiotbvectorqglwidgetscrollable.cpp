@@ -551,7 +551,7 @@ void ItiOtbVectorQGLWidgetScrollable::mouseMoveEvent(QMouseEvent *event){
         if(extent.GetIndex()[0] < 0 && extent.GetIndex()[1] < 0){
             ImageRegionType::IndexType idx  = indexFromPoint(event->pos());
 
-            qDebug() << "idx[0] : " << idx[0] << "\t" << "idx[1] : " << idx[1];
+//            qDebug() << "idx[0] : " << idx[0] << "\t" << "idx[1] : " << idx[1];
 
             text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx);
         }else{
