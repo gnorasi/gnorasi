@@ -574,26 +574,49 @@ void ItiOtbVectorQGLWidgetZoomable::zoomOut(){
  */
 void ItiOtbVectorQGLWidgetZoomable::onFocusRegionChanged(const QRect &rect){
 
+    ImageRegionType extent = m_pImageViewManipulator->extent();
+    ImageRegionType bufferedRegion = m_pImageViewManipulator->bufferRegion();
+
+    if(extent.GetIndex()[0] < 0 || bufferedRegion.GetSize()[0]  > rect.width()){
+        m_IsotropicZoom = (double)width() / (double)rect.width()  ;
+    }
+
+    setupViewport(width(),height());
+
+    extent = m_pImageViewManipulator->extent();
+
     unsigned int nb_d_cs = m_pImageModelRenderer->nbDisplayColumns();
     unsigned int nb_d_rs = m_pImageModelRenderer->nbDisplayRows();
     unsigned int f_d_c = m_pImageModelRenderer->firstDisplayColumn();
     unsigned int f_d_r = m_pImageModelRenderer->firstDisplayRow();
 
-    m_IsotropicZoom = (double)width() / (double)rect.width()  ;
+    //
+    if(extent.GetIndex()[0] > 0)
+        nb_d_cs = bufferedRegion.GetSize()[0];
+    else
+        nb_d_cs = width() / m_IsotropicZoom;
 
-    f_d_c = rect.x();
-    nb_d_cs = width() / m_IsotropicZoom;
-    nb_d_rs = height() / m_IsotropicZoom;
-    f_d_r = rect.y();
+    //
+    if(extent.GetIndex()[1] > 0)
+        nb_d_rs = bufferedRegion.GetSize()[1];
+    else
+        nb_d_rs = height() / m_IsotropicZoom;
 
-    ImageRegionType extent = m_pImageViewManipulator->extent();
+    //
+    if(extent.GetIndex()[0] > 0)
+        f_d_c = 0;
+    else if(f_d_c + nb_d_cs > extent.GetSize()[0])
+        f_d_c = extent.GetSize()[0] - nb_d_cs;
+    else
+        f_d_c = rect.x();
 
-    if(f_d_c + nb_d_cs > extent.GetSize()[0])
-        f_d_c = extent.GetSize()[0];
-
-    if(f_d_r + nb_d_rs > extent.GetSize()[1])
-        f_d_r = extent.GetSize()[0] - nb_d_rs;
-
+    //
+    if(extent.GetIndex()[1] > 0)
+        f_d_r = 0;
+    else if(f_d_r + nb_d_rs > extent.GetSize()[1])
+        f_d_r = extent.GetSize()[1] - nb_d_rs;
+    else
+        f_d_r = rect.y();
 
     //!
     m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
@@ -628,8 +651,8 @@ ImageRegionType::IndexType ItiOtbVectorQGLWidgetZoomable::indexFromPoint(const Q
     unsigned int f_d_r      = m_pImageModelRenderer->firstDisplayRow();
     unsigned int nb_d_rs    = m_pImageModelRenderer->nbDisplayRows();
 
-    idx[0] = f_d_c + (m_IsotropicZoom * p.x());
-    idx[1] = region.GetSize()[1] - nb_d_rs - f_d_r + (m_IsotropicZoom * p.y());
+    idx[0] = f_d_c + (p.x() / m_IsotropicZoom);
+    idx[1] = region.GetSize()[1] - nb_d_rs - f_d_r + (p.y() / m_IsotropicZoom);
 
     return idx;
 }
