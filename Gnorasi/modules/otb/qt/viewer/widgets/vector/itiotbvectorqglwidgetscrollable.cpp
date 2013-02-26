@@ -543,38 +543,58 @@ void ItiOtbVectorQGLWidgetScrollable::mouseMoveEvent(QMouseEvent *event){
 
     if(hasMouseTracking()){
 
-        VectorImageModel *vModel = m_pItiOtbVectorImageViewer->vModel();
+        VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
         if(vModel){
 
-            QString text;
+            VectorImageType *img = ITIOTBIMAGEMANAGER->image();
+            if(img){
 
-            ImageRegionType extent = m_pImageViewManipulator->extent();
+                QString text;
 
-            // check if both x y extent values are negative then this means that the
-            // mouse position is definetely inside the image boundaries
-            if(extent.GetIndex()[0] < 0 && extent.GetIndex()[1] < 0){
-                ImageRegionType::IndexType idx  = indexFromPoint(event->pos());
+                ImageRegionType extent = m_pImageViewManipulator->extent();
 
-    //            qDebug() << "idx[0] : " << idx[0] << "\t" << "idx[1] : " << idx[1];
+                // check if both x y extent values are negative then this means that the
+                // mouse position is definetely inside the image boundaries
+                if(extent.GetIndex()[0] < 0 && extent.GetIndex()[1] < 0){
+                    ImageRegionType::IndexType idx  = indexFromPoint(event->pos());
 
-                text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx,vModel);
-            }else{
-                QPoint point(event->pos().x()- extent.GetIndex()[0],event->pos().y()- extent.GetIndex()[1]);
+                    VectorImageType::PixelType pixelValue = img->GetPixel(idx);
 
-                ImageRegionType::IndexType idx;
-                idx[0] = point.x();
-                idx[1] = point.y();
+                    RenderingFilterType* filter = vModel->filter();
 
-                // check whether the point is inside the image boundaries
-                if(!ItiOtbImageManager::isInsideTheImage(extent,point))
-                    text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
-                else{
-                    text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx,vModel);
+                    const std::string pixeldata = filter->GetRenderingFunction()->Describe(pixelValue);
+
+                    QString pdt = QString::fromStdString(pixeldata);
+
+        //            qDebug() << "idx[0] : " << idx[0] << "\t" << "idx[1] : " << idx[1];
+
+                    text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx,pdt);
+                }else{
+                    QPoint point(event->pos().x()- extent.GetIndex()[0],event->pos().y()- extent.GetIndex()[1]);
+
+                    ImageRegionType::IndexType idx;
+                    idx[0] = point.x();
+                    idx[1] = point.y();
+
+                    // check whether the point is inside the image boundaries
+                    if(!ItiOtbImageManager::isInsideTheImage(extent,point))
+                        text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
+                    else{
+                        VectorImageType::PixelType pixelValue = img->GetPixel(idx);
+
+                        RenderingFilterType* filter = vModel->filter();
+
+                        const std::string pixeldata = filter->GetRenderingFunction()->Describe(pixelValue);
+
+                        QString pdt = QString::fromStdString(pixeldata);
+
+                        text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx,pdt);
+                    }
                 }
-            }
 
-            // emit the signal containing the text of the pixel info
-            emit currentIndexChanged(text);
+                // emit the signal containing the text of the pixel info
+                emit currentIndexChanged(text);
+            }
         }
     }
 

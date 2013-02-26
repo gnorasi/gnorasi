@@ -284,18 +284,10 @@ void ItiOtbImageManager::setupColors(){
 }
 
 
-QString ItiOtbImageManager::constructInfoByIndex(ImageRegionType::IndexType idx, VectorImageModel *vModel){
+QString ItiOtbImageManager::constructInfoByIndex(ImageRegionType::IndexType idx, const QString &pixelInfo){
     QString text;
 
     ImageRegionType region = m_pImgType->GetLargestPossibleRegion();
-
-    VectorImageType::PixelType pixelValue = m_pImgType->GetPixel(idx);
-
-    RenderingFilterType* filter = vModel->filter();
-
-    const std::string pixeldata = filter->GetRenderingFunction()->Describe(pixelValue);
-
-    QString pdt = QString::fromStdString(pixeldata);
 
     const VectorImageType::SpacingType sp = m_pImgType->GetSpacing();
 
@@ -307,8 +299,7 @@ QString ItiOtbImageManager::constructInfoByIndex(ImageRegionType::IndexType idx,
     text += "\n";
     text += QString("Image Size : [%1, %2]").arg(QString::number(region.GetSize()[0])).arg(QString::number(region.GetSize()[1]));
     text += "\n";
-    text += pdt;
-//    text += "\n";
+    text += pixelInfo;
     text += QString("Ground spacing in m: (%1, %2)").arg(QString::number(sp[0])).arg(QString::number(sp[1]));
     text += "\n";
     text += QString("Lon: %1, Lat : %2").arg(QString::number(pt[0],'f',2)).arg(QString::number(pt[1],'f',2));
