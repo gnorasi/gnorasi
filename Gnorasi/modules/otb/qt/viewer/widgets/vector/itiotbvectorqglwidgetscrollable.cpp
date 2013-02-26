@@ -355,20 +355,30 @@ void ItiOtbVectorQGLWidgetScrollable::updateObserver(ItiViewerObservable *observ
     int x       = rregion.x() - m_pImageModelRenderer->firstDisplayColumn();
     int y       = m_pImageModelRenderer->firstDisplayRow() + height() - rregion.y() - h;
 
-    if(extent.GetIndex()[0] > 0)
+    if(extent.GetIndex()[0] > 0){
         x += extent.GetIndex()[0];
-    if(extent.GetIndex()[1] > 0)
+        if(x < extent.GetIndex()[0])
+            x = extent.GetIndex()[0];
+    }
+
+    if(extent.GetIndex()[1] > 0){
         y -= extent.GetIndex()[1];
+        if(y < extent.GetIndex()[1])
+            y = extent.GetIndex()[1];
+    }
+
+    if(w > extent.GetSize()[0]){
+        w = extent.GetSize()[0];
+        x = extent.GetIndex()[0];
+    }
+
+    if(h > extent.GetSize()[1]){
+        h = extent.GetSize()[1];
+        y = extent.GetIndex()[1];
+    }
 
     m_focusRegion.setX(x);
     m_focusRegion.setY(y);
-
-    if(w > extent.GetSize()[0])
-        w = extent.GetSize()[0];
-
-    if(h > extent.GetSize()[1])
-        h = extent.GetSize()[1];
-
     m_focusRegion.setWidth(w);
     m_focusRegion.setHeight(h);
 
