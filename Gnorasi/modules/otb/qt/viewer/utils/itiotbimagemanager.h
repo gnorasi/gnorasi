@@ -108,12 +108,22 @@ public:
     voreen::Port* nextPort(voreen::Port* ) const;
 
 
+    /*!
+     * \brief clearLevels
+     */
     void clearLevels();
 
-
+    /*!
+     * \brief appendLevel
+     * \param pLevel
+     */
     void appendLevel(Level *pLevel);
 
 
+    /*!
+     * \brief deleteLevel
+     * \param pLevel
+     */
     void deleteLevel(Level *pLevel);
 
 
@@ -124,21 +134,31 @@ public:
      */
     Level* levelById(int id);
 
-    //!
+    /*!
+     * \brief levels
+     * \return
+     */
     QList<Level*> levels() const { return m_levelList; }
 
-    //!
+    /*!
+     * \brief classficationNamesIds
+     * \return
+     */
     QHash<int ,QString> classficationNamesIds() const {return m_classficationNamesIds; }
 
-    //!
+    /*!
+     * \brief classificationColorsIds
+     * \return
+     */
     QHash<int,QColor> classificationColorsIds() const { return m_colorHash ; }
 
     /*!
      * \brief constructInfoByIndex
-     * \param idx
+     * \param idx, the index for which a text is being constructed
+     * \param pixelInfo , a string holding pixel information
      * \return
      */
-    QString constructInfoByIndex(ImageRegionType::IndexType idx, VectorImageModel* );
+    QString constructInfoByIndex(ImageRegionType::IndexType idx, const QString &pixelInfo);
 
     /*!
      * \brief constructInfoByIndexAlt
@@ -149,19 +169,31 @@ public:
 
     /*!
      * \brief isInsideTheImage
-     * \param point
+     * \param region checked whether the given point is inside
+     * \param point to check
+     * \param z, the zoom level
      * \return
      */
     static inline bool isInsideTheImage(const ImageRegionType region, const QPoint &point, double z = 1.);
 
 private:
-    //! ctor
+    /*!
+     * \brief ItiOtbImageManager
+     *
+     *  The constructor function
+     */
     ItiOtbImageManager();
 
-    //!dtor
+    /*!
+     *  \brief ~ItiOtbImageManager
+     *
+     *  The destructor function
+     */
     ~ItiOtbImageManager();
 
-    //!
+    /*!
+     * \brief createRegions
+     */
     void createRegions();
 
     //! this is the unique instance
@@ -179,16 +211,21 @@ private:
     /*! GeoidFile filename (used if a VectorData is rendered */
     QString m_GeoidFile;
 
+    /*!
+     * \brief filter , an raster to vector image cast filter
+     */
     ImageToVectorImageCastFilterType::Pointer filter;
 
-    //! test
+    //! helper class
     std::vector<voreen::Processor*> nextConnectedProcessor(voreen::Port* ) const;
 
+    //! helper class
     bool isReader(voreen::Processor* ) const;
 
+    //! helper class
     QString getPathFromReaderProcessor(voreen::Processor*) const ;
 
-
+    //! helper class
     void checkNext(voreen::Processor*, QString& );
 
     /*!
@@ -216,22 +253,6 @@ bool ItiOtbImageManager::isInsideTheImage(const ImageRegionType extent, const QP
         return false;
 
     return true;
-
-//    QRect rect;
-//    rect.setX(extent.GetIndex()[0]);
-//    rect.setWidth(extent.GetSize()[0]);
-//    if(rect.x()<0){
-//        rect.setX(-rect.x());
-//        rect.setWidth(rect.width()+extent.GetIndex()[0]);
-//    }
-//    rect.setY(extent.GetIndex()[1]);
-//    rect.setHeight(extent.GetSize()[1]);
-//    if(rect.y() < 0){
-//        rect.setY(-rect.y());
-//        rect.setHeight(extent.GetSize()[1]-extent.GetIndex()[1]);
-//    }
-
-//    return rect.contains(point);
 }
 
 } // end of namespace itiviewer

@@ -126,13 +126,6 @@ public:
     ItiOtbVectorQGLWidgetZoomable *zoomView()       const {return m_pItiOtbVectorImageWidgetZoomable; }
 
 
-    /*!
-     * \brief vModel
-     * \return
-     */
-    VectorImageModel* vModel()                      const { return qobject_cast<VectorImageModel*>(m_pAbstractImageModel); }
-
-
 public slots:
 
     /*!
