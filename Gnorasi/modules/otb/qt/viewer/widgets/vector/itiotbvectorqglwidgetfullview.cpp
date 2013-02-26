@@ -128,12 +128,13 @@ void ItiOtbVectorQGLWidgetFullView::paintEvent(QPaintEvent *event){
     // setup the rendering context
     if (aiModel)
     {
+        setupViewport(width(), height());
+
         const ImageRegionType extent(m_pImageViewManipulator->extent());
 
         // Get the region to draw from the ImageViewManipulator navigation
         // context
-        const ImageRegionType region(
-          m_pImageViewManipulator->bufferRegion());
+        const ImageRegionType region(m_pImageViewManipulator->bufferRegion());
 
         ImageModelRendererFullView::RenderingContext context(aiModel, region, extent, this->width(), this->height(), m_IsotropicZoom);
 
