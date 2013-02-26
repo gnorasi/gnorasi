@@ -362,6 +362,13 @@ void ItiOtbVectorQGLWidgetScrollable::updateObserver(ItiViewerObservable *observ
 
     m_focusRegion.setX(x);
     m_focusRegion.setY(y);
+
+    if(w > extent.GetSize()[0])
+        w = extent.GetSize()[0];
+
+    if(h > extent.GetSize()[1])
+        h = extent.GetSize()[1];
+
     m_focusRegion.setWidth(w);
     m_focusRegion.setHeight(h);
 
