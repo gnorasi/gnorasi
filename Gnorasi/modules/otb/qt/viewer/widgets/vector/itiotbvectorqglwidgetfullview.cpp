@@ -230,13 +230,6 @@ void ItiOtbVectorQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
 
             VectorImageType *img = ITIOTBIMAGEMANAGER->image();
             if(img){
-                VectorImageType::PixelType pixelValue = img->GetPixel(idx);
-
-                RenderingFilterType* filter = vModel->filter();
-
-                const std::string pixeldata = filter->GetRenderingFunction()->Describe(pixelValue);
-
-                QString pdt = QString::fromStdString(pixeldata);
 
                 QString text;
 
@@ -244,6 +237,14 @@ void ItiOtbVectorQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
                 if(!ItiOtbImageManager::isInsideTheImage(extent,point,m_IsotropicZoom))
                     text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
                 else{
+                    VectorImageType::PixelType pixelValue = img->GetPixel(idx);
+
+                    RenderingFilterType* filter = vModel->filter();
+
+                    const std::string pixeldata = filter->GetRenderingFunction()->Describe(pixelValue);
+
+                    QString pdt = QString::fromStdString(pixeldata);
+
                     text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx,pdt);
                 }
 
