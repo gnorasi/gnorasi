@@ -89,6 +89,29 @@ void ItiOtbImageManager::setupImage(){
     }
 }
 
+bool ItiOtbImageManager::isPortEmpty(Port *port){
+    //! type case checking
+    if(dynamic_cast<OTBImagePort*>(port)){ // set here the raster image port
+        //! cast it ot OTBImagePort
+        OTBImagePort *pOtbImagePort = dynamic_cast<OTBImagePort*>(port);
+
+        RasterImageType *rImgType = (RasterImageType*)pOtbImagePort->getData();
+        if(rImgType && (rImgType->GetLargestPossibleRegion().GetSize()[0] == 0 || rImgType->GetLargestPossibleRegion().GetSize()[1] == 0) )
+            return false;
+
+    }
+    else if(dynamic_cast<OTBVectorImagePort*>(port)){ // set here the vector image factory
+        OTBVectorImagePort *pOtbVectorImagePort = dynamic_cast<OTBVectorImagePort*>(port);
+
+        //! get the image
+        VectorImageType *vImgType = (VectorImageType*)pOtbVectorImagePort->getData();
+        if(vImgType && (vImgType->GetLargestPossibleRegion().GetSize()[0] || vImgType->GetLargestPossibleRegion().GetSize()[1]))
+            return false;
+    }
+
+    return true;
+}
+
 //!
 QString ItiOtbImageManager::imageFile(voreen::Port *port) {
 
