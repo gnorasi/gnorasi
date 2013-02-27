@@ -102,7 +102,7 @@ bool ItiOtbImageManager::isPortEmpty(Port *port){
 
         //! get the image
         VectorImageType *vImgType = (VectorImageType*)pOtbVectorImagePort->getData();
-        if(vImgType && (vImgType->GetLargestPossibleRegion().GetSize()[0] || vImgType->GetLargestPossibleRegion().GetSize()[1]))
+        if(vImgType && (vImgType->GetLargestPossibleRegion().GetSize()[0] == 0 || vImgType->GetLargestPossibleRegion().GetSize()[1] == 0))
             return false;
     }
 

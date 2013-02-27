@@ -311,7 +311,7 @@ void ItiOtbImageViewerPanelSetupTab::setupChannels(){
     if(list.isEmpty())
         return;
 
-    m_pSpinBoxGreenChannel->setMinimum(1);
+    m_pSpinBoxGreyscaleChannel->setMinimum(1);
     m_pSpinBoxRedChannel->setMinimum(1);
     m_pSpinBoxGreenChannel->setMinimum(1);
     m_pSpinBoxBlueChannel->setMinimum(1);
@@ -331,15 +331,29 @@ void ItiOtbImageViewerPanelSetupTab::setupChannels(){
         else
             m_pSpinBoxBlueChannel->setValue(list.at(1)+1);
 
-        m_pRadioButtonRGBCompositionMode->setChecked(true);
+        if(m_pRadioButtonGrayscaleMode->isChecked())
+            m_pRadioButtonGrayscaleMode->toggle();
+
+        if(!m_pRadioButtonRGBCompositionMode->isChecked())
+            m_pRadioButtonRGBCompositionMode->toggle();
+
+        m_pButtonApplyColorComposition->setEnabled(true);
     }
     else{
         m_pSpinBoxGreenChannel->setValue(list.at(0)+1);
         m_pSpinBoxBlueChannel->setValue(list.at(0)+1);
 
-        m_pRadioButtonGrayscaleMode->setChecked(true);
+        if(!m_pRadioButtonGrayscaleMode->isChecked())
+            m_pRadioButtonGrayscaleMode->toggle();
+
+        if(m_pRadioButtonRGBCompositionMode->isChecked())
+            m_pRadioButtonRGBCompositionMode->toggle();
+
+        m_pButtonApplyColorComposition->setEnabled(false);
     }
 
+
+    onRadioButtonColorCompositionChanged();
 
     setupClassificationData();
 }
