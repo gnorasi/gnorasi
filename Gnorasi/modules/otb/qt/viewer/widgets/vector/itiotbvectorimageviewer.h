@@ -61,6 +61,9 @@ class ItiOtbVectorImageViewer : public ItiOtbImageViewer
 public:
     explicit ItiOtbVectorImageViewer(QWidget *parent = 0);
 
+
+    ~ItiOtbVectorImageViewer();
+
     /*!
      * \brief disassembleWidgets , implementation
      */
@@ -161,6 +164,20 @@ signals:
 
 private:
 
+    /*!
+     * \brief saveDisplaySettings
+     */
+    void saveDisplaySettings();
+
+    /*!
+     * \brief readDisplaySettings
+     */
+    void readDisplaySettings();
+
+
+    /*!
+     * \brief setupModel
+     */
     void setupModel();
 
     /*!
@@ -268,6 +285,10 @@ private:
      */
     QString m_labelCss;
 
+
+    QWidget *m_pphelperWidgetScroll;
+    QWidget *m_pphelperWidgetFullView;
+    QWidget *m_pphelperWidgetZoomView;
     
 };
 
