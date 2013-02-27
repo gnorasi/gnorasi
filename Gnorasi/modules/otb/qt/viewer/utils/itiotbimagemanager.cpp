@@ -16,9 +16,6 @@
 
 #include "../models/itiotbVectorImageModel.h"
 
-//#include "../../../ports/otbimageport.h"
-//#include "../../../ports/otbvectorimageport.h"
-
 using namespace itiviewer;
 using namespace otb;
 using namespace voreen;

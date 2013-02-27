@@ -61,23 +61,29 @@ class ItiOtbVectorImageViewer : public ItiOtbImageViewer
 public:
     explicit ItiOtbVectorImageViewer(QWidget *parent = 0);
 
-
+    /*!
+     *  \brief dtor!, ATM saving display GUI settings is called on the splitted mode version of the viewer.
+     */
     ~ItiOtbVectorImageViewer();
 
     /*!
-     * \brief disassembleWidgets , implementation
+     * \brief disassembleWidgets.
+     *
+     *  Disassembles all children widgets, each widget has its own window
      */
     void disassembleWidgets();
 
     /*!
      * \brief assembleWidgets
-     *  implementation
+     *
+     *  Assembles all children widgets into one sinble parent widget.
      */
     void assembleWidgets();
 
     /*!
      * \brief draw
-     *  implementation
+     *
+     *  This is a accumulated function, each childrens gl widget's draw funtion is called seperately.
      */
     void draw();
 
@@ -110,47 +116,36 @@ public:
       return (index[1] - region.GetIndex()[1]) * 3 * region.GetSize()[0] + 3 * (index[0] - region.GetIndex()[0]);
     }
 
-    /*!
-     * \brief fullView
-     * \return
-     */
-    ItiOtbVectorQGLWidgetFullView *fullView()       const { return m_pItiOtbVectorImageWidgetFullView; }
-
-    /*!
-     * \brief scrollView
-     * \return
-     */
-    ItiOtbVectorQGLWidgetScrollable *scrollView()   const {return m_pItiOtbVectorImageWidgetScroll; }
-
-    /*!
-     * \brief zoomView
-     * \return
-     */
-    ItiOtbVectorQGLWidgetZoomable *zoomView()       const {return m_pItiOtbVectorImageWidgetZoomable; }
-
 
 public slots:
 
     /*!
      * \brief updatePixelInfoWithChannelData
+     *
+     *  Append pixel info to the text member variable.
+     *
+     *  \param text data
      */
-    void updatePixelInfoWithChannelData(const QString& );
+    void updatePixelInfoWithChannelData(const QString &text);
 
 private slots:
     /*!
      * \brief onScrollableWidgetSizeChanged
+     *  update regions to notify observers
      * \param size
      */
     void onScrollableWidgetSizeChanged(const QRect &size);
 
     /*!
      * \brief onZoomableWidgetSizeChanged
+     *  update regions to notify observers
      * \param size
      */
     void onZoomableWidgetSizeChanged(const QRect &size, double z = 1.0);
 
     /*!
      * \brief onFocusRegionTranslated
+     *  update regions to notify observers
      * \param rect
      */
     void onFocusRegionChanged(const QRect &rect);
@@ -166,37 +161,51 @@ private:
 
     /*!
      * \brief saveDisplaySettings
+     *  This function is called when the viewer is on a splitted mode,
+     *  all it does is to save the GUI state of the widgets on an INI settings file.
      */
     void saveDisplaySettings();
 
     /*!
      * \brief readDisplaySettings
+     *
+     *  This function is called when the viewer is on the splitted mode,
+     *  all it does is to load and read the GUI settings size and pos and restore the widgets's state
+     *  according to the value red from the INI settings file.
      */
     void readDisplaySettings();
 
 
     /*!
      * \brief setupModel
+     *
+     *  Inside this function the model is being setup. The original file is being loaded.
      */
     void setupModel();
 
     /*!
      * \brief resetObserverMechanism
+     *
+     *  Reset the observer mechanism, un register all previously registered observe objects.
      */
     void resetObserverMechanism();
 
     /*!
-     * \brief setupConnections , setup the signal and slot mechanims
+     * \brief setupConnections , setup the signal and slot mechanism.
      */
     void setupConnections();
 
     /*!
      * \brief setupObserverMechanism
+     *
+     *  Register all objects to the observable object.
      */
     void setupObserverMechanism();
 
     /*!
      * \brief setupLayout
+     *
+     *  Setup the layout , craete widgets objects ana setup the layouts.
      */
     void setupLayout();
 
@@ -286,8 +295,19 @@ private:
     QString m_labelCss;
 
 
+    /*!
+     * \brief m_pphelperWidgetScroll , this is a container widget, holding ItiOtbVectorQGLWidgetScrollable object.
+     */
     QWidget *m_pphelperWidgetScroll;
+
+    /*!
+     * \brief m_pphelperWidgetFullView, this is a container widget, holding ItiOtbVectorQGLWidgetFullView object.
+     */
     QWidget *m_pphelperWidgetFullView;
+
+    /*!
+     * \brief m_pphelperWidgetZoomView, this is a container widget, holding ItiOtbVectorQGLWidgetZoomable object.
+     */
     QWidget *m_pphelperWidgetZoomView;
     
 };
