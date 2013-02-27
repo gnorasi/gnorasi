@@ -198,9 +198,15 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     qDebug() << "Start of incoming image data , setting up the image...";
     time.restart();
 
+    //! setup the mode
     int vmode = 0;
     if(m_pItiOtbImageViewer)
         vmode = m_pItiOtbImageViewer->vmode();
+
+
+    // sanity check, the data in the port must not be empty
+    if(!ITIOTBIMAGEMANAGER->isPortEmpty(port))
+        return;
 
     //
     //                          STATISTICS

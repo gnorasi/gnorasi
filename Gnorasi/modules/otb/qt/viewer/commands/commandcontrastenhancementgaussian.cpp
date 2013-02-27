@@ -45,43 +45,42 @@ CommandContrastEnhancementGaussian::CommandContrastEnhancementGaussian(ItiOtbVec
 
 void CommandContrastEnhancementGaussian::execute(){
 
-    VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
-    if(!vModel || !vModel->buffer())
-        return;
+//    VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
+//    if(!vModel || !vModel->buffer())
+//        return;
 
-    RenderingFunctionType::Pointer renderer;
-    renderer = GaussianRenderingFunctionType::New();
+//    RenderingFunctionType::Pointer renderer;
+//    renderer = GaussianRenderingFunctionType::New();
 
-    if(vModel){
-        std::vector<unsigned int> l = vModel->GetChannelList();
-        renderer->SetChannelList(l);
-        renderer->SetAutoMinMax(false);
+//    if(vModel){
+//        std::vector<unsigned int> l = vModel->GetChannelList();
+//        renderer->SetChannelList(l);
+//        renderer->SetAutoMinMax(false);
 
-        VectorImageType *vimg = ITIOTBIMAGEMANAGER->image();
+//        VectorImageType *vimg = ITIOTBIMAGEMANAGER->image();
 
-        SampleListType::Pointer sampleList = SampleListType::New();
-        sampleList->SetMeasurementVectorSize(vimg->GetVectorLength());
+//        SampleListType::Pointer sampleList = SampleListType::New();
+//        sampleList->SetMeasurementVectorSize(vimg->GetVectorLength());
 
-        itk::ImageRegionIterator<VectorImageType> imgIter (vimg,vimg->GetBufferedRegion());
-        imgIter.GoToBegin();
+//        itk::ImageRegionIterator<VectorImageType> imgIter (vimg,vimg->GetBufferedRegion());
+//        imgIter.GoToBegin();
 
-        do
-        {
-            sampleList->PushBack(imgIter.Get());
-            ++imgIter;
-        }
-        while (!imgIter.IsAtEnd());
+//        do
+//        {
+//            sampleList->PushBack(imgIter.Get());
+//            ++imgIter;
+//        }
+//        while (!imgIter.IsAtEnd());
 
-        renderer->SetListSample(sampleList);
+//        renderer->SetListSample(sampleList);
 
-        vModel->setRenderingFunction(renderer);
+//        vModel->setRenderingFunction(renderer);
 
-        vModel->resetData();
+//        vModel->resetData();
 
-        const DefaultImageType *img = vModel->GetOutput(0);
+//        const DefaultImageType *img = vModel->GetOutput(0);
 
-        renderer->Initialize(img->GetMetaDataDictionary());
-    }
+//        renderer->Initialize(img->GetMetaDataDictionary());
+//    }
 
-//    m_pItiOtbVectorImageViewer->draw();
 }

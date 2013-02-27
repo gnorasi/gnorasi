@@ -176,6 +176,13 @@ public:
      */
     static inline bool isInsideTheImage(const ImageRegionType region, const QPoint &point, double z = 1.);
 
+    /*!
+     * \brief isPortEmpty
+     * \param port
+     * \return
+     */
+    bool isPortEmpty(voreen::Port *port);
+
 private:
     /*!
      * \brief ItiOtbImageManager
