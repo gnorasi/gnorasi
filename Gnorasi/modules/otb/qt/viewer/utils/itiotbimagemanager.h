@@ -97,12 +97,15 @@ public:
 
     /*!
      * \brief imageFile
-     * \return
+     *  Parse the port chain in order to fetch the image file path of the original image which is being loaded by a reader processor.
+     * \param port, the port given to which parsing of all ports is done
+     * \return the path of the original image.
      */
     QString imageFile(voreen::Port *port = 0) ;
 
     /*!
      * \brief getNextPort
+     *  Helper function, it gets the next incoming port given a port member variable
      * \return
      */
     voreen::Port* nextPort(voreen::Port* ) const;
@@ -110,6 +113,7 @@ public:
 
     /*!
      * \brief clearLevels
+     *  Clear all level objects.
      */
     void clearLevels();
 
@@ -203,19 +207,29 @@ private:
      */
     void createRegions();
 
-    //! this is the unique instance
+    /*!
+     * \brief m_pInstance, this is the unique instance.
+     */
     static ItiOtbImageManager* m_pInstance;
 
-    //! this is the image
+    /*!
+     * \brief m_pImgType, this is the image
+     */
     VectorImageType *m_pImgType;
 
-    /*! Pointer to the image , the port holds image related data.*/
+    /*!
+     * \brief m_pPort, Pointer to the image , the port holds image related data.
+     */
     voreen::Port *m_pPort;
 
-    /*! Path to the DEMDirectory (used if a VectorData is rendered */
+    /*!
+     * \brief m_DEMDirectory, Path to the DEMDirectory (used if a VectorData is rendered
+     */
     QString m_DEMDirectory;
 
-    /*! GeoidFile filename (used if a VectorData is rendered */
+    /*!
+     * \brief m_GeoidFile, GeoidFile filename (used if a VectorData is rendered
+     */
     QString m_GeoidFile;
 
     /*!
@@ -223,30 +237,56 @@ private:
      */
     ImageToVectorImageCastFilterType::Pointer filter;
 
-    //! helper class
+    /*!
+     * \brief nextConnectedProcessor
+     * \return the next connected processor given a specific port.
+     */
     std::vector<voreen::Processor*> nextConnectedProcessor(voreen::Port* ) const;
 
-    //! helper class
+    /*!
+     * \brief isReader, checks whether a specific processor is of type reader
+     * \return
+     */
     bool isReader(voreen::Processor* ) const;
 
-    //! helper class
+    /*!
+     * \brief getPathFromReaderProcessor
+     *  helper class, gets the path from a given reader processor
+     * \return
+     */
     QString getPathFromReaderProcessor(voreen::Processor*) const ;
 
-    //! helper class
-    void checkNext(voreen::Processor*, QString& );
+    /*!
+     * \brief checkNext
+     *  helper class, check the next processor given a specific processor
+     * \param proc, the processor which is used as the origin processor during the iterating process
+     * \param path, the path of the file, this is a reference to a QString , once the reader procesor is found its port data is passed to it.
+     */
+    void checkNext(voreen::Processor *proc, QString &path);
 
     /*!
      * \brief m_levelList
      */
     QList<Level*> m_levelList;
 
-    //!
+    /*!
+     * \brief setupColors
+     *  Setup the colors of all levels, randomly.
+     *  This function is used during the classification process.
+     */
     void setupColors();
 
-    //! a container where the key value is the class if from the segmentation
+    /*!
+     * \brief m_colorHash
+     *  a container where the key value is the class if from the segmentation
+     */
     QHash<int, QColor> m_colorHash;
 
-    //! a container holding the clasficaiton ids and a string values for names
+    /*!
+     * \brief m_classficationNamesIds
+     *
+     *  a container holding the clasficaiton ids and a string values for names
+     */
     QHash<int ,QString> m_classficationNamesIds;
 };
 
