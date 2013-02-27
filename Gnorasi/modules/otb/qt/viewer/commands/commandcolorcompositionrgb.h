@@ -45,6 +45,10 @@ class ItiOtbVectorImageViewer;
 /*!
  * \brief The CommandColorCompositionRGB class
  *
+ *  This class is responsible for setting a rgb composition fix to the viewer.
+ *  All it does is to set the preferred red, green, red channels to the viewer and reset the model data,
+ *  in order to reflect changes to the viewer.
+ *
  */
 class CommandColorCompositionRGB : public Command
 {
