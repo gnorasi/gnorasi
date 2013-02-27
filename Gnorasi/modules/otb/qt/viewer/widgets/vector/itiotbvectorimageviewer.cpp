@@ -44,6 +44,9 @@ using namespace itiviewer;
 using namespace voreen;
 
 ItiOtbVectorImageViewer::ItiOtbVectorImageViewer(QWidget *parent) :
+    m_pphelperWidgetZoomView(NULL),
+    m_pphelperWidgetFullView(NULL),
+    m_pphelperWidgetScroll(NULL),
     ItiOtbImageViewer(parent)
 {
     //! set the visual mode to packed
@@ -184,32 +187,32 @@ void ItiOtbVectorImageViewer::disassembleWidgets(){
     //!
 
     //! setup the zoom viewe
-    QWidget *phelperWidgetScroll = new QWidget(this,Qt::Window);
-    phelperWidgetScroll->setWindowTitle(m_pLabelScrollableResolution->text());
-    phelperWidgetScroll->setMinimumSize(QSize(150,150));
-    phelperWidgetScroll->setGeometry(QApplication::desktop()->width()/2 - 200,QApplication::desktop()->height()/2 - 200,200,200);
+    m_pphelperWidgetScroll = new QWidget(this,Qt::Window);
+    m_pphelperWidgetScroll->setWindowTitle(m_pLabelScrollableResolution->text());
+    m_pphelperWidgetScroll->setMinimumSize(QSize(150,150));
+    m_pphelperWidgetScroll->setGeometry(QApplication::desktop()->width()/2 - 200,QApplication::desktop()->height()/2 - 200,200,200);
     QVBoxLayout *vboxLayout = new QVBoxLayout();
     vboxLayout->addWidget(m_pItiOtbVectorImageWidgetScroll);
-    phelperWidgetScroll->setLayout(vboxLayout);
+    m_pphelperWidgetScroll->setLayout(vboxLayout);
 
     //! setup the full viewe
-    QWidget *phelperWidgetFullView = new QWidget(this,Qt::Window);
-    phelperWidgetFullView->setMinimumSize(QSize(150,150));
-    phelperWidgetFullView->setWindowTitle(m_pLabelFullView->text());
-    phelperWidgetFullView->setGeometry(QApplication::desktop()->width()/2 - 160,QApplication::desktop()->height()/2 - 160,200,200);
+    m_pphelperWidgetFullView = new QWidget(this,Qt::Window);
+    m_pphelperWidgetFullView->setMinimumSize(QSize(150,150));
+    m_pphelperWidgetFullView->setWindowTitle(m_pLabelFullView->text());
+    m_pphelperWidgetFullView->setGeometry(QApplication::desktop()->width()/2 - 160,QApplication::desktop()->height()/2 - 160,200,200);
     QVBoxLayout *vboxLayout1 = new QVBoxLayout();
     vboxLayout1->addWidget(m_pItiOtbVectorImageWidgetFullView);
-    phelperWidgetFullView->setLayout(vboxLayout1);
+    m_pphelperWidgetFullView->setLayout(vboxLayout1);
 
 
     //! setup the zoom viewe
-    QWidget *phelperWidgetZoomView = new QWidget(this,Qt::Window);
-    phelperWidgetZoomView->setMinimumSize(QSize(150,150));
-    phelperWidgetZoomView->setWindowTitle(m_pLabelZoomView->text());
-    phelperWidgetZoomView->setGeometry(QApplication::desktop()->width()/2 - 120,QApplication::desktop()->height()/2 - 120,200,200);
+    m_pphelperWidgetZoomView = new QWidget(this,Qt::Window);
+    m_pphelperWidgetZoomView->setMinimumSize(QSize(150,150));
+    m_pphelperWidgetZoomView->setWindowTitle(m_pLabelZoomView->text());
+    m_pphelperWidgetZoomView->setGeometry(QApplication::desktop()->width()/2 - 120,QApplication::desktop()->height()/2 - 120,200,200);
     QVBoxLayout *vboxLayout2 = new QVBoxLayout();
     vboxLayout2->addWidget(m_pItiOtbVectorImageWidgetZoomable);
-    phelperWidgetZoomView->setLayout(vboxLayout2);
+    m_pphelperWidgetZoomView->setLayout(vboxLayout2);
 
     //! establish signals and slot connections
     setupConnections();
@@ -217,10 +220,13 @@ void ItiOtbVectorImageViewer::disassembleWidgets(){
     //! setup the observer mechanism
     setupObserverMechanism();
 
+    //
+    readDisplaySettings();
+
     //! show the widgets
-    phelperWidgetScroll->show();
-    phelperWidgetFullView->show();
-    phelperWidgetZoomView->show();
+    m_pphelperWidgetScroll->show();
+    m_pphelperWidgetFullView->show();
+    m_pphelperWidgetZoomView->show();
     m_pItiViewerPixelInfoWidget->show();
 }
 
@@ -366,4 +372,75 @@ void ItiOtbVectorImageViewer::updatePixelInfoWithChannelData(const QString &text
     }
 
     m_pItiViewerPixelInfoWidget->updateText(utext);
+}
+
+void ItiOtbVectorImageViewer::saveDisplaySettings(){
+    if(!m_pphelperWidgetFullView || !m_pphelperWidgetScroll || !m_pphelperWidgetZoomView)
+        return;
+
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Gnorasi","ItiOtbVectorImageViewer");
+//    settings.beginWriteArray("ItiOtbVectorImageViewer");
+
+    settings.beginGroup("FullView");
+    settings.setValue("size", m_pphelperWidgetFullView->size());
+    settings.setValue("pos", m_pphelperWidgetFullView->pos());
+    settings.endGroup();
+
+    settings.beginGroup("Scrollable");
+    settings.setValue("size", m_pphelperWidgetScroll->size());
+    settings.setValue("pos", m_pphelperWidgetScroll->pos());
+    settings.endGroup();
+
+    settings.beginGroup("Zoomable");
+    settings.setValue("size", m_pphelperWidgetZoomView->size());
+    settings.setValue("pos", m_pphelperWidgetZoomView->pos());
+    settings.endGroup();
+
+    settings.beginGroup("PixelInformation");
+    settings.setValue("size",m_pItiViewerPixelInfoWidget->size());
+    settings.setValue("pos",m_pItiViewerPixelInfoWidget->pos());
+    settings.endGroup();
+}
+
+
+void ItiOtbVectorImageViewer::readDisplaySettings(){
+    if(!m_pphelperWidgetFullView || !m_pphelperWidgetScroll || !m_pphelperWidgetZoomView)
+        return;
+
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Gnorasi","ItiOtbVectorImageViewer");
+
+    settings.beginGroup("FullView");
+    QSize size1     = settings.value("size", QSize(250,250)).toSize();
+    QPoint pos1     = settings.value("pos", QPoint(200,200)).toPoint();
+    m_pphelperWidgetFullView->resize(size1);
+    m_pphelperWidgetFullView->move(pos1);
+    settings.endGroup();
+
+    settings.beginGroup("Scrollable");
+    QSize size2     = settings.value("size", QSize(250,250)).toSize();
+    QPoint pos2     = settings.value("pos", QPoint(300,300)).toPoint();
+    m_pphelperWidgetScroll->resize(size2);
+    m_pphelperWidgetScroll->move(pos2);
+    settings.endGroup();
+
+    settings.beginGroup("Zoomable");
+    QSize size3     = settings.value("size", QSize(250,250)).toSize();
+    QPoint pos3     = settings.value("pos", QPoint(400,400)).toPoint();
+    m_pphelperWidgetZoomView->resize(size3);
+    m_pphelperWidgetZoomView->move(pos3);
+    settings.endGroup();
+
+    settings.beginGroup("PixelInformation");
+    QSize size4     = settings.value("size",QSize(200,200)).toSize();
+    QPoint pos4     = settings.value("pos",QPoint(300,350)).toPoint();
+    m_pItiViewerPixelInfoWidget->resize(size4);
+    m_pItiViewerPixelInfoWidget->move(pos4);
+    settings.endGroup();
+}
+
+ItiOtbVectorImageViewer::~ItiOtbVectorImageViewer(){
+
+    if(m_vmode == VMODE_SPLITTED){  // meaning this is the splitted mode
+        saveDisplaySettings();
+    }
 }

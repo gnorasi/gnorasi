@@ -110,6 +110,13 @@ public:
      */
     VMODE vmode() const                                                                { return m_vmode; }
 
+
+    /*!
+     * \brief setMode
+     * \param vm
+     */
+    void setMode(VMODE vm)                                                              { m_vmode = vm; }
+
 protected:
     /*!
      * \brief m_vmode , a variable holding the VMODE value
