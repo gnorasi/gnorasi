@@ -10,8 +10,6 @@
 //#include "../viewer/factories/itiotbrgbaimageviewerfactory.h"
 #include "../viewer/factories/itiotbvectorimageviewerfactory.h"
 #include "../viewer/widgets/panel/itiotbimageviewerpanel.h"
-//#include "../viewer/utils/itiotbimagergbachannelprovider.h"
-#include "../viewer/utils/itiotbimagevectorchannelprovider.h"
 #include "../viewer/rgba_globaldefs.h"
 
 #include "../viewer/utils/itiotblevel.h"
@@ -198,7 +196,8 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     qDebug() << "Start of incoming image data , setting up the image...";
     time.restart();
 
-    //! setup the mode
+    //! get the mode of the viewer before creating a new viewer
+    //! use it after the creation process has finished, to dissasemble the widgets.
     int vmode = 0;
     if(m_pItiOtbImageViewer)
         vmode = m_pItiOtbImageViewer->vmode();
@@ -229,8 +228,11 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! draw stuff
     m_pItiOtbImageViewer->draw();
 
-    if(vmode)
+    //! use the visual mode of the viewer previously got and dissasemble the widgets if true
+    if(vmode){
         disassembleWidgets();
+        m_pItiOtbImageViewerPanel->readDisplaySettings();
+    }
 
 
     //

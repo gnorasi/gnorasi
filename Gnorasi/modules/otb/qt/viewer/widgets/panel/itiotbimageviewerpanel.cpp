@@ -9,6 +9,7 @@
 
 #include <QVBoxLayout>
 
+#include <QtCore/QSettings>
 
 using namespace itiviewer;
 
@@ -22,7 +23,8 @@ ItiOtbImageViewerPanel::ItiOtbImageViewerPanel(QWidget *parent) :
 //!
 void ItiOtbImageViewerPanel::initialize(){
 
-    //! the setu tab
+    //! the setup tab
+    //! ATM only one tab exists,
     m_pSetupTab = new ItiOtbImageViewerPanelSetupTab(this);
 
     //! the tab widget
@@ -99,4 +101,34 @@ void ItiOtbImageViewerPanel::applyToggleClassLabelVisible(){
 //!
 void ItiOtbImageViewerPanel::setupChannels(){
     m_pSetupTab->setupChannels();
+}
+
+
+void ItiOtbImageViewerPanel::saveDisplaySettings(){
+
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Gnorasi","ItiOtbVectorImageViewer");
+
+    settings.beginGroup("Panel");
+    settings.setValue("size", size());
+    settings.setValue("pos", pos());
+    settings.endGroup();
+}
+
+
+void ItiOtbImageViewerPanel::readDisplaySettings(){
+
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Gnorasi","ItiOtbVectorImageViewer");
+
+    settings.beginGroup("Panel");
+    QSize size1 = settings.value("size", QSize(250,250)).toSize();
+    QPoint pos1 = settings.value("pos", QPoint(200,200)).toPoint();
+    resize(size1);
+    move(pos1);
+    settings.endGroup();
+}
+
+
+ItiOtbImageViewerPanel::~ItiOtbImageViewerPanel(){
+    if(windowFlags() & Qt::Window)
+        saveDisplaySettings();
 }

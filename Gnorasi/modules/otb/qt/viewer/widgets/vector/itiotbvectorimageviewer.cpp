@@ -379,7 +379,6 @@ void ItiOtbVectorImageViewer::saveDisplaySettings(){
         return;
 
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Gnorasi","ItiOtbVectorImageViewer");
-//    settings.beginWriteArray("ItiOtbVectorImageViewer");
 
     settings.beginGroup("FullView");
     settings.setValue("size", m_pphelperWidgetFullView->size());
