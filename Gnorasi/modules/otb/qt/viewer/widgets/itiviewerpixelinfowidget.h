@@ -3,7 +3,9 @@
 
 #include <QWidget>
 
-class QTextEdit;
+//class QTextEdit;
+class QLabel;
+class QGroupBox;
 
 namespace itiviewer{
 
@@ -66,6 +68,8 @@ signals:
 
 private:
 
+    QGroupBox *m_pGroupBox;
+
     /*!
      * \brief m_title
      */
@@ -74,7 +78,8 @@ private:
     /*!
      * \brief m_pTextEdit
      */
-    QTextEdit *m_pTextEdit;
+//    QTextEdit *m_pTextEdit;
+    QLabel *m_pLabel;
 
     /*!
      * \brief setupLayout

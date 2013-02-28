@@ -289,9 +289,9 @@ void ItiOtbVectorImageViewer::setupConnections(){
     connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(visibleAreaTranslated(int,int)),m_pItiOtbVectorImageWidgetScroll,SLOT(translate(int,int)));
 //    connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(visibleAreaTranslated(int,int)),m_pItiOtbVectorImageWidgetZoomable,SLOT(translate(int,int)));
     connect(m_pItiOtbVectorImageWidgetZoomable,SIGNAL(readyToClearZoom()),m_pItiOtbVectorImageWidgetScroll,SLOT(resetZoom()));
-    connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(currentIndexChanged(QString)),this,SLOT(updatePixelInfoWithChannelData(QString)));
-    connect(m_pItiOtbVectorImageWidgetZoomable,SIGNAL(currentIndexChanged(QString)),this,SLOT(updatePixelInfoWithChannelData(QString)));
-    connect(m_pItiOtbVectorImageWidgetScroll,SIGNAL(currentIndexChanged(QString)),this,SLOT(updatePixelInfoWithChannelData(QString)));
+    connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
+    connect(m_pItiOtbVectorImageWidgetZoomable,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
+    connect(m_pItiOtbVectorImageWidgetScroll,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
 }
 
 //! update regions to notify observers
@@ -331,47 +331,6 @@ void ItiOtbVectorImageViewer::setupModel(){
     m_pItiOtbVectorImageWidgetZoomable->enableMouseTracking();
 
     emit modelChanged();
-}
-
-
-void ItiOtbVectorImageViewer::updatePixelInfoWithChannelData(const QString &text){
-    VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pAbstractImageModel);
-    if(!vModel || !vModel->buffer())
-        return;
-
-    RenderingFilterType *filter = vModel->filter();
-    if(!filter)
-        return;
-
-    // Select the current rendering function
-    RenderingFunctionType::Pointer renderer = filter->GetRenderingFunction();
-
-    if(!renderer)
-        return;
-
-    // Build the appropriate rendering function
-    ChannelListType channels = renderer->GetChannelList();
-
-    QString utext = text;
-
-    if(channels.size() >2 ){
-        int index = utext.indexOf("\n");
-        index = utext.indexOf("\n",index+1);
-
-        utext = utext.insert(index,QString("\nChannel selection : %1, %2, %3").arg(QString::number(channels[0]+1)).arg(QString::number(channels[1]+1)).arg(QString::number(channels[2]+1)));
-    }else if(channels.size() == 2){
-        int index = utext.indexOf("\n");
-        index = utext.indexOf("\n",index+1);
-
-        utext = utext.insert(index,QString("\nChannel selection : %1, %2, %3").arg(QString::number(channels[0]+1)).arg(QString::number(channels[1]+1)).arg(QString::number(channels[1]+1)));
-    }else if(channels.size() == 1){
-        int index = utext.indexOf("\n");
-        index = utext.indexOf("\n",index+1);
-
-        utext = utext.insert(index,QString("\nChannel selection : %1, %2, %3").arg(QString::number(channels[0]+1)).arg(QString::number(channels[0]+1)).arg(QString::number(channels[0]+1)));
-    }
-
-    m_pItiViewerPixelInfoWidget->updateText(utext);
 }
 
 void ItiOtbVectorImageViewer::saveDisplaySettings(){
