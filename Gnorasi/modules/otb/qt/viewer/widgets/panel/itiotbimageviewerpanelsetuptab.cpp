@@ -96,6 +96,9 @@ void ItiOtbImageViewerPanelSetupTab::setupColorCompositionGroupBox(){
     connect(m_pRadioButtonGrayscaleMode,SIGNAL(clicked()),this,SLOT(onRadioButtonColorCompositionChanged()));
     connect(m_pRadioButtonRGBCompositionMode,SIGNAL(clicked()),this,SLOT(onRadioButtonColorCompositionChanged()));
     connect(m_pButtonApplyColorComposition,SIGNAL(clicked()),this,SLOT(onColorCompositionApplyButtonClicked()));
+    connect(m_pSpinBoxRedChannel,SIGNAL(valueChanged(int)),this,SLOT(onChannelValueChanged(int)));
+    connect(m_pSpinBoxGreenChannel,SIGNAL(valueChanged(int)),this,SLOT(onChannelValueChanged(int)));
+    connect(m_pSpinBoxBlueChannel,SIGNAL(valueChanged(int)),this,SLOT(onChannelValueChanged(int)));
 }
 
 //!
@@ -204,23 +207,7 @@ void ItiOtbImageViewerPanelSetupTab::initialize(){
 }
 
 //!
-void ItiOtbImageViewerPanelSetupTab::onSpinBoxRedChannelChanged(int val){
-    Q_UNUSED(val)
-
-    //!
-    emit rgbColorCompositionChannelsChanged(m_pSpinBoxRedChannel->value(),m_pSpinBoxGreenChannel->value(),m_pSpinBoxBlueChannel->value());
-}
-
-//!
-void ItiOtbImageViewerPanelSetupTab::onSpinBoxGreenChannelChanged(int val){
-    Q_UNUSED(val)
-
-    //!
-    emit rgbColorCompositionChannelsChanged(m_pSpinBoxRedChannel->value(),m_pSpinBoxGreenChannel->value(),m_pSpinBoxBlueChannel->value());
-}
-
-//!
-void ItiOtbImageViewerPanelSetupTab::onSpinBoxBlueChannelChanged(int val){
+void ItiOtbImageViewerPanelSetupTab::onChannelValueChanged(int val){
     Q_UNUSED(val)
 
     //!
