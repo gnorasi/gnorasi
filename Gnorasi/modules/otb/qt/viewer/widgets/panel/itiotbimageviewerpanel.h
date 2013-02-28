@@ -67,6 +67,12 @@ class ItiOtbImageViewerPanel : public QWidget
 {
     Q_OBJECT
 public:
+    /*!
+     * \brief The SLOT_KEY enum
+     *  each command in the panel has a discrete slot enumaration value.
+     *  The first two values are reserved for general purposes.
+     *  each new command should just increase the value of the enumeration.
+     */
     enum SLOT_KEY{
         SLOT_CC                 = 0,    //! color composition
         SLOT_CE                 = 1,    //! contrast enhancement
@@ -80,7 +86,7 @@ public:
     };
 
     /*!
-     * \brief ItiOtbImageViewerPanel
+     * \brief ItiOtbImageViewerPanel, ctor!
      * \param parent
      */
     explicit ItiOtbImageViewerPanel(QWidget *parent = 0);
@@ -88,7 +94,7 @@ public:
     /*!
      * \brief ~ItiOtbImageViewerPanel
      */
-    virtual ~ItiOtbImageViewerPanel() {}
+    virtual ~ItiOtbImageViewerPanel()   ;
 
     /*!
      * \brief setCommand, adds the command to the hash object
@@ -99,14 +105,14 @@ public:
     void setCommand(SLOT_KEY cmdk, Command *pC);
 
     /*!
-     * \brief setProvider
+     * \brief setProvider, setter
      * \param p
      */
     void setProvider(ItiOtbImageChannelProvider *p) { m_pItiOtbImageChannelProvider = p; }
 
 
     /*!
-     * \brief provider
+     * \brief provider, getter
      * \return
      */
     ItiOtbImageChannelProvider* provider() { return m_pItiOtbImageChannelProvider; }
@@ -117,6 +123,22 @@ public:
      * \return
      */
     ItiOtbImageViewerPanelSetupTab *setupTab() { return m_pSetupTab; }
+
+    /*!
+     * \brief saveDisplaySettings
+     *  This function is called when the viewer is on a splitted mode,
+     *  all it does is to save the GUI state of the widget on an INI settings file.
+     */
+    void saveDisplaySettings();
+
+    /*!
+     * \brief readDisplaySettings
+     *
+     *  This function is called when the viewer is on the splitted mode,
+     *  all it does is to load and read the GUI settings size and pos and restore the widgets state
+     *  according to the value red from the INI settings file.
+     */
+    void readDisplaySettings();
 
 
 public slots:
@@ -167,6 +189,7 @@ private slots:
     void applyToggleClassLabelVisible();
 
 private:
+
     /*!
      * \brief initialize, inititializing stuff
      */

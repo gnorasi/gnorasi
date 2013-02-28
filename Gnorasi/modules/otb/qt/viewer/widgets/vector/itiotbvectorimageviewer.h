@@ -154,6 +154,7 @@ private slots:
 signals:
     /*!
      * \brief modelChanged
+     *  Notify by emitting a signal informing others that the model has been changed
      */
     void modelChanged();
 
