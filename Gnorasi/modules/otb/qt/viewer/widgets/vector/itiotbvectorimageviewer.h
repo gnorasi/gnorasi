@@ -87,13 +87,6 @@ public:
      */
     void draw();
 
-    /*!
-     * \brief costructTextFromImageIndex
-     * \param index , the index of the image
-     * \return , return a QString containing pixel info data in order to show it on the respective widget
-     */
-    static inline QString constructTextFromImageIndex(VectorIndexType index, VectorImageType* image);
-
     /** Compute the linear buffer index according to the 2D region and
      * its 2D index.This method is used when OTB_GL_USE_ACCEL is OFF.
      * The resulting buffer will be flipped over the X axis.
@@ -119,14 +112,6 @@ public:
 
 public slots:
 
-    /*!
-     * \brief updatePixelInfoWithChannelData
-     *
-     *  Append pixel info to the text member variable.
-     *
-     *  \param text data
-     */
-    void updatePixelInfoWithChannelData(const QString &text);
 
 private slots:
     /*!
@@ -312,48 +297,6 @@ private:
     QWidget *m_pphelperWidgetZoomView;
     
 };
-
-//!
-QString ItiOtbVectorImageViewer::constructTextFromImageIndex(VectorIndexType index, VectorImageType* image){
-    if(!image)
-        return QString();
-
-    QString text;
-
-    text  = QString::fromUtf8("Index : [%1, %2]").arg(QString::number(index[0])).arg(QString::number(index[1]));
-    text += "\n";
-    text += QString::fromUtf8("Layer : ");
-    text += "\n";
-
-    //! region
-    VectorRegionType region = image->GetBufferedRegion();
-    text += QString::fromUtf8("Image size : [%1, %2]").arg(QString::number(region.GetSize()[0])).arg(QString::number(region.GetSize()[1]));
-    text += "\n";
-
-    //! image related
-    text += QString::fromUtf8("Channel selection : ");
-    text += "\n";
-
-    //! index related
-    text += QString::fromUtf8("Pixel value : [%1, %2, %3]");
-    text += "\n";
-    text += QString::fromUtf8("Value computed : [%1, %2, %3]");
-    text += "\n";
-    text += QString::fromUtf8("Value displayed : R %1, G %2, B %3, A %4");
-    text += "\n";
-
-    //! region related
-    text += QString::fromUtf8("Ground spacing (in m): (%1, %2)");
-    text += "\n";
-
-    //! index related
-    text += QString::fromUtf8("Lon: %1, Lat: %2");
-    text += "\n";
-    text += QLatin1String("(precise location)");
-
-    return text;
-
-}
 
 } // end of namespace itiviewer
 

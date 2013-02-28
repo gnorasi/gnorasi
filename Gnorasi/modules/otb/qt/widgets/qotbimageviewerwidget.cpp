@@ -189,6 +189,9 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
 void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! START OF INCOMING DATA USAGE
 
+    if(!m_pItiOtbImageViewer)
+        return;
+
     //
     //                          STATISTICS
 
@@ -198,17 +201,11 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
 
     //! get the mode of the viewer before creating a new viewer
     //! use it after the creation process has finished, to dissasemble the widgets.
-    int vmode = 0;
-    if(m_pItiOtbImageViewer)
-        vmode = m_pItiOtbImageViewer->vmode();
-
+    int vmode = m_pItiOtbImageViewer->vmode();
 
     // sanity check, the data in the port must not be empty
     if(!ITIOTBIMAGEMANAGER->isPortEmpty(port))
         return;
-
-    //
-    //                          STATISTICS
 
     //! set the port to the image manager
     ITIOTBIMAGEMANAGER->setPort(port);
