@@ -14,8 +14,8 @@
 
 using namespace itiviewer;
 
-ItiOtbImageViewerPanelSetupTab::ItiOtbImageViewerPanelSetupTab(ItiOtbImageViewerPanel *panel, QWidget *parent) :
-    m_pItiOtbImageViewerPanel(panel), QWidget(parent)
+ItiOtbImageViewerPanelSetupTab::ItiOtbImageViewerPanelSetupTab(ItiOtbImageViewerPanel *panel) :
+    m_pItiOtbImageViewerPanel(panel)
 {
     setWindowTitle(tr("Setup"));
 
@@ -380,9 +380,9 @@ void ItiOtbImageViewerPanelSetupTab::onColorCompositionApplyButtonClicked(){
 void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
     m_pClassificationModel->clear();
 
-    QHash<int ,QColor> cdata = ITIOTBIMAGEMANAGER->classificationColorsIds();
+    QHash<int ,QColor> cdata = m_pItiOtbImageViewerPanel->manager()->classificationColorsIds();
 
-    QList<Level*> rlist = ITIOTBIMAGEMANAGER->levels();
+    QList<Level*> rlist = m_pItiOtbImageViewerPanel->manager()->levels();
     if(rlist.isEmpty())
         return;
 
@@ -393,7 +393,7 @@ void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
     pRootItem->setData(Qt::Checked,Qt::CheckStateRole);
     m_pClassificationModel->setItem(m_pClassificationModel->rowCount(),pRootItem);
 
-    QHash<int,QString> data = ITIOTBIMAGEMANAGER->classficationNamesIds();
+    QHash<int,QString> data = m_pManager->classficationNamesIds();
     QHash<int,QString>::const_iterator i;
     for(i = data.constBegin(); i != data.constEnd(); i++){
         QString name = i.value();
@@ -415,7 +415,7 @@ void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
     QString text;
     text += tr("<h3>Classification statistics</h3><br/>");
 
-    QList<Level*> levellist = ITIOTBIMAGEMANAGER->levels();
+    QList<Level*> levellist = m_pManager->levels();
     QList<Level*>::const_iterator j;
     for(j = levellist.constBegin(); j != levellist.constEnd();j++){
         Level *pLevel  = *j;

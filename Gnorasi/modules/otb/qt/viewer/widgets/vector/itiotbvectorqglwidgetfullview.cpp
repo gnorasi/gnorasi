@@ -229,14 +229,14 @@ void ItiOtbVectorQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
             idx[0] = point.x();
             idx[1] = point.y();
 
-            VectorImageType *img = ITIOTBIMAGEMANAGER->image();
+            VectorImageType *img = m_pItiOtbVectorImageViewer->manager()->image();
             if(img){
 
                 QString text;
 
                 // check whether the point is inside the image boundaries
                 if(!ItiOtbImageManager::isInsideTheImage(extent,point,m_IsotropicZoom))
-                    text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
+                    text = m_pItiOtbVectorImageViewer->manager()->constructInfoByIndexAlt(idx);
                 else{
                     VectorImageType::PixelType pixelValue = img->GetPixel(idx);
 
@@ -246,7 +246,7 @@ void ItiOtbVectorQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
 
                     QString pdt = QString::fromStdString(pixeldata);
 
-                    text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx,pdt);
+                    text = m_pItiOtbVectorImageViewer->manager()->constructInfoByIndex(idx,pdt);
                 }
 
 

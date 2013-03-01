@@ -44,7 +44,7 @@
 namespace itiviewer{
 
 class ItiOtbImageViewerPanel;
-
+class ItiOtbImageManager;
 /*!
  * \brief The ItiOtbImageViewerPanelSetupTab class
  */
@@ -53,7 +53,7 @@ class ItiOtbImageViewerPanelSetupTab : public QWidget
     Q_OBJECT
 public:
     //! ctor
-    explicit ItiOtbImageViewerPanelSetupTab(ItiOtbImageViewerPanel *panel, QWidget *parent = 0);
+    explicit ItiOtbImageViewerPanelSetupTab(ItiOtbImageViewerPanel *panel);
 
     //!
     void setupChannels();
@@ -229,6 +229,11 @@ private:
      * \brief m_pItiOtbImageViewerPanel
      */
     ItiOtbImageViewerPanel* m_pItiOtbImageViewerPanel;
+
+    /*!
+     * \brief m_pManager
+     */
+    ItiOtbImageManager *m_pManager;
 };
 
 }

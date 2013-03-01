@@ -55,8 +55,8 @@ using namespace itiviewer;
 
 /*******************************************************************************/
 VectorImageModel
-::VectorImageModel( QObject* parent ) :
-  AbstractImageModel( parent ),
+::VectorImageModel( ItiOtbImageManager *manager, QObject* parent ) :
+  AbstractImageModel( manager, parent ),
   m_RasterizedBuffer( NULL ),
   m_PreviousRegion(ImageRegionType())
 {

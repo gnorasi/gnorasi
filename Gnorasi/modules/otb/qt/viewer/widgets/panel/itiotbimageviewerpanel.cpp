@@ -6,7 +6,7 @@
 #include "itiotbimageviewerpanelpixeldescriptiontab.h"
 
 #include "../../commands/command.h"
-
+#include "../../utils/itiotbimagemanager.h"
 #include <QVBoxLayout>
 
 #include <QtCore/QSettings>
@@ -14,14 +14,18 @@
 using namespace itiviewer;
 
 ItiOtbImageViewerPanel::ItiOtbImageViewerPanel(QWidget *parent) :
+    m_pManager(NULL),
+    m_pSetupTab(NULL),
     m_pItiOtbImageChannelProvider(NULL),
     QWidget(parent)
 {
-    initialize();
+//    initialize();
 }
 
 //!
 void ItiOtbImageViewerPanel::initialize(){
+
+    Q_ASSERT(m_pManager);
 
     //! the setup tab
     //! ATM only one tab exists,
