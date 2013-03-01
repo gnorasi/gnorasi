@@ -46,9 +46,22 @@ void QGLOtbImageViewerWidget::initialize(){
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->viewer();
 
     ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
+
+    //
+    //  ** IMPORTANT **
+    //
+    // the manager must be set prior to setting up the rest of the functionality , in order the viewer to work property..
+    //
     m_pItiOtbImageViewerPanel->setManager(manager);
+
+    //
+    //  ** IMPORTANT **
+    //
+    // It is necessary also to initialize the viewer's panel
+    //
     m_pItiOtbImageViewerPanel->initialize();
 
+    // now setup the panel data , widgets etc..
     m_pItiOtbImageFactory->setupPanelData(m_pItiOtbImageViewerPanel);
 
     //!
@@ -135,7 +148,7 @@ void QGLOtbImageViewerWidget::keyPressEvent(QKeyEvent *event){
 void QGLOtbImageViewerWidget::disassembleWidgets(){
 
     //! Due to a lack of removing added itmes functionality on a QSplitter instance
-    //! the added widgets must be firstly hidden and then deleted..
+    //! the added widgets must be firstly hidden and then deleted in order to work properly..
 
     //! hide widgets
     m_pItiOtbImageViewer->hide();
@@ -149,6 +162,8 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
 
     //! create the panel
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
+
+    //set the properties
     m_pItiOtbImageViewerPanel->setWindowFlags(Qt::Window);
     m_pItiOtbImageViewerPanel->show();
 
@@ -157,6 +172,7 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->viewer();
 
     ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
+
     //! set the port to the image manager
     manager->setPort(port);
 
@@ -178,6 +194,7 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
     //
     m_pItiOtbImageViewerPanel->initialize();
 
+    // now setup the panel data , widgets etc..
     m_pItiOtbImageFactory->setupPanelData(m_pItiOtbImageViewerPanel);
 
     m_pItiOtbImageViewer->setParent(this);
@@ -235,7 +252,7 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     //
     m_pItiOtbImageViewerPanel->initialize();
 
-    //
+    // now setup the panel data , widgets etc..
     m_pItiOtbImageFactory->setupPanelData(m_pItiOtbImageViewerPanel);
 
     // setup viewer properties
