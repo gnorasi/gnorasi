@@ -41,7 +41,7 @@ class ItiOtbImageViewerPanelSetupTab;
 class ItiOtbImageViewerPanelHistogramTab;
 class ItiOtbImageViewerPanelPixelDescriptionTab;
 class ItiOtbImageViewer;
-
+class ItiOtbImageManager;
 class Command;
 class ItiOtbImageChannelProvider;
 
@@ -140,6 +140,24 @@ public:
      */
     void readDisplaySettings();
 
+    /*!
+     * \brief setManager , setter , need error checking
+     * \param manager
+     */
+    void setManager(ItiOtbImageManager *manager) { m_pManager = manager; }
+
+    /*!
+     * \brief manager, getter function
+     * \return
+     */
+    ItiOtbImageManager* manager() { return m_pManager; }
+
+
+    /*!
+     * \brief initialize, inititializing stuff
+     */
+    void initialize();
+
 
 public slots:
     /*!
@@ -191,11 +209,6 @@ private slots:
 private:
 
     /*!
-     * \brief initialize, inititializing stuff
-     */
-    void initialize();
-
-    /*!
      * \brief m_pTabWidget , the main tool box
      */
     QTabWidget *m_pTabWidget;
@@ -215,6 +228,11 @@ private:
      * \brief m_pItiOtbImageChannelProvider
      */
     ItiOtbImageChannelProvider *m_pItiOtbImageChannelProvider;
+
+    /*!
+     * \brief m_pManager
+     */
+    ItiOtbImageManager *m_pManager;
 };
 
 } // end of namespace itiviewer

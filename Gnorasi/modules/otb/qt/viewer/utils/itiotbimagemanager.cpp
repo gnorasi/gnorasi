@@ -20,31 +20,12 @@ using namespace itiviewer;
 using namespace otb;
 using namespace voreen;
 
-//! initialize the unique instance to null
-ItiOtbImageManager* ItiOtbImageManager::m_pInstance = NULL;
 
 //!
-ItiOtbImageManager::ItiOtbImageManager()
+ItiOtbImageManager::ItiOtbImageManager(QObject *parent)
+    : QObject(parent)
 {
     filter = ImageToVectorImageCastFilterType::New();
-}
-
-//!
-ItiOtbImageManager* ItiOtbImageManager::instance(){
-    if(m_pInstance == NULL){
-        m_pInstance = new ItiOtbImageManager();
-    }
-
-    return m_pInstance;
-}
-
-//!
-void ItiOtbImageManager::deleteInstance(){
-    if(m_pInstance != NULL){
-        delete m_pInstance;
-
-        m_pInstance = NULL;
-    }
 }
 
 
@@ -93,8 +74,8 @@ bool ItiOtbImageManager::isPortEmpty(Port *port){
         OTBImagePort *pOtbImagePort = dynamic_cast<OTBImagePort*>(port);
 
         RasterImageType *rImgType = (RasterImageType*)pOtbImagePort->getData();
-        if(rImgType && (rImgType->GetLargestPossibleRegion().GetSize()[0] == 0 || rImgType->GetLargestPossibleRegion().GetSize()[1] == 0) )
-            return false;
+        if(!rImgType || rImgType->GetLargestPossibleRegion().GetSize()[0] == 0 || rImgType->GetLargestPossibleRegion().GetSize()[1] == 0 )
+            return true;
 
     }
     else if(dynamic_cast<OTBVectorImagePort*>(port)){ // set here the vector image factory
@@ -102,11 +83,11 @@ bool ItiOtbImageManager::isPortEmpty(Port *port){
 
         //! get the image
         VectorImageType *vImgType = (VectorImageType*)pOtbVectorImagePort->getData();
-        if(vImgType && (vImgType->GetLargestPossibleRegion().GetSize()[0] == 0 || vImgType->GetLargestPossibleRegion().GetSize()[1] == 0))
-            return false;
+        if(!vImgType || vImgType->GetLargestPossibleRegion().GetSize()[0] == 0 || vImgType->GetLargestPossibleRegion().GetSize()[1] == 0)
+            return true;
     }
 
-    return true;
+    return false;
 }
 
 //!
@@ -224,6 +205,7 @@ void ItiOtbImageManager::createRegions(){
                 if(mapT){
 
                     LabelMapParser *parser = new LabelMapParser(this);
+                    parser->setManager(this);
 
                     Level *pLevel = new Level(this);
 

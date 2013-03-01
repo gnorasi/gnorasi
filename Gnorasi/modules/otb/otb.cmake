@@ -272,7 +272,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/otbvectorimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
-    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
+#    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
 
 )
 
@@ -320,7 +320,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Radiometry/otbvectorimagebandmathprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.h
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
-    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
+#    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
 )
 
 #
@@ -410,8 +410,8 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/utils/itiotblabelmapparser.cpp
 #    ${MOD_DIR}/qt/viewer/utils/itiotblabelimageparser.cpp
     ${MOD_DIR}/qt/viewer/commands/commandtoggleclassificationlabelvisibiltiy.cpp
-    ${MOD_DIR}/qt/orthorectify/otborthorectifyutility.cpp
-    ${MOD_DIR}/qt/widgets/qotborthorectifywidget.cpp
+#    ${MOD_DIR}/qt/orthorectify/otborthorectifyutility.cpp
+#    ${MOD_DIR}/qt/widgets/qotborthorectifywidget.cpp
 )
 ################################################################################
 # Qt headers
@@ -467,8 +467,8 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/utils/itiotblabelmapparser.h
     ${MOD_DIR}/qt/viewer/commands/commandtoggleclassificationlabelvisibiltiy.h
 #    ${MOD_DIR}/qt/viewer/utils/itiotblabelimageparser.h
-    ${MOD_DIR}/qt/orthorectify/otborthorectifyutility.h
-    ${MOD_DIR}/qt/widgets/qotborthorectifywidget.h
+#    ${MOD_DIR}/qt/orthorectify/otborthorectifyutility.h
+#    ${MOD_DIR}/qt/widgets/qotborthorectifywidget.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

@@ -57,7 +57,12 @@ public:
     /*!
      * \brief createViewer
      */
-    void createViewer(ItiOtbImageViewerPanel *panel);
+    void createViewer();
+
+    /*!
+     * \brief setupViewer
+     */
+    void setupPanelData(ItiOtbImageViewerPanel *panel);
 
     /*!
      * \brief createCommandContrastEnhancementGaussian

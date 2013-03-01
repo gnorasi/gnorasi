@@ -252,7 +252,7 @@ void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
 
     QRectF rect = constructHelperRect();
 
-    Level *pLevel = ITIOTBIMAGEMANAGER->levelById(m_currentLevelId);
+    Level *pLevel = m_pItiOtbVectorImageViewer->manager()->levelById(m_currentLevelId);
     if(pLevel){
 
         ImageRegionType extent = m_pImageViewManipulator->extent();
@@ -281,7 +281,7 @@ void ItiOtbVectorQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
         VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
         if(vModel){
 
-            VectorImageType *img = ITIOTBIMAGEMANAGER->image();
+            VectorImageType *img = m_pItiOtbVectorImageViewer->manager()->image();
             if(img){
                 QString text;
 
@@ -300,7 +300,7 @@ void ItiOtbVectorQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
 
                     QString pdt = QString::fromStdString(pixeldata);
 
-                    text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx,pdt);
+                    text = m_pItiOtbVectorImageViewer->manager()->constructInfoByIndex(idx,pdt);
                 }else{
                     QPoint point(event->pos().x()- extent.GetIndex()[0],event->pos().y()- extent.GetIndex()[1]);
 
@@ -310,7 +310,7 @@ void ItiOtbVectorQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
 
                     // check whether the point is inside the image boundaries
                     if(!ItiOtbImageManager::isInsideTheImage(extent,point))
-                        text = ITIOTBIMAGEMANAGER->constructInfoByIndexAlt(idx);
+                        text = m_pItiOtbVectorImageViewer->manager()->constructInfoByIndexAlt(idx);
                     else{
                         VectorImageType::PixelType pixelValue = img->GetPixel(idx);
 
@@ -320,7 +320,7 @@ void ItiOtbVectorQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
 
                         QString pdt = QString::fromStdString(pixeldata);
 
-                        text = ITIOTBIMAGEMANAGER->constructInfoByIndex(idx,pdt);
+                        text = m_pItiOtbVectorImageViewer->manager()->constructInfoByIndex(idx,pdt);
                     }
                 }
 

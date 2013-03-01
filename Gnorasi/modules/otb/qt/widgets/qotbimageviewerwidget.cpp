@@ -42,7 +42,14 @@ void QGLOtbImageViewerWidget::initialize(){
 
     //!
     m_pItiOtbImageFactory = new ItiOtbVectorImageViewerFactory(this);
-    m_pItiOtbImageFactory->createViewer(m_pItiOtbImageViewerPanel);
+    m_pItiOtbImageFactory->createViewer();
+    m_pItiOtbImageViewer = m_pItiOtbImageFactory->viewer();
+
+    ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
+    m_pItiOtbImageViewerPanel->setManager(manager);
+    m_pItiOtbImageViewerPanel->initialize();
+
+    m_pItiOtbImageFactory->setupPanelData(m_pItiOtbImageViewerPanel);
 
     //!
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->viewer();
@@ -134,6 +141,8 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
     m_pItiOtbImageViewer->hide();
     m_pItiOtbImageViewerPanel->hide();
 
+    voreen::Port *port = m_pItiOtbImageViewer->manager()->port();
+
     //! delete widgets
     delete m_pItiOtbImageViewer;
     delete m_pItiOtbImageViewerPanel;
@@ -144,8 +153,33 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
     m_pItiOtbImageViewerPanel->show();
 
     //! Create again the viewer and disassemble the sub widgets
-    m_pItiOtbImageFactory->createViewer(m_pItiOtbImageViewerPanel);
+    m_pItiOtbImageFactory->createViewer();
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->viewer();
+
+    ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
+    //! set the port to the image manager
+    manager->setPort(port);
+
+    // sanity check, the data in the port must not be empty
+    if(!manager->isPortEmpty(port))
+        manager->setupImage(); //! setup the image
+
+    //
+    //  ** IMPORTANT **
+    //
+    // the manager must be set prior to setting up the rest of the functionality , in order the viewer to work property..
+    //
+    m_pItiOtbImageViewerPanel->setManager(manager);
+
+    //
+    //  ** IMPORTANT **
+    //
+    // It is necessary also to initialize the viewer's panel
+    //
+    m_pItiOtbImageViewerPanel->initialize();
+
+    m_pItiOtbImageFactory->setupPanelData(m_pItiOtbImageViewerPanel);
+
     m_pItiOtbImageViewer->setParent(this);
     m_pItiOtbImageViewer->disassembleWidgets();
 
@@ -163,6 +197,8 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     m_pItiOtbImageViewer->hide();
     m_pItiOtbImageViewerPanel->hide();
 
+    voreen::Port *port = m_pItiOtbImageViewer->manager()->port();
+
     //! delete widgets
     delete m_pItiOtbImageViewer;
     delete m_pItiOtbImageViewerPanel;
@@ -171,8 +207,38 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     m_pItiOtbImageViewerPanel->setMinimumHeight(100);
 
     //! Create again the viewer and the panel
-    m_pItiOtbImageFactory->createViewer(m_pItiOtbImageViewerPanel);
+    m_pItiOtbImageFactory->createViewer();
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->viewer();
+
+    ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
+    //! set the port to the image manager
+    manager->setPort(port);
+
+    // sanity check, the data in the port must not be empty
+    if(!manager->isPortEmpty(port)){
+
+        //! setup the image
+        manager->setupImage();
+    }
+
+    //
+    //  ** IMPORTANT **
+    //
+    // the manager must be set prior to setting up the rest of the functionality , in order the viewer to work property..
+    //
+    m_pItiOtbImageViewerPanel->setManager(manager);
+
+    //
+    //  ** IMPORTANT **
+    //
+    // It is necessary also to initialize the viewer's panel
+    //
+    m_pItiOtbImageViewerPanel->initialize();
+
+    //
+    m_pItiOtbImageFactory->setupPanelData(m_pItiOtbImageViewerPanel);
+
+    // setup viewer properties
     m_pItiOtbImageViewer->setParent(this);
     m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
 
@@ -203,21 +269,31 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! use it after the creation process has finished, to dissasemble the widgets.
     int vmode = m_pItiOtbImageViewer->vmode();
 
-    // sanity check, the data in the port must not be empty
-    if(!ITIOTBIMAGEMANAGER->isPortEmpty(port))
-        return;
-
-    //! set the port to the image manager
-    ITIOTBIMAGEMANAGER->setPort(port);
-
-    //! setup the image
-    ITIOTBIMAGEMANAGER->setupImage();
-
-    //! create the specialized factory item
+    //! create the specialized factory item , now this is the default viewer
     m_pItiOtbImageFactory = new ItiOtbVectorImageViewerFactory(this);
 
-    //! create the appropriate viewer
+    //! create the discrete viewer
     createViewer();
+
+    // get the manager from the viewer object
+    ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
+
+    //! set the port to the image manager
+    manager->setPort(port);
+
+    // sanity check, the data in the port must not be empty
+    if(!manager->isPortEmpty(port))
+        manager->setupImage(); //! setup the image
+
+    //
+    //  ** IMPORTANT **
+    //
+    // the manager must be set prior to setting up the rest of the functionality , in order the viewer to work property..
+    //
+    m_pItiOtbImageViewerPanel->setManager(manager);
+
+    // setup the panel data, commands , connections etc..
+    m_pItiOtbImageFactory->setupPanelData(m_pItiOtbImageViewerPanel);
 
     //! setup the channels , get number etc..
     m_pItiOtbImageViewerPanel->setupChannels();
@@ -225,7 +301,7 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! draw stuff
     m_pItiOtbImageViewer->draw();
 
-    //! use the visual mode of the viewer previously got and dissasemble the widgets if true
+    //! use the visual mode of the viewer previously got and dissasemble the widgets if the viewer was previously on splitted mode
     if(vmode){
         disassembleWidgets();
         m_pItiOtbImageViewerPanel->readDisplaySettings();
@@ -256,7 +332,7 @@ void QGLOtbImageViewerWidget::createViewer(){
     delete m_pItiOtbImageViewer;
 
     //! create a new ItiOtbImageViewer instance
-    m_pItiOtbImageFactory->createViewer(m_pItiOtbImageViewerPanel);
+    m_pItiOtbImageFactory->createViewer();
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->viewer();
 
     //! set this widget as viewer's parent
@@ -269,7 +345,7 @@ void QGLOtbImageViewerWidget::createViewer(){
 
 
 QGLOtbImageViewerWidget::~QGLOtbImageViewerWidget(){
-    ItiOtbImageManager::deleteInstance();
+//    ItiOtbImageManager::deleteInstance();
 }
 
 } //namespace voreen

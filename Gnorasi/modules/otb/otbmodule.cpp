@@ -66,7 +66,7 @@
 #include "processors/Radiometry/otbtwoimagebandmathprocessor.h"
 
 #include "processors/Visualization/otbimageviewerprocessor.h"
-#include "processors/Geometry/otborthorectifyprocessor.h"
+//#include "processors/Geometry/otborthorectifyprocessor.h"
 
 #ifdef WIN32
 
@@ -138,7 +138,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBFFTConvolutionImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
-    registerProcessor(new OTBOrthoRectifyProcessor());
+//    registerProcessor(new OTBOrthoRectifyProcessor());
 }
 
 } // namespace

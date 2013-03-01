@@ -39,10 +39,6 @@
 
 namespace itiviewer{
 
-/*!
- *  A helper MACRO
- */
-#define ITIOTBIMAGEMANAGER ItiOtbImageManager::instance()
 
 class Command;
 class Level;
@@ -54,11 +50,8 @@ class VectorImageModel;
  *  previously handled by the ImageView class declared in the
  *  otbImageView header file contained in the OTB library.
  *
- *  This is a singleton class in order the unique instance of this class to be
- *  used as an interface - console item , accessible from everywhere in
- *  the project.
  *
- *  This class has a vetore image as member variable,
+ *  This class has a vetor image member variable,
  *  The concrete ItiOtbImageViewer class handles vector image data
  *
  */
@@ -66,11 +59,20 @@ class ItiOtbImageManager : public QObject
 {
     Q_OBJECT
 public:
-    //!
-    static ItiOtbImageManager* instance();
 
-    //! This function should be called at the destructor of the top level class
-    static void deleteInstance();
+    /*!
+     * \brief ItiOtbImageManager
+     *
+     *  The constructor function
+     */
+    ItiOtbImageManager(QObject *parent = 0);
+
+    /*!
+     *  \brief ~ItiOtbImageManager
+     *
+     *  The destructor function
+     */
+    ~ItiOtbImageManager();
 
     /** Set/Get the image to render */
     voreen::Port* port() const { return m_pPort; }
@@ -188,29 +190,12 @@ public:
     bool isPortEmpty(voreen::Port *port);
 
 private:
-    /*!
-     * \brief ItiOtbImageManager
-     *
-     *  The constructor function
-     */
-    ItiOtbImageManager();
 
-    /*!
-     *  \brief ~ItiOtbImageManager
-     *
-     *  The destructor function
-     */
-    ~ItiOtbImageManager();
 
     /*!
      * \brief createRegions
      */
     void createRegions();
-
-    /*!
-     * \brief m_pInstance, this is the unique instance.
-     */
-    static ItiOtbImageManager* m_pInstance;
 
     /*!
      * \brief m_pImgType, this is the image

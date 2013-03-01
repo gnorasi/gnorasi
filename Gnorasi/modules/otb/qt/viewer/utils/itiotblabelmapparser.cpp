@@ -35,7 +35,7 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
     QList<Region*> list;
 
-    VectorImageType *img = ITIOTBIMAGEMANAGER->image();
+    VectorImageType *img = m_pManager->image();
     if(!img)
         return list;
 

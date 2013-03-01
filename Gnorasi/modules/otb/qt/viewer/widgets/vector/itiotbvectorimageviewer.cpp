@@ -62,6 +62,7 @@ ItiOtbVectorImageViewer::ItiOtbVectorImageViewer(QWidget *parent) :
     setupConnections();
 }
 
+
 /*!
  * \brief ItiOtbVectorImageViewer::setupLayout
  */
@@ -316,7 +317,7 @@ void ItiOtbVectorImageViewer::onFocusRegionChanged(const QRect &rect){
 
 
 void ItiOtbVectorImageViewer::setupModel(){
-    QString path = ITIOTBIMAGEMANAGER->imageFile();
+    QString path = m_pManager->imageFile();
 
     if(path.isEmpty())
         return;
