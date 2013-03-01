@@ -397,6 +397,12 @@ void ItiOtbVectorImageViewer::readDisplaySettings(){
     settings.endGroup();
 }
 
+void ItiOtbVectorImageViewer::forceUpdates(){
+    m_pItiOtbVectorImageWidgetFullView->update();
+    m_pItiOtbVectorImageWidgetScroll->update();
+    m_pItiOtbVectorImageWidgetZoomable->update();
+}
+
 ItiOtbVectorImageViewer::~ItiOtbVectorImageViewer(){
 
     if(m_vmode == VMODE_SPLITTED){  // meaning this is the splitted mode
