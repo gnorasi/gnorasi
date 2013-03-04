@@ -59,7 +59,10 @@ public:
 
     /*!
      * \brief setupPanelData, setup the viewer given a ItiOtbImageViewerPanel panel object
-     *  this actually setups the commands , actions and the connections functionality.
+     *  this actually setups the commands , actions and the connections functionality,
+     *  This function needs a valid manager to be set on the panel objects , in order to work properly
+     *  before calling this function call
+     *  itiOtmImageViewerPanel->setManager(validManager);
      */
     virtual void setupPanelData(ItiOtbImageViewerPanel *) = 0;
 

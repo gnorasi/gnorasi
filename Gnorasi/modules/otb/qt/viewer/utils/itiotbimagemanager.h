@@ -52,7 +52,10 @@ class VectorImageModel;
  *
  *
  *  This class has a vetor image member variable,
- *  The concrete ItiOtbImageViewer class handles vector image data
+ *  The concrete ItiOtbImageViewer class handles vector image data.
+ *
+ *  Each concrete viewer instance has an instance of this class as a member variable.
+ *  The Image Model also has a member variable of this classes instance.
  *
  */
 class ItiOtbImageManager : public QObject
@@ -115,12 +118,13 @@ public:
 
     /*!
      * \brief clearLevels
-     *  Clear all level objects.
+     *  Clear all level objects. This function is used on the classification process.
      */
     void clearLevels();
 
     /*!
      * \brief appendLevel
+     *  This function is used on the classification process.
      * \param pLevel
      */
     void appendLevel(Level *pLevel);
@@ -128,6 +132,7 @@ public:
 
     /*!
      * \brief deleteLevel
+     *  This function is used on the classification process.
      * \param pLevel
      */
     void deleteLevel(Level *pLevel);
@@ -135,25 +140,29 @@ public:
 
     /*!
      * \brief levelById
+     *  This function is used on the classification process.
      * \param id
      * \return
      */
     Level* levelById(int id);
 
     /*!
-     * \brief levels
+     * \brief levels, getter
+     *  This function is used on the classification process.
      * \return
      */
     QList<Level*> levels() const { return m_levelList; }
 
     /*!
-     * \brief classficationNamesIds
+     * \brief classficationNamesIds, getter.
+     *  This function is used on the classification process.
      * \return
      */
     QHash<int ,QString> classficationNamesIds() const {return m_classficationNamesIds; }
 
     /*!
-     * \brief classificationColorsIds
+     * \brief classificationColorsIds, getter.
+     *  This function is used on the classification process.
      * \return
      */
     QHash<int,QColor> classificationColorsIds() const { return m_colorHash ; }
@@ -183,7 +192,8 @@ public:
     static inline bool isInsideTheImage(const ImageRegionType region, const QPoint &point, double z = 1.);
 
     /*!
-     * \brief isPortEmpty
+     * \brief isPortEmpty,
+     *  Checks whether this port has not an empty image.
      * \param port
      * \return
      */
