@@ -11,6 +11,10 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/ontologycreatorprocessor.cpp
     ${MOD_DIR}/processors/featureclassificationprocessor.cpp
     ${MOD_DIR}/processors/geospatialclassificationprocessor.cpp
+    ${MOD_DIR}/processors/knowledgewebserviceprocessor.cpp
+    ${MOD_DIR}/ports/ontologyport.cpp
+    ${MOD_DIR}/ports/georuleport.cpp
+    ${MOD_DIR}/ports/fuzzyruleport.cpp
 )
 
 SET(MOD_CORE_HEADERS 
@@ -20,6 +24,10 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/ontologycreatorprocessor.h
     ${MOD_DIR}/processors/featureclassificationprocessor.h
     ${MOD_DIR}/processors/geospatialclassificationprocessor.h
+    ${MOD_DIR}/processors/knowledgewebserviceprocessor.h
+    ${MOD_DIR}/ports/ontologyport.h
+    ${MOD_DIR}/ports/georuleport.h
+    ${MOD_DIR}/ports/fuzzyruleport.h
 )
 
 ################################################################################
