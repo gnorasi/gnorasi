@@ -17,32 +17,26 @@ ItiOtbImageViewerPanelHistogramTab::ItiOtbImageViewerPanelHistogramTab(ItiOtbIma
 
 //!
 void ItiOtbImageViewerPanelHistogramTab::initialize(){
-    QVBoxLayout *layout = new QVBoxLayout;
+    m_pHistogramGenerator = new HistogramGenerator(this);
 
-    m_pButton = new QPushButton(tr("Generate histogram"), this);
+    QVBoxLayout *layout = new QVBoxLayout;
 
     m_pHistogramView = new HistogramView(this);
 
-    layout->addWidget(m_pButton);
     layout->addWidget(m_pHistogramView);
 
     setLayout(layout);
-
-    connect(m_pButton,SIGNAL(clicked()),this,SLOT(onClicked()));
 }
 
-
-void ItiOtbImageViewerPanelHistogramTab::onClicked()
-{
-    HistogramGenerator *pHG = new HistogramGenerator(this);
+void ItiOtbImageViewerPanelHistogramTab::setupHistogram(){
 
     QString path = m_pItiOtbImageViewerPanel->manager()->imageFile();
 
-    pHG->generateHistogram(path);
+    m_pHistogramGenerator->generateHistogram(path);
 
-    QHash<int,double> rcd = pHG->redChannelData();
-    QHash<int,double> gcd = pHG->redChannelData();
-    QHash<int,double> bcd = pHG->blueChannelData();
+    QHash<int,double> rcd = m_pHistogramGenerator->redChannelData();
+    QHash<int,double> gcd = m_pHistogramGenerator->greenChannelData();
+    QHash<int,double> bcd = m_pHistogramGenerator->blueChannelData();
 
     m_pHistogramView->setupRedChannel(rcd.size(), rcd);
     m_pHistogramView->setupGreenChannel(gcd.size(), gcd);
@@ -50,3 +44,4 @@ void ItiOtbImageViewerPanelHistogramTab::onClicked()
 
     m_pHistogramView->replot();
 }
+

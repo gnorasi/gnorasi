@@ -166,6 +166,11 @@ public slots:
      */
     void setupChannels();
 
+    /*!
+     * \brief setupHistogram
+     */
+    void setupHistogram();
+
 signals:
 
     
