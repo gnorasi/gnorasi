@@ -41,7 +41,7 @@ void ItiOtbImageViewerPanel::initialize(){
 
     //! add widgets to the tab
     m_pTabWidget->addTab(m_pSetupTab,m_pSetupTab->windowTitle());
-    m_pTabWidget->addTab(m_pHistogramTab,m_pSetupTab->windowTitle());
+    m_pTabWidget->addTab(m_pHistogramTab,m_pHistogramTab->windowTitle());
 
     //! connections to establish updating command parameters
     connect(m_pSetupTab,SIGNAL(contrastEnhancementChanged(int,double,double)),this,SIGNAL(contrastEnhancementChanged(int,double,double)));
