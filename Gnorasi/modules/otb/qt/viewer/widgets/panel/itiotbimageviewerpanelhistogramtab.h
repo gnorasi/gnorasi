@@ -31,7 +31,13 @@
 
 #include <QWidget>
 
+class QPushButton;
+
+class HistogramView;
+
 namespace itiviewer{
+
+class ItiOtbImageViewerPanel;
 
 /*!
  * \brief The ItiOtbImageViewerPanelHistogramTab class
@@ -41,7 +47,7 @@ class ItiOtbImageViewerPanelHistogramTab : public QWidget
     Q_OBJECT
 public:
     //! ctor
-    explicit ItiOtbImageViewerPanelHistogramTab(QWidget *parent = 0);
+    explicit ItiOtbImageViewerPanelHistogramTab(ItiOtbImageViewerPanel *panel);
 
 
     
@@ -49,11 +55,21 @@ signals:
     
 public slots:
 
+private slots:
+    void onClicked();
+
 private:
     void initialize();
 
-
+    QPushButton *m_pButton;
     
+    /*!
+     * \brief m_pItiOtbImageViewerPanel
+     */
+    ItiOtbImageViewerPanel* m_pItiOtbImageViewerPanel;
+
+
+    HistogramView *m_pHistogramView;
 };
 
 }

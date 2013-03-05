@@ -31,11 +31,17 @@ void ItiOtbImageViewerPanel::initialize(){
     //! ATM only one tab exists,
     m_pSetupTab = new ItiOtbImageViewerPanelSetupTab(this);
 
+
+    // the histogram tab
+    //
+    m_pHistogramTab = new ItiOtbImageViewerPanelHistogramTab(this);
+
     //! the tab widget
     m_pTabWidget = new QTabWidget(this);
 
     //! add widgets to the tab
     m_pTabWidget->addTab(m_pSetupTab,m_pSetupTab->windowTitle());
+    m_pTabWidget->addTab(m_pHistogramTab,m_pSetupTab->windowTitle());
 
     //! connections to establish updating command parameters
     connect(m_pSetupTab,SIGNAL(contrastEnhancementChanged(int,double,double)),this,SIGNAL(contrastEnhancementChanged(int,double,double)));

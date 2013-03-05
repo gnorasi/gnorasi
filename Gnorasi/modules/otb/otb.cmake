@@ -140,6 +140,7 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/jpeg12_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/libtiff_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/libcurl_imp.lib
+                ${ORFEOTOOLBOX_LIB_DIR}/debug/qwtd.lib
     )
 
 	# link against OrfeoToolBox
@@ -218,6 +219,7 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/release/jpeg12_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/libtiff_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/libcurl_imp.lib
+                ${ORFEOTOOLBOX_LIB_DIR}/release/qwtd.lib
     )
 
 ENDIF(UNIX)
@@ -412,6 +414,8 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/commands/commandtoggleclassificationlabelvisibiltiy.cpp
 #    ${MOD_DIR}/qt/orthorectify/otborthorectifyutility.cpp
 #    ${MOD_DIR}/qt/widgets/qotborthorectifywidget.cpp
+    ${MOD_DIR}/qt/histogram/histogramgenerator.cpp
+    ${MOD_DIR}/qt/histogram/histogramview.cpp
 )
 ################################################################################
 # Qt headers
@@ -466,6 +470,8 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/utils/itiotbregion.h
     ${MOD_DIR}/qt/viewer/utils/itiotblabelmapparser.h
     ${MOD_DIR}/qt/viewer/commands/commandtoggleclassificationlabelvisibiltiy.h
+    ${MOD_DIR}/qt/histogram/histogramgenerator.h
+    ${MOD_DIR}/qt/histogram/histogramview.h
 #    ${MOD_DIR}/qt/viewer/utils/itiotblabelimageparser.h
 #    ${MOD_DIR}/qt/orthorectify/otborthorectifyutility.h
 #    ${MOD_DIR}/qt/widgets/qotborthorectifywidget.h
