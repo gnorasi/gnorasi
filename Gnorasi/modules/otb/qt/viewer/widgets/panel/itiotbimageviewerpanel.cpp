@@ -114,6 +114,11 @@ void ItiOtbImageViewerPanel::setupChannels(){
 }
 
 
+void ItiOtbImageViewerPanel::setupHistogram(){
+    m_pHistogramTab->setupHistogram();
+}
+
+
 void ItiOtbImageViewerPanel::saveDisplaySettings(){
 
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Gnorasi","ItiOtbVectorImageViewer");

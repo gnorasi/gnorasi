@@ -73,6 +73,18 @@ void HistogramView::initialize(){
 
     plotLayout()->setAlignCanvasToScales(true);
 
+    m_pRedCurve = new QwtPlotCurve(QString("Red Channel"));
+    m_pRedCurve->setPen(QPen(Qt::red));
+    m_pRedCurve->attach(this);
+
+    m_pGreenCurve = new QwtPlotCurve(QString("Green Channel"));
+    m_pGreenCurve->setPen(QPen(Qt::green));
+    m_pGreenCurve->attach(this);
+
+    m_pBlueCurve = new QwtPlotCurve(QString("Blue Channel"));
+    m_pBlueCurve->setPen(QPen(Qt::blue));
+    m_pBlueCurve->attach(this);
+
     // grid
     QwtPlotGrid *grid = new QwtPlotGrid;
     grid->enableX(false);
@@ -83,8 +95,8 @@ void HistogramView::initialize(){
     grid->attach(this);
 
     // axes
-    setAxisTitle(QwtPlot::xBottom, "Normalized Frequency");
-    setAxisTitle(QwtPlot::yLeft, "Amplitude [dB]");
+    setAxisTitle(QwtPlot::xBottom, "Pixel Value");
+    setAxisTitle(QwtPlot::yLeft, "Frequency");
 
     QwtLegend *legend = new QwtLegend;
     legend->setItemMode(QwtLegend::CheckableItem);
@@ -119,49 +131,59 @@ void HistogramView::showItem(QwtPlotItem *item, bool on)
 
 
 void HistogramView::setupData(){
-
 }
 
 
 void HistogramView::setupRedChannel(int sd, const QHash<int,double> &data){
 
     double helperVal[255];
+    double helperVal2[255];
     QHash<int,double>::const_iterator i;
     int counter = 0;
     for(i = data.constBegin(); i != data.constEnd(); i++){
+        helperVal2[counter] = i.key();
         helperVal[counter++] = i.value();
     }
 
-    Histogram *histogramRedChannel = new Histogram("Red Channel", Qt::red);
-    histogramRedChannel->setValues(255, helperVal);
-    histogramRedChannel->attach(this);
+    m_pRedCurve->setSamples(helperVal2,helperVal,255);
+
+//    Histogram *histogramRedChannel = new Histogram("Red Channel", Qt::red);
+//    histogramRedChannel->setValues(255, helperVal);
+//    histogramRedChannel->attach(this);
 }
 
 
 void HistogramView::setupGreenChannel(int sd, const QHash<int,double> &data){
     double helperVal[255];
+    double helperVal2[255];
     QHash<int,double>::const_iterator i;
     int counter = 0;
     for(i = data.constBegin(); i != data.constEnd(); i++){
+        helperVal2[counter] = i.key();
         helperVal[counter++] = i.value();
     }
 
+    m_pGreenCurve->setSamples(helperVal2,helperVal,255);
 
-    Histogram *histogramRedChannel = new Histogram("Green Channel", Qt::green);
-    histogramRedChannel->setValues(data.size(), helperVal);
-    histogramRedChannel->attach(this);
+//    Histogram *histogramRedChannel = new Histogram("Green Channel", Qt::green);
+//    histogramRedChannel->setValues(data.size(), helperVal);
+//    histogramRedChannel->attach(this);
 }
 
 
 void HistogramView::setupBlueChannel(int sd, const QHash<int,double> &data){
     double helperVal[255];
+    double helperVal2[255];
     QHash<int,double>::const_iterator i;
     int counter = 0;
     for(i = data.constBegin(); i != data.constEnd(); i++){
+        helperVal2[counter] = i.key();
         helperVal[counter++] = i.value();
     }
 
-    Histogram *histogramRedChannel = new Histogram("Green Channel", Qt::blue);
-    histogramRedChannel->setValues(data.size(), helperVal);
-    histogramRedChannel->attach(this);
+    m_pBlueCurve->setSamples(helperVal2,helperVal,255);
+
+//    Histogram *histogramRedChannel = new Histogram("Green Channel", Qt::blue);
+//    histogramRedChannel->setValues(data.size(), helperVal);
+//    histogramRedChannel->attach(this);
 }

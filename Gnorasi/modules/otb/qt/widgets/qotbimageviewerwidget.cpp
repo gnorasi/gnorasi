@@ -314,6 +314,7 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
 
     //! setup the channels , get number etc..
     m_pItiOtbImageViewerPanel->setupChannels();
+    m_pItiOtbImageViewerPanel->setupHistogram();
 
     //! draw stuff
     m_pItiOtbImageViewer->draw();

@@ -16,6 +16,10 @@ void HistogramGenerator::generateHistogram(const QString &path){
     {
         reader->Update();
 
+        m_redChannelData.clear();
+        m_greenChannelData.clear();
+        m_blueChannelData.clear();
+
         parseRedChannel();
         parseGreenChannel();
         parseBlueChannel();

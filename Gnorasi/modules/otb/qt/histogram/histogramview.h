@@ -45,9 +45,9 @@ public slots:
 private:
     void initialize();
 
-//    QwtPlotCurve *m_pRedCurve;
-//    QwtPlotCurve *m_pGreenCurve;
-//    QwtPlotCurve *m_pBlueCurve;
+    QwtPlotCurve *m_pRedCurve;
+    QwtPlotCurve *m_pGreenCurve;
+    QwtPlotCurve *m_pBlueCurve;
 
 //    QwtPlotHistogram *m_pistogram;
 

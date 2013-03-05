@@ -34,6 +34,7 @@
 class QPushButton;
 
 class HistogramView;
+class HistogramGenerator;
 
 namespace itiviewer{
 
@@ -49,25 +50,27 @@ public:
     //! ctor
     explicit ItiOtbImageViewerPanelHistogramTab(ItiOtbImageViewerPanel *panel);
 
-
+    /*!
+     * \brief setupHistogram
+     */
+    void setupHistogram();
     
 signals:
     
 public slots:
 
 private slots:
-    void onClicked();
+//    void onClicked();
 
 private:
     void initialize();
-
-    QPushButton *m_pButton;
     
     /*!
      * \brief m_pItiOtbImageViewerPanel
      */
     ItiOtbImageViewerPanel* m_pItiOtbImageViewerPanel;
 
+    HistogramGenerator *m_pHistogramGenerator;
 
     HistogramView *m_pHistogramView;
 };
