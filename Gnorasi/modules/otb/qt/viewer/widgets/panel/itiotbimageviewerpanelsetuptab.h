@@ -229,11 +229,6 @@ private:
      * \brief m_pItiOtbImageViewerPanel
      */
     ItiOtbImageViewerPanel* m_pItiOtbImageViewerPanel;
-
-    /*!
-     * \brief m_pManager
-     */
-    ItiOtbImageManager *m_pManager;
 };
 
 }

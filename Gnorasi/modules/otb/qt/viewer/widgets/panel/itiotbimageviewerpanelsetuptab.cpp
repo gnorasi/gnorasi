@@ -393,7 +393,7 @@ void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
     pRootItem->setData(Qt::Checked,Qt::CheckStateRole);
     m_pClassificationModel->setItem(m_pClassificationModel->rowCount(),pRootItem);
 
-    QHash<int,QString> data = m_pManager->classficationNamesIds();
+    QHash<int,QString> data = m_pItiOtbImageViewerPanel->manager()->classficationNamesIds();
     QHash<int,QString>::const_iterator i;
     for(i = data.constBegin(); i != data.constEnd(); i++){
         QString name = i.value();
@@ -415,7 +415,7 @@ void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
     QString text;
     text += tr("<h3>Classification statistics</h3><br/>");
 
-    QList<Level*> levellist = m_pManager->levels();
+    QList<Level*> levellist = m_pItiOtbImageViewerPanel->manager()->levels();
     QList<Level*>::const_iterator j;
     for(j = levellist.constBegin(); j != levellist.constEnd();j++){
         Level *pLevel  = *j;

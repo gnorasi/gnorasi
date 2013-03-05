@@ -219,6 +219,11 @@ private:
     ItiOtbImageViewerPanelSetupTab *m_pSetupTab;
 
     /*!
+     * \brief m_pHistogramTab
+     */
+    ItiOtbImageViewerPanelHistogramTab *m_pHistogramTab;
+
+    /*!
      * \brief m_commandHash , a has holding the command objects
      *  keys are SLOT_KEY enum values
      */
