@@ -23,7 +23,6 @@ void HistogramGenerator::generateHistogram(const QString &path){
     catch( itk::ExceptionObject & excp )
     {
         qDebug() << "Problem encoutered while reading image file : " << path << "\n";
-//        qDebug() << excp << "\n";
         return;
     }
 }

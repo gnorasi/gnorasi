@@ -110,33 +110,6 @@ void HistogramView::initialize(){
     }
 
     setAutoReplot(true);
-
-//    m_pRedCurve     = new QwtPlotCurve("Red Channel");
-//    m_pGreenCurve   = new QwtPlotCurve("Green Channel");
-//    m_pBlueCurve    = new QwtPlotCurve("Blue Channel");
-
-//    QPen redPen(Qt::red);
-//    QPen greenPen(Qt::green);
-//    QPen bluePen(Qt::blue);
-
-//    m_pRedCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
-//    m_pGreenCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
-//    m_pBlueCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
-
-//    m_pRedCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine);
-//    m_pRedCurve->setYAxis(QwtPlot::yLeft);
-//    m_pGreenCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine);
-//    m_pGreenCurve->setYAxis(QwtPlot::yLeft);
-//    m_pBlueCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine);
-//    m_pBlueCurve->setYAxis(QwtPlot::yLeft);
-
-//    m_pRedCurve->setPen(redPen);
-//    m_pGreenCurve->setPen(greenPen);
-//    m_pBlueCurve->setPen(bluePen);
-
-//    m_pRedCurve->attach(this);
-//    m_pGreenCurve->attach(this);
-//    m_pBlueCurve->attach(this);
 }
 
 void HistogramView::showItem(QwtPlotItem *item, bool on)
@@ -162,9 +135,6 @@ void HistogramView::setupRedChannel(int sd, const QHash<int,double> &data){
     Histogram *histogramRedChannel = new Histogram("Red Channel", Qt::red);
     histogramRedChannel->setValues(255, helperVal);
     histogramRedChannel->attach(this);
-
-//    m_pRedCurve->setSamples(frequency,amplitude,255);
-//    }
 }
 
 
@@ -180,9 +150,6 @@ void HistogramView::setupGreenChannel(int sd, const QHash<int,double> &data){
     Histogram *histogramRedChannel = new Histogram("Green Channel", Qt::green);
     histogramRedChannel->setValues(data.size(), helperVal);
     histogramRedChannel->attach(this);
-
-//    m_pGreenCurve->setSamples(frequency,amplitude,255);
-//    }
 }
 
 
@@ -197,8 +164,4 @@ void HistogramView::setupBlueChannel(int sd, const QHash<int,double> &data){
     Histogram *histogramRedChannel = new Histogram("Green Channel", Qt::blue);
     histogramRedChannel->setValues(data.size(), helperVal);
     histogramRedChannel->attach(this);
-
-
-//        m_pBlueCurve->setSamples(frequency,amplitude,255);
-//    }
 }
