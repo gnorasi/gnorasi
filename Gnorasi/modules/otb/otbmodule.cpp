@@ -64,20 +64,18 @@
 #include "processors/Radiometry/otbndwiprocessor.h"
 #include "processors/Radiometry/otbvectorimagebandmathprocessor.h"
 #include "processors/Radiometry/otbtwoimagebandmathprocessor.h"
+#include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
+#include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 
 #include "processors/Visualization/otbimageviewerprocessor.h"
 //#include "processors/Geometry/otborthorectifyprocessor.h"
 
 #ifdef WIN32
 
-//#include "processors/ImageIO/otbvectorimagewriterprocessor.h"
-#include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 //#include "processors/Visualization/otbsimpleviewerprocessor.h"
 
 #else
 
-#include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
-#include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 #include "processors/Visualization/otbsimpleviewerprocessor.h"
 
 #endif
@@ -95,13 +93,13 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBLabelImageReaderProcessor());
     registerProcessor(new OTBVectorImageReaderProcessor());
     registerProcessor(new OTBImageWriterProcessor());
-#ifdef WIN32
-    //registerProcessor(new OTBVectorImageWriterProcessor());
     registerProcessor(new OTBImageToVectorImageCastProcessor());
+    registerProcessor(new OTBVectorImageWriterProcessor());
+#ifdef WIN32
+
     //registerProcessor(new OTBSimpleViewerProcessor());
 #else
-    registerProcessor(new OTBVectorImageWriterProcessor());
-    registerProcessor(new OTBImageToVectorImageCastProcessor());
+
     registerProcessor(new OTBSimpleViewerProcessor());
 #endif
     registerProcessor(new OTBLabelImageWriterProcessor());

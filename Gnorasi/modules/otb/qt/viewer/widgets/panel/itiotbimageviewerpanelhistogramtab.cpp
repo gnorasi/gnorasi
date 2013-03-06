@@ -30,9 +30,11 @@ void ItiOtbImageViewerPanelHistogramTab::initialize(){
 
 void ItiOtbImageViewerPanelHistogramTab::setupHistogram(){
 
-    QString path = m_pItiOtbImageViewerPanel->manager()->imageFile();
+//    QString path = m_pItiOtbImageViewerPanel->manager()->imageFile();
+    VectorImageType *image = m_pItiOtbImageViewerPanel->manager()->image();
 
-    m_pHistogramGenerator->generateHistogram(path);
+//    m_pHistogramGenerator->generateHistogram(path);
+    m_pHistogramGenerator->generateHistogram(image);
 
     QHash<int,double> rcd = m_pHistogramGenerator->redChannelData();
     QHash<int,double> gcd = m_pHistogramGenerator->greenChannelData();
