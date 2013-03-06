@@ -10,12 +10,6 @@ HistogramGenerator::HistogramGenerator(QObject *parent) :
 
     //OTB initialization
     writer = WriterType::New();
-    int_writer = IntegerWriterType::New();
-    intrescaler = IntegerRescalerFilterType::New();
-    float_writer = FloatWriterType::New();
-    floatrescaler = FloatRescalerFilterType::New();
-    byte_writer = ByteWriterType::New();
-    byterescaler = ByteRescalerFilterType::New();
 
     QStringList filters;
     filters << "helperImageRepo";
@@ -71,7 +65,6 @@ void HistogramGenerator::generateHistogram(VectorImageType *image){
 
     QFile file(path);
     if(file.exists()){
-//        if(!file.remove()){
         qDebug() << "file exists .." << path;
         return;
     }
@@ -89,99 +82,11 @@ void HistogramGenerator::generateHistogram(VectorImageType *image){
     }
     catch (itk::ExceptionObject& err)
     {
-//        LWARNING("ExceptionObject caught !");
         qDebug() << "ExceptionObject caught !";
         return;
     }
 
-
     generateHistogram(path);
-
-//    if(!path.isEmpty())
-//    {
-//        if (imageType_.get() == "double") {
-//            writer->SetFileName(filename.c_str());
-//            writer->SetInput(image);
-//            try
-//            {
-//                writer->Update();
-//            }
-//            catch (itk::ExceptionObject& err)
-//            {
-//                LWARNING("ExceptionObject caught !");
-//                return;
-//            }
-//        }else if (imageType_.get() == "float"){
-//            try
-//                {
-//            FloatImageType::PixelType minimum, maximum;
-//            minimum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
-//            maximum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
-//            minimum.Fill(min_.get());
-//                    maximum.Fill(max_.get());
-//            floatrescaler->SetInput(inport_.getData());
-//            floatrescaler->SetOutputMinimum(minimum);
-//            floatrescaler->SetOutputMaximum(maximum);
-//            floatrescaler->SetClampThreshold(clip_.get());
-//            float_writer->SetFileName(filename.c_str());
-//            float_writer->SetInput(floatrescaler->GetOutput());
-//            float_writer->Update();
-//            }
-//            catch (itk::ExceptionObject& err)
-//                {
-//                LWARNING("ExceptionObject caught !");
-//                return;
-//                }
-//        }else if (imageType_.get() == "int"){
-//            try
-//                {
-//            IntegerImageType::PixelType minimum, maximum;
-//            minimum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
-//            maximum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
-//            minimum.Fill(min_.get());
-//                    maximum.Fill(max_.get());
-//            intrescaler->SetInput(inport_.getData());
-//            intrescaler->SetOutputMinimum(minimum);
-//            intrescaler->SetOutputMaximum(maximum);
-//            intrescaler->SetClampThreshold(clip_.get());
-//            int_writer->SetFileName(filename.c_str());
-//            int_writer->SetInput(intrescaler->GetOutput());
-//            int_writer->Update();
-//            }
-//            catch (itk::ExceptionObject& err)
-//                {
-//                LWARNING("ExceptionObject caught !");
-//                return;
-//                }
-//        }else if (imageType_.get() == "char"){
-//            try
-//                {
-//            ByteImageType::PixelType minimum, maximum;
-//            minimum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
-//            maximum.SetSize(inport_.getData()->GetNumberOfComponentsPerPixel());
-//            minimum.Fill(min_.get());
-//                    maximum.Fill(max_.get());
-//            byterescaler->SetInput(inport_.getData());
-//            byterescaler->SetOutputMinimum(minimum);
-//            byterescaler->SetOutputMaximum(maximum);
-//            byterescaler->SetClampThreshold(clip_.get());
-//            byte_writer->SetFileName(filename.c_str());
-//            byte_writer->SetInput(byterescaler->GetOutput());
-//            byte_writer->Update();
-//            }
-//            catch (itk::ExceptionObject& err)
-//                {
-//                LWARNING("ExceptionObject caught !");
-//                return;
-//                }
-//        }
-//    }else if(!this->isReady()){
-//    LWARNING("Writer Inport not connected");
-//    return;
-//    }else if(!hasImage){
-//    LWARNING("Image Name Not Set");
-//    return;
-//    }
 }
 
 
