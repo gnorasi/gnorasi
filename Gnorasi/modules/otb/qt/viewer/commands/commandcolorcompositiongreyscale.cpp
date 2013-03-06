@@ -79,4 +79,6 @@ void CommandColorCompositionGreyscale::execute(){
     renderer->Initialize(img->GetMetaDataDictionary());
 
     m_pItiOtbVectorImageViewer->forceUpdates();
+
+    m_pItiOtbVectorImageViewer->manager()->setImage(vModel->GetOutput(0));
 }

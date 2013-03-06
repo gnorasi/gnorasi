@@ -18,22 +18,38 @@ public:
     void setupData();
 
     /*!
+     * \brief setupRGBMode
+     */
+    void setupRGBMode();
+
+    /*!
+     * \brief setupGreyScaleMode
+     */
+    void setupGreyScaleMode();
+
+    /*!
+     * \brief setupGreyChannel
+     * \param data
+     */
+    void setupGreyChannel(const QHash<int,double> &data);
+
+    /*!
      * \brief setupRedChannel
      * \param data
      */
-    void setupRedChannel(int, const QHash<int,double> &data);
+    void setupRedChannel(const QHash<int,double> &data);
 
     /*!
      * \brief setupGreenChannel
      * \param data
      */
-    void setupGreenChannel(int, const QHash<int,double> &data);
+    void setupGreenChannel(const QHash<int,double> &data);
 
     /*!
      * \brief setupBlueChannel
      * \param data
      */
-    void setupBlueChannel(int, const QHash<int,double> &data);
+    void setupBlueChannel(const QHash<int,double> &data);
     
 signals:
     
@@ -43,8 +59,10 @@ public slots:
     void showItem(QwtPlotItem *item, bool on);
 
 private:
+
     void initialize();
 
+    QwtPlotCurve *m_pGreyscaleCurve;
     QwtPlotCurve *m_pRedCurve;
     QwtPlotCurve *m_pGreenCurve;
     QwtPlotCurve *m_pBlueCurve;

@@ -69,21 +69,15 @@ HistogramView::HistogramView(QWidget *parent) :
 
 void HistogramView::initialize(){
 
-    setTitle("Histogram");
+    setTitle(tr("Histogram"));
 
-    plotLayout()->setAlignCanvasToScales(true);
+    setCanvasBackground(QColor("#EBEBEB"));
 
-    m_pRedCurve = new QwtPlotCurve(QString("Red Channel"));
-    m_pRedCurve->setPen(QPen(Qt::red));
-    m_pRedCurve->attach(this);
+//    plotLayout()->setAlignCanvasToScales(true);
 
-    m_pGreenCurve = new QwtPlotCurve(QString("Green Channel"));
-    m_pGreenCurve->setPen(QPen(Qt::green));
-    m_pGreenCurve->attach(this);
-
-    m_pBlueCurve = new QwtPlotCurve(QString("Blue Channel"));
-    m_pBlueCurve->setPen(QPen(Qt::blue));
-    m_pBlueCurve->attach(this);
+    QwtLegend *legend = new QwtLegend;
+    legend->setItemMode(QwtLegend::CheckableItem);
+    insertLegend(legend, QwtPlot::RightLegend);
 
     // grid
     QwtPlotGrid *grid = new QwtPlotGrid;
@@ -95,17 +89,37 @@ void HistogramView::initialize(){
     grid->attach(this);
 
     // axes
-    setAxisTitle(QwtPlot::xBottom, "Pixel Value");
-    setAxisTitle(QwtPlot::yLeft, "Frequency");
+    setAxisTitle(QwtPlot::xBottom, tr("Pixel Value"));
+    setAxisTitle(QwtPlot::yLeft, tr("Frequency"));
 
-    QwtLegend *legend = new QwtLegend;
-    legend->setItemMode(QwtLegend::CheckableItem);
-    insertLegend(legend, QwtPlot::RightLegend);
+    m_pRedCurve = new QwtPlotCurve(tr("Red Channel"));
+    m_pRedCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
+    m_pRedCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine);
+    m_pRedCurve->setPen(QPen(Qt::red));
+    m_pRedCurve->attach(this);
+
+    m_pGreenCurve = new QwtPlotCurve(tr("Green Channel"));
+    m_pGreenCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
+    m_pGreenCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine);
+    m_pGreenCurve->setPen(QPen(Qt::green));
+    m_pGreenCurve->attach(this);
+
+    m_pBlueCurve = new QwtPlotCurve(tr("Blue Channel"));
+    m_pBlueCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
+    m_pBlueCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine);
+    m_pBlueCurve->setPen(QPen(Qt::blue));
+    m_pBlueCurve->attach(this);
+
+    m_pGreyscaleCurve = new QwtPlotCurve(tr("Grey Channel"));
+    m_pGreyscaleCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
+    m_pGreyscaleCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine);
+    m_pGreyscaleCurve->setPen(QPen("#2E2E2E"));
+    m_pGreyscaleCurve->attach(this);
 
     connect(this, SIGNAL(legendChecked(QwtPlotItem *, bool)),
         SLOT(showItem(QwtPlotItem *, bool)));
 
-    replot(); // creating the legend items
+//    replot(); // creating the legend items
 
     QwtPlotItemList items = itemList(QwtPlotItem::Rtti_PlotHistogram);
     for ( int i = 0; i < items.size(); i++ )
@@ -124,6 +138,7 @@ void HistogramView::initialize(){
     setAutoReplot(true);
 }
 
+
 void HistogramView::showItem(QwtPlotItem *item, bool on)
 {
     item->setVisible(on);
@@ -134,7 +149,44 @@ void HistogramView::setupData(){
 }
 
 
-void HistogramView::setupRedChannel(int sd, const QHash<int,double> &data){
+void HistogramView::setupGreyScaleMode(){
+    m_pBlueCurve->detach();
+    m_pGreenCurve->detach();
+    m_pRedCurve->detach();
+
+    m_pGreyscaleCurve->attach(this);
+}
+
+
+void HistogramView::setupRGBMode(){
+    m_pGreyscaleCurve->detach();
+
+    m_pBlueCurve->attach(this);
+    m_pGreenCurve->attach(this);
+    m_pRedCurve->attach(this);
+}
+
+
+void HistogramView::setupGreyChannel(const QHash<int,double> &data){
+    setAutoReplot(false);
+
+    double helperVal[255];
+    double helperVal2[255];
+    QHash<int,double>::const_iterator i;
+    int counter = 0;
+    for(i = data.constBegin(); i != data.constEnd(); i++){
+        helperVal2[counter] = i.key();
+        helperVal[counter++] = i.value();
+    }
+
+    m_pGreyscaleCurve->setSamples(helperVal2,helperVal,255);
+
+    setAutoReplot(true);
+}
+
+void HistogramView::setupRedChannel(const QHash<int,double> &data){
+
+    setAutoReplot(false);
 
     double helperVal[255];
     double helperVal2[255];
@@ -147,13 +199,17 @@ void HistogramView::setupRedChannel(int sd, const QHash<int,double> &data){
 
     m_pRedCurve->setSamples(helperVal2,helperVal,255);
 
+    setAutoReplot(true);
+
 //    Histogram *histogramRedChannel = new Histogram("Red Channel", Qt::red);
 //    histogramRedChannel->setValues(255, helperVal);
 //    histogramRedChannel->attach(this);
 }
 
 
-void HistogramView::setupGreenChannel(int sd, const QHash<int,double> &data){
+void HistogramView::setupGreenChannel(const QHash<int,double> &data){
+    setAutoReplot(false);
+
     double helperVal[255];
     double helperVal2[255];
     QHash<int,double>::const_iterator i;
@@ -165,13 +221,17 @@ void HistogramView::setupGreenChannel(int sd, const QHash<int,double> &data){
 
     m_pGreenCurve->setSamples(helperVal2,helperVal,255);
 
+    setAutoReplot(true);
+
 //    Histogram *histogramRedChannel = new Histogram("Green Channel", Qt::green);
 //    histogramRedChannel->setValues(data.size(), helperVal);
 //    histogramRedChannel->attach(this);
 }
 
 
-void HistogramView::setupBlueChannel(int sd, const QHash<int,double> &data){
+void HistogramView::setupBlueChannel(const QHash<int,double> &data){
+    setAutoReplot(false);
+
     double helperVal[255];
     double helperVal2[255];
     QHash<int,double>::const_iterator i;
@@ -182,6 +242,8 @@ void HistogramView::setupBlueChannel(int sd, const QHash<int,double> &data){
     }
 
     m_pBlueCurve->setSamples(helperVal2,helperVal,255);
+
+    setAutoReplot(true);
 
 //    Histogram *histogramRedChannel = new Histogram("Green Channel", Qt::blue);
 //    histogramRedChannel->setValues(data.size(), helperVal);

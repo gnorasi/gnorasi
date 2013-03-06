@@ -90,15 +90,19 @@ void ItiOtbImageViewerPanel::applyContrastEnhancementSquareRoot(){
 
 void ItiOtbImageViewerPanel::applyColorCompositionGreyscale(){
     Command *pCommand = m_commandHash[(int)SLOT_CC_GREYSCALE];
-    if(pCommand)
+    if(pCommand){
         pCommand->execute();
+        setupHistogram();
+    }
 }
 
 
 void ItiOtbImageViewerPanel::applyColorCompositionRGB(){
     Command *pCommand = m_commandHash[(int)SLOT_CC_RGB];
-    if(pCommand)
+    if(pCommand){
         pCommand->execute();
+        setupHistogram();
+    }
 }
 
 
@@ -142,6 +146,13 @@ void ItiOtbImageViewerPanel::readDisplaySettings(){
     settings.endGroup();
 }
 
+int ItiOtbImageViewerPanel::currentGreyscaleChannel() const{
+    return m_pSetupTab->currentGreyscaleChannel();
+}
+
+bool ItiOtbImageViewerPanel::isGreyscale(){
+    return m_pSetupTab->isGreyScale();
+}
 
 ItiOtbImageViewerPanel::~ItiOtbImageViewerPanel(){
     if(windowFlags() & Qt::Window)
