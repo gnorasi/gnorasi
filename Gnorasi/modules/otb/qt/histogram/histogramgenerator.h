@@ -26,6 +26,12 @@ class HistogramGenerator : public QObject
     Q_OBJECT
 public:
 
+    enum RMODE{
+        RMODE_GREYSCALE = 0,
+        RMODE_RGB       = 1
+    };
+
+
     typedef unsigned char                                   PixelComponentType;
 
 
@@ -79,6 +85,7 @@ public:
     double* greenChannelAmplitude() const { return m_pGreenChannelAmplitude; }
     double* blueChannelAmplitude() const { return m_pBlueChannelAmplitude; }
 
+    QHash<int,double> greyscaleChannelData() const { return m_greyscaleChannelData; }
     QHash<int,double> redChannelData() const { return m_redChannelData; }
     QHash<int,double> greenChannelData() const { return m_greenChannelData; }
     QHash<int,double> blueChannelData() const { return m_blueChannelData; }
@@ -90,6 +97,12 @@ public:
     typedef otb::ImageFileWriter<VectorImageType> WriterType;
     WriterType::Pointer writer;
 
+
+    void setRMode(RMODE rmode) { m_rmode = rmode; }
+
+    RMODE rmode() { return m_rmode; }
+
+    void setCurrentGreyChannel(int c) { m_currentGreyChannel = c; }
     
 signals:
     
@@ -101,6 +114,12 @@ private:
     ReaderType::Pointer reader;
 
     const HistogramType * histogram;
+
+    /*!
+     * \brief parseGreyscaleChannel
+     */
+    void parseGreyscaleChannel();
+
 
     /*!
      * \brief parseRedChannel
@@ -131,11 +150,16 @@ private:
     double *m_pGreenChannelAmplitude;
     double *m_pBlueChannelAmplitude;
 
+    QHash<int, double> m_greyscaleChannelData;
     QHash<int, double> m_redChannelData;
     QHash<int, double> m_greenChannelData;
     QHash<int, double> m_blueChannelData;
 
     QDir m_dir;
+
+    RMODE m_rmode;
+
+    int m_currentGreyChannel;
 
 };
 

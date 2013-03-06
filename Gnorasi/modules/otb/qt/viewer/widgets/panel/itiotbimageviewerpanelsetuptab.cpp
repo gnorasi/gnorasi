@@ -19,6 +19,8 @@ ItiOtbImageViewerPanelSetupTab::ItiOtbImageViewerPanelSetupTab(ItiOtbImageViewer
 {
     setWindowTitle(tr("Setup"));
 
+    m_isGreyscale = false;
+
     initialize();
 }
 
@@ -325,6 +327,8 @@ void ItiOtbImageViewerPanelSetupTab::setupChannels(){
             m_pRadioButtonRGBCompositionMode->toggle();
 
         m_pButtonApplyColorComposition->setEnabled(true);
+
+        m_isGreyscale = false;
     }
     else{
         m_pSpinBoxGreenChannel->setValue(list.at(0)+1);
@@ -337,6 +341,8 @@ void ItiOtbImageViewerPanelSetupTab::setupChannels(){
             m_pRadioButtonRGBCompositionMode->toggle();
 
         m_pButtonApplyColorComposition->setEnabled(false);
+
+        m_isGreyscale = true;
     }
 
 
@@ -370,8 +376,11 @@ void ItiOtbImageViewerPanelSetupTab::onContrastEnhancementApplyButtonClicked(){
 void ItiOtbImageViewerPanelSetupTab::onColorCompositionApplyButtonClicked(){
 
     if(m_pRadioButtonGrayscaleMode->isChecked()) {
+        m_isGreyscale = true;
         emit applyColorCompositionGreyscale();
     }else {
+        m_isGreyscale = false;
+
         emit applyColorCompositionRGB();
     }
 

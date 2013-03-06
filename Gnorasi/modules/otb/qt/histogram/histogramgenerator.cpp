@@ -8,6 +8,8 @@ HistogramGenerator::HistogramGenerator(QObject *parent) :
     histogramGenerator  = HistogramGeneratorType::New();
     reader              = ReaderType::New();
 
+    m_rmode = RMODE_RGB;
+
     //OTB initialization
     writer = WriterType::New();
 
@@ -43,13 +45,20 @@ void HistogramGenerator::generateHistogram(const QString &path){
     {
         reader->Update();
 
-        m_redChannelData.clear();
-        m_greenChannelData.clear();
-        m_blueChannelData.clear();
+        if(m_rmode == RMODE_GREYSCALE){
+            m_greyscaleChannelData.clear();
+            parseGreyscaleChannel();
 
-        parseRedChannel();
-        parseGreenChannel();
-        parseBlueChannel();
+        }else{
+            m_redChannelData.clear();
+            m_greenChannelData.clear();
+            m_blueChannelData.clear();
+
+
+            parseRedChannel();
+            parseGreenChannel();
+            parseBlueChannel();
+        }
     }
     catch( itk::ExceptionObject & excp )
     {
@@ -89,6 +98,55 @@ void HistogramGenerator::generateHistogram(VectorImageType *image){
     generateHistogram(path);
 }
 
+
+void HistogramGenerator::parseGreyscaleChannel(){
+    SizeType size;
+
+    if(!m_currentGreyChannel){
+        size[0] = 255;      // number of bins for the Red   channel
+        size[1] = 1;        // number of bins for the Green channel
+        size[2] = 1;        // number of bins for the Blue  channel
+    }
+    else if(m_currentGreyChannel == 1){
+        size[0] = 1;        // number of bins for the Red   channel
+        size[1] = 255;      // number of bins for the Green channel
+        size[2] = 1;        // number of bins for the Blue  channel
+    }else{
+        size[0] = 1;        // number of bins for the Red   channel
+        size[1] = 1;        // number of bins for the Green channel
+        size[2] = 255;      // number of bins for the Blue  channel
+    }
+
+    histogramGenerator->SetInput(  reader->GetOutput()  );
+
+    histogramGenerator->SetNumberOfBins( size );
+    histogramGenerator->SetMarginalScale( 10.0 );
+
+    histogramGenerator->Compute();
+
+    histogram = histogramGenerator->GetOutput();
+
+    const unsigned int histogramSize = histogram->Size();
+
+    qDebug() << "Histogram size " << histogramSize << "\n";
+
+    HistogramType::ConstIterator itr = histogram->Begin();
+    HistogramType::ConstIterator end = histogram->End();
+
+    typedef HistogramType::FrequencyType FrequencyType;
+
+    unsigned int binNumber = 0;
+    while( itr != end )
+    {
+        const FrequencyType frequency = itr.GetFrequency();
+
+        m_greyscaleChannelData[binNumber] = (double)frequency;
+//        histogramFile.write( (const char *)(&frequency), sizeof(frequency) );
+
+        ++itr;
+        ++binNumber;
+    }
+}
 
 void HistogramGenerator::parseRedChannel(){
     SizeType size;

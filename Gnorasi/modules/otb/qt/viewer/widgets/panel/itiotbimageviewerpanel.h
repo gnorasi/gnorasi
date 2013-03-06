@@ -158,6 +158,18 @@ public:
      */
     void initialize();
 
+    /*!
+     * \brief isGreyscale
+     *  Returns the current mode is being used and setup by the number of channels and setup tab panel widget
+     * \return
+     */
+    bool isGreyscale();
+
+    /*!
+     * \brief currentGreyscaleChannel
+     * \return
+     */
+    int currentGreyscaleChannel() const ;
 
 public slots:
     /*!

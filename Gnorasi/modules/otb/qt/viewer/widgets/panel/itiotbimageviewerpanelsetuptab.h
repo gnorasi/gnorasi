@@ -57,6 +57,10 @@ public:
 
     //!
     void setupChannels();
+
+    bool isGreyScale() const { return m_isGreyscale; }
+
+    int currentGreyscaleChannel() { return m_pSpinBoxGreyscaleChannel->value(); }
     
 signals:
 
@@ -229,6 +233,9 @@ private:
      * \brief m_pItiOtbImageViewerPanel
      */
     ItiOtbImageViewerPanel* m_pItiOtbImageViewerPanel;
+
+
+    bool            m_isGreyscale;
 };
 
 }
