@@ -8,50 +8,40 @@
 class QwtPlotCurve;
 class QwtPlotItem;
 class QwtPlotHistogram;
+class Histogram;
+class QwtPlotPanner;
+class QwtPlotMagnifier;
 
 class HistogramView : public QwtPlot
 {
     Q_OBJECT
+    Q_PROPERTY(QColor color             READ color          WRITE setColor          NOTIFY colorChanged)
+    Q_PROPERTY(QString histogramTitle   READ histogramTitle WRITE setHistogramTitle NOTIFY histogramTitleChanged)
+
 public:
     explicit HistogramView(QWidget *parent = 0);
 
-    void setupData();
-
     /*!
-     * \brief setupRGBMode
-     */
-    void setupRGBMode();
-
-    /*!
-     * \brief setupGreyScaleMode
-     */
-    void setupGreyScaleMode();
-
-    /*!
-     * \brief setupGreyChannel
+     * \brief setupData
      * \param data
      */
-    void setupGreyChannel(const QHash<int,double> &data);
+    void setupData(const QHash<int,double> &data);
 
     /*!
-     * \brief setupRedChannel
-     * \param data
+     * \brief color
+     * \return
      */
-    void setupRedChannel(const QHash<int,double> &data);
+    QColor color() const { return m_color; }
+    void setColor(const QColor &c);
 
-    /*!
-     * \brief setupGreenChannel
-     * \param data
-     */
-    void setupGreenChannel(const QHash<int,double> &data);
 
-    /*!
-     * \brief setupBlueChannel
-     * \param data
-     */
-    void setupBlueChannel(const QHash<int,double> &data);
+    QString histogramTitle() const { return m_histogramTitle; }
+    void setHistogramTitle(const QString &t);
     
+
 signals:
+    void colorChanged();
+    void histogramTitleChanged();
     
 public slots:
 
@@ -62,12 +52,18 @@ private:
 
     void initialize();
 
-    QwtPlotCurve *m_pGreyscaleCurve;
-    QwtPlotCurve *m_pRedCurve;
-    QwtPlotCurve *m_pGreenCurve;
-    QwtPlotCurve *m_pBlueCurve;
+    void rescale();
 
-//    QwtPlotHistogram *m_pistogram;
+//    Histogram *m_pHistogram;
+
+    QString m_histogramTitle;
+
+    QColor m_color;
+
+    QwtPlotPanner       *m_pPanner;
+    QwtPlotMagnifier    *m_pMagnifier;
+
+    const QRectF d_mapRect;
 
 };
 

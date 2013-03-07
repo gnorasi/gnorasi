@@ -72,7 +72,12 @@ private:
 
     HistogramGenerator *m_pHistogramGenerator;
 
-    HistogramView *m_pHistogramView;
+    HistogramView *m_pHistogramViewRed;
+    HistogramView *m_pHistogramViewBlue;
+    HistogramView *m_pHistogramViewGreen;
+
+
+    HistogramView *m_pHistogramViewGreyscale;
 };
 
 }
