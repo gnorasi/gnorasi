@@ -250,21 +250,21 @@ void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    QRectF rect = constructHelperRect();
+//    QRectF rect = constructHelperRect();
 
-    Level *pLevel = m_pItiOtbVectorImageViewer->manager()->levelById(m_currentLevelId);
-    if(pLevel){
+//    Level *pLevel = m_pItiOtbVectorImageViewer->manager()->levelById(m_currentLevelId);
+//    if(pLevel){
 
-        ImageRegionType extent = m_pImageViewManipulator->extent();
+//        ImageRegionType extent = m_pImageViewManipulator->extent();
 
-        QList<Region*> regions = pLevel->regions();
-        QList<Region*>::const_iterator i;
-        for(i = regions.constBegin(); i != regions.constEnd(); i++){
-            Region *pRegion = *i;
-            if(pRegion->visible() && isRegionPolygonInsideVisibleArea(pRegion->area()))
-                pRegion->drawRegion(&painter, extent, rect, m_IsotropicZoom);
-        }
-    }
+//        QList<Region*> regions = pLevel->regions();
+//        QList<Region*>::const_iterator i;
+//        for(i = regions.constBegin(); i != regions.constEnd(); i++){
+//            Region *pRegion = *i;
+//            if(pRegion->visible() && isRegionPolygonInsideVisibleArea(pRegion->area()))
+//                pRegion->drawRegion(&painter, extent, rect, m_IsotropicZoom);
+//        }
+//    }
 
     painter.end();
 }
