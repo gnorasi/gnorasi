@@ -219,7 +219,7 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/release/jpeg12_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/libtiff_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/libcurl_imp.lib
-                ${ORFEOTOOLBOX_LIB_DIR}/release/qwtd.lib
+                ${ORFEOTOOLBOX_LIB_DIR}/release/qwt.lib
     )
 
 ENDIF(UNIX)
