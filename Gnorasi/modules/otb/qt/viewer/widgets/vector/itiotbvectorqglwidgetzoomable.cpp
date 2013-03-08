@@ -205,16 +205,23 @@ void ItiOtbVectorQGLWidgetZoomable::initializeColumnRowParameters(){
     m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
 }
 
-bool ItiOtbVectorQGLWidgetZoomable::isRegionPolygonInsideVisibleArea(const QPolygonF &pol) const{
-//    ImageRegionType bufferedRegion = m_pImageViewManipulator->bufferRegion();
-//    ImageRegionType extentRegion = m_pImageViewManipulator->extent();
+bool ItiOtbVectorQGLWidgetZoomable::isRegionPolygonInsideVisibleArea(Region *region) const{
 
-//    QRectF rect = constructHelperRect();
+    QPolygon regionpolygon = region->area();
 
-//    QRectF brect = pol.boundingRect();
+    unsigned int f_display_column   = m_pImageModelRenderer->firstDisplayColumn();
+    unsigned int f_display_row      = m_pImageModelRenderer->firstDisplayRow();
+    unsigned int nb_display_columns = m_pImageModelRenderer->nbDisplayColumns();
+    unsigned int nb_display_rows    = m_pImageModelRenderer->nbDisplayRows();
 
-//    return rect.contains(brect);
-    return true;
+    ImageRegionType bufferedRegion  = m_pImageViewManipulator->bufferRegion();
+    unsigned int maxheight          = bufferedRegion.GetSize()[1];
+
+    QRect currentrect(QPoint(f_display_column,maxheight-f_display_row-nb_display_rows),QSize(nb_display_columns,nb_display_rows));
+
+    QRect regionrect = regionpolygon.boundingRect();
+
+    return currentrect.contains(regionrect);
 }
 
 
@@ -250,21 +257,21 @@ void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-//    QRectF rect = constructHelperRect();
+    QRectF rect = constructHelperRect();
 
-//    Level *pLevel = m_pItiOtbVectorImageViewer->manager()->levelById(m_currentLevelId);
-//    if(pLevel){
+    Level *pLevel = m_pItiOtbVectorImageViewer->manager()->levelById(m_currentLevelId);
+    if(pLevel){
 
-//        ImageRegionType extent = m_pImageViewManipulator->extent();
+        ImageRegionType extent = m_pImageViewManipulator->extent();
 
-//        QList<Region*> regions = pLevel->regions();
-//        QList<Region*>::const_iterator i;
-//        for(i = regions.constBegin(); i != regions.constEnd(); i++){
-//            Region *pRegion = *i;
-//            if(pRegion->visible() && isRegionPolygonInsideVisibleArea(pRegion->area()))
-//                pRegion->drawRegion(&painter, extent, rect, m_IsotropicZoom);
-//        }
-//    }
+        QList<Region*> regions = pLevel->regions();
+        QList<Region*>::const_iterator i;
+        for(i = regions.constBegin(); i != regions.constEnd(); i++){
+            Region *pRegion = *i;
+            if(pRegion->visible() /*&& isRegionPolygonInsideVisibleArea(pRegion)*/)
+                pRegion->drawRegion(&painter, extent, rect, m_IsotropicZoom);
+        }
+    }
 
     painter.end();
 }
@@ -626,6 +633,7 @@ void ItiOtbVectorQGLWidgetZoomable::onFocusRegionChanged(const QRect &rect){
 }
 
 QRectF ItiOtbVectorQGLWidgetZoomable::constructHelperRect() const {
+    ImageRegionType bufferedRegion = m_pImageViewManipulator->bufferRegion();
     ImageRegionType extent = m_pImageViewManipulator->extent();
 
     QRectF rect;
@@ -633,7 +641,7 @@ QRectF ItiOtbVectorQGLWidgetZoomable::constructHelperRect() const {
     if(extent.GetIndex()[1] > 0)
         rect.setY(0);
     else
-        rect.setY(extent.GetSize()[1] - m_pImageModelRenderer->firstDisplayRow()-m_pImageModelRenderer->nbDisplayRows());
+        rect.setY(bufferedRegion.GetSize()[1] - m_pImageModelRenderer->firstDisplayRow()-m_pImageModelRenderer->nbDisplayRows());
 
     rect.setWidth(m_pImageModelRenderer->nbDisplayColumns());
     rect.setHeight(m_pImageModelRenderer->nbDisplayRows());

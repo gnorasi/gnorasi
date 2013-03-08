@@ -47,6 +47,7 @@ namespace itiviewer{
 class ImageModelRendererZoomable;
 class ImageViewManipulatorZoomable;
 class ItiOtbVectorImageViewer;
+class Region;
 
 /** \brief The ItiOtbVectorQGLWidgetZoomable class
  *
@@ -192,7 +193,7 @@ private:
     ImageRegionType::IndexType indexFromPoint(const QPoint& );
 
 
-    bool isRegionPolygonInsideVisibleArea(const QPolygonF &) const;
+    bool isRegionPolygonInsideVisibleArea(Region* ) const;
     /*!
      * \brief setupcolumnRowParameters
      */
