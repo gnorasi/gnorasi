@@ -96,16 +96,10 @@ void HistogramView::initialize(){
 
     plotLayout()->setAlignCanvasToScales(true);
 
-//    setAxisScale(QwtPlot::xBottom, 0.0, 3.0);
     setAxisMaxMinor(QwtPlot::xBottom, 0);
-//    setAxisScale(QwtPlot::yLeft, 0.0, 3.0);
     setAxisMaxMinor(QwtPlot::yLeft, 0);
 
     canvas()->setBorderRadius( 10 );
-
-//    QwtLegend *legend = new QwtLegend;
-//    legend->setItemMode(QwtLegend::CheckableItem);
-//    insertLegend(legend, QwtPlot::RightLegend);
 
     // grid
     QwtPlotGrid *grid = new QwtPlotGrid;
@@ -118,53 +112,6 @@ void HistogramView::initialize(){
 
     // axes
     setAxisTitle(QwtPlot::xBottom, tr("Intensity"));
-    setAxisTitle(QwtPlot::yLeft, tr("Number of pixels"));
-
-//    m_pHistogram = new Histogram(m_histogramTitle,m_color);
-//    m_pHistogram->attach(this);
-
-//    m_pRedCurve = new QwtPlotCurve(tr("Red Channel"));
-//    m_pRedCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
-//    m_pRedCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine);
-//    m_pRedCurve->setPen(QPen(Qt::red));
-//    m_pRedCurve->attach(this);
-
-//    m_pGreenCurve = new QwtPlotCurve(tr("Green Channel"));
-//    m_pGreenCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
-//    m_pGreenCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine);
-//    m_pGreenCurve->setPen(QPen(Qt::green));
-//    m_pGreenCurve->attach(this);
-
-//    m_pBlueCurve = new QwtPlotCurve(tr("Blue Channel"));
-//    m_pBlueCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
-//    m_pBlueCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine);
-//    m_pBlueCurve->setPen(QPen(Qt::blue));
-//    m_pBlueCurve->attach(this);
-
-//    m_pGreyscaleCurve = new QwtPlotCurve(tr("Grey Channel"));
-//    m_pGreyscaleCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
-//    m_pGreyscaleCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine);
-//    m_pGreyscaleCurve->setPen(QPen("#2E2E2E"));
-//    m_pGreyscaleCurve->attach(this);
-
-//    connect(this, SIGNAL(legendChecked(QwtPlotItem *, bool)),
-//        SLOT(showItem(QwtPlotItem *, bool)));
-
-//    replot(); // creating the legend items
-
-//    QwtPlotItemList items = itemList(QwtPlotItem::Rtti_PlotHistogram);
-//    for ( int i = 0; i < items.size(); i++ )
-//    {
-//        if ( i == 0 )
-//        {
-//            QwtLegendItem *legendItem = (QwtLegendItem *)legend->find(items[i]);
-//            if ( legendItem )
-//                legendItem->setChecked(true);
-//            items[i]->setVisible(true);
-//        }
-//        else
-//            items[i]->setVisible(false);
-//    }
 
     setAutoReplot(true);
 }
@@ -192,10 +139,6 @@ void HistogramView::setupData(const QHash<int,double> &data){
         helperVal[counter++] = i.value();
     }
 
-//    m_pRedCurve->setSamples(helperVal2,helperVal,255);
-
-//    m_pHistogram->setValues(255, helperVal);
-
     Histogram *histogram = new Histogram(m_histogramTitle,m_color);
     histogram->attach(this);
     histogram->setValues(255, helperVal);
@@ -211,14 +154,12 @@ void HistogramView::setupData(const QHash<int,double> &data){
 void HistogramView::setHistogramTitle(const QString &t){
     m_histogramTitle = t;
 
-//    m_pHistogram->setTitle(t);
     this->setTitle(t);
 }
 
 void HistogramView::setColor(const QColor &c){
     m_color = c;
 
-//    m_pHistogram->setColor(c);
 }
 
 
@@ -228,104 +169,3 @@ void HistogramView::rescale(){
 //    setAxisScale(QwtPlot::yLeft,
 //        d_mapRect.top(), d_mapRect.bottom());
 }
-
-//void HistogramView::setupGreyScaleMode(){
-//    m_pBlueCurve->detach();
-//    m_pGreenCurve->detach();
-//    m_pRedCurve->detach();
-
-//    m_pGreyscaleCurve->attach(this);
-//}
-
-
-//void HistogramView::setupRGBMode(){
-//    m_pGreyscaleCurve->detach();
-
-//    m_pBlueCurve->attach(this);
-//    m_pGreenCurve->attach(this);
-//    m_pRedCurve->attach(this);
-//}
-
-
-//void HistogramView::setupGreyChannel(const QHash<int,double> &data){
-//    setAutoReplot(false);
-
-//    double helperVal[255];
-//    double helperVal2[255];
-//    QHash<int,double>::const_iterator i;
-//    int counter = 0;
-//    for(i = data.constBegin(); i != data.constEnd(); i++){
-//        helperVal2[counter] = i.key();
-//        helperVal[counter++] = i.value();
-//    }
-
-//    m_pGreyscaleCurve->setSamples(helperVal2,helperVal,255);
-
-//    setAutoReplot(true);
-//}
-
-//void HistogramView::setupRedChannel(const QHash<int,double> &data){
-
-//    setAutoReplot(false);
-
-//    double helperVal[255];
-//    double helperVal2[255];
-//    QHash<int,double>::const_iterator i;
-//    int counter = 0;
-//    for(i = data.constBegin(); i != data.constEnd(); i++){
-//        helperVal2[counter] = i.key();
-//        helperVal[counter++] = i.value();
-//    }
-
-//    m_pRedCurve->setSamples(helperVal2,helperVal,255);
-
-//    setAutoReplot(true);
-
-////    Histogram *histogramRedChannel = new Histogram("Red Channel", Qt::red);
-////    histogramRedChannel->setValues(255, helperVal);
-////    histogramRedChannel->attach(this);
-//}
-
-
-//void HistogramView::setupGreenChannel(const QHash<int,double> &data){
-//    setAutoReplot(false);
-
-//    double helperVal[255];
-//    double helperVal2[255];
-//    QHash<int,double>::const_iterator i;
-//    int counter = 0;
-//    for(i = data.constBegin(); i != data.constEnd(); i++){
-//        helperVal2[counter] = i.key();
-//        helperVal[counter++] = i.value();
-//    }
-
-//    m_pGreenCurve->setSamples(helperVal2,helperVal,255);
-
-//    setAutoReplot(true);
-
-////    Histogram *histogramRedChannel = new Histogram("Green Channel", Qt::green);
-////    histogramRedChannel->setValues(data.size(), helperVal);
-////    histogramRedChannel->attach(this);
-//}
-
-
-//void HistogramView::setupBlueChannel(const QHash<int,double> &data){
-//    setAutoReplot(false);
-
-//    double helperVal[255];
-//    double helperVal2[255];
-//    QHash<int,double>::const_iterator i;
-//    int counter = 0;
-//    for(i = data.constBegin(); i != data.constEnd(); i++){
-//        helperVal2[counter] = i.key();
-//        helperVal[counter++] = i.value();
-//    }
-
-//    m_pBlueCurve->setSamples(helperVal2,helperVal,255);
-
-//    setAutoReplot(true);
-
-////    Histogram *histogramRedChannel = new Histogram("Green Channel", Qt::blue);
-////    histogramRedChannel->setValues(data.size(), helperVal);
-////    histogramRedChannel->attach(this);
-//}
