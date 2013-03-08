@@ -312,8 +312,8 @@ void ItiOtbVectorQGLWidgetZoomable::mouseMoveEvent(QMouseEvent *event){
                     QPoint point(event->pos().x()- extent.GetIndex()[0],event->pos().y()- extent.GetIndex()[1]);
 
                     ImageRegionType::IndexType idx;
-                    idx[0] = point.x();
-                    idx[1] = point.y();
+                    idx[0] = point.x()  / m_IsotropicZoom;
+                    idx[1] = point.y() / m_IsotropicZoom;
 
                     // check whether the point is inside the image boundaries
                     if(!ItiOtbImageManager::isInsideTheImage(extent,point))

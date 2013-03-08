@@ -38,7 +38,7 @@ void QGLOtbImageViewerWidget::initialize(){
 
     //!
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
-    m_pItiOtbImageViewerPanel->setMinimumHeight(270);
+//    m_pItiOtbImageViewerPanel->setMinimumHeight(270);
 
     //!
     m_pItiOtbImageFactory = new ItiOtbVectorImageViewerFactory(this);
@@ -221,7 +221,7 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     delete m_pItiOtbImageViewerPanel;
 
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
-    m_pItiOtbImageViewerPanel->setMinimumHeight(100);
+//    m_pItiOtbImageViewerPanel->setMinimumHeight(100);
 
     //! Create again the viewer and the panel
     m_pItiOtbImageFactory->createViewer();
