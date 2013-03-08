@@ -75,6 +75,10 @@ void QGLOtbImageViewerWidget::initialize(){
     m_pvSplitter->addWidget(m_pItiOtbImageViewer);
     m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
     m_pvSplitter->setChildrenCollapsible(false);
+    m_pvSplitter->setStretchFactor(0,100);
+    QList<int> sizlist;
+    sizlist << 450 << 150;
+    m_pvSplitter->setSizes(sizlist);
 
     //! create a vertical box layout and add the splitter on it
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -266,6 +270,10 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     m_pvSplitter->addWidget(m_pItiOtbImageViewer);
     m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
     m_pvSplitter->setChildrenCollapsible(false);
+    m_pvSplitter->setStretchFactor(0,100);
+    QList<int> sizlist;
+    sizlist << 450 << 150;
+    m_pvSplitter->setSizes(sizlist);
 
     //!
     m_pItiOtbImageViewer->draw();
