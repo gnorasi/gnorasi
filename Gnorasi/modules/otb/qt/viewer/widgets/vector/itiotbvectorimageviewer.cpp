@@ -94,10 +94,10 @@ void ItiOtbVectorImageViewer::setupLayout(){
     m_pItiOtbVectorImageWidgetScroll      = new ItiOtbVectorQGLWidgetScrollable(this);
     m_pItiOtbVectorImageWidgetScroll->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     m_pItiOtbVectorImageWidgetFullView    = new ItiOtbVectorQGLWidgetFullView(this);
-//    m_pItiOtbVectorImageWidgetFullView->setMinimumSize(160,160);
+    m_pItiOtbVectorImageWidgetFullView->setMinimumSize(50,50);
     m_pItiOtbVectorImageWidgetScroll->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     m_pItiOtbVectorImageWidgetZoomable    = new ItiOtbVectorQGLWidgetZoomable(this);
-//    m_pItiOtbVectorImageWidgetZoomable->setMinimumSize(160,160);
+    m_pItiOtbVectorImageWidgetZoomable->setMinimumSize(50,50);
     m_pItiOtbVectorImageWidgetScroll->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
     //! TODO
@@ -105,8 +105,8 @@ void ItiOtbVectorImageViewer::setupLayout(){
     //! create the metadata widget, also a widget for showing pixel info metadata
     //!
     m_pItiViewerPixelInfoWidget         = new ItiViewerPixelInfoWidget(this);
-    m_pItiViewerPixelInfoWidget->setGeometry(0,0,160,160);
-    m_pItiViewerPixelInfoWidget->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+    m_pItiViewerPixelInfoWidget->setGeometry(0,0,160,140);
+    m_pItiViewerPixelInfoWidget->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
     //! setup the left layout
     m_pvBoxLayoutLeft                   = new QVBoxLayout();
