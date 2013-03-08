@@ -37,6 +37,8 @@ void ItiOtbImageViewerPanelHistogramTab::initialize(){
     m_pHistogramViewGreen->setColor(QColor(Qt::green));
     m_pHistogramViewRed->setColor(QColor(Qt::red));
 
+    m_pHistogramViewRed->setAxisTitle(QwtPlot::yLeft, tr("Number of pixels"));
+
     m_pHistogramViewGreyscale->setColor(QColor(Qt::darkGray));
 
     m_pHistogramViewGreyscale->setVisible(false);
