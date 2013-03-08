@@ -38,6 +38,7 @@ void QGLOtbImageViewerWidget::initialize(){
 
     //!
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
+    m_pItiOtbImageViewerPanel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 //    m_pItiOtbImageViewerPanel->setMinimumHeight(270);
 
     //!
@@ -165,6 +166,7 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
 
     //set the properties
     m_pItiOtbImageViewerPanel->setWindowFlags(Qt::Window);
+    m_pItiOtbImageViewerPanel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     m_pItiOtbImageViewerPanel->show();
 
     //! Create again the viewer and disassemble the sub widgets
@@ -221,6 +223,7 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     delete m_pItiOtbImageViewerPanel;
 
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
+    m_pItiOtbImageViewerPanel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 //    m_pItiOtbImageViewerPanel->setMinimumHeight(100);
 
     //! Create again the viewer and the panel
