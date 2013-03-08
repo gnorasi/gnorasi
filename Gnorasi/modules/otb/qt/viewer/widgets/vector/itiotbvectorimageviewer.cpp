@@ -94,10 +94,10 @@ void ItiOtbVectorImageViewer::setupLayout(){
     m_pItiOtbVectorImageWidgetScroll      = new ItiOtbVectorQGLWidgetScrollable(this);
     m_pItiOtbVectorImageWidgetScroll->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     m_pItiOtbVectorImageWidgetFullView    = new ItiOtbVectorQGLWidgetFullView(this);
-    m_pItiOtbVectorImageWidgetFullView->setMinimumSize(160,160);
+//    m_pItiOtbVectorImageWidgetFullView->setMinimumSize(160,160);
     m_pItiOtbVectorImageWidgetScroll->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     m_pItiOtbVectorImageWidgetZoomable    = new ItiOtbVectorQGLWidgetZoomable(this);
-    m_pItiOtbVectorImageWidgetZoomable->setMinimumSize(160,160);
+//    m_pItiOtbVectorImageWidgetZoomable->setMinimumSize(160,160);
     m_pItiOtbVectorImageWidgetScroll->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
     //! TODO
@@ -190,7 +190,7 @@ void ItiOtbVectorImageViewer::disassembleWidgets(){
     //! setup the zoom viewe
     m_pphelperWidgetScroll = new QWidget(this,Qt::Window);
     m_pphelperWidgetScroll->setWindowTitle(m_pLabelScrollableResolution->text());
-    m_pphelperWidgetScroll->setMinimumSize(QSize(150,150));
+//    m_pphelperWidgetScroll->setMinimumSize(QSize(150,150));
     m_pphelperWidgetScroll->setGeometry(QApplication::desktop()->width()/2 - 200,QApplication::desktop()->height()/2 - 200,200,200);
     QVBoxLayout *vboxLayout = new QVBoxLayout();
     vboxLayout->addWidget(m_pItiOtbVectorImageWidgetScroll);
@@ -198,7 +198,7 @@ void ItiOtbVectorImageViewer::disassembleWidgets(){
 
     //! setup the full viewe
     m_pphelperWidgetFullView = new QWidget(this,Qt::Window);
-    m_pphelperWidgetFullView->setMinimumSize(QSize(150,150));
+//    m_pphelperWidgetFullView->setMinimumSize(QSize(150,150));
     m_pphelperWidgetFullView->setWindowTitle(m_pLabelFullView->text());
     m_pphelperWidgetFullView->setGeometry(QApplication::desktop()->width()/2 - 160,QApplication::desktop()->height()/2 - 160,200,200);
     QVBoxLayout *vboxLayout1 = new QVBoxLayout();
@@ -208,7 +208,7 @@ void ItiOtbVectorImageViewer::disassembleWidgets(){
 
     //! setup the zoom viewe
     m_pphelperWidgetZoomView = new QWidget(this,Qt::Window);
-    m_pphelperWidgetZoomView->setMinimumSize(QSize(150,150));
+//    m_pphelperWidgetZoomView->setMinimumSize(QSize(150,150));
     m_pphelperWidgetZoomView->setWindowTitle(m_pLabelZoomView->text());
     m_pphelperWidgetZoomView->setGeometry(QApplication::desktop()->width()/2 - 120,QApplication::desktop()->height()/2 - 120,200,200);
     QVBoxLayout *vboxLayout2 = new QVBoxLayout();

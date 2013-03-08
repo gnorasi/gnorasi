@@ -29,7 +29,7 @@ void ItiViewerPixelInfoWidget::setupLayout(){
     font.setPointSize(8);
     m_pLabel->setFont(font);
     m_pLabel->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    m_pLabel->setMinimumHeight(140);
+    m_pLabel->setMinimumHeight(120);
     m_pLabel->setMinimumWidth(220);
 
     QVBoxLayout *layout = new QVBoxLayout();
