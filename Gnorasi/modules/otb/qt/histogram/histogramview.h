@@ -26,57 +26,71 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef ITIIMAGEVIEWERFACTORY_H
-#define ITIIMAGEVIEWERFACTORY_H
+#ifndef HISTOGRAMVIEW_H
+#define HISTOGRAMVIEW_H
 
-#include <QObject>
+#include <QWidget>
 
-namespace itiviewer{
+#include "qwt_plot.h"
 
-class ItiOtbImageViewer;
-class ItiOtbImageViewerPanel;
+class QwtPlotCurve;
+class QwtPlotItem;
+class QwtPlotHistogram;
+class Histogram;
+class QwtPlotPanner;
+class QwtPlotMagnifier;
 
-/*!
- * \brief The ITIImageViewerFactory class
- *
- * The ITIImageViewerFactory class is an abstract factory which is responsible for creating ITIImageViewer instances
- * Each subclass of this class must reimplement the create method.
- *
- */
-class ItiOtbImageViewerFactory : public QObject
+class HistogramView : public QwtPlot
 {
     Q_OBJECT
+    Q_PROPERTY(QColor color             READ color          WRITE setColor          NOTIFY colorChanged)
+    Q_PROPERTY(QString histogramTitle   READ histogramTitle WRITE setHistogramTitle NOTIFY histogramTitleChanged)
+
 public:
-    //! ctor
-    explicit ItiOtbImageViewerFactory(QObject *parent = 0) : QObject(parent) { }
+    explicit HistogramView(QWidget *parent = 0);
 
     /*!
-     * \brief createViewer
-     *  abstract method, every subclass must implement this class
-     * \param panel , the panel user to control the viewer, the panel item is used to create the appropriate commands
+     * \brief setupData
+     * \param data
      */
-    virtual void createViewer() = 0;
+    void setupData(const QHash<int,double> &data);
 
     /*!
-     * \brief setupPanelData, setup the viewer given a ItiOtbImageViewerPanel panel object
-     *  this actually setups the commands , actions and the connections functionality,
-     *  This function needs a valid manager to be set on the panel objects , in order to work properly
-     *  before calling this function call
-     *  itiOtmImageViewerPanel->setManager(validManager);
+     * \brief color
+     * \return
      */
-    virtual void setupPanelData(ItiOtbImageViewerPanel *) = 0;
+    QColor color() const { return m_color; }
+    void setColor(const QColor &c);
 
-    /*!
-     * \brief viewer
-     * \return the viewer
-     */
-    ItiOtbImageViewer* viewer() { return m_pItiOtbImageViewer; }
 
-protected:
-    ItiOtbImageViewer* m_pItiOtbImageViewer;
+    QString histogramTitle() const { return m_histogramTitle; }
+    void setHistogramTitle(const QString &t);
     
+
+signals:
+    void colorChanged();
+    void histogramTitleChanged();
+    
+public slots:
+
+public slots:
+    void showItem(QwtPlotItem *item, bool on);
+
+private:
+
+    void initialize();
+
+    void rescale();
+
+    QString m_histogramTitle;
+
+    QColor m_color;
+
+    QwtPlotPanner       *m_pPanner;
+    QwtPlotMagnifier    *m_pMagnifier;
+
+    const QRectF d_mapRect;
+
 };
 
-} // end of namespace iti
-
-#endif // ITIIMAGEVIEWERFACTORY_H
+#endif // HISTOGRAMVIEW_H

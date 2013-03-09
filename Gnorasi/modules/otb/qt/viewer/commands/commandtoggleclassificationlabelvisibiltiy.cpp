@@ -4,6 +4,9 @@
 #include "../utils/itiotbregion.h"
 #include "../utils/itiotblevel.h"
 
+#include "../widgets/vector/itiotbvectorimageviewer.h"
+#include "../utils/itiotbimagemanager.h"
+
 using namespace itiviewer;
 
 CommandToggleClassificationLabelVisibiltiy::CommandToggleClassificationLabelVisibiltiy(ItiOtbVectorImageViewer *viewer, QObject *parent) :
@@ -12,7 +15,9 @@ CommandToggleClassificationLabelVisibiltiy::CommandToggleClassificationLabelVisi
 }
 
 void CommandToggleClassificationLabelVisibiltiy::execute(){
-    QList<Level*> levelList = ITIOTBIMAGEMANAGER->levels();
+    ItiOtbImageManager *manager = m_pItiOtbVectorImageViewer->manager();
+
+    QList<Level*> levelList = manager->levels();
 
     QList<Level*>::const_iterator i;
     for(i = levelList.constBegin(); i != levelList.constEnd(); i++){

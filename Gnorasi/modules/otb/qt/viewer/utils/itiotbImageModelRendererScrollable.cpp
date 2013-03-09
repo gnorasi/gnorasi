@@ -71,10 +71,16 @@ void ImageModelRendererScrollable::paintGL( const RenderingContext& context )
     const_cast<AbstractImageModel*>(context.m_AbstractImageModel)
     );
 
-    ImageRegionType extent = context.m_extent;
     ImageRegionType bufferedRegion = context.m_ImageRegion;
+
+    // margin validation checks
+    if(m_first_displayed_col+m_nb_displayed_cols > bufferedRegion.GetSize()[0]
+            || m_first_displayed_row + m_nb_displayed_rows > bufferedRegion.GetSize()[1])
+        return;
+
     unsigned char* buffer = viModel->RasterizeRegion(bufferedRegion);
 
+    ImageRegionType extent = context.m_extent;
 
     VectorIndexType startPosition = extent.GetIndex();
     startPosition[0] = startPosition[0] < 0 ? 0 : startPosition[0];
@@ -96,6 +102,10 @@ void ImageModelRendererScrollable::paintGL( const RenderingContext& context )
        buffer);
 
     glFlush();
+
+    glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+    glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0);
+    glPixelStorei(GL_UNPACK_SKIP_ROWS,0);
 
     glShadeModel(GL_FLAT);
     glDisable(GL_CULL_FACE);

@@ -40,6 +40,7 @@ namespace itiviewer{
 //
 // Class declaration.
 class AbstractModel;
+class ItiOtbImageManager;
 
 /*!
  * \class ItiOtbImageViewer
@@ -67,7 +68,7 @@ public:
     //!
     //! ctor
     //!
-    explicit ItiOtbImageViewer(QWidget *parent = 0) : QWidget(parent) { }
+    explicit ItiOtbImageViewer(QWidget *parent = 0);
 
     /*!
      * \brief disassembleWidgets
@@ -104,6 +105,20 @@ public:
         return m_pAbstractImageModel;
     }
 
+    /*!
+     * \brief vmode
+     * \return
+     */
+    VMODE vmode() const                                                                 { return m_vmode; }
+
+
+    /*!
+     * \brief manager
+     * \return
+     */
+    ItiOtbImageManager* manager()                                                       { return m_pManager; }
+
+
 protected:
     /*!
      * \brief m_vmode , a variable holding the VMODE value
@@ -114,6 +129,11 @@ protected:
      * \brief m_pAbstractImageModel
      */
     AbstractModel*                                                                      m_pAbstractImageModel;
+
+    /*!
+     * \brief m_pManager
+     */
+    ItiOtbImageManager                                                                  *m_pManager;
 
 };
 
