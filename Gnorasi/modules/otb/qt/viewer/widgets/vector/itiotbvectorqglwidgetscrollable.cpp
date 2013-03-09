@@ -65,6 +65,7 @@ ItiOtbVectorQGLWidgetScrollable::ItiOtbVectorQGLWidgetScrollable(ItiOtbVectorIma
     m_pItiOtbVectorImageViewer(parent),
     m_currentLevelId(1),
     m_helperZoomCounter(1.0),
+    m_moving(false),
     QGLWidget(parent)
 {
     setAutoFillBackground(false);
@@ -291,7 +292,7 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
     QRectF rect = constructHelperRect();
 
     //!
-    Level *pLevel = ITIOTBIMAGEMANAGER->levelById(m_currentLevelId);
+    Level *pLevel = m_pItiOtbVectorImageViewer->manager()->levelById(m_currentLevelId);
     if(pLevel){
 
         ImageRegionType extent = m_pImageViewManipulator->extent();
@@ -329,9 +330,6 @@ void ItiOtbVectorQGLWidgetScrollable::draw(){
 
     m_pImageViewManipulator->SetImageLargestRegion(vModel->GetLargestPossibleRegion());
 
-    //! mouse tracking is disabled on startup, set it on
-    setMouseTracking(true);
-
     //! initialize the column and row related parameters
     initializeColumnRowParameters();
 }
@@ -348,16 +346,36 @@ void ItiOtbVectorQGLWidgetScrollable::updateObserver(ItiViewerObservable *observ
     //! get the current rect from the region
     QRect rregion = region->region();
 
+    // update the zoom value
+    m_helperZoomCounter = region->zoom();
+
     //! create helper values from the rect's parameters
     int w       = rregion.width();
     int h       = rregion.height();
     int x       = rregion.x() - m_pImageModelRenderer->firstDisplayColumn();
     int y       = m_pImageModelRenderer->firstDisplayRow() + height() - rregion.y() - h;
 
-    if(extent.GetIndex()[0] > 0)
+    if(extent.GetIndex()[0] > 0){
         x += extent.GetIndex()[0];
-    if(extent.GetIndex()[1] > 0)
+        if(x < extent.GetIndex()[0])
+            x = extent.GetIndex()[0];
+    }
+
+    if(extent.GetIndex()[1] > 0){
         y -= extent.GetIndex()[1];
+        if(y < extent.GetIndex()[1])
+            y = extent.GetIndex()[1];
+    }
+
+    if(w > extent.GetSize()[0]){
+        w = extent.GetSize()[0];
+        x = extent.GetIndex()[0];
+    }
+
+    if(h > extent.GetSize()[1]){
+        h = extent.GetSize()[1];
+        y = extent.GetIndex()[1];
+    }
 
     m_focusRegion.setX(x);
     m_focusRegion.setY(y);
@@ -386,6 +404,20 @@ void ItiOtbVectorQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
 
     //! setup translating functionality only on left button pressed mouse events
     if(event->button() == Qt::LeftButton){
+
+        ImageRegionType bregion = m_pImageViewManipulator->bufferRegion();
+
+        if(!bregion.GetSize()[0] || !bregion.GetSize()[1]){
+            QGLWidget::mousePressEvent(event);
+            return;
+        }
+
+        QCursor dragCursor;
+        dragCursor.setShape(Qt::ClosedHandCursor) ;
+        this->setCursor(dragCursor);
+
+        m_moving = true;
+
         //! create a helper point value
         QPoint previousCenter = m_focusRegion.center();
 
@@ -456,35 +488,148 @@ void ItiOtbVectorQGLWidgetScrollable::mousePressEvent(QMouseEvent *event){
 
 //!
 void ItiOtbVectorQGLWidgetScrollable::mouseMoveEvent(QMouseEvent *event){
-    //! get the current image port from the manager
-    Port *port = ITIOTBIMAGEMANAGER->port();
+    //! setup translating functionality only on left button pressed mouse events
+    if(m_moving){
 
-    //! check if the image port is valid and connected with other ports
-    if(port && port->isConnected()){
-        //! get the image from the port
-//        VectorImageType* imgType =  (VectorImageType*)ITIOTBIMAGEMANAGER->image();
-//        if(!imgType){
-//            QGLWidget::mouseMoveEvent(event);
-//            return;
-//        }
+        //! create a helper point value
+        QPoint previousCenter = m_focusRegion.center();
 
-//        //! get the position
-//        QPoint point = event->pos();
+        //! get the position of the event
+        QPoint point = event->pos();
 
-//        VectorIndexType index;
-//        index[0] = (point.x() - m_Extent.GetIndex()[0])/m_IsotropicZoom;
-//        index[1] = (point.y() - m_Extent.GetIndex()[1])/m_IsotropicZoom;
+        //! create a helper line object
+        QLine line(previousCenter,point);
 
-//        //! construct a text value related to pixel info data
-//        QString text = ItiOtbVectorImageViewer::constructTextFromImageIndex(index,imgType);
+        ImageRegionType extent = m_pImageViewManipulator->extent();
 
-//        //! emit the signal
-//        emit currentIndexChanged(text);
+        //! create helper values
+        int dx = 0, dy = 0;
+
+
+        if(line.dx() > 0 && extent.GetIndex()[0] < 0 && m_pImageModelRenderer->firstDisplayColumn() + m_focusRegion.x() + line.dx() + m_focusRegion.width() > extent.GetSize()[0] ){
+            dx = extent.GetSize()[0] - m_pImageModelRenderer->firstDisplayColumn() - m_focusRegion.width() - m_focusRegion.x();
+            if(extent.GetIndex()[0] > 0)
+                dx += extent.GetIndex()[0];
+        }
+        else if(line.dx() > 0 && extent.GetIndex()[0] >= 0 && m_focusRegion.x() + line.dx() + m_focusRegion.width() - extent.GetIndex()[0] > extent.GetSize()[0] ){
+            dx = extent.GetSize()[0] - m_focusRegion.width() - m_focusRegion.x() + extent.GetIndex()[0];
+        }
+        else if( line.dx() < 0 && (int)m_pImageModelRenderer->firstDisplayColumn() + m_focusRegion.x() + line.dx() < 0){
+            dx = -m_focusRegion.x();
+            if(extent.GetIndex()[0] > 0)
+                dx += extent.GetIndex()[0];
+        }
+        else if( line.dx() < 0 && extent.GetIndex()[0] > 0 && (int)m_pImageModelRenderer->firstDisplayColumn() + m_focusRegion.x() + line.dx() < extent.GetIndex()[0]){
+            dx = -m_focusRegion.x() + extent.GetIndex()[0];
+        }else
+            dx = line.dx();
+
+        //
+
+        if(line.dy() > 0 && extent.GetIndex()[1] < 0 && extent.GetSize()[1] - m_pImageModelRenderer->nbDisplayRows() - m_pImageModelRenderer->firstDisplayRow() + m_focusRegion.y() + m_focusRegion.height() + line.dy() > extent.GetSize()[1]){
+            dy = height() - m_focusRegion.y() - m_focusRegion.height();
+            if(extent.GetIndex()[1] > 0)
+                dy -= extent.GetIndex()[1];
+        }
+        else if(line.dy() > 0 && extent.GetIndex()[1] >= 0 && extent.GetSize()[1] -extent.GetIndex()[1] - m_pImageModelRenderer->nbDisplayRows() + m_focusRegion.y() + m_focusRegion.height() + line.dy() > extent.GetSize()[1] ){
+            dy = height() - m_focusRegion.y() - m_focusRegion.height() - extent.GetIndex()[1];
+        }
+        else if( line.dy() < 0 && extent.GetIndex()[1] < 0 && m_pImageModelRenderer->firstDisplayRow() + height() - m_focusRegion.y() - line.dy() > extent.GetSize()[1]){
+            dy = -m_focusRegion.y();
+            if(extent.GetIndex()[1] > 0)
+                dy -= extent.GetIndex()[1];
+        }
+        else if( line.dy() < 0 && extent.GetIndex()[1] >= 0 && m_focusRegion.y() + line.dy() < extent.GetIndex()[1]){
+            dy = -m_focusRegion.y() + extent.GetIndex()[1];
+        }
+        else
+            dy = line.dy();
+
+
+        //!translate the focus region
+        m_focusRegion.translate(dx,dy);
+
+        //
+        setupFocusRegionAndSendNotification();
+
+        //! update widget
+        update();
     }
 
-    //! call the parent's class method
+    // pixel info related functionality follows
+
+    if(hasMouseTracking()){
+
+        VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
+        if(vModel){
+
+            VectorImageType *img = m_pItiOtbVectorImageViewer->manager()->image();
+            if(img){
+
+                QString text;
+
+                ImageRegionType extent = m_pImageViewManipulator->extent();
+
+                // check if both x y extent values are negative then this means that the
+                // mouse position is definetely inside the image boundaries
+                if(extent.GetIndex()[0] < 0 && extent.GetIndex()[1] < 0){
+                    ImageRegionType::IndexType idx  = indexFromPoint(event->pos());
+
+                    VectorImageType::PixelType pixelValue = img->GetPixel(idx);
+
+                    RenderingFilterType* filter = vModel->filter();
+
+                    const std::string pixeldata = filter->GetRenderingFunction()->Describe(pixelValue);
+
+                    QString pdt = QString::fromStdString(pixeldata);
+
+        //            qDebug() << "idx[0] : " << idx[0] << "\t" << "idx[1] : " << idx[1];
+
+                    text = m_pItiOtbVectorImageViewer->manager()->constructInfoByIndex(idx,pdt);
+                }else{
+                    QPoint point(event->pos().x()- extent.GetIndex()[0],event->pos().y()- extent.GetIndex()[1]);
+
+                    ImageRegionType::IndexType idx;
+                    idx[0] = point.x();
+                    idx[1] = point.y();
+
+                    // check whether the point is inside the image boundaries
+                    if(!ItiOtbImageManager::isInsideTheImage(extent,point))
+                        text = m_pItiOtbVectorImageViewer->manager()->constructInfoByIndexAlt(idx);
+                    else{
+                        VectorImageType::PixelType pixelValue = img->GetPixel(idx);
+
+                        RenderingFilterType* filter = vModel->filter();
+
+                        const std::string pixeldata = filter->GetRenderingFunction()->Describe(pixelValue);
+
+                        QString pdt = QString::fromStdString(pixeldata);
+
+                        text = m_pItiOtbVectorImageViewer->manager()->constructInfoByIndex(idx,pdt);
+                    }
+                }
+
+                // emit the signal containing the text of the pixel info
+                emit currentIndexChanged(text);
+            }
+        }
+    }
+
+    // now call the parent widget class mousemoveevent
     QGLWidget::mouseMoveEvent(event);
 }
+
+
+void ItiOtbVectorQGLWidgetScrollable::mouseReleaseEvent(QMouseEvent *event){
+    m_moving = false;
+
+    QCursor dragCursor;
+    dragCursor.setShape(Qt::ArrowCursor) ;
+    this->setCursor(dragCursor);
+
+    QGLWidget::mouseReleaseEvent(event);
+}
+
 
 /*!
  * \brief ItiOtbVectorQGLWidgetScrollable::translate
@@ -527,8 +672,9 @@ void ItiOtbVectorQGLWidgetScrollable::translate(int dx, int dy){
     m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
 
     //! update painting
-//    updateGL();
     update();
+
+    setupFocusRegionAndSendNotification();
 }
 
 
@@ -582,6 +728,20 @@ void ItiOtbVectorQGLWidgetScrollable::zoomOut(){
 
     m_focusRegion.translate(qRound((prevWidth - (double)m_focusRegion.width())/2.0),qRound((prevHeight - (double)m_focusRegion.height())/2.0));
 
+    ImageRegionType extent = m_pImageViewManipulator->extent();
+
+
+    // applying margin checks
+    if(m_focusRegion.x() < extent.GetIndex()[0])
+        m_focusRegion.translate(extent.GetIndex()[0]-m_focusRegion.x(),0);
+    else if(m_focusRegion.x() + m_focusRegion.width() > extent.GetSize()[0] + extent.GetIndex()[0])
+        m_focusRegion.translate(extent.GetSize()[0]+extent.GetIndex()[0]-m_focusRegion.x() - m_focusRegion.width(),0);
+
+    if(m_focusRegion.y() < extent.GetIndex()[1])
+        m_focusRegion.translate(0,extent.GetIndex()[1]-m_focusRegion.y());
+    else if( m_focusRegion.y() + m_focusRegion.height() > extent.GetSize()[1]+ extent.GetIndex()[1])
+        m_focusRegion.translate(0,extent.GetSize()[1]+extent.GetIndex()[1]-m_focusRegion.y()-m_focusRegion.height());
+
     update();
 
     setupFocusRegionAndSendNotification();
@@ -604,6 +764,40 @@ QRectF ItiOtbVectorQGLWidgetScrollable::constructHelperRect() const {
 
 }
 
+
+ImageRegionType::IndexType ItiOtbVectorQGLWidgetScrollable::indexFromPoint(const QPoint &p){
+    ImageRegionType::IndexType idx;
+
+    ImageRegionType region = m_pImageViewManipulator->bufferRegion();
+
+    unsigned int f_d_c      = m_pImageModelRenderer->firstDisplayColumn();
+    unsigned int f_d_r      = m_pImageModelRenderer->firstDisplayRow();
+    unsigned int nb_d_rs    = m_pImageModelRenderer->nbDisplayRows();
+
+    idx[0] = f_d_c + p.x();
+    idx[1] = region.GetSize()[1] - nb_d_rs - f_d_r + p.y();
+
+    if(idx[0] < 0)
+        idx[0] = 0;
+
+    if(idx[0] > region.GetSize()[0]-1)
+        idx[0]  = region.GetSize()[0]-1;
+
+    if(idx[1] < 0)
+        idx[1] = 0;
+
+    if(idx[1] > region.GetSize()[1]-1)
+        idx[1] = region.GetSize()[1]-1;
+
+
+    return idx;
+}
+
+
+void ItiOtbVectorQGLWidgetScrollable::enableMouseTracking(){
+    //! mouse tracking is disabled on startup, set it on
+    setMouseTracking(true);
+}
 
 //!
 ItiOtbVectorQGLWidgetScrollable::~ItiOtbVectorQGLWidgetScrollable(){

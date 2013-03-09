@@ -140,6 +140,7 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/jpeg12_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/libtiff_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/libcurl_imp.lib
+                ${ORFEOTOOLBOX_LIB_DIR}/debug/qwtd.lib
     )
 
 	# link against OrfeoToolBox
@@ -218,6 +219,7 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/release/jpeg12_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/libtiff_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/libcurl_imp.lib
+                ${ORFEOTOOLBOX_LIB_DIR}/release/qwt.lib
     )
 
 ENDIF(UNIX)
@@ -272,6 +274,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/otbvectorimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
+#    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
 
 )
 
@@ -319,6 +322,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Radiometry/otbvectorimagebandmathprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.h
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
+#    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
 )
 
 #
@@ -340,11 +344,11 @@ IF(UNIX)
     LIST(APPEND MOD_CORE_HEADERS ${MOD_DIR}/processors/ImageIO/otbimagetovectorimagecastprocessor.h)
     LIST(APPEND MOD_CORE_HEADERS ${MOD_DIR}/processors/Visualization/otbsimpleviewerprocessor.h)
 ELSE(UNIX)
-    # LIST(APPEND MOD_CORE_SOURCES ${MOD_DIR}/processors/ImageIO/otbvectorimagewriterprocessor.cpp)
+     LIST(APPEND MOD_CORE_SOURCES ${MOD_DIR}/processors/ImageIO/otbvectorimagewriterprocessor.cpp)
     LIST(APPEND MOD_CORE_SOURCES ${MOD_DIR}/processors/ImageIO/otbimagetovectorimagecastprocessor.cpp)
     # LIST(APPEND MOD_CORE_SOURCES ${MOD_DIR}/processors/Visualization/otbsimpleviewerprocessor.cpp)
 
-    # LIST(APPEND MOD_CORE_HEADERS ${MOD_DIR}/processors/ImageIO/otbvectorimagewriterprocessor.h)
+     LIST(APPEND MOD_CORE_HEADERS ${MOD_DIR}/processors/ImageIO/otbvectorimagewriterprocessor.h)
     LIST(APPEND MOD_CORE_HEADERS ${MOD_DIR}/processors/ImageIO/otbimagetovectorimagecastprocessor.h)
     # LIST(APPEND MOD_CORE_HEADERS ${MOD_DIR}/processors/Visualization/otbsimpleviewerprocessor.h)
 ENDIF(UNIX)
@@ -408,6 +412,10 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/utils/itiotblabelmapparser.cpp
 #    ${MOD_DIR}/qt/viewer/utils/itiotblabelimageparser.cpp
     ${MOD_DIR}/qt/viewer/commands/commandtoggleclassificationlabelvisibiltiy.cpp
+#    ${MOD_DIR}/qt/orthorectify/otborthorectifyutility.cpp
+#    ${MOD_DIR}/qt/widgets/qotborthorectifywidget.cpp
+    ${MOD_DIR}/qt/histogram/histogramgenerator.cpp
+    ${MOD_DIR}/qt/histogram/histogramview.cpp
 )
 ################################################################################
 # Qt headers
@@ -462,7 +470,11 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/utils/itiotbregion.h
     ${MOD_DIR}/qt/viewer/utils/itiotblabelmapparser.h
     ${MOD_DIR}/qt/viewer/commands/commandtoggleclassificationlabelvisibiltiy.h
+    ${MOD_DIR}/qt/histogram/histogramgenerator.h
+    ${MOD_DIR}/qt/histogram/histogramview.h
 #    ${MOD_DIR}/qt/viewer/utils/itiotblabelimageparser.h
+#    ${MOD_DIR}/qt/orthorectify/otborthorectifyutility.h
+#    ${MOD_DIR}/qt/widgets/qotborthorectifywidget.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

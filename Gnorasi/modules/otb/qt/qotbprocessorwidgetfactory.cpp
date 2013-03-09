@@ -37,9 +37,8 @@
 
 #include "widgets/qotbimageviewerwidget.h"
 #include "../processors/Visualization/otbimageviewerprocessor.h"
-
-
-
+//#include "widgets/qotborthorectifywidget.h"
+//#include "../processors/Geometry/otborthorectifyprocessor.h"
 
 namespace voreen {
 
@@ -53,6 +52,9 @@ ProcessorWidget* QOTBProcessorWidgetFactory::createWidget(Processor* processor) 
 
     if(dynamic_cast<OTBImageViewerProcessor*>(processor))
         return new QGLOtbImageViewerWidget(parent, static_cast<OTBImageViewerProcessor*>(processor));
+
+//    if(dynamic_cast<OTBOrthoRectifyProcessor*>(processor))
+//        return new QOtbOrthoRectifyWidget(parent,static_cast<OTBOrthoRectifyProcessor*>(processor));
 
     return 0;
 }

@@ -14,38 +14,18 @@
 
 #include "../../../ports/otblabelimageport.h"
 
-//#include "../../../ports/otbimageport.h"
-//#include "../../../ports/otbvectorimageport.h"
+#include "../models/itiotbVectorImageModel.h"
 
 using namespace itiviewer;
 using namespace otb;
 using namespace voreen;
 
-//! initialize the unique instance to null
-ItiOtbImageManager* ItiOtbImageManager::m_pInstance = NULL;
 
 //!
-ItiOtbImageManager::ItiOtbImageManager()
+ItiOtbImageManager::ItiOtbImageManager(QObject *parent)
+    : QObject(parent)
 {
     filter = ImageToVectorImageCastFilterType::New();
-}
-
-//!
-ItiOtbImageManager* ItiOtbImageManager::instance(){
-    if(m_pInstance == NULL){
-        m_pInstance = new ItiOtbImageManager();
-    }
-
-    return m_pInstance;
-}
-
-//!
-void ItiOtbImageManager::deleteInstance(){
-    if(m_pInstance != NULL){
-        delete m_pInstance;
-
-        m_pInstance = NULL;
-    }
 }
 
 
@@ -87,12 +67,42 @@ void ItiOtbImageManager::setupImage(){
     }
 }
 
+bool ItiOtbImageManager::isPortEmpty(Port *port){
+    //! type case checking
+    if(dynamic_cast<OTBImagePort*>(port)){ // set here the raster image port
+        //! cast it ot OTBImagePort
+        OTBImagePort *pOtbImagePort = dynamic_cast<OTBImagePort*>(port);
+
+        RasterImageType *rImgType = (RasterImageType*)pOtbImagePort->getData();
+        if(!rImgType || rImgType->GetLargestPossibleRegion().GetSize()[0] == 0 || rImgType->GetLargestPossibleRegion().GetSize()[1] == 0 )
+            return true;
+
+    }
+    else if(dynamic_cast<OTBVectorImagePort*>(port)){ // set here the vector image factory
+        OTBVectorImagePort *pOtbVectorImagePort = dynamic_cast<OTBVectorImagePort*>(port);
+
+        //! get the image
+        VectorImageType *vImgType = (VectorImageType*)pOtbVectorImagePort->getData();
+        if(!vImgType || vImgType->GetLargestPossibleRegion().GetSize()[0] == 0 || vImgType->GetLargestPossibleRegion().GetSize()[1] == 0)
+            return true;
+    }
+
+    return false;
+}
+
 //!
-QString ItiOtbImageManager::imageFile() {
+QString ItiOtbImageManager::imageFile(voreen::Port *port) {
 
     QString path;
 
-    std::vector<voreen::Processor*> list = nextConnectedProcessor(m_pPort);
+    std::vector<voreen::Processor*> list;
+
+    if(port){
+        list = nextConnectedProcessor(port);
+    }else{
+        list = nextConnectedProcessor(m_pPort);
+    }
+
     if(list.size()){
         Processor *proc = list.at(0);
 
@@ -195,6 +205,7 @@ void ItiOtbImageManager::createRegions(){
                 if(mapT){
 
                     LabelMapParser *parser = new LabelMapParser(this);
+                    parser->setManager(this);
 
                     Level *pLevel = new Level(this);
 
@@ -272,6 +283,52 @@ void ItiOtbImageManager::setupColors(){
 
         qDebug() << "Number of regions created : " << rList.size();
     }
+}
+
+
+QString ItiOtbImageManager::constructInfoByIndex(ImageRegionType::IndexType idx, const QString &pixelInfo){
+    QString text;
+
+    ImageRegionType region = m_pImgType->GetLargestPossibleRegion();
+
+    const VectorImageType::SpacingType sp = m_pImgType->GetSpacing();
+
+    VectorImageType::PointType pt;
+
+    m_pImgType->TransformIndexToPhysicalPoint(idx,pt);
+
+    text += QString("Index :[%1, %2]").arg(QString::number(idx[0])).arg(QString::number(idx[1]));
+    text += "\n";
+    text += QString("Image Size : [%1, %2]").arg(QString::number(region.GetSize()[0])).arg(QString::number(region.GetSize()[1]));
+    text += "\n";
+    text += pixelInfo;
+    text += QString("Ground spacing in m: (%1, %2)").arg(QString::number(sp[0])).arg(QString::number(sp[1]));
+    text += "\n";
+    text += QString("Lon: %1, Lat : %2").arg(QString::number(pt[0],'f',2)).arg(QString::number(pt[1],'f',2));
+
+    return text;
+}
+
+QString ItiOtbImageManager::constructInfoByIndexAlt(ImageRegionType::IndexType idx){
+    QString text;
+
+    ImageRegionType region = m_pImgType->GetLargestPossibleRegion();
+
+    const VectorImageType::SpacingType sp = m_pImgType->GetSpacing();
+
+    VectorImageType::PointType pt;
+
+    m_pImgType->TransformIndexToPhysicalPoint(idx,pt);
+
+    text += QString("Index :[%1, %2]").arg(QString::number(idx[0])).arg(QString::number(idx[1]));
+    text += "\n";
+    text += QString("Image Size : [%1, %2]").arg(QString::number(region.GetSize()[0])).arg(QString::number(region.GetSize()[1]));
+    text += "\n";
+    text += QString("Ground spacing in m: (%1, %2)").arg(QString::number(sp[0])).arg(QString::number(sp[1]));
+    text += "\n";
+    text += QString("Lon: %1, Lat : %2").arg(QString::number(pt[0],'f',2)).arg(QString::number(pt[1],'f',2));
+
+    return text;
 }
 
 //!

@@ -25,10 +25,12 @@ ItiOtbVectorImageViewerFactory::ItiOtbVectorImageViewerFactory(QObject *parent)
 }
 
 //!
-void ItiOtbVectorImageViewerFactory::createViewer(ItiOtbImageViewerPanel *panel){
+void ItiOtbVectorImageViewerFactory::createViewer(){
     m_pItiOtbImageViewer = new ItiOtbVectorImageViewer();
+}
 
-    VectorImageModel *model = new VectorImageModel(this);
+void ItiOtbVectorImageViewerFactory::setupPanelData(ItiOtbImageViewerPanel *panel){
+    VectorImageModel *model = new VectorImageModel(m_pItiOtbImageViewer->manager(),this);
 
     m_pItiOtbImageViewer->setModel(model);
 

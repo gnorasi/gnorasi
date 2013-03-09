@@ -14,10 +14,12 @@
 
 using namespace itiviewer;
 
-ItiOtbImageViewerPanelSetupTab::ItiOtbImageViewerPanelSetupTab(ItiOtbImageViewerPanel *panel, QWidget *parent) :
-    m_pItiOtbImageViewerPanel(panel), QWidget(parent)
+ItiOtbImageViewerPanelSetupTab::ItiOtbImageViewerPanelSetupTab(ItiOtbImageViewerPanel *panel) :
+    m_pItiOtbImageViewerPanel(panel)
 {
     setWindowTitle(tr("Setup"));
+
+    m_isGreyscale = false;
 
     initialize();
 }
@@ -96,6 +98,9 @@ void ItiOtbImageViewerPanelSetupTab::setupColorCompositionGroupBox(){
     connect(m_pRadioButtonGrayscaleMode,SIGNAL(clicked()),this,SLOT(onRadioButtonColorCompositionChanged()));
     connect(m_pRadioButtonRGBCompositionMode,SIGNAL(clicked()),this,SLOT(onRadioButtonColorCompositionChanged()));
     connect(m_pButtonApplyColorComposition,SIGNAL(clicked()),this,SLOT(onColorCompositionApplyButtonClicked()));
+    connect(m_pSpinBoxRedChannel,SIGNAL(valueChanged(int)),this,SLOT(onChannelValueChanged(int)));
+    connect(m_pSpinBoxGreenChannel,SIGNAL(valueChanged(int)),this,SLOT(onChannelValueChanged(int)));
+    connect(m_pSpinBoxBlueChannel,SIGNAL(valueChanged(int)),this,SLOT(onChannelValueChanged(int)));
 }
 
 //!
@@ -182,6 +187,8 @@ void ItiOtbImageViewerPanelSetupTab::setupClassficationGroupBox(){
 
     m_pGroupBoxClassification->setLayout(clVBoxLayout);
 
+    m_pGroupBoxClassification->setVisible(false);
+
     connect(m_pClassificationModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(onClassLabelCheckstateToggled(QStandardItem*)));
 }
 
@@ -202,23 +209,7 @@ void ItiOtbImageViewerPanelSetupTab::initialize(){
 }
 
 //!
-void ItiOtbImageViewerPanelSetupTab::onSpinBoxRedChannelChanged(int val){
-    Q_UNUSED(val)
-
-    //!
-    emit rgbColorCompositionChannelsChanged(m_pSpinBoxRedChannel->value(),m_pSpinBoxGreenChannel->value(),m_pSpinBoxBlueChannel->value());
-}
-
-//!
-void ItiOtbImageViewerPanelSetupTab::onSpinBoxGreenChannelChanged(int val){
-    Q_UNUSED(val)
-
-    //!
-    emit rgbColorCompositionChannelsChanged(m_pSpinBoxRedChannel->value(),m_pSpinBoxGreenChannel->value(),m_pSpinBoxBlueChannel->value());
-}
-
-//!
-void ItiOtbImageViewerPanelSetupTab::onSpinBoxBlueChannelChanged(int val){
+void ItiOtbImageViewerPanelSetupTab::onChannelValueChanged(int val){
     Q_UNUSED(val)
 
     //!
@@ -306,13 +297,56 @@ void ItiOtbImageViewerPanelSetupTab::setupChannels(){
 
     QList<int> list = provider->channels();
 
-    if(list.size()<3)
+    if(list.isEmpty())
         return;
+
+    m_pSpinBoxGreyscaleChannel->setMinimum(1);
+    m_pSpinBoxRedChannel->setMinimum(1);
+    m_pSpinBoxGreenChannel->setMinimum(1);
+    m_pSpinBoxBlueChannel->setMinimum(1);
+    m_pSpinBoxRedChannel->setMaximum(list.size());
+    m_pSpinBoxGreenChannel->setMaximum(list.size());
+    m_pSpinBoxBlueChannel->setMaximum(list.size());
+    m_pSpinBoxGreyscaleChannel->setMaximum(list.size());
 
     m_pSpinBoxGreyscaleChannel->setValue(list.at(0)+1);
     m_pSpinBoxRedChannel->setValue(list.at(0)+1);
-    m_pSpinBoxGreenChannel->setValue(list.at(1)+1);
-    m_pSpinBoxBlueChannel->setValue(list.at(2)+1);
+
+    if(list.size()>1){
+        m_pSpinBoxGreenChannel->setValue(list.at(1)+1);
+
+        if(list.size() > 2)
+            m_pSpinBoxBlueChannel->setValue(list.at(2)+1);
+        else
+            m_pSpinBoxBlueChannel->setValue(list.at(1)+1);
+
+        if(m_pRadioButtonGrayscaleMode->isChecked())
+            m_pRadioButtonGrayscaleMode->toggle();
+
+        if(!m_pRadioButtonRGBCompositionMode->isChecked())
+            m_pRadioButtonRGBCompositionMode->toggle();
+
+        m_pButtonApplyColorComposition->setEnabled(true);
+
+        m_isGreyscale = false;
+    }
+    else{
+        m_pSpinBoxGreenChannel->setValue(list.at(0)+1);
+        m_pSpinBoxBlueChannel->setValue(list.at(0)+1);
+
+        if(!m_pRadioButtonGrayscaleMode->isChecked())
+            m_pRadioButtonGrayscaleMode->toggle();
+
+        if(m_pRadioButtonRGBCompositionMode->isChecked())
+            m_pRadioButtonRGBCompositionMode->toggle();
+
+        m_pButtonApplyColorComposition->setEnabled(false);
+
+        m_isGreyscale = true;
+    }
+
+
+    onRadioButtonColorCompositionChanged();
 
     setupClassificationData();
 }
@@ -342,8 +376,11 @@ void ItiOtbImageViewerPanelSetupTab::onContrastEnhancementApplyButtonClicked(){
 void ItiOtbImageViewerPanelSetupTab::onColorCompositionApplyButtonClicked(){
 
     if(m_pRadioButtonGrayscaleMode->isChecked()) {
+        m_isGreyscale = true;
         emit applyColorCompositionGreyscale();
     }else {
+        m_isGreyscale = false;
+
         emit applyColorCompositionRGB();
     }
 
@@ -352,9 +389,9 @@ void ItiOtbImageViewerPanelSetupTab::onColorCompositionApplyButtonClicked(){
 void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
     m_pClassificationModel->clear();
 
-    QHash<int ,QColor> cdata = ITIOTBIMAGEMANAGER->classificationColorsIds();
+    QHash<int ,QColor> cdata = m_pItiOtbImageViewerPanel->manager()->classificationColorsIds();
 
-    QList<Level*> rlist = ITIOTBIMAGEMANAGER->levels();
+    QList<Level*> rlist = m_pItiOtbImageViewerPanel->manager()->levels();
     if(rlist.isEmpty())
         return;
 
@@ -365,7 +402,7 @@ void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
     pRootItem->setData(Qt::Checked,Qt::CheckStateRole);
     m_pClassificationModel->setItem(m_pClassificationModel->rowCount(),pRootItem);
 
-    QHash<int,QString> data = ITIOTBIMAGEMANAGER->classficationNamesIds();
+    QHash<int,QString> data = m_pItiOtbImageViewerPanel->manager()->classficationNamesIds();
     QHash<int,QString>::const_iterator i;
     for(i = data.constBegin(); i != data.constEnd(); i++){
         QString name = i.value();
@@ -387,7 +424,7 @@ void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
     QString text;
     text += tr("<h3>Classification statistics</h3><br/>");
 
-    QList<Level*> levellist = ITIOTBIMAGEMANAGER->levels();
+    QList<Level*> levellist = m_pItiOtbImageViewerPanel->manager()->levels();
     QList<Level*>::const_iterator j;
     for(j = levellist.constBegin(); j != levellist.constEnd();j++){
         Level *pLevel  = *j;

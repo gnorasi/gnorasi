@@ -45,51 +45,42 @@ CommandContrastEnhancementGaussian::CommandContrastEnhancementGaussian(ItiOtbVec
 
 void CommandContrastEnhancementGaussian::execute(){
 
-    VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
-    if(!vModel || !vModel->buffer())
-        return;
+//    VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
+//    if(!vModel || !vModel->buffer())
+//        return;
 
-    RenderingFunctionType::Pointer renderer;
-    renderer = GaussianRenderingFunctionType::New();
+//    RenderingFunctionType::Pointer renderer;
+//    renderer = GaussianRenderingFunctionType::New();
 
-    if(vModel){
-        std::vector<unsigned int> l = vModel->GetChannelList();
-        renderer->SetChannelList(l);
-        renderer->SetAutoMinMax(false);
+//    if(vModel){
+//        std::vector<unsigned int> l = vModel->GetChannelList();
+//        renderer->SetChannelList(l);
+//        renderer->SetAutoMinMax(false);
 
-        ReaderType::Pointer reader = ReaderType::New();
-        reader->SetFileName(vModel->lastPath().toLatin1().data());
-        reader->Update();
+//        VectorImageType *vimg = ITIOTBIMAGEMANAGER->image();
 
-        SampleListType::Pointer sampleList = SampleListType::New();
-        sampleList->SetMeasurementVectorSize(reader->GetOutput()->GetVectorLength());
+//        SampleListType::Pointer sampleList = SampleListType::New();
+//        sampleList->SetMeasurementVectorSize(vimg->GetVectorLength());
 
-        itk::ImageRegionIterator<VectorImageType> imgIter (reader->GetOutput(),
-                                                   reader->GetOutput()->
-                                                   GetBufferedRegion());
-        imgIter.GoToBegin();
+//        itk::ImageRegionIterator<VectorImageType> imgIter (vimg,vimg->GetBufferedRegion());
+//        imgIter.GoToBegin();
 
-        itk::ImageRegionIterator<VectorImageType> imgIterEnd (reader->GetOutput(),
-                                                      reader->GetOutput()->
-                                                      GetBufferedRegion());
+//        do
+//        {
+//            sampleList->PushBack(imgIter.Get());
+//            ++imgIter;
+//        }
+//        while (!imgIter.IsAtEnd());
 
-        do
-        {
-            sampleList->PushBack(imgIter.Get());
-            ++imgIter;
-        }
-        while (imgIter != imgIterEnd);
+//        renderer->SetListSample(sampleList);
 
-        renderer->SetListSample(sampleList);
+//        vModel->setRenderingFunction(renderer);
 
-        vModel->setRenderingFunction(renderer);
+//        vModel->resetData();
 
-        vModel->resetData();
+//        const DefaultImageType *img = vModel->GetOutput(0);
 
-        const DefaultImageType *img = vModel->GetOutput(0);
+//        renderer->Initialize(img->GetMetaDataDictionary());
+//    }
 
-        renderer->Initialize(img->GetMetaDataDictionary());
-    }
-
-//    m_pItiOtbVectorImageViewer->draw();
 }

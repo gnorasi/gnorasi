@@ -58,6 +58,7 @@ ItiOtbVectorQGLWidgetFullView::ItiOtbVectorQGLWidgetFullView(ItiOtbVectorImageVi
     m_pImageViewManipulator( NULL ),
     m_pImageModelRenderer( NULL ),
     m_pItiOtbVectorImageViewer(parent),
+    m_moving(false),
     QGLWidget(parent)
 {
     setAutoFillBackground(false);
@@ -82,9 +83,6 @@ void ItiOtbVectorQGLWidgetFullView::resizeGL(int w, int h)
 }
 
 void ItiOtbVectorQGLWidgetFullView::setupViewport(int w, int h){
-//    if(!m_OpenGlBuffer)
-//        return;
-
 
     ImageRegionType bufferedRegion = m_pImageViewManipulator->bufferRegion();
 
@@ -124,30 +122,25 @@ void ItiOtbVectorQGLWidgetFullView::paintEvent(QPaintEvent *event){
 
     qglClearColor(Qt::black);
 
-    //
-    // TEST
-
     // Set the new rendering context to be known in the ModelRendere
     const AbstractImageModel* aiModel=  qobject_cast<AbstractImageModel*>(m_pItiOtbVectorImageViewer->model());
 
     // setup the rendering context
     if (aiModel)
     {
+        setupViewport(width(), height());
+
         const ImageRegionType extent(m_pImageViewManipulator->extent());
 
         // Get the region to draw from the ImageViewManipulator navigation
         // context
-        const ImageRegionType region(
-          m_pImageViewManipulator->bufferRegion());
+        const ImageRegionType region(m_pImageViewManipulator->bufferRegion());
 
         ImageModelRendererFullView::RenderingContext context(aiModel, region, extent, this->width(), this->height(), m_IsotropicZoom);
 
         // use the model renderer to paint the requested region of the image
         m_pImageModelRenderer->paintGL( context );
     }
-
-    //
-    // END OF TEST
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
@@ -168,12 +161,14 @@ void ItiOtbVectorQGLWidgetFullView::draw(){
     if(!vModel)
         return;
 
+    //
     m_pImageViewManipulator->InitializeContext(width(),height());
 
+    //
     m_pImageViewManipulator->SetImageLargestRegion(vModel->GetLargestPossibleRegion());
 
-    //!
-    setMouseTracking(true);
+    //! initialize the column and row related parameters
+    setupViewport(width(),height());
 }
 
 //!
@@ -187,17 +182,9 @@ void ItiOtbVectorQGLWidgetFullView::updateObserver(ItiViewerObservable *observab
     ImageRegionType extent = m_pImageViewManipulator->extent();
 
     QRect rect = region->region();
-    //! check if the x coordinate of the given rect is greater than zero
-//    if(rect.x()>=0)
-//        m_visibleRegion.setX(extent.GetIndex()[0]);
-//    else //! if not , this means that the scrollable view has been resized to a value smaller than the original size of the image
-        m_visibleRegion.setX(extent.GetIndex()[0] + (qAbs(rect.x()*m_IsotropicZoom)));
 
-    //! same type of checking as the checking on the previous if statement
-//    if(rect.y() >= 0)
-//        m_visibleRegion.setY(extent.GetIndex()[1]);
-//    else
-        m_visibleRegion.setY(extent.GetIndex()[1]+(qAbs(rect.y()*m_IsotropicZoom) ));
+    m_visibleRegion.setX(extent.GetIndex()[0] + (qAbs(rect.x()*m_IsotropicZoom)));
+    m_visibleRegion.setY(extent.GetIndex()[1]+(qAbs(rect.y()*m_IsotropicZoom) ));
 
     //! calculate the new width and height value;
     int nw = m_IsotropicZoom * rect.width();
@@ -219,25 +206,56 @@ void ItiOtbVectorQGLWidgetFullView::updateObserver(ItiViewerObservable *observab
 //!
 void ItiOtbVectorQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
 
-    OTBVectorImagePort *imgPort = (OTBVectorImagePort*)ITIOTBIMAGEMANAGER->port();
-    if(imgPort && imgPort->isConnected()){
-//        VectorImageType* imgType =  (VectorImageType*)imgPort->getData();
-//        if(!imgType){
-//            QGLWidget::mouseMoveEvent(event);
-//            return;
-//        }
+    if(m_moving){
+        //! create a helper point value
+        QPoint previousCenter = m_visibleRegion.center();
 
-//        //! get the position
-//        QPoint point = event->pos();
+        //! get the position of the event
+        QPoint point = event->pos();
 
-//        VectorIndexType index;
-//        index[0] = (point.x() - m_Extent.GetIndex()[0])/m_IsotropicZoom;
-//        index[1] = (point.y() - m_Extent.GetIndex()[1])/m_IsotropicZoom;
-
-//        QString text = ItiOtbVectorImageViewer::constructTextFromImageIndex(index,imgType);
-
-//        emit currentIndexChanged(text);
+        translate(previousCenter,point);
     }
+
+    // pixel info related functionality follows
+
+    if(hasMouseTracking()){
+        VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
+        if(vModel){
+            ImageRegionType extent = m_pImageViewManipulator->extent();
+
+            QPoint point((event->pos().x()- extent.GetIndex()[0])/m_IsotropicZoom,(event->pos().y()- extent.GetIndex()[1])/m_IsotropicZoom);
+
+            ImageRegionType::IndexType idx;
+            idx[0] = point.x();
+            idx[1] = point.y();
+
+            VectorImageType *img = m_pItiOtbVectorImageViewer->manager()->image();
+            if(img){
+
+                QString text;
+
+                // check whether the point is inside the image boundaries
+                if(!ItiOtbImageManager::isInsideTheImage(extent,point,m_IsotropicZoom))
+                    text = m_pItiOtbVectorImageViewer->manager()->constructInfoByIndexAlt(idx);
+                else{
+                    VectorImageType::PixelType pixelValue = img->GetPixel(idx);
+
+                    RenderingFilterType* filter = vModel->filter();
+
+                    const std::string pixeldata = filter->GetRenderingFunction()->Describe(pixelValue);
+
+                    QString pdt = QString::fromStdString(pixeldata);
+
+                    text = m_pItiOtbVectorImageViewer->manager()->constructInfoByIndex(idx,pdt);
+                }
+
+
+                emit currentIndexChanged(text);
+            }
+        }
+    }
+
+    // now call the parent widget class mousemoveevent
 
     QGLWidget::mouseMoveEvent(event);
 }
@@ -247,55 +265,90 @@ void ItiOtbVectorQGLWidgetFullView::mousePressEvent(QMouseEvent *event){
 
     //! setup translating functionality only on left button pressed mouse events
     if(event->button() == Qt::LeftButton){
+
+        ImageRegionType region = m_pImageViewManipulator->bufferRegion();
+
+        if(!region.GetSize()[0] || !region.GetSize()[1]){
+            QGLWidget::mousePressEvent(event);
+            return;
+        }
+
+        m_moving = true;
+
+        QCursor dragCursor;
+        dragCursor.setShape(Qt::ClosedHandCursor) ;
+        this->setCursor(dragCursor);
+
         //! create a helper point value
         QPoint previousCenter = m_visibleRegion.center();
 
         //! get the position of the event
         QPoint point = event->pos();
 
-        //! create a helper line object
-        QLine line(previousCenter,point);
-
-        ImageRegionType extent = m_pImageViewManipulator->extent();
-
-        //! create helper values
-        int dx = 0, dy = 0;
-
-        //! check if the new rect right border exceeds the extends' width value
-        if(point.x()+ qRound((double)m_visibleRegion.width()/2.0) > extent.GetSize()[0] + extent.GetIndex()[0]){
-            dx = extent.GetIndex()[0] + extent.GetSize()[0] - qRound((double)m_visibleRegion.width()/2.0) - previousCenter.x();
-        } //! check if the new rect left border exceeds the extend's index x value
-        else if(point.x()- qRound((double)m_visibleRegion.width()/2.0) < extent.GetIndex()[0]){
-            dx = extent.GetIndex()[0] + qRound((double)m_visibleRegion.width()/2.0) - previousCenter.x();
-        }else //! else set the dx value equal to the line dx value
-            dx = line.dx();
-
-        //! check if the new rect right border exceeds the extends' height value
-        if(point.y()+ qRound((double)m_visibleRegion.height()/2.0) > extent.GetSize()[1] + extent.GetIndex()[1]){
-            dy = extent.GetSize()[1] + extent.GetIndex()[1] - qRound((double)m_visibleRegion.height()/2.0) - previousCenter.y();
-        } //! check if the new rect left border exceeds the extend's index y value
-        else if(point.y()- qRound((double)m_visibleRegion.height()/2.0) < extent.GetIndex()[1]){
-            dy = extent.GetIndex()[1] + qRound((double)m_visibleRegion.height()/2.0) - previousCenter.y();
-        }else //! else set the dy value equal to the line dy value
-            dy = line.dy();
-
-        //!translate the focus region
-        m_visibleRegion.translate(dx,dy);
-
-        //! emit signal in order to update the zoomable view
-        emit visibleAreaTranslated(dx/m_IsotropicZoom,dy/m_IsotropicZoom);
-
-        //! update widget
-        update();
+        // translate function
+        translate(previousCenter,point);
     }
 
     QGLWidget::mousePressEvent(event);
 }
 
 
+void ItiOtbVectorQGLWidgetFullView::translate(const QPoint &previousCenter, const QPoint& point){
+    //! create a helper line object
+    QLine line(previousCenter,point);
+
+    ImageRegionType extent = m_pImageViewManipulator->extent();
+
+    //! create helper values
+    int dx = 0, dy = 0;
+
+    //! check if the new rect right border exceeds the extends' width value
+    if(point.x()+ qRound((double)m_visibleRegion.width()/2.0) > extent.GetSize()[0] + extent.GetIndex()[0]){
+        dx = extent.GetIndex()[0] + extent.GetSize()[0] - qRound((double)m_visibleRegion.width()/2.0) - previousCenter.x();
+    } //! check if the new rect left border exceeds the extend's index x value
+    else if(point.x()- qRound((double)m_visibleRegion.width()/2.0) < extent.GetIndex()[0]){
+        dx = extent.GetIndex()[0] + qRound((double)m_visibleRegion.width()/2.0) - previousCenter.x();
+    }else //! else set the dx value equal to the line dx value
+        dx = line.dx();
+
+    //! check if the new rect right border exceeds the extends' height value
+    if(point.y()+ qRound((double)m_visibleRegion.height()/2.0) > extent.GetSize()[1] + extent.GetIndex()[1]){
+        dy = extent.GetSize()[1] + extent.GetIndex()[1] - qRound((double)m_visibleRegion.height()/2.0) - previousCenter.y();
+    } //! check if the new rect left border exceeds the extend's index y value
+    else if(point.y()- qRound((double)m_visibleRegion.height()/2.0) < extent.GetIndex()[1]){
+        dy = extent.GetIndex()[1] + qRound((double)m_visibleRegion.height()/2.0) - previousCenter.y();
+    }else //! else set the dy value equal to the line dy value
+        dy = line.dy();
+
+    //!translate the focus region
+    m_visibleRegion.translate(dx,dy);
+
+    //! emit signal in order to update the zoomable view
+    emit visibleAreaTranslated(dx/m_IsotropicZoom,dy/m_IsotropicZoom);
+
+    //! update widget
+    update();
+}
+
+void ItiOtbVectorQGLWidgetFullView::mouseReleaseEvent(QMouseEvent *event){
+    m_moving = false;
+
+    QCursor dragCursor;
+    dragCursor.setShape(Qt::ArrowCursor) ;
+    this->setCursor(dragCursor);
+
+    QGLWidget::mouseReleaseEvent(event);
+}
+
+
 //void ItiOtbVectorQGLWidgetFullView::resizeEvent(QResizeEvent *event){
 //    m_pImageViewManipulator->resizeEvent(event);
 //}
+
+void ItiOtbVectorQGLWidgetFullView::enableMouseTracking(){
+    //! mouse tracking is disabled on startup, set it on
+    setMouseTracking(true);
+}
 
 
 //!

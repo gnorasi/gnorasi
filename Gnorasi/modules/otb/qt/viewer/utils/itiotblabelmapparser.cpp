@@ -35,7 +35,7 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
     QList<Region*> list;
 
-    VectorImageType *img = ITIOTBIMAGEMANAGER->image();
+    VectorImageType *img = m_pManager->image();
     if(!img)
         return list;
 
@@ -106,16 +106,26 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
                     std::string clname = attrList.at(attrList.size()-1);
                     QString cname = QString::fromStdString(clname);
-                    double val = lblObject->GetAttribute(cname.toUtf8().constData());
-                    if(val - 666.666 < 0.1 )
+
+                    if(!cname.startsWith("SHAPE:"))
                         m_classLabelIdsNames[classificationId] = cname;
                     else{
                         clname = attrList.at(0);
                         cname = QString::fromStdString(clname);
-                        val = lblObject->GetAttribute(cname.toUtf8().constData());
-                        if(val - 666.666 < 0.1 )
+//                        val = lblObject->GetAttribute(cname.toUtf8().constData());
+//                        if(val - 666.666 < 0.1 )
                             m_classLabelIdsNames[classificationId] = cname;
                     }
+//                    double val = lblObject->GetAttribute(cname.toUtf8().constData());
+//                    if(val - 666.666 < 0.1 )
+//                        m_classLabelIdsNames[classificationId] = cname;
+//                    else{
+//                        clname = attrList.at(0);
+//                        cname = QString::fromStdString(clname);
+//                        val = lblObject->GetAttribute(cname.toUtf8().constData());
+//                        if(val - 666.666 < 0.1 )
+//                            m_classLabelIdsNames[classificationId] = cname;
+//                    }
                 }
                 else{
                     qDebug() << QString("The following id does not exist on the hash map but the attributes vector is a empty : ").append(QString::number(classificationId));

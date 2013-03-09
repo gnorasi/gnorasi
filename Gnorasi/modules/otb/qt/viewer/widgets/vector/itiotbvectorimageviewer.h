@@ -37,6 +37,8 @@
 
 #include "../../vector_globaldefs.h"
 
+#include "../../models/itiotbVectorImageModel.h"
+
 
 namespace itiviewer{
 
@@ -60,28 +62,30 @@ public:
     explicit ItiOtbVectorImageViewer(QWidget *parent = 0);
 
     /*!
-     * \brief disassembleWidgets , implementation
+     *  \brief dtor!, ATM saving display GUI settings is called on the splitted mode version of the viewer.
+     */
+    ~ItiOtbVectorImageViewer();
+
+    /*!
+     * \brief disassembleWidgets.
+     *
+     *  Disassembles all children widgets, each widget has its own window
      */
     void disassembleWidgets();
 
     /*!
      * \brief assembleWidgets
-     *  implementation
+     *
+     *  Assembles all children widgets into one sinble parent widget.
      */
     void assembleWidgets();
 
     /*!
      * \brief draw
-     *  implementation
+     *
+     *  This is a accumulated function, each childrens gl widget's draw funtion is called seperately.
      */
     void draw();
-
-    /*!
-     * \brief costructTextFromImageIndex
-     * \param index , the index of the image
-     * \return , return a QString containing pixel info data in order to show it on the respective widget
-     */
-    static inline QString constructTextFromImageIndex(VectorIndexType index, VectorImageType* image);
 
     /** Compute the linear buffer index according to the 2D region and
      * its 2D index.This method is used when OTB_GL_USE_ACCEL is OFF.
@@ -106,38 +110,32 @@ public:
     }
 
     /*!
-     * \brief fullView
-     * \return
+     * \brief forceUpdates
      */
-    ItiOtbVectorQGLWidgetFullView *fullView()       const { return m_pItiOtbVectorImageWidgetFullView; }
+    void forceUpdates();
 
-    /*!
-     * \brief scrollView
-     * \return
-     */
-    ItiOtbVectorQGLWidgetScrollable *scrollView()   const {return m_pItiOtbVectorImageWidgetScroll; }
 
-    /*!
-     * \brief zoomView
-     * \return
-     */
-    ItiOtbVectorQGLWidgetZoomable *zoomView()       const {return m_pItiOtbVectorImageWidgetZoomable; }
+public slots:
+
 
 private slots:
     /*!
      * \brief onScrollableWidgetSizeChanged
+     *  update regions to notify observers
      * \param size
      */
     void onScrollableWidgetSizeChanged(const QRect &size);
 
     /*!
      * \brief onZoomableWidgetSizeChanged
+     *  update regions to notify observers
      * \param size
      */
-    void onZoomableWidgetSizeChanged(const QRect &size);
+    void onZoomableWidgetSizeChanged(const QRect &size, double z = 1.0);
 
     /*!
      * \brief onFocusRegionTranslated
+     *  update regions to notify observers
      * \param rect
      */
     void onFocusRegionChanged(const QRect &rect);
@@ -146,30 +144,59 @@ private slots:
 signals:
     /*!
      * \brief modelChanged
+     *  Notify by emitting a signal informing others that the model has been changed
      */
     void modelChanged();
 
 private:
 
+    /*!
+     * \brief saveDisplaySettings
+     *  This function is called when the viewer is on a splitted mode,
+     *  all it does is to save the GUI state of the widgets on an INI settings file.
+     */
+    void saveDisplaySettings();
+
+    /*!
+     * \brief readDisplaySettings
+     *
+     *  This function is called when the viewer is on the splitted mode,
+     *  all it does is to load and read the GUI settings size and pos and restore the widgets's state
+     *  according to the value red from the INI settings file.
+     */
+    void readDisplaySettings();
+
+
+    /*!
+     * \brief setupModel
+     *
+     *  Inside this function the model is being setup. The original file is being loaded.
+     */
     void setupModel();
 
     /*!
      * \brief resetObserverMechanism
+     *
+     *  Reset the observer mechanism, un register all previously registered observe objects.
      */
     void resetObserverMechanism();
 
     /*!
-     * \brief setupConnections , setup the signal and slot mechanims
+     * \brief setupConnections , setup the signal and slot mechanism.
      */
     void setupConnections();
 
     /*!
      * \brief setupObserverMechanism
+     *
+     *  Register all objects to the observable object.
      */
     void setupObserverMechanism();
 
     /*!
      * \brief setupLayout
+     *
+     *  Setup the layout , craete widgets objects ana setup the layouts.
      */
     void setupLayout();
 
@@ -258,50 +285,23 @@ private:
      */
     QString m_labelCss;
 
+
+    /*!
+     * \brief m_pphelperWidgetScroll , this is a container widget, holding ItiOtbVectorQGLWidgetScrollable object.
+     */
+    QWidget *m_pphelperWidgetScroll;
+
+    /*!
+     * \brief m_pphelperWidgetFullView, this is a container widget, holding ItiOtbVectorQGLWidgetFullView object.
+     */
+    QWidget *m_pphelperWidgetFullView;
+
+    /*!
+     * \brief m_pphelperWidgetZoomView, this is a container widget, holding ItiOtbVectorQGLWidgetZoomable object.
+     */
+    QWidget *m_pphelperWidgetZoomView;
     
 };
-
-//!
-QString ItiOtbVectorImageViewer::constructTextFromImageIndex(VectorIndexType index, VectorImageType* image){
-    if(!image)
-        return QString();
-
-    QString text;
-
-    text  = QString::fromUtf8("Index : [%1, %2]").arg(QString::number(index[0])).arg(QString::number(index[1]));
-    text += "\n";
-    text += QString::fromUtf8("Layer : ");
-    text += "\n";
-
-    //! region
-    VectorRegionType region = image->GetBufferedRegion();
-    text += QString::fromUtf8("Image size : [%1, %2]").arg(QString::number(region.GetSize()[0])).arg(QString::number(region.GetSize()[1]));
-    text += "\n";
-
-    //! image related
-    text += QString::fromUtf8("Channel selection : ");
-    text += "\n";
-
-    //! index related
-    text += QString::fromUtf8("Pixel value : [%1, %2, %3]");
-    text += "\n";
-    text += QString::fromUtf8("Value computed : [%1, %2, %3]");
-    text += "\n";
-    text += QString::fromUtf8("Value displayed : R %1, G %2, B %3, A %4");
-    text += "\n";
-
-    //! region related
-    text += QString::fromUtf8("Ground spacing (in m): (%1, %2)");
-    text += "\n";
-
-    //! index related
-    text += QString::fromUtf8("Lon: %1, Lat: %2");
-    text += "\n";
-    text += QLatin1String("(precise location)");
-
-    return text;
-
-}
 
 } // end of namespace itiviewer
 
