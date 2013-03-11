@@ -34,7 +34,7 @@
 
 #include "modules/otb/ports/otblabelmapport.h"
 
-#include "../utils/fuzzylabelmapparser.h"
+#include "../utils/fuzzylabelmaputility.h"
 
 #include "modules/knowledge/processors/fuzzyprocessor.h"
 #include "voreen/core/voreencoreapi.h"
@@ -87,10 +87,12 @@ private:
 
     void setupAvailableTableByList(const QStringList &list);
 
-    FuzzyLabelMapParser::LabelMapType*       getMapFromPort();
+    FuzzyLabelMapUtility::LabelMapType*       getMapFromPort();
 
-    QSpinBox            *m_pSpinBoxMin;
-    QSpinBox            *m_pSpinBoxMax;
+    FuzzyLabelMapUtility *m_pFuzzyLabelMapUtility;
+
+    QDoubleSpinBox      *m_pSpinBoxMin;
+    QDoubleSpinBox      *m_pSpinBoxMax;
 
     QTableView          *m_pTableViewAvailable;
     QTableView          *m_pTableViewSelection;
@@ -103,16 +105,6 @@ private:
     QPushButton         *m_pPushButtonCalculate;
 
 };
-
-
-inline double calculateValue(double val, double a , double b){
-    if(val <= a)
-        return 0.0;
-    else if(val >= b)
-        return 1.0;
-    else
-        return (val -a)/(a-b);
-}
 
 }
 

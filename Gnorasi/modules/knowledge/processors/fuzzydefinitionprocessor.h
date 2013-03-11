@@ -1,5 +1,5 @@
-#ifndef VRN_FUZZYPROCESSOR_H
-#define VRN_FUZZYPROCESSOR_H
+#ifndef VRN_FUZZYDEFINITIONPROCESSOR_H
+#define VRN_FUZZYDEFINITIONPROCESSOR_H
 
 #include "voreen/core/processors/processor.h"
 
@@ -7,16 +7,17 @@
 #include "voreen/core/properties/buttonproperty.h"
 
 #include "../../otb/ports/otblabelmapport.h"
+#include "modules/knowledge/ports/ontologyport.h"
 
 namespace voreen {
 
-class VRN_CORE_API FuzzyProcessor : public Processor {
+class VRN_CORE_API FuzzyDefinitionProcessor : public Processor {
 public:
-    FuzzyProcessor();
-    virtual ~FuzzyProcessor();
+    FuzzyDefinitionProcessor();
+    virtual ~FuzzyDefinitionProcessor();
     virtual Processor* create() const;
 
-    virtual std::string getClassName() const { return "Fuzzy Processor"; }
+    virtual std::string getClassName() const { return "Fuzzy Defintion Processor"; }
     virtual std::string getCategory() const  { return "Classification"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_EXPERIMENTAL; } //STABLE, TESTING, EXPERIMENTAL
     virtual std::string getProcessorInfo() const;
@@ -44,6 +45,7 @@ private:
     void updateView();
 
     OTBLabelMapPort inLblMapPort_;
+    OntologyPort    inOntologyPort_;
     OTBLabelMapPort outLblMapPort_;
 
     FileDialogProperty loadImageFile_;  ///< Path of the RDF file.
@@ -55,4 +57,4 @@ private:
 
 } // namespace
 
-#endif // VRN_FUZZYPROCESSOR_H
+#endif // VRN_FUZZYDEFINITIONPROCESSOR_H

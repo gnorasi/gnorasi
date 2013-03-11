@@ -16,6 +16,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/georuleport.cpp
     ${MOD_DIR}/ports/fuzzyruleport.cpp
     ${MOD_DIR}/processors/fuzzyprocessor.cpp
+    ${MOD_DIR}/processors/fuzzydefinitionprocessor.cpp
 )
 
 SET(MOD_CORE_HEADERS 
@@ -30,6 +31,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/georuleport.h
     ${MOD_DIR}/ports/fuzzyruleport.h
     ${MOD_DIR}/processors/fuzzyprocessor.h
+    ${MOD_DIR}/processors/fuzzydefinitionprocessor.h
 )
 
 ################################################################################
@@ -58,7 +60,7 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/processorwidgets/comboboxdelegate.cpp
     ${MOD_DIR}/qt/utils/rulewriter.cpp
     ${MOD_DIR}/qt/utils/ruleparser.cpp
-    ${MOD_DIR}/qt/utils/fuzzylabelmapparser.cpp
+    ${MOD_DIR}/qt/utils/fuzzylabelmaputility.cpp
     ${MOD_DIR}/qt/processorwidgets/fuzzyprocessorwidget.cpp
 )
 
@@ -82,7 +84,7 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/processorwidgets/comboboxdelegate.h
     ${MOD_DIR}/qt/utils/rulewriter.h
     ${MOD_DIR}/qt/utils/ruleparser.h
-    ${MOD_DIR}/qt/utils/fuzzylabelmapparser.h
+    ${MOD_DIR}/qt/utils/fuzzylabelmaputility.h
     ${MOD_DIR}/qt/processorwidgets/fuzzyprocessorwidget.h
 )
 

@@ -2,18 +2,6 @@
 
 #include "voreen/qt/voreenapplicationqt.h"
 
-//#include "../../ports/otbimageport.h"
-//#include "../../ports/otbvectorimageport.h"
-
-//#include "../viewer/utils/itiotbimagemanager.h"
-//#include "../viewer/widgets/itiotbimageviewer.h"
-////#include "../viewer/factories/itiotbrgbaimageviewerfactory.h"
-//#include "../viewer/factories/itiotbvectorimageviewerfactory.h"
-//#include "../viewer/widgets/panel/itiotbimageviewerpanel.h"
-//#include "../viewer/rgba_globaldefs.h"
-
-//#include "../viewer/utils/itiotblevel.h"
-
 using namespace otb;
 //using namespace itiviewer;
 
@@ -45,12 +33,12 @@ void FuzzyProcessorWidget::initialize(){
     m_pPushButtonRemove->setText(tr("Remove"));
     m_pPushButtonCalculate->setText(tr("Calculate"));
 
-    m_pSpinBoxMax = new QSpinBox(this);
-    m_pSpinBoxMin = new QSpinBox(this);
-    m_pSpinBoxMax->setMinimum(0);
-    m_pSpinBoxMax->setMaximum(1);
-    m_pSpinBoxMin->setMinimum(0);
-    m_pSpinBoxMax->setMaximum(1);
+    m_pSpinBoxMax = new QDoubleSpinBox(this);
+    m_pSpinBoxMin = new QDoubleSpinBox(this);
+    m_pSpinBoxMax->setMinimum(0.0);
+    m_pSpinBoxMax->setMaximum(1.0);
+    m_pSpinBoxMin->setMinimum(0.0);
+    m_pSpinBoxMin->setMaximum(1.0);
 
     m_pModel = new QStandardItemModel(this);
     QStringList headers;
@@ -81,6 +69,7 @@ void FuzzyProcessorWidget::initialize(){
     layout->addWidget(pLabel2);
     layout->addWidget(m_pSpinBoxMax);
     layout->addSpacerItem(new QSpacerItem(100,20,QSizePolicy::Expanding,QSizePolicy::Fixed));
+    layout->addWidget(m_pPushButtonCalculate);
 
     QVBoxLayout *vboxLayout2 = new QVBoxLayout;
     vboxLayout2->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Fixed,QSizePolicy::Expanding));
@@ -108,27 +97,30 @@ void FuzzyProcessorWidget::initialize(){
     bbLayout->addWidget(pGroupBox);
     setLayout(bbLayout);
 
+    m_pFuzzyLabelMapUtility = new FuzzyLabelMapUtility(this);
+
     connect(m_pPushButtonAdd,SIGNAL(clicked()),this,SLOT(addSelection()));
     connect(m_pPushButtonCalculate,SIGNAL(clicked()),this,SLOT(calculate()));
     connect(m_pPushButtonRemove,SIGNAL(clicked()),this,SLOT(removeSelection()));
+    connect(m_pSpinBoxMin,SIGNAL(valueChanged(double)),m_pFuzzyLabelMapUtility,SLOT(updateMinValue(double)));
+    connect(m_pSpinBoxMax,SIGNAL(valueChanged(double)),m_pFuzzyLabelMapUtility,SLOT(updateMaxValue(double)));
 }
 
 
 //!
 void FuzzyProcessorWidget::updateFromProcessor(){
-    FuzzyLabelMapParser::LabelMapType *mapT = getMapFromPort();
+    FuzzyLabelMapUtility::LabelMapType *mapT = getMapFromPort();
     if(mapT){
-        FuzzyLabelMapParser *parser = new FuzzyLabelMapParser(this);
-        parser->parse(mapT);
+        m_pFuzzyLabelMapUtility->parse(mapT);
 
-        QStringList namesList = parser->getAttributeListNames();
+        QStringList namesList = m_pFuzzyLabelMapUtility->getAttributeListNames();
 
         setupAvailableTableByList(namesList);
     }
 }
 
 
-FuzzyLabelMapParser::LabelMapType* FuzzyProcessorWidget::getMapFromPort(){
+FuzzyLabelMapUtility::LabelMapType* FuzzyProcessorWidget::getMapFromPort(){
     FuzzyProcessor* fProcessor = dynamic_cast<FuzzyProcessor*>(processor_);
 
     if(!fProcessor)
@@ -144,7 +136,7 @@ FuzzyLabelMapParser::LabelMapType* FuzzyProcessorWidget::getMapFromPort(){
         if(port->isConnected()){
             OTBLabelMapPort *lblMapPort = dynamic_cast<OTBLabelMapPort*>(port);
             if(lblMapPort){
-                FuzzyLabelMapParser::LabelMapType *mapT = (FuzzyLabelMapParser::LabelMapType*)lblMapPort->getData();
+                FuzzyLabelMapUtility::LabelMapType *mapT = (FuzzyLabelMapUtility::LabelMapType*)lblMapPort->getData();
 
                 return mapT;
             }
@@ -170,6 +162,9 @@ void FuzzyProcessorWidget::setupAvailableTableByList(const QStringList &list){
 void FuzzyProcessorWidget::addSelection(){
     QModelIndex index = m_pTableViewAvailable->currentIndex();
 
+    if(!index.isValid())
+        return;
+
     QString name = m_pModel->data(index).toString();
 
     QStandardItem *pItem = new QStandardItem();
@@ -181,15 +176,32 @@ void FuzzyProcessorWidget::addSelection(){
 void FuzzyProcessorWidget::removeSelection(){
     QModelIndex index = m_pTableViewSelection->currentIndex();
 
+    if(!index.isValid())
+        return;
+
     m_pModelSelection->removeRow(index.row());
 }
 
 void FuzzyProcessorWidget::calculate(){
 
+    QStringList list;
+
     for(int i = 0; i < m_pModelSelection->rowCount(); i++){
         QStandardItem *pItem = m_pModelSelection->item(i);
-
+        list << pItem->data(Qt::DisplayRole).toString();
     }
+
+    FuzzyLabelMapUtility::LabelMapType *lblMap = getMapFromPort();
+
+    m_pFuzzyLabelMapUtility->calculateValues(lblMap,list);
+
+    FuzzyProcessor *fProcessor = dynamic_cast<FuzzyProcessor*>(processor_);
+    if(!fProcessor)
+        return;
+
+//    const OTBLabelMapPort::LabelMapPointer lpointer = (OTBLabelMapPort::LabelMapPointer*)(lblMap);
+
+    fProcessor->setOutputData(lblMap);
 }
 
 FuzzyProcessorWidget::~FuzzyProcessorWidget(){
