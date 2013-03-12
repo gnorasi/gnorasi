@@ -64,8 +64,30 @@
 #include "processors/Radiometry/otbndwiprocessor.h"
 #include "processors/Radiometry/otbvectorimagebandmathprocessor.h"
 #include "processors/Radiometry/otbtwoimagebandmathprocessor.h"
+#include "processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h"
+#include "processors/BasicFilters/OTBLeeImageFilterProcessor.h"
+#include "processors/BasicFilters/otbScalarImageToTexturesFilterProcessor.h"
+#include "processors/Radiometry/otbbayesianfusionfilterprocessor.h"
+#include "processors/Patented/otbImageToSURFKeyPointSetFilterProcessor.h"
+#include "processors/BasicFilters/OTBGradientMagnitudeImageFilterProcessor.h"
+#include "processors/FeatureExtraction/OTBLineRatioDetectorImageFilterProcessor.h"
+#include "processors/FeatureExtraction/otblinesegmentdetectorprocessor.h"
+#include "processors/Segmentation/otbwatershedsegmentationfilterprocessor.h"
+#include "processors/FeatureExtraction/otblinesegmentdetectorprocessor.h"
+#include "processors/Segmentation/OTBWatershedSegmentationFilterProcessor.h"
+#include "processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.h"
+#include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
+#include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
+#include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
+#include "processors/FeatureExtraction/otbroadextractionprocessor.h"
+#include "processors/ImageAdministration/otbmultichannelextracroiprocessor.h"
+#include "processors/patented/otbimagetosiftkeypointsetfilterprocessor.h"
+#include "processors/Radiometry/otblaindviprocessor.h"
+#include "processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h"
+
 
 #include "processors/Visualization/otbimageviewerprocessor.h"
+#include "processors/Geometry/otborthorectifyprocessor.h"
 
 #ifdef WIN32
 
@@ -135,8 +157,28 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBVectorImageBandMathProcessor());
     registerProcessor(new OTBTwoVectorImagesBandMathProcessor());
     registerProcessor(new OTBFFTConvolutionImageFilterProcessor());
+    registerProcessor(new OTBDiscreteGaussianImageFilterProcessor());
+    registerProcessor(new OTBLeeImageFilterProcessor());
+    registerProcessor(new OTBScalarImageToTexturesFilterProcessor());
+    registerProcessor(new OTBBayesianFusionFilterProcessor());
+    registerProcessor(new OTBImageToSURFKeyPointSetFilterProcessor());
+    registerProcessor(new OTBGradientMagnitudeImageFilterProcessor());
+    registerProcessor(new OTBLineRatioDetectorImageFilterProcessor());
+    registerProcessor(new OTBLineSegmentDetectorProcessor());
+    registerProcessor(new OTBWatershedSegmentationFilterProcessor());
+    registerProcessor(new OTBLineSegmentDetectorProcessor());
+    registerProcessor(new OTBConfusionMatrixCalculatorProcessor());
+    registerProcessor(new OTBCBAMIChangeDetectorProcessor());
+    registerProcessor(new OTBMultiAlterationDetectorImageFilterProcessor());
+    registerProcessor(new OTBKMeansImageClassificationFilterProcessor());
+    registerProcessor(new OTBRoadExtractionProcessor());
+    registerProcessor(new OTBMultiChannelExtractROIProcessor());
+    registerProcessor(new OTBImageToSIFTKeyPointSetFilterProcessor());
+    registerProcessor(new OTBLAINDVIProcessor());
+    registerProcessor(new OTBLaplacianSegmentationLevelSetImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
+    registerProcessor(new OTBOrthoRectifyProcessor());
 }
 
 } // namespace
