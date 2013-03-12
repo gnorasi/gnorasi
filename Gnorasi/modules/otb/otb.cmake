@@ -234,8 +234,6 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/otblabelmapport.cpp
     ${MOD_DIR}/ports/otbvectorimageport.cpp
     ${MOD_DIR}/ports/otbsmartpointerport.cpp
-    ${MOD_DIR}/ports/otbkeypointsetport.cpp
-    ${MOD_DIR}/ports/otbvectordataport.cpp
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.cpp
@@ -274,26 +272,6 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/otbvectorimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
-    ${MOD_DIR}/processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.cpp
-    ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.cpp
-    ${MOD_DIR}/processors/BasicFilters/OTBScalarImageToTexturesFilterProcessor.cpp
-    ${MOD_DIR}/processors/Radiometry/OTBBayesianFusionFilterProcessor.cpp  
-    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
-    ${MOD_DIR}/processors/patented/otbimagetosurfkeypointsetfilterprocessor.cpp
-    ${MOD_DIR}/processors/BasicFilters/OTBGradientMagnitudeImageFilterProcessor.cpp
-    ${MOD_DIR}/processors/FeatureExtraction/OTBLineRatioDetectorImageFilterProcessor.cpp
-    ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.cpp
-    ${MOD_DIR}/processors/Segmentation/OTBWatershedSegmentationFilterProcessor.cpp
-    ${MOD_DIR}/processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.cpp    
-    ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.cpp
-    ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.cpp
-    ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.cpp
-    ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.cpp
-    ${MOD_DIR}/processors/ImageAdministration/otbmultichannelextracroiprocessor.cpp
-    ${MOD_DIR}/processors/patented/otbimagetosiftkeypointsetfilterprocessor.cpp
-    ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.cpp
-    ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.cpp
-
 
 )
 
@@ -303,8 +281,6 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/otblabelmapport.h
     ${MOD_DIR}/ports/otbvectorimageport.h
     ${MOD_DIR}/ports/otbsmartpointerport.h
-    ${MOD_DIR}/ports/otbkeypointsetport.h
-    ${MOD_DIR}/ports/otbvectordataport.h
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.h
@@ -343,26 +319,6 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Radiometry/otbvectorimagebandmathprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.h
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
-    ${MOD_DIR}/processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h
-    ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.h
-    ${MOD_DIR}/processors/BasicFilters/OTBScalarImageToTexturesFilterProcessor.h
-    ${MOD_DIR}/processors/Radiometry/OTBBayesianFusionFilterProcessor.h 
-    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
-    ${MOD_DIR}/processors/patented/otbimagetosurfkeypointsetfilterprocessor.h
-    ${MOD_DIR}/processors/BasicFilters/OTBGradientMagnitudeImageFilterProcessor.h
-    ${MOD_DIR}/processors/FeatureExtraction/OTBLineRatioDetectorImageFilterProcessor.h
-    ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.h
-    ${MOD_DIR}/processors/Segmentation/OTBWatershedSegmentationFilterProcessor.h
-    ${MOD_DIR}/processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.h    
-    ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
-    ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
-    ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.h
-    ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.h
-    ${MOD_DIR}/processors/ImageAdministration/otbmultichannelextracroiprocessor.h
-    ${MOD_DIR}/processors/patented/otbimagetosiftkeypointsetfilterprocessor.h
-    ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.h
-    ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h
-
 )
 
 #
