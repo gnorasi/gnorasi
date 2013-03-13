@@ -283,6 +283,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/OTBBayesianFusionFilterProcessor.cpp  
     ${MOD_DIR}/processors/patented/otbimagetosurfkeypointsetfilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/OTBGradientMagnitudeImageFilterProcessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/OTBLineRatioDetectorImageFilterProcessor.cpp
 
 )
 
@@ -339,6 +340,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Radiometry/OTBBayesianFusionFilterProcessor.h 
     ${MOD_DIR}/processors/patented/otbimagetosurfkeypointsetfilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/OTBGradientMagnitudeImageFilterProcessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/OTBLineRatioDetectorImageFilterProcessor.h
 )
 
 #
