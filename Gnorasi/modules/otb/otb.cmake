@@ -290,6 +290,8 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.cpp
+    ${MOD_DIR}/processors/ImageAdministration/otbmultichannelextractroiprocessor.cpp
+
 
 )
 
@@ -353,6 +355,8 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.h
+    ${MOD_DIR}/processors/ImageAdministration/otbmultichannelextractroiprocessor.h
+
 )
 
 #

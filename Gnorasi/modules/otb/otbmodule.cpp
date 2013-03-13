@@ -80,6 +80,7 @@
 #include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
 #include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
 #include "processors/FeatureExtraction/otbroadextractionprocessor.h"
+#include "processors/ImageAdministration/otbmultichannelextractroiprocessor.h"
 
 #include "processors/Visualization/otbimageviewerprocessor.h"
 //#include "processors/Geometry/otborthorectifyprocessor.h"
@@ -162,6 +163,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBMultiAlterationDetectorImageFilterProcessor());
     registerProcessor(new OTBKMeansImageClassificationFilterProcessor());
     registerProcessor(new OTBRoadExtractionProcessor());
+    registerProcessor(new OTBMultiChannelExtractROIProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
