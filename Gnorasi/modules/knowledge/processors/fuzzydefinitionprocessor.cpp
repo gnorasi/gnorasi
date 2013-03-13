@@ -10,14 +10,13 @@ FuzzyDefinitionProcessor::FuzzyDefinitionProcessor()
     : Processor(),
     inLblMapPort_(Port::INPORT, "Input Label Map Port",0),
     inOntologyPort_(Port::INPORT,"Input Ontology Port", 0),
-    outLblMapPort_(Port::OUTPORT, "Output Label Map Port",0)
+    outTextPort_(Port::OUTPORT, "Output Text Port")
 {
     // register ports and properties
     addPort(inLblMapPort_);
     addPort(inOntologyPort_);
-    addPort(outLblMapPort_);
+    addPort(outTextPort_);
     //OTB initialization
-
     
 }
 
@@ -30,7 +29,7 @@ Processor* FuzzyDefinitionProcessor::create() const {
 }
 
 bool FuzzyDefinitionProcessor::isEndProcessor() const {
-    return (!outLblMapPort_.isConnected());
+    return (!outTextPort_.isConnected());
 }
 
 bool FuzzyDefinitionProcessor::isReady() const {

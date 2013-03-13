@@ -3,8 +3,13 @@
 #include "voreen/qt/voreenapplicationqt.h"
 
 #include "comboboxdelegate.h"
+#include "../utils/owlparser.h"
+#include "../utils/owlhelperitem.h"
 
 #include <QDomDocument>
+
+#define MINOPERATOR "min"
+#define MAXOPERATOR "max"
 
 using namespace otb;
 //using namespace itiviewer;
@@ -14,7 +19,7 @@ namespace voreen {
 const std::string FuzzyDefinitionProcessorWidget::loggerCat_("voreen.FuzzyDefinitionProcessorWidget");
 
 FuzzyDefinitionProcessorWidget::FuzzyDefinitionProcessorWidget(QWidget *parent, FuzzyDefinitionProcessor *fuzzyDefinitionProcessor)
-    : QProcessorWidget(fuzzyDefinitionProcessor, parent)
+    : m_pCurrentRule(NULL), QProcessorWidget(fuzzyDefinitionProcessor, parent)
 {
     tgtAssert(fuzzyDefinitionProcessor, "No FuzzyDefinitionProcessorWidget processor");
 
@@ -35,11 +40,6 @@ void FuzzyDefinitionProcessorWidget::initialize(){
 
     m_pRulesModel = new QStandardItemModel(this);
 
-    m_pRulesTableView = new QTableView(this);
-    QStringList headers;
-    headers << tr("Name") << tr("Operator") << tr("Value");
-    m_pRulesModel->setHorizontalHeaderLabels(headers);
-
     m_pMinRadioButton = new QRadioButton(this);
     m_pMaxRadioButton = new QRadioButton(this);
 
@@ -53,9 +53,170 @@ void FuzzyDefinitionProcessorWidget::initialize(){
 
     m_pMaxRadioButton->setChecked(true);
 
+    QHBoxLayout *hboxLayout = new QHBoxLayout;
+    hboxLayout->addWidget(m_pOntologyClassComboBox);
+    hboxLayout->addWidget(m_pMinRadioButton);
+    hboxLayout->addWidget(m_pMaxRadioButton);
+    hboxLayout->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Expanding,QSizePolicy::Fixed));
+
+    m_pAddPushButton = new QPushButton(tr("Add"),this);
+    m_pRemovePushButton = new QPushButton(tr("Remove"),this);
+
+    QHBoxLayout *hboxlayout1 = new QHBoxLayout;
+    hboxlayout1->addWidget(m_pAddPushButton);
+    hboxlayout1->addWidget(m_pRemovePushButton);
+    hboxlayout1->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Expanding,QSizePolicy::Fixed));
+
+    m_pRulesTableView = new QTableView(this);
+    QStringList headers;
+    headers << tr("Name") << tr("Operator") << tr("Value");
+    m_pRulesModel->setHorizontalHeaderLabels(headers);
+
     m_pRulesTableView->setModel(m_pRulesModel);
 
+    m_pExportPushButton = new QPushButton(tr("Update Processor"),this);
+
+    QHBoxLayout *hboxlayout2 = new QHBoxLayout;
+    hboxlayout2->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Expanding,QSizePolicy::Fixed));
+    hboxlayout2->addWidget(m_pExportPushButton);
+
+    QVBoxLayout *vboxlayout = new QVBoxLayout;
+    vboxlayout->addWidget(pLabel);
+    vboxlayout->addLayout(hboxLayout);
+    vboxlayout->addLayout(hboxlayout1);
+    vboxlayout->addWidget(m_pRulesTableView);
+    vboxlayout->addLayout(hboxlayout2);
+
+    pGroupBox->setLayout(vboxlayout);
+
+    QVBoxLayout *vboxlayout1 = new QVBoxLayout;
+    vboxlayout1->addWidget(pGroupBox);
+    setLayout(vboxlayout1);
+
     setupOperatorField();
+
+    connect(m_pAddPushButton,SIGNAL(clicked()),this,SLOT(onAddButtonClicked()));
+    connect(m_pRemovePushButton,SIGNAL(clicked()),this,SLOT(onRemoveButtonClicked()));
+    connect(m_pOntologyClassComboBox,SIGNAL(currentIndexChanged(QString)),this,SLOT(onComboboxCurrentIndexChanged(QString)));
+    connect(m_pMinRadioButton,SIGNAL(pressed()),this,SLOT(onRadioButtonMixMaxChanged()));
+    connect(m_pMaxRadioButton,SIGNAL(pressed()),this,SLOT(onRadioButtonMixMaxChanged()));
+    connect(m_pExportPushButton,SIGNAL(clicked()),this,SLOT(updateOutPortTextData()));
+    connect(m_pRulesModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(onModelChanged(QStandardItem*)));
+}
+
+
+void FuzzyDefinitionProcessorWidget::onAddButtonClicked(){
+
+    if(m_pCurrentRule){
+        FuzzyRestriction *pRestriction = new FuzzyRestriction;
+        m_pCurrentRule->addRestriction(pRestriction);
+
+        int row = m_pRulesModel->rowCount();
+
+        m_pRulesModel->insertRows(row,1);
+
+        QStandardItem *item0 = new QStandardItem;
+
+        m_pRulesModel->setItem(row,0,item0);
+    }
+}
+
+
+void FuzzyDefinitionProcessorWidget::onRemoveButtonClicked(){
+    if(!m_pCurrentRule)
+        return;
+
+    // checking for validation of the index is not needed
+    QModelIndex index = m_pRulesTableView->selectionModel()->currentIndex();
+
+    int row = index.row();
+
+    FuzzyRestriction *rItem = m_pCurrentRule->restrictionAt(row);
+    if(!rItem)
+        return;
+
+    m_pCurrentRule->removeRestriction(rItem);
+    m_pRulesModel->removeRows(row,1);
+}
+
+
+FuzzyRule* FuzzyDefinitionProcessorWidget::fuzzyRuleByOntologyClass(const QString &text){
+    QList<FuzzyRule*>::const_iterator i;
+    for(i = m_fuzzyRuleList.constBegin(); i != m_fuzzyRuleList.constEnd(); i++)
+    {
+        FuzzyRule *pRule = *i;
+        QString className = pRule->className();
+        if(!className.compare(text))
+            return pRule;
+    }
+
+    return 0;
+}
+
+void FuzzyDefinitionProcessorWidget::onComboboxCurrentIndexChanged(const QString &text){
+    FuzzyRule *pRule = fuzzyRuleByOntologyClass(text);
+    if(pRule)
+    {
+        m_pCurrentRule = pRule;
+
+        setupWidgetByCurrentRule();
+    }
+}
+
+QString FuzzyDefinitionProcessorWidget::getSymbolOperatorFromText(const QString &text){
+    QString symbol;
+
+    if(!text.compare("le")){
+        symbol = QLatin1String("<=");
+    }else if(!text.compare("l")){
+        symbol = QLatin1String("<");
+    }else if(!text.compare("ge")){
+        symbol = QLatin1String(">=");
+    }else if(!text.compare("g")){
+        symbol = QLatin1String(">");
+    }else
+        qDebug() << "mouliaka mpouliaka !!";
+
+    return symbol;
+}
+
+
+void FuzzyDefinitionProcessorWidget::setupWidgetByCurrentRule(){
+    if(!m_pCurrentRule)
+        return;
+
+    m_pRulesModel->removeRows(0,m_pRulesModel->rowCount());
+
+    QString opr = m_pCurrentRule->opr();
+    if(opr.compare(QString::fromAscii(MINOPERATOR)))
+        m_pMinRadioButton->setChecked(true);
+    else
+        m_pMaxRadioButton->setChecked(true);
+
+    QList<FuzzyRestriction*> list = m_pCurrentRule->restrictions();
+    QList<FuzzyRestriction*>::const_iterator i;
+    for(i = list.constBegin(); i != list.constEnd(); i++){
+        FuzzyRestriction *pRestriction = *i;
+
+        QStandardItem *item0 = new QStandardItem;
+        QStandardItem *item1 = new QStandardItem;
+        QStandardItem *item2 = new QStandardItem;
+
+        item0->setData(pRestriction->fuzzyProperty,Qt::DisplayRole);
+        item1->setData(pRestriction->opr,Qt::DisplayRole);
+        item2->setData(QString::number(pRestriction->val,'f',2),Qt::DisplayRole);
+
+        QList<QStandardItem*> l;
+        l << item0 << item1 << item2;
+
+        m_pRulesModel->appendRow(l);
+    }
+}
+
+
+void FuzzyDefinitionProcessorWidget::setupNameField(){
+    ComboBoxDelegate *pComboBoxDelegate = new ComboBoxDelegate(m_fuzzyAttributesList,this);
+    m_pRulesTableView->setItemDelegateForColumn(0,pComboBoxDelegate);
 }
 
 
@@ -70,11 +231,16 @@ void FuzzyDefinitionProcessorWidget::setupOperatorField(){
 //!
 void FuzzyDefinitionProcessorWidget::updateFromProcessor(){
     FuzzyLabelMapUtility::LabelMapType *mapT = getMapFromPort();
-    if(mapT){
-        setupFuzzyAtributes(mapT,QLatin1String("Fuzzy_"));
-    }
+    if(!mapT)
+        return;
 
+    setupFuzzyAtributes(mapT,QLatin1String("Fuzzy"));
 
+    QStringList list = getOntologyClassesFromPort();
+
+    setupOntologyClassItems(list);
+
+    setupNameField();
 }
 
 
@@ -108,6 +274,8 @@ FuzzyLabelMapUtility::LabelMapType* FuzzyDefinitionProcessorWidget::getMapFromPo
 
 void FuzzyDefinitionProcessorWidget::setupFuzzyAtributes(FuzzyLabelMapUtility::LabelMapType *mapT, const QString &prepkey){
 
+    m_fuzzyAttributesList.clear();
+
     for(unsigned int i = 1; i < mapT->GetNumberOfLabelObjects(); i++){
         FuzzyLabelMapUtility::LabelObjectType* lblObject = mapT->GetLabelObject(i);
 
@@ -116,14 +284,28 @@ void FuzzyDefinitionProcessorWidget::setupFuzzyAtributes(FuzzyLabelMapUtility::L
             for(int j = 0; j < attrList.size(); j ++){
                 QString name = QString::fromStdString(attrList.at(j));
 
-                if(name.startsWith(prepkey)){
+                if(name.contains(prepkey)){
 //                    m_pOntologyClassesComboBox->addItem(name);
                     m_fuzzyAttributesList << name;
-                    break;
+
                 }
             }
         }
+
+        break;
     }
+}
+
+void FuzzyDefinitionProcessorWidget::updateOutPortTextData(){
+    FuzzyDefinitionProcessor *fProcessor = dynamic_cast<FuzzyDefinitionProcessor*>(processor_);
+    if(!fProcessor)
+        return;
+
+    QString text = constructXmlFile();
+
+    qDebug() << text;
+
+    fProcessor->setTextOutputData(text.toStdString());
 }
 
 QString FuzzyDefinitionProcessorWidget::constructXmlFile() const{
@@ -158,12 +340,107 @@ QString FuzzyDefinitionProcessorWidget::constructXmlFile() const{
             fuzzyRestrictionElement.setAttribute(QLatin1String("operator"),pRestriction->opr);
             bodyElement.appendChild(fuzzyRestrictionElement);
         }
+
+        QDomElement headElement = doc.createElement(QLatin1String("head"));
+        headElement.setAttribute(QLatin1String("class"),pRule->className());
+        fuzzyRuleElemet.appendChild(headElement);
+
     }
+
+    text = doc.toString(4);
 
     return text;
 }
 
 
+void FuzzyDefinitionProcessorWidget::setupOntologyClassItems(const QStringList &list){
+    m_fuzzyRuleList.clear();
+    m_pOntologyClassComboBox->clear();
+    QStringList::const_iterator i;
+    int counter = 1;
+    for(i = list.constBegin(); i!= list.constEnd(); i++){
+        QString text = *i;
+
+        m_pOntologyClassComboBox->addItem(text);
+
+        FuzzyRule *pRule =new FuzzyRule(this);
+        pRule->setClassName(text);
+        pRule->setId(counter++);
+        if(m_pMaxRadioButton->isChecked())
+            pRule->setOpr(QString::fromAscii(MAXOPERATOR));
+        else
+            pRule->setOpr(QString::fromAscii(MINOPERATOR));
+
+        m_fuzzyRuleList.append(pRule);
+
+        m_pCurrentRule = pRule;
+    }
+}
+
+void FuzzyDefinitionProcessorWidget::onRadioButtonMixMaxChanged(){
+    if(m_pMaxRadioButton->isChecked()){
+        if(m_pCurrentRule)
+            m_pCurrentRule->setOpr(QString::fromAscii(MAXOPERATOR));
+    }
+    else{
+        if(m_pCurrentRule)
+            m_pCurrentRule->setOpr(QString::fromAscii(MINOPERATOR));
+    }
+}
+
+
+void FuzzyDefinitionProcessorWidget::processOntologyItem(OWLHelperItem *item, QStringList &list){
+    QList<OWLHelperItem*> childList = item->owlChildren();
+    if(!childList.count())
+        list << item->label();
+    else{
+        QList<OWLHelperItem*>::const_iterator i;
+        for(i = childList.constBegin(); i != childList.constEnd(); i++){
+            OWLHelperItem *pItem = *i;
+            processOntologyItem(pItem,list);
+        }
+    }
+}
+
+
+void FuzzyDefinitionProcessorWidget::onModelChanged(QStandardItem *item){
+    if(!m_pCurrentRule)
+        return;
+
+    int row = item->row();
+
+    FuzzyRestriction *pRestriction = m_pCurrentRule->restrictionAt(row);
+    if(!pRestriction)
+        return;
+
+    int column = item->column();
+    if(column == 0) // this is the property
+        pRestriction->fuzzyProperty = item->text();
+    else if(column == 1)
+        pRestriction->opr = item->text();
+    else
+        pRestriction->val = item->data(Qt::DisplayRole).toDouble();
+}
+
+
+QStringList FuzzyDefinitionProcessorWidget::getOntologyClassesFromPort(){
+    QStringList list;
+    FuzzyDefinitionProcessor *fProcessor = dynamic_cast<FuzzyDefinitionProcessor*>(processor_);
+    if(!fProcessor)
+        return list;
+
+    std::string text = fProcessor->getOntologyData();
+    QString text_ = QString::fromStdString(text);
+
+    OWLParser parser;
+    parser.parseContent(text_);
+
+    OWLHelperItem *rootItem = parser.rootOWLHelperItem();
+
+    processOntologyItem(rootItem,list);
+
+    return list;
+}
 
 FuzzyDefinitionProcessorWidget::~FuzzyDefinitionProcessorWidget(){
 //    ItiOtbImageManager::deleteInstance();
