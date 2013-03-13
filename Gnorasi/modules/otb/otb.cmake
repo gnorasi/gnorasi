@@ -281,6 +281,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/OTBScalarImageToTexturesFilterProcessor.cpp
     ${MOD_DIR}/processors/Radiometry/OTBBayesianFusionFilterProcessor.cpp  
+    ${MOD_DIR}/processors/patented/otbimagetosurfkeypointsetfilterprocessor.cpp
 
 )
 
@@ -335,6 +336,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/OTBScalarImageToTexturesFilterProcessor.h
     ${MOD_DIR}/processors/Radiometry/OTBBayesianFusionFilterProcessor.h 
+    ${MOD_DIR}/processors/patented/otbimagetosurfkeypointsetfilterprocessor.h
 )
 
 #
