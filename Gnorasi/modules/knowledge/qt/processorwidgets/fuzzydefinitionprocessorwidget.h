@@ -138,11 +138,11 @@ private:
 
 //    void setupOntologyComboBoxItems();
 
-    QString getTextOperatorFromSymbol(const QString &text);
+    QString getTextOperatorFromSymbol(QString &text);
 
     QString getSymbolOperatorFromText(const QString &text);
 
-    QString constructXmlFile() const;
+    QString constructXmlFile() ;
 
     void setupOperatorField();
 
