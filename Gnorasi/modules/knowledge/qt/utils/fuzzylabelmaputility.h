@@ -38,6 +38,8 @@ public:
      */
     void calculateValues(LabelMapType *lblMap, const QStringList &);
 
+    QString constructCsvFromLabelMap(LabelMapType *lblMap);
+
 
 signals:
     

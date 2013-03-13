@@ -146,7 +146,7 @@ FuzzyLabelMapUtility::LabelMapType* FuzzyProcessorWidget::getMapFromPort(){
 }
 
 void FuzzyProcessorWidget::setupAvailableTableByList(const QStringList &list){
-    m_pModel->clear();
+    m_pModel->removeRows(0,m_pModel->rowCount());
 
     QStringList::const_iterator i;
     for(i = list.constBegin(); i != list.constEnd(); i++){
@@ -202,6 +202,19 @@ void FuzzyProcessorWidget::calculate(){
 //    const OTBLabelMapPort::LabelMapPointer lpointer = (OTBLabelMapPort::LabelMapPointer*)(lblMap);
 
     fProcessor->setOutputData(lblMap);
+
+    QString text = m_pFuzzyLabelMapUtility->constructCsvFromLabelMap(lblMap);
+
+    qDebug() << text;
+
+    QFile file(QFileDialog::getSaveFileName(this,tr("Save"),QDir::homePath()));
+    if(!file.open(QIODevice::WriteOnly))
+        return;
+
+    QTextStream out(&file);
+    out << text;
+    file.close();
+
 }
 
 FuzzyProcessorWidget::~FuzzyProcessorWidget(){
