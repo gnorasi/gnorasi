@@ -37,6 +37,7 @@
 #include "processors/knowledgewebserviceprocessor.h"
 
 #include "processors/fuzzyprocessor.h"
+#include "processors/fuzzydefinitionprocessor.h"
 
 namespace voreen {
 
@@ -56,6 +57,7 @@ KnowledgeModule::KnowledgeModule(const std::string& moduleName)
     registerProcessor(new KnowledgeWebServiceProcessor());
 
     registerProcessor(new FuzzyProcessor());
+    registerProcessor(new FuzzyDefinitionProcessor());
 
     // adds the module source glsl dir to the shader search path
     //addShaderPath(getModulesPath("knowledge/processors/glsl"));
