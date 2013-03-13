@@ -236,7 +236,8 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/otblabelmapport.cpp
     ${MOD_DIR}/ports/otbvectorimageport.cpp
     ${MOD_DIR}/ports/otbsmartpointerport.cpp
-	${MOD_DIR}/ports/otbvectordataport.cpp
+    ${MOD_DIR}/ports/otbkeypointsetport.cpp
+    ${MOD_DIR}/ports/otbvectordataport.cpp
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.cpp
