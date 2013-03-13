@@ -78,6 +78,7 @@
 #include "processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.h"
 #include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
 #include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
+#include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
 
 #include "processors/Visualization/otbimageviewerprocessor.h"
 //#include "processors/Geometry/otborthorectifyprocessor.h"
@@ -158,6 +159,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBWatershedSegmentationFilterProcessor());
     registerProcessor(new OTBCBAMIChangeDetectorProcessor());
     registerProcessor(new OTBMultiAlterationDetectorImageFilterProcessor());
+    registerProcessor(new OTBKMeansImageClassificationFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
