@@ -292,6 +292,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.cpp
     ${MOD_DIR}/processors/ImageAdministration/otbmultichannelextractroiprocessor.cpp
     ${MOD_DIR}/processors/patented/otbimagetosiftkeypointsetfilterprocessor.cpp
+    ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.cpp
 
 
 )
@@ -359,6 +360,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.h
     ${MOD_DIR}/processors/ImageAdministration/otbmultichannelextractroiprocessor.h
     ${MOD_DIR}/processors/patented/otbimagetosiftkeypointsetfilterprocessor.h
+    ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.h
 
 )
 
