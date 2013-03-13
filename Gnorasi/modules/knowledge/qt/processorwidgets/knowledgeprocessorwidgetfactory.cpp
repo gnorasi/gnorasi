@@ -46,6 +46,9 @@
 #include "../../processors/fuzzyprocessor.h"
 #include "fuzzyprocessorwidget.h"
 
+#include "../../processors/fuzzydefinitionprocessor.h"
+#include "fuzzydefinitionprocessorwidget.h"
+
 #include "voreen/qt/voreenapplicationqt.h"
 #include <QWidget>
 #include <QMainWindow>
@@ -78,6 +81,8 @@ ProcessorWidget* KnowledgeProcessorWidgetFactory::createWidget(Processor* proces
     if(dynamic_cast<FuzzyProcessor*>(processor))
         return new FuzzyProcessorWidget(parent, static_cast<FuzzyProcessor*>(processor));
 
+    if(dynamic_cast<FuzzyDefinitionProcessor*>(processor))
+        return new FuzzyDefinitionProcessorWidget(parent,static_cast<FuzzyDefinitionProcessor*>(processor));
 
     return 0;
 }
