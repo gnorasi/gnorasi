@@ -180,6 +180,23 @@ QString FuzzyDefinitionProcessorWidget::getSymbolOperatorFromText(const QString 
     return symbol;
 }
 
+QString FuzzyDefinitionProcessorWidget::getTextOperatorFromSymbol(QString &text){
+    QString symbol;
+
+    if(!text.compare("<=")){
+        symbol = QLatin1String("le");
+    }else if(!text.compare("<")){
+        symbol = QLatin1String("l");
+    }else if(!text.compare(">=")){
+        symbol = QLatin1String("ge");
+    }else if(!text.compare(">")){
+        symbol = QLatin1String("g");
+    }else
+        qDebug() << "mouliaka mpouliaka !!";
+
+    return symbol;
+}
+
 
 void FuzzyDefinitionProcessorWidget::setupWidgetByCurrentRule(){
     if(!m_pCurrentRule)
@@ -308,7 +325,7 @@ void FuzzyDefinitionProcessorWidget::updateOutPortTextData(){
     fProcessor->setTextOutputData(text.toStdString());
 }
 
-QString FuzzyDefinitionProcessorWidget::constructXmlFile() const{
+QString FuzzyDefinitionProcessorWidget::constructXmlFile(){
     QString text;
 
     QDomDocument doc = QDomDocument();
@@ -317,6 +334,7 @@ QString FuzzyDefinitionProcessorWidget::constructXmlFile() const{
     doc.appendChild(xmlDeclaration);
 
     QDomElement rootElement = doc.createElement(QLatin1String("fuzzy"));
+    doc.appendChild(rootElement);
 
     QList<FuzzyRule*>::const_iterator i;
     for(i = m_fuzzyRuleList.constBegin(); i != m_fuzzyRuleList.constEnd(); i++){
@@ -337,7 +355,7 @@ QString FuzzyDefinitionProcessorWidget::constructXmlFile() const{
             QDomElement fuzzyRestrictionElement = doc.createElement("restriction");
             fuzzyRestrictionElement.setAttribute(QLatin1String("property"),pRestriction->fuzzyProperty);
             fuzzyRestrictionElement.setAttribute(QLatin1String("value"),QString::number(pRestriction->val,'f',2));
-            fuzzyRestrictionElement.setAttribute(QLatin1String("operator"),pRestriction->opr);
+            fuzzyRestrictionElement.setAttribute(QLatin1String("operator"),getTextOperatorFromSymbol(pRestriction->opr));
             bodyElement.appendChild(fuzzyRestrictionElement);
         }
 
