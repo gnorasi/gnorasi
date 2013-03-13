@@ -83,6 +83,7 @@
 #include "processors/ImageAdministration/otbmultichannelextractroiprocessor.h"
 #include "processors/patented/otbimagetosiftkeypointsetfilterprocessor.h"
 #include "processors/Radiometry/otblaindviprocessor.h"
+#include "processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h"
 
 #include "processors/Visualization/otbimageviewerprocessor.h"
 //#include "processors/Geometry/otborthorectifyprocessor.h"
@@ -168,6 +169,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBMultiChannelExtractROIProcessor());
     registerProcessor(new OTBImageToSIFTKeyPointSetFilterProcessor());
     registerProcessor(new OTBLAINDVIProcessor());
+    registerProcessor(new OTBLaplacianSegmentationLevelSetImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
