@@ -285,6 +285,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/OTBGradientMagnitudeImageFilterProcessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/OTBLineRatioDetectorImageFilterProcessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.cpp
+    ${MOD_DIR}/processors/Segmentation/OTBWatershedSegmentationFilterProcessor.cpp
 
 )
 
@@ -343,6 +344,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/OTBGradientMagnitudeImageFilterProcessor.h
     ${MOD_DIR}/processors/FeatureExtraction/OTBLineRatioDetectorImageFilterProcessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.h
+    ${MOD_DIR}/processors/Segmentation/OTBWatershedSegmentationFilterProcessor.h
 )
 
 #

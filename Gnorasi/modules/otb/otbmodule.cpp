@@ -74,6 +74,7 @@
 #include "processors/BasicFilters/OTBGradientMagnitudeImageFilterProcessor.h"
 #include "processors/FeatureExtraction/OTBLineRatioDetectorImageFilterProcessor.h"
 #include "processors/FeatureExtraction/otblinesegmentdetectorprocessor.h"
+#include "processors/Segmentation/OTBWatershedSegmentationFilterProcessor.h"
 #include "processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.h"
 
 #include "processors/Visualization/otbimageviewerprocessor.h"
@@ -152,6 +153,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBGradientMagnitudeImageFilterProcessor());
     registerProcessor(new OTBLineRatioDetectorImageFilterProcessor());
     registerProcessor(new OTBLineSegmentDetectorProcessor());
+    registerProcessor(new OTBWatershedSegmentationFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
