@@ -73,6 +73,7 @@
 #include "processors/Patented/otbImageToSURFKeyPointSetFilterProcessor.h"
 #include "processors/BasicFilters/OTBGradientMagnitudeImageFilterProcessor.h"
 #include "processors/FeatureExtraction/OTBLineRatioDetectorImageFilterProcessor.h"
+#include "processors/FeatureExtraction/otblinesegmentdetectorprocessor.h"
 #include "processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.h"
 
 #include "processors/Visualization/otbimageviewerprocessor.h"
@@ -150,6 +151,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBImageToSURFKeyPointSetFilterProcessor());
     registerProcessor(new OTBGradientMagnitudeImageFilterProcessor());
     registerProcessor(new OTBLineRatioDetectorImageFilterProcessor());
+    registerProcessor(new OTBLineSegmentDetectorProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
