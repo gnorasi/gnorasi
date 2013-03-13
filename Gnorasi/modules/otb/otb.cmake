@@ -277,6 +277,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
 	${MOD_DIR}/processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.cpp
+	${MOD_DIR}/processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.cpp
 
 )
 
@@ -327,6 +328,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
 	${MOD_DIR}/processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.h    
+	${MOD_DIR}/processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h
 )
 
 #
