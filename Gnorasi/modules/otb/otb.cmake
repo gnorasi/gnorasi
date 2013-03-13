@@ -236,6 +236,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/otblabelmapport.cpp
     ${MOD_DIR}/ports/otbvectorimageport.cpp
     ${MOD_DIR}/ports/otbsmartpointerport.cpp
+	${MOD_DIR}/ports/otbvectordataport.cpp
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.cpp
@@ -275,6 +276,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
+	${MOD_DIR}/processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.cpp
 
 )
 
@@ -284,6 +286,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/otblabelmapport.h
     ${MOD_DIR}/ports/otbvectorimageport.h
     ${MOD_DIR}/ports/otbsmartpointerport.h
+	${MOD_DIR}/ports/otbvectordataport.h
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.h
@@ -323,6 +326,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.h
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
+	${MOD_DIR}/processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.h    
 )
 
 #
