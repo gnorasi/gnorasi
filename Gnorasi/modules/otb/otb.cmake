@@ -291,6 +291,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.cpp
     ${MOD_DIR}/processors/ImageAdministration/otbmultichannelextractroiprocessor.cpp
+    ${MOD_DIR}/processors/patented/otbimagetosiftkeypointsetfilterprocessor.cpp
 
 
 )
@@ -301,7 +302,8 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/otblabelmapport.h
     ${MOD_DIR}/ports/otbvectorimageport.h
     ${MOD_DIR}/ports/otbsmartpointerport.h
-	${MOD_DIR}/ports/otbvectordataport.h
+    ${MOD_DIR}/ports/otbkeypointsetport.h
+    ${MOD_DIR}/ports/otbvectordataport.h
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.h
@@ -356,6 +358,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.h
     ${MOD_DIR}/processors/ImageAdministration/otbmultichannelextractroiprocessor.h
+    ${MOD_DIR}/processors/patented/otbimagetosiftkeypointsetfilterprocessor.h
 
 )
 
