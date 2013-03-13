@@ -66,6 +66,11 @@
 #include "processors/Radiometry/otbtwoimagebandmathprocessor.h"
 #include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 #include "processors/ImageIO/otbvectorimagewriterprocessor.h"
+#include "processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h"
+#include "processors/BasicFilters/OTBLeeImageFilterProcessor.h"
+#include "processors/BasicFilters/otbScalarImageToTexturesFilterProcessor.h"
+#include "processors/Radiometry/otbbayesianfusionfilterprocessor.h"
+#include "processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.h"
 
 #include "processors/Visualization/otbimageviewerprocessor.h"
 //#include "processors/Geometry/otborthorectifyprocessor.h"
@@ -134,6 +139,11 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBVectorImageBandMathProcessor());
     registerProcessor(new OTBTwoVectorImagesBandMathProcessor());
     registerProcessor(new OTBFFTConvolutionImageFilterProcessor());
+	registerProcessor(new OTBConfusionMatrixCalculatorProcessor());
+	registerProcessor(new OTBDiscreteGaussianImageFilterProcessor());
+	registerProcessor(new OTBLeeImageFilterProcessor());
+	registerProcessor(new OTBScalarImageToTexturesFilterProcessor());
+    registerProcessor(new OTBBayesianFusionFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
