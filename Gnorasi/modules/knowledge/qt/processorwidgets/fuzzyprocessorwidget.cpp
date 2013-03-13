@@ -36,9 +36,9 @@ void FuzzyProcessorWidget::initialize(){
     m_pSpinBoxMax = new QDoubleSpinBox(this);
     m_pSpinBoxMin = new QDoubleSpinBox(this);
     m_pSpinBoxMax->setMinimum(0.0);
-    m_pSpinBoxMax->setMaximum(1.0);
+    m_pSpinBoxMax->setMaximum(999999.0);
     m_pSpinBoxMin->setMinimum(0.0);
-    m_pSpinBoxMin->setMaximum(1.0);
+    m_pSpinBoxMin->setMaximum(999999.0);
 
     m_pModel = new QStandardItemModel(this);
     QStringList headers;
@@ -205,15 +205,17 @@ void FuzzyProcessorWidget::calculate(){
 
     QString text = m_pFuzzyLabelMapUtility->constructCsvFromLabelMap(lblMap);
 
-    qDebug() << text;
+    fProcessor->setTextOutputData(text.toStdString());
 
-    QFile file(QFileDialog::getSaveFileName(this,tr("Save"),QDir::homePath()));
-    if(!file.open(QIODevice::WriteOnly))
-        return;
+//    qDebug() << text;
 
-    QTextStream out(&file);
-    out << text;
-    file.close();
+//    QFile file(QFileDialog::getSaveFileName(this,tr("Save"),QDir::homePath()));
+//    if(!file.open(QIODevice::WriteOnly))
+//        return;
+
+//    QTextStream out(&file);
+//    out << text;
+//    file.close();
 
 }
 

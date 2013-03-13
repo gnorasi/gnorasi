@@ -46,6 +46,8 @@ using namespace otb;
 
 namespace voreen {
 
+class OWLHelperItem;
+
 struct FuzzyRestriction{
     QString fuzzyProperty;
     double val;
@@ -63,15 +65,21 @@ public:
     QString opr() const { return m_opr; }
     void setOpr(const QString &opr) { m_opr = opr; }
 
+    QString className() const { return m_className; }
+    void setClassName(const QString &cl) { m_className = cl; }
+
     QList<FuzzyRestriction*> restrictions() const { return m_restrictionList; }
     void setRestrictions(const QList<FuzzyRestriction*> rl) { m_restrictionList = rl; }
 
     void addRestriction(FuzzyRestriction *r) { m_restrictionList.append(r); }
     void removeRestriction(FuzzyRestriction *r) { m_restrictionList.removeOne(r); }
 
+    FuzzyRestriction* restrictionAt(int index) { if(index >= 0 && index < m_restrictionList.size())return m_restrictionList.at(index); return 0; }
+
 private:
     int     m_id;
     QString m_opr;
+    QString m_className;
     QList<FuzzyRestriction*> m_restrictionList;
 };
 
@@ -109,24 +117,44 @@ public slots:
 
 
 private slots:
+    void onAddButtonClicked();
+    void onRemoveButtonClicked();
 
+    void onComboboxCurrentIndexChanged(const QString& );
 
+    void onRadioButtonMixMaxChanged();
+
+    void updateOutPortTextData();
+
+    void onModelChanged(QStandardItem* );
 
 private:
 
-//    void setupOntologyClassItems();
+    void processOntologyItem(OWLHelperItem *, QStringList &) ;
+
+    void setupWidgetByCurrentRule();
+
+    void setupOntologyClassItems(const QStringList &list);
 
 //    void setupOntologyComboBoxItems();
 
     QString getTextOperatorFromSymbol(const QString &text);
 
+    QString getSymbolOperatorFromText(const QString &text);
+
     QString constructXmlFile() const;
 
     void setupOperatorField();
 
+    void setupNameField();
+
     void setupFuzzyAtributes(FuzzyLabelMapUtility::LabelMapType* , const QString &prepkey);
 
+    FuzzyRule* fuzzyRuleByOntologyClass(const QString &);
+
     FuzzyLabelMapUtility::LabelMapType* getMapFromPort();
+
+    QStringList                         getOntologyClassesFromPort();
 
     FuzzyLabelMapUtility*               m_pFuzzyLabelMapUtility;
 
@@ -141,9 +169,15 @@ private:
     QRadioButton*                       m_pMinRadioButton;
     QRadioButton*                       m_pMaxRadioButton;
 
+    QPushButton*                        m_pAddPushButton;
+    QPushButton*                        m_pRemovePushButton;
+    QPushButton*                        m_pExportPushButton;
+
     QComboBox*                          m_pOntologyClassComboBox;
 
     QList<FuzzyRule*>                   m_fuzzyRuleList;
+
+    FuzzyRule*                          m_pCurrentRule;
 };
 
 }

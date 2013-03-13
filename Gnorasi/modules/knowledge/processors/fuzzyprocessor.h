@@ -1,6 +1,7 @@
 #ifndef VRN_FUZZYPROCESSOR_H
 #define VRN_FUZZYPROCESSOR_H
 
+#include "voreen/core/ports/textport.h"
 #include "voreen/core/processors/processor.h"
 
 #include "voreen/core/properties/filedialogproperty.h"
@@ -31,6 +32,7 @@ public:
      */
     void setOutputData(const OTBLabelMapPort::LabelMapPointer& pointer) { outLblMapPort_.setData(pointer); }
     
+    void setTextOutputData(const std::string text) { outTextPort_.setData(text); }
     
 protected:
     virtual void setDescriptions() {
@@ -45,6 +47,7 @@ private:
 
     OTBLabelMapPort inLblMapPort_;
     OTBLabelMapPort outLblMapPort_;
+    TextPort        outTextPort_;
 
     FileDialogProperty loadImageFile_;  ///< Path of the RDF file.
 
