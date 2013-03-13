@@ -81,6 +81,7 @@
 #include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
 #include "processors/FeatureExtraction/otbroadextractionprocessor.h"
 #include "processors/ImageAdministration/otbmultichannelextractroiprocessor.h"
+#include "processors/patented/otbimagetosiftkeypointsetfilterprocessor.h"
 
 #include "processors/Visualization/otbimageviewerprocessor.h"
 //#include "processors/Geometry/otborthorectifyprocessor.h"
@@ -164,6 +165,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBKMeansImageClassificationFilterProcessor());
     registerProcessor(new OTBRoadExtractionProcessor());
     registerProcessor(new OTBMultiChannelExtractROIProcessor());
+    registerProcessor(new OTBImageToSIFTKeyPointSetFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
