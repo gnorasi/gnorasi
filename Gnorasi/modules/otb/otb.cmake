@@ -278,7 +278,8 @@ SET(MOD_CORE_SOURCES
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
 	${MOD_DIR}/processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.cpp
 	${MOD_DIR}/processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.cpp
-	${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/OTBScalarImageToTexturesFilterProcessor.cpp
 
 )
 
@@ -329,8 +330,9 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
 	${MOD_DIR}/processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.h    
-	${MOD_DIR}/processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h
-	${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/OTBScalarImageToTexturesFilterProcessor.h
 )
 
 #
