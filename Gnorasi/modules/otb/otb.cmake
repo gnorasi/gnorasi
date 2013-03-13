@@ -287,6 +287,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/OTBWatershedSegmentationFilterProcessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.cpp
+    ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.cpp
 
 )
 
@@ -347,6 +348,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.h
     ${MOD_DIR}/processors/Segmentation/OTBWatershedSegmentationFilterProcessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
+    ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
 )
 
 #
