@@ -257,7 +257,6 @@ void FuzzyRulesProcessorWidget::setupValueField(){
     m_pRulesTableView->setItemDelegateForColumn(2,doubleSpinBoxDelegate);
 }
 
-
 //!
 void FuzzyRulesProcessorWidget::updateFromProcessor(){
     FuzzyLabelMapUtility::LabelMapType *mapT = getMapFromPort();
@@ -470,7 +469,8 @@ QStringList FuzzyRulesProcessorWidget::getOntologyClassesFromPort(){
 
     OWLHelperItem *rootItem = parser.rootOWLHelperItem();
 
-    processOntologyItem(rootItem,list);
+    if(rootItem)
+        processOntologyItem(rootItem,list);
 
     return list;
 }
