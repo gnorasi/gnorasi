@@ -262,16 +262,14 @@ void KnowledgeWebServiceProcessor::closeConnection(CURL* curlHandle) {
     char *url = composeURL("/close");
     curl_easy_setopt(curlHandle, CURLOPT_URL, url);
 
-    curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, "");
-
     CURLcode curlErr = curl_easy_perform(curlHandle);
     if(curlErr) {
         LWARNING(curl_easy_strerror(curlErr));
     }
 
     //revert to HTTP GET
-    curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, NULL);
-    curl_easy_setopt(curlHandle, CURLOPT_HTTPGET, 1L);
+    //curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, NULL);
+    //curl_easy_setopt(curlHandle, CURLOPT_HTTPGET, 1L);
 
     delete[] url;
 }
