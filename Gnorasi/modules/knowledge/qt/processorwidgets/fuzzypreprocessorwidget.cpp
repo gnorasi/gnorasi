@@ -102,6 +102,8 @@ void FuzzyPreProcessorWidget::initialize(){
     connect(m_pPushButtonAdd,SIGNAL(clicked()),this,SLOT(addSelection()));
     connect(m_pPushButtonCalculate,SIGNAL(clicked()),this,SLOT(calculate()));
     connect(m_pPushButtonRemove,SIGNAL(clicked()),this,SLOT(removeSelection()));
+
+    hide();
 }
 
 void FuzzyPreProcessorWidget::setupABFields(){
@@ -121,6 +123,8 @@ void FuzzyPreProcessorWidget::updateFromProcessor(){
         QStringList namesList = m_pFuzzyLabelMapUtility->getAttributeListNames();
 
         setupAvailableTableByList(namesList);
+
+        m_pTableViewAvailable->resizeColumnToContents(0);
     }
 }
 
@@ -176,6 +180,8 @@ void FuzzyPreProcessorWidget::addSelection(){
     pItem->setText(name);
 
     m_pModelSelection->appendRow(pItem);
+
+    m_pTableViewSelection->resizeColumnToContents(0);
 }
 
 void FuzzyPreProcessorWidget::removeSelection(){
@@ -210,31 +216,15 @@ void FuzzyPreProcessorWidget::calculate(){
         m_pFuzzyLabelMapUtility->calculateValues(lblMap,atName);
     }
 
-
-
-
-
     FuzzyPreProcessor *fProcessor = dynamic_cast<FuzzyPreProcessor*>(processor_);
     if(!fProcessor)
         return;
-
-//    const OTBLabelMapPort::LabelMapPointer lpointer = (OTBLabelMapPort::LabelMapPointer*)(lblMap);
 
     fProcessor->setOutputData(lblMap);
 
     QString text = m_pFuzzyLabelMapUtility->constructCsvFromLabelMap(lblMap);
 
     fProcessor->setTextOutputData(text.toStdString());
-
-//    qDebug() << text;
-
-//    QFile file(QFileDialog::getSaveFileName(this,tr("Save"),QDir::homePath()));
-//    if(!file.open(QIODevice::WriteOnly))
-//        return;
-
-//    QTextStream out(&file);
-//    out << text;
-//    file.close();
 
 }
 

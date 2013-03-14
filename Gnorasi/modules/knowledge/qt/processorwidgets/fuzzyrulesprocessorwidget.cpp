@@ -56,8 +56,8 @@ void FuzzyRulesProcessorWidget::initialize(){
     hboxLayout->addWidget(m_pOntologyClassComboBox);
     hboxLayout->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Expanding,QSizePolicy::Fixed));
 
-    m_pAddPushButton = new QPushButton(tr("Add"),this);
-    m_pRemovePushButton = new QPushButton(tr("Remove"),this);
+    m_pAddPushButton = new QPushButton(tr("Add Restriction"),this);
+    m_pRemovePushButton = new QPushButton(tr("Remove Restriction"),this);
 
     QLabel *pLabelFuzzOperator = new QLabel(tr("Fuzzy Operator : "),this);
 
@@ -82,7 +82,7 @@ void FuzzyRulesProcessorWidget::initialize(){
     hboxlayout2->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Expanding,QSizePolicy::Fixed));
     hboxlayout2->addWidget(m_pExportPushButton);
 
-    QLabel *pLabelRules = new QLabel(tr("Rules Table"),this);
+    QLabel *pLabelRules = new QLabel(tr("Restrictions"),this);
 
     QVBoxLayout *vboxlayout = new QVBoxLayout;
     vboxlayout->addWidget(pLabel);
@@ -108,6 +108,8 @@ void FuzzyRulesProcessorWidget::initialize(){
     connect(m_pMaxRadioButton,SIGNAL(pressed()),this,SLOT(onRadioButtonMixMaxChanged()));
     connect(m_pExportPushButton,SIGNAL(clicked()),this,SLOT(updateOutPortTextData()));
     connect(m_pRulesModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(onModelChanged(QStandardItem*)));
+
+    hide();
 }
 
 
@@ -467,7 +469,8 @@ QStringList FuzzyRulesProcessorWidget::getOntologyClassesFromPort(){
 
     OWLHelperItem *rootItem = parser.rootOWLHelperItem();
 
-    processOntologyItem(rootItem,list);
+    if(rootItem)
+        processOntologyItem(rootItem,list);
 
     return list;
 }
