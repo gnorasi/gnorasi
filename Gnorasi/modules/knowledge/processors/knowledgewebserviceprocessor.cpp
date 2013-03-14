@@ -19,10 +19,11 @@ KnowledgeWebServiceProcessor::KnowledgeWebServiceProcessor()
     , pTextDataOut_("")
 {
     // register ports and properties
-    addPort(inOntologyPort_);
-    addPort(inGeoRulePort_);
     addPort(inFuzzyRulePort_);
     addPort(inObjectMapPort_);
+    addPort(inOntologyPort_);
+    addPort(inGeoRulePort_);
+
     addPort(outPort_);
     addProperty(serverURLupdate_);
     update_.onChange(CallMemberAction<KnowledgeWebServiceProcessor>(this, &KnowledgeWebServiceProcessor::updateView));
@@ -168,10 +169,23 @@ void KnowledgeWebServiceProcessor::process() {
         LINFO(retData);
         retData = "";
 
-        getQueryResults(curlHandle, "SELECT ?regions WHERE {?regions rdf:type gno:Region}");
+        sendFuzzyRules(curlHandle);
+        LINFO(retData);
+        retData = "";
+
+        sendGeoRules(curlHandle);
+        LINFO(retData);
+        retData = "";
+
+        getClassificationResults(curlHandle);
+
+        //getQueryResults(curlHandle, "SELECT ?regions WHERE {?regions rdf:type gno:Region}");
 
         setTextDataOut(retData);
+        LINFO(retData);
         retData = "";
+
+        closeConnection(curlHandle);
 
         /* Clean-up libcurl */
         curl_easy_cleanup(curlHandle);
@@ -244,6 +258,24 @@ void KnowledgeWebServiceProcessor::initConnection(CURL* curlHandle, char *trunca
     curl_free(truncateEncoded);
 }
 
+void KnowledgeWebServiceProcessor::closeConnection(CURL* curlHandle) {
+    char *url = composeURL("/close");
+    curl_easy_setopt(curlHandle, CURLOPT_URL, url);
+
+    curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, "");
+
+    CURLcode curlErr = curl_easy_perform(curlHandle);
+    if(curlErr) {
+        LWARNING(curl_easy_strerror(curlErr));
+    }
+
+    //revert to HTTP GET
+    curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, NULL);
+    curl_easy_setopt(curlHandle, CURLOPT_HTTPGET, 1L);
+
+    delete[] url;
+}
+
 void KnowledgeWebServiceProcessor::sendOntology(CURL* curlHandle) {
     char *url = composeURL("/sendUserOntology");
     curl_easy_setopt(curlHandle, CURLOPT_URL, url);
@@ -275,6 +307,8 @@ void KnowledgeWebServiceProcessor::sendOntology(CURL* curlHandle) {
 void KnowledgeWebServiceProcessor::sendObjectMapData(CURL* curlHandle, char *srid, char *parseFeatures) {
     char *url = composeURL("/sendCSVDataString");
     curl_easy_setopt(curlHandle, CURLOPT_URL, url);
+
+    //LINFO(getObjectMapData().c_str());
 
     char *urlEncoded = curl_escape(getObjectMapData().c_str(),0);
     char *postfields = new char[strlen(urlEncoded)+50];

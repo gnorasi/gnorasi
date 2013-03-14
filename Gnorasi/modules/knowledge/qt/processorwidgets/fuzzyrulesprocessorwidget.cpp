@@ -255,7 +255,6 @@ void FuzzyRulesProcessorWidget::setupValueField(){
     m_pRulesTableView->setItemDelegateForColumn(2,doubleSpinBoxDelegate);
 }
 
-
 //!
 void FuzzyRulesProcessorWidget::updateFromProcessor(){
     FuzzyLabelMapUtility::LabelMapType *mapT = getMapFromPort();

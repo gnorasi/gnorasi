@@ -78,6 +78,7 @@ public:
 
     FuzzyRestriction* restrictionAt(int index) { if(index >= 0 && index < m_restrictionList.size())return m_restrictionList.at(index); return 0; }
 
+
 private:
     int     m_id;
     QString m_opr;
