@@ -36,7 +36,7 @@ public:
     /*!
      * \brief calculateValues
      */
-    void calculateValues(LabelMapType *lblMap, const QStringList &);
+    void calculateValues(LabelMapType *lblMap, const QString& );
 
     QString constructCsvFromLabelMap(LabelMapType *lblMap);
 

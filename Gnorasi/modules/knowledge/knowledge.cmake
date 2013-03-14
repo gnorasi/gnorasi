@@ -63,6 +63,7 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/utils/fuzzylabelmaputility.cpp
     ${MOD_DIR}/qt/processorwidgets/fuzzyprocessorwidget.cpp
     ${MOD_DIR}/qt/processorwidgets/fuzzydefinitionprocessorwidget.cpp
+    ${MOD_DIR}/qt/processorwidgets/doublespinboxdelegate.cpp
 )
 
 SET(MOD_QT_HEADERS
@@ -88,6 +89,7 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/utils/fuzzylabelmaputility.h
     ${MOD_DIR}/qt/processorwidgets/fuzzyprocessorwidget.h
     ${MOD_DIR}/qt/processorwidgets/fuzzydefinitionprocessorwidget.h
+    ${MOD_DIR}/qt/processorwidgets/doublespinboxdelegate.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

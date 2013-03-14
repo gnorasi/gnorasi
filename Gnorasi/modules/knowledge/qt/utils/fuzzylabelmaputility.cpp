@@ -37,24 +37,21 @@ void FuzzyLabelMapUtility::parse(LabelMapType *lblmap){
 }
 
 
-void FuzzyLabelMapUtility::calculateValues(LabelMapType *lblMap, const QStringList &list){
+void FuzzyLabelMapUtility::calculateValues(LabelMapType *lblMap, const QString &propName){
     for(unsigned int i = 1; i < lblMap->GetNumberOfLabelObjects(); i++){
         LabelObjectType* lblObject = lblMap->GetLabelObject(i);
 
-        QStringList::const_iterator p;
-        for(p = list.constBegin(); p != list.constEnd(); p++){
-            QString atName = *p;
-            double val = (double)lblObject->GetAttribute(atName.toLatin1().constData());
+        double val = (double)lblObject->GetAttribute(propName.toLatin1().constData());
 
-            double calval = calculateValue(val,m_a,m_b);
+        double calval = calculateValue(val,m_a,m_b);
 
-            int idx = atName.lastIndexOf("::");
-            idx += 2;
+        int idx = propName.lastIndexOf("::");
+        idx += 2;
 
-            QString newName = atName.insert(idx,QLatin1String("Fuzzy"));
+        QString newName = propName;
+        newName = newName.insert(idx,QLatin1String("Fuzzy"));
 
-            lblObject->SetAttribute(newName.toLatin1().constData(),calval);
-        }
+        lblObject->SetAttribute(newName.toLatin1().constData(),calval);
     }
 }
 

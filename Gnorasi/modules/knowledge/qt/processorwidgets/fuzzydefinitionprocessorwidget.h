@@ -158,8 +158,6 @@ private:
 
     FuzzyLabelMapUtility*               m_pFuzzyLabelMapUtility;
 
-    QComboBox*                          m_pOntologyClassesComboBox;
-
     QStringList                         m_fuzzyAttributesList;
 
     QTableView*                         m_pRulesTableView;

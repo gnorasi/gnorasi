@@ -2,6 +2,8 @@
 
 #include "voreen/qt/voreenapplicationqt.h"
 
+#include "doublespinboxdelegate.h"
+
 using namespace otb;
 //using namespace itiviewer;
 
@@ -23,7 +25,7 @@ FuzzyProcessorWidget::FuzzyProcessorWidget(QWidget *parent, FuzzyProcessor *fuzz
 void FuzzyProcessorWidget::initialize(){
     QProcessorWidget::initialize();
 
-    QGroupBox *pGroupBox = new QGroupBox(tr("Fuzzy information"),this);
+    QGroupBox *pGroupBox = new QGroupBox(tr("Right-shoulder parameters"),this);
 
     m_pPushButtonAdd = new QPushButton(this);
     m_pPushButtonRemove = new QPushButton(this);
@@ -33,13 +35,6 @@ void FuzzyProcessorWidget::initialize(){
     m_pPushButtonRemove->setText(tr("Remove"));
     m_pPushButtonCalculate->setText(tr("Calculate"));
 
-    m_pSpinBoxMax = new QDoubleSpinBox(this);
-    m_pSpinBoxMin = new QDoubleSpinBox(this);
-    m_pSpinBoxMax->setMinimum(0.0);
-    m_pSpinBoxMax->setMaximum(999999.0);
-    m_pSpinBoxMin->setMinimum(0.0);
-    m_pSpinBoxMin->setMaximum(999999.0);
-
     m_pModel = new QStandardItemModel(this);
     QStringList headers;
     headers << tr("Attribute Name");
@@ -47,27 +42,21 @@ void FuzzyProcessorWidget::initialize(){
 
     m_pModelSelection = new QStandardItemModel(this);
     QStringList headers1;
-    headers1 << tr("Attribute Name");
+    headers1 << tr("Attribute Name") << "a" << "b";
     m_pModelSelection->setHorizontalHeaderLabels(headers1);
 
     m_pTableViewAvailable = new QTableView(this);
     m_pTableViewSelection = new QTableView(this);
     m_pTableViewAvailable->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
-    m_pTableViewSelection->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
+    m_pTableViewSelection->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     m_pTableViewAvailable->setAlternatingRowColors(true);
     m_pTableViewSelection->setAlternatingRowColors(true);
     m_pTableViewAvailable->setModel(m_pModel);
     m_pTableViewSelection->setModel(m_pModelSelection);
 
+
     QHBoxLayout *layout = new QHBoxLayout;
 
-    QLabel *pLabel1 = new QLabel(tr("Min Value"),this);
-    QLabel *pLabel2 = new QLabel(tr("Max Value"),this);
-
-    layout->addWidget(pLabel1);
-    layout->addWidget(m_pSpinBoxMin);
-    layout->addWidget(pLabel2);
-    layout->addWidget(m_pSpinBoxMax);
     layout->addSpacerItem(new QSpacerItem(100,20,QSizePolicy::Expanding,QSizePolicy::Fixed));
     layout->addWidget(m_pPushButtonCalculate);
 
@@ -99,11 +88,19 @@ void FuzzyProcessorWidget::initialize(){
 
     m_pFuzzyLabelMapUtility = new FuzzyLabelMapUtility(this);
 
+    setupABFields();
+
     connect(m_pPushButtonAdd,SIGNAL(clicked()),this,SLOT(addSelection()));
     connect(m_pPushButtonCalculate,SIGNAL(clicked()),this,SLOT(calculate()));
     connect(m_pPushButtonRemove,SIGNAL(clicked()),this,SLOT(removeSelection()));
-    connect(m_pSpinBoxMin,SIGNAL(valueChanged(double)),m_pFuzzyLabelMapUtility,SLOT(updateMinValue(double)));
-    connect(m_pSpinBoxMax,SIGNAL(valueChanged(double)),m_pFuzzyLabelMapUtility,SLOT(updateMaxValue(double)));
+}
+
+void FuzzyProcessorWidget::setupABFields(){
+    DoubleSpinBoxDelegate *spinBoxDelegate = new DoubleSpinBoxDelegate(-9999999.0, 9999999.0,2,this);
+    m_pTableViewSelection->setItemDelegateForColumn(1,spinBoxDelegate);
+
+    DoubleSpinBoxDelegate *spinBoxDelegate1 = new DoubleSpinBoxDelegate(-9999999.0, 9999999.0,2,this);
+    m_pTableViewSelection->setItemDelegateForColumn(2,spinBoxDelegate1);
 }
 
 
@@ -184,16 +181,30 @@ void FuzzyProcessorWidget::removeSelection(){
 
 void FuzzyProcessorWidget::calculate(){
 
-    QStringList list;
-
-    for(int i = 0; i < m_pModelSelection->rowCount(); i++){
-        QStandardItem *pItem = m_pModelSelection->item(i);
-        list << pItem->data(Qt::DisplayRole).toString();
-    }
-
     FuzzyLabelMapUtility::LabelMapType *lblMap = getMapFromPort();
 
-    m_pFuzzyLabelMapUtility->calculateValues(lblMap,list);
+    for(int i = 0; i < m_pModelSelection->rowCount(); i++){
+        QStandardItem *pItem = m_pModelSelection->item(i,0);
+        QString atName = pItem->data(Qt::DisplayRole).toString();
+
+        QStandardItem *pItemA =m_pModelSelection->item(i,1);
+        if(!pItemA)
+            continue;
+
+        m_pFuzzyLabelMapUtility->updateMinValue(pItemA->data(Qt::DisplayRole).toDouble());
+
+        QStandardItem *pItemB = m_pModelSelection->item(i,2);
+        if(!pItemB)
+            continue;
+
+        m_pFuzzyLabelMapUtility->updateMinValue(pItemB->data(Qt::DisplayRole).toDouble());
+
+        m_pFuzzyLabelMapUtility->calculateValues(lblMap,atName);
+    }
+
+
+
+
 
     FuzzyProcessor *fProcessor = dynamic_cast<FuzzyProcessor*>(processor_);
     if(!fProcessor)
