@@ -299,6 +299,77 @@ void KnowledgeWebServiceProcessor::sendObjectMapData(CURL* curlHandle, char *sri
     curl_free(urlEncoded);
 }
 
+void KnowledgeWebServiceProcessor::sendFuzzyRules(CURL* curlHandle) {
+    if (getFuzzyRuleData().compare("") != 0) {
+        char *url = composeURL("/execFuzzyRules");
+        curl_easy_setopt(curlHandle, CURLOPT_URL, url);
+
+        char *fuzzyRulesEncoded = curl_escape(getFuzzyRuleData().c_str(),0);
+
+        char *postfields = new char[strlen(fuzzyRulesEncoded)+100];
+        sprintf(postfields,"rules=%s&context=", fuzzyRulesEncoded);
+
+        curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, postfields);
+
+        CURLcode curlErr = curl_easy_perform(curlHandle);
+        if(curlErr) {
+            LWARNING(curl_easy_strerror(curlErr));
+        }
+
+        //revert to HTTP GET
+        curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, NULL);
+        curl_easy_setopt(curlHandle, CURLOPT_HTTPGET, 1L);
+
+        delete[] postfields;
+        delete[] url;
+        curl_free(fuzzyRulesEncoded);
+    }
+}
+
+void KnowledgeWebServiceProcessor::sendGeoRules(CURL* curlHandle) {
+    if (getGeoRuleData().compare("") != 0) {
+        char *url = composeURL("/ruleString");
+        curl_easy_setopt(curlHandle, CURLOPT_URL, url);
+
+        char *geoRulesEncoded = curl_escape(getGeoRuleData().c_str(),0);
+
+        char *postfields = new char[strlen(geoRulesEncoded)+100];
+        sprintf(postfields,"rules=%s&context=", geoRulesEncoded);
+
+        curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, postfields);
+
+        CURLcode curlErr = curl_easy_perform(curlHandle);
+        if(curlErr) {
+            LWARNING(curl_easy_strerror(curlErr));
+        }
+
+        //revert to HTTP GET
+        curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, NULL);
+        curl_easy_setopt(curlHandle, CURLOPT_HTTPGET, 1L);
+
+        delete[] postfields;
+        delete[] url;
+        curl_free(geoRulesEncoded);
+    }
+}
+
+void KnowledgeWebServiceProcessor::getClassificationResults(CURL* curlHandle) {
+    char *url = composeURL("/getResults");
+
+     char *params = new char[strlen(url)+50];
+    sprintf(params, "%s?context=", url);
+
+    curl_easy_setopt(curlHandle, CURLOPT_URL, params);
+
+    CURLcode curlErr = curl_easy_perform(curlHandle);
+    if(curlErr) {
+        LWARNING(curl_easy_strerror(curlErr));
+    }
+
+    delete[] url;
+    delete[] params;
+}
+
 void KnowledgeWebServiceProcessor::getQueryResults(CURL* curlHandle, char *query) {
     char *url = composeURL("/getResultsQuery");
 
