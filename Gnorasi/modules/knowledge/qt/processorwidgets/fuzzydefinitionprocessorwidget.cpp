@@ -58,10 +58,13 @@ void FuzzyDefinitionProcessorWidget::initialize(){
     m_pAddPushButton = new QPushButton(tr("Add"),this);
     m_pRemovePushButton = new QPushButton(tr("Remove"),this);
 
+    QLabel *pLabelFuzzOperator = new QLabel(tr("Fuzzy Operator : "),this);
+
     QHBoxLayout *hboxlayout1 = new QHBoxLayout;
     hboxlayout1->addWidget(m_pAddPushButton);
     hboxlayout1->addWidget(m_pRemovePushButton);
     hboxlayout1->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Expanding,QSizePolicy::Fixed));
+    hboxlayout1->addWidget(pLabelFuzzOperator);
     hboxlayout1->addWidget(m_pMinRadioButton);
     hboxlayout1->addWidget(m_pMaxRadioButton);
 
@@ -378,6 +381,7 @@ void FuzzyDefinitionProcessorWidget::setupOntologyClassItems(const QStringList &
         QString text = *i;
 
         m_pOntologyClassComboBox->addItem(text);
+        m_pOntologyClassComboBox->setCurrentIndex(m_pOntologyClassComboBox->count()-1);
 
         FuzzyRule *pRule =new FuzzyRule(this);
         pRule->setClassName(text);

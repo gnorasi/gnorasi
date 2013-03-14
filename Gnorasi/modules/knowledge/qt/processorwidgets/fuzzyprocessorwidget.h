@@ -85,14 +85,13 @@ private slots:
 
 private:
 
+    void setupABFields();
+
     void setupAvailableTableByList(const QStringList &list);
 
     FuzzyLabelMapUtility::LabelMapType*       getMapFromPort();
 
     FuzzyLabelMapUtility *m_pFuzzyLabelMapUtility;
-
-    QDoubleSpinBox      *m_pSpinBoxMin;
-    QDoubleSpinBox      *m_pSpinBoxMax;
 
     QTableView          *m_pTableViewAvailable;
     QTableView          *m_pTableViewSelection;
