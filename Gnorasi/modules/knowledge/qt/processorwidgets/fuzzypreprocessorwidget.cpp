@@ -217,31 +217,15 @@ void FuzzyPreProcessorWidget::calculate(){
         m_pFuzzyLabelMapUtility->calculateValues(lblMap,atName);
     }
 
-
-
-
-
     FuzzyPreProcessor *fProcessor = dynamic_cast<FuzzyPreProcessor*>(processor_);
     if(!fProcessor)
         return;
-
-//    const OTBLabelMapPort::LabelMapPointer lpointer = (OTBLabelMapPort::LabelMapPointer*)(lblMap);
 
     fProcessor->setOutputData(lblMap);
 
     QString text = m_pFuzzyLabelMapUtility->constructCsvFromLabelMap(lblMap);
 
     fProcessor->setTextOutputData(text.toStdString());
-
-//    qDebug() << text;
-
-//    QFile file(QFileDialog::getSaveFileName(this,tr("Save"),QDir::homePath()));
-//    if(!file.open(QIODevice::WriteOnly))
-//        return;
-
-//    QTextStream out(&file);
-//    out << text;
-//    file.close();
 
 }
 
