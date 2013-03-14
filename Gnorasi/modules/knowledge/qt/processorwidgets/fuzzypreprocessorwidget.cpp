@@ -212,7 +212,7 @@ void FuzzyPreProcessorWidget::calculate(){
         if(!pItemB)
             continue;
 
-        m_pFuzzyLabelMapUtility->updateMinValue(pItemB->data(Qt::DisplayRole).toDouble());
+        m_pFuzzyLabelMapUtility->updateMaxValue(pItemB->data(Qt::DisplayRole).toDouble());
 
         m_pFuzzyLabelMapUtility->calculateValues(lblMap,atName);
     }
