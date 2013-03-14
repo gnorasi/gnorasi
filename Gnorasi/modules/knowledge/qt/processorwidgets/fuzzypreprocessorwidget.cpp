@@ -1,4 +1,4 @@
-#include "fuzzyprocessorwidget.h"
+#include "fuzzypreprocessorwidget.h"
 
 #include "voreen/qt/voreenapplicationqt.h"
 
@@ -9,12 +9,12 @@ using namespace otb;
 
 namespace voreen {
 
-const std::string FuzzyProcessorWidget::loggerCat_("voreen.FuzzyProcessorWidget");
+const std::string FuzzyPreProcessorWidget::loggerCat_("voreen.FuzzyPreProcessorWidget");
 
-FuzzyProcessorWidget::FuzzyProcessorWidget(QWidget *parent, FuzzyProcessor *fuzzyProcessor)
+FuzzyPreProcessorWidget::FuzzyPreProcessorWidget(QWidget *parent, FuzzyPreProcessor *fuzzyProcessor)
     : QProcessorWidget(fuzzyProcessor, parent)
 {
-    tgtAssert(fuzzyProcessor, "No FuzzyProcessorWidget processor");
+    tgtAssert(fuzzyProcessor, "No FuzzyPreProcessorWidget processor");
 
     setWindowTitle(QString::fromStdString(fuzzyProcessor->getName()));
     resize(600, 500);
@@ -22,7 +22,7 @@ FuzzyProcessorWidget::FuzzyProcessorWidget(QWidget *parent, FuzzyProcessor *fuzz
 }
 
 //!
-void FuzzyProcessorWidget::initialize(){
+void FuzzyPreProcessorWidget::initialize(){
     QProcessorWidget::initialize();
 
     QGroupBox *pGroupBox = new QGroupBox(tr("Right-shoulder parameters"),this);
@@ -95,7 +95,7 @@ void FuzzyProcessorWidget::initialize(){
     connect(m_pPushButtonRemove,SIGNAL(clicked()),this,SLOT(removeSelection()));
 }
 
-void FuzzyProcessorWidget::setupABFields(){
+void FuzzyPreProcessorWidget::setupABFields(){
     DoubleSpinBoxDelegate *spinBoxDelegate = new DoubleSpinBoxDelegate(-9999999.0, 9999999.0,2,this);
     m_pTableViewSelection->setItemDelegateForColumn(1,spinBoxDelegate);
 
@@ -105,7 +105,7 @@ void FuzzyProcessorWidget::setupABFields(){
 
 
 //!
-void FuzzyProcessorWidget::updateFromProcessor(){
+void FuzzyPreProcessorWidget::updateFromProcessor(){
     FuzzyLabelMapUtility::LabelMapType *mapT = getMapFromPort();
     if(mapT){
         m_pFuzzyLabelMapUtility->parse(mapT);
@@ -117,8 +117,8 @@ void FuzzyProcessorWidget::updateFromProcessor(){
 }
 
 
-FuzzyLabelMapUtility::LabelMapType* FuzzyProcessorWidget::getMapFromPort(){
-    FuzzyProcessor* fProcessor = dynamic_cast<FuzzyProcessor*>(processor_);
+FuzzyLabelMapUtility::LabelMapType* FuzzyPreProcessorWidget::getMapFromPort(){
+    FuzzyPreProcessor* fProcessor = dynamic_cast<FuzzyPreProcessor*>(processor_);
 
     if(!fProcessor)
         return 0;
@@ -142,7 +142,7 @@ FuzzyLabelMapUtility::LabelMapType* FuzzyProcessorWidget::getMapFromPort(){
     return 0;
 }
 
-void FuzzyProcessorWidget::setupAvailableTableByList(const QStringList &list){
+void FuzzyPreProcessorWidget::setupAvailableTableByList(const QStringList &list){
     m_pModel->removeRows(0,m_pModel->rowCount());
 
     QStringList::const_iterator i;
@@ -156,7 +156,7 @@ void FuzzyProcessorWidget::setupAvailableTableByList(const QStringList &list){
     }
 }
 
-void FuzzyProcessorWidget::addSelection(){
+void FuzzyPreProcessorWidget::addSelection(){
     QModelIndex index = m_pTableViewAvailable->currentIndex();
 
     if(!index.isValid())
@@ -170,7 +170,7 @@ void FuzzyProcessorWidget::addSelection(){
     m_pModelSelection->appendRow(pItem);
 }
 
-void FuzzyProcessorWidget::removeSelection(){
+void FuzzyPreProcessorWidget::removeSelection(){
     QModelIndex index = m_pTableViewSelection->currentIndex();
 
     if(!index.isValid())
@@ -179,7 +179,7 @@ void FuzzyProcessorWidget::removeSelection(){
     m_pModelSelection->removeRow(index.row());
 }
 
-void FuzzyProcessorWidget::calculate(){
+void FuzzyPreProcessorWidget::calculate(){
 
     FuzzyLabelMapUtility::LabelMapType *lblMap = getMapFromPort();
 
@@ -206,7 +206,7 @@ void FuzzyProcessorWidget::calculate(){
 
 
 
-    FuzzyProcessor *fProcessor = dynamic_cast<FuzzyProcessor*>(processor_);
+    FuzzyPreProcessor *fProcessor = dynamic_cast<FuzzyPreProcessor*>(processor_);
     if(!fProcessor)
         return;
 
@@ -230,7 +230,7 @@ void FuzzyProcessorWidget::calculate(){
 
 }
 
-FuzzyProcessorWidget::~FuzzyProcessorWidget(){
+FuzzyPreProcessorWidget::~FuzzyPreProcessorWidget(){
 //    ItiOtbImageManager::deleteInstance();
 }
 

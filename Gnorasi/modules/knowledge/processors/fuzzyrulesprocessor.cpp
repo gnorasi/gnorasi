@@ -1,12 +1,12 @@
-#include "fuzzydefinitionprocessor.h"
+#include "fuzzyrulesprocessor.h"
 #include "voreen/core/voreenapplication.h"
 #include "voreen/core/processors/processorwidget.h"
 
 namespace voreen {
 
-const std::string FuzzyDefinitionProcessor::loggerCat_("voreen.FuzzyDefinitionProcessor");
+const std::string FuzzyRulesProcessor::loggerCat_("voreen.FuzzyRulesProcessor");
   
-FuzzyDefinitionProcessor::FuzzyDefinitionProcessor()
+FuzzyRulesProcessor::FuzzyRulesProcessor()
     : Processor(),
     inLblMapPort_(Port::INPORT, "Input Label Map Port",0),
     inOntologyPort_(Port::INPORT,"Input Ontology Port", 0),
@@ -20,19 +20,19 @@ FuzzyDefinitionProcessor::FuzzyDefinitionProcessor()
     
 }
 
-FuzzyDefinitionProcessor::~FuzzyDefinitionProcessor() {
+FuzzyRulesProcessor::~FuzzyRulesProcessor() {
 
 }
 
-Processor* FuzzyDefinitionProcessor::create() const {
-    return new FuzzyDefinitionProcessor();
+Processor* FuzzyRulesProcessor::create() const {
+    return new FuzzyRulesProcessor();
 }
 
-bool FuzzyDefinitionProcessor::isEndProcessor() const {
+bool FuzzyRulesProcessor::isEndProcessor() const {
     return (!outFuzzyRulePort_.isConnected());
 }
 
-bool FuzzyDefinitionProcessor::isReady() const {
+bool FuzzyRulesProcessor::isReady() const {
     if (!isInitialized())
         return false;
 
@@ -41,19 +41,19 @@ bool FuzzyDefinitionProcessor::isReady() const {
     return true;
 }
 
-std::string FuzzyDefinitionProcessor::getProcessorInfo() const {
-    return "Fuzzy Definition";
+std::string FuzzyRulesProcessor::getProcessorInfo() const {
+    return "Fuzzy Rules";
 }
 
-void FuzzyDefinitionProcessor::initialize() throw (VoreenException) {
+void FuzzyRulesProcessor::initialize() throw (VoreenException) {
     Processor::initialize();
 }
 
-void FuzzyDefinitionProcessor::deinitialize() throw (VoreenException) {
+void FuzzyRulesProcessor::deinitialize() throw (VoreenException) {
     Processor::deinitialize();
 }
 
-void FuzzyDefinitionProcessor::process() {
+void FuzzyRulesProcessor::process() {
     if(!isEndProcessor()){
 //        outPort2_.setData(inPort2_.getData());
     }
@@ -64,7 +64,7 @@ void FuzzyDefinitionProcessor::process() {
 }
 
 //
-void FuzzyDefinitionProcessor::updateView() {
+void FuzzyRulesProcessor::updateView() {
     if (getProcessorWidget()){
         getProcessorWidget()->updateFromProcessor();
     }

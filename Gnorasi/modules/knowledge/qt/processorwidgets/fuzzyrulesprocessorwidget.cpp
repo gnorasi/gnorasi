@@ -1,4 +1,4 @@
-#include "fuzzydefinitionprocessorwidget.h"
+#include "fuzzyrulesprocessorwidget.h"
 
 #include "voreen/qt/voreenapplicationqt.h"
 
@@ -16,12 +16,12 @@ using namespace otb;
 
 namespace voreen {
 
-const std::string FuzzyDefinitionProcessorWidget::loggerCat_("voreen.FuzzyDefinitionProcessorWidget");
+const std::string FuzzyRulesProcessorWidget::loggerCat_("voreen.FuzzyRulesProcessorWidget");
 
-FuzzyDefinitionProcessorWidget::FuzzyDefinitionProcessorWidget(QWidget *parent, FuzzyDefinitionProcessor *fuzzyDefinitionProcessor)
+FuzzyRulesProcessorWidget::FuzzyRulesProcessorWidget(QWidget *parent, FuzzyRulesProcessor *fuzzyDefinitionProcessor)
     : m_pCurrentRule(NULL), QProcessorWidget(fuzzyDefinitionProcessor, parent)
 {
-    tgtAssert(fuzzyDefinitionProcessor, "No FuzzyDefinitionProcessorWidget processor");
+    tgtAssert(fuzzyDefinitionProcessor, "No FuzzyRulesProcessorWidget processor");
 
     setWindowTitle(QString::fromStdString(fuzzyDefinitionProcessor->getName()));
     resize(600, 500);
@@ -29,10 +29,10 @@ FuzzyDefinitionProcessorWidget::FuzzyDefinitionProcessorWidget(QWidget *parent, 
 }
 
 //!
-void FuzzyDefinitionProcessorWidget::initialize(){
+void FuzzyRulesProcessorWidget::initialize(){
     QProcessorWidget::initialize();
 
-    QGroupBox *pGroupBox = new QGroupBox(tr("Fuzzy Definition"),this);
+    QGroupBox *pGroupBox = new QGroupBox(tr("Fuzzy Rules"),this);
 
     QLabel *pLabel = new QLabel(tr("Ontology Class"),this);
 
@@ -106,7 +106,7 @@ void FuzzyDefinitionProcessorWidget::initialize(){
 }
 
 
-void FuzzyDefinitionProcessorWidget::onAddButtonClicked(){
+void FuzzyRulesProcessorWidget::onAddButtonClicked(){
 
     if(m_pCurrentRule){
         FuzzyRestriction *pRestriction = new FuzzyRestriction;
@@ -123,7 +123,7 @@ void FuzzyDefinitionProcessorWidget::onAddButtonClicked(){
 }
 
 
-void FuzzyDefinitionProcessorWidget::onRemoveButtonClicked(){
+void FuzzyRulesProcessorWidget::onRemoveButtonClicked(){
     if(!m_pCurrentRule)
         return;
 
@@ -141,7 +141,7 @@ void FuzzyDefinitionProcessorWidget::onRemoveButtonClicked(){
 }
 
 
-FuzzyRule* FuzzyDefinitionProcessorWidget::fuzzyRuleByOntologyClass(const QString &text){
+FuzzyRule* FuzzyRulesProcessorWidget::fuzzyRuleByOntologyClass(const QString &text){
     QList<FuzzyRule*>::const_iterator i;
     for(i = m_fuzzyRuleList.constBegin(); i != m_fuzzyRuleList.constEnd(); i++)
     {
@@ -154,7 +154,7 @@ FuzzyRule* FuzzyDefinitionProcessorWidget::fuzzyRuleByOntologyClass(const QStrin
     return 0;
 }
 
-void FuzzyDefinitionProcessorWidget::onComboboxCurrentIndexChanged(const QString &text){
+void FuzzyRulesProcessorWidget::onComboboxCurrentIndexChanged(const QString &text){
     FuzzyRule *pRule = fuzzyRuleByOntologyClass(text);
     if(pRule)
     {
@@ -164,7 +164,7 @@ void FuzzyDefinitionProcessorWidget::onComboboxCurrentIndexChanged(const QString
     }
 }
 
-QString FuzzyDefinitionProcessorWidget::getSymbolOperatorFromText(const QString &text){
+QString FuzzyRulesProcessorWidget::getSymbolOperatorFromText(const QString &text){
     QString symbol;
 
     if(!text.compare("le")){
@@ -181,7 +181,7 @@ QString FuzzyDefinitionProcessorWidget::getSymbolOperatorFromText(const QString 
     return symbol;
 }
 
-QString FuzzyDefinitionProcessorWidget::getTextOperatorFromSymbol(QString &text){
+QString FuzzyRulesProcessorWidget::getTextOperatorFromSymbol(QString &text){
     QString symbol;
 
     if(!text.compare("<=")){
@@ -199,7 +199,7 @@ QString FuzzyDefinitionProcessorWidget::getTextOperatorFromSymbol(QString &text)
 }
 
 
-void FuzzyDefinitionProcessorWidget::setupWidgetByCurrentRule(){
+void FuzzyRulesProcessorWidget::setupWidgetByCurrentRule(){
     if(!m_pCurrentRule)
         return;
 
@@ -232,13 +232,13 @@ void FuzzyDefinitionProcessorWidget::setupWidgetByCurrentRule(){
 }
 
 
-void FuzzyDefinitionProcessorWidget::setupNameField(){
+void FuzzyRulesProcessorWidget::setupNameField(){
     ComboBoxDelegate *pComboBoxDelegate = new ComboBoxDelegate(m_fuzzyAttributesList,this);
     m_pRulesTableView->setItemDelegateForColumn(0,pComboBoxDelegate);
 }
 
 
-void FuzzyDefinitionProcessorWidget::setupOperatorField(){
+void FuzzyRulesProcessorWidget::setupOperatorField(){
     QStringList list;
     list << ">=" << ">" << "<=" << "<";
     ComboBoxDelegate *pComboBoxDelegate = new ComboBoxDelegate(list,this);
@@ -247,7 +247,7 @@ void FuzzyDefinitionProcessorWidget::setupOperatorField(){
 
 
 //!
-void FuzzyDefinitionProcessorWidget::updateFromProcessor(){
+void FuzzyRulesProcessorWidget::updateFromProcessor(){
     FuzzyLabelMapUtility::LabelMapType *mapT = getMapFromPort();
     if(!mapT)
         return;
@@ -262,8 +262,8 @@ void FuzzyDefinitionProcessorWidget::updateFromProcessor(){
 }
 
 
-FuzzyLabelMapUtility::LabelMapType* FuzzyDefinitionProcessorWidget::getMapFromPort(){
-    FuzzyDefinitionProcessor* fProcessor = dynamic_cast<FuzzyDefinitionProcessor*>(processor_);
+FuzzyLabelMapUtility::LabelMapType* FuzzyRulesProcessorWidget::getMapFromPort(){
+    FuzzyRulesProcessor* fProcessor = dynamic_cast<FuzzyRulesProcessor*>(processor_);
 
     if(!fProcessor)
         return 0;
@@ -290,7 +290,7 @@ FuzzyLabelMapUtility::LabelMapType* FuzzyDefinitionProcessorWidget::getMapFromPo
 }
 
 
-void FuzzyDefinitionProcessorWidget::setupFuzzyAtributes(FuzzyLabelMapUtility::LabelMapType *mapT, const QString &prepkey){
+void FuzzyRulesProcessorWidget::setupFuzzyAtributes(FuzzyLabelMapUtility::LabelMapType *mapT, const QString &prepkey){
 
     m_fuzzyAttributesList.clear();
 
@@ -314,8 +314,8 @@ void FuzzyDefinitionProcessorWidget::setupFuzzyAtributes(FuzzyLabelMapUtility::L
     }
 }
 
-void FuzzyDefinitionProcessorWidget::updateOutPortTextData(){
-    FuzzyDefinitionProcessor *fProcessor = dynamic_cast<FuzzyDefinitionProcessor*>(processor_);
+void FuzzyRulesProcessorWidget::updateOutPortTextData(){
+    FuzzyRulesProcessor *fProcessor = dynamic_cast<FuzzyRulesProcessor*>(processor_);
     if(!fProcessor)
         return;
 
@@ -326,7 +326,7 @@ void FuzzyDefinitionProcessorWidget::updateOutPortTextData(){
     fProcessor->setTextOutputData(text.toStdString());
 }
 
-QString FuzzyDefinitionProcessorWidget::constructXmlFile(){
+QString FuzzyRulesProcessorWidget::constructXmlFile(){
     QString text;
 
     QDomDocument doc = QDomDocument();
@@ -372,7 +372,7 @@ QString FuzzyDefinitionProcessorWidget::constructXmlFile(){
 }
 
 
-void FuzzyDefinitionProcessorWidget::setupOntologyClassItems(const QStringList &list){
+void FuzzyRulesProcessorWidget::setupOntologyClassItems(const QStringList &list){
     m_fuzzyRuleList.clear();
     m_pOntologyClassComboBox->clear();
     QStringList::const_iterator i;
@@ -397,7 +397,7 @@ void FuzzyDefinitionProcessorWidget::setupOntologyClassItems(const QStringList &
     }
 }
 
-void FuzzyDefinitionProcessorWidget::onRadioButtonMixMaxChanged(){
+void FuzzyRulesProcessorWidget::onRadioButtonMixMaxChanged(){
     if(m_pMaxRadioButton->isChecked()){
         if(m_pCurrentRule)
             m_pCurrentRule->setOpr(QString::fromAscii(MAXOPERATOR));
@@ -409,7 +409,7 @@ void FuzzyDefinitionProcessorWidget::onRadioButtonMixMaxChanged(){
 }
 
 
-void FuzzyDefinitionProcessorWidget::processOntologyItem(OWLHelperItem *item, QStringList &list){
+void FuzzyRulesProcessorWidget::processOntologyItem(OWLHelperItem *item, QStringList &list){
     QList<OWLHelperItem*> childList = item->owlChildren();
     QList<OWLHelperItem*>::const_iterator i;
     for(i = childList.constBegin(); i != childList.constEnd(); i++){
@@ -420,7 +420,7 @@ void FuzzyDefinitionProcessorWidget::processOntologyItem(OWLHelperItem *item, QS
 }
 
 
-void FuzzyDefinitionProcessorWidget::onModelChanged(QStandardItem *item){
+void FuzzyRulesProcessorWidget::onModelChanged(QStandardItem *item){
     if(!m_pCurrentRule)
         return;
 
@@ -440,9 +440,9 @@ void FuzzyDefinitionProcessorWidget::onModelChanged(QStandardItem *item){
 }
 
 
-QStringList FuzzyDefinitionProcessorWidget::getOntologyClassesFromPort(){
+QStringList FuzzyRulesProcessorWidget::getOntologyClassesFromPort(){
     QStringList list;
-    FuzzyDefinitionProcessor *fProcessor = dynamic_cast<FuzzyDefinitionProcessor*>(processor_);
+    FuzzyRulesProcessor *fProcessor = dynamic_cast<FuzzyRulesProcessor*>(processor_);
     if(!fProcessor)
         return list;
 
@@ -459,8 +459,8 @@ QStringList FuzzyDefinitionProcessorWidget::getOntologyClassesFromPort(){
     return list;
 }
 
-FuzzyDefinitionProcessorWidget::~FuzzyDefinitionProcessorWidget(){
-//    ItiOtbImageManager::deleteInstance();
+FuzzyRulesProcessorWidget::~FuzzyRulesProcessorWidget(){
+
 }
 
 } //namespace voreen
