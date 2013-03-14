@@ -84,10 +84,15 @@ void FuzzyRulesProcessorWidget::initialize(){
 
     QLabel *pLabelRules = new QLabel(tr("Restrictions"),this);
 
+    QFrame *pFrame = new QFrame(this);
+    pFrame->setFrameShape(QFrame::HLine);
+    pFrame->setFrameShadow(QFrame::Sunken);
+
     QVBoxLayout *vboxlayout = new QVBoxLayout;
     vboxlayout->addWidget(pLabel);
     vboxlayout->addLayout(hboxLayout);
     vboxlayout->addLayout(hboxlayout1);
+    vboxlayout->addWidget(pFrame);
     vboxlayout->addWidget(pLabelRules);
     vboxlayout->addWidget(m_pRulesTableView);
     vboxlayout->addLayout(hboxlayout2);
