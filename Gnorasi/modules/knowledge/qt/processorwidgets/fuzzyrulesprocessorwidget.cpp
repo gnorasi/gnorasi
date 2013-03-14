@@ -5,6 +5,7 @@
 #include "comboboxdelegate.h"
 #include "../utils/owlparser.h"
 #include "../utils/owlhelperitem.h"
+#include "../processorwidgets/doublespinboxdelegate.h"
 
 #include <QDomDocument>
 
@@ -81,10 +82,13 @@ void FuzzyRulesProcessorWidget::initialize(){
     hboxlayout2->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Expanding,QSizePolicy::Fixed));
     hboxlayout2->addWidget(m_pExportPushButton);
 
+    QLabel *pLabelRules = new QLabel(tr("Rules Table"),this);
+
     QVBoxLayout *vboxlayout = new QVBoxLayout;
     vboxlayout->addWidget(pLabel);
     vboxlayout->addLayout(hboxLayout);
     vboxlayout->addLayout(hboxlayout1);
+    vboxlayout->addWidget(pLabelRules);
     vboxlayout->addWidget(m_pRulesTableView);
     vboxlayout->addLayout(hboxlayout2);
 
@@ -95,6 +99,7 @@ void FuzzyRulesProcessorWidget::initialize(){
     setLayout(vboxlayout1);
 
     setupOperatorField();
+    setupValueField();
 
     connect(m_pAddPushButton,SIGNAL(clicked()),this,SLOT(onAddButtonClicked()));
     connect(m_pRemovePushButton,SIGNAL(clicked()),this,SLOT(onRemoveButtonClicked()));
@@ -245,6 +250,11 @@ void FuzzyRulesProcessorWidget::setupOperatorField(){
     m_pRulesTableView->setItemDelegateForColumn(1,pComboBoxDelegate);
 }
 
+void FuzzyRulesProcessorWidget::setupValueField(){
+    DoubleSpinBoxDelegate *doubleSpinBoxDelegate = new DoubleSpinBoxDelegate(-99999999.0,9999999.0,2,this);
+    m_pRulesTableView->setItemDelegateForColumn(2,doubleSpinBoxDelegate);
+}
+
 
 //!
 void FuzzyRulesProcessorWidget::updateFromProcessor(){
@@ -340,6 +350,10 @@ QString FuzzyRulesProcessorWidget::constructXmlFile(){
     QList<FuzzyRule*>::const_iterator i;
     for(i = m_fuzzyRuleList.constBegin(); i != m_fuzzyRuleList.constEnd(); i++){
         FuzzyRule *pRule = *i;
+
+        if(pRule->isEmpty())
+            continue;
+
         QDomElement fuzzyRuleElemet = doc.createElement(QLatin1String("fuzzyRule"));
         fuzzyRuleElemet.setAttribute(QLatin1String("id"),pRule->id());
         fuzzyRuleElemet.setAttribute(QLatin1String("operator"),pRule->opr());

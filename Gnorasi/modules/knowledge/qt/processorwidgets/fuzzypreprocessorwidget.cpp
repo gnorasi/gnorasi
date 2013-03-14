@@ -55,6 +55,14 @@ void FuzzyPreProcessorWidget::initialize(){
     m_pTableViewSelection->setModel(m_pModelSelection);
 
 
+    QLabel *pLabelAvailable = new QLabel(tr("Available Properties"),this);
+    QLabel *pLabelSelected = new QLabel(tr("Fuzzy Properties"),this);
+
+    QHBoxLayout *hboxLayout3 = new QHBoxLayout;
+    hboxLayout3->addWidget(pLabelAvailable);
+    hboxLayout3->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Expanding,QSizePolicy::Fixed));
+    hboxLayout3->addWidget(pLabelSelected);
+
     QHBoxLayout *layout = new QHBoxLayout;
 
     layout->addSpacerItem(new QSpacerItem(100,20,QSizePolicy::Expanding,QSizePolicy::Fixed));
@@ -78,6 +86,7 @@ void FuzzyPreProcessorWidget::initialize(){
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addLayout(layout);
     vLayout->addWidget(pFrame);
+    vLayout->addLayout(hboxLayout3);
     vLayout->addLayout(hboxLayout2);
 
     pGroupBox->setLayout(vLayout);

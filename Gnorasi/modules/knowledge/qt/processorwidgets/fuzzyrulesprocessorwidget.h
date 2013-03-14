@@ -68,6 +68,8 @@ public:
     QString className() const { return m_className; }
     void setClassName(const QString &cl) { m_className = cl; }
 
+    bool isEmpty() const { return m_restrictionList.empty(); }
+
     QList<FuzzyRestriction*> restrictions() const { return m_restrictionList; }
     void setRestrictions(const QList<FuzzyRestriction*> rl) { m_restrictionList = rl; }
 
@@ -147,6 +149,8 @@ private:
     void setupOperatorField();
 
     void setupNameField();
+
+    void setupValueField();
 
     void setupFuzzyAtributes(FuzzyLabelMapUtility::LabelMapType* , const QString &prepkey);
 
