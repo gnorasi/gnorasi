@@ -69,7 +69,7 @@ inline double calculateValue(double val, double a , double b){
     else if(val >= b)
         return 1.0;
     else
-        return (val -a)/(a-b);
+        return (val -a)/(b-a);
 }
 
 QString FuzzyLabelMapUtility::contructTextFromPolygon(const QPolygon &pol){
