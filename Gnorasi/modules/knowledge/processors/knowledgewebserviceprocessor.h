@@ -52,6 +52,7 @@ private:
     void updateView();
     static size_t getRequestData(void *ptr, size_t size, size_t nmemb, std::string *stream);
     void initConnection(CURL* curlHandle, char *truncate);
+    void closeConnection(CURL* curlHandle);
     void sendOntology(CURL* curlHandle);
     void sendObjectMapData(CURL* curlHandle, char *srid, char *parseFeatures);
     void sendFuzzyRules(CURL* curlHandle);

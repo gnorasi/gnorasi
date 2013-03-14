@@ -112,7 +112,6 @@ void FuzzyPreProcessorWidget::setupABFields(){
     m_pTableViewSelection->setItemDelegateForColumn(2,spinBoxDelegate1);
 }
 
-
 //!
 void FuzzyPreProcessorWidget::updateFromProcessor(){
     FuzzyLabelMapUtility::LabelMapType *mapT = getMapFromPort();
