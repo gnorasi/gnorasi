@@ -47,16 +47,12 @@ void FuzzyDefinitionProcessorWidget::initialize(){
     m_pMinRadioButton->setText(tr("Min"));
 
     QButtonGroup *buttonGroup = new QButtonGroup(this);
-
     buttonGroup->addButton(m_pMinRadioButton);
     buttonGroup->addButton(m_pMaxRadioButton);
-
     m_pMaxRadioButton->setChecked(true);
 
     QHBoxLayout *hboxLayout = new QHBoxLayout;
     hboxLayout->addWidget(m_pOntologyClassComboBox);
-    hboxLayout->addWidget(m_pMinRadioButton);
-    hboxLayout->addWidget(m_pMaxRadioButton);
     hboxLayout->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Expanding,QSizePolicy::Fixed));
 
     m_pAddPushButton = new QPushButton(tr("Add"),this);
@@ -66,6 +62,8 @@ void FuzzyDefinitionProcessorWidget::initialize(){
     hboxlayout1->addWidget(m_pAddPushButton);
     hboxlayout1->addWidget(m_pRemovePushButton);
     hboxlayout1->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Expanding,QSizePolicy::Fixed));
+    hboxlayout1->addWidget(m_pMinRadioButton);
+    hboxlayout1->addWidget(m_pMaxRadioButton);
 
     m_pRulesTableView = new QTableView(this);
     QStringList headers;
@@ -409,14 +407,11 @@ void FuzzyDefinitionProcessorWidget::onRadioButtonMixMaxChanged(){
 
 void FuzzyDefinitionProcessorWidget::processOntologyItem(OWLHelperItem *item, QStringList &list){
     QList<OWLHelperItem*> childList = item->owlChildren();
-    if(!childList.count())
-        list << item->label();
-    else{
-        QList<OWLHelperItem*>::const_iterator i;
-        for(i = childList.constBegin(); i != childList.constEnd(); i++){
-            OWLHelperItem *pItem = *i;
-            processOntologyItem(pItem,list);
-        }
+    QList<OWLHelperItem*>::const_iterator i;
+    for(i = childList.constBegin(); i != childList.constEnd(); i++){
+        OWLHelperItem *pItem = *i;
+        list << pItem->label();
+        processOntologyItem(pItem,list);
     }
 }
 
