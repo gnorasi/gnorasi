@@ -10,6 +10,8 @@
 #include "../../otb/ports/otblabelmapport.h"
 #include "modules/knowledge/ports/ontologyport.h"
 
+#include "../ports/fuzzyruleport.h"
+
 
 namespace voreen {
 
@@ -31,7 +33,7 @@ public:
 
     std::string getOntologyData() { return inOntologyPort_.getData(); }
 
-    void setTextOutputData(const std::string text) { outTextPort_.setData(text); }
+    void setTextOutputData(const std::string text) { outFuzzyRulePort_.setData(text); }
     
 protected:
     virtual void setDescriptions() {
@@ -46,7 +48,7 @@ private:
 
     OTBLabelMapPort inLblMapPort_;
     OntologyPort    inOntologyPort_;
-    TextPort        outTextPort_;
+    FuzzyRulePort   outFuzzyRulePort_;
 
     FileDialogProperty loadImageFile_;  ///< Path of the RDF file.
 
