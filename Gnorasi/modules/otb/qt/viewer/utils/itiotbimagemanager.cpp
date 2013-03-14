@@ -74,7 +74,7 @@ bool ItiOtbImageManager::isPortEmpty(Port *port){
         OTBImagePort *pOtbImagePort = dynamic_cast<OTBImagePort*>(port);
 
         RasterImageType *rImgType = (RasterImageType*)pOtbImagePort->getData();
-        if(!rImgType || rImgType->GetLargestPossibleRegion().GetSize()[0] == 0 || rImgType->GetLargestPossibleRegion().GetSize()[1] == 0 )
+        if(!rImgType /*|| rImgType->GetLargestPossibleRegion().GetSize()[0] == 0 || rImgType->GetLargestPossibleRegion().GetSize()[1] == 0*/ )
             return true;
 
     }
