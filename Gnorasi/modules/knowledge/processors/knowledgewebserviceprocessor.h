@@ -54,6 +54,9 @@ private:
     void initConnection(CURL* curlHandle, char *truncate);
     void sendOntology(CURL* curlHandle);
     void sendObjectMapData(CURL* curlHandle, char *srid, char *parseFeatures);
+    void sendFuzzyRules(CURL* curlHandle);
+    void sendGeoRules(CURL* curlHandle);
+    void getClassificationResults(CURL* curlHandle);
     void getQueryResults(CURL* curlHandle, char *query);
 
     OntologyPort inOntologyPort_;
