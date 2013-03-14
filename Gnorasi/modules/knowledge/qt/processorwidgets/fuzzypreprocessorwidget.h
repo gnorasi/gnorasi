@@ -36,7 +36,7 @@
 
 #include "../utils/fuzzylabelmaputility.h"
 
-#include "modules/knowledge/processors/fuzzyprocessor.h"
+#include "modules/knowledge/processors/fuzzypreprocessor.h"
 #include "voreen/core/voreencoreapi.h"
 #include "voreen/qt/voreenmoduleqt.h"
 #include "voreen/qt/widgets/processor/qprocessorwidget.h"
@@ -47,13 +47,13 @@ using namespace otb;
 namespace voreen {
 
 
-class VRN_QT_API FuzzyProcessorWidget : public QProcessorWidget
+class VRN_QT_API FuzzyPreProcessorWidget : public QProcessorWidget
 {
     Q_OBJECT
 public:
-    FuzzyProcessorWidget(QWidget*, FuzzyProcessor* );
+    FuzzyPreProcessorWidget(QWidget*, FuzzyPreProcessor* );
 
-    virtual ~FuzzyProcessorWidget();
+    virtual ~FuzzyPreProcessorWidget();
 
     /*!
      * \brief initialize

@@ -1,12 +1,12 @@
-#include "fuzzyprocessor.h"
+#include "fuzzypreprocessor.h"
 #include "voreen/core/voreenapplication.h"
 #include "voreen/core/processors/processorwidget.h"
 
 namespace voreen {
 
-const std::string FuzzyProcessor::loggerCat_("voreen.FuzzyProcessor");
+const std::string FuzzyPreProcessor::loggerCat_("voreen.FuzzyPreProcessor");
   
-FuzzyProcessor::FuzzyProcessor()
+FuzzyPreProcessor::FuzzyPreProcessor()
     : Processor(),
     inLblMapPort_(Port::INPORT, "Input Label Map Port",0),
     outLblMapPort_(Port::OUTPORT, "Output Label Map Port",0),
@@ -21,19 +21,19 @@ FuzzyProcessor::FuzzyProcessor()
     
 }
 
-FuzzyProcessor::~FuzzyProcessor() {
+FuzzyPreProcessor::~FuzzyPreProcessor() {
 
 }
 
-Processor* FuzzyProcessor::create() const {
-    return new FuzzyProcessor();
+Processor* FuzzyPreProcessor::create() const {
+    return new FuzzyPreProcessor();
 }
 
-bool FuzzyProcessor::isEndProcessor() const {
+bool FuzzyPreProcessor::isEndProcessor() const {
     return (!outLblMapPort_.isConnected());
 }
 
-bool FuzzyProcessor::isReady() const {
+bool FuzzyPreProcessor::isReady() const {
     if (!isInitialized())
         return false;
 
@@ -42,19 +42,19 @@ bool FuzzyProcessor::isReady() const {
     return true;
 }
 
-std::string FuzzyProcessor::getProcessorInfo() const {
+std::string FuzzyPreProcessor::getProcessorInfo() const {
     return "Fuzzy Calculation";
 }
 
-void FuzzyProcessor::initialize() throw (VoreenException) {
+void FuzzyPreProcessor::initialize() throw (VoreenException) {
     Processor::initialize();
 }
 
-void FuzzyProcessor::deinitialize() throw (VoreenException) {
+void FuzzyPreProcessor::deinitialize() throw (VoreenException) {
     Processor::deinitialize();
 }
 
-void FuzzyProcessor::process() {
+void FuzzyPreProcessor::process() {
     if(!isEndProcessor()){
 //        outPort2_.setData(inPort2_.getData());
     }
@@ -83,7 +83,7 @@ void FuzzyProcessor::process() {
 }
 
 //
-void FuzzyProcessor::updateView() {
+void FuzzyPreProcessor::updateView() {
     if (getProcessorWidget()){
         getProcessorWidget()->updateFromProcessor();
     }

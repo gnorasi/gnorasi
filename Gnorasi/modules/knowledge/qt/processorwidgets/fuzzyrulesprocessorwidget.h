@@ -36,7 +36,7 @@
 
 #include "../utils/fuzzylabelmaputility.h"
 
-#include "modules/knowledge/processors/fuzzydefinitionprocessor.h"
+#include "modules/knowledge/processors/fuzzyrulesprocessor.h"
 #include "voreen/core/voreencoreapi.h"
 #include "voreen/qt/voreenmoduleqt.h"
 #include "voreen/qt/widgets/processor/qprocessorwidget.h"
@@ -86,13 +86,13 @@ private:
 
 
 
-class VRN_QT_API FuzzyDefinitionProcessorWidget : public QProcessorWidget
+class VRN_QT_API FuzzyRulesProcessorWidget : public QProcessorWidget
 {
     Q_OBJECT
 public:
-    FuzzyDefinitionProcessorWidget(QWidget*, FuzzyDefinitionProcessor* );
+    FuzzyRulesProcessorWidget(QWidget*, FuzzyRulesProcessor* );
 
-    virtual ~FuzzyDefinitionProcessorWidget();
+    virtual ~FuzzyRulesProcessorWidget();
 
     /*!
      * \brief initialize

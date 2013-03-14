@@ -1,5 +1,5 @@
-#ifndef VRN_FUZZYDEFINITIONPROCESSOR_H
-#define VRN_FUZZYDEFINITIONPROCESSOR_H
+#ifndef VRN_FUZZYRULESPROCESSOR_H
+#define VRN_FUZZYRULESPROCESSOR_H
 
 #include "voreen/core/ports/textport.h"
 #include "voreen/core/processors/processor.h"
@@ -15,13 +15,13 @@
 
 namespace voreen {
 
-class VRN_CORE_API FuzzyDefinitionProcessor : public Processor {
+class VRN_CORE_API FuzzyRulesProcessor : public Processor {
 public:
-    FuzzyDefinitionProcessor();
-    virtual ~FuzzyDefinitionProcessor();
+    FuzzyRulesProcessor();
+    virtual ~FuzzyRulesProcessor();
     virtual Processor* create() const;
 
-    virtual std::string getClassName() const { return "Fuzzy Defintion Processor"; }
+    virtual std::string getClassName() const { return "Fuzzy Rules Processor"; }
     virtual std::string getCategory() const  { return "Classification"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_EXPERIMENTAL; } //STABLE, TESTING, EXPERIMENTAL
     virtual std::string getProcessorInfo() const;
@@ -59,4 +59,4 @@ private:
 
 } // namespace
 
-#endif // VRN_FUZZYDEFINITIONPROCESSOR_H
+#endif // VRN_FUZZYRULESPROCESSOR_H

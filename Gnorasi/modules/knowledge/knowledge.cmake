@@ -15,8 +15,8 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/ontologyport.cpp
     ${MOD_DIR}/ports/georuleport.cpp
     ${MOD_DIR}/ports/fuzzyruleport.cpp
-    ${MOD_DIR}/processors/fuzzyprocessor.cpp
-    ${MOD_DIR}/processors/fuzzydefinitionprocessor.cpp
+    ${MOD_DIR}/processors/fuzzypreprocessor.cpp
+    ${MOD_DIR}/processors/fuzzyrulesprocessor.cpp
 )
 
 SET(MOD_CORE_HEADERS 
@@ -30,8 +30,8 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/ontologyport.h
     ${MOD_DIR}/ports/georuleport.h
     ${MOD_DIR}/ports/fuzzyruleport.h
-    ${MOD_DIR}/processors/fuzzyprocessor.h
-    ${MOD_DIR}/processors/fuzzydefinitionprocessor.h
+    ${MOD_DIR}/processors/fuzzypreprocessor.h
+    ${MOD_DIR}/processors/fuzzyrulesprocessor.h
 )
 
 ################################################################################
@@ -61,8 +61,8 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/utils/rulewriter.cpp
     ${MOD_DIR}/qt/utils/ruleparser.cpp
     ${MOD_DIR}/qt/utils/fuzzylabelmaputility.cpp
-    ${MOD_DIR}/qt/processorwidgets/fuzzyprocessorwidget.cpp
-    ${MOD_DIR}/qt/processorwidgets/fuzzydefinitionprocessorwidget.cpp
+    ${MOD_DIR}/qt/processorwidgets/fuzzypreprocessorwidget.cpp
+    ${MOD_DIR}/qt/processorwidgets/fuzzyrulesprocessorwidget.cpp
     ${MOD_DIR}/qt/processorwidgets/doublespinboxdelegate.cpp
 )
 
@@ -87,8 +87,8 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/utils/rulewriter.h
     ${MOD_DIR}/qt/utils/ruleparser.h
     ${MOD_DIR}/qt/utils/fuzzylabelmaputility.h
-    ${MOD_DIR}/qt/processorwidgets/fuzzyprocessorwidget.h
-    ${MOD_DIR}/qt/processorwidgets/fuzzydefinitionprocessorwidget.h
+    ${MOD_DIR}/qt/processorwidgets/fuzzypreprocessorwidget.h
+    ${MOD_DIR}/qt/processorwidgets/fuzzyrulesprocessorwidget.h
     ${MOD_DIR}/qt/processorwidgets/doublespinboxdelegate.h
 )
 
