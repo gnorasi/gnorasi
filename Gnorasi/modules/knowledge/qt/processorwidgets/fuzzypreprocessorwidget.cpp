@@ -102,6 +102,8 @@ void FuzzyPreProcessorWidget::initialize(){
     connect(m_pPushButtonAdd,SIGNAL(clicked()),this,SLOT(addSelection()));
     connect(m_pPushButtonCalculate,SIGNAL(clicked()),this,SLOT(calculate()));
     connect(m_pPushButtonRemove,SIGNAL(clicked()),this,SLOT(removeSelection()));
+
+    hide();
 }
 
 void FuzzyPreProcessorWidget::setupABFields(){
@@ -122,6 +124,8 @@ void FuzzyPreProcessorWidget::updateFromProcessor(){
         QStringList namesList = m_pFuzzyLabelMapUtility->getAttributeListNames();
 
         setupAvailableTableByList(namesList);
+
+        m_pTableViewAvailable->resizeColumnToContents(0);
     }
 }
 
@@ -177,6 +181,8 @@ void FuzzyPreProcessorWidget::addSelection(){
     pItem->setText(name);
 
     m_pModelSelection->appendRow(pItem);
+
+    m_pTableViewSelection->resizeColumnToContents(0);
 }
 
 void FuzzyPreProcessorWidget::removeSelection(){
