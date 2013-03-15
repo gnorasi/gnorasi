@@ -68,3 +68,6 @@ CMakeLists.txt.user
 Gnorasi/data/voreensettings.xml
 Gnorasi/data/voreenve-log.html
 data
+GnorasiWholeProjectDoxyfile
+Gnorasi/modules/KnowledgeDoxyfile
+Gnorasi/modules/OTBDoxyfile

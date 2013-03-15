@@ -38,7 +38,6 @@ namespace voreen {
 /**
  * Constructs Qt processor widgets for:
  * - ClassifierWSProcessor (ClassifierWSWidget)
- * - DummySegmentationProcessor (DummySegmentationWidget)
  */
 class KnowledgeProcessorWidgetFactory : public ProcessorWidgetFactory {
 public:
