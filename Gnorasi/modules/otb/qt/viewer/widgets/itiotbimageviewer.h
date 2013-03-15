@@ -119,12 +119,6 @@ public:
     ItiOtbImageManager* manager()                                                       { return m_pManager; }
 
 
-    /*!
-     * \brief clear
-     *  Clears all data on the render OpenGL widgets
-     */
-    virtual void clear()                                                                = 0;
-
 
 protected:
     /*!
