@@ -250,6 +250,8 @@ VectorImageModel
 
   // TODO : add some checking
   const DefaultImageType* image =  this->GetOutput(currentIndex);
+  if(!image)
+      return;
 
   // some checking
   if (!image->GetBufferedRegion().IsInside(region))

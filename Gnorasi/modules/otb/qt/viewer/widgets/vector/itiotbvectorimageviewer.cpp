@@ -401,9 +401,6 @@ void ItiOtbVectorImageViewer::forceUpdates(){
     m_pItiOtbVectorImageWidgetZoomable->update();
 }
 
-void ItiOtbVectorImageViewer::clear(){
-    m_pManager->clearLevels();
-}
 
 ItiOtbVectorImageViewer::~ItiOtbVectorImageViewer(){
 

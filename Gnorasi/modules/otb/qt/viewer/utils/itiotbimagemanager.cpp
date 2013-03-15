@@ -331,12 +331,6 @@ QString ItiOtbImageManager::constructInfoByIndexAlt(ImageRegionType::IndexType i
     return text;
 }
 
-void ItiOtbImageManager::clear(){
-    m_pImgType = 0;
-    m_pPort = 0;
-    clearLevels();
-}
-
 //!
 ItiOtbImageManager::~ItiOtbImageManager(){
 //    qDeleteAll(m_levelList);
