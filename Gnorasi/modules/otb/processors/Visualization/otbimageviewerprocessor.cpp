@@ -104,12 +104,13 @@ void OTBImageViewerProcessor::updateView() {
 
 void OTBImageViewerProcessor::showImage() {
     
+    ProcessorWidget *pW = getProcessorWidget();
+    if(pW)
+        pW->setVisible(true);
+
     if(this->isReady())
     {
-//        viewer = ViewerType::New();
-//        viewer->SetImage(inPort_.getData());
-//        viewer->SetLabel("Simple Image Viewer");
-//        viewer->Update();
+
     }
 }
 
