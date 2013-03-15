@@ -100,12 +100,12 @@ int main(int argc, char** argv) {
 
     // load and set style sheet
 #if !defined(__APPLE__)
-    if (useStylesheet) {
-        QFile file(":/voreenve/widgetstyle/voreen.qss");
-        file.open(QFile::ReadOnly);
-        QString styleSheet = QLatin1String(file.readAll());
-        vapp.setStyleSheet(styleSheet);
-    }
+//    if (useStylesheet) {
+//        QFile file(":/voreenve/widgetstyle/voreen.qss");
+//        file.open(QFile::ReadOnly);
+//        QString styleSheet = QLatin1String(file.readAll());
+//        vapp.setStyleSheet(styleSheet);
+//    }
 #endif
 
 #ifndef VRN_SHARED_LIBS

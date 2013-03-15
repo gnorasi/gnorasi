@@ -23,7 +23,7 @@ using namespace voreen;
 
 //!
 ItiOtbImageManager::ItiOtbImageManager(QObject *parent)
-    : QObject(parent)
+    : m_pImgType(0), m_pPort(0), QObject(parent)
 {
     filter = ImageToVectorImageCastFilterType::New();
 }
@@ -329,6 +329,12 @@ QString ItiOtbImageManager::constructInfoByIndexAlt(ImageRegionType::IndexType i
     text += QString("Lon: %1, Lat : %2").arg(QString::number(pt[0],'f',2)).arg(QString::number(pt[1],'f',2));
 
     return text;
+}
+
+void ItiOtbImageManager::clear(){
+    m_pImgType = 0;
+    m_pPort = 0;
+    clearLevels();
 }
 
 //!
