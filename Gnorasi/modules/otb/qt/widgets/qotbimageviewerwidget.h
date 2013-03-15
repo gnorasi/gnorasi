@@ -97,6 +97,8 @@ private slots:
 
 private:
 
+    void clearImage();
+
     /*!
      * \brief createViewer
      * \param port

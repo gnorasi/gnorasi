@@ -117,6 +117,14 @@ public:
 
 
     /*!
+     * \brief clear
+     *  Clear all data handled by the manager
+     *  image data + classification related data
+     */
+    void clear();
+
+
+    /*!
      * \brief clearLevels
      *  Clear all level objects. This function is used on the classification process.
      */

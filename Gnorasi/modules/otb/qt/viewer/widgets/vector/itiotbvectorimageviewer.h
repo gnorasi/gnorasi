@@ -87,6 +87,12 @@ public:
      */
     void draw();
 
+    /*!
+     * \brief clear
+     */
+    void clear();
+
+
     /** Compute the linear buffer index according to the 2D region and
      * its 2D index.This method is used when OTB_GL_USE_ACCEL is OFF.
      * The resulting buffer will be flipped over the X axis.
