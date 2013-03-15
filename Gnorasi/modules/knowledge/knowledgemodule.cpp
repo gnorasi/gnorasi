@@ -27,7 +27,6 @@
  ********************************************************************************/
 
 #include "knowledgemodule.h"
-#include "processors/dummysegmentationprocessor.h"
 #include "processors/classifierwsprocessor.h"
 #include "processors/retrieveclassificationdataprocessor.h"
 
@@ -48,7 +47,6 @@ KnowledgeModule::KnowledgeModule(const std::string& moduleName)
     setName("Knowledge");
     
     // each module processor needs to be registered
-    registerProcessor(new DummySegmentationProcessor());
     registerProcessor(new ClassifierWSProcessor());
     registerProcessor(new RetrieveClassificationDataProcessor());
 

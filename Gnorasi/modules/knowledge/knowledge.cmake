@@ -5,7 +5,6 @@
 SET(MOD_CORE_MODULECLASS KnowledgeModule)
 
 SET(MOD_CORE_SOURCES 
-    ${MOD_DIR}/processors/dummysegmentationprocessor.cpp
     ${MOD_DIR}/processors/classifierwsprocessor.cpp
     ${MOD_DIR}/processors/retrieveclassificationdataprocessor.cpp
     ${MOD_DIR}/processors/ontologycreatorprocessor.cpp
@@ -20,7 +19,6 @@ SET(MOD_CORE_SOURCES
 )
 
 SET(MOD_CORE_HEADERS 
-    ${MOD_DIR}/processors/dummysegmentationprocessor.h
     ${MOD_DIR}/processors/classifierwsprocessor.h
     ${MOD_DIR}/processors/retrieveclassificationdataprocessor.h
     ${MOD_DIR}/processors/ontologycreatorprocessor.h
@@ -41,7 +39,6 @@ SET(MOD_QT_MODULECLASS KnowledgeModuleQt)
 
 SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/processorwidgets/knowledgeprocessorwidgetfactory.cpp
-    ${MOD_DIR}/qt/processorwidgets/dummysegmentationwidget.cpp
     ${MOD_DIR}/qt/processorwidgets/classifierwswidget.cpp
     ${MOD_DIR}/qt/processorwidgets/retrieveclassificationdatawidget.cpp
     ${MOD_DIR}/qt/processorwidgets/ontologycreatorwidget.cpp
@@ -67,7 +64,6 @@ SET(MOD_QT_SOURCES
 )
 
 SET(MOD_QT_HEADERS
-    ${MOD_DIR}/qt/processorwidgets/dummysegmentationwidget.h
     ${MOD_DIR}/qt/processorwidgets/classifierwswidget.h
     ${MOD_DIR}/qt/processorwidgets/retrieveclassificationdatawidget.h
     ${MOD_DIR}/qt/processorwidgets/ontologycreatorwidget.h

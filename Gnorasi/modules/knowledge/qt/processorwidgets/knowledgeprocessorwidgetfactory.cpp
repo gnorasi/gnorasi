@@ -28,9 +28,6 @@
 
 #include "knowledgeprocessorwidgetfactory.h"
 
-#include "../../processors/dummysegmentationprocessor.h"
-#include "dummysegmentationwidget.h"
-
 #include "../../processors/classifierwsprocessor.h"
 #include "classifierwswidget.h"
 
@@ -68,9 +65,6 @@ ProcessorWidget* KnowledgeProcessorWidgetFactory::createWidget(Processor* proces
 
     if (dynamic_cast<ClassifierWSProcessor*>(processor))
         return new ClassifierWSWidget(parent, static_cast<ClassifierWSProcessor*>(processor));
-
-    if (dynamic_cast<DummySegmentationProcessor*>(processor))
-        return new DummySegmentationWidget(parent, static_cast<DummySegmentationProcessor*>(processor));
 
     if (dynamic_cast<OntologyCreatorProcessor*>(processor))
         return new OntologyCreatorWidget(parent, static_cast<OntologyCreatorProcessor*>(processor));
