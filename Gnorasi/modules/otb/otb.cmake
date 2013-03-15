@@ -280,19 +280,19 @@ SET(MOD_CORE_SOURCES
 	${MOD_DIR}/processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.cpp
 	${MOD_DIR}/processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.cpp
-    ${MOD_DIR}/processors/BasicFilters/OTBScalarImageToTexturesFilterProcessor.cpp
-    ${MOD_DIR}/processors/Radiometry/OTBBayesianFusionFilterProcessor.cpp  
-    ${MOD_DIR}/processors/patented/otbimagetosurfkeypointsetfilterprocessor.cpp
-    ${MOD_DIR}/processors/BasicFilters/OTBGradientMagnitudeImageFilterProcessor.cpp
-    ${MOD_DIR}/processors/FeatureExtraction/OTBLineRatioDetectorImageFilterProcessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.cpp
+    ${MOD_DIR}/processors/Radiometry/otbbayesianfusionfilterprocessor.cpp  
+    ${MOD_DIR}/processors/Patented/otbimagetosurfkeypointsetfilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.cpp
-    ${MOD_DIR}/processors/Segmentation/OTBWatershedSegmentationFilterProcessor.cpp
+    ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.cpp
     ${MOD_DIR}/processors/ImageAdministration/otbmultichannelextractroiprocessor.cpp
-    ${MOD_DIR}/processors/patented/otbimagetosiftkeypointsetfilterprocessor.cpp
+    ${MOD_DIR}/processors/Patented/otbimagetosiftkeypointsetfilterprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.cpp
 
@@ -348,19 +348,19 @@ SET(MOD_CORE_HEADERS
 	${MOD_DIR}/processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.h    
     ${MOD_DIR}/processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.h
-    ${MOD_DIR}/processors/BasicFilters/OTBScalarImageToTexturesFilterProcessor.h
-    ${MOD_DIR}/processors/Radiometry/OTBBayesianFusionFilterProcessor.h 
-    ${MOD_DIR}/processors/patented/otbimagetosurfkeypointsetfilterprocessor.h
-    ${MOD_DIR}/processors/BasicFilters/OTBGradientMagnitudeImageFilterProcessor.h
-    ${MOD_DIR}/processors/FeatureExtraction/OTBLineRatioDetectorImageFilterProcessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h
+    ${MOD_DIR}/processors/Radiometry/otbbayesianfusionfilterprocessor.h 
+    ${MOD_DIR}/processors/Patented/otbimagetosurfkeypointsetfilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.h
-    ${MOD_DIR}/processors/Segmentation/OTBWatershedSegmentationFilterProcessor.h
+    ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.h
     ${MOD_DIR}/processors/ImageAdministration/otbmultichannelextractroiprocessor.h
-    ${MOD_DIR}/processors/patented/otbimagetosiftkeypointsetfilterprocessor.h
+    ${MOD_DIR}/processors/Patented/otbimagetosiftkeypointsetfilterprocessor.h
     ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.h
     ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h
 
