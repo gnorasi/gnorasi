@@ -7,7 +7,7 @@
 #include <QPolygon>
 #include <QStringList>
 
-#include "../../../ports/otblabelmapport.h"
+#include "../../../otb/ports/otblabelmapport.h"
 
 #include "otbAttributesMapLabelObjectWithClassLabel.h"
 
