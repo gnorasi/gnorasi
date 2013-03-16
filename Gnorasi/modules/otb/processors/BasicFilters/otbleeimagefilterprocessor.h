@@ -4,6 +4,7 @@
  * 								      		*
  * Language:  C++						      		*
  * 										*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
  * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
  * Copyright (c) National Technical University of Athens. All rights reserved.	*
  * Copyright (c) Informatics and Telematics Institute				*

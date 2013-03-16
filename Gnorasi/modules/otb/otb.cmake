@@ -259,6 +259,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaleopeningfilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbbinaryclosingfilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaleclosingfilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.cpp
@@ -272,8 +273,6 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/otbvectorimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
-
-	${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.cpp
 )
 
 SET(MOD_CORE_HEADERS
@@ -307,6 +306,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaleopeningfilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbbinaryclosingfilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaleclosingfilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h
@@ -320,7 +320,6 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Radiometry/otbvectorimagebandmathprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.h
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
-	${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.h
 )
 
 #
