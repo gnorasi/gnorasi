@@ -52,7 +52,7 @@
 #include "processors/BasicFilters/otbgrayscaleopeningfilterprocessor.h"
 #include "processors/BasicFilters/otbbinaryclosingfilterprocessor.h"
 #include "processors/BasicFilters/otbgrayscaleclosingfilterprocessor.h"
-#include "processors/BasicFilters/otbleeImageFilterProcessor.h"
+#include "processors/BasicFilters/otbleeimagefilterprocessor.h"
 #include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
