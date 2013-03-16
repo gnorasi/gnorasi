@@ -4,10 +4,7 @@
  * 								      		*
  * Language:  C++						      		*
  * 										*
- * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
- * Copyright (c) National Technical University of Athens. All rights reserved.	*
- * Copyright (c) Informatics and Telematics Institute				*
- *	  Centre for Research and Technology Hellas. All rights reserved.	*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
  * 										*
  *                                                                    		*
  * This file is part of the GNORASI software package. GNORASI is free  		*
