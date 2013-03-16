@@ -52,6 +52,7 @@
 #include "processors/BasicFilters/otbgrayscaleopeningfilterprocessor.h"
 #include "processors/BasicFilters/otbbinaryclosingfilterprocessor.h"
 #include "processors/BasicFilters/otbgrayscaleclosingfilterprocessor.h"
+#include "processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h"
 #include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
@@ -64,7 +65,7 @@
 #include "processors/Radiometry/otbndwiprocessor.h"
 #include "processors/Radiometry/otbvectorimagebandmathprocessor.h"
 #include "processors/Radiometry/otbtwoimagebandmathprocessor.h"
-#include "processors/Radiometry/otbdiscretegaussianimagefilterprocessor.h"
+
 
 #include "processors/Visualization/otbimageviewerprocessor.h"
 
