@@ -259,6 +259,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaleopeningfilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbbinaryclosingfilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaleclosingfilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.cpp
@@ -306,6 +307,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaleopeningfilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbbinaryclosingfilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaleclosingfilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.h
