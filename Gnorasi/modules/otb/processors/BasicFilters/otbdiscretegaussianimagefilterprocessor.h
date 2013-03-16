@@ -5,6 +5,8 @@
  * Language:  C++						      		*
  * 										*
  * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
+ * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
+ * Copyright (c) National Technical University of Athens. All rights reserved.	*
  * 										*
  *                                                                    		*
  * This file is part of the GNORASI software package. GNORASI is free  		*
@@ -42,14 +44,14 @@ public:
 
     virtual Processor* create() const;
 
-    virtual std::string getCategory() const { return "Image Filters"; }
+    virtual std::string getCategory() const { return "Basic Filters"; }
     virtual std::string getClassName() const { return "Discrete Gaussian Image Filter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
 
     virtual std::string getProcessorInfo() const;
 
     typedef itk::DiscreteGaussianImageFilter<OTBImageFilterProcessor::ImageType,
-    OTBImageFilterProcessor::ImageType> FilterType;
+      OTBImageFilterProcessor::ImageType> FilterType;
 
     FilterType::Pointer filter;
 

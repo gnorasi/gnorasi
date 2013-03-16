@@ -7,8 +7,8 @@ const std::string OTBDiscreteGaussianImageFilterProcessor::loggerCat_("voreen.OT
 
 OTBDiscreteGaussianImageFilterProcessor::OTBDiscreteGaussianImageFilterProcessor()
     : OTBImageFilterProcessor(),
-    gaussianVarianceValue_("gaussianVarianceValue", "Gaussian Variance Value", 255.0f, 0.0f, 1024.0f),
-    maxKernelWidthValue_("maxKernelWidthValue", "Max Kernel Width Value", 0.0f, 0.0f, 1024.0f),
+    gaussianVarianceValue_("gaussianVarianceValue", "Gaussian Variance Value", 1.0f, 0.0f, 1024.0f),
+    maxKernelWidthValue_("maxKernelWidthValue", "Max Kernel Width Value", 30.0f, 0.0f, 1024.0f),
     inPort_(Port::INPORT, "OTBImage.inport", 0),
     outPort_(Port::OUTPORT, "OTBImage.outport", 0)
     {
