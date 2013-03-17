@@ -296,10 +296,6 @@ SET(MOD_CORE_SOURCES
 
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.cpp
-
-
-
-
 )
 
 SET(MOD_CORE_HEADERS
@@ -368,10 +364,6 @@ SET(MOD_CORE_HEADERS
 
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
-
-
-
-
 )
 
 #

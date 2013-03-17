@@ -87,9 +87,6 @@
 #include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
 #include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
 
-
-
-
 #include "processors/Visualization/otbimageviewerprocessor.h"
 //#include "processors/Geometry/otborthorectifyprocessor.h"
 
