@@ -284,11 +284,12 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
     ${MOD_DIR}/processors/Patented/otbimagetosurfkeypointsetfilterprocessor.cpp
     ${MOD_DIR}/processors/Patented/otbimagetosiftkeypointsetfilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.cpp
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
 
 
-    ${MOD_DIR}/processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.cpp
-    ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.cpp
+
     ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.cpp
@@ -355,10 +356,11 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
     ${MOD_DIR}/processors/Patented/otbimagetosurfkeypointsetfilterprocessor.h
     ${MOD_DIR}/processors/Patented/otbimagetosiftkeypointsetfilterprocessor.h
-#    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
-
     ${MOD_DIR}/processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.h
+#    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
+
+
     ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
