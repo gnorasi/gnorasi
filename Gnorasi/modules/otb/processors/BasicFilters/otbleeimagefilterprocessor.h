@@ -85,7 +85,3 @@ private:
 
 #endif // OTBLEEIMAGEFILTERPROCESSOR_H
 
-} //namespace
-
-#endif // OTBLEEIMAGEFILTERPROCESSOR_H
-
