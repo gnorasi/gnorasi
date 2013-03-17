@@ -21,11 +21,14 @@
 #include "otbSquareRootRenderingFunction.h"
 #include "otbGaussianRenderingFunction.h"
 #include "otbVectorRescaleIntensityImageFilter.h"
+#include "otbStreamingImageFileWriter.h"
+#include "otbGCPsToRPCSensorModelImageFilter.h"
 
+#include "otbOrthoRectificationFilter.h"
+#include "otbMapProjections.h"
 
 #include "../../ports/otbimageport.h"
 #include "../../ports/otbvectorimageport.h"
-
 
 
 #include "rgba_globaldefs.h"
@@ -139,6 +142,17 @@ DefaultImageType, ByteImageType>                                            Byte
 */
 typedef std::vector< std::string > StringVector;
 
+typedef otb::UtmInverseProjection                                                                           utmMapProjectionType;
+typedef otb::Lambert2EtenduForwardProjection                                                                lambert2MapProjectionType;
+typedef otb::TransMercatorInverseProjection                                                                 tranverseMercatorProjectionType;
+typedef otb::OrthoRectificationFilter<VectorImageType, VectorImageType, utmMapProjectionType>               OrthoRectifyUTMFilterType;
+typedef otb::OrthoRectificationFilter<VectorImageType, VectorImageType, lambert2MapProjectionType>          OrthoRectifyLambert2FilterType;
+typedef otb::OrthoRectificationFilter<VectorImageType, VectorImageType, tranverseMercatorProjectionType>    OrthoRectifyTMFilterType;
+
+typedef otb::GCPsToRPCSensorModelImageFilter<VectorImageType>                                               GCPsToSensorModelFilterType;
+
+typedef GCPsToSensorModelFilterType::Point2DType                                                            Point2DType;
+typedef GCPsToSensorModelFilterType::Point3DType                                                            Point3DType;
 
 
 #endif // VECTOR_GLOBALDEFS_H

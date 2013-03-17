@@ -2,7 +2,15 @@
 
 #include "../models/itiotbAbstractImageModel.h"
 
+#include "../utils/itiotbimagemanager.h"
+
 using namespace itiviewer;
+
+ItiOtbImageViewer::ItiOtbImageViewer(QWidget *parent)
+    : QWidget(parent)
+{
+    m_pManager = new ItiOtbImageManager(this);
+}
 
 void ItiOtbImageViewer::setModel( AbstractModel* model )
 {

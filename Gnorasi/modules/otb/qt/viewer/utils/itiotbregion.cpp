@@ -43,8 +43,11 @@ void Region::modifyPolygonByExtent(ImageRegionType &extent, const QRectF &rect, 
 
         QPoint hp;
 
-        hp.setX(point.x()*iz - rect.x());
-        hp.setY(point.y()*iz - rect.y());
+        int helperx = (point.x() - rect.x())*iz;
+        int helpery = (point.y() - rect.y())*iz;
+
+        hp.setX(helperx);
+        hp.setY(helpery);
 
         if(extent.GetIndex()[0] > 0)
             hp.setX(hp.x()+extent.GetIndex()[0]);

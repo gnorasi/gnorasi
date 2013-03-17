@@ -41,7 +41,7 @@ class ItiOtbImageViewerPanelSetupTab;
 class ItiOtbImageViewerPanelHistogramTab;
 class ItiOtbImageViewerPanelPixelDescriptionTab;
 class ItiOtbImageViewer;
-
+class ItiOtbImageManager;
 class Command;
 class ItiOtbImageChannelProvider;
 
@@ -54,17 +54,25 @@ class ItiOtbImageChannelProvider;
  *
  *  The processing of various slots provided by the GUI of this class is handled
  *  by a commands mechanism. Firstly a client object creates a new command instance.
- *  Then the client connects the newly created command object's slots with signals provided by this class.
+ *  Then the client connects the newly created command object's slots with signals provided by child objects of this class's instance.
  *  Finally the client must use the setCommand operation which sets the created command instance
  *  to the apporpriate slot given a SLOT_KEY argument.
  *  A SLOT enumeration of the available slots is declared below.
  *  For an example usage of the above mechanism please see the QOtbImageViewerWidget class source file
  *  and especially the setupCommands() function.
+ *  Setting up this object also passes from setting a valid ItiOtbImageChannelProvider object .
+ *  The ItiOtbImageChannelProvider object sets up the channels used by children objects ex. the setup tab .
  */
 class ItiOtbImageViewerPanel : public QWidget
 {
     Q_OBJECT
 public:
+    /*!
+     * \brief The SLOT_KEY enum
+     *  each command in the panel has a discrete slot enumaration value.
+     *  The first two values are reserved for general purposes.
+     *  each new command should just increase the value of the enumeration.
+     */
     enum SLOT_KEY{
         SLOT_CC                 = 0,    //! color composition
         SLOT_CE                 = 1,    //! contrast enhancement
@@ -78,7 +86,7 @@ public:
     };
 
     /*!
-     * \brief ItiOtbImageViewerPanel
+     * \brief ItiOtbImageViewerPanel, ctor!
      * \param parent
      */
     explicit ItiOtbImageViewerPanel(QWidget *parent = 0);
@@ -86,24 +94,25 @@ public:
     /*!
      * \brief ~ItiOtbImageViewerPanel
      */
-    virtual ~ItiOtbImageViewerPanel() {}
+    virtual ~ItiOtbImageViewerPanel()   ;
 
     /*!
-     * \brief setCommand, adds the command to the hash
+     * \brief setCommand, adds the command to the hash object
+     *  The client object uses this function in order to set the command objects, which encapsulate the specialized core functionality.
      * \param cmdk the slot key argument
      * \param pC the Command instance
      */
     void setCommand(SLOT_KEY cmdk, Command *pC);
 
     /*!
-     * \brief setProvider
+     * \brief setProvider, setter
      * \param p
      */
     void setProvider(ItiOtbImageChannelProvider *p) { m_pItiOtbImageChannelProvider = p; }
 
 
     /*!
-     * \brief provider
+     * \brief provider, getter
      * \return
      */
     ItiOtbImageChannelProvider* provider() { return m_pItiOtbImageChannelProvider; }
@@ -115,87 +124,106 @@ public:
      */
     ItiOtbImageViewerPanelSetupTab *setupTab() { return m_pSetupTab; }
 
-
-public slots:
     /*!
-     * \brief setupChannels,
+     * \brief saveDisplaySettings
+     *  This function is called when the viewer is on a splitted mode,
+     *  all it does is to save the GUI state of the widget on an INI settings file.
      */
-    void setupChannels();
-
-signals:
-    /*!
-     * \brief greyScaleColorCompositionChannelChanged
-     *  emitted when the grey scale channel selection has been altered
-     */
-    void greyScaleColorCompositionChannelChanged(int);
+    void saveDisplaySettings();
 
     /*!
-     * \brief rgbColorCompositionChannelsChanged emitted when the rgb channel selection has been altered
-     * \param red, the red channel number
-     * \param green, the green channel number
-     * \param blue, the blue channel number
+     * \brief readDisplaySettings
+     *
+     *  This function is called when the viewer is on the splitted mode,
+     *  all it does is to load and read the GUI settings size and pos and restore the widgets state
+     *  according to the value red from the INI settings file.
      */
-    void rgbColorCompositionChannelsChanged(int red, int green, int blue);
+    void readDisplaySettings();
 
     /*!
-     * \brief contrastEnhancementChanged emitted when the contrast enhancement method has been changed
-     * \param method , the method to be used for contrast enhancement
-     * \param aval, the a val could be a standard deviation value of a lower quantile value
-     * \param bval, the bval could be -1.0 if the method is standard deviation, or the upper quantile value
+     * \brief setManager , setter , need error checking
+     * \param manager
      */
-    void contrastEnhancementChanged(int method, double aval, double bval = -1.0);
-    
-private slots:
-    /*!
-     * \brief applyColorComposition
-     */
-    void applyColorComposition();
+    void setManager(ItiOtbImageManager *manager) { m_pManager = manager; }
 
     /*!
-     * \brief applyConstrastEnhancement
+     * \brief manager, getter function
+     * \return
      */
-    void applyConstrastEnhancement();
+    ItiOtbImageManager* manager() { return m_pManager; }
 
-    /*!
-     * \brief applyContrastEnhancementGaussian
-     */
-    void applyContrastEnhancementGaussian();
 
-    /*!
-     * \brief applyContrastEnhancementLinear0_255
-     */
-    void applyContrastEnhancementLinear0_255();
-
-    /*!
-     * \brief applyContrastEnhancementLinearXPerc
-     */
-    void applyContrastEnhancementLinearXPerc();
-
-    /*!
-     * \brief applyContrastEnhancementSquareRoot
-     */
-    void applyContrastEnhancementSquareRoot();
-
-    /*!
-     * \brief applyColorCompositionGreyscale
-     */
-    void applyColorCompositionGreyscale();
-
-    /*!
-     * \brief applyColorCompositionRGB
-     */
-    void applyColorCompositionRGB();
-
-    /*!
-     * \brief applyToggleClassLabelVisible
-     */
-    void applyToggleClassLabelVisible();
-
-private:
     /*!
      * \brief initialize, inititializing stuff
      */
     void initialize();
+
+    /*!
+     * \brief isGreyscale
+     *  Returns the current mode is being used and setup by the number of channels and setup tab panel widget
+     * \return
+     */
+    bool isGreyscale();
+
+    /*!
+     * \brief currentGreyscaleChannel
+     * \return
+     */
+    int currentGreyscaleChannel() const ;
+
+public slots:
+    /*!
+     * \brief setupChannels,
+     *  this function is called during the setup process when a new image is being loaded.
+     */
+    void setupChannels();
+
+    /*!
+     * \brief setupHistogram
+     */
+    void setupHistogram();
+
+signals:
+
+    
+private slots:
+
+    /*!
+     * \brief applyContrastEnhancementGaussian , triggers the respective command's execution call
+     */
+    void applyContrastEnhancementGaussian();
+
+    /*!
+     * \brief applyContrastEnhancementLinear0_255 , triggers the respective command's execution call
+     */
+    void applyContrastEnhancementLinear0_255();
+
+    /*!
+     * \brief applyContrastEnhancementLinearXPerc , triggers the respective command's execution call
+     */
+    void applyContrastEnhancementLinearXPerc();
+
+    /*!
+     * \brief applyContrastEnhancementSquareRoot , triggers the respective command's execution call
+     */
+    void applyContrastEnhancementSquareRoot();
+
+    /*!
+     * \brief applyColorCompositionGreyscale , triggers the respective command's execution call
+     */
+    void applyColorCompositionGreyscale();
+
+    /*!
+     * \brief applyColorCompositionRGB , triggers the respective command's execution call
+     */
+    void applyColorCompositionRGB();
+
+    /*!
+     * \brief applyToggleClassLabelVisible , triggers the respective command's execution call
+     */
+    void applyToggleClassLabelVisible();
+
+private:
 
     /*!
      * \brief m_pTabWidget , the main tool box
@@ -208,6 +236,11 @@ private:
     ItiOtbImageViewerPanelSetupTab *m_pSetupTab;
 
     /*!
+     * \brief m_pHistogramTab
+     */
+    ItiOtbImageViewerPanelHistogramTab *m_pHistogramTab;
+
+    /*!
      * \brief m_commandHash , a has holding the command objects
      *  keys are SLOT_KEY enum values
      */
@@ -217,6 +250,11 @@ private:
      * \brief m_pItiOtbImageChannelProvider
      */
     ItiOtbImageChannelProvider *m_pItiOtbImageChannelProvider;
+
+    /*!
+     * \brief m_pManager
+     */
+    ItiOtbImageManager *m_pManager;
 };
 
 } // end of namespace itiviewer

@@ -3,6 +3,7 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QGroupBox>
 
 using namespace itiviewer;
 
@@ -16,23 +17,23 @@ ItiViewerPixelInfoWidget::ItiViewerPixelInfoWidget(QWidget *parent) :
 
 //!
 void ItiViewerPixelInfoWidget::setupLayout(){
-    QLabel *pLabel = new QLabel(m_title,this);
-    QString css;
-    css = QString("QLabel { color: blue; font: bold 13px; } ");
-    pLabel->setStyleSheet(css);
-    pLabel->setAlignment(Qt::AlignHCenter);
-    pLabel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
-    m_pTextEdit = new QTextEdit(this);
+
+    m_pGroupBox = new QGroupBox(this);
+    m_pGroupBox->setTitle(tr("Pixel Information"));
+    m_pLabel = new QLabel(this);
+    QVBoxLayout *boxLayout1 = new QVBoxLayout();
+    boxLayout1->addWidget(m_pLabel);
+    m_pGroupBox->setLayout(boxLayout1);
+
     QFont font;
     font.setPointSize(8);
-    m_pTextEdit->setFont(font);
-    m_pTextEdit->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+    m_pLabel->setFont(font);
+    m_pLabel->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    m_pLabel->setMinimumHeight(120);
+    m_pLabel->setMinimumWidth(220);
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
-
-    layout->addWidget(pLabel);
-    layout->addWidget(m_pTextEdit);
-
+    QVBoxLayout *layout = new QVBoxLayout();
+    layout->addWidget(m_pGroupBox);
     setLayout(layout);
 }
 
@@ -40,5 +41,6 @@ void ItiViewerPixelInfoWidget::setupLayout(){
 void ItiViewerPixelInfoWidget::setText(const QString &s){
     m_text = s;
 
-    m_pTextEdit->setText(s);
+//    m_pTextEdit->setText(s);
+    m_pLabel->setText(s);
 }

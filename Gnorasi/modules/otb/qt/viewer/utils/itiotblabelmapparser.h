@@ -18,6 +18,7 @@ using namespace voreen;
 namespace itiviewer {
 
 class Region;
+class ItiOtbImageManager;
 
 class LabelMapParser : public QObject
 {
@@ -40,6 +41,9 @@ public:
 
     QHash<int,QString> classLabelIdsNames() const {return m_classLabelIdsNames; }
 
+
+    void setManager(ItiOtbImageManager *manager) { m_pManager = manager; }
+
 signals:
     
 public slots:
@@ -52,6 +56,8 @@ private:
     static inline bool validatePolygon(const QPolygon &pol);
 
     QHash<int,QString> m_classLabelIdsNames;
+
+    ItiOtbImageManager *m_pManager;
 
 };
 

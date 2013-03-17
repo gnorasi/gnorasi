@@ -9,7 +9,8 @@
 #include "voreen/core/properties/filedialogproperty.h"
 #include "voreen/core/properties/buttonproperty.h"
 
-#include "voreen/core/ports/textport.h"
+//#include "voreen/core/ports/textport.h"
+#include "../ports/ontologyport.h"
 
 namespace voreen {
 
@@ -22,7 +23,7 @@ public:
 
     // documentary functions
     virtual std::string getClassName() const { return "OntologyCreatorProcessor";       }
-    virtual std::string getCategory() const  { return "Ontology";      }
+    virtual std::string getCategory() const  { return "Classification";      }
     virtual CodeState getCodeState() const   { return CODE_STATE_EXPERIMENTAL; }
 
     /// sets the link to the TextData object after calling WS (outport data actually)
@@ -60,7 +61,8 @@ private:
     // ports and properties
     bool hasFileName;
 
-    TextPort outPort_;
+    //TextPort outPort_;
+    OntologyPort outPort_;
 
     std::string pTextData_;
 

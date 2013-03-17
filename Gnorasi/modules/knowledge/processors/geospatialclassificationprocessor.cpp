@@ -6,7 +6,7 @@ namespace voreen {
 
 GeospatialClassificationProcessor::GeospatialClassificationProcessor()
     : Processor()
-    , outPort_(Port::OUTPORT, "Geospatial Classification Data Output", 0)
+    , outPort_(Port::OUTPORT, "Geospatial Classification Rules Output", 0)
     , inPort_(Port::INPORT, "Ontology Data Input", 1)
     , saveFile_("saveGCButton", "Save File")
     , openFile_("xmlFile", "Input xml file", "Input xml file", VoreenApplication::app()->getUserDataPath())

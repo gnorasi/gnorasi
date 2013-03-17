@@ -1,5 +1,6 @@
 
 #include "itiotbAbstractImageModel.h"
+#include "../utils/itiotbimagemanager.h"
 
 //
 // Qt includes (sorted by alphabetic order)
@@ -26,8 +27,8 @@ using namespace itiviewer;
 
 /*******************************************************************************/
 AbstractImageModel
-::AbstractImageModel( QObject* parent ) :
-  AbstractModel( parent )
+::AbstractImageModel( ItiOtbImageManager *manager, QObject* parent ) :
+    m_pManager(manager), AbstractModel( parent )
 {
 }
 

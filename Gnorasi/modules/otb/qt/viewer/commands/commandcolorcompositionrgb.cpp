@@ -79,5 +79,7 @@ void CommandColorCompositionRGB::execute(){
 
     renderer->Initialize(img->GetMetaDataDictionary());
 
-    m_pItiOtbVectorImageViewer->update();
+    m_pItiOtbVectorImageViewer->forceUpdates();
+
+    m_pItiOtbVectorImageViewer->manager()->setImage(vModel->GetOutput(0));
 }

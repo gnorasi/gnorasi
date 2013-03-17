@@ -27,12 +27,16 @@
  ********************************************************************************/
 
 #include "knowledgemodule.h"
-#include "processors/dummysegmentationprocessor.h"
 #include "processors/classifierwsprocessor.h"
 #include "processors/retrieveclassificationdataprocessor.h"
 
 #include "processors/ontologycreatorprocessor.h"
 #include "processors/geospatialclassificationprocessor.h"
+
+#include "processors/knowledgewebserviceprocessor.h"
+
+#include "processors/fuzzypreprocessor.h"
+#include "processors/fuzzyrulesprocessor.h"
 
 namespace voreen {
 
@@ -43,12 +47,15 @@ KnowledgeModule::KnowledgeModule(const std::string& moduleName)
     setName("Knowledge");
     
     // each module processor needs to be registered
-    registerProcessor(new DummySegmentationProcessor());
     registerProcessor(new ClassifierWSProcessor());
     registerProcessor(new RetrieveClassificationDataProcessor());
 
     registerProcessor(new OntologyCreatorProcessor());
     registerProcessor(new GeospatialClassificationProcessor());
+    registerProcessor(new KnowledgeWebServiceProcessor());
+
+    registerProcessor(new FuzzyPreProcessor());
+    registerProcessor(new FuzzyRulesProcessor());
 
     // adds the module source glsl dir to the shader search path
     //addShaderPath(getModulesPath("knowledge/processors/glsl"));

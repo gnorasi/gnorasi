@@ -44,7 +44,7 @@
 namespace itiviewer{
 
 class ItiOtbImageViewerPanel;
-
+class ItiOtbImageManager;
 /*!
  * \brief The ItiOtbImageViewerPanelSetupTab class
  */
@@ -53,25 +53,37 @@ class ItiOtbImageViewerPanelSetupTab : public QWidget
     Q_OBJECT
 public:
     //! ctor
-    explicit ItiOtbImageViewerPanelSetupTab(ItiOtbImageViewerPanel *panel, QWidget *parent = 0);
+    explicit ItiOtbImageViewerPanelSetupTab(ItiOtbImageViewerPanel *panel);
 
     //!
     void setupChannels();
+
+    bool isGreyScale() const { return m_isGreyscale; }
+
+    int currentGreyscaleChannel() { return m_pSpinBoxGreyscaleChannel->value(); }
     
 signals:
-    //! emitted when the apply button for color composition has been clicked
-    void colorCompositionApplyButtonClicked();
 
-    //! emitted when the apply button for contrast enhancement has been clicked
-    void contrastEnhancementApplyButtonClicked();
-
-    //! emitted when the grey scale channel selection has been altered
+    /*!
+     * \brief greyScaleColorCompositionChannelChanged
+     *  emitted when the grey scale channel selection through the spinbox value has been changed
+     */
     void greyScaleColorCompositionChannelChanged(int);
 
-    //! emitted when the rgb channel selection has been altered
+    /*!
+     * \brief rgbColorCompositionChannelsChanged emitted when the rgb spinbox values has been changed
+     * \param red, the red channel number
+     * \param green, the green channel number
+     * \param blue, the blue channel number
+     */
     void rgbColorCompositionChannelsChanged(int red, int green, int blue);
 
-    //! emitted when the contrast enhancement method has been changed
+    /*!
+     * \brief contrastEnhancementChanged emitted when the contrast enhancement method has been changed
+     * \param method , the method to be used for contrast enhancement
+     * \param aval, the a val could be a standard deviation value of a lower quantile value
+     * \param bval, the bval could be -1.0 if the method is standard deviation, or the upper quantile value
+     */
     void contrastEnhancementChanged(int method, double aval, double bval);
 
     //!
@@ -138,20 +150,17 @@ public slots:
     void onComboBoxContrastEnhancementMethodCurrentIndexChanged(int);
 
     //!
-    void onSpinBoxRedChannelChanged(int val);
-
-    //!
-    void onSpinBoxGreenChannelChanged(int val);
-
-    //!
-    void onSpinBoxBlueChannelChanged(int val);
+    void onChannelValueChanged(int val);
 
 
 private slots:
+    //
     void onUpperQuantileLineEditChanged(const QString &);
 
+    //
     void onLowerQuantileLineEditChanged(const QString &);
 
+    //
     void onStandardDeviationLineEdiitChanged(const QString &);
 
     /*!
@@ -170,8 +179,10 @@ private slots:
     void onClassLabelCheckstateToggled(QStandardItem*);
 
 private:
+    //
     void setupClassificationData();
 
+    //
     void initialize();
 
     //!
@@ -213,9 +224,18 @@ private:
     QLabel          *m_pLabelClassificationListHeader;
     QLabel          *m_pLabelClassificationOutput;
 
+    /*!
+     * \brief m_pClassificationModel
+     */
     QStandardItemModel *m_pClassificationModel;
 
+    /*!
+     * \brief m_pItiOtbImageViewerPanel
+     */
     ItiOtbImageViewerPanel* m_pItiOtbImageViewerPanel;
+
+
+    bool            m_isGreyscale;
 };
 
 }

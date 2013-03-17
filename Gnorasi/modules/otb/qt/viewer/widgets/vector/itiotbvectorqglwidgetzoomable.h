@@ -47,6 +47,7 @@ namespace itiviewer{
 class ImageModelRendererZoomable;
 class ImageViewManipulatorZoomable;
 class ItiOtbVectorImageViewer;
+class Region;
 
 /** \brief The ItiOtbVectorQGLWidgetZoomable class
  *
@@ -118,12 +119,17 @@ public slots:
      */
     void onFocusRegionChanged(const QRect &);
 
+    /*!
+     * \brief enableMouseTracking
+     */
+    void enableMouseTracking();
+
 signals:
     /*!
      * \brief visibleAreaChanged , this signal is emitted uppon the view resizing
      * \param rect
      */
-    void focusAreaChanged(const QRect &rect);
+    void focusAreaChanged(const QRect &rect, double z);
 
     /*!
      * \brief currentIndexChanged
@@ -180,7 +186,14 @@ protected:
 
 private:
 
-    bool isRegionPolygonInsideVisibleArea(const QPolygonF &) const;
+    /*!
+     * \brief indexFromPoint
+     * \return
+     */
+    ImageRegionType::IndexType indexFromPoint(const QPoint& );
+
+
+    bool isRegionPolygonInsideVisibleArea(Region* ) const;
     /*!
      * \brief setupcolumnRowParameters
      */

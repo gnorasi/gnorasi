@@ -8,6 +8,7 @@
  * Copyright (c) National Technical University of Athens. All rights reserved.	*
  * Copyright (c) Informatics and Telematics Institute				*
  *	  Centre for Research and Technology Hellas. All rights reserved.	*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
  * 										*
  *                                                                    		*
  * This file is part of the GNORASI software package. GNORASI is free  		*
@@ -35,6 +36,7 @@
 #include "processors/ImageIO/otblabelimagewriterprocessor.h"
 #include "processors/ImageIO/otbcsvwriterprocessor.h"
 #include "processors/ImageIO/otbcsvreaderprocessor.h"
+#include "processors/ImageIO/otbmultichannelextractroiprocessor.h"
 #include "processors/BasicFilters/otbconvolutionimagefilterprocessor.h"
 #include "processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h"
 #include "processors/BasicFilters/otbcannyedgedetectionimagefilterprocessor.h"
@@ -42,7 +44,6 @@
 #include "processors/BasicFilters/otbmeanimagefilterprocessor.h"
 #include "processors/BasicFilters/otbmedianimagefilterprocessor.h"
 #include "processors/BasicFilters/otbsobelimagefilterprocessor.h"
-#include "processors/BasicFilters/otbmeanshiftimagesegmentationprocessor.h"
 #include "processors/BasicFilters/otbbinarythresholdfilterprocessor.h"
 #include "processors/BasicFilters/otbbinarydilatefilterprocessor.h"
 #include "processors/BasicFilters/otbgrayscaledilatefilterprocessor.h"
@@ -54,6 +55,8 @@
 #include "processors/BasicFilters/otbgrayscaleclosingfilterprocessor.h"
 #include "processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h"
 #include "processors/BasicFilters/otbleeimagefilterprocessor.h"
+#include "processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h"
+#include "processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h"
 #include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
@@ -66,20 +69,31 @@
 #include "processors/Radiometry/otbndwiprocessor.h"
 #include "processors/Radiometry/otbvectorimagebandmathprocessor.h"
 #include "processors/Radiometry/otbtwoimagebandmathprocessor.h"
-
-
+#include "processors/Radiometry/otbbayesianfusionfilterprocessor.h"
+#include "processors/Radiometry/otblaindviprocessor.h"
+#include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
+#include "processors/ImageIO/otbvectorimagewriterprocessor.h"
+#include "processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.h"
+#include "processors/FeatureExtraction/otbimagetosiftkeypointsetfilterprocessor.h"
+#include "processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.h"
+#include "processors/FeatureExtraction/otblinesegmentdetectorprocessor.h"
+#include "processors/FeatureExtraction/otbroadextractionprocessor.h"
+#include "processors/Segmentation/otbmeanshiftimagesegmentationprocessor.h"
+#include "processors/Segmentation/otbwatershedsegmentationfilterprocessor.h"
+#include "processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h"
+#include "processors/Classification/otbconfusionmatrixcalculatorprocessor.h"
+#include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
+#include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
+#include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
 #include "processors/Visualization/otbimageviewerprocessor.h"
+//#include "processors/Geometry/otborthorectifyprocessor.h"
 
 #ifdef WIN32
 
-//#include "processors/ImageIO/otbvectorimagewriterprocessor.h"
-#include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 //#include "processors/Visualization/otbsimpleviewerprocessor.h"
 
 #else
 
-#include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
-#include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 #include "processors/Visualization/otbsimpleviewerprocessor.h"
 
 #endif
@@ -97,13 +111,13 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBLabelImageReaderProcessor());
     registerProcessor(new OTBVectorImageReaderProcessor());
     registerProcessor(new OTBImageWriterProcessor());
-#ifdef WIN32
-    //registerProcessor(new OTBVectorImageWriterProcessor());
     registerProcessor(new OTBImageToVectorImageCastProcessor());
+    registerProcessor(new OTBVectorImageWriterProcessor());
+#ifdef WIN32
+
     //registerProcessor(new OTBSimpleViewerProcessor());
 #else
-    registerProcessor(new OTBVectorImageWriterProcessor());
-    registerProcessor(new OTBImageToVectorImageCastProcessor());
+
     registerProcessor(new OTBSimpleViewerProcessor());
 #endif
     registerProcessor(new OTBLabelImageWriterProcessor());
@@ -138,10 +152,27 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBVectorImageBandMathProcessor());
     registerProcessor(new OTBTwoVectorImagesBandMathProcessor());
     registerProcessor(new OTBFFTConvolutionImageFilterProcessor());
+    registerProcessor(new OTBConfusionMatrixCalculatorProcessor());
     registerProcessor(new OTBDiscreteGaussianImageFilterProcessor());
     registerProcessor(new OTBLeeImageFilterProcessor());
+    registerProcessor(new OTBScalarImageToTexturesFilterProcessor());
+    registerProcessor(new OTBBayesianFusionFilterProcessor());
+    registerProcessor(new OTBImageToSURFKeyPointSetFilterProcessor());
+    registerProcessor(new OTBGradientMagnitudeImageFilterProcessor());
+    registerProcessor(new OTBLineRatioDetectorImageFilterProcessor());
+    registerProcessor(new OTBLineSegmentDetectorProcessor());
+    registerProcessor(new OTBWatershedSegmentationFilterProcessor());
+    registerProcessor(new OTBCBAMIChangeDetectorProcessor());
+    registerProcessor(new OTBMultiAlterationDetectorImageFilterProcessor());
+    registerProcessor(new OTBKMeansImageClassificationFilterProcessor());
+    registerProcessor(new OTBRoadExtractionProcessor());
+    registerProcessor(new OTBMultiChannelExtractROIProcessor());
+    registerProcessor(new OTBImageToSIFTKeyPointSetFilterProcessor());
+    registerProcessor(new OTBLAINDVIProcessor());
+    registerProcessor(new OTBLaplacianSegmentationLevelSetImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
+//    registerProcessor(new OTBOrthoRectifyProcessor());
 }
 
 } // namespace

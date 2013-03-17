@@ -136,7 +136,7 @@ void GeoSpatialClassificationWidget::updateFromProcessor(){
             return;
         }
 
-        TextPort *pP = dynamic_cast<TextPort*>(l.at(0));
+        OntologyPort *pP = dynamic_cast<OntologyPort*>(l.at(0));
 
         if(!pP)
             return;

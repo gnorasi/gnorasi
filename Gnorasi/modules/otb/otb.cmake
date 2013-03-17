@@ -140,6 +140,7 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/jpeg12_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/libtiff_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/libcurl_imp.lib
+                ${ORFEOTOOLBOX_LIB_DIR}/debug/qwtd.lib
     )
 
 	# link against OrfeoToolBox
@@ -218,6 +219,7 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/release/jpeg12_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/libtiff_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/libcurl_imp.lib
+                ${ORFEOTOOLBOX_LIB_DIR}/release/qwt.lib
     )
 
 ENDIF(UNIX)
@@ -234,6 +236,8 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/otblabelmapport.cpp
     ${MOD_DIR}/ports/otbvectorimageport.cpp
     ${MOD_DIR}/ports/otbsmartpointerport.cpp
+    ${MOD_DIR}/ports/otbkeypointsetport.cpp
+    ${MOD_DIR}/ports/otbvectordataport.cpp
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.cpp
@@ -241,6 +245,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/ImageIO/otblabelimagewriterprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbcsvwriterprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbcsvreaderprocessor.cpp
+    ${MOD_DIR}/processors/ImageIO/otbmultichannelextractroiprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbconvolutionimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbfftconvolutionimagefilterprocessor.cpp
@@ -249,7 +254,6 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbmedianimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbsobelimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbgradientanisotropicdiffusionfilterprocessor.cpp
-    ${MOD_DIR}/processors/BasicFilters/otbmeanshiftimagesegmentationprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbbinarythresholdfilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbbinarydilatefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaledilatefilterprocessor.cpp
@@ -261,6 +265,8 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaleclosingfilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.cpp
@@ -273,7 +279,22 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbvectorimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.cpp
+    ${MOD_DIR}/processors/Radiometry/otbbayesianfusionfilterprocessor.cpp
+    ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.cpp
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otbimagetosiftkeypointsetfilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.cpp
+    ${MOD_DIR}/processors/Segmentation/otbmeanshiftimagesegmentationprocessor.cpp
+    ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.cpp
+    ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/Classification/otbconfusionmatrixcalculatorprocessor.cpp
+    ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.cpp
+    ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.cpp
+#    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
 )
 
 SET(MOD_CORE_HEADERS
@@ -282,6 +303,8 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/otblabelmapport.h
     ${MOD_DIR}/ports/otbvectorimageport.h
     ${MOD_DIR}/ports/otbsmartpointerport.h
+    ${MOD_DIR}/ports/otbkeypointsetport.h
+    ${MOD_DIR}/ports/otbvectordataport.h
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.h
@@ -289,6 +312,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/ImageIO/otblabelimagewriterprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbcsvwriterprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbcsvreaderprocessor.h
+    ${MOD_DIR}/processors/ImageIO/otbmultichannelextractroiprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbconvolutionimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h
@@ -297,7 +321,6 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbmedianimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbsobelimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbgradientanisotropicdiffusionfilterprocessor.h
-    ${MOD_DIR}/processors/BasicFilters/otbmeanshiftimagesegmentationprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbbinarythresholdfilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbbinarydilatefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaledilatefilterprocessor.h
@@ -309,6 +332,8 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaleclosingfilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h
@@ -321,7 +346,22 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbvectorimagebandmathprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.h
+    ${MOD_DIR}/processors/Radiometry/otbbayesianfusionfilterprocessor.h 
+    ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.h
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otbimagetosiftkeypointsetfilterprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.h
+    ${MOD_DIR}/processors/Segmentation/otbmeanshiftimagesegmentationprocessor.h
+    ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.h
+    ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h
+    ${MOD_DIR}/processors/Classification/otbconfusionmatrixcalculatorprocessor.h
+    ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.h
+    ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
+    ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
+#    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
 )
 
 #
@@ -343,11 +383,11 @@ IF(UNIX)
     LIST(APPEND MOD_CORE_HEADERS ${MOD_DIR}/processors/ImageIO/otbimagetovectorimagecastprocessor.h)
     LIST(APPEND MOD_CORE_HEADERS ${MOD_DIR}/processors/Visualization/otbsimpleviewerprocessor.h)
 ELSE(UNIX)
-    # LIST(APPEND MOD_CORE_SOURCES ${MOD_DIR}/processors/ImageIO/otbvectorimagewriterprocessor.cpp)
+     LIST(APPEND MOD_CORE_SOURCES ${MOD_DIR}/processors/ImageIO/otbvectorimagewriterprocessor.cpp)
     LIST(APPEND MOD_CORE_SOURCES ${MOD_DIR}/processors/ImageIO/otbimagetovectorimagecastprocessor.cpp)
     # LIST(APPEND MOD_CORE_SOURCES ${MOD_DIR}/processors/Visualization/otbsimpleviewerprocessor.cpp)
 
-    # LIST(APPEND MOD_CORE_HEADERS ${MOD_DIR}/processors/ImageIO/otbvectorimagewriterprocessor.h)
+     LIST(APPEND MOD_CORE_HEADERS ${MOD_DIR}/processors/ImageIO/otbvectorimagewriterprocessor.h)
     LIST(APPEND MOD_CORE_HEADERS ${MOD_DIR}/processors/ImageIO/otbimagetovectorimagecastprocessor.h)
     # LIST(APPEND MOD_CORE_HEADERS ${MOD_DIR}/processors/Visualization/otbsimpleviewerprocessor.h)
 ENDIF(UNIX)
@@ -411,6 +451,10 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/utils/itiotblabelmapparser.cpp
 #    ${MOD_DIR}/qt/viewer/utils/itiotblabelimageparser.cpp
     ${MOD_DIR}/qt/viewer/commands/commandtoggleclassificationlabelvisibiltiy.cpp
+#    ${MOD_DIR}/qt/orthorectify/otborthorectifyutility.cpp
+#    ${MOD_DIR}/qt/widgets/qotborthorectifywidget.cpp
+    ${MOD_DIR}/qt/histogram/histogramgenerator.cpp
+    ${MOD_DIR}/qt/histogram/histogramview.cpp
 )
 ################################################################################
 # Qt headers
@@ -465,7 +509,11 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/utils/itiotbregion.h
     ${MOD_DIR}/qt/viewer/utils/itiotblabelmapparser.h
     ${MOD_DIR}/qt/viewer/commands/commandtoggleclassificationlabelvisibiltiy.h
+    ${MOD_DIR}/qt/histogram/histogramgenerator.h
+    ${MOD_DIR}/qt/histogram/histogramview.h
 #    ${MOD_DIR}/qt/viewer/utils/itiotblabelimageparser.h
+#    ${MOD_DIR}/qt/orthorectify/otborthorectifyutility.h
+#    ${MOD_DIR}/qt/widgets/qotborthorectifywidget.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

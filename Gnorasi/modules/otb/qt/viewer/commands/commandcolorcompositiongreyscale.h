@@ -45,6 +45,10 @@ class ItiOtbVectorImageViewer;
 /*!
  * \brief The CommandColorCompositionGreyscale class
  *
+ *  This class is responsible for setting a greyscale fix to the viewer.
+ *  All it does is to set the preferred channel to the viewer and reset the model data,
+ *  in order to reflect changes to the viewer.
+ *
  */
 class CommandColorCompositionGreyscale : public Command
 {
