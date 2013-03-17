@@ -253,7 +253,6 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbmedianimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbsobelimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbgradientanisotropicdiffusionfilterprocessor.cpp
-    ${MOD_DIR}/processors/BasicFilters/otbmeanshiftimagesegmentationprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbbinarythresholdfilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbbinarydilatefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaledilatefilterprocessor.cpp
@@ -287,6 +286,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.cpp
+    ${MOD_DIR}/processors/Segmentation/otbmeanshiftimagesegmentationprocessor.cpp
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
 
 
@@ -323,7 +323,6 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbmedianimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbsobelimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbgradientanisotropicdiffusionfilterprocessor.h
-    ${MOD_DIR}/processors/BasicFilters/otbmeanshiftimagesegmentationprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbbinarythresholdfilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbbinarydilatefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaledilatefilterprocessor.h
@@ -357,6 +356,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.h
+    ${MOD_DIR}/processors/Segmentation/otbmeanshiftimagesegmentationprocessor.h
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
 
 
