@@ -55,7 +55,16 @@ public:
      *  abstract method, every subclass must implement this class
      * \param panel , the panel user to control the viewer, the panel item is used to create the appropriate commands
      */
-    virtual void createViewer(ItiOtbImageViewerPanel *panel) = 0;
+    virtual void createViewer() = 0;
+
+    /*!
+     * \brief setupPanelData, setup the viewer given a ItiOtbImageViewerPanel panel object
+     *  this actually setups the commands , actions and the connections functionality,
+     *  This function needs a valid manager to be set on the panel objects , in order to work properly
+     *  before calling this function call
+     *  itiOtmImageViewerPanel->setManager(validManager);
+     */
+    virtual void setupPanelData(ItiOtbImageViewerPanel *) = 0;
 
     /*!
      * \brief viewer

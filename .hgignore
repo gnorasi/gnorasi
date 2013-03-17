@@ -54,6 +54,7 @@ Gnorasi/ext/boost
 Gnorasi/ext/glew
 Gnorasi/ext/glut
 Gnorasi/ext/osgeo4w
+Gnorasi/ext/qwt
 
 ============================================
 
@@ -67,3 +68,6 @@ CMakeLists.txt.user
 Gnorasi/data/voreensettings.xml
 Gnorasi/data/voreenve-log.html
 data
+GnorasiWholeProjectDoxyfile
+Gnorasi/modules/KnowledgeDoxyfile
+Gnorasi/modules/OTBDoxyfile

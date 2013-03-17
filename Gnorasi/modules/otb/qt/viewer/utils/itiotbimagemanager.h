@@ -39,13 +39,10 @@
 
 namespace itiviewer{
 
-/*!
- *  A helper MACRO
- */
-#define ITIOTBIMAGEMANAGER ItiOtbImageManager::instance()
 
 class Command;
 class Level;
+class VectorImageModel;
 
 /*!
  *
@@ -53,23 +50,32 @@ class Level;
  *  previously handled by the ImageView class declared in the
  *  otbImageView header file contained in the OTB library.
  *
- *  This is a singleton class in order the unique instance of this class to be
- *  used as an interface - console item , accessible from everywhere in
- *  the project.
  *
- *  This class has a vetore image as member variable,
- *  The concrete ItiOtbImageViewer class handles vector image data
+ *  This class has a vetor image member variable,
+ *  The concrete ItiOtbImageViewer class handles vector image data.
+ *
+ *  Each concrete viewer instance has an instance of this class as a member variable.
+ *  The Image Model also has a member variable of this classes instance.
  *
  */
 class ItiOtbImageManager : public QObject
 {
     Q_OBJECT
 public:
-    //!
-    static ItiOtbImageManager* instance();
 
-    //! This function should be called at the destructor of the top level class
-    static void deleteInstance();
+    /*!
+     * \brief ItiOtbImageManager
+     *
+     *  The constructor function
+     */
+    ItiOtbImageManager(QObject *parent = 0);
+
+    /*!
+     *  \brief ~ItiOtbImageManager
+     *
+     *  The destructor function
+     */
+    ~ItiOtbImageManager();
 
     /** Set/Get the image to render */
     voreen::Port* port() const { return m_pPort; }
@@ -96,93 +102,200 @@ public:
 
     /*!
      * \brief imageFile
-     * \return
+     *  Parse the port chain in order to fetch the image file path of the original image which is being loaded by a reader processor.
+     * \param port, the port given to which parsing of all ports is done
+     * \return the path of the original image.
      */
-    QString imageFile() ;
+    QString imageFile(voreen::Port *port = 0) ;
 
     /*!
      * \brief getNextPort
+     *  Helper function, it gets the next incoming port given a port member variable
      * \return
      */
     voreen::Port* nextPort(voreen::Port* ) const;
 
 
+    /*!
+     * \brief clearLevels
+     *  Clear all level objects. This function is used on the classification process.
+     */
     void clearLevels();
 
-
+    /*!
+     * \brief appendLevel
+     *  This function is used on the classification process.
+     * \param pLevel
+     */
     void appendLevel(Level *pLevel);
 
 
+    /*!
+     * \brief deleteLevel
+     *  This function is used on the classification process.
+     * \param pLevel
+     */
     void deleteLevel(Level *pLevel);
 
 
     /*!
      * \brief levelById
+     *  This function is used on the classification process.
      * \param id
      * \return
      */
     Level* levelById(int id);
 
-    //!
+    /*!
+     * \brief levels, getter
+     *  This function is used on the classification process.
+     * \return
+     */
     QList<Level*> levels() const { return m_levelList; }
 
-    //!
+    /*!
+     * \brief classficationNamesIds, getter.
+     *  This function is used on the classification process.
+     * \return
+     */
     QHash<int ,QString> classficationNamesIds() const {return m_classficationNamesIds; }
 
-    //!
+    /*!
+     * \brief classificationColorsIds, getter.
+     *  This function is used on the classification process.
+     * \return
+     */
     QHash<int,QColor> classificationColorsIds() const { return m_colorHash ; }
 
+    /*!
+     * \brief constructInfoByIndex
+     * \param idx, the index for which a text is being constructed
+     * \param pixelInfo , a string holding pixel information
+     * \return
+     */
+    QString constructInfoByIndex(ImageRegionType::IndexType idx, const QString &pixelInfo);
+
+    /*!
+     * \brief constructInfoByIndexAlt
+     * \param idx
+     * \return
+     */
+    QString constructInfoByIndexAlt(ImageRegionType::IndexType idx);
+
+    /*!
+     * \brief isInsideTheImage
+     * \param region checked whether the given point is inside
+     * \param point to check
+     * \param z, the zoom level
+     * \return
+     */
+    static inline bool isInsideTheImage(const ImageRegionType region, const QPoint &point, double z = 1.);
+
+    /*!
+     * \brief isPortEmpty,
+     *  Checks whether this port has not an empty image.
+     * \param port
+     * \return
+     */
+    bool isPortEmpty(voreen::Port *port);
+
 private:
-    //! ctor
-    ItiOtbImageManager();
 
-    //!dtor
-    ~ItiOtbImageManager();
 
-    //!
+    /*!
+     * \brief createRegions
+     */
     void createRegions();
 
-    //! this is the unique instance
-    static ItiOtbImageManager* m_pInstance;
-
-    //! this is the image
+    /*!
+     * \brief m_pImgType, this is the image
+     */
     VectorImageType *m_pImgType;
 
-    /*! Pointer to the image , the port holds image related data.*/
+    /*!
+     * \brief m_pPort, Pointer to the image , the port holds image related data.
+     */
     voreen::Port *m_pPort;
 
-    /*! Path to the DEMDirectory (used if a VectorData is rendered */
+    /*!
+     * \brief m_DEMDirectory, Path to the DEMDirectory (used if a VectorData is rendered
+     */
     QString m_DEMDirectory;
 
-    /*! GeoidFile filename (used if a VectorData is rendered */
+    /*!
+     * \brief m_GeoidFile, GeoidFile filename (used if a VectorData is rendered
+     */
     QString m_GeoidFile;
 
+    /*!
+     * \brief filter , an raster to vector image cast filter
+     */
     ImageToVectorImageCastFilterType::Pointer filter;
 
-    //! test
+    /*!
+     * \brief nextConnectedProcessor
+     * \return the next connected processor given a specific port.
+     */
     std::vector<voreen::Processor*> nextConnectedProcessor(voreen::Port* ) const;
 
+    /*!
+     * \brief isReader, checks whether a specific processor is of type reader
+     * \return
+     */
     bool isReader(voreen::Processor* ) const;
 
+    /*!
+     * \brief getPathFromReaderProcessor
+     *  helper class, gets the path from a given reader processor
+     * \return
+     */
     QString getPathFromReaderProcessor(voreen::Processor*) const ;
 
-
-    void checkNext(voreen::Processor*, QString& );
+    /*!
+     * \brief checkNext
+     *  helper class, check the next processor given a specific processor
+     * \param proc, the processor which is used as the origin processor during the iterating process
+     * \param path, the path of the file, this is a reference to a QString , once the reader procesor is found its port data is passed to it.
+     */
+    void checkNext(voreen::Processor *proc, QString &path);
 
     /*!
      * \brief m_levelList
      */
     QList<Level*> m_levelList;
 
-    //!
+    /*!
+     * \brief setupColors
+     *  Setup the colors of all levels, randomly.
+     *  This function is used during the classification process.
+     */
     void setupColors();
 
-    //! a container where the key value is the class if from the segmentation
+    /*!
+     * \brief m_colorHash
+     *  a container where the key value is the class if from the segmentation
+     */
     QHash<int, QColor> m_colorHash;
 
-    //! a container holding the clasficaiton ids and a string values for names
+    /*!
+     * \brief m_classficationNamesIds
+     *
+     *  a container holding the clasficaiton ids and a string values for names
+     */
     QHash<int ,QString> m_classficationNamesIds;
 };
+
+
+bool ItiOtbImageManager::isInsideTheImage(const ImageRegionType extent, const QPoint &point, double z){
+
+    if(point.x() < 0 || point.y() < 0)
+        return false;
+
+    if(point.x() > ( extent.GetSize()[0]-1 ) / z || point.y() > (extent.GetSize()[1]-1) / z)
+        return false;
+
+    return true;
+}
 
 } // end of namespace itiviewer
 

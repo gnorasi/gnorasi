@@ -9,6 +9,8 @@ class Region;
 
 /*!
  * \brief The Level class
+ *  Conecptually , a level is a container object which accumulates regions .
+ *  The Level class is used on the classification process.
  */
 class Level : public QObject
 {

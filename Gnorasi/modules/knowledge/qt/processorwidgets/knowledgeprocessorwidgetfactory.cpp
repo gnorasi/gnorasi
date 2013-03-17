@@ -28,9 +28,6 @@
 
 #include "knowledgeprocessorwidgetfactory.h"
 
-#include "../../processors/dummysegmentationprocessor.h"
-#include "dummysegmentationwidget.h"
-
 #include "../../processors/classifierwsprocessor.h"
 #include "classifierwswidget.h"
 
@@ -42,6 +39,12 @@
 
 #include "../../processors/geospatialclassificationprocessor.h"
 #include "geospatialclassificationwidget.h"
+
+#include "../../processors/fuzzypreprocessor.h"
+#include "fuzzypreprocessorwidget.h"
+
+#include "../../processors/fuzzyrulesprocessor.h"
+#include "fuzzyrulesprocessorwidget.h"
 
 #include "voreen/qt/voreenapplicationqt.h"
 #include <QWidget>
@@ -63,14 +66,17 @@ ProcessorWidget* KnowledgeProcessorWidgetFactory::createWidget(Processor* proces
     if (dynamic_cast<ClassifierWSProcessor*>(processor))
         return new ClassifierWSWidget(parent, static_cast<ClassifierWSProcessor*>(processor));
 
-    if (dynamic_cast<DummySegmentationProcessor*>(processor))
-        return new DummySegmentationWidget(parent, static_cast<DummySegmentationProcessor*>(processor));
-
     if (dynamic_cast<OntologyCreatorProcessor*>(processor))
         return new OntologyCreatorWidget(parent, static_cast<OntologyCreatorProcessor*>(processor));
 
     if(dynamic_cast<GeospatialClassificationProcessor*>(processor))
         return new GeoSpatialClassificationWidget(parent, static_cast<GeospatialClassificationProcessor*>(processor));
+
+    if(dynamic_cast<FuzzyPreProcessor*>(processor))
+        return new FuzzyPreProcessorWidget(parent, static_cast<FuzzyPreProcessor*>(processor));
+
+    if(dynamic_cast<FuzzyRulesProcessor*>(processor))
+        return new FuzzyRulesProcessorWidget(parent,static_cast<FuzzyRulesProcessor*>(processor));
 
     return 0;
 }

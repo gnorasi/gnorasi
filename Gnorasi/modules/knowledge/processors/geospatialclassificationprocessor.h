@@ -9,7 +9,9 @@
 #include "voreen/core/properties/filedialogproperty.h"
 #include "voreen/core/properties/buttonproperty.h"
 
-#include "voreen/core/ports/textport.h"
+//#include "voreen/core/ports/textport.h"
+#include "../ports/ontologyport.h"
+#include "../ports/georuleport.h"
 
 namespace voreen {
 
@@ -22,7 +24,7 @@ public:
 
     // documentary functions
     virtual std::string getClassName() const { return "GeospatialClassificationProcessor";       }
-    virtual std::string getCategory() const  { return "Ontology";      }
+    virtual std::string getCategory() const  { return "Classification";      }
     virtual CodeState getCodeState() const   { return CODE_STATE_EXPERIMENTAL; }
 
     void setOutportText(std::string d) { outPort_.setData(d); }
@@ -63,8 +65,8 @@ private:
     // ports and properties
     bool hasFileName;
 
-    TextPort outPort_;
-    TextPort inPort_;
+    GeoRulePort outPort_;
+    OntologyPort inPort_;
 
     ButtonProperty      saveFile_; /// saves the geospatial classification data in an rdf file
 

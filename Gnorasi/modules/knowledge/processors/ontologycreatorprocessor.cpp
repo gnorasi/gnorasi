@@ -6,7 +6,7 @@ namespace voreen {
 
 OntologyCreatorProcessor::OntologyCreatorProcessor()
     : Processor()
-    , outPort_(Port::OUTPORT, "Text Data Output", 0)
+    , outPort_(Port::OUTPORT, "Ontology Output", 0)
     , OWLFile_("owlfile", "Input File", "Input File Name", VoreenApplication::app()->getUserDataPath())
     , newOntology_("newButton", "New Ontology")
     , saveFile_("saveButton", "Save File")
@@ -26,11 +26,11 @@ Processor* OntologyCreatorProcessor::create() const {
 }
 
 void OntologyCreatorProcessor::process() {
-    std::vector<const TextPort*> l = outPort_.getConnected();
+    std::vector<const OntologyPort*> l = outPort_.getConnected();
     if(l.empty())
         return;
 
-    const TextPort *p = l.at(0);
+    const OntologyPort *p = l.at(0);
 
     Processor *processor_ = p->getProcessor();
     if(processor_ && processor_->getProcessorWidget())

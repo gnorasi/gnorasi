@@ -73,12 +73,19 @@ void ImageModelRendererZoomable::paintGL( const RenderingContext& context )
 
     // the region of the image to render
     const ImageRegionType&  region = context.m_ImageRegion;
+
+    // margin validation checks
+    if(m_first_displayed_col+m_nb_displayed_cols > region.GetSize()[0]
+            || m_first_displayed_row + m_nb_displayed_rows > region.GetSize()[1])
+        return;
+
+
     const ImageRegionType&  extent = context.m_extent;
 
     // the buffer will be painted
     unsigned char*          buffer = viModel->RasterizeRegion(region);
 
-
+    //
     VectorIndexType startPosition = extent.GetIndex();
     startPosition[0] = startPosition[0] < 0 ? 0 : startPosition[0];
     startPosition[1] = startPosition[1] < 0 ? 0 : startPosition[1];

@@ -59,6 +59,8 @@ namespace itiviewer
 //
 // Internal classes pre-declaration.
 
+class ItiOtbImageManager;
+
 /** \class VectorImageModel
  *
  */
@@ -71,7 +73,7 @@ class  VectorImageModel : public AbstractImageModel
 public:
 
   /** Constructor */
-  VectorImageModel( QObject* parent =NULL );
+  VectorImageModel( ItiOtbImageManager *manager, QObject* parent =NULL );
 
   /** Destructor */
   virtual ~VectorImageModel();
@@ -92,7 +94,7 @@ public:
 
   inline
     DefaultImageType* GetOutput( int index ){
-      return ITIOTBIMAGEMANAGER->image();
+      return m_pManager->image();
   }
 
   /**
@@ -159,6 +161,9 @@ signals:
    * \brief changed
    */
   void changed();
+
+  //
+  void ready();
 
 //
 // Protected methods.

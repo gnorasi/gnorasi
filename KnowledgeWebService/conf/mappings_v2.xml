@@ -1,0 +1,50 @@
+<feature>
+	<ID property="hasID" domain="Region" range="int" />
+	<STATS property="featureIsType" type="Statistics_featureType">
+		<Band1 property="featureRelatedTo" type="ImageBand">Band1</Band1>
+		<Band2 property="featureRelatedTo" type="ImageBand">Band2</Band2>
+		<Band3 property="featureRelatedTo" type="ImageBand">Band3</Band3>
+		<Band4 property="featureRelatedTo" type="ImageBand">Band4</Band4>
+		<MSAVI property="featureRelatedTo" type="FeatureClass">MSAVI_feature</MSAVI>
+		<Variance property="featureHasMeasure" type="StatisticsMeasure">Variance</Variance>
+		<Kurtosis property="featureHasMeasure" type="StatisticsMeasure">Kurtosis</Kurtosis>
+		<Skewness property="featureHasMeasure" type="StatisticsMeasure">Skewness</Skewness>
+		<Mean property="featureHasMeasure" type="StatisticsMeasure">Mean</Mean>
+	</STATS>
+	<SHAPE property="featureIsType" type="Shape_featureType">
+		<Elongation property="featureHasMeasure" type="ShapeMeasure">Elongation</Elongation>
+		<EquivalentEllipsoidRadius0 property="featureHasMeasure" type="ShapeMeasure">EquivalentEllipsoidRadius0</EquivalentEllipsoidRadius0>
+		<EquivalentEllipsoidRadius1 property="featureHasMeasure" type="ShapeMeasure">EquivalentEllipsoidRadius1</EquivalentEllipsoidRadius1>
+		<EquivalentPerimeter property="featureHasMeasure" type="ShapeMeasure">EquivalentPerimeter</EquivalentPerimeter>
+		<EquivalentRadius property="featureHasMeasure" type="ShapeMeasure">EquivalentRadius</EquivalentRadius>
+		<Flusser01 property="featureHasMeasure" type="ShapeMeasure">Flusser01</Flusser01>
+		<Flusser02 property="featureHasMeasure" type="ShapeMeasure">Flusser02</Flusser02>
+		<Flusser03 property="featureHasMeasure" type="ShapeMeasure">Flusser03</Flusser03>
+		<Flusser04 property="featureHasMeasure" type="ShapeMeasure">Flusser04</Flusser04>
+		<Flusser05 property="featureHasMeasure" type="ShapeMeasure">Flusser05</Flusser05>
+		<Flusser06 property="featureHasMeasure" type="ShapeMeasure">Flusser06</Flusser06>
+		<Flusser07 property="featureHasMeasure" type="ShapeMeasure">Flusser07</Flusser07>
+		<Flusser08 property="featureHasMeasure" type="ShapeMeasure">Flusser08</Flusser08>
+		<Flusser09 property="featureHasMeasure" type="ShapeMeasure">Flusser09</Flusser09>
+		<Flusser10 property="featureHasMeasure" type="ShapeMeasure">Flusser10</Flusser10>
+		<Flusser11 property="featureHasMeasure" type="ShapeMeasure">Flusser11</Flusser11>
+		<Perimeter property="featureHasMeasure" type="ShapeMeasure">Perimeter</Perimeter>
+		<PhysicalCentroid0 property="featureHasMeasure" type="ShapeMeasure">PhysicalCentroid0</PhysicalCentroid0>
+		<PhysicalCentroid1 property="featureHasMeasure" type="ShapeMeasure">PhysicalCentroid1</PhysicalCentroid1>
+		<PhysicalSize property="featureHasMeasure" type="ShapeMeasure">PhysicalSize</PhysicalSize>
+		<PhysicalSizeOnBorder property="featureHasMeasure" type="ShapeMeasure">PhysicalSizeOnBorder</PhysicalSizeOnBorder>
+		<PrincipalAxis00 property="featureHasMeasure" type="ShapeMeasure">PrincipalAxis00</PrincipalAxis00>
+		<PrincipalAxis01 property="featureHasMeasure" type="ShapeMeasure">PrincipalAxis01</PrincipalAxis01>
+		<PrincipalAxis10 property="featureHasMeasure" type="ShapeMeasure">PrincipalAxis10</PrincipalAxis10>
+		<PrincipalAxis11 property="featureHasMeasure" type="ShapeMeasure">PrincipalAxis11</PrincipalAxis11>
+		<RegionElongation property="featureHasMeasure" type="ShapeMeasure">RegionElongation</RegionElongation>
+		<RegionIndex0 property="featureHasMeasure" type="ShapeMeasure">RegionIndex0</RegionIndex0>
+		<RegionIndex1 property="featureHasMeasure" type="ShapeMeasure">RegionIndex1</RegionIndex1>
+		<RegionRatio property="featureHasMeasure" type="ShapeMeasure">RegionRatio</RegionRatio>
+		<RegionSize0 property="featureHasMeasure" type="ShapeMeasure">RegionSize0</RegionSize0>
+		<RegionSize1 property="featureHasMeasure" type="ShapeMeasure">RegionSize1</RegionSize1>
+		<Roundness property="featureHasMeasure" type="ShapeMeasure">Roundness</Roundness>
+		<Size property="featureHasMeasure" type="ShapeMeasure">Size</Size>
+		<SizeOnBorder property="featureHasMeasure" type="ShapeMeasure">SizeOnBorder</SizeOnBorder>
+	</SHAPE>
+</feature>

@@ -24,6 +24,8 @@ namespace itiviewer
 //
 // Internal classes pre-declaration.
 
+class ItiOtbImageManager;
+
 /** \class AbstractImageModel
  *
  */
@@ -48,12 +50,12 @@ signals:
 protected:
 
   /** Constructor */
-  AbstractImageModel( QObject* parent = NULL );
+  AbstractImageModel(ItiOtbImageManager *manager, QObject* parent = NULL );
 
 //
 // Protected attributes.
 protected:
-
+    ItiOtbImageManager *m_pManager;
 //
 // Private methods.
 private:
@@ -62,6 +64,8 @@ private:
 //
 // Private attributes.
 private:
+
+
 
 //
 // SLOTS.

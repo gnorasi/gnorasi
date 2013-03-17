@@ -104,6 +104,11 @@ public slots:
      */
     void resetZoom() { m_helperZoomCounter = 1.0; }
 
+    /*!
+     * \brief enableMouseTracking
+     */
+    void enableMouseTracking();
+
 signals:
     /*!
      * \brief visibleAreaChanged , this signal is emitted uppon the view resizing
@@ -164,7 +169,17 @@ protected:
      */
     void mouseMoveEvent(QMouseEvent *event);
 
+    /*!
+     * \brief mouseReleaseEvent
+     */
+    void mouseReleaseEvent(QMouseEvent *);
+
 private:
+    /*!
+     * \brief indexFromPoint
+     * \return
+     */
+    ImageRegionType::IndexType indexFromPoint(const QPoint& );
 
     /*!
      * \brief zoomIn
@@ -220,6 +235,9 @@ private:
      *  An observalble region and the observer classes which in this case are the views(scrollable,zoombable,full view)
      */
     QRect m_focusRegion;
+
+
+    bool m_moving;
 
 
     int m_currentLevelId;

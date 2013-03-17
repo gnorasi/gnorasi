@@ -1,3 +1,29 @@
+/********************************************************************************
+ *                                                                              *
+ * GNORASI - The Knowlegde-Based Remote Sensing Engine                          *
+ *                                                                              *
+ * Language:  C++                                                               *
+ *                                                                              *
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
+ * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
+ * Copyright (c) National Technical University of Athens. All rights reserved.	*
+ *                                                                              *
+ * This file is part of the GNORASI software package. GNORASI is free           *
+ * software: you can redistribute it and/or modify it under the terms           *
+ * of the GNU General Public License version 2 as published by the              *
+ * Free Software Foundation.                                                    *
+ *                                                                              *
+ * GNORASI is distributed in the hope that it will be useful,                   *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of               *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the                 *
+ * GNU General Public License for more details.                                 *
+ *                                                                              *
+ * You should have received a copy of the GNU General Public License            *
+ * in the file "LICENSE.txt" along with this program.                           *
+ * If not, see <http://www.gnu.org/licenses/>.                                  *
+ *                                                                              *
+ ********************************************************************************/
+ 
 #include "otbdiscretegaussianimagefilterprocessor.h"
 #include "voreen/core/voreenapplication.h"
 
@@ -69,7 +95,7 @@ void OTBDiscreteGaussianImageFilterProcessor::process() {
     try
     {
     filter->SetInput(inPort_.getData());
-
+    //The filter is executed by invoking the \code{Update()} method.
     filter->Update();
 
     outPort_.setData(filter->GetOutput());
