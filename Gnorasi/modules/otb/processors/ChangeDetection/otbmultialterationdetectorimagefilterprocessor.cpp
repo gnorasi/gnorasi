@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.				*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
+ * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
+ * Copyright (c) National Technical University of Athens. All rights reserved.	*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -74,8 +76,10 @@ void OTBMultiAlterationDetectorImageFilterProcessor::process() {
     {
         InputImageType *img = inPort_.getData();
         InputImageType *img1 = inPort1_.getData();
-        if(!img || !img1)
+        if(!img || !img1) {
+	    LERROR("One or more input images missing.");
             return;
+	}
 
         madfilter->SetInput1(img);
         madfilter->SetInput(img1);
