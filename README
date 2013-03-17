@@ -1,7 +1,7 @@
 Gnorasi - The Knowlegde-Based Remote Sensing Engine
 ---------------------------------------------------
 
-Welcome to Gnorasi v0.1.0
+Welcome to Gnorasi v0.4.0
 
 Gnorasi is Free Software licenced under the GPLv2.
 
@@ -11,7 +11,7 @@ http://www.youtube.com/watch?v=WSjbEvoSkFM
 Installation from source
 ------------------------
 
-1. Dependencies: CMake, OrfeoToolbox-devel, libqt4-devel, glew-devel, boost-devel 
+1. Dependencies: CMake, OrfeoToolbox-devel, libqt4-devel, qwt-devel, glew-devel, boost-devel 
 
 2. Run cmake configuration in /Gnorasi:
 
