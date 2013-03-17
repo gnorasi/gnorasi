@@ -36,7 +36,7 @@
 #include "processors/ImageIO/otblabelimagewriterprocessor.h"
 #include "processors/ImageIO/otbcsvwriterprocessor.h"
 #include "processors/ImageIO/otbcsvreaderprocessor.h"
-#include "processors/ImageAdministration/otbmultichannelextractroiprocessor.h"
+#include "processors/ImageIO/otbmultichannelextractroiprocessor.h"
 #include "processors/BasicFilters/otbconvolutionimagefilterprocessor.h"
 #include "processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h"
 #include "processors/BasicFilters/otbcannyedgedetectionimagefilterprocessor.h"
