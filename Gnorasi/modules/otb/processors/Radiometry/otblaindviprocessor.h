@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.				*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
+ * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
+ * Copyright (c) National Technical University of Athens. All rights reserved.	*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -46,7 +48,7 @@ public:
     
     virtual std::string getCategory() const { return "Radiometry"; }
     virtual std::string getClassName() const { return "Calculate LAI from NDVI"; }
-    virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
+    virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;
     

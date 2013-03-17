@@ -69,6 +69,7 @@
 #include "processors/Radiometry/otbvectorimagebandmathprocessor.h"
 #include "processors/Radiometry/otbtwoimagebandmathprocessor.h"
 #include "processors/Radiometry/otbbayesianfusionfilterprocessor.h"
+#include "processors/Radiometry/otblaindviprocessor.h"
 #include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 #include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 #include "processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.h"
@@ -86,7 +87,7 @@
 #include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
 #include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
 #include "processors/ImageAdministration/otbmultichannelextractroiprocessor.h"
-#include "processors/Radiometry/otblaindviprocessor.h"
+
 
 
 #include "processors/Visualization/otbimageviewerprocessor.h"

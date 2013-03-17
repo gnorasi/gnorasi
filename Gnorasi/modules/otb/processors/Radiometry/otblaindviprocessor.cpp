@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.				*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
+ * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
+ * Copyright (c) National Technical University of Athens. All rights reserved.	*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -31,12 +33,12 @@ const std::string OTBLAINDVIProcessor::loggerCat_("voreen.OTBLAINDVIProcessor");
 OTBLAINDVIProcessor::OTBLAINDVIProcessor()
     : Processor(),
     inPort_(Port::INPORT, "Vector Image Input", 0),
-    outPort_(Port::OUTPORT, "NDVI Image Output", 0),
-    redBand_("red", "Red Band Index", 1,1,3),
+    outPort_(Port::OUTPORT, "LAI Image Output", 0),
+    redBand_("red", "Red Band Index", 3),
     nirBand_("nir", "NIR Band Index", 4),
-    m_ndviSoilProperty("soil", "NDVI Soil Property", 0.0,0.0, 256.0),
-    m_NdviInfProperty("inf", "NDVI Inf Property", 0.0,0.0, 256.0),
-    m_ExtinctionCoefficientProperty("Coeffictient", "Coefficient Extinction Property", 0.0,0.0, 256.0)
+    m_ndviSoilProperty("soil", "NDVI Soil", 0.10f, -255.0f, 255.0f),
+    m_NdviInfProperty("inf", "NDVI Inf", 0.89f, -255.0f, 255.0f),
+    m_ExtinctionCoefficientProperty("Coeffictient", "Coefficient Extinction", 0.71f, -255.0f, 255.0f)
 {
     addPort(inPort_);
     addPort(outPort_);
