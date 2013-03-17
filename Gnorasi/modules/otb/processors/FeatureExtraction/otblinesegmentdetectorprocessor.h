@@ -5,6 +5,8 @@
  * Language:  C++                                                               *
  *                                                                              *
  * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
+ * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
+ * Copyright (c) National Technical University of Athens. All rights reserved.	*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -31,7 +33,7 @@
 #include "voreen/core/properties/buttonproperty.h"
 #include "../BasicFilters/otbimagefilterprocessor.h"
 #include "../../ports/otbimageport.h"
-//#include "../../ports/otbvectordataport.h"
+#include "../../ports/otbvectordataport.h"
 #include "otbLineSegmentDetector.h"
 
 namespace voreen {
@@ -72,7 +74,7 @@ protected:
 private:
 
     OTBImagePort inPort_;
-    //OTBVectorDataPort outPort_;
+    OTBVectorDataPort outPort_;
 
 //    FloatProperty                                                       m_thresholdProperty;
 //    FloatProperty                                                       m_precisionProperty;
