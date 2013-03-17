@@ -74,9 +74,9 @@
 #include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 #include "processors/Patented/otbimagetosurfkeypointsetfilterprocessor.h"
 #include "processors/Patented/otbimagetosiftkeypointsetfilterprocessor.h"
-
 #include "processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.h"
 #include "processors/FeatureExtraction/otblinesegmentdetectorprocessor.h"
+
 #include "processors/Segmentation/otbwatershedsegmentationfilterprocessor.h"
 #include "processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.h"
 #include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"

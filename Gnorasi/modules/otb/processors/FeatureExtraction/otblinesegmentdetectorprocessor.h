@@ -4,7 +4,7 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.					*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -44,8 +44,8 @@ public:
     virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Feature Extranction"; }
-    virtual std::string getClassName() const { return "Fast Line Detector"; }
-    virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
+    virtual std::string getClassName() const { return "Line Segment Detector"; }
+    virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;
 
@@ -76,7 +76,7 @@ private:
 
 //    FloatProperty                                                       m_thresholdProperty;
 //    FloatProperty                                                       m_precisionProperty;
-//    FloatProperty                        v                                m_directionAllowedProperty;
+//    FloatProperty                                                       m_directionAllowedProperty;
 //    IntProperty                                                         m_minimumRegionSizeProperty;
 
     ButtonProperty                                                      m_updateProperty;
