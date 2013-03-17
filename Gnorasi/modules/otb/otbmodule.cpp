@@ -77,8 +77,8 @@
 #include "processors/FeatureExtraction/otblinesegmentdetectorprocessor.h"
 #include "processors/FeatureExtraction/otbroadextractionprocessor.h"
 #include "processors/Segmentation/otbmeanshiftimagesegmentationprocessor.h"
-
 #include "processors/Segmentation/otbwatershedsegmentationfilterprocessor.h"
+
 #include "processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.h"
 #include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
 #include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
