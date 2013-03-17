@@ -8,6 +8,7 @@
  * Copyright (c) National Technical University of Athens. All rights reserved.	*
  * Copyright (c) Informatics and Telematics Institute				*
  *	  Centre for Research and Technology Hellas. All rights reserved.	*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
  * 										*
  *                                                                    		*
  * This file is part of the GNORASI software package. GNORASI is free  		*

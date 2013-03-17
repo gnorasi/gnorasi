@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.					*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
+ * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
+ * Copyright (c) National Technical University of Athens. All rights reserved.	*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -31,7 +33,7 @@ const std::string OTBLeeImageFilterProcessor::loggerCat_("voreen.OTBLeeImageFilt
 
 OTBLeeImageFilterProcessor::OTBLeeImageFilterProcessor()
     : OTBImageFilterProcessor(),
-    radius_("radiusWindowValue", "Radius Window X*X", 3, 3, 15),
+    radius_("radiusWindowValue", "Filter Radius", 3, 3, 15),
     numberOfLooks_("NumberOfLooks", "Number of Looks", 1.0f, 0.0f, 4.0f),
     inPort_(Port::INPORT, "OTBImage.inport", 0),
     outPort_(Port::OUTPORT, "OTBImage.outport", 0)
