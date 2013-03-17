@@ -4,7 +4,7 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.				*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -43,14 +43,15 @@ public:
     virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Classification"; }
-    virtual std::string getClassName() const { return "Classification using KMeans"; }
-    virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
+    virtual std::string getClassName() const { return "KMeans Classification"; }
+    virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;
 
     static const unsigned int                                           Dimension = 2;
     typedef double                                                      PixelType;
     typedef double                                                      LabeledPixelType;
+    //TODO: Switch to pretty output format for LabeledPixelType
     typedef otb::VectorImage<PixelType,Dimension>                       VImageType;
     typedef otb::Image<LabeledPixelType,Dimension>                      LabeledImageType;
 

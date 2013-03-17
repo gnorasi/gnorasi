@@ -4,7 +4,7 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.				*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -32,8 +32,8 @@ OTBKMeansImageClassificationFilterProcessor::OTBKMeansImageClassificationFilterP
     : OTBImageFilterProcessor(),
     inPort_(Port::INPORT, "Vector Image Input", 0),
     outPort_(Port::OUTPORT, "Image Output", 0),
-    m_nbClassesProperty("nbClasses", "Number of classes Property", 3),
-    m_centroidsProperty("centroids", "Centrtoids property")
+    m_nbClassesProperty("nbClasses", "Number of Classes", 3),
+    m_centroidsProperty("centroids", "Centrtoids")
 {
     addPort(inPort_);
     addPort(outPort_);
@@ -124,7 +124,7 @@ void OTBKMeansImageClassificationFilterProcessor::process() {
     }
     catch (int e)
     {
-    LERROR("Problem with fast line detector!");
+    LERROR("Problem with KMeans Classification!");
 	return;
     }
     

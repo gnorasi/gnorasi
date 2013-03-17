@@ -290,11 +290,11 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbconfusionmatrixcalculatorprocessor.cpp
+    ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.cpp
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
 
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.cpp
-    ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.cpp
     ${MOD_DIR}/processors/ImageAdministration/otbmultichannelextractroiprocessor.cpp
 
 
@@ -361,11 +361,11 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.h
     ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h
     ${MOD_DIR}/processors/Classification/otbconfusionmatrixcalculatorprocessor.h
+    ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.h
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
 
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
-    ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.h
     ${MOD_DIR}/processors/ImageAdministration/otbmultichannelextractroiprocessor.h
 
 
