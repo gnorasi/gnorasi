@@ -76,15 +76,14 @@
 #include "processors/Patented/otbimagetosiftkeypointsetfilterprocessor.h"
 #include "processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.h"
 #include "processors/FeatureExtraction/otblinesegmentdetectorprocessor.h"
+#include "processors/FeatureExtraction/otbroadextractionprocessor.h"
 
 #include "processors/Segmentation/otbwatershedsegmentationfilterprocessor.h"
 #include "processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.h"
 #include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
 #include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
 #include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
-#include "processors/FeatureExtraction/otbroadextractionprocessor.h"
 #include "processors/ImageAdministration/otbmultichannelextractroiprocessor.h"
-
 #include "processors/Radiometry/otblaindviprocessor.h"
 #include "processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h"
 
