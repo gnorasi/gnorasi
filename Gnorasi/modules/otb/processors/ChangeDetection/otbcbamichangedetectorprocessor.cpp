@@ -4,7 +4,7 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.				*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -33,7 +33,7 @@ OTBCBAMIChangeDetectorProcessor::OTBCBAMIChangeDetectorProcessor()
     inPort_(Port::INPORT, "Vector Image Input 1", 0),
     inPort1_(Port::INPORT, "Vector Image Input 2", 0),
     outPort_(Port::OUTPORT, "Vector Image Output", 0),
-    m_radiusProperty("radius", "Radius Proprety",2)
+    m_radiusProperty("radius", "Radius",2)
 {
     addPort(inPort_);
     addPort(inPort1_);
@@ -78,8 +78,10 @@ void OTBCBAMIChangeDetectorProcessor::process() {
     {
         InputImageType *img = inPort_.getData();
         InputImageType *img1 = inPort1_.getData();
-        if(!img || !img1)
+        if(!img || !img1) {
+	    LERROR("One or more input images missing.");
             return;
+	}
 
 
         cbamidetector->SetInput1(img);
