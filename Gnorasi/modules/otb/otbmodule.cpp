@@ -83,9 +83,8 @@
 #include "processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h"
 #include "processors/Classification/otbconfusionmatrixcalculatorprocessor.h"
 #include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
-
-#include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
 #include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
+#include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
 
 #include "processors/Visualization/otbimageviewerprocessor.h"
 //#include "processors/Geometry/otborthorectifyprocessor.h"
