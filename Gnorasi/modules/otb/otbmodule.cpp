@@ -55,6 +55,7 @@
 #include "processors/BasicFilters/otbgrayscaleclosingfilterprocessor.h"
 #include "processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h"
 #include "processors/BasicFilters/otbleeimagefilterprocessor.h"
+#include "processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h"
 #include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
@@ -70,7 +71,7 @@
 #include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 #include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 
-#include "processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h"
+
 #include "processors/Radiometry/otbbayesianfusionfilterprocessor.h"
 #include "processors/Patented/otbimagetosurfkeypointsetfilterprocessor.h"
 #include "processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h"

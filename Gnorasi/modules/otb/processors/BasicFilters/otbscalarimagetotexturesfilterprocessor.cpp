@@ -4,7 +4,7 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.					*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -31,7 +31,7 @@ const std::string OTBScalarImageToTexturesFilterProcessor::loggerCat_("voreen.OT
 
 OTBScalarImageToTexturesFilterProcessor::OTBScalarImageToTexturesFilterProcessor()
     :OTBImageFilterProcessor(),
-    radius_("radiusWindowValue", "Radius Window/Neighborhood X*X", 3, 3, 25),
+    radius_("radiusWindowValue", "Filter Radius", 3, 3, 25),
     offSetX_("OffsetX", "Offset Array used in X", 3, 0, 4096),
     offSetY_("OffsetY", "Offset Array used in Y", 3, 0, 4096),
     inPort_(Port::INPORT, "OTBImage.inport", 0),
@@ -106,7 +106,8 @@ void OTBScalarImageToTexturesFilterProcessor::process() {
         filter->SetInputImageMaximum(255);
 
         filter->SetInput(inPort_.getData());
-
+	
+	//TODO: Add more options for output here
         outPort_.setData(filter->GetInertiaOutput());
     }
     catch (int e)
