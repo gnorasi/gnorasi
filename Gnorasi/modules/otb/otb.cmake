@@ -281,8 +281,8 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbbayesianfusionfilterprocessor.cpp  
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
-    ${MOD_DIR}/processors/Patented/otbimagetosurfkeypointsetfilterprocessor.cpp
-    ${MOD_DIR}/processors/Patented/otbimagetosiftkeypointsetfilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otbimagetosiftkeypointsetfilterprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.cpp
@@ -351,8 +351,8 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbbayesianfusionfilterprocessor.h 
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
-    ${MOD_DIR}/processors/Patented/otbimagetosurfkeypointsetfilterprocessor.h
-    ${MOD_DIR}/processors/Patented/otbimagetosiftkeypointsetfilterprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otbimagetosiftkeypointsetfilterprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.h
