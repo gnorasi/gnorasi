@@ -8,6 +8,7 @@
  * Copyright (c) National Technical University of Athens. All rights reserved.	*
  * Copyright (c) Informatics and Telematics Institute				*
  *	  Centre for Research and Technology Hellas. All rights reserved.	*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
  * 										*
  *                                                                    		*
  * This file is part of the GNORASI software package. GNORASI is free  		*
@@ -52,6 +53,8 @@
 #include "processors/BasicFilters/otbgrayscaleopeningfilterprocessor.h"
 #include "processors/BasicFilters/otbbinaryclosingfilterprocessor.h"
 #include "processors/BasicFilters/otbgrayscaleclosingfilterprocessor.h"
+#include "processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h"
+#include "processors/BasicFilters/otbleeimagefilterprocessor.h"
 #include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
@@ -66,8 +69,7 @@
 #include "processors/Radiometry/otbtwoimagebandmathprocessor.h"
 #include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 #include "processors/ImageIO/otbvectorimagewriterprocessor.h"
-#include "processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h"
-#include "processors/BasicFilters/otbleeimagefilterprocessor.h"
+
 #include "processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h"
 #include "processors/Radiometry/otbbayesianfusionfilterprocessor.h"
 #include "processors/Patented/otbimagetosurfkeypointsetfilterprocessor.h"
@@ -152,10 +154,10 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBVectorImageBandMathProcessor());
     registerProcessor(new OTBTwoVectorImagesBandMathProcessor());
     registerProcessor(new OTBFFTConvolutionImageFilterProcessor());
-	registerProcessor(new OTBConfusionMatrixCalculatorProcessor());
-	registerProcessor(new OTBDiscreteGaussianImageFilterProcessor());
-	registerProcessor(new OTBLeeImageFilterProcessor());
-	registerProcessor(new OTBScalarImageToTexturesFilterProcessor());
+    registerProcessor(new OTBConfusionMatrixCalculatorProcessor());
+    registerProcessor(new OTBDiscreteGaussianImageFilterProcessor());
+    registerProcessor(new OTBLeeImageFilterProcessor());
+    registerProcessor(new OTBScalarImageToTexturesFilterProcessor());
     registerProcessor(new OTBBayesianFusionFilterProcessor());
     registerProcessor(new OTBImageToSURFKeyPointSetFilterProcessor());
     registerProcessor(new OTBGradientMagnitudeImageFilterProcessor());
