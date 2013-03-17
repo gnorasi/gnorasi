@@ -5,6 +5,8 @@
  * Language:  C++                                                               *
  *                                                                              *
  * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
+ * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
+ * Copyright (c) National Technical University of Athens. All rights reserved.	*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -30,8 +32,8 @@ const std::string OTBLineSegmentDetectorProcessor::loggerCat_("voreen.OTBLineSeg
 
 OTBLineSegmentDetectorProcessor::OTBLineSegmentDetectorProcessor()
     : OTBImageFilterProcessor(),
-    inPort_(Port::INPORT, "Image Input", 0)
-    //outPort_(Port::OUTPORT, "Vector Data Output", 0)
+    inPort_(Port::INPORT, "Image Input", 0),
+    outPort_(Port::OUTPORT, "Vector Data Output", 0)
     /*,
     m_thresholdProperty("threshold", "Threshold Property", 0.1),
     m_minimumRegionSizeProperty("minregion", "Minimum Region Property",0),
@@ -39,7 +41,7 @@ OTBLineSegmentDetectorProcessor::OTBLineSegmentDetectorProcessor()
     m_directionAllowedProperty("directionAllowed", "Direction Allowed Property")*/
 {
     addPort(inPort_);
-    //addPort(outPort_);
+    addPort(outPort_);
 
 //    addProperty(m_thresholdProperty);
 //    addProperty(m_minimumRegionSizeProperty);
@@ -74,7 +76,7 @@ void OTBLineSegmentDetectorProcessor::deinitialize() throw (tgt::Exception) {
 
 std::string OTBLineSegmentDetectorProcessor::getProcessorInfo() const {
     
-    return "Implements a fast line detector with false detection control using the a contrario method";
+    return "Implements a Line Segment Detector with false detection control using the a contrario method";
 }
 
 void OTBLineSegmentDetectorProcessor::process() {
@@ -95,7 +97,7 @@ void OTBLineSegmentDetectorProcessor::process() {
     }
     catch (int e)
     {
-    LERROR("Problem with fast line detector!");
+    LERROR("Problem with Line Segment Detector!");
 	return;
     }
     
