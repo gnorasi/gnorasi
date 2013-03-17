@@ -68,11 +68,12 @@
 #include "processors/Radiometry/otbndwiprocessor.h"
 #include "processors/Radiometry/otbvectorimagebandmathprocessor.h"
 #include "processors/Radiometry/otbtwoimagebandmathprocessor.h"
+#include "processors/Radiometry/otbbayesianfusionfilterprocessor.h"
 #include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 #include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 
 
-#include "processors/Radiometry/otbbayesianfusionfilterprocessor.h"
+
 #include "processors/Patented/otbimagetosurfkeypointsetfilterprocessor.h"
 #include "processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h"
 #include "processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.h"
