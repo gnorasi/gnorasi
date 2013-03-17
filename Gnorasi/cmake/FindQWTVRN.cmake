@@ -49,6 +49,30 @@ IF (WIN32)
     ENDIF()
 
 ELSE(WIN32)
+    FIND_PATH(QWT_INCLUDE_DIRS qwt.h 
+	/usr/include/qwt
+	/usr/include/qwt6
+	/usr/local/include/qwt
+	/usr/local/include/qwt6
+	/sw/include/qwt
+	/sw/include/qwt6
+	)
+    FIND_LIBRARY(QWT_LIBRARIES 
+	NAMES libqwt.so
+	PATHS /usr/lib
+	      /usr/lib64
+	      /usr/local/lib
+	      /usr/local/lib64
+	      /sw/lib
+	      /sw/lib64
+	)
+
+    IF(QWT_INCLUDE_DIRS AND QWT_LIBRARIES) 
+      SET(QWT_FOUND TRUE)
+    ELSE(QWT_INCLUDE_DIRS AND QWT_LIBRARIES) 
+      SET(QWT_FOUND FALSE)
+    ENDIF(QWT_INCLUDE_DIRS AND QWT_LIBRARIES) 
+    
     #FIND_PACKAGE(QWT 6.40.0 REQUIRED date_time prg_exec_monitor program_options regex thread unit_test_framework)
 ENDIF(WIN32)
 
