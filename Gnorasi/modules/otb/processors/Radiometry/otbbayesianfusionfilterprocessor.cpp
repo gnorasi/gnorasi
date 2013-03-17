@@ -4,7 +4,7 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.				*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -31,9 +31,9 @@ const std::string OTBBayesianFusionFilterProcessor::loggerCat_("voreen.OTBBayesi
 
 OTBBayesianFusionFilterProcessor::OTBBayesianFusionFilterProcessor()
     : Processor(),
-      inMultiSpecPort_(Port::INPORT, "Vector Multi Spec Image Input", 0),
-      inMultiSpecInterpPort_(Port::INPORT, "Vector Multi Spec Interp. Image Input", 0),
-      inPanchroPort_(Port::INPORT, "Vector Panchro Image Input", 0),
+      inMultiSpecPort_(Port::INPORT, "Multispectral Image Input", 0),
+      inMultiSpecInterpPort_(Port::INPORT, "Interpolated Multispectral Image Input", 0),
+      inPanchroPort_(Port::INPORT, "Pan Image Input", 0),
       outPort_(Port::OUTPORT, "Bayesian Fusion Filter Image Output", 0),
 
       //tune the fusion toward either a high color consistency or sharp details
@@ -73,7 +73,7 @@ void OTBBayesianFusionFilterProcessor::deinitialize() throw (tgt::Exception) {
 
 std::string OTBBayesianFusionFilterProcessor::getProcessorInfo() const {
 
-    return "Calculate Bayesian Fused Image from Multisprectral and Panchro Images";
+    return "Calculate Bayesian Fused Image from Multisprectral and Panchromatic Images";
 }
 
 void OTBBayesianFusionFilterProcessor::process() {
