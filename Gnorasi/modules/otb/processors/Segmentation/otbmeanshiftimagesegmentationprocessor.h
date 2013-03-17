@@ -32,7 +32,7 @@
 
 #include "voreen/core/properties/floatproperty.h"
 #include "voreen/core/properties/intproperty.h"
-#include "otbimagefilterprocessor.h"
+#include "../BasicFilters/otbimagefilterprocessor.h"
 #include "otbMeanShiftVectorImageFilter.h"
 #include "../../ports/otbvectorimageport.h"
 #include "../../ports/otblabelimageport.h"

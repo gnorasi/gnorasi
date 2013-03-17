@@ -43,7 +43,6 @@
 #include "processors/BasicFilters/otbmeanimagefilterprocessor.h"
 #include "processors/BasicFilters/otbmedianimagefilterprocessor.h"
 #include "processors/BasicFilters/otbsobelimagefilterprocessor.h"
-#include "processors/BasicFilters/otbmeanshiftimagesegmentationprocessor.h"
 #include "processors/BasicFilters/otbbinarythresholdfilterprocessor.h"
 #include "processors/BasicFilters/otbbinarydilatefilterprocessor.h"
 #include "processors/BasicFilters/otbgrayscaledilatefilterprocessor.h"
@@ -77,6 +76,7 @@
 #include "processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.h"
 #include "processors/FeatureExtraction/otblinesegmentdetectorprocessor.h"
 #include "processors/FeatureExtraction/otbroadextractionprocessor.h"
+#include "processors/Segmentation/otbmeanshiftimagesegmentationprocessor.h"
 
 #include "processors/Segmentation/otbwatershedsegmentationfilterprocessor.h"
 #include "processors/BasicFilters/otbconfusionmatrixcalculatorprocessor.h"
