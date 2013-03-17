@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.				*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
+ * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
+ * Copyright (c) National Technical University of Athens. All rights reserved.	*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -45,17 +47,19 @@ public:
     
     virtual Processor* create() const;
     
-    virtual std::string getCategory() const { return "Segmentation"; }
-    virtual std::string getClassName() const { return "Laplacian Segmentation Level Set Image Filter"; }
-    virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
+    virtual std::string getCategory() const { return "Image Segmentation"; }
+    virtual std::string getClassName() const { return "Laplacian Level Set Segmentation"; }
+    virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;
     
     typedef float PixelType;
 
-    typedef itk::LaplacianSegmentationLevelSetImageFilter<OTBImagePort::ImageType,OTBImagePort::ImageType, double>  LaplacianSegmentationLevelSetImageFilter;
+    typedef itk::LaplacianSegmentationLevelSetImageFilter<OTBImagePort::ImageType,OTBImagePort::ImageType, double>  
+	LaplacianSegmentationLevelSetImageFilter;
 
-    typedef itk::GradientAnisotropicDiffusionImageFilter<OTBImagePort::ImageType, OTBImagePort::ImageType> SmoothingFilterType;
+    typedef itk::GradientAnisotropicDiffusionImageFilter<OTBImagePort::ImageType, OTBImagePort::ImageType> 
+	SmoothingFilterType;
     
     LaplacianSegmentationLevelSetImageFilter::Pointer filter;
 

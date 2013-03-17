@@ -45,7 +45,7 @@ public:
     
     virtual Processor* create() const;
     
-    virtual std::string getCategory() const { return "Feature Extranction"; }
+    virtual std::string getCategory() const { return "Feature Extraction"; }
     virtual std::string getClassName() const { return "Line Segment Detector"; }
     virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
     

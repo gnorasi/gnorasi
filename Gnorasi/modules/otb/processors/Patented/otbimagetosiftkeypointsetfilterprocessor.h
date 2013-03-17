@@ -49,7 +49,7 @@ public:
     virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Feature Extraction"; }
-    virtual std::string getClassName() const { return "Implements the SIFT key point detector "; }
+    virtual std::string getClassName() const { return "SIFT Key Point Detector "; }
     virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;

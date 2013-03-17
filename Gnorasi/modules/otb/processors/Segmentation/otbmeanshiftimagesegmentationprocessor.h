@@ -49,7 +49,7 @@ public:
     virtual Processor* create() const;
     
     virtual std::string getCategory() const { return "Image Segmentation"; }
-    virtual std::string getClassName() const { return "Mean Shift Image Segmentation"; }
+    virtual std::string getClassName() const { return "Mean Shift Segmentation"; }
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;
