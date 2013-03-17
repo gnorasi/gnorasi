@@ -31,7 +31,7 @@
 #include "voreen/core/properties/buttonproperty.h"
 #include "../BasicFilters/otbimagefilterprocessor.h"
 #include "../../ports/otbimageport.h"
-//#include "../../ports/otbkeypointsetport.h" //CHECK HERE TO INCLUDE.
+#include "../../ports/otbkeypointsetport.h" //CHECK HERE TO INCLUDE.
 #include "itkPointSet.h"
 #include "itkVariableLengthVector.h"
 
