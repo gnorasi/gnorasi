@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.				*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
+ * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
+ * Copyright (c) National Technical University of Athens. All rights reserved.	*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -33,18 +35,18 @@ OTBLaplacianSegmentationLevelSetImageFilterProcessor::OTBLaplacianSegmentationLe
     inPort1_(Port::INPORT, "Image Input", 0),
     inPort2_(Port::INPORT, "Feature Image Input", 0),
     outPort_(Port::OUTPORT, "Image Output", 0),
-    m_isoSurfaceProperty("isoSurface", "Iso Surface Property", 0.0,0.0, 256.0),
-    m_maxRMSErrorProperty("maxRMS", "Max RMS Property", 0.001),
-    m_maxIterationsProperty("numberIterations", "Number of Iterations Property", 10,0,10000),
+    m_isoSurfaceProperty("isoSurface", "Iso Surface", 127.5f, 0.0f, 255.0f),
+    m_maxRMSErrorProperty("maxRMS", "Max RMS", 0.002f),
+    m_maxIterationsProperty("numberIterations", "Number of Iterations", 15, 0, 10000),
     m_useFeatureScalingProperty("useFeatureScaling", "Use Feature Scaling",true),
-    m_featureScalingProperty("featureScaling","Feature Scaling Property", 1.0),
-    m_curvatureScalingProperty("curvatureScaling","Curvature Scaling Property",1.0),
-    m_propagationScalingProperty("propagationScaling","Propagation Scaling Property",0.0),
-    m_advectionScalingProperty("advectionScaling", "Advection Scaling Property", 0.0),
+    m_featureScalingProperty("featureScaling","Feature Scaling", 1.0f),
+    m_curvatureScalingProperty("curvatureScaling","Curvature Scaling",1.0f),
+    m_propagationScalingProperty("propagationScaling","Propagation Scaling",1.0f),
+    m_advectionScalingProperty("advectionScaling", "Advection Scaling", 0.0f),
     m_useSmoothingFilterProperty("useSmoothing", "Use Smoothing Filter Property"),
-    m_smoothingTimeStepProperty("smoothingTimeStep", "Time Step Smoothing Property",0.125),
-    m_smoothingnumberOfIterationsProperty("smoothingNumberIterations", "Number of Iterations Property",10),
-    m_smoothingconductanceParameterProperty("smoothingConductance", "Conductance Parameter Property",2.0,0.0,100.0)
+    m_smoothingTimeStepProperty("smoothingTimeStep", "Smoothing Time Step",0.125f),
+    m_smoothingnumberOfIterationsProperty("smoothingNumberIterations", "Number of Smoothing Iterations",10),
+    m_smoothingconductanceParameterProperty("smoothingConductance", "Smoothing Conductance",2.0f, 0.0f, 100.0f)
 {
     addPort(inPort1_);
     addPort(inPort2_);

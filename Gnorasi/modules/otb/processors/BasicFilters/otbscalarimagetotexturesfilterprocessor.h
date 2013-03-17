@@ -42,7 +42,7 @@ public:
     virtual Processor* create() const;
 
     virtual std::string getCategory() const { return "Basic Filters"; }
-    virtual std::string getClassName() const { return "Image To Haralick Texture Image"; }
+    virtual std::string getClassName() const { return "Haralick Texture Image Filter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
 
     virtual std::string getProcessorInfo() const;
