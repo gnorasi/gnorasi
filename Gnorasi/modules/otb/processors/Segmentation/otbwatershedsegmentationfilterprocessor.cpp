@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.				*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
+ * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
+ * Copyright (c) National Technical University of Athens. All rights reserved.	*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -30,8 +32,8 @@ const std::string OTBWatershedSegmentationFilterProcessor::loggerCat_("voreen.OT
 
 OTBWatershedSegmentationFilterProcessor::OTBWatershedSegmentationFilterProcessor()
     :OTBImageFilterProcessor(),
-    waterShedLevel_("waterShedLevel", "waterShedLevel Property", 0.005, 0, 1.0),
-    waterShedThreshold_("waterShedThreshold", "waterShedThreshold Property", 0.05, 0, 1.0),
+    waterShedLevel_("waterShedLevel", "Level", 0.005f, 0.0f, 1.0f),
+    waterShedThreshold_("waterShedThreshold", "Threshold", 0.05f, 0.0f, 1.0f),
     inPort_(Port::INPORT, "OTBImage.inport", 0),
     outPort_(Port::OUTPORT, "OTBImage.outport", 0)
 {
@@ -65,7 +67,7 @@ Processor::deinitialize();
 
 std::string OTBWatershedSegmentationFilterProcessor::getProcessorInfo() const {
 
-return "OTBWatershedSegmentationFilter Processor";
+  return "OTBWatershedSegmentationFilter Processor";
 }
 
 void OTBWatershedSegmentationFilterProcessor::process() {
@@ -100,7 +102,7 @@ void OTBWatershedSegmentationFilterProcessor::process() {
     }
     catch (int e)
     {
-        LERROR("Problem with WaterShed Segmentation Filter!");
+        LERROR("Problem with Watershed Segmentation Filter!");
     return;
     }
 }
