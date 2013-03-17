@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.				*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
+ * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
+ * Copyright (c) National Technical University of Athens. All rights reserved.	*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -38,9 +40,9 @@ OTBImageToSIFTKeyPointSetFilterProcessor::OTBImageToSIFTKeyPointSetFilterProcess
     inPort_(Port::INPORT, "Image Input", 0),
     outPort_(Port::OUTPORT, "Point Set Output", 0),
     m_octavesProperty("siftOctaves", "Octaves Property", 3),
-    m_scalesProperty("siftScales", "Scales Property", 3,3,100),
-    m_ratioProperty("siftRatio", "Ratio Property", 1.0,0,100.0),
-    m_thresholdProperty("siftThreshold", "Threshold Property",0.0,0.0,100.0),
+    m_scalesProperty("siftScales", "Scales Property", 3, 3, 100),
+    m_ratioProperty("siftRatio", "Ratio Property", 1.0f, 0.0f, 100.0f),
+    m_thresholdProperty("siftThreshold", "Threshold Property",0.0f, 0.0f, 100.0f),
     m_neighborhoodProperty("neighborhood", "KeyPoint Density Neighborhood Property", 0, 0, 1000),
     m_updateProperty("update","Update")
 {
@@ -121,7 +123,7 @@ void OTBImageToSIFTKeyPointSetFilterProcessor::process() {
     }
     catch (int e)
     {
-    LERROR("Problem with LAI from NDVI calculation!");
+    LERROR("Problem with SIFT key point detector!");
 	return;
     }
     

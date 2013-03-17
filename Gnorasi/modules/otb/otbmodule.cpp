@@ -71,10 +71,10 @@
 #include "processors/Radiometry/otbbayesianfusionfilterprocessor.h"
 #include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 #include "processors/ImageIO/otbvectorimagewriterprocessor.h"
-
-
-
 #include "processors/Patented/otbimagetosurfkeypointsetfilterprocessor.h"
+#include "processors/Patented/otbimagetosiftkeypointsetfilterprocessor.h"
+
+
 #include "processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h"
 #include "processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.h"
 #include "processors/FeatureExtraction/otblinesegmentdetectorprocessor.h"
@@ -85,7 +85,7 @@
 #include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
 #include "processors/FeatureExtraction/otbroadextractionprocessor.h"
 #include "processors/ImageAdministration/otbmultichannelextractroiprocessor.h"
-#include "processors/Patented/otbimagetosiftkeypointsetfilterprocessor.h"
+
 #include "processors/Radiometry/otblaindviprocessor.h"
 #include "processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h"
 
