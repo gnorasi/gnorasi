@@ -245,7 +245,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/ImageIO/otblabelimagewriterprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbcsvwriterprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbcsvreaderprocessor.cpp
-    ${MOD_DIR}/processors/ImageAdministration/otbmultichannelextractroiprocessor.cpp
+    ${MOD_DIR}/processors/ImageIO/otbmultichannelextractroiprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbconvolutionimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbfftconvolutionimagefilterprocessor.cpp
@@ -317,7 +317,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/ImageIO/otblabelimagewriterprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbcsvwriterprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbcsvreaderprocessor.h
-    ${MOD_DIR}/processors/ImageAdministration/otbmultichannelextractroiprocessor.h
+    ${MOD_DIR}/processors/ImageIO/otbmultichannelextractroiprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbconvolutionimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h
