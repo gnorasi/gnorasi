@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.					*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
+ * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
+ * Copyright (c) National Technical University of Athens. All rights reserved.	*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -32,16 +34,16 @@ OTBRoadExtractionProcessor::OTBRoadExtractionProcessor()
     : OTBImageFilterProcessor(),
     inPort_(Port::INPORT, "Vector Image Input", 0),
     outPort_(Port::OUTPORT, "Image Output", 0),
-    m_alphaProperty("alpha", "Alpha Property",0.0),
-    m_amplitudeProperty("amplitude", "Amplitude",0.0),
-    m_angularThresholdProperty("angularThreshold", "Angular Threshold Property",0.0),
-    m_distanceThresholdProperty("distanceThreshold", "Distance Threshold Property",0.0),
-    m_fistMeanDistanceThresholdProperty("firstMeanDistanceThreshold", "First Mean Threshold Property",0.0),
+    m_alphaProperty("alpha", "Alpha",1.0f),
+    m_amplitudeProperty("amplitude", "Amplitude Threshold",0.00005f),
+    m_angularThresholdProperty("angularThreshold", "Angular Threshold",0.39269f),
+    m_distanceThresholdProperty("distanceThreshold", "Distance Threshold",25.0f),
+    m_fistMeanDistanceThresholdProperty("firstMeanDistanceThreshold", "First Mean Distance Threshold",1.0f),
     m_referencePixelProperty("referencePixel", "Reference Pixel Property"),
     m_resolutionProperty("resolution", "Resolution Property"),
-    m_sendondMeanDistanceThresholdProperty("second", "Second Mean Distance Threshold Property",0.0),
-    m_toleranceProperty("tolerance", "Tolerance Property",0.0),
-    m_maxAngleProperty("maxAngle", "Max Angle Property", 0.0)
+    m_sendondMeanDistanceThresholdProperty("second", "Second Mean Distance Threshold",10.0f),
+    m_toleranceProperty("tolerance", "Tolerance Property",1.0f),
+    m_maxAngleProperty("maxAngle", "Max Angle Property", 0.39269f)
 {
     addPort(inPort_);
     addPort(outPort_);
