@@ -4,7 +4,7 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.					*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -42,7 +42,7 @@ public:
 
     virtual std::string getCategory() const { return "Basic Filters"; }
     virtual std::string getClassName() const { return "Gradient Magnitude"; }
-    virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
+    virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
 
     virtual std::string getProcessorInfo() const;
 

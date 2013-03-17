@@ -56,6 +56,7 @@
 #include "processors/BasicFilters/otbdiscretegaussianimagefilterprocessor.h"
 #include "processors/BasicFilters/otbleeimagefilterprocessor.h"
 #include "processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h"
+#include "processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h"
 #include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
@@ -74,8 +75,6 @@
 #include "processors/Patented/otbimagetosurfkeypointsetfilterprocessor.h"
 #include "processors/Patented/otbimagetosiftkeypointsetfilterprocessor.h"
 
-
-#include "processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h"
 #include "processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.h"
 #include "processors/FeatureExtraction/otblinesegmentdetectorprocessor.h"
 #include "processors/Segmentation/otbwatershedsegmentationfilterprocessor.h"
