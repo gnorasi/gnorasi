@@ -4,7 +4,7 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.				*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -30,13 +30,13 @@ const std::string OTBMultiChannelExtractROIProcessor::loggerCat_("voreen.OTBMult
 
 OTBMultiChannelExtractROIProcessor::OTBMultiChannelExtractROIProcessor()
     : OTBImageFilterProcessor(),
-    inPort_(Port::INPORT, "Vector Image Input 1", 0),
+    inPort_(Port::INPORT, "Vector Image Input", 0),
     outPort_(Port::OUTPORT, "Vector Image Output", 0),
-    m_useSingleChannelProperty("useSingleChannel", "Use Single Channel Property"),
-    m_singleChannelProperty("singleChannel", "Single Channel Property",2),
-    m_useMultipleChannelProperty("multipleChannel", "Use Multiple Channels Property"),
-    m_channelFromProperty("channelFrom", "Channel From Proprety",0,0,20),
-    m_channelEndProperty("channelEnd", "Channel End Proprety",2,0,20)
+    m_useSingleChannelProperty("useSingleChannel", "Use Single Channel"),
+    m_singleChannelProperty("singleChannel", "Single Channel",2),
+    m_useMultipleChannelProperty("multipleChannel", "Use Multiple Channels"),
+    m_channelFromProperty("channelFrom", "Channel From",0,0,1024),
+    m_channelEndProperty("channelEnd", "Channel End",2,0,1024)
 
 {
     addPort(inPort_);
@@ -132,7 +132,7 @@ void OTBMultiChannelExtractROIProcessor::process() {
     }
     catch (int e)
     {
-    LERROR("Problem with cbami detector!");
+    LERROR("Problem with Multi Channel Extract ROI!");
 	return;
     }
     
