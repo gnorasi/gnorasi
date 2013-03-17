@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.				*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
+ * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
+ * Copyright (c) National Technical University of Athens. All rights reserved.	*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -44,9 +46,9 @@ public:
 
     virtual Processor* create() const;
 
-    virtual std::string getCategory() const { return "Segmentation"; }
-    virtual std::string getClassName() const { return "OTBWatershedSegmentationFilterProcessor"; }
-    virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
+    virtual std::string getCategory() const { return "Image Segmentation"; }
+    virtual std::string getClassName() const { return "Watershed Segmentation"; }
+    virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
 
     virtual std::string getProcessorInfo() const;
 
@@ -59,13 +61,12 @@ public:
     typedef itk::Image<float, 2>           ScalarImageType;
 
     typedef itk::VectorCastImageFilter<RGBImageType, VectorImageType>
-      CastFilterType;
-      typedef itk::VectorGradientAnisotropicDiffusionImageFilter<VectorImageType,
-          VectorImageType>
-      DiffusionFilterType;
-      typedef itk::VectorGradientMagnitudeImageFilter<VectorImageType, float, ScalarImageType>
-      GradientMagnitudeFilterType;
-      typedef itk::WatershedImageFilter<OTBImageFilterProcessor::ImageType> WatershedFilterType;
+	CastFilterType;
+    typedef itk::VectorGradientAnisotropicDiffusionImageFilter<VectorImageType,
+        VectorImageType> DiffusionFilterType;
+    typedef itk::VectorGradientMagnitudeImageFilter<VectorImageType, float, ScalarImageType>
+	GradientMagnitudeFilterType;
+    typedef itk::WatershedImageFilter<OTBImageFilterProcessor::ImageType> WatershedFilterType;
 
     WatershedFilterType::Pointer waterShedFilter;
 
