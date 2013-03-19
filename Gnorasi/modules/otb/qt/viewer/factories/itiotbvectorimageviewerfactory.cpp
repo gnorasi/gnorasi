@@ -69,6 +69,7 @@ void ItiOtbVectorImageViewerFactory::setupPanelData(ItiOtbImageViewerPanel *pane
             panel->setCommand(ItiOtbImageViewerPanel::SLOT_CL_TOGGLEVISIBLE,cmdTV);
 
         connect(provider,SIGNAL(channelsChanged()),panel,SLOT(setupChannels()));
+        connect(provider,SIGNAL(channelsChanged()),panel,SLOT(setupHistogram()));
     }
 }
 
