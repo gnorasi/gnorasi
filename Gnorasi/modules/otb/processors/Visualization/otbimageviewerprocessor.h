@@ -61,7 +61,6 @@ private:
     OTBVectorImagePort outPort2_;
 
     OTBLabelMapPort lblMapPort_;
-//    OTBLabelImagePort lblImagePort_;
 
     ButtonProperty showImageButton_;    ///< shows the image.
 

@@ -772,28 +772,28 @@ void VoreenMainWindow::createToolWindows() {
 
     // input mapping
 
-    inputMappingDialog_ =  new InputMappingDialog(this, vis_->getWorkspace()->getProcessorNetwork());
-    QAction* inputMappingAction = new QAction(QIcon(":/qt/icons/keymapping.png"), tr("&Input Mapping"), this);
-    inputMappingAction->setShortcut(tr("Ctrl+I"));
-    VoreenToolWindow* inputWindow = addToolWindow(inputMappingAction, inputMappingDialog_, tr("Show shortcut preferences"),
-        Qt::NoDockWidgetArea, Qt::NoDockWidgetArea, true);
-    inputWindow->resize(520, 400);
-    vis_->setInputMappingDialog(inputMappingDialog_);
+//    inputMappingDialog_ =  new InputMappingDialog(this, vis_->getWorkspace()->getProcessorNetwork());
+//    QAction* inputMappingAction = new QAction(QIcon(":/qt/icons/keymapping.png"), tr("&Input Mapping"), this);
+//    inputMappingAction->setShortcut(tr("Ctrl+I"));
+//    VoreenToolWindow* inputWindow = addToolWindow(inputMappingAction, inputMappingDialog_, tr("Show shortcut preferences"),
+//        Qt::NoDockWidgetArea, Qt::NoDockWidgetArea, true);
+//    inputWindow->resize(520, 400);
+//    vis_->setInputMappingDialog(inputMappingDialog_);
 
 
     // render target debug window
 
-    renderTargetViewer_ = new RenderTargetViewer(sharedContext_);
-    renderTargetViewer_->setEvaluator(vis_->getEvaluator());
-    renderTargetViewer_->setMinimumSize(200, 200);
-    QAction* texContainerAction = new QAction(QIcon(":/qt/icons/rendertargets.png"),tr("Render &Target Viewer"), this);
-    texContainerAction->setShortcut(tr("Ctrl+T"));
-    VoreenToolWindow* tc = addToolWindow(texContainerAction, renderTargetViewer_, "RenderTargetViewer",
-        Qt::NoDockWidgetArea, Qt::NoDockWidgetArea);
-    tc->widget()->setContentsMargins(0,0,0,0);
-    tc->widget()->layout()->setContentsMargins(0,0,0,0);
-    tc->resize(500, 500);
-    vis_->setRenderTargetViewer(renderTargetViewer_);
+//    renderTargetViewer_ = new RenderTargetViewer(sharedContext_);
+//    renderTargetViewer_->setEvaluator(vis_->getEvaluator());
+//    renderTargetViewer_->setMinimumSize(200, 200);
+//    QAction* texContainerAction = new QAction(QIcon(":/qt/icons/rendertargets.png"),tr("Render &Target Viewer"), this);
+//    texContainerAction->setShortcut(tr("Ctrl+T"));
+//    VoreenToolWindow* tc = addToolWindow(texContainerAction, renderTargetViewer_, "RenderTargetViewer",
+//        Qt::NoDockWidgetArea, Qt::NoDockWidgetArea);
+//    tc->widget()->setContentsMargins(0,0,0,0);
+//    tc->widget()->layout()->setContentsMargins(0,0,0,0);
+//    tc->resize(500, 500);
+//    vis_->setRenderTargetViewer(renderTargetViewer_);
 
     // animation editor
 /*
