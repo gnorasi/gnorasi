@@ -212,7 +212,10 @@ private:
     /** OpenGl zoom factor */
     double m_IsotropicZoom;
 
-    /** Event handler pointer */
+    /*!
+     * \brief m_pImageViewManipulator
+     *  ATM this objects holds the extent and buffer properties
+     */
     ImageViewManipulatorScrollable* m_pImageViewManipulator;
 
     /** Model Renderer pointer */
@@ -222,6 +225,9 @@ private:
      * this indicates the subsampling rate */
     unsigned int m_SubsamplingRate;
 
+    /*!
+     * \brief m_pItiOtbVectorImageViewer, the parent viewer
+     */
     ItiOtbVectorImageViewer *m_pItiOtbVectorImageViewer;
 
     /*!
@@ -236,12 +242,19 @@ private:
      */
     QRect m_focusRegion;
 
-
+    /*!
+     * \brief m_moving, a variable used while moving the mouse
+     */
     bool m_moving;
 
-
+    /*!
+     * \brief m_currentLevelId, a helper variable used to the classification process
+     */
     int m_currentLevelId;
 
+    /*!
+     * \brief m_helperZoomCounter, a variable used while using the mouse wheel
+     */
     double m_helperZoomCounter;
 
 };

@@ -5,14 +5,17 @@
 HistogramGenerator::HistogramGenerator(QObject *parent) :
     QObject(parent)
 {
+    //! initializations
     histogramGenerator  = HistogramGeneratorType::New();
     reader              = ReaderType::New();
 
+    //! the default mode is RGB mode
     m_rmode = RMODE_RGB;
 
-    //OTB initialization
+    //! OTB initialization
     writer = WriterType::New();
 
+    //! scan the application directory and check whether a folder named "helperImageRepo" exists
     QStringList filters;
     filters << "helperImageRepo";
     m_dir.setPath(QCoreApplication::applicationDirPath());
@@ -28,6 +31,9 @@ HistogramGenerator::HistogramGenerator(QObject *parent) :
     clearImageRepo();
 }
 
+/*
+ * Create a new name on the application dir folder
+ */
 QString HistogramGenerator::constructNewName(){
     QString path;
 
@@ -43,6 +49,11 @@ QString HistogramGenerator::constructNewName(){
     return path;
 }
 
+/*!
+ * \brief HistogramGenerator::generateHistogram
+ *  the following code has been copy pasted from the ITK documentation
+ * \param path
+ */
 void HistogramGenerator::generateHistogram(const QString &path){
     reader->SetFileName(path.toStdString());
     try
@@ -74,19 +85,24 @@ void HistogramGenerator::generateHistogram(const QString &path){
 
 void HistogramGenerator::generateHistogram(VectorImageType *image){
 
+    //! create a new path name
     QString path = constructNewName();
 
     QFile file(path);
+    //! check whether the file exists
     if(file.exists()){
         qDebug() << "file exists .." << path;
         return;
     }
 
+    //! now convert the filename to std string
     std::string filename = path.toStdString();
 
+    //! check whether the std string is empty
     if(path.isEmpty())
         return;
 
+    //! write the content to the file using the writer object
     writer->SetFileName(filename.c_str());
     writer->SetInput(image);
     try
@@ -99,6 +115,7 @@ void HistogramGenerator::generateHistogram(VectorImageType *image){
         return;
     }
 
+    //! now get the path and generate the histogram from the paths
     generateHistogram(path);
 }
 
@@ -121,25 +138,32 @@ void HistogramGenerator::parseGreyscaleChannel(){
         size[2] = 255;      // number of bins for the Blue  channel
     }
 
+    //! set the input from the reader
     histogramGenerator->SetInput(  reader->GetOutput()  );
 
+    //! setup properties
     histogramGenerator->SetNumberOfBins( size );
     histogramGenerator->SetMarginalScale( 10.0 );
 
+    //! now compute the histogram
     histogramGenerator->Compute();
 
+    //! get the histogram
     histogram = histogramGenerator->GetOutput();
 
+    // get the histogram size
     const unsigned int histogramSize = histogram->Size();
 
     qDebug() << "Histogram size " << histogramSize << "\n";
 
+    // create an iterator
     HistogramType::ConstIterator itr = histogram->Begin();
     HistogramType::ConstIterator end = histogram->End();
 
     typedef HistogramType::FrequencyType FrequencyType;
 
     unsigned int binNumber = 0;
+    // iterate through the values and set data to the hash instance
     while( itr != end )
     {
         const FrequencyType frequency = itr.GetFrequency();
@@ -152,11 +176,16 @@ void HistogramGenerator::parseGreyscaleChannel(){
     }
 }
 
+//
 void HistogramGenerator::parseRedChannel(){
     SizeType size;
 
+    //! TODO
+    //!
+    //! now this may change in the future
+    //!
+    //! the maximum number at the moment is 3, namely the hisogram is being calculaate only for the first three channels
     unsigned int maxNo = 3;
-
     unsigned int max = qMax(maxNo,m_redChannel);
     max = qMax(m_greenChannel,max);
     max = qMax(m_blueChannel,max);
@@ -168,26 +197,32 @@ void HistogramGenerator::parseRedChannel(){
             size[i] = 1;
     }
 
+    // set the num ber of bins
     histogramGenerator->SetNumberOfBins( size );
 
+    // set margin scale
     histogramGenerator->SetMarginalScale( 10.0 );
 
+    // set the input form the reader
     histogramGenerator->SetInput(  reader->GetOutput()  );
 
+    // compute values
     histogramGenerator->Compute();
 
+    // get the histogram output
     histogram = histogramGenerator->GetOutput();
 
+    // get the histgram size
     const unsigned int histogramSize = histogram->Size();
 
     qDebug() << "Histogram size " << histogramSize << "\n";
-
 
     std::cout << "Histogram of the red component" << std::endl;
 
     double helperFreq[255];
     double helperAmpl[255];
 
+    // iterate thgrough the histrgram and set  the values to the hash and list instaces
     for( unsigned int bin=0; bin < histogramSize; bin++ )
     {
         helperFreq[bin] = (double)bin;
@@ -205,8 +240,13 @@ void HistogramGenerator::parseRedChannel(){
 void HistogramGenerator::parseGreenChannel(){
     SizeType size;
 
+    //! TODO
+    //!
+    //! now this may change in the future
+    //!
+    //! the maximum number at the moment is 3, namely the hisogram is being calculaate only for the first three channels
+    //!
     unsigned int maxNo = 3;
-
     unsigned int max = qMax(maxNo,m_redChannel);
     max = qMax(m_greenChannel,max);
     max = qMax(m_blueChannel,max);
@@ -218,17 +258,22 @@ void HistogramGenerator::parseGreenChannel(){
             size[i] = 1;
     }
 
+    // se the nuber of beans
     histogramGenerator->SetNumberOfBins( size );
 
+    // compute the histogram
     histogramGenerator->Compute();
 
+    // get the size
     const unsigned int histogramSize = histogram->Size();
 
+    //
     std::cout << "Histogram of the green component" << std::endl;
 
     double helperFreq[255];
     double helperAmpl[255];
 
+    // iterate thgrough histogram and set values to the hash instances
     for( unsigned int bin=0; bin < histogramSize; bin++ )
     {
         helperFreq[bin] = (double)bin;
@@ -246,8 +291,12 @@ void HistogramGenerator::parseGreenChannel(){
 void HistogramGenerator::parseBlueChannel(){
     SizeType size;
 
+    //! TODO
+    //!
+    //! now this may change in the future
+    //!
+    //! the maximum number at the moment is 3, namely the hisogram is being calculaate only for the first three channels
     unsigned int maxNo = 3;
-
     unsigned int max = qMax(maxNo,m_redChannel);
     max = qMax(m_greenChannel,max);
     max = qMax(m_blueChannel,max);
@@ -259,10 +308,13 @@ void HistogramGenerator::parseBlueChannel(){
             size[i] = 1;
     }
 
+    // set nubmer of beans
     histogramGenerator->SetNumberOfBins( size );
 
+     // compute values
     histogramGenerator->Compute();
 
+    // get the hiostgram size
     const unsigned int histogramSize = histogram->Size();
 
     std::cout << "Histogram of the blue component" << std::endl;
@@ -270,6 +322,7 @@ void HistogramGenerator::parseBlueChannel(){
     double helperFreq[255];
     double helperAmpl[255];
 
+    // iterate thgrough the histogram and set the values to the hash instances
     for( unsigned int bin=0; bin < histogramSize; bin++ )
     {
         helperFreq[bin] = (double)bin;
@@ -282,6 +335,7 @@ void HistogramGenerator::parseBlueChannel(){
     m_pBlueChannelFrequency = &helperFreq[0];
 }
 
+// clear all files from the helper folder
 void HistogramGenerator::clearImageRepo(){
     QStringList list = m_dir.entryList(QDir::Files);
     QStringList::const_iterator i;

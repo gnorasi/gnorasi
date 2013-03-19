@@ -53,6 +53,8 @@ class ItiViewerPixelInfoWidget;
  *  This class implements a standard visualization tool to be
  *  plugged at the end of a pipeline.
  *  This viewer handles Vector images coming from ImagePorts which are specialized data IO classes handling OTB Images.
+ *  This viewer's GUI designing and the general usability has been effected by the Monteverdi viewer version 1
+ *  For more information take a look at the Orfeo ToolBox website \link http://www.orfeo-toolbox.org/otb/ \endlink
  *
  */
 class ItiOtbVectorImageViewer : public ItiOtbImageViewer
@@ -172,18 +174,20 @@ private:
      * \brief setupModel
      *
      *  Inside this function the model is being setup. The original file is being loaded.
+     *  This is a crucial function for the viewer to work
      */
     void setupModel();
 
     /*!
-     * \brief resetObserverMechanism
+     * \brief resetObserverMechanism, Resets all observers and stuff, as regards the observe mechanism take a look at the respective classes
+     *  and the setupObserverMechanism() function
      *
-     *  Reset the observer mechanism, un register all previously registered observe objects.
      */
     void resetObserverMechanism();
 
     /*!
      * \brief setupConnections , setup the signal and slot mechanism.
+     *  The connections used to handle the interactions
      */
     void setupConnections();
 
@@ -191,6 +195,10 @@ private:
      * \brief setupObserverMechanism
      *
      *  Register all objects to the observable object.
+     *  Reset the observer mechanism, un register all previously registered observe objects.
+     *  The Observer mechanism is explained better on the respective classes.
+     *  The Observer pattern has been used in order to handle the user interaction and the ability of the viewer.
+     *  to preview some rectangle aread on the scrollable and the full view widgets on top of the OpenGL image painted.
      */
     void setupObserverMechanism();
 
