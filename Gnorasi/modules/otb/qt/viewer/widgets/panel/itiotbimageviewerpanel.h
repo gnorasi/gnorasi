@@ -171,6 +171,25 @@ public:
      */
     int currentGreyscaleChannel() const ;
 
+
+    /*!
+     * \brief currentRedChannel
+     * \return
+     */
+    unsigned currentRedChannel() const;
+
+    /*!
+     * \brief currentGreenChannel
+     * \return
+     */
+    unsigned currentGreenChannel() const;
+
+    /*!
+     * \brief currentBlueChannel
+     * \return
+     */
+    unsigned currentBlueChannel() const;
+
 public slots:
     /*!
      * \brief setupChannels,

@@ -131,6 +131,9 @@ public:
     RMODE rmode() { return m_rmode; }
 
     void setCurrentGreyChannel(int c) { m_currentGreyChannel = c; }
+
+    //
+    void setCurrentRGBChannels(unsigned int red, unsigned int green, unsigned int blue) { m_redChannel = red; m_greenChannel = green; m_blueChannel = blue; }
     
 signals:
     
@@ -182,6 +185,10 @@ private:
     QHash<int, double> m_redChannelData;
     QHash<int, double> m_greenChannelData;
     QHash<int, double> m_blueChannelData;
+
+    unsigned int m_redChannel;
+    unsigned int m_greenChannel;
+    unsigned int m_blueChannel;
 
     QDir m_dir;
 

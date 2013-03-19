@@ -54,6 +54,9 @@ public:
      * \brief setupHistogram
      */
     void setupHistogram();
+
+    // set the current channels
+    void setCurrentChannels(int red, int green, int blue);
     
 signals:
     

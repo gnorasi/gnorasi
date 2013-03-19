@@ -44,8 +44,8 @@ void ItiOtbImageViewerPanelHistogramTab::initialize(){
     m_pHistogramViewGreyscale->setVisible(false);
 
     layout->addWidget(m_pHistogramViewRed);
-    layout->addWidget(m_pHistogramViewBlue);
     layout->addWidget(m_pHistogramViewGreen);
+    layout->addWidget(m_pHistogramViewBlue);
 
     layout->addWidget(m_pHistogramViewGreyscale);
 
@@ -76,6 +76,12 @@ void ItiOtbImageViewerPanelHistogramTab::setupHistogram(){
         m_pHistogramViewGreyscale->replot();
     }
     else{
+
+        // set selected channels
+        m_pHistogramGenerator->setCurrentRGBChannels(m_pItiOtbImageViewerPanel->currentRedChannel()-1,
+                                                     m_pItiOtbImageViewerPanel->currentGreenChannel()-1,
+                                                     m_pItiOtbImageViewerPanel->currentBlueChannel()-1);
+
         m_pHistogramGenerator->setRMode(HistogramGenerator::RMODE_RGB);
         m_pHistogramGenerator->generateHistogram(image);
 
