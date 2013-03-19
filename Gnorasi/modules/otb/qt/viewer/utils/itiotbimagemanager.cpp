@@ -23,7 +23,7 @@ using namespace voreen;
 
 //!
 ItiOtbImageManager::ItiOtbImageManager(QObject *parent)
-    : QObject(parent)
+    : m_pImgType(0), m_pPort(0), QObject(parent)
 {
     filter = ImageToVectorImageCastFilterType::New();
 }

@@ -39,7 +39,6 @@ void QGLOtbImageViewerWidget::initialize(){
     //!
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
     m_pItiOtbImageViewerPanel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-//    m_pItiOtbImageViewerPanel->setMinimumHeight(270);
 
     //!
     m_pItiOtbImageFactory = new ItiOtbVectorImageViewerFactory(this);
@@ -74,10 +73,12 @@ void QGLOtbImageViewerWidget::initialize(){
     m_pvSplitter = new QSplitter(Qt::Vertical,this);
     m_pvSplitter->addWidget(m_pItiOtbImageViewer);
     m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
-    m_pvSplitter->setChildrenCollapsible(false);
+//    m_pvSplitter->setChildrenCollapsible(false);
     m_pvSplitter->setStretchFactor(0,100);
+    m_pvSplitter->setCollapsible(1,true);
+    m_pvSplitter->setCollapsible(0,true);
     QList<int> sizlist;
-    sizlist << 450 << 150;
+    sizlist << 350 << 0;
     m_pvSplitter->setSizes(sizlist);
 
     //! create a vertical box layout and add the splitter on it
@@ -103,6 +104,7 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
         qDebug() << "image port list is empty..";
 
     }else{
+        bool helper = false;
         //! get the first port
         for(int i = 0 ; i < l.size(); i++)
         {
@@ -110,9 +112,13 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
             QString className = QString::fromStdString(port->getName());
             if(port->isConnected() && ( !className.compare(QLatin1String("IN Multi Band Image")) || !className.compare(QLatin1String("OTBImage.inport")))){
                 setupByPort(port);
+                helper = true;
                 break;
             }
         }
+
+        if(!helper)
+            clearImage();
     }
 }
 
@@ -228,7 +234,6 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
 
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
     m_pItiOtbImageViewerPanel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-//    m_pItiOtbImageViewerPanel->setMinimumHeight(100);
 
     //! Create again the viewer and the panel
     m_pItiOtbImageFactory->createViewer();
@@ -271,8 +276,10 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
     m_pvSplitter->setChildrenCollapsible(false);
     m_pvSplitter->setStretchFactor(0,100);
+    m_pvSplitter->setCollapsible(1,true);
+    m_pvSplitter->setCollapsible(0,true);
     QList<int> sizlist;
-    sizlist << 450 << 150;
+    sizlist << 350 << 0;
     m_pvSplitter->setSizes(sizlist);
 
     //!
@@ -330,6 +337,10 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! draw stuff
     m_pItiOtbImageViewer->draw();
 
+    QList<int> sizlist;
+    sizlist << 300 << 0;
+    m_pvSplitter->setSizes(sizlist);
+
     //! use the visual mode of the viewer previously got and dissasemble the widgets if the viewer was previously on splitted mode
     if(vmode){
         disassembleWidgets();
@@ -372,6 +383,47 @@ void QGLOtbImageViewerWidget::createViewer(){
     m_pvSplitter->insertWidget(0,m_pItiOtbImageViewer);
 }
 
+
+void QGLOtbImageViewerWidget::clearImage(){
+    //! create the discrete viewer
+    createViewer();
+
+    delete m_pItiOtbImageViewerPanel;
+    //!
+    m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
+    m_pItiOtbImageViewerPanel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+
+    ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
+
+    //
+    //  ** IMPORTANT **
+    //
+    // the manager must be set prior to setting up the rest of the functionality , in order the viewer to work property..
+    //
+    m_pItiOtbImageViewerPanel->setManager(manager);
+
+    //
+    //  ** IMPORTANT **
+    //
+    // It is necessary also to initialize the viewer's panel
+    //
+    m_pItiOtbImageViewerPanel->initialize();
+
+    // now setup the panel data , widgets etc..
+    m_pItiOtbImageFactory->setupPanelData(m_pItiOtbImageViewerPanel);
+
+    m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
+//    m_pvSplitter->setChildrenCollapsible(false);
+    m_pvSplitter->setStretchFactor(0,100);
+    m_pvSplitter->setCollapsible(1,true);
+    m_pvSplitter->setCollapsible(0,true);
+    QList<int> sizlist;
+    sizlist << 350 << 0;
+    m_pvSplitter->setSizes(sizlist);
+
+
+
+}
 
 QGLOtbImageViewerWidget::~QGLOtbImageViewerWidget(){
 //    ItiOtbImageManager::deleteInstance();

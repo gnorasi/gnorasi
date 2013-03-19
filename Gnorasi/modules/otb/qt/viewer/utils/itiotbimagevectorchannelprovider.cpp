@@ -42,15 +42,15 @@ void ItiOtbImageVectorChannelProvider::onModelJChanged(){
 
 //!
 void ItiOtbImageVectorChannelProvider::parse(){
-    std::vector<unsigned int> list = m_pVectorImageModel->GetChannelList();
 
-    m_channelList.clear();
-    for(std::vector<unsigned int>::const_iterator it = list.begin(); it != list.end(); ++it) {
-        unsigned int val = *it;
+    unsigned int currentIndex = 0;
+    const DefaultImageType* image =  m_pVectorImageModel->GetOutput(currentIndex);
+    if(!image)
+        return;
 
-        qDebug() << val;
-        m_channelList.append(val);
-    }
+    unsigned int ncpp = image->GetNumberOfComponentsPerPixel();
+    for(int i = 0; i < ncpp; i++)
+        m_channelList << i;
 
     emit channelsChanged();
 
