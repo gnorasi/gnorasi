@@ -60,7 +60,17 @@ public:
 
     bool isGreyScale() const { return m_isGreyscale; }
 
-    int currentGreyscaleChannel() { return m_pSpinBoxGreyscaleChannel->value(); }
+    // getter
+    int currentGreyscaleChannel() const { return m_pSpinBoxGreyscaleChannel->value(); }
+
+    // getter
+    int currentRedChannel() const { return m_pSpinBoxRedChannel->value(); }
+
+    // getter
+    int currentGreenChannel() const { return m_pSpinBoxGreenChannel->value(); }
+
+    // getter
+    int currentBlueChannel() const { return m_pSpinBoxBlueChannel->value(); }
     
 signals:
 

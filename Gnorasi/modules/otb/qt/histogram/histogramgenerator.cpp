@@ -21,6 +21,10 @@ HistogramGenerator::HistogramGenerator(QObject *parent) :
 
     m_dir.cd("helperImageRepo");
 
+    m_redChannel    = 0;
+    m_greenChannel  = 1;
+    m_blueChannel   = 2;
+
     clearImageRepo();
 }
 
@@ -151,9 +155,18 @@ void HistogramGenerator::parseGreyscaleChannel(){
 void HistogramGenerator::parseRedChannel(){
     SizeType size;
 
-    size[0] = 255;        // number of bins for the Red   channel
-    size[1] =   1;        // number of bins for the Green channel
-    size[2] =   1;        // number of bins for the Blue  channel
+    unsigned int maxNo = 3;
+
+    unsigned int max = qMax(maxNo,m_redChannel);
+    max = qMax(m_greenChannel,max);
+    max = qMax(m_blueChannel,max);
+
+    for(int i = 0; i < max; i++){
+        if(i == m_redChannel)
+            size[i] = 255;
+        else
+            size[i] = 1;
+    }
 
     histogramGenerator->SetNumberOfBins( size );
 
@@ -169,7 +182,6 @@ void HistogramGenerator::parseRedChannel(){
 
     qDebug() << "Histogram size " << histogramSize << "\n";
 
-    unsigned int channel = 0;  // red channel
 
     std::cout << "Histogram of the red component" << std::endl;
 
@@ -179,9 +191,10 @@ void HistogramGenerator::parseRedChannel(){
     for( unsigned int bin=0; bin < histogramSize; bin++ )
     {
         helperFreq[bin] = (double)bin;
-        helperAmpl[bin] = (double)histogram->GetFrequency( bin, channel );
 
-        m_redChannelData[bin] = (double)histogram->GetFrequency( bin, channel );
+        helperAmpl[bin] = (double)histogram->GetFrequency( bin, m_redChannel );
+
+        m_redChannelData[bin] = (double)histogram->GetFrequency( bin, m_redChannel );
     }
 
     m_pRedChannelAmplitude = &helperAmpl[0];
@@ -192,17 +205,24 @@ void HistogramGenerator::parseRedChannel(){
 void HistogramGenerator::parseGreenChannel(){
     SizeType size;
 
-    size[0] =   1;  // number of bins for the Red   channel
-    size[1] = 255;  // number of bins for the Green channel
-    size[2] =   1;  // number of bins for the Blue  channel
+    unsigned int maxNo = 3;
+
+    unsigned int max = qMax(maxNo,m_redChannel);
+    max = qMax(m_greenChannel,max);
+    max = qMax(m_blueChannel,max);
+
+    for(int i = 0; i < max; i++){
+        if(i == m_greenChannel)
+            size[i] = 255;
+        else
+            size[i] = 1;
+    }
 
     histogramGenerator->SetNumberOfBins( size );
 
     histogramGenerator->Compute();
 
     const unsigned int histogramSize = histogram->Size();
-
-    unsigned int channel = 1;  // green channel
 
     std::cout << "Histogram of the green component" << std::endl;
 
@@ -212,9 +232,10 @@ void HistogramGenerator::parseGreenChannel(){
     for( unsigned int bin=0; bin < histogramSize; bin++ )
     {
         helperFreq[bin] = (double)bin;
-        helperAmpl[bin] = (double)histogram->GetFrequency( bin, channel );
 
-        m_greenChannelData[bin] = (double)histogram->GetFrequency( bin, channel );
+        helperAmpl[bin] = (double)histogram->GetFrequency( bin, m_greenChannel );
+
+        m_greenChannelData[bin] = (double)histogram->GetFrequency( bin, m_greenChannel );
     }
 
     m_pGreenChannelAmplitude = &helperAmpl[0];
@@ -225,17 +246,24 @@ void HistogramGenerator::parseGreenChannel(){
 void HistogramGenerator::parseBlueChannel(){
     SizeType size;
 
-    size[0] =   1;  // number of bins for the Red   channel
-    size[1] =   1;  // number of bins for the Green channel
-    size[2] =   255;  // number of bins for the Blue  channel
+    unsigned int maxNo = 3;
+
+    unsigned int max = qMax(maxNo,m_redChannel);
+    max = qMax(m_greenChannel,max);
+    max = qMax(m_blueChannel,max);
+
+    for(int i = 0; i < max; i++){
+        if(i == m_blueChannel)
+            size[i] = 255;
+        else
+            size[i] = 1;
+    }
 
     histogramGenerator->SetNumberOfBins( size );
 
     histogramGenerator->Compute();
 
     const unsigned int histogramSize = histogram->Size();
-
-    unsigned int channel = 2;  // green channel
 
     std::cout << "Histogram of the blue component" << std::endl;
 
@@ -245,9 +273,9 @@ void HistogramGenerator::parseBlueChannel(){
     for( unsigned int bin=0; bin < histogramSize; bin++ )
     {
         helperFreq[bin] = (double)bin;
-        helperAmpl[bin] = (double)histogram->GetFrequency( bin, channel );
+        helperAmpl[bin] = (double)histogram->GetFrequency( bin, m_blueChannel );
 
-        m_blueChannelData[bin] = (double)histogram->GetFrequency( bin, channel );
+        m_blueChannelData[bin] = (double)histogram->GetFrequency( bin, m_blueChannel );
     }
 
     m_pBlueChannelAmplitude = &helperAmpl[0];
