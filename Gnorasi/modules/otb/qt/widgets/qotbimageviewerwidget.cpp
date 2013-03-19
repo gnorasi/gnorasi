@@ -73,7 +73,6 @@ void QGLOtbImageViewerWidget::initialize(){
     m_pvSplitter = new QSplitter(Qt::Vertical,this);
     m_pvSplitter->addWidget(m_pItiOtbImageViewer);
     m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
-//    m_pvSplitter->setChildrenCollapsible(false);
     m_pvSplitter->setStretchFactor(0,100);
     m_pvSplitter->setCollapsible(1,true);
     m_pvSplitter->setCollapsible(0,true);
@@ -111,8 +110,12 @@ void QGLOtbImageViewerWidget::updateFromProcessor(){
             Port *port = l.at(i);
             QString className = QString::fromStdString(port->getName());
             if(port->isConnected() && ( !className.compare(QLatin1String("IN Multi Band Image")) || !className.compare(QLatin1String("OTBImage.inport")))){
+
+                // setup data by port
                 setupByPort(port);
+
                 helper = true;
+
                 break;
             }
         }
@@ -158,14 +161,15 @@ void QGLOtbImageViewerWidget::keyPressEvent(QKeyEvent *event){
 //!
 void QGLOtbImageViewerWidget::disassembleWidgets(){
 
+    // get  the port prior to deleting the viewer and the panel
+    voreen::Port *port = m_pItiOtbImageViewer->manager()->port();
+
     //! Due to a lack of removing added itmes functionality on a QSplitter instance
     //! the added widgets must be firstly hidden and then deleted in order to work properly..
 
     //! hide widgets
     m_pItiOtbImageViewer->hide();
     m_pItiOtbImageViewerPanel->hide();
-
-    voreen::Port *port = m_pItiOtbImageViewer->manager()->port();
 
     //! delete widgets
     delete m_pItiOtbImageViewer;
@@ -174,15 +178,18 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
     //! create the panel
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
 
-    //set the properties
+    //set the panel properties
     m_pItiOtbImageViewerPanel->setWindowFlags(Qt::Window);
     m_pItiOtbImageViewerPanel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     m_pItiOtbImageViewerPanel->show();
 
     //! Create again the viewer and disassemble the sub widgets
     m_pItiOtbImageFactory->createViewer();
+
+    // get the viewer from the factory
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->viewer();
 
+    // now get the manager from the viewer
     ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
 
     //! set the port to the image manager
@@ -195,7 +202,7 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
     //
     //  ** IMPORTANT **
     //
-    // the manager must be set prior to setting up the rest of the functionality , in order the viewer to work property..
+    // the manager must be set prior to setting up the rest of the functionality , in order the viewer to work properly..
     //
     m_pItiOtbImageViewerPanel->setManager(manager);
 
@@ -209,15 +216,27 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
     // now setup the panel data , widgets etc..
     m_pItiOtbImageFactory->setupPanelData(m_pItiOtbImageViewerPanel);
 
+    // set this object as the parent of it, when the instance of the viewer is constructed no parent has been set as it has been created by the factory instance
     m_pItiOtbImageViewer->setParent(this);
+
+    // now dissasemble widgets on the viewer
     m_pItiOtbImageViewer->disassembleWidgets();
 
-    //!
+    //! setup the channels , get number etc..
+    m_pItiOtbImageViewerPanel->setupChannels();
+
+    // now setup the histogram on the panel
+    m_pItiOtbImageViewerPanel->setupHistogram();
+
+    //! finally draw the viewer
     m_pItiOtbImageViewer->draw();
 }
 
 //!
 void QGLOtbImageViewerWidget::assembleWidgets(){
+
+    // firstly get the port prior to deleting the viewrer and the panel object
+    voreen::Port *port = m_pItiOtbImageViewer->manager()->port();
 
     //! Due to a lack of removing added itmes functionality on a QSplitter instance
     //! the added widgets must be firstly hidden and then deleted..
@@ -226,20 +245,24 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     m_pItiOtbImageViewer->hide();
     m_pItiOtbImageViewerPanel->hide();
 
-    voreen::Port *port = m_pItiOtbImageViewer->manager()->port();
-
     //! delete widgets
     delete m_pItiOtbImageViewer;
     delete m_pItiOtbImageViewerPanel;
 
+    // create a new panel
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
     m_pItiOtbImageViewerPanel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
     //! Create again the viewer and the panel
     m_pItiOtbImageFactory->createViewer();
+
+
+    /// get the viewer
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->viewer();
 
+    // get the manager from the viewer
     ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
+
     //! set the port to the image manager
     manager->setPort(port);
 
@@ -267,6 +290,12 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     // now setup the panel data , widgets etc..
     m_pItiOtbImageFactory->setupPanelData(m_pItiOtbImageViewerPanel);
 
+    //! setup the channels , get number etc..
+    m_pItiOtbImageViewerPanel->setupChannels();
+
+    // now setup the histogram on the panel
+    m_pItiOtbImageViewerPanel->setupHistogram();
+
     // setup viewer properties
     m_pItiOtbImageViewer->setParent(this);
     m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
@@ -282,19 +311,17 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     sizlist << 350 << 0;
     m_pvSplitter->setSizes(sizlist);
 
-    //!
+
+    // finally draw the viewer
     m_pItiOtbImageViewer->draw();
 }
 
 //!
 void QGLOtbImageViewerWidget::setupByPort(Port *port){
-    //! START OF INCOMING DATA USAGE
 
+    // error check
     if(!m_pItiOtbImageViewer)
         return;
-
-    //
-    //                          STATISTICS
 
     QTime time;
     qDebug() << "Start of incoming image data , setting up the image...";
@@ -332,6 +359,8 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
 
     //! setup the channels , get number etc..
     m_pItiOtbImageViewerPanel->setupChannels();
+
+    // now setup the histogram on the panel
     m_pItiOtbImageViewerPanel->setupHistogram();
 
     //! draw stuff
@@ -346,21 +375,6 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
         disassembleWidgets();
         m_pItiOtbImageViewerPanel->readDisplaySettings();
     }
-
-
-    //
-    //                          STATISTICS
-
-//    if(!ITIOTBIMAGEMANAGER->levels().isEmpty()){
-        qDebug() << "End of image setup \nmilliseconds elapsed : " << time.elapsed()
-                 /*<< "\nRegions created : " << ITIOTBIMAGEMANAGER->levels().last()->regions().size()*/;
-//    }
-
-    //
-    //                          STATISTICS
-
-    //!
-    //! END OF INCOMING DATA USAGE
 }
 
 void QGLOtbImageViewerWidget::createViewer(){
@@ -413,16 +427,12 @@ void QGLOtbImageViewerWidget::clearImage(){
     m_pItiOtbImageFactory->setupPanelData(m_pItiOtbImageViewerPanel);
 
     m_pvSplitter->addWidget(m_pItiOtbImageViewerPanel);
-//    m_pvSplitter->setChildrenCollapsible(false);
     m_pvSplitter->setStretchFactor(0,100);
     m_pvSplitter->setCollapsible(1,true);
     m_pvSplitter->setCollapsible(0,true);
     QList<int> sizlist;
     sizlist << 350 << 0;
     m_pvSplitter->setSizes(sizlist);
-
-
-
 }
 
 QGLOtbImageViewerWidget::~QGLOtbImageViewerWidget(){
