@@ -199,6 +199,7 @@ public slots:
 
     /*!
      * \brief setupHistogram
+     * this funciton , is called during the setup process when a new image has been set or the channel selection has been changed
      */
     void setupHistogram();
 

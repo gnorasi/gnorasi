@@ -176,9 +176,17 @@ private:
     /** OpenGl zoom factor */
     double m_IsotropicZoom;
 
-    void translate(const QPoint& , const QPoint&);
+    /*!
+     * \brief translate
+     * \param previousCenter
+     * \param point
+     */
+    void translate(const QPoint &previousCenter, const QPoint &point);
 
-    /** Event handler pointer */
+    /*!
+     * \brief m_pImageViewManipulator
+     *  ATM this objects holds the extent and buffer properties
+     */
     ImageViewManipulatorFullView* m_pImageViewManipulator;
 
     /** Model Renderer pointer */
@@ -188,6 +196,9 @@ private:
      * this indicates the subsampling rate */
     unsigned int m_SubsamplingRate;
 
+    /*!
+     * \brief m_pItiOtbVectorImageViewer, the parent viewer
+     */
     ItiOtbVectorImageViewer *m_pItiOtbVectorImageViewer;
 
     /*!
@@ -200,7 +211,9 @@ private:
      */
     QRect m_visibleRegion;
 
-
+    /*!
+     * \brief m_moving, a variable used while moving the mouse
+     */
     bool m_moving;
 
 };
