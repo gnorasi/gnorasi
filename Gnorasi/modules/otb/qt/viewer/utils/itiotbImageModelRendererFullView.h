@@ -62,31 +62,44 @@ class ImageModelRendererFullView :
 //
 // Public types.
 public:
-  struct RenderingContext
-  {
-     inline
-     RenderingContext( const AbstractImageModel* model =NULL,
+
+    /*!
+     * \brief The RenderingContext struct contains all the information necessary to paint the current image portion
+     */
+    struct RenderingContext
+    {
+        /*!
+         * \brief RenderingContext
+         * \param model , the current model
+         * \param region, the buffer region
+         * \param ext, the extent region
+         * \param width, the viewport width
+         * \param height, the viewport height
+         * \param iz. the isotropic zoom
+         */
+        inline
+        RenderingContext( const AbstractImageModel* model =NULL,
                        const ImageRegionType& region =ImageRegionType(),
                        const ImageRegionType& ext = ImageRegionType(),
                        unsigned int width = 0,
                        unsigned int height = 0,
                        double iz = 1.0):
-       m_AbstractImageModel( model ),
-       m_ImageRegion( region ),
-       m_extent(ext),
-       m_WidgetWidth(width),
-       m_WidgetHeight(height),
-       m_isotropicZoom(iz)
-    {
-    }
+        m_AbstractImageModel( model ),
+        m_ImageRegion( region ),
+        m_extent(ext),
+        m_WidgetWidth(width),
+        m_WidgetHeight(height),
+        m_isotropicZoom(iz)
+        {
+        }
 
-    const AbstractImageModel* m_AbstractImageModel;
-    ImageRegionType m_ImageRegion;
-    unsigned int m_WidgetWidth;
-    unsigned int m_WidgetHeight;
-    double m_isotropicZoom;
-    ImageRegionType m_extent;
-  };
+        const AbstractImageModel* m_AbstractImageModel;
+        ImageRegionType m_ImageRegion;
+        unsigned int m_WidgetWidth;
+        unsigned int m_WidgetHeight;
+        double m_isotropicZoom;
+        ImageRegionType m_extent;
+    };
 
 //
 // Public methods.

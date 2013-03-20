@@ -1,0 +1,139 @@
+<?xml version="1.0" ?>
+<VoreenData version="1">
+    <Workspace version="2" GlobalDescription="">
+        <ProcessorNetwork version="12">
+            <MetaData>
+                <MetaItem name="ProcessorSelection" type="SelectionMetaData::Processor">
+                    <values>
+                        <item type="Image File Writer" ref="ref6" />
+                    </values>
+                </MetaItem>
+            </MetaData>
+            <Processors>
+                <Processor type="MultiBand Image File Reader" name="MultiBand Image File Reader" id="ref0">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-67" y="-559" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="clearButton" />
+                        <Property name="enableSignleBand" value="false" />
+                        <Property name="imageFile" noPathSet="false" value="FLOOD_Evros.img" />
+                        <Property name="outputBand" value="1" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Calculate NDWI" name="Calculate NDWI" id="ref1">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-22" y="-458" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="mir" value="5" />
+                        <Property name="nir" value="4" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Binary Threshold Image Segmentation" name="Binary Threshold Image Segmentation" id="ref2">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-85" y="-352" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="enable" value="true" />
+                        <Property name="insideValue" value="255" />
+                        <Property name="lowerThreshold" value="0.14" />
+                        <Property name="outsideValue" value="0" />
+                        <Property name="upperThreshold" value="1" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Image File Writer" name="Image File Writer" id="ref3">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-55" y="-250" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="clearButton" />
+                        <Property name="imageFile" noPathSet="false" value="flood1.img" />
+                        <Property name="maxValue" value="255" />
+                        <Property name="minValue" value="0" />
+                        <Property name="outputImageType" value="char" />
+                        <Property name="rescaleSelection" value="true" />
+                        <Property name="saveButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="MultiBand Image File Reader" name="MultiBand Image File Reader 2" id="ref4">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="284" y="-528" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="clearButton" />
+                        <Property name="enableSignleBand" value="false" />
+                        <Property name="imageFile" noPathSet="false" value="FLOOD_Evros.img" />
+                        <Property name="outputBand" value="1" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Band Math Calculator (Single Image)" name="Band Math Calculator (Single Image)" id="ref5">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="265" y="-433" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="expr" value="(b1-b2)" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Image File Writer" name="Image File Writer 2" id="ref6">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="323" y="-330" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="clearButton" />
+                        <Property name="imageFile" noPathSet="false" value="flood2.img" />
+                        <Property name="maxValue" value="255" />
+                        <Property name="minValue" value="0" />
+                        <Property name="outputImageType" value="char" />
+                        <Property name="rescaleSelection" value="true" />
+                        <Property name="saveButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+            </Processors>
+            <Connections>
+                <Connection>
+                    <Outport name="MultibandImage">
+                        <Processor type="MultiBand Image File Reader" ref="ref0" />
+                    </Outport>
+                    <Inport name="Vector Image Input">
+                        <Processor type="Calculate NDWI" ref="ref1" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="NDWI Image Output">
+                        <Processor type="Calculate NDWI" ref="ref1" />
+                    </Outport>
+                    <Inport name="OTBImage.inport">
+                        <Processor type="Binary Threshold Image Segmentation" ref="ref2" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="OTBImage.outport">
+                        <Processor type="Binary Threshold Image Segmentation" ref="ref2" />
+                    </Outport>
+                    <Inport name="OTBImage.inport">
+                        <Processor type="Image File Writer" ref="ref3" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="MultibandImage">
+                        <Processor type="MultiBand Image File Reader" ref="ref4" />
+                    </Outport>
+                    <Inport name="Vector Image Input">
+                        <Processor type="Band Math Calculator (Single Image)" ref="ref5" />
+                    </Inport>
+                </Connection>
+            </Connections>
+            <CoProcessorConnections />
+            <PropertyLinks />
+        </ProcessorNetwork>
+        <Animation />
+    </Workspace>
+</VoreenData>

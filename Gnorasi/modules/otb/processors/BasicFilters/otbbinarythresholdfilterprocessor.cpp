@@ -37,8 +37,8 @@ OTBBinaryThresholdFilterProcessor::OTBBinaryThresholdFilterProcessor()
     : OTBImageFilterProcessor(),
     insideValue_("insideValue", "Inside Value", 255.0f, 0.0f, 1024.0f),
     outsideValue_("outsideValue", "Outside Value", 0.0f, 0.0f, 1024.0f),
-    lowerThreshold_("lowerThreshold", "Lower Threshold", 0.1f, 0.0f, 1024.0f),
-    upperThreshold_("upperThreshold", "Upper Threshold", 1.0f, 0.0f, 1024.0f),
+    lowerThreshold_("lowerThreshold", "Lower Threshold", 0.1f, -1024.0f, 1024.0f),
+    upperThreshold_("upperThreshold", "Upper Threshold", 1.0f, -1024.0f, 1024.0f),
     inPort_(Port::INPORT, "OTBImage.inport", 0),
     outPort_(Port::OUTPORT, "OTBImage.outport", 0)
 {

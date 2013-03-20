@@ -171,6 +171,25 @@ public:
      */
     int currentGreyscaleChannel() const ;
 
+
+    /*!
+     * \brief currentRedChannel
+     * \return
+     */
+    unsigned currentRedChannel() const;
+
+    /*!
+     * \brief currentGreenChannel
+     * \return
+     */
+    unsigned currentGreenChannel() const;
+
+    /*!
+     * \brief currentBlueChannel
+     * \return
+     */
+    unsigned currentBlueChannel() const;
+
 public slots:
     /*!
      * \brief setupChannels,
@@ -180,6 +199,7 @@ public slots:
 
     /*!
      * \brief setupHistogram
+     * this funciton , is called during the setup process when a new image has been set or the channel selection has been changed
      */
     void setupHistogram();
 

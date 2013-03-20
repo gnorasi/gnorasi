@@ -49,7 +49,11 @@ bool OTBImageViewerProcessor::isReady() const {
     if (!isInitialized())
         return false;
 
-    if(!inPort_.isConnected() && !inPort2_.isConnected()) return false;
+    // Commnented this in order the proces function to continue
+    // had to do this in order to call process functionality when user
+    // deletes the last connected image related port
+    // Un comment this if errors occur..
+//    if(!inPort_.isConnected() && !inPort2_.isConnected()) return false;
 
     return true;
 }
@@ -104,12 +108,13 @@ void OTBImageViewerProcessor::updateView() {
 
 void OTBImageViewerProcessor::showImage() {
     
+    ProcessorWidget *pW = getProcessorWidget();
+    if(pW)
+        pW->setVisible(true);
+
     if(this->isReady())
     {
-//        viewer = ViewerType::New();
-//        viewer->SetImage(inPort_.getData());
-//        viewer->SetLabel("Simple Image Viewer");
-//        viewer->Update();
+
     }
 }
 
