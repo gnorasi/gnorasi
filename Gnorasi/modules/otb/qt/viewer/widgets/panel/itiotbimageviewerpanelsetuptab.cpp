@@ -87,7 +87,7 @@ void ItiOtbImageViewerPanelSetupTab::setupColorCompositionGroupBox(){
     layout->addLayout(hboxLayout1);
     layout->addLayout(hboxLayout2);
     layout->addLayout(hboxLayout3);
-    layout->addSpacerItem(new QSpacerItem(100,100,QSizePolicy::Fixed,QSizePolicy::Expanding));
+    layout->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Fixed,QSizePolicy::Expanding));
     layout->addWidget(m_pButtonApplyColorComposition);
 
     m_pGroupBoxColorComposition->setLayout(layout);

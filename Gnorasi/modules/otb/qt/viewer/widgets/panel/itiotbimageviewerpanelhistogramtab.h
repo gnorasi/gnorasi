@@ -54,6 +54,9 @@ public:
      * \brief setupHistogram
      */
     void setupHistogram();
+
+    // set the current channels
+    void setCurrentChannels(int red, int green, int blue);
     
 signals:
     
@@ -70,13 +73,29 @@ private:
      */
     ItiOtbImageViewerPanel* m_pItiOtbImageViewerPanel;
 
+    /*!
+     * \brief m_pHistogramGenerator
+     */
     HistogramGenerator *m_pHistogramGenerator;
 
+    /*!
+     * \brief m_pHistogramViewRed
+     */
     HistogramView *m_pHistogramViewRed;
+
+    /*!
+     * \brief m_pHistogramViewBlue
+     */
     HistogramView *m_pHistogramViewBlue;
+
+    /*!
+     * \brief m_pHistogramViewGreen
+     */
     HistogramView *m_pHistogramViewGreen;
 
-
+    /*!
+     * \brief m_pHistogramViewGreyscale
+     */
     HistogramView *m_pHistogramViewGreyscale;
 };
 

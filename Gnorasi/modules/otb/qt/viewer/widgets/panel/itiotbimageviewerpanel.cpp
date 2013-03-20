@@ -150,6 +150,19 @@ int ItiOtbImageViewerPanel::currentGreyscaleChannel() const{
     return m_pSetupTab->currentGreyscaleChannel();
 }
 
+
+unsigned int ItiOtbImageViewerPanel::currentRedChannel() const{
+    return m_pSetupTab->currentRedChannel();
+}
+
+unsigned int ItiOtbImageViewerPanel::currentGreenChannel() const{
+    return m_pSetupTab->currentGreenChannel();
+}
+
+unsigned int ItiOtbImageViewerPanel::currentBlueChannel() const{
+    return m_pSetupTab->currentBlueChannel();
+}
+
 bool ItiOtbImageViewerPanel::isGreyscale(){
     return m_pSetupTab->isGreyScale();
 }
