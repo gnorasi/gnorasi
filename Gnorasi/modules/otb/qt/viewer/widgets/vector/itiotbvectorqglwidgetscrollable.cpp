@@ -91,32 +91,18 @@ void ItiOtbVectorQGLWidgetScrollable::setupFocusRegionAndSendNotification() {
     int _x = f_d_c + m_focusRegion.x();
     if(extent.GetIndex()[0] > 0)
         _x -= extent.GetIndex()[0];
-    int _y = f_d_r + height() - m_focusRegion.y() - m_focusRegion.height();
-    int _w = m_focusRegion.width();
-    int _h = m_focusRegion.height();
 
+    int _y = f_d_r + height() - m_focusRegion.y() - m_focusRegion.height();
     if(extent.GetIndex()[1] > 0)
         _y -= extent.GetIndex()[1];
 
-    if(_x < 0)
-        _x = 0;
-    if(_y < 0)
-        _y  = 0;
-    if(_w < 0)
-        _w = 0;
-    if(_h < 0)
-        _h = 0;
+    int _w = m_focusRegion.width();
+    int _h = m_focusRegion.height();
 
-    if(_x + _w > extent.GetSize()[0])
-        _x = extent.GetSize()[0] - _w;
-    if(_y + _h > extent.GetSize()[1])
-        _y  = extent.GetSize()[1] - _h;
+    if(_x < 0) _x = 0; else if(_x + _w > extent.GetSize()[0]) _x = extent.GetSize()[0] - _w;
+    if(_y < 0) _y = 0; else if(_y + _h > extent.GetSize()[1]) _y  = extent.GetSize()[1] - _h;
 
-    QRect rect;
-    rect.setX(_x);
-    rect.setY(_y);
-    rect.setWidth(_w);
-    rect.setHeight(_h);
+    QRect rect(_x,_y,_w,_h);
 
     //! emit signal in order to update the zoomable view
     emit focusRegionChanged(rect);
@@ -132,12 +118,7 @@ void ItiOtbVectorQGLWidgetScrollable::initializeGL()
     glShadeModel(GL_FLAT);
 }
 
-
-void ItiOtbVectorQGLWidgetScrollable::resizeGL(int w, int h)
-{
-    //! firstly setup the viweport with the new width and height
-    setupViewport(w,h);
-
+void ItiOtbVectorQGLWidgetScrollable::setupPaintingParametersAndVisibleArea(){
     ImageRegionType extent = m_pImageViewManipulator->extent();
     ImageRegionType bufferRegion = m_pImageViewManipulator->bufferRegion();
 
@@ -155,7 +136,7 @@ void ItiOtbVectorQGLWidgetScrollable::resizeGL(int w, int h)
         f_d_c = 0;
     } else {
 
-        nb_d_cs = w / m_IsotropicZoom;
+        nb_d_cs = width() / m_IsotropicZoom;
 
         //!
         //! setup the fisrt display column
@@ -170,7 +151,7 @@ void ItiOtbVectorQGLWidgetScrollable::resizeGL(int w, int h)
         nb_d_rs = bufferRegion.GetSize()[1];
         f_d_r = extent.GetSize()[1] - nb_d_rs;
     } else {
-        nb_d_rs = h / m_IsotropicZoom;
+        nb_d_rs = height() / m_IsotropicZoom;
 
         //!
         //! setup first display row
@@ -186,6 +167,14 @@ void ItiOtbVectorQGLWidgetScrollable::resizeGL(int w, int h)
 
     //! emit the signal
     emit visibleAreaChanged(rect);
+}
+
+void ItiOtbVectorQGLWidgetScrollable::resizeGL(int w, int h)
+{
+    //! firstly setup the viweport with the new width and height
+    setupViewport(w,h);
+
+    setupPaintingParametersAndVisibleArea();
 
 }
 
@@ -798,6 +787,7 @@ void ItiOtbVectorQGLWidgetScrollable::enableMouseTracking(){
     //! mouse tracking is disabled on startup, set it on
     setMouseTracking(true);
 }
+
 
 //!
 ItiOtbVectorQGLWidgetScrollable::~ItiOtbVectorQGLWidgetScrollable(){

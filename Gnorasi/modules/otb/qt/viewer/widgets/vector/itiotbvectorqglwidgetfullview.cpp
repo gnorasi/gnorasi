@@ -219,7 +219,6 @@ void ItiOtbVectorQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
     }
 
     // pixel info related functionality follows
-
     if(hasMouseTracking()){
         VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
         if(vModel){
@@ -304,7 +303,9 @@ void ItiOtbVectorQGLWidgetFullView::translate(const QPoint &previousCenter, cons
     //! create helper values
     int dx = 0, dy = 0;
 
+    //!
     //! check if the new rect right border exceeds the extends' width value
+    //!
     if(point.x()+ qRound((double)m_visibleRegion.width()/2.0) > extent.GetSize()[0] + extent.GetIndex()[0]){
         dx = extent.GetIndex()[0] + extent.GetSize()[0] - qRound((double)m_visibleRegion.width()/2.0) - previousCenter.x();
     } //! check if the new rect left border exceeds the extend's index x value
@@ -342,11 +343,6 @@ void ItiOtbVectorQGLWidgetFullView::mouseReleaseEvent(QMouseEvent *event){
     QGLWidget::mouseReleaseEvent(event);
 }
 
-
-//void ItiOtbVectorQGLWidgetFullView::resizeEvent(QResizeEvent *event){
-//    m_pImageViewManipulator->resizeEvent(event);
-//}
-
 void ItiOtbVectorQGLWidgetFullView::enableMouseTracking(){
     //! mouse tracking is disabled on startup, set it on
     setMouseTracking(true);
@@ -355,5 +351,5 @@ void ItiOtbVectorQGLWidgetFullView::enableMouseTracking(){
 
 //!
 ItiOtbVectorQGLWidgetFullView::~ItiOtbVectorQGLWidgetFullView(){
-//    ClearBuffer();
+
 }
