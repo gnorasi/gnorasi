@@ -175,6 +175,12 @@ protected:
     void mouseReleaseEvent(QMouseEvent *);
 
 private:
+
+    /*!
+     * \brief setupPaintingParameters
+     */
+    void setupPaintingParametersAndVisibleArea();
+
     /*!
      * \brief indexFromPoint
      * \return
