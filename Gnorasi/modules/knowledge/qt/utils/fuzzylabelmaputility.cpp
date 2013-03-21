@@ -19,6 +19,8 @@ FuzzyLabelMapUtility::FuzzyLabelMapUtility(QObject *parent) :
 
 void FuzzyLabelMapUtility::parse(LabelMapType *lblmap){
 
+    m_attributeList.clear();
+
     for(unsigned int i = 1; i < lblmap->GetNumberOfLabelObjects(); i++){
         LabelObjectType* lblObject = lblmap->GetLabelObject(i);
 
