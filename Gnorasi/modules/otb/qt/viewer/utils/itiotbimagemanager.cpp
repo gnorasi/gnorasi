@@ -10,7 +10,7 @@
 #include "itiotblabelimageparser.h"
 #include "itiotblevel.h"
 #include "itiotbregion.h"
-#include "itiotblevelutility.h"
+//#include "itiotblevelutility.h"
 
 #include "../../../ports/otblabelimageport.h"
 
