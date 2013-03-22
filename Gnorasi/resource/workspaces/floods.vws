@@ -5,7 +5,7 @@
             <MetaData>
                 <MetaItem name="ProcessorSelection" type="SelectionMetaData::Processor">
                     <values>
-                        <item type="Image File Writer" ref="ref6" />
+                        <item type="Band Math Calculator (Single Image)" ref="ref5" />
                     </values>
                 </MetaItem>
             </MetaData>
@@ -77,11 +77,11 @@
                         <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="265" y="-433" />
                     </MetaData>
                     <Properties>
-                        <Property name="expr" value="(b1-b2)" />
+                        <Property name="expr" value="if(((if((b5 &gt; 0),1,151) + b5) &lt; 150),255,0)" />
                     </Properties>
                     <InteractionHandlers />
                 </Processor>
-                <Processor type="Image File Writer" name="Image File Writer 2" id="ref6">
+                <Processor type="Image File Writer" name="Image File Writer 2">
                     <MetaData>
                         <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="323" y="-330" />
                     </MetaData>
