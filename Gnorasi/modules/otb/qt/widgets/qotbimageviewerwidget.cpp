@@ -439,6 +439,13 @@ void QGLOtbImageViewerWidget::clearImage(){
     m_pvSplitter->setSizes(sizlist);
 }
 
+
+void QGLOtbImageViewerWidget::showEvent(QShowEvent *event){
+    qDebug() << "show event .. ";
+
+    resize(width()+1,height()+1);
+}
+
 QGLOtbImageViewerWidget::~QGLOtbImageViewerWidget(){
 //    ItiOtbImageManager::deleteInstance();
 }
