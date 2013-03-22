@@ -347,6 +347,8 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     if(!manager->isPortEmpty(port))
         manager->setupImage(); //! setup the image
 
+    qDebug() << "time elapsed after setupImage : " << time.elapsed();
+
     //
     //  ** IMPORTANT **
     //
@@ -375,6 +377,8 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
         disassembleWidgets();
         m_pItiOtbImageViewerPanel->readDisplaySettings();
     }
+
+    qDebug() << "final time elapsed : " << time.elapsed();
 }
 
 void QGLOtbImageViewerWidget::createViewer(){
