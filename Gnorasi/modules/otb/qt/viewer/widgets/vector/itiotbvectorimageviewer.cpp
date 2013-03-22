@@ -94,10 +94,10 @@ void ItiOtbVectorImageViewer::setupLayout(){
     m_pItiOtbVectorImageWidgetScroll        = new ItiOtbVectorQGLWidgetScrollable(this);
     m_pItiOtbVectorImageWidgetScroll->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     m_pItiOtbVectorImageWidgetFullView      = new ItiOtbVectorQGLWidgetFullView(this);
-    m_pItiOtbVectorImageWidgetFullView->setMinimumSize(10,10);
+//    m_pItiOtbVectorImageWidgetFullView->setMinimumSize(10,10);
     m_pItiOtbVectorImageWidgetScroll->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     m_pItiOtbVectorImageWidgetZoomable      = new ItiOtbVectorQGLWidgetZoomable(this);
-    m_pItiOtbVectorImageWidgetZoomable->setMinimumSize(10,10);
+//    m_pItiOtbVectorImageWidgetZoomable->setMinimumSize(10,10);
     m_pItiOtbVectorImageWidgetScroll->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
     //! TODO

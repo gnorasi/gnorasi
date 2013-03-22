@@ -68,7 +68,7 @@ signals:
 
 private:
 
-    QGroupBox *m_pGroupBox;
+//    QGroupBox *m_pGroupBox;
 
     /*!
      * \brief m_title
