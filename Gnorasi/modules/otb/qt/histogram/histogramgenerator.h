@@ -30,6 +30,7 @@
 #define HISTOGRAMGENERATOR_H
 
 #include <QObject>
+#include <QHash>
 
 #if defined(_MSC_VER)
 #pragma warning ( disable : 4786 )
@@ -45,9 +46,9 @@
 #include "otbVectorRescaleIntensityImageFilter.h"
 #include "../viewer/vector_globaldefs.h"
 
-#include <QHash>
+#include "otbStreamingHistogramVectorImageFilter.h"
+#include "otbStreamingMinMaxVectorImageFilter.h"
 
-const unsigned int _Dimension                           = 2;
 
 /*!
  * \brief The HistogramGenerator class encapsulates the HistogramGenerator object from the ITK library.
@@ -60,14 +61,27 @@ class HistogramGenerator : public QObject
     Q_OBJECT
 public:
 
-    typedef unsigned char                               PixelComponentType;
-    typedef itk::RGBPixel< PixelComponentType >         RGBPixelType;
-    typedef itk::Image< RGBPixelType, _Dimension >      RGBImageType;
-    typedef itk::Statistics::ImageToHistogramGenerator<
-                                RGBImageType >          HistogramGeneratorType;
-    typedef HistogramGeneratorType::SizeType            SizeType;
-    typedef itk::ImageFileReader< RGBImageType >        ReaderType;
-    typedef HistogramGeneratorType::HistogramType       HistogramType;
+    /** */
+    typedef
+      // itk::NumericTraits< T >::FloatType and
+      // itk::NumericTraits< T >::RealType do not depend on template
+      // parameter T. They are always typedef, respectively, as float
+      // and double.
+      //
+      // So, itk::NumericTraits< DefaultImageType::InternalPixelType
+      // >::RealType is equivalent to itk::NumericTraits< float
+      // >::RealType which is always an alias of double.
+      //
+      // This typedef is used for compatibility with
+      // itk::Histogram<>::MeasurementType.
+      itk::NumericTraits< VectorImageType::InternalPixelType >::RealType
+      MeasurementType;
+
+    /** */
+    typedef itk::Statistics::Histogram< MeasurementType, 1 > Histogram;
+
+    /** */
+    typedef otb::ObjectList< Histogram > HistogramList;
 
     /*!
      * \brief The RMODE enum can be either RMODE_GREYSCALE or RMODE_RGB enumeration value
@@ -91,16 +105,6 @@ public:
 
     /*!
      * \brief generateHistogram
-     * \param path
-     */
-    void generateHistogram(const QString &path);
-
-    /*!
-     * \brief generateHistogram
-     *  Oh, there is one thing Greek people say in such an occassion..
-     *  Yet another path knows the good fellow..
-     *  So dummy implementation, the problem was that the histogram filter was not been able to be
-     *  implemented in the gnorasi..
      * \param image
      */
     void generateHistogram(VectorImageType *image);
@@ -122,12 +126,6 @@ public:
     QHash<int,double> blueChannelData() const { return m_blueChannelData; }
 
 
-    //OTB specific stuff***************************************************
-    //Default 32 bit image writer
-    typedef VectorImageType* 		     ImagePointer;
-    typedef otb::ImageFileWriter<VectorImageType> WriterType;
-    WriterType::Pointer writer;
-
     /*!
      * \brief setRMode
      * \param rmode
@@ -148,20 +146,7 @@ signals:
 public slots:
 
 private:
-    /*!
-     * \brief histogramGenerator
-     */
-    HistogramGeneratorType::Pointer histogramGenerator;
-
-    /*!
-     * \brief reader, a helper instance
-     */
-    ReaderType::Pointer reader;
-
-    /*!
-     * \brief histogram instance
-     */
-    const HistogramType * histogram;
+    void parseHistogram();
 
     /*!
      * \brief parseGreyscaleChannel
@@ -184,12 +169,6 @@ private:
      */
     void parseBlueChannel();
 
-    // this is ta helper funciton for creating new paths on the helper folder
-    QString constructNewName();
-
-    /// clear all files on the helper folder
-    void clearImageRepo();
-
 
     double *m_pRedChannelFrequency;
     double *m_pGreenChannelFrequency;
@@ -208,11 +187,15 @@ private:
     unsigned int m_greenChannel;
     unsigned int m_blueChannel;
 
-    QDir m_dir;
-
     RMODE m_rmode;
 
     int m_currentGreyChannel;
+
+    HistogramList::Pointer m_Histograms;
+    /** */
+    VectorImageType::PixelType m_MinPixel;
+    /** */
+    VectorImageType::PixelType m_MaxPixel;
 
 };
 
