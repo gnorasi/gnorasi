@@ -225,9 +225,6 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
     //! setup the channels , get number etc..
     m_pItiOtbImageViewerPanel->setupChannels();
 
-    // now setup the histogram on the panel
-    m_pItiOtbImageViewerPanel->setupHistogram();
-
     //! finally draw the viewer
     m_pItiOtbImageViewer->draw();
 }
@@ -292,9 +289,6 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
 
     //! setup the channels , get number etc..
     m_pItiOtbImageViewerPanel->setupChannels();
-
-    // now setup the histogram on the panel
-    m_pItiOtbImageViewerPanel->setupHistogram();
 
     // setup viewer properties
     m_pItiOtbImageViewer->setParent(this);
@@ -361,9 +355,6 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
 
     //! setup the channels , get number etc..
     m_pItiOtbImageViewerPanel->setupChannels();
-
-    // now setup the histogram on the panel
-    m_pItiOtbImageViewerPanel->setupHistogram();
 
     //! draw stuff
     m_pItiOtbImageViewer->draw();
