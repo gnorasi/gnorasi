@@ -21,6 +21,9 @@ TARGET_LINK_LIBRARIES(NDWI OTBCommon OTBIO OTBBasicFilters)
 ADD_EXECUTABLE(ImageDifference ImageDifference.cxx )
 TARGET_LINK_LIBRARIES(ImageDifference OTBCommon OTBIO OTBBasicFilters)
 
+ADD_EXECUTABLE(AdaptiveHistogramEqualization AdaptiveHistogramEqualization.cxx )
+TARGET_LINK_LIBRARIES(AdaptiveHistogramEqualization OTBCommon OTBIO OTBBasicFilters)
+
 ADD_EXECUTABLE(BinaryThreshold BinaryThreshold.cxx )
 TARGET_LINK_LIBRARIES(BinaryThreshold OTBCommon OTBIO)
 
