@@ -48,6 +48,9 @@
 
 #include "otbGaussianRenderingFunction.h"
 
+
+#include "../vector_globaldefs.h"
+
 //
 // External classes pre-declaration.
 namespace
@@ -153,6 +156,16 @@ public:
    * \return
    */
   QString lastPath() const { return m_lastPath; }
+
+  /**
+   * Get a smart-pointer to the current LOD image-base.
+   */
+  ImageBaseType::ConstPointer ToImageBase() const;
+
+  /**
+   * Get a smart-pointer to the current LOD image-base.
+   */
+  ImageBaseType::Pointer ToImageBase();
 
 //
 // SIGNALS.
@@ -296,6 +309,7 @@ private:
 // SLOTS.
 private slots:
 
+protected:
 
 public:
   /*!
@@ -303,6 +317,7 @@ public:
    */
   void setRenderingFuction(RenderingFunctionType* );
 };
+
 
 } // end namespace 'mvd'
 

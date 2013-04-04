@@ -57,6 +57,10 @@ typedef itk::ImageRegion<VDimension >                                       Imag
  */
 typedef itk::Index< VDimension >                                            IndexType;
 
+/**
+ */
+typedef itk::ImageBase< 2 >                                                 ImageBaseType;
+
 typedef VectorImageType                                                     DefaultImageType;
 typedef VectorImageType::RegionType                                         VectorRegionType;
 typedef VectorImageType::IndexType                                          VectorIndexType;

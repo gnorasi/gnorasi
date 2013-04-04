@@ -115,6 +115,50 @@ VectorImageModel
 
   m_RenderingFilter->GetRenderingFunction()->SetChannelList(m_Channels);
 
+
+  /////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+  /// TEST
+
+    otb::ImageMetadataInterfaceBase::Pointer metaData =  otb::ImageMetadataInterfaceFactory::CreateIMI(ToImageBase()->GetMetaDataDictionary());
+
+  // Ensure default display returns valid band indices (see OTB bug).
+  Q_ASSERT(  metaData->GetDefaultDisplay().size()==3 );
+#if 0
+  Q_ASSERT( metaData->GetDefaultDisplay()[ 0 ]
+      < m_Image->GetNumberOfComponentsPerPixel() );
+  Q_ASSERT( metaData->GetDefaultDisplay()[ 1 ]
+      < m_Image->GetNumberOfComponentsPerPixel() );
+  Q_ASSERT( metaData->GetDefaultDisplay()[ 2 ]
+      < m_Image->GetNumberOfComponentsPerPixel() );
+#endif
+
+  // Patch invalid band indices of default-display (see OTB bug).
+  std::vector<unsigned int> rgb( metaData->GetDefaultDisplay() );
+
+  if( rgb[ 0 ]>= m_pManager->image()->GetNumberOfComponentsPerPixel() )
+    {
+    rgb[ 0 ] = 0;
+    }
+
+  if( rgb[ 1 ]>= m_pManager->image()->GetNumberOfComponentsPerPixel() )
+    {
+    rgb[ 1 ] = 0;
+    }
+
+  if( rgb[ 2 ]>= m_pManager->image()->GetNumberOfComponentsPerPixel() )
+    {
+    rgb[ 2 ] = 0;
+    }
+
+  // Store default display settings.
+//  GetSettings().SetRgbChannels( rgb );
+
+    /// END OF TEST
+  /////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+
+
   emit changed();
 }
 
@@ -402,6 +446,22 @@ ImageRegionType VectorImageModel::GetLargestPossibleRegion() const{
 void VectorImageModel::setRenderingFuction(RenderingFunctionType *rType){
 
     m_RenderingFilter->SetRenderingFunction(rType);
+}
+
+/*******************************************************************************/
+ImageBaseType::ConstPointer
+VectorImageModel
+::ToImageBase() const
+{
+  return ImageBaseType::ConstPointer( m_pManager->image() );
+}
+
+/*******************************************************************************/
+ImageBaseType::Pointer
+VectorImageModel
+::ToImageBase()
+{
+  return ImageBaseType::Pointer( m_pManager->image() );
 }
 
 
