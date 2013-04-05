@@ -98,40 +98,40 @@ typedef otb::ImageFileReader< VectorImageType >                             Vect
 
 /** Rendering filter */
 /** Rendering part */
-//typedef RenderingImageFilter<VectorImageType, RGBAImageType>                RenderingFilterType;
-typedef RenderingImageFilter<ByteImageType, RGBAImageType>                  RenderingFilterType;
+typedef RenderingImageFilter<VectorImageType, RGBAImageType>                RenderingFilterType;
+//typedef RenderingImageFilter<ByteImageType, RGBAImageType>                  RenderingFilterType;
 
 
 /** Rendering function */
-//typedef Function::RenderingFunction<VectorImageType::PixelType, RGBAPixelType> RenderingFunctionType;
-typedef Function::RenderingFunction<ByteImageType::PixelType, RGBAPixelType> RenderingFunctionType;
+typedef Function::RenderingFunction<VectorImageType::PixelType, RGBAPixelType> RenderingFunctionType;
+//typedef Function::RenderingFunction<ByteImageType::PixelType, RGBAPixelType> RenderingFunctionType;
 
-//typedef Function::StandardRenderingFunction<VectorImageType::PixelType,
-//                                            RGBAPixelType> StandardRenderingFunctionType;
-//typedef StandardRenderingFunctionType::ChannelListType    ChannelListType;
-//typedef StandardRenderingFunctionType::ParametersType     ParametersType;
-
-//typedef Function::NoStretchRenderingFunction<VectorImageType::PixelType,
-//                                             RGBAPixelType> NoStretchRenderingFunctionType;
-
-//typedef Function::SquareRootRenderingFunction<VectorImageType::PixelType,
-//                                              RGBAPixelType> SquareRootRenderingFunctionType;
-
-//typedef Function::GaussianRenderingFunction<VectorImageType::PixelType,
-//                                            RGBAPixelType> GaussianRenderingFunctionType;
-typedef Function::StandardRenderingFunction<ByteImageType::PixelType,
+typedef Function::StandardRenderingFunction<VectorImageType::PixelType,
                                             RGBAPixelType> StandardRenderingFunctionType;
 typedef StandardRenderingFunctionType::ChannelListType    ChannelListType;
 typedef StandardRenderingFunctionType::ParametersType     ParametersType;
 
-typedef Function::NoStretchRenderingFunction<ByteImageType::PixelType,
+typedef Function::NoStretchRenderingFunction<VectorImageType::PixelType,
                                              RGBAPixelType> NoStretchRenderingFunctionType;
 
-typedef Function::SquareRootRenderingFunction<ByteImageType::PixelType,
+typedef Function::SquareRootRenderingFunction<VectorImageType::PixelType,
                                               RGBAPixelType> SquareRootRenderingFunctionType;
 
-typedef Function::GaussianRenderingFunction<ByteImageType::PixelType,
+typedef Function::GaussianRenderingFunction<VectorImageType::PixelType,
                                             RGBAPixelType> GaussianRenderingFunctionType;
+//typedef Function::StandardRenderingFunction<ByteImageType::PixelType,
+//                                            RGBAPixelType> StandardRenderingFunctionType;
+//typedef StandardRenderingFunctionType::ChannelListType    ChannelListType;
+//typedef StandardRenderingFunctionType::ParametersType     ParametersType;
+
+//typedef Function::NoStretchRenderingFunction<ByteImageType::PixelType,
+//                                             RGBAPixelType> NoStretchRenderingFunctionType;
+
+//typedef Function::SquareRootRenderingFunction<ByteImageType::PixelType,
+//                                              RGBAPixelType> SquareRootRenderingFunctionType;
+
+//typedef Function::GaussianRenderingFunction<ByteImageType::PixelType,
+//                                            RGBAPixelType> GaussianRenderingFunctionType;
 
 /**
  */

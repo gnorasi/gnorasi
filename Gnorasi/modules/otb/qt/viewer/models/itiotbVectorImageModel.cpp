@@ -77,6 +77,7 @@ void
 VectorImageModel
 ::loadFile( const QString& filename )
 {
+    Q_UNUSED(filename);
 
     otb::ImageMetadataInterfaceBase::Pointer metaData =  otb::ImageMetadataInterfaceFactory::CreateIMI(ToImageBase()->GetMetaDataDictionary());
 
@@ -94,17 +95,24 @@ VectorImageModel
   // Patch invalid band indices of default-display (see OTB bug).
   std::vector<unsigned int> rgb( metaData->GetDefaultDisplay() );
 
-  if( rgb[ 0 ]>= m_pManager->image()->GetNumberOfComponentsPerPixel() )
+  unsigned int ncpp = m_pManager->image()->GetNumberOfComponentsPerPixel();
+
+  qDebug() << "m_pManager->image()->GetNumberOfComponentsPerPixel() : " << m_pManager->image()->GetNumberOfComponentsPerPixel();
+  qDebug() << "rgb[ 0 ] : " << rgb[ 0 ];
+  qDebug() << "rgb[ 1 ] : " << rgb[ 1 ];
+  qDebug() << "rgb[ 2 ] : " << rgb[ 2 ];
+
+  if( rgb[ 0 ]>= ncpp )
     {
     rgb[ 0 ] = 0;
     }
 
-  if( rgb[ 1 ]>= m_pManager->image()->GetNumberOfComponentsPerPixel() )
+  if( rgb[ 1 ]>= ncpp )
     {
     rgb[ 1 ] = 0;
     }
 
-  if( rgb[ 2 ]>= m_pManager->image()->GetNumberOfComponentsPerPixel() )
+  if( rgb[ 2 ]>= ncpp )
     {
     rgb[ 2 ] = 0;
     }
@@ -262,35 +270,47 @@ VectorImageModel
 
   Q_ASSERT(image);
 
-
   //test to strech image in 8bit
-  ByteRescalerFilterType::Pointer  byterescaler;
-  byterescaler = ByteRescalerFilterType::New();
-  //image->UpdateOutputInformation();
-  ByteImageType::PixelType minimum, maximum;
-  int bands = image->GetNumberOfComponentsPerPixel();
-  minimum.SetSize(bands);
-  maximum.SetSize(bands);
-  minimum.Fill(0);
-  maximum.Fill(255);
-  byterescaler->SetInput(image);
-  byterescaler->SetOutputMinimum(minimum);
-  byterescaler->SetOutputMaximum(maximum);
-  byterescaler->SetClampThreshold(0.01);
-  ByteImageType::Pointer image8;
-  image8 = byterescaler->GetOutput();
+//  ByteRescalerFilterType::Pointer  byterescaler;
+//  byterescaler = ByteRescalerFilterType::New();
+//  //image->UpdateOutputInformation();
+//  ByteImageType::PixelType minimum, maximum;
+//  int bands = image->GetNumberOfComponentsPerPixel();
+//  minimum.SetSize(bands);
+//  maximum.SetSize(bands);
+//  minimum.Fill(0);
+//  maximum.Fill(255);
+//  byterescaler->SetInput(image);
+//  byterescaler->SetOutputMinimum(minimum);
+//  byterescaler->SetOutputMaximum(maximum);
+//  byterescaler->SetClampThreshold(0.01);
+//  ByteImageType::Pointer image8;
+//  image8 = byterescaler->GetOutput();
 //  byterescaler->Update();
   //end test
 
   Q_ASSERT(!m_ExtractFilter.IsNull());
 
   // Extract the region of interest in the image
-  m_ExtractFilter->SetInput(image8);
+  m_ExtractFilter->SetInput(image);
   m_ExtractFilter->SetExtractionRegion(region);
 
-  Q_ASSERT(!m_ExtractFilter.IsNull());
+  Q_ASSERT(!m_RenderingFilter.IsNull());
 
   m_RenderingFilter->GetRenderingFunction()->SetAutoMinMax(false);
+
+  // ----------------------------------
+    RenderingFilterType::RenderingFunctionType::ParametersType  paramsMinMax;
+    paramsMinMax.SetSize(6);
+
+//    // Update the parameters
+    for (unsigned int i = 0; i < paramsMinMax.Size(); i = i + 2)
+    {
+        paramsMinMax.SetElement(i, 0);
+        paramsMinMax.SetElement(i + 1, 1024/*256*/);
+    }
+
+    m_RenderingFilter->GetRenderingFunction()->SetParameters(paramsMinMax);
 
   // Use the rendering filter to get
   m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());

@@ -201,12 +201,12 @@ private:
   /**
    * Extract filter.
    */
-//  typedef
-//    itk::ExtractImageFilter< SourceImageType, SourceImageType >
-//    ExtractFilterType;
   typedef
-    itk::ExtractImageFilter< ByteImageType, ByteImageType >
+    itk::ExtractImageFilter< SourceImageType, SourceImageType >
     ExtractFilterType;
+//  typedef
+//    itk::ExtractImageFilter< ByteImageType, ByteImageType >
+//    ExtractFilterType;
 
 //
 // Private methods.
