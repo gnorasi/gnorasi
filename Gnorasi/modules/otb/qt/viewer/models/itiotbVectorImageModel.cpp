@@ -260,6 +260,9 @@ VectorImageModel
     }
 
 
+  Q_ASSERT(image);
+
+
   //test to strech image in 8bit
   ByteRescalerFilterType::Pointer  byterescaler;
   byterescaler = ByteRescalerFilterType::New();
@@ -279,13 +282,19 @@ VectorImageModel
 //  byterescaler->Update();
   //end test
 
+  Q_ASSERT(!m_ExtractFilter.IsNull());
+
   // Extract the region of interest in the image
   m_ExtractFilter->SetInput(image8);
   m_ExtractFilter->SetExtractionRegion(region);
 
+  Q_ASSERT(!m_ExtractFilter.IsNull());
+
+  m_RenderingFilter->GetRenderingFunction()->SetAutoMinMax(false);
+
   // Use the rendering filter to get
   m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());
-  m_RenderingFilter->GetOutput()->SetRequestedRegion(region);
+//  m_RenderingFilter->GetOutput()->SetRequestedRegion(region);
   m_RenderingFilter->Update();
 
 //  qDebug() << "End of m_RenderingFilter \nmilliseconds elapsed : " << time.elapsed();
