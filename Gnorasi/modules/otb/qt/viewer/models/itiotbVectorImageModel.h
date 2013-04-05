@@ -151,11 +151,6 @@ public:
    */
   void resetData();
 
-  /*!
-   * \brief lastPath
-   * \return
-   */
-  QString lastPath() const { return m_lastPath; }
 
   /**
    * Get a smart-pointer to the current LOD image-base.
@@ -275,8 +270,6 @@ private:
 //
 // Private attributes.
 private:
-  // Default image reader
-  DefaultImageFileReaderType::Pointer   m_ImageFileReader;
 
   // Buffer where to store the image pixels needed by the renderer
   unsigned char *                       m_RasterizedBuffer;
@@ -299,11 +292,6 @@ private:
 
   // Vector storing the region to load
   std::vector<VectorRegionType >        m_RegionsToLoadVector;
-
-  /*!
-   * \brief m_lastPath
-   */
-  QString                               m_lastPath;
 
 //
 // SLOTS.
