@@ -77,48 +77,6 @@ void
 VectorImageModel
 ::loadFile( const QString& filename )
 {
-  DefaultImageFileReaderType::Pointer imageFileReader(
-    DefaultImageFileReaderType::New()
-  );
-
-  m_lastPath = filename;
-
-  imageFileReader->SetFileName( filename.toLatin1().data() );
-  imageFileReader->UpdateOutputInformation();
-
-  m_ImageFileReader = imageFileReader;
-
-  // Before doing anything, check if region is inside the buffered
-  // region of image
-  unsigned int currentIndex = 0;
-  const DefaultImageType* image =  this->GetOutput(currentIndex);
-  if(!image)
-      return;
-
-  // initialize the channel list for the rendering needs following the
-  // input image
-  // TODO : See if if needs to be moved somewhere else
-  // TODO : use the default display
-//  if (m_ImageFileReader->GetOutput()->GetNumberOfComponentsPerPixel()  < 3)
-  if(image->GetNumberOfComponentsPerPixel() < 3)
-    {
-    m_Channels.resize(1);
-    m_Channels[0]  = 0;
-    }
-  else
-    {
-    m_Channels.resize(3);
-    m_Channels[0]  = 0;
-    m_Channels[1]  = 1;
-    m_Channels[2]  = 2;
-    }
-
-  m_RenderingFilter->GetRenderingFunction()->SetChannelList(m_Channels);
-
-
-  /////////////////////////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////////////////////////
-  /// TEST
 
     otb::ImageMetadataInterfaceBase::Pointer metaData =  otb::ImageMetadataInterfaceFactory::CreateIMI(ToImageBase()->GetMetaDataDictionary());
 
@@ -151,13 +109,11 @@ VectorImageModel
     rgb[ 2 ] = 0;
     }
 
-  // Store default display settings.
-//  GetSettings().SetRgbChannels( rgb );
+  Q_ASSERT(m_Channels.empty() || m_Channels.size() == rgb.size());
 
-    /// END OF TEST
-  /////////////////////////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////////////////////////
+  m_Channels = rgb;
 
+  m_RenderingFilter->GetRenderingFunction()->SetChannelList(m_Channels);
 
   emit changed();
 }
@@ -435,11 +391,8 @@ VectorImageModel
 
 
 ImageRegionType VectorImageModel::GetLargestPossibleRegion() const{
-    ImageRegionType region;
-    if(!lastPath().isEmpty())
-        region = m_ImageFileReader->GetOutput()->GetLargestPossibleRegion();
 
-    return region;
+    return m_pManager->image()->GetLargestPossibleRegion();
 }
 
 
