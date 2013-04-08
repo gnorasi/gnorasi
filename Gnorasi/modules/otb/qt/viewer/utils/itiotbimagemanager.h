@@ -37,6 +37,9 @@
 #include "../vector_globaldefs.h"
 
 
+
+class HistogramGenerator;
+
 namespace itiviewer{
 
 
@@ -199,6 +202,18 @@ public:
      */
     bool isPortEmpty(voreen::Port *port);
 
+    /*!
+     * \brief histogramGenerator
+     * \return
+     */
+    HistogramGenerator* histogramGenerator() { return m_pHistogramGenerator; }
+
+    /*!
+     * \brief setHistogramGenerator
+     * \param hg
+     */
+    void setHistogramGenerator(HistogramGenerator *hg) { m_pHistogramGenerator = hg; }
+
 private:
 
 
@@ -283,6 +298,11 @@ private:
      *  a container holding the clasficaiton ids and a string values for names
      */
     QHash<int ,QString> m_classficationNamesIds;
+
+    /*!
+     * \brief m_pHistogramGenerator
+     */
+    HistogramGenerator*                   m_pHistogramGenerator;
 };
 
 

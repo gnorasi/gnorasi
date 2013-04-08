@@ -61,6 +61,16 @@ class HistogramGenerator : public QObject
     Q_OBJECT
 public:
 
+
+    /**
+     */
+    enum Bound
+    {
+      BOUND_LOWER = 0,
+      BOUND_UPPER,
+      BOUND_COUNT
+    };
+
     /** */
     typedef
       // itk::NumericTraits< T >::FloatType and
@@ -140,6 +150,31 @@ public:
 
     //! setter
     void setCurrentRGBChannels(unsigned int red, unsigned int green, unsigned int blue) { m_redChannel = red; m_greenChannel = green; m_blueChannel = blue; }
+
+    /** */
+    inline MeasurementType Quantile( CountType band, double p ) const;
+
+    /** */
+    inline MeasurementType Quantile( CountType band, double p, Bound bound ) const;
+
+    /*!
+     * \brief redChannelIndex
+     * \return
+     */
+    unsigned int redChannelIndex() const { return m_redChannel; }
+
+    /*!
+     * \brief greenChannelIndex
+     * \return
+     */
+    unsigned int greenChannelIndex() const { return m_greenChannel; }
+
+    /*!
+     * \brief blueChannelIndex
+     * \return
+     */
+    unsigned int blueChannelIndex() const { return m_blueChannel; }
+
     
 signals:
     
@@ -198,5 +233,34 @@ private:
     VectorImageType::PixelType m_MaxPixel;
 
 };
+
+
+/*******************************************************************************/
+inline
+HistogramGenerator::MeasurementType
+HistogramGenerator
+::Quantile( unsigned int band,
+        double p ) const
+{
+  assert( band<m_Histograms->Size() );
+
+  return m_Histograms->GetNthElement( band )->Quantile( 0, p );
+}
+
+/*******************************************************************************/
+inline
+HistogramGenerator::MeasurementType
+HistogramGenerator
+::Quantile( unsigned int band,
+        double p,
+        Bound bound ) const
+{
+  assert( band<m_Histograms->Size() );
+
+  return m_Histograms->GetNthElement( band )->Quantile(
+    0,
+    bound==BOUND_UPPER ? 1.0 - p : p
+  );
+}
 
 #endif // HISTOGRAMGENERATOR_H

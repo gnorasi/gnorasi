@@ -41,6 +41,8 @@
 #include "itkImageRegionConstIteratorWithIndex.h"
 
 
+#include "../../histogram/histogramgenerator.h"
+
 using namespace otb;
 
 
@@ -299,15 +301,36 @@ VectorImageModel
 
   m_RenderingFilter->GetRenderingFunction()->SetAutoMinMax(false);
 
+
+  Q_ASSERT(m_pManager->histogramGenerator());
+
   // ----------------------------------
     RenderingFilterType::RenderingFunctionType::ParametersType  paramsMinMax;
     paramsMinMax.SetSize(6);
 
 //    // Update the parameters
+//    for (unsigned int i = 0; i < paramsMinMax.Size(); i = i + 2)
+//    {
+//        paramsMinMax.SetElement(i, 30);
+//        paramsMinMax.SetElement(i + 1, 850);
+//    }
+
+    // Update the parameters
     for (unsigned int i = 0; i < paramsMinMax.Size(); i = i + 2)
     {
-        paramsMinMax.SetElement(i, 0);
-        paramsMinMax.SetElement(i + 1, 1024/*256*/);
+        unsigned int band = m_Channels.at(i/2);
+
+        double val = m_pManager->histogramGenerator()->Quantile(band,0.02,HistogramGenerator::BOUND_LOWER);
+
+        paramsMinMax.SetElement(i,val);
+
+        qDebug() << "m_pHistogramGenerator->Quantile(band,0.02,HistogramGenerator::BOUND_LOWER); : " << band << "\t" << val;
+
+        val = m_pManager->histogramGenerator()->Quantile(band,0.02,HistogramGenerator::BOUND_UPPER);
+
+        paramsMinMax.SetElement(i+1,val);
+
+        qDebug() << "m_pHistogramGenerator->Quantile(band,0.02,HistogramGenerator::BOUND_UPPER); : " << band << "\t" << val;
     }
 
     m_RenderingFilter->GetRenderingFunction()->SetParameters(paramsMinMax);

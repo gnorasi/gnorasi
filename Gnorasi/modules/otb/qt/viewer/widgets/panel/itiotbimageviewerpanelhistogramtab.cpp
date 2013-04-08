@@ -129,5 +129,7 @@ void ItiOtbImageViewerPanelHistogramTab::setupHistogram(){
         m_pHistogramViewGreen->replot();
         m_pHistogramViewBlue->replot();
     }
+
+    m_pItiOtbImageViewerPanel->manager()->setHistogramGenerator(m_pHistogramGenerator);
 }
 

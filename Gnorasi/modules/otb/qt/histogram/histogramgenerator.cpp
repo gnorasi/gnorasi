@@ -36,6 +36,7 @@ void HistogramGenerator::parseHistogram(){
 
 
 void HistogramGenerator::generateHistogram(VectorImageType *image){
+
     QTime lMain;
     QTime lPass1;
     QTime lPass2;
@@ -63,7 +64,7 @@ void HistogramGenerator::generateHistogram(VectorImageType *image){
     MinMaxFilter::Pointer filterMinMax( MinMaxFilter::New() );
 
     filterMinMax->SetInput(image);
-
+    filterMinMax->GetFilter()->SetNoDataFlag(true);
     filterMinMax->Update();
 
     /*
@@ -101,7 +102,7 @@ void HistogramGenerator::generateHistogram(VectorImageType *image){
     // Setup histogram filter.
     histogramFilter->GetFilter()->SetHistogramMin( m_MinPixel );
     histogramFilter->GetFilter()->SetHistogramMax( m_MaxPixel );
-//    histogramFilter->SetNumberOfBins( BINS_OVERSAMPLING_RATE * 256 );
+    histogramFilter->GetFilter()->SetNumberOfBins( BINS_OVERSAMPLING_RATE* 256 );
     histogramFilter->GetFilter()->SetSubSamplingRate( 1 );
 
     // Go.
@@ -135,8 +136,8 @@ void HistogramGenerator::parseGreyscaleChannel(){
 
     std::cout << "Histogram of the red component" << std::endl;
 
-    double helperFreq[255];
-    double helperAmpl[255];
+    double helperFreq[BINS_OVERSAMPLING_RATE*256];
+    double helperAmpl[BINS_OVERSAMPLING_RATE*256];
 
     // iterate thgrough the histrgram and set  the values to the hash and list instaces
     for( unsigned int bin=0; bin < histogramSize; bin++ )
@@ -163,8 +164,8 @@ void HistogramGenerator::parseRedChannel(){
 
     std::cout << "Histogram of the red component" << std::endl;
 
-    double helperFreq[255];
-    double helperAmpl[255];
+    double helperFreq[BINS_OVERSAMPLING_RATE*256];
+    double helperAmpl[BINS_OVERSAMPLING_RATE*256];
 
     // iterate thgrough the histrgram and set  the values to the hash and list instaces
     for( unsigned int bin=0; bin < histogramSize; bin++ )
@@ -193,8 +194,8 @@ void HistogramGenerator::parseGreenChannel(){
 
     std::cout << "Histogram of the green component" << std::endl;
 
-    double helperFreq[255];
-    double helperAmpl[255];
+    double helperFreq[BINS_OVERSAMPLING_RATE*256];
+    double helperAmpl[BINS_OVERSAMPLING_RATE*256];
 
     // iterate thgrough the histrgram and set  the values to the hash and list instaces
     for( unsigned int bin=0; bin < histogramSize; bin++ )
@@ -224,8 +225,8 @@ void HistogramGenerator::parseBlueChannel(){
 
     std::cout << "Histogram of the blue component" << std::endl;
 
-    double helperFreq[255];
-    double helperAmpl[255];
+    double helperFreq[BINS_OVERSAMPLING_RATE*256];
+    double helperAmpl[BINS_OVERSAMPLING_RATE*256];
 
     // iterate thgrough the histrgram and set  the values to the hash and list instaces
     for( unsigned int bin=0; bin < histogramSize; bin++ )
