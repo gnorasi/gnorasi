@@ -15,6 +15,9 @@
 #include <QPen>
 #include <QColor>
 
+#define BINS_OVERSAMPLING_RATE_DOUBLE 5.0
+#define BINS_OVERSAMPLING_RATE_INT 5
+
 
 class Histogram: public QwtPlotHistogram
 {
@@ -64,7 +67,7 @@ void Histogram::setValues(uint numValues, const double *values)
 
 
 HistogramView::HistogramView(QWidget *parent) :
-    d_mapRect(0.0, 0.0, 255.0, 255.0),
+    d_mapRect(0.0, 0.0, BINS_OVERSAMPLING_RATE_DOUBLE*256.0, BINS_OVERSAMPLING_RATE_DOUBLE*256),
     QwtPlot(parent)
 {
     initialize();
@@ -130,8 +133,8 @@ void HistogramView::setupData(const QHash<int,double> &data){
 
     detachItems();
 
-    double helperVal[255];
-    double helperVal2[255];
+    double helperVal[BINS_OVERSAMPLING_RATE_INT*256];
+    double helperVal2[BINS_OVERSAMPLING_RATE_INT*256];
     QHash<int,double>::const_iterator i;
     int counter = 0;
     for(i = data.constBegin(); i != data.constEnd(); i++){
@@ -141,7 +144,7 @@ void HistogramView::setupData(const QHash<int,double> &data){
 
     Histogram *histogram = new Histogram(m_histogramTitle,m_color);
     histogram->attach(this);
-    histogram->setValues(255, helperVal);
+    histogram->setValues(BINS_OVERSAMPLING_RATE_INT*256, helperVal);
 
     rescale();
 

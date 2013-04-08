@@ -57,6 +57,21 @@ typedef itk::ImageRegion<VDimension >                                       Imag
  */
 typedef itk::Index< VDimension >                                            IndexType;
 
+/*******************************************************************************/
+/* Type definitions of scalar values.                                          */
+/**
+ */
+typedef unsigned int                                                        CountType;
+
+/**
+ */
+enum Bound
+{
+  BOUND_LOWER = 0,
+  BOUND_UPPER,
+  BOUND_COUNT
+};
+
 /**
  */
 typedef itk::ImageBase< 2 >                                                 ImageBaseType;

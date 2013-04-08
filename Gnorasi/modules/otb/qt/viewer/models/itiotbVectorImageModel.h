@@ -162,6 +162,7 @@ public:
    */
   ImageBaseType::Pointer ToImageBase();
 
+
 //
 // SIGNALS.
 signals:
