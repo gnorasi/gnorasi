@@ -38,11 +38,13 @@ OTBStatisticsAttributesLabelMapProcessor::OTBStatisticsAttributesLabelMapProcess
     reducedProperties_("reduced", "Only Basic Properties", true),
     featureName_("featurename","Feature Name", "feature1"),
     update_("updateButton", "Update"), 
+    automaticUpdate("automaticUpdate", "Automaic Update", false),
     inPort_(Port::INPORT, "Input Object Map", 0),
     inImage_(Port::INPORT, "Input Feature Image", 0),
     outPort_(Port::OUTPORT, "Output Object Map", 0),
     outImage_(Port::OUTPORT, "Unchanged Feature Image", 0)
 {
+    addProperty(automaticUpdate);
     addProperty(reducedProperties_);
     featureName_.onChange(CallMemberAction<OTBStatisticsAttributesLabelMapProcessor>(this, &OTBStatisticsAttributesLabelMapProcessor::setFeatureName));
     addProperty(featureName_);
@@ -85,14 +87,17 @@ void OTBStatisticsAttributesLabelMapProcessor::process() {
     LINFO("Statistics Calculation Processor Processed.");
     try
     {
-	statisticsLabelMapFilter->SetInput(inPort_.getData());
-	statisticsLabelMapFilter->SetFeatureImage(inImage_.getData());
-	statisticsLabelMapFilter->SetFeatureName(featureName);
-	(reducedProperties_.get()) ? statisticsLabelMapFilter->ReducedAttributeSetOn() : 
-				     statisticsLabelMapFilter->ReducedAttributeSetOff();
-	outPort_.setData(statisticsLabelMapFilter->GetOutput());
-	outImage_.setData(inImage_.getData());
+    statisticsLabelMapFilter->SetInput(inPort_.getData());
+    statisticsLabelMapFilter->SetFeatureImage(inImage_.getData());
+    statisticsLabelMapFilter->SetFeatureName(featureName);
+    (reducedProperties_.get()) ? statisticsLabelMapFilter->ReducedAttributeSetOn() :
+                     statisticsLabelMapFilter->ReducedAttributeSetOff();
 
+    if(automaticUpdate.get())
+        statisticsLabelMapFilter->Update();
+
+    outPort_.setData(statisticsLabelMapFilter->GetOutput());
+    outImage_.setData(inImage_.getData());
     }
     catch (int e)
     {
