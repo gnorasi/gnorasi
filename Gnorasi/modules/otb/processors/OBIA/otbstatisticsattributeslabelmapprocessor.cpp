@@ -127,4 +127,10 @@ bool OTBStatisticsAttributesLabelMapProcessor::isReady() const {
     return true;
 }
 
+
+void OTBStatisticsAttributesLabelMapProcessor::forceUpdate(){
+    if(automaticUpdate.get())
+        process();
+}
+
 } // namespace

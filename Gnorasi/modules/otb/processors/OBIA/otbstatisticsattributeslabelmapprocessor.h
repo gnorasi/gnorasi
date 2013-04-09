@@ -67,6 +67,11 @@ public:
 							StatisticsLabelMapFilterType;
 
     StatisticsLabelMapFilterType::Pointer statisticsLabelMapFilter;
+
+    /*!
+     * \brief forceUpdate
+     */
+    void forceUpdate();
     
 protected:
     virtual void setDescriptions() {
