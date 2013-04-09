@@ -132,9 +132,9 @@ void HistogramGenerator::parseGreyscaleChannel(){
     // get the histgram size
     const unsigned int histogramSize = histogram->Size();
 
-    qDebug() << "Histogram size " << histogramSize << "\n";
+//    qDebug() << "Histogram size " << histogramSize << "\n";
 
-    std::cout << "Histogram of the red component" << std::endl;
+//    std::cout << "Histogram of the red component" << std::endl;
 
     double helperFreq[BINS_OVERSAMPLING_RATE*256];
     double helperAmpl[BINS_OVERSAMPLING_RATE*256];
@@ -160,9 +160,9 @@ void HistogramGenerator::parseRedChannel(){
     // get the histgram size
     const unsigned int histogramSize = histogram->Size();
 
-    qDebug() << "Histogram size " << histogramSize << "\n";
+//    qDebug() << "Histogram size " << histogramSize << "\n";
 
-    std::cout << "Histogram of the red component" << std::endl;
+//    std::cout << "Histogram of the red component" << std::endl;
 
     double helperFreq[BINS_OVERSAMPLING_RATE*256];
     double helperAmpl[BINS_OVERSAMPLING_RATE*256];
@@ -190,9 +190,9 @@ void HistogramGenerator::parseGreenChannel(){
     // get the histgram size
     const unsigned int histogramSize = histogram->Size();
 
-    qDebug() << "Histogram size " << histogramSize << "\n";
+//    qDebug() << "Histogram size " << histogramSize << "\n";
 
-    std::cout << "Histogram of the green component" << std::endl;
+//    std::cout << "Histogram of the green component" << std::endl;
 
     double helperFreq[BINS_OVERSAMPLING_RATE*256];
     double helperAmpl[BINS_OVERSAMPLING_RATE*256];
@@ -221,9 +221,9 @@ void HistogramGenerator::parseBlueChannel(){
     // get the histgram size
     const unsigned int histogramSize = histogram->Size();
 
-    qDebug() << "Histogram size " << histogramSize << "\n";
+//    qDebug() << "Histogram size " << histogramSize << "\n";
 
-    std::cout << "Histogram of the blue component" << std::endl;
+//    std::cout << "Histogram of the blue component" << std::endl;
 
     double helperFreq[BINS_OVERSAMPLING_RATE*256];
     double helperAmpl[BINS_OVERSAMPLING_RATE*256];

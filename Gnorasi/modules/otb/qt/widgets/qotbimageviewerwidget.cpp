@@ -161,6 +161,8 @@ void QGLOtbImageViewerWidget::keyPressEvent(QKeyEvent *event){
 //!
 void QGLOtbImageViewerWidget::disassembleWidgets(){
 
+    Q_ASSERT(m_pItiOtbImageViewer);
+
     // get  the port prior to deleting the viewer and the panel
     voreen::Port *port = m_pItiOtbImageViewer->manager()->port();
 
@@ -188,6 +190,8 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
 
     // get the viewer from the factory
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->viewer();
+
+    Q_ASSERT(m_pItiOtbImageViewer);
 
     // now get the manager from the viewer
     ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
@@ -231,6 +235,8 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
 
 //!
 void QGLOtbImageViewerWidget::assembleWidgets(){
+
+    Q_ASSERT(m_pItiOtbImageViewer);
 
     // firstly get the port prior to deleting the viewrer and the panel object
     voreen::Port *port = m_pItiOtbImageViewer->manager()->port();
@@ -314,8 +320,7 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
 void QGLOtbImageViewerWidget::setupByPort(Port *port){
 
     // error check
-    if(!m_pItiOtbImageViewer)
-        return;
+    Q_ASSERT(m_pItiOtbImageViewer);
 
     QTime time;
     qDebug() << "Start of incoming image data , setting up the image...";
@@ -330,6 +335,9 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
 
     //! create the discrete viewer
     createViewer();
+
+    //
+    Q_ASSERT(m_pItiOtbImageViewer);
 
     // get the manager from the viewer object
     ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
@@ -396,6 +404,8 @@ void QGLOtbImageViewerWidget::createViewer(){
 void QGLOtbImageViewerWidget::clearImage(){
     //! create the discrete viewer
     createViewer();
+
+    Q_ASSERT(m_pItiOtbImageViewer);
 
     delete m_pItiOtbImageViewerPanel;
     //!

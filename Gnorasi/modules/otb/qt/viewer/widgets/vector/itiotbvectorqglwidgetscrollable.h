@@ -104,11 +104,6 @@ public slots:
      */
     void resetZoom() { m_helperZoomCounter = 1.0; }
 
-    /*!
-     * \brief enableMouseTracking
-     */
-    void enableMouseTracking();
-
 signals:
     /*!
      * \brief visibleAreaChanged , this signal is emitted uppon the view resizing

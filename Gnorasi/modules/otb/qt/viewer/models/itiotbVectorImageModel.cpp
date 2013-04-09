@@ -99,10 +99,10 @@ VectorImageModel
 
   unsigned int ncpp = m_pManager->image()->GetNumberOfComponentsPerPixel();
 
-  qDebug() << "m_pManager->image()->GetNumberOfComponentsPerPixel() : " << m_pManager->image()->GetNumberOfComponentsPerPixel();
-  qDebug() << "rgb[ 0 ] : " << rgb[ 0 ];
-  qDebug() << "rgb[ 1 ] : " << rgb[ 1 ];
-  qDebug() << "rgb[ 2 ] : " << rgb[ 2 ];
+//  qDebug() << "m_pManager->image()->GetNumberOfComponentsPerPixel() : " << m_pManager->image()->GetNumberOfComponentsPerPixel();
+//  qDebug() << "rgb[ 0 ] : " << rgb[ 0 ];
+//  qDebug() << "rgb[ 1 ] : " << rgb[ 1 ];
+//  qDebug() << "rgb[ 2 ] : " << rgb[ 2 ];
 
   if( rgb[ 0 ]>= ncpp )
     {
@@ -250,9 +250,9 @@ VectorImageModel
 ::DumpImagePixelsWithinRegionIntoBuffer(const ImageRegionType& region)
 {
 
-//    QTime time;
-//    qDebug() << "Start of DumpImagePixelsWithinRegionIntoBuffer...";
-//    time.restart();
+    QTime time;
+    qDebug() << "Start of DumpImagePixelsWithinRegionIntoBuffer...";
+    time.restart();
 
   // Before doing anything, check if region is inside the buffered
   // region of image
@@ -301,19 +301,11 @@ VectorImageModel
 
   m_RenderingFilter->GetRenderingFunction()->SetAutoMinMax(false);
 
-
   Q_ASSERT(m_pManager->histogramGenerator());
 
   // ----------------------------------
     RenderingFilterType::RenderingFunctionType::ParametersType  paramsMinMax;
     paramsMinMax.SetSize(6);
-
-//    // Update the parameters
-//    for (unsigned int i = 0; i < paramsMinMax.Size(); i = i + 2)
-//    {
-//        paramsMinMax.SetElement(i, 30);
-//        paramsMinMax.SetElement(i + 1, 850);
-//    }
 
     // Update the parameters
     for (unsigned int i = 0; i < paramsMinMax.Size(); i = i + 2)
@@ -324,13 +316,13 @@ VectorImageModel
 
         paramsMinMax.SetElement(i,val);
 
-        qDebug() << "m_pHistogramGenerator->Quantile(band,0.02,HistogramGenerator::BOUND_LOWER); : " << band << "\t" << val;
+//        qDebug() << "m_pHistogramGenerator->Quantile(band,0.02,HistogramGenerator::BOUND_LOWER); : " << band << "\t" << val;
 
         val = m_pManager->histogramGenerator()->Quantile(band,0.02,HistogramGenerator::BOUND_UPPER);
 
         paramsMinMax.SetElement(i+1,val);
 
-        qDebug() << "m_pHistogramGenerator->Quantile(band,0.02,HistogramGenerator::BOUND_UPPER); : " << band << "\t" << val;
+//        qDebug() << "m_pHistogramGenerator->Quantile(band,0.02,HistogramGenerator::BOUND_UPPER); : " << band << "\t" << val;
     }
 
     m_RenderingFilter->GetRenderingFunction()->SetParameters(paramsMinMax);
@@ -340,7 +332,7 @@ VectorImageModel
 //  m_RenderingFilter->GetOutput()->SetRequestedRegion(region);
   m_RenderingFilter->Update();
 
-//  qDebug() << "End of m_RenderingFilter \nmilliseconds elapsed : " << time.elapsed();
+  qDebug() << "End of m_RenderingFilter \nmilliseconds elapsed : " << time.elapsed();
 
 
   // Declare the iterator
@@ -364,7 +356,7 @@ VectorImageModel
     }
 
 
-//    qDebug() << "End of DumpImagePixelsWithinRegionIntoBuffer \nmilliseconds elapsed : " << time.elapsed();
+    qDebug() << "End of DumpImagePixelsWithinRegionIntoBuffer \nmilliseconds elapsed : " << time.elapsed();
 }
 
 

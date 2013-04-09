@@ -272,6 +272,9 @@ void ItiOtbVectorQGLWidgetScrollable::paintEvent(QPaintEvent *event){
 
         // use the model renderer to paint the requested region of the image
         m_pImageModelRenderer->paintGL( context );
+
+        //
+        setMouseTracking(true);
     }
 
     //! overpainting
@@ -780,12 +783,6 @@ ImageRegionType::IndexType ItiOtbVectorQGLWidgetScrollable::indexFromPoint(const
 
 
     return idx;
-}
-
-
-void ItiOtbVectorQGLWidgetScrollable::enableMouseTracking(){
-    //! mouse tracking is disabled on startup, set it on
-    setMouseTracking(true);
 }
 
 

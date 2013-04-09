@@ -247,6 +247,7 @@ void ItiOtbVectorImageViewer::assembleWidgets(){
  *  This is where all the painting is done.
  */
 void ItiOtbVectorImageViewer::draw(){
+
     //!
     setupModel();
 
@@ -258,6 +259,10 @@ void ItiOtbVectorImageViewer::draw(){
 
     //!
     m_pItiOtbVectorImageWidgetZoomable->draw();
+
+//    m_pItiOtbVectorImageWidgetFullView->setMouseTracking(true);
+//    m_pItiOtbVectorImageWidgetScroll->setMouseTracking(true);
+//    m_pItiOtbVectorImageWidgetZoomable->setMouseTracking(true);
 }
 
 //!
@@ -323,10 +328,6 @@ void ItiOtbVectorImageViewer::setupModel(){
 
     if(model)
         model->loadFile(path);
-
-    m_pItiOtbVectorImageWidgetFullView->enableMouseTracking();
-    m_pItiOtbVectorImageWidgetScroll->enableMouseTracking();
-    m_pItiOtbVectorImageWidgetZoomable->enableMouseTracking();
 
     emit modelChanged();
 }
@@ -399,7 +400,6 @@ void ItiOtbVectorImageViewer::forceUpdates(){
     m_pItiOtbVectorImageWidgetScroll->update();
     m_pItiOtbVectorImageWidgetZoomable->update();
 }
-
 
 ItiOtbVectorImageViewer::~ItiOtbVectorImageViewer(){
 
