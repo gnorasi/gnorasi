@@ -107,5 +107,10 @@ void OTBShapeAttributesLabelMapProcessor::update() {
     shapeLabelMapFilter->Update();
 }
 
+void OTBShapeAttributesLabelMapProcessor::forceUpdate(){
+    if(automaticUpdate.get())
+        process();
+}
+
 
 } // namespace

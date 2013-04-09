@@ -338,6 +338,11 @@ public:
     std::string getPropertyDescription(const std::string& propId) const;
     std::string getPortDescription(const std::string& portId) const;
 
+    /*!
+     * \brief forceUpdate
+     */
+    virtual void forceUpdate() { }
+
 protected:
     /**
      * @brief This method is called by the NetworkEvaluator when the processor should be processed.

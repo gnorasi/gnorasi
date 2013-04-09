@@ -61,6 +61,11 @@ public:
     typedef otb::ShapeAttributesLabelMapFilter<LabelMapType> ShapeLabelMapFilterType;
 
     ShapeLabelMapFilterType::Pointer shapeLabelMapFilter;
+
+    /*!
+     * \brief forceUpdate
+     */
+    void forceUpdate();
     
     
 protected:

@@ -133,4 +133,10 @@ bool OTBBandStatisticsAttributesLabelMapProcessor::isReady() const {
 }
 
 
+void OTBBandStatisticsAttributesLabelMapProcessor::forceUpdate(){
+    if(automaticUpdate.get())
+        process();
+}
+
+
 } // namespace
