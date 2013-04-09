@@ -80,6 +80,9 @@ protected:
     BoolProperty reducedProperties_; ///< Calculate reduced number of shape properties
     StringProperty featureName_; ///< Set the name of the attribute added to the Object Map
     ButtonProperty update_;      ///< Executes update().
+
+    //! test
+    BoolProperty automaticUpdate;
     
     std::string featureName;
     

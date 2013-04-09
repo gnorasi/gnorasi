@@ -37,12 +37,14 @@ OTBBandStatisticsAttributesLabelMapProcessor::OTBBandStatisticsAttributesLabelMa
     : Processor(),
     reducedProperties_("reduced", "Only Basic Properties", true),
     update_("updateButton", "Update"), 
+    automaticUpdate("automaticUpdate", "Automatic Update" , false),
     inPort_(Port::INPORT, "Input Object Map", 0),
     inVImage_(Port::INPORT, "Input MultiBand Image", 0),
     outPort_(Port::OUTPORT, "Output Object Map", 0),
     outPort2_(Port::OUTPORT, "Unchanged Input Object Map", 0),
     outVImage_(Port::OUTPORT, "Unchanged Input MultiBand Image", 0)
 {
+    addProperty(automaticUpdate);
     addProperty(reducedProperties_);
     update_.onChange(CallMemberAction<OTBBandStatisticsAttributesLabelMapProcessor>(this, &OTBBandStatisticsAttributesLabelMapProcessor::update));
     addProperty(update_);
@@ -96,6 +98,10 @@ void OTBBandStatisticsAttributesLabelMapProcessor::process() {
 	statisticsLabelMapFilter->SetFeatureImage(inVImage_.getData());
 	(reducedProperties_.get()) ? statisticsLabelMapFilter->ReducedAttributeSetOn() : 
 				     statisticsLabelMapFilter->ReducedAttributeSetOff();
+
+    if(automaticUpdate.get())
+        statisticsLabelMapFilter->Update();
+
 	outPort_.setData(statisticsLabelMapFilter->GetOutput());
 	outVImage_.setData(inVImage_.getData());
 	outPort2_.setData(inPort_.getData());

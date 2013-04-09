@@ -80,6 +80,9 @@ protected:
     BoolProperty reducedProperties_; ///< Calculate reduced number of shape properties
     ButtonProperty update_;      ///< Executes clearImage().
 
+    //! test
+    BoolProperty automaticUpdate;
+
 private:
 
     OTBLabelMapPort inPort_;
