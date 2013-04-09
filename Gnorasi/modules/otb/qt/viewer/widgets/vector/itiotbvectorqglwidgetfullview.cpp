@@ -142,6 +142,9 @@ void ItiOtbVectorQGLWidgetFullView::paintEvent(QPaintEvent *event){
 
         // use the model renderer to paint the requested region of the image
         m_pImageModelRenderer->paintGL( context );
+
+        //
+        setMouseTracking(true);
     }
 
     QPainter painter(this);
@@ -341,11 +344,6 @@ void ItiOtbVectorQGLWidgetFullView::mouseReleaseEvent(QMouseEvent *event){
     this->setCursor(dragCursor);
 
     QGLWidget::mouseReleaseEvent(event);
-}
-
-void ItiOtbVectorQGLWidgetFullView::enableMouseTracking(){
-    //! mouse tracking is disabled on startup, set it on
-    setMouseTracking(true);
 }
 
 

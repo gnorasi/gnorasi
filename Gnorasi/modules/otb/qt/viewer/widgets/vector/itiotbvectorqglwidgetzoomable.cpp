@@ -250,6 +250,9 @@ void ItiOtbVectorQGLWidgetZoomable::paintEvent(QPaintEvent *event){
 
         // use the model renderer to paint the requested region of the image
         m_pImageModelRenderer->paintGL( context );
+
+        //
+        setMouseTracking(true);
     }
 
 
@@ -663,11 +666,6 @@ ImageRegionType::IndexType ItiOtbVectorQGLWidgetZoomable::indexFromPoint(const Q
     idx[1] = region.GetSize()[1] - nb_d_rs - f_d_r + (p.y() / m_IsotropicZoom);
 
     return idx;
-}
-
-void ItiOtbVectorQGLWidgetZoomable::enableMouseTracking(){
-    //! mouse tracking is disabled on startup, set it on
-    setMouseTracking(true);
 }
 
 //!
