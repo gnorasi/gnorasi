@@ -539,11 +539,13 @@ void VoreenMainWindow::createMenus() {
     modeApplicationAction_->setCheckable(true);
     modeApplicationAction_->setShortcut(tr("F4"));
 
+    viewMenu_->addSeparator();
 
-    forceUpdateAction_ = new QAction(QIcon(":/voreenve/icons/visualization-mode.png"),
+    forceUpdateAction_ = new QAction(QIcon(":/voreenve/icons/player-start.png"),
                                      tr("&Force Update Processors"), this);
     forceUpdateAction_->setCheckable(true);
     forceUpdateAction_->setShortcut(tr("F10"));
+    connect(forceUpdateAction_,SIGNAL(triggered()),this,SLOT(processorsForceUpdate()));
 
     QActionGroup* guiModeGroup = new QActionGroup(this);
     guiModeGroup->addAction(modeApplicationAction_);
@@ -555,8 +557,8 @@ void VoreenMainWindow::createMenus() {
     viewMenu_->addAction(modeApplicationAction_);
     viewMenu_->addSeparator();
     viewMenu_->addAction(forceUpdateAction_);
+    viewMenu_->addSeparator();
 
-    connect(forceUpdateAction_,SIGNAL(triggered()),this,SLOT(processorsForceUpdate()));
 
     //
     // Tools menu
@@ -675,6 +677,7 @@ void VoreenMainWindow::createToolBars() {
     viewToolBar_->addAction(modeApplicationAction_);
     viewToolBar_->addSeparator();
     viewToolBar_->addAction(forceUpdateAction_);
+    viewToolBar_->addSeparator();
 
     // tools toolbar
 /*
