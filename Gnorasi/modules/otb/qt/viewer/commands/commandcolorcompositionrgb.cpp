@@ -73,39 +73,6 @@ void CommandColorCompositionRGB::execute(){
     // Apply the new rendering function to the Image layer
     renderer->SetAutoMinMax(false);
 
-//    ItiOtbImageManager *manager = vModel->itiOtbImageManager();
-//    Q_ASSERT(manager);
-
-
-//    Q_ASSERT(manager->histogramGenerator());
-
-    // ----------------------------------
-//      RenderingFilterType::RenderingFunctionType::ParametersType  paramsMinMax;
-//      paramsMinMax.SetSize(6);
-
-//      // Update the parameters
-//      for (unsigned int i = 0; i < paramsMinMax.Size(); i = i + 2)
-//      {
-//          unsigned int band = channels.at(i/2);
-
-//          double val = manager->histogramGenerator()->Quantile(band,0.02,HistogramGenerator::BOUND_LOWER);
-
-//          paramsMinMax.SetElement(i,val);
-
-//  //        qDebug() << "m_pHistogramGenerator->Quantile(band,0.02,HistogramGenerator::BOUND_LOWER); : " << band << "\t" << val;
-
-//          val = manager->histogramGenerator()->Quantile(band,0.02,HistogramGenerator::BOUND_UPPER);
-
-//          paramsMinMax.SetElement(i+1,val);
-
-//  //        qDebug() << "m_pHistogramGenerator->Quantile(band,0.02,HistogramGenerator::BOUND_UPPER); : " << band << "\t" << val;
-//      }
-
-//      renderer->SetParameters(paramsMinMax);
-
-
-//    vModel->setRenderingFuction(renderer);
-
     vModel->resetData();
 
     DefaultImageType *img = vModel->GetOutput(0);
