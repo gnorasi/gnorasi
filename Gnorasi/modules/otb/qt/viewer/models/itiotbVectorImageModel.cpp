@@ -291,17 +291,19 @@ VectorImageModel
 //  byterescaler->Update();
   //end test
 
-  Q_ASSERT(!m_ExtractFilter.IsNull());
+    Q_ASSERT(!m_ExtractFilter.IsNull());
 
-  // Extract the region of interest in the image
-  m_ExtractFilter->SetInput(image);
-  m_ExtractFilter->SetExtractionRegion(region);
+    // Extract the region of interest in the image
+    m_ExtractFilter->SetInput(image);
+    m_ExtractFilter->SetExtractionRegion(region);
 
-  Q_ASSERT(!m_RenderingFilter.IsNull());
+    Q_ASSERT(!m_RenderingFilter.IsNull());
 
-  m_RenderingFilter->GetRenderingFunction()->SetAutoMinMax(false);
+    m_RenderingFilter->GetRenderingFunction()->SetAutoMinMax(false);
 
-  Q_ASSERT(m_pManager->histogramGenerator());
+    Q_ASSERT(m_pManager->histogramGenerator());
+
+    std::vector<unsigned int> clist = m_RenderingFilter->GetRenderingFunction()->GetChannelList();
 
   // ----------------------------------
     RenderingFilterType::RenderingFunctionType::ParametersType  paramsMinMax;
@@ -310,7 +312,7 @@ VectorImageModel
     // Update the parameters
     for (unsigned int i = 0; i < paramsMinMax.Size(); i = i + 2)
     {
-        unsigned int band = m_Channels.at(i/2);
+        unsigned int band = clist.at(i/2);
 
         double val = m_pManager->histogramGenerator()->Quantile(band,0.02,HistogramGenerator::BOUND_LOWER);
 
@@ -327,36 +329,36 @@ VectorImageModel
 
     m_RenderingFilter->GetRenderingFunction()->SetParameters(paramsMinMax);
 
-  // Use the rendering filter to get
-  m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());
-//  m_RenderingFilter->GetOutput()->SetRequestedRegion(region);
-  m_RenderingFilter->Update();
+    // Use the rendering filter to get
+    m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());
+    //  m_RenderingFilter->GetOutput()->SetRequestedRegion(region);
+    m_RenderingFilter->Update();
 
-  qDebug() << "End of m_RenderingFilter \nmilliseconds elapsed : " << time.elapsed();
+    qDebug() << "End of m_RenderingFilter \nmilliseconds elapsed : " << time.elapsed();
 
 
-  // Declare the iterator
-  itk::ImageRegionConstIteratorWithIndex< RenderingFilterType::OutputImageType >
+    // Declare the iterator
+    itk::ImageRegionConstIteratorWithIndex< RenderingFilterType::OutputImageType >
     it(m_RenderingFilter->GetOutput(), region);
 
-  // Go to begin
-  it.GoToBegin();
+    // Go to begin
+    it.GoToBegin();
 
-  while (!it.IsAtEnd())
+    while (!it.IsAtEnd())
     {
-    // Fill the buffer
-    unsigned int index = 0;
-    index = ComputeXAxisFlippedBufferIndex(it.GetIndex(), m_Region);
+        // Fill the buffer
+        unsigned int index = 0;
+        index = ComputeXAxisFlippedBufferIndex(it.GetIndex(), m_Region);
 
-    // Fill the buffer
-    m_RasterizedBuffer[index]  = it.Get()[0];
-    m_RasterizedBuffer[index + 1] = it.Get()[1];
-    m_RasterizedBuffer[index + 2] = it.Get()[2];
-    ++it;
+        // Fill the buffer
+        m_RasterizedBuffer[index]  = it.Get()[0];
+        m_RasterizedBuffer[index + 1] = it.Get()[1];
+        m_RasterizedBuffer[index + 2] = it.Get()[2];
+        ++it;
     }
 
 
-    qDebug() << "End of DumpImagePixelsWithinRegionIntoBuffer \nmilliseconds elapsed : " << time.elapsed();
+        qDebug() << "End of DumpImagePixelsWithinRegionIntoBuffer \nmilliseconds elapsed : " << time.elapsed();
 }
 
 
