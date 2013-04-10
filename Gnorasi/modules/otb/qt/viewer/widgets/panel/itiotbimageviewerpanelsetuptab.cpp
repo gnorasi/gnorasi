@@ -101,6 +101,7 @@ void ItiOtbImageViewerPanelSetupTab::setupColorCompositionGroupBox(){
     connect(m_pSpinBoxRedChannel,SIGNAL(valueChanged(int)),this,SLOT(onChannelValueChanged(int)));
     connect(m_pSpinBoxGreenChannel,SIGNAL(valueChanged(int)),this,SLOT(onChannelValueChanged(int)));
     connect(m_pSpinBoxBlueChannel,SIGNAL(valueChanged(int)),this,SLOT(onChannelValueChanged(int)));
+    connect(m_pSpinBoxGreyscaleChannel,SIGNAL(valueChanged(int)),this,SLOT(onChannelValueChanged(int)));
 }
 
 //!
@@ -214,6 +215,9 @@ void ItiOtbImageViewerPanelSetupTab::onChannelValueChanged(int val){
 
     //!
     emit rgbColorCompositionChannelsChanged(m_pSpinBoxRedChannel->value(),m_pSpinBoxGreenChannel->value(),m_pSpinBoxBlueChannel->value());
+
+    //!
+    emit greyScaleColorCompositionChannelChanged(m_pSpinBoxGreyscaleChannel->value());
 }
 
 //!
