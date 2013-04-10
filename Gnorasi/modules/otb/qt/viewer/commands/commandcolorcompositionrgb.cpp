@@ -36,8 +36,6 @@
 #include "../models/itiotbVectorImageModel.h"
 #include "../vector_globaldefs.h"
 
-#include "../../histogram/histogramgenerator.h"
-
 using namespace itiviewer;
 using namespace otb;
 
