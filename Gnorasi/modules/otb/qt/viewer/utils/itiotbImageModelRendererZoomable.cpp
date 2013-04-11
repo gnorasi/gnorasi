@@ -71,6 +71,10 @@ void ImageModelRendererZoomable::paintGL( const RenderingContext& context )
     const_cast<AbstractImageModel*>(context.m_AbstractImageModel)
     );
 
+    ItiOtbImageManager *mgr = viModel->itiOtbImageManager();
+    if(!mgr->isHistogramReady())
+        return;
+
     // the region of the image to render
     const ImageRegionType&  region = context.m_ImageRegion;
 

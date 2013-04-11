@@ -248,6 +248,10 @@ void ItiOtbVectorImageViewer::assembleWidgets(){
  */
 void ItiOtbVectorImageViewer::draw(){
 
+    m_pItiOtbVectorImageWidgetFullView->setMouseTracking(false);
+    m_pItiOtbVectorImageWidgetZoomable->setMouseTracking(false);
+    m_pItiOtbVectorImageWidgetScroll->setMouseTracking(false);
+
     //!
     setupModel();
 
@@ -260,9 +264,11 @@ void ItiOtbVectorImageViewer::draw(){
     //!
     m_pItiOtbVectorImageWidgetZoomable->draw();
 
-//    m_pItiOtbVectorImageWidgetFullView->setMouseTracking(true);
-//    m_pItiOtbVectorImageWidgetScroll->setMouseTracking(true);
-//    m_pItiOtbVectorImageWidgetZoomable->setMouseTracking(true);
+    VectorImageModel *model = qobject_cast<VectorImageModel*>(m_pAbstractImageModel);
+
+    if(model){
+        connect(model,SIGNAL(ready()),this,SLOT(enableMouseTrackingState()));
+    }
 }
 
 //!
@@ -399,6 +405,15 @@ void ItiOtbVectorImageViewer::forceUpdates(){
     m_pItiOtbVectorImageWidgetFullView->update();
     m_pItiOtbVectorImageWidgetScroll->update();
     m_pItiOtbVectorImageWidgetZoomable->update();
+}
+
+
+void ItiOtbVectorImageViewer::enableMouseTrackingState(){
+    m_pItiOtbVectorImageWidgetFullView->setMouseTracking(true);
+    m_pItiOtbVectorImageWidgetZoomable->setMouseTracking(true);
+    m_pItiOtbVectorImageWidgetScroll->setMouseTracking(true);
+
+    QApplication::setOverrideCursor( QCursor( Qt::ArrowCursor ) );
 }
 
 ItiOtbVectorImageViewer::~ItiOtbVectorImageViewer(){
