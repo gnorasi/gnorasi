@@ -29,6 +29,8 @@
 #ifndef HISTOGRAMGENERATOR_H
 #define HISTOGRAMGENERATOR_H
 
+#include <QtCore>
+#include <QtGui>
 #include <QObject>
 #include <QHash>
 #include <QThread>
