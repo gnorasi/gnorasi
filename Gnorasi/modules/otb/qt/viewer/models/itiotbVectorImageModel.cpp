@@ -301,7 +301,7 @@ VectorImageModel
 
     m_RenderingFilter->GetRenderingFunction()->SetAutoMinMax(false);
 
-    Q_ASSERT(m_pManager->histogramGenerator());
+    Q_ASSERT(m_pManager->histogramList());
 
     std::vector<unsigned int> clist = m_RenderingFilter->GetRenderingFunction()->GetChannelList();
 
@@ -314,13 +314,13 @@ VectorImageModel
     {
         unsigned int band = clist.at(i/2);
 
-        double val = m_pManager->histogramGenerator()->Quantile(band,0.02,HistogramGenerator::BOUND_LOWER);
+        double val = m_pManager->histogramList()->Quantile(band,0.02,BOUND_LOWER);
 
         paramsMinMax.SetElement(i,val);
 
 //        qDebug() << "m_pHistogramGenerator->Quantile(band,0.02,HistogramGenerator::BOUND_LOWER); : " << band << "\t" << val;
 
-        val = m_pManager->histogramGenerator()->Quantile(band,0.02,HistogramGenerator::BOUND_UPPER);
+        val = m_pManager->histogramList()->Quantile(band,0.02,BOUND_UPPER);
 
         paramsMinMax.SetElement(i+1,val);
 
@@ -357,6 +357,7 @@ VectorImageModel
         ++it;
     }
 
+    emit ready();
 
         qDebug() << "End of DumpImagePixelsWithinRegionIntoBuffer \nmilliseconds elapsed : " << time.elapsed();
 }

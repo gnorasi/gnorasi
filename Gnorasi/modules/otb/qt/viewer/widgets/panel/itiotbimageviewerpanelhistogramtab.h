@@ -35,6 +35,7 @@ class QPushButton;
 
 class HistogramView;
 class HistogramGenerator;
+class MyHistogramList;
 
 namespace itiviewer{
 
@@ -64,6 +65,7 @@ public slots:
 
 private slots:
 //    void onClicked();
+    void onHistogramFinished(MyHistogramList* );
 
 private:
     void initialize();
