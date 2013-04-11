@@ -35,10 +35,11 @@
 #include "voreen/core/processors/processor.h"
 
 #include "../vector_globaldefs.h"
-
+//#include "../../histogram/histogramgenerator.h"
 
 
 class HistogramGenerator;
+class MyHistogramList;
 
 namespace itiviewer{
 
@@ -206,13 +207,26 @@ public:
      * \brief histogramGenerator
      * \return
      */
-    HistogramGenerator* histogramGenerator() { return m_pHistogramGenerator; }
+    MyHistogramList* histogramList() { return m_pMyHistogramList; }
 
     /*!
      * \brief setHistogramGenerator
      * \param hg
      */
-    void setHistogramGenerator(HistogramGenerator *hg) { m_pHistogramGenerator = hg; }
+//    void setHistogramGenerator(HistogramGenerator *hg) { m_pHistogramGenerator = hg; }
+
+
+    bool isHistogramReady() const { return m_isHistogramReady; }
+    void setHistogramReady(bool b) { m_isHistogramReady = b; ; emit histogramChanged(m_isHistogramReady); }
+
+
+signals:
+    void histogramFinished(MyHistogramList* );
+
+    void histogramChanged(bool );
+
+public slots:
+    void onHistogramFinished(MyHistogramList*);
 
 private:
 
@@ -302,7 +316,10 @@ private:
     /*!
      * \brief m_pHistogramGenerator
      */
-    HistogramGenerator*                   m_pHistogramGenerator;
+    MyHistogramList*                   m_pMyHistogramList;
+
+
+    bool m_isHistogramReady;
 };
 
 

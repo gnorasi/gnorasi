@@ -10,6 +10,7 @@
 #include "itiotblabelimageparser.h"
 #include "itiotblevel.h"
 #include "itiotbregion.h"
+#include "../../histogram/histogramgenerator.h"
 //#include "itiotblevelutility.h"
 
 #include "../../../ports/otblabelimageport.h"
@@ -23,7 +24,7 @@ using namespace voreen;
 
 //!
 ItiOtbImageManager::ItiOtbImageManager(QObject *parent)
-    : m_pImgType(0), m_pPort(0), QObject(parent)
+    : m_pImgType(0), m_pPort(0), m_isHistogramReady(false), QObject(parent)
 {
     filter = ImageToVectorImageCastFilterType::New();
 }
@@ -329,6 +330,12 @@ QString ItiOtbImageManager::constructInfoByIndexAlt(ImageRegionType::IndexType i
     text += QString("Lon: %1, Lat : %2").arg(QString::number(pt[0],'f',2)).arg(QString::number(pt[1],'f',2));
 
     return text;
+}
+
+
+void ItiOtbImageManager::onHistogramFinished(MyHistogramList *list ){
+    m_pMyHistogramList = list;
+    setHistogramReady(true);
 }
 
 //!

@@ -142,9 +142,6 @@ void ItiOtbVectorQGLWidgetFullView::paintEvent(QPaintEvent *event){
 
         // use the model renderer to paint the requested region of the image
         m_pImageModelRenderer->paintGL( context );
-
-        //
-        setMouseTracking(true);
     }
 
     QPainter painter(this);
