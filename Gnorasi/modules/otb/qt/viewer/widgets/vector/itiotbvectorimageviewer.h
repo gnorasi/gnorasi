@@ -144,6 +144,11 @@ private slots:
      */
     void onFocusRegionChanged(const QRect &rect);
 
+    /*!
+     * \brief updateMouseTrackingState
+     */
+    void enableMouseTrackingState();
+
 
 signals:
     /*!
