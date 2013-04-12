@@ -66,6 +66,7 @@ signals:
      */
     void titleChanged();
 
+
 private:
 
 //    QGroupBox *m_pGroupBox;

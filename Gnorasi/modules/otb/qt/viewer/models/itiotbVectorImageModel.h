@@ -171,9 +171,6 @@ signals:
    */
   void changed();
 
-  //
-  void ready();
-
 //
 // Protected methods.
 protected:

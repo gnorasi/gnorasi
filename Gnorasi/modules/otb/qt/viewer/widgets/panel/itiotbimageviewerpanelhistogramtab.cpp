@@ -67,15 +67,17 @@ void ItiOtbImageViewerPanelHistogramTab::setupHistogram(){
 
     Q_ASSERT(mgr);
 
-    mgr->setHistogramReady(false);
-
-    connect(m_pHistogramGenerator,SIGNAL(histogramGeneratedFinished(MyHistogramList*)),mgr,SLOT(onHistogramFinished(MyHistogramList*)));
-
     // get the imge and perform an error check
     VectorImageType *image = mgr->image();
 
     if(!image )
         return;
+
+    emit histogramGenerationStarted();
+
+    mgr->setHistogramReady(false);
+
+    connect(m_pHistogramGenerator,SIGNAL(histogramGeneratedFinished(MyHistogramList*)),mgr,SLOT(onHistogramFinished(MyHistogramList*)));
 
     if(m_pItiOtbImageViewerPanel->isGreyscale()){
 
@@ -87,8 +89,6 @@ void ItiOtbImageViewerPanelHistogramTab::setupHistogram(){
 
         // set the mode to greyscale
         m_pHistogramGenerator->setRMode(HistogramGenerator::RMODE_GREYSCALE);
-
-        QApplication::setOverrideCursor( QCursor( Qt::WaitCursor ) );
 
         // generate the histogram
         m_pHistogramGenerator->generateHistogram(image);
@@ -109,8 +109,6 @@ void ItiOtbImageViewerPanelHistogramTab::setupHistogram(){
 
         // set the RGB mode
         m_pHistogramGenerator->setRMode(HistogramGenerator::RMODE_RGB);
-
-        QApplication::setOverrideCursor( QCursor( Qt::WaitCursor ) );
 
         // generate the histogam
         m_pHistogramGenerator->generateHistogram(image);

@@ -39,6 +39,7 @@ void QGLOtbImageViewerWidget::initialize(){
     //!
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
     m_pItiOtbImageViewerPanel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+    connect(m_pItiOtbImageViewerPanel,SIGNAL(histogramGenerationStarted()),this,SLOT(onHistogramGenerationStarted()));
 
     //!
     m_pItiOtbImageFactory = new ItiOtbVectorImageViewerFactory(this);
@@ -179,11 +180,11 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
 
     //! create the panel
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
-
     //set the panel properties
     m_pItiOtbImageViewerPanel->setWindowFlags(Qt::Window);
     m_pItiOtbImageViewerPanel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     m_pItiOtbImageViewerPanel->show();
+    connect(m_pItiOtbImageViewerPanel,SIGNAL(histogramGenerationStarted()),this,SLOT(onHistogramGenerationStarted()));
 
     //! Create again the viewer and disassemble the sub widgets
     m_pItiOtbImageFactory->createViewer();
@@ -191,7 +192,11 @@ void QGLOtbImageViewerWidget::disassembleWidgets(){
     // get the viewer from the factory
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->viewer();
 
+    //
     Q_ASSERT(m_pItiOtbImageViewer);
+
+    //
+    connect(m_pItiOtbImageViewer,SIGNAL(ready()),this,SLOT(onViewerReady()));
 
     // now get the manager from the viewer
     ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
@@ -255,6 +260,7 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
     // create a new panel
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
     m_pItiOtbImageViewerPanel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+    connect(m_pItiOtbImageViewerPanel,SIGNAL(histogramGenerationStarted()),this,SLOT(onHistogramGenerationStarted()));
 
     //! Create again the viewer and the panel
     m_pItiOtbImageFactory->createViewer();
@@ -262,6 +268,7 @@ void QGLOtbImageViewerWidget::assembleWidgets(){
 
     /// get the viewer
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->viewer();
+    connect(m_pItiOtbImageViewer,SIGNAL(ready()),this,SLOT(onViewerReady()));
 
     // get the manager from the viewer
     ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
@@ -339,6 +346,8 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //
     Q_ASSERT(m_pItiOtbImageViewer);
 
+    connect(m_pItiOtbImageViewer,SIGNAL(ready()),this,SLOT(onViewerReady()));
+
     // get the manager from the viewer object
     ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
 
@@ -392,6 +401,7 @@ void QGLOtbImageViewerWidget::createViewer(){
     m_pItiOtbImageFactory->createViewer();
     m_pItiOtbImageViewer = m_pItiOtbImageFactory->viewer();
 
+
     //! set this widget as viewer's parent
     m_pItiOtbImageViewer->setParent(this);
     m_pItiOtbImageViewer->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
@@ -411,6 +421,7 @@ void QGLOtbImageViewerWidget::clearImage(){
     //!
     m_pItiOtbImageViewerPanel = new ItiOtbImageViewerPanel(this);
     m_pItiOtbImageViewerPanel->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+    connect(m_pItiOtbImageViewerPanel,SIGNAL(histogramGenerationStarted()),this,SLOT(onHistogramGenerationStarted()));
 
     ItiOtbImageManager *manager = m_pItiOtbImageViewer->manager();
 
@@ -445,6 +456,15 @@ void QGLOtbImageViewerWidget::showEvent(QShowEvent *event){
     qDebug() << "show event .. ";
 
     resize(width()+1,height()+1);
+}
+
+void QGLOtbImageViewerWidget::onHistogramGenerationStarted(){
+    this->setCursor(Qt::WaitCursor);
+}
+
+void QGLOtbImageViewerWidget::onViewerReady(){
+
+    this->setCursor(Qt::ArrowCursor);
 }
 
 QGLOtbImageViewerWidget::~QGLOtbImageViewerWidget(){

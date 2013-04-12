@@ -60,7 +60,8 @@ public:
     void setCurrentChannels(int red, int green, int blue);
     
 signals:
-    
+    void histogramGenerationStarted();
+
 public slots:
 
 private slots:

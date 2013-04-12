@@ -98,6 +98,15 @@ public slots:
 
 
 private slots:
+    /*!
+     * \brief onHistogramGenerationStarted
+     */
+    void onHistogramGenerationStarted();
+
+    /*!
+     * \brief onViewerReady
+     */
+    void onViewerReady();
 
 
 private:

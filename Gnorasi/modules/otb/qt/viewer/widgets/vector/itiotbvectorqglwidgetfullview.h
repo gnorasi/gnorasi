@@ -113,6 +113,7 @@ signals:
      */
     void visibleAreaTranslated(int, int);
 
+
 protected:
 
     /*!

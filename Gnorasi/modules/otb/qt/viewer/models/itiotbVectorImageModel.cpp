@@ -254,42 +254,23 @@ VectorImageModel
     qDebug() << "Start of DumpImagePixelsWithinRegionIntoBuffer...";
     time.restart();
 
-  // Before doing anything, check if region is inside the buffered
-  // region of image
-  unsigned int currentIndex = 0;
+    // Before doing anything, check if region is inside the buffered
+    // region of image
+    unsigned int currentIndex = 0;
 
-  // TODO : add some checking
-  const DefaultImageType* image =  this->GetOutput(currentIndex);
-  if(!image)
-      return;
+    // TODO : add some checking
+    const DefaultImageType* image =  this->GetOutput(currentIndex);
+    if(!image)
+        return;
 
-  // some checking
-  if (!image->GetBufferedRegion().IsInside(region))
+    // some checking
+    if (!image->GetBufferedRegion().IsInside(region))
     {
     //itkExceptionMacro(<< "Region to read is oustside of the buffered region.");
     }
 
 
-  Q_ASSERT(image);
-
-  //test to strech image in 8bit
-//  ByteRescalerFilterType::Pointer  byterescaler;
-//  byterescaler = ByteRescalerFilterType::New();
-//  //image->UpdateOutputInformation();
-//  ByteImageType::PixelType minimum, maximum;
-//  int bands = image->GetNumberOfComponentsPerPixel();
-//  minimum.SetSize(bands);
-//  maximum.SetSize(bands);
-//  minimum.Fill(0);
-//  maximum.Fill(255);
-//  byterescaler->SetInput(image);
-//  byterescaler->SetOutputMinimum(minimum);
-//  byterescaler->SetOutputMaximum(maximum);
-//  byterescaler->SetClampThreshold(0.01);
-//  ByteImageType::Pointer image8;
-//  image8 = byterescaler->GetOutput();
-//  byterescaler->Update();
-  //end test
+    Q_ASSERT(image);
 
     Q_ASSERT(!m_ExtractFilter.IsNull());
 
@@ -359,7 +340,7 @@ VectorImageModel
 
     emit ready();
 
-        qDebug() << "End of DumpImagePixelsWithinRegionIntoBuffer \nmilliseconds elapsed : " << time.elapsed();
+    qDebug() << "End of DumpImagePixelsWithinRegionIntoBuffer \nmilliseconds elapsed : " << time.elapsed();
 }
 
 
@@ -439,7 +420,13 @@ VectorImageModel
 
 ImageRegionType VectorImageModel::GetLargestPossibleRegion() const{
 
-    return m_pManager->image()->GetLargestPossibleRegion();
+    ImageRegionType region;
+
+    if(m_pManager->image())
+        return m_pManager->image()->GetLargestPossibleRegion();
+
+    return region;
+
 }
 
 

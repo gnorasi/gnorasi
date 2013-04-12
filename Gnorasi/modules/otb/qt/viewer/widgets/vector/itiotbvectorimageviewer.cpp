@@ -412,8 +412,6 @@ void ItiOtbVectorImageViewer::enableMouseTrackingState(){
     m_pItiOtbVectorImageWidgetFullView->setMouseTracking(true);
     m_pItiOtbVectorImageWidgetZoomable->setMouseTracking(true);
     m_pItiOtbVectorImageWidgetScroll->setMouseTracking(true);
-
-    QApplication::setOverrideCursor( QCursor( Qt::ArrowCursor ) );
 }
 
 ItiOtbVectorImageViewer::~ItiOtbVectorImageViewer(){
