@@ -317,7 +317,9 @@ void ItiOtbVectorQGLWidgetScrollable::draw(){
 
     m_pImageViewManipulator->InitializeContext(this->width(),this->height());
 
-    m_pImageViewManipulator->SetImageLargestRegion(vModel->GetLargestPossibleRegion());
+    const VectorRegionType region = vModel->GetLargestPossibleRegion();
+
+    m_pImageViewManipulator->SetImageLargestRegion(region);
 
     //! initialize the column and row related parameters
     initializeColumnRowParameters();

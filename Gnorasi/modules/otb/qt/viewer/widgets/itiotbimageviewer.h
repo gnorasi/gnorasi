@@ -119,6 +119,9 @@ public:
     ItiOtbImageManager* manager()                                                       { return m_pManager; }
 
 
+signals:
+    void ready();
+
 
 protected:
     /*!

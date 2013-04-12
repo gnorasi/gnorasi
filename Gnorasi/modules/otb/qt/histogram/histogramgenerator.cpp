@@ -28,7 +28,6 @@ HistogramGenerator::HistogramGenerator(QObject *parent) :
 
     m_image = NULL;
 
-    restart = false;
     abort = false;
 }
 
@@ -58,9 +57,8 @@ void HistogramGenerator::generateHistogram(VectorImageType *image){
     this->m_image = image;
 
     if (!isRunning()) {
-        start(LowPriority);
+        start();
     } else {
-        restart = true;
         condition.wakeOne();
     }
 }
@@ -204,127 +202,119 @@ QHash<int,double> HistogramGenerator::parseBlueChannel(MyHistogramList::Histogra
 
 void HistogramGenerator::run(){
 
-    forever {
-        mutex.lock();
-        VectorImageType::PixelType minPixel = this->m_MinPixel;
-        VectorImageType::PixelType maxPixel = this->m_MaxPixel;
-        VectorImageType *img                = this->m_image;
-        unsigned int cgyc                   = this->m_currentGreyChannel;
-        unsigned int crc                    = this->m_redChannel;
-        unsigned int cgnc                   = this->m_greenChannel;
-        unsigned int cbc                    = this->m_blueChannel;
-        RMODE mode                          = this->m_rmode;
-        mutex.unlock();
+    mutex.lock();
+    VectorImageType::PixelType minPixel = this->m_MinPixel;
+    VectorImageType::PixelType maxPixel = this->m_MaxPixel;
+    VectorImageType *img                = this->m_image;
+    unsigned int cgyc                   = this->m_currentGreyChannel;
+    unsigned int crc                    = this->m_redChannel;
+    unsigned int cgnc                   = this->m_greenChannel;
+    unsigned int cbc                    = this->m_blueChannel;
+    RMODE mode                          = this->m_rmode;
+    mutex.unlock();
 
-        if (abort)
-            return;
+    QTime lMain;
+    QTime lPass1;
+    QTime lPass2;
 
-        if(!restart){
-            QTime lMain;
-            QTime lPass1;
-            QTime lPass2;
+    while(!abort){
 
-            lMain.start();
+        lMain.restart();
 
-            qDebug() << tr( "%1: Generating histogram (I)..." )
-              .arg( QDateTime::currentDateTime().toString( Qt::ISODate ) );
+        qDebug() << tr( "%1: Generating histogram (I)..." )
+          .arg( QDateTime::currentDateTime().toString( Qt::ISODate ) );
 
-            Q_ASSERT( img!=NULL );
+        Q_ASSERT( img!=NULL );
 
-            //
-            // 1st pass: process min/MAX for each band.
+        //
+        // 1st pass: process min/MAX for each band.
 
-            qDebug() << tr( "%1: Pass #1 - finding pixel min/maxes..." )
-              .arg( QDateTime::currentDateTime().toString( Qt::ISODate ) );
+        qDebug() << tr( "%1: Pass #1 - finding pixel min/maxes..." )
+          .arg( QDateTime::currentDateTime().toString( Qt::ISODate ) );
 
-            lPass1.start();
+        lPass1.restart();
 
-            MinMaxFilter::Pointer filterMinMax( MinMaxFilter::New() );
+        MinMaxFilter::Pointer filterMinMax( MinMaxFilter::New() );
 
-            filterMinMax->SetInput(img);
-            filterMinMax->GetFilter()->SetNoDataFlag(true);
-            filterMinMax->Update();
+        filterMinMax->SetInput(img);
+        filterMinMax->GetFilter()->SetNoDataFlag(true);
+        filterMinMax->Update();
 
-            /*
-            // Extract min/MAX intensities for each band.
-            // itk::VariableLengthVector< FLOAT_TYPE >
-            typename MinMaxFilter::PixelType lSrcMin( f );
-            typename MinMaxFilter::PixelType lSrcMax( filterMinMax->GetMaximum() );
-            */
+        /*
+        // Extract min/MAX intensities for each band.
+        // itk::VariableLengthVector< FLOAT_TYPE >
+        typename MinMaxFilter::PixelType lSrcMin( f );
+        typename MinMaxFilter::PixelType lSrcMax( filterMinMax->GetMaximum() );
+        */
 
-            // Extract-convert-remember min/MAX intensities for each band.
-            minPixel = filterMinMax->GetMinimum();
-            maxPixel = filterMinMax->GetMaximum();
+        // Extract-convert-remember min/MAX intensities for each band.
+        minPixel = filterMinMax->GetMinimum();
+        maxPixel = filterMinMax->GetMaximum();
 
-            qDebug() << tr( "%1: Pass #1 - done (%2 ms)." )
-              .arg( QDateTime::currentDateTime().toString( Qt::ISODate ) )
-              .arg( lPass1.elapsed() );
+        qDebug() << tr( "%1: Pass #1 - done (%2 ms)." )
+          .arg( QDateTime::currentDateTime().toString( Qt::ISODate ) )
+          .arg( lPass1.elapsed() );
 
-            //
-            // 2nd pass: compute histogram.
+        //
+        // 2nd pass: compute histogram.
 
-            qDebug() << tr( "%1: Pass #2 - computing histogram..." )
-              .arg( QDateTime::currentDateTime().toString( Qt::ISODate ) );
+        qDebug() << tr( "%1: Pass #2 - computing histogram..." )
+          .arg( QDateTime::currentDateTime().toString( Qt::ISODate ) );
 
-            lPass2.start();
+        lPass2.restart();
 
-            HistogramFilter::Pointer histogramFilter( HistogramFilter::New() );
+        HistogramFilter::Pointer histogramFilter( HistogramFilter::New() );
 
-            histogramFilter->SetInput(img);
+        histogramFilter->SetInput(img);
 
-            // Setup histogram filter.
-            histogramFilter->GetFilter()->SetHistogramMin( minPixel );
-            histogramFilter->GetFilter()->SetHistogramMax( maxPixel );
-            histogramFilter->GetFilter()->SetNumberOfBins( BINS_OVERSAMPLING_RATE* 256 );
-            histogramFilter->GetFilter()->SetSubSamplingRate( 1 );
+        // Setup histogram filter.
+        histogramFilter->GetFilter()->SetHistogramMin( minPixel );
+        histogramFilter->GetFilter()->SetHistogramMax( maxPixel );
+        histogramFilter->GetFilter()->SetNumberOfBins( BINS_OVERSAMPLING_RATE* 256 );
+        histogramFilter->GetFilter()->SetSubSamplingRate( 1 );
 
-            // Go.
-            histogramFilter->Update();
+        // Go.
+        histogramFilter->Update();
 
-            qDebug() << tr( "%1: Pass #2 - done (%2 ms)." )
-              .arg( QDateTime::currentDateTime().toString( Qt::ISODate ) )
-              .arg( lPass2.elapsed()  );
+        qDebug() << tr( "%1: Pass #2 - done (%2 ms)." )
+          .arg( QDateTime::currentDateTime().toString( Qt::ISODate ) )
+          .arg( lPass2.elapsed()  );
 
-            MyHistogramList::HistogramList::Pointer histograms(histogramFilter->GetHistogramList());
+        MyHistogramList::HistogramList::Pointer histograms(histogramFilter->GetHistogramList());
 
-            //
-            // Reference result.
-        //    m_Histograms = histogramFilter->GetHistogramList();
+        //
+        // Reference result.
 
-            qDebug() << tr( "%1: Histogram (I) generated (%2 ms)." )
-              .arg( QDateTime::currentDateTime().toString( Qt::ISODate ) )
-              .arg( lMain.elapsed() );
+        qDebug() << tr( "%1: Histogram (I) generated (%2 ms)." )
+          .arg( QDateTime::currentDateTime().toString( Qt::ISODate ) )
+          .arg( lMain.elapsed() );
 
 
-            MyHistogramList *list = new MyHistogramList();
-            list->setHistogramList(histograms);
+        MyHistogramList *list = new MyHistogramList();
+        list->setHistogramList(histograms);
 
-            if(mode == RMODE_GREYSCALE){
-                MyHistogramList::Histogram::Pointer greyhsm(histograms->GetNthElement(cgyc));
-                QHash<int,double> greycd    = parseGreyscaleChannel(greyhsm);
-                list->setGreyChannelData(greycd);
-            }else{
-                MyHistogramList::Histogram::Pointer redhsm(histograms->GetNthElement(crc));
-                MyHistogramList::Histogram::Pointer greenhsm(histograms->GetNthElement(cgnc));
-                MyHistogramList::Histogram::Pointer bluehsm(histograms->GetNthElement(cbc));
+        if(mode == RMODE_GREYSCALE){
+            MyHistogramList::Histogram::Pointer greyhsm(histograms->GetNthElement(cgyc));
+            QHash<int,double> greycd    = parseGreyscaleChannel(greyhsm);
+            list->setGreyChannelData(greycd);
+        }else{
+            MyHistogramList::Histogram::Pointer redhsm(histograms->GetNthElement(crc));
+            MyHistogramList::Histogram::Pointer greenhsm(histograms->GetNthElement(cgnc));
+            MyHistogramList::Histogram::Pointer bluehsm(histograms->GetNthElement(cbc));
 
-                QHash<int,double> redcd     = parseRedChannel(redhsm);
-                QHash<int,double> greencd   = parseGreenChannel(greenhsm);
-                QHash<int,double> bluecd    = parseBlueChannel(bluehsm);
+            QHash<int,double> redcd     = parseRedChannel(redhsm);
+            QHash<int,double> greencd   = parseGreenChannel(greenhsm);
+            QHash<int,double> bluecd    = parseBlueChannel(bluehsm);
 
-                list->setBlueChannelData(bluecd);
-                list->setGreenChannelData(greencd);
-                list->setRedChannelData(redcd);
-            }
-
-            if(!restart)
-                emit histogramGeneratedFinished(list);
+            list->setBlueChannelData(bluecd);
+            list->setGreenChannelData(greencd);
+            list->setRedChannelData(redcd);
         }
 
         mutex.lock();
-        if (!restart)
-            condition.wait(&mutex);
-        restart = false;
+        emit histogramGeneratedFinished(list);
+
+        condition.wait(&mutex);
         mutex.unlock();
     }
 }

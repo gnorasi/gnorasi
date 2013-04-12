@@ -261,7 +261,6 @@ private:
     QMutex mutex;
     QWaitCondition condition;
 
-    bool restart;
     bool abort;
 
 };
