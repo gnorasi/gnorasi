@@ -69,17 +69,14 @@ signals:
 
 private:
 
-//    QGroupBox *m_pGroupBox;
-
     /*!
      * \brief m_title
      */
     QString m_title;
 
     /*!
-     * \brief m_pTextEdit
+     * \brief m_pLabel
      */
-//    QTextEdit *m_pTextEdit;
     QLabel *m_pLabel;
 
     /*!

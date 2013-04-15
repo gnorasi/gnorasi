@@ -202,22 +202,22 @@ QHash<int,double> HistogramGenerator::parseBlueChannel(MyHistogramList::Histogra
 
 void HistogramGenerator::run(){
 
-    mutex.lock();
-    VectorImageType::PixelType minPixel = this->m_MinPixel;
-    VectorImageType::PixelType maxPixel = this->m_MaxPixel;
-    VectorImageType *img                = this->m_image;
-    unsigned int cgyc                   = this->m_currentGreyChannel;
-    unsigned int crc                    = this->m_redChannel;
-    unsigned int cgnc                   = this->m_greenChannel;
-    unsigned int cbc                    = this->m_blueChannel;
-    RMODE mode                          = this->m_rmode;
-    mutex.unlock();
-
-    QTime lMain;
-    QTime lPass1;
-    QTime lPass2;
-
     while(!abort){
+
+        mutex.lock();
+        VectorImageType::PixelType minPixel;
+        VectorImageType::PixelType maxPixel;
+        VectorImageType *img                = this->m_image;
+        unsigned int cgyc                   = this->m_currentGreyChannel;
+        unsigned int crc                    = this->m_redChannel;
+        unsigned int cgnc                   = this->m_greenChannel;
+        unsigned int cbc                    = this->m_blueChannel;
+        RMODE mode                          = this->m_rmode;
+        mutex.unlock();
+
+        QTime lMain;
+        QTime lPass1;
+        QTime lPass2;
 
         lMain.restart();
 
