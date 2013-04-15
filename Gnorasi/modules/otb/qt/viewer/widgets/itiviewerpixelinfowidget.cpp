@@ -31,7 +31,7 @@ void ItiViewerPixelInfoWidget::setupLayout(){
     m_pLabel->setFont(font);
     m_pLabel->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     m_pLabel->setMinimumHeight(120);
-    m_pLabel->setMinimumWidth(200);
+    m_pLabel->setMinimumWidth(100);
 
     setLayout(boxLayout1);
 }

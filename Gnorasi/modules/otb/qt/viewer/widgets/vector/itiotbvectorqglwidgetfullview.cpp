@@ -86,8 +86,24 @@ void ItiOtbVectorQGLWidgetFullView::setupViewport(int w, int h){
 
     ImageRegionType bufferedRegion = m_pImageViewManipulator->bufferRegion();
 
+    double bratio = (double)bufferedRegion.GetSize()[0] / (double)bufferedRegion.GetSize()[1];
+
+    double viewportratio = (double)w/(double)h;
+
+    if(w < h){
+        if(bratio > viewportratio)
+            m_IsotropicZoom = static_cast<double>(w)/ static_cast<double>(bufferedRegion.GetSize()[0]);
+        else
+            m_IsotropicZoom = static_cast<double>(h)/ static_cast<double>(bufferedRegion.GetSize()[1]);
+    }else{
+        if(bratio > viewportratio)
+            m_IsotropicZoom = static_cast<double>(w)/ static_cast<double>(bufferedRegion.GetSize()[0]);
+        else
+            m_IsotropicZoom = static_cast<double>(h)/ static_cast<double>(bufferedRegion.GetSize()[1]);
+    }
+
     // setup the isotropic zoom value, check whether the width is greater than height
-    m_IsotropicZoom = w < h ? static_cast<double>(w)/ static_cast<double>(bufferedRegion.GetSize()[0]) : static_cast<double>(h)/ static_cast<double>(bufferedRegion.GetSize()[1]);
+//    m_IsotropicZoom = w < h || bratio > viewportratio ? static_cast<double>(w)/ static_cast<double>(bufferedRegion.GetSize()[0]) : static_cast<double>(h)/ static_cast<double>(bufferedRegion.GetSize()[1]);
 
     VectorSizeType size;
     size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(bufferedRegion.GetSize()[0]));
