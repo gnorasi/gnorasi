@@ -102,21 +102,6 @@ public:
     /** */
     inline MeasurementType Quantile( CountType band, double p, Bound bound ) const;
 
-    /*!
-     * \brief initialize
-     */
-//    void initialize();
-
-//    //! getters
-//    double* redChannelFrequency() const { return m_pRedChannelFrequency; }
-//    double* greenChannelFrequency() const { return m_pGreenChannelFrequency; }
-//    double* blueChannelFrequency() const { return m_pBlueChannelFrequency; }
-
-//    //! getters
-//    double* redChannelAmplitude() const { return m_pRedChannelAmplitude; }
-//    double* greenChannelAmplitude() const { return m_pGreenChannelAmplitude; }
-//    double* blueChannelAmplitude() const { return m_pBlueChannelAmplitude; }
-
     //! getters
     QHash<int,double> greyscaleChannelData() const { return m_greyscaleChannelData; }
     QHash<int,double> redChannelData() const { return m_redChannelData; }
@@ -135,14 +120,6 @@ private:
      * \brief m_Histograms
      */
     HistogramList::Pointer m_Histograms;
-
-//    double *m_pRedChannelFrequency;
-//    double *m_pGreenChannelFrequency;
-//    double *m_pBlueChannelFrequency;
-
-//    double *m_pRedChannelAmplitude;
-//    double *m_pGreenChannelAmplitude;
-//    double *m_pBlueChannelAmplitude;
 
     QHash<int, double> m_greyscaleChannelData;
     QHash<int, double> m_redChannelData;
@@ -246,12 +223,6 @@ private:
     unsigned int m_greenChannel;
     unsigned int m_blueChannel;
     unsigned int m_currentGreyChannel;
-
-
-    /** */
-    VectorImageType::PixelType m_MinPixel;
-    /** */
-    VectorImageType::PixelType m_MaxPixel;
 
     /*!
      * \brief m_image

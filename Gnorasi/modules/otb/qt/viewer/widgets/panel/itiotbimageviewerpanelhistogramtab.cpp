@@ -85,7 +85,7 @@ void ItiOtbImageViewerPanelHistogramTab::setupHistogram(){
         int currentGreyscaleChannel = m_pItiOtbImageViewerPanel->currentGreyscaleChannel();
 
         // set the channel to the histogram generator
-        m_pHistogramGenerator->setCurrentGreyChannel(currentGreyscaleChannel);
+        m_pHistogramGenerator->setCurrentGreyChannel(currentGreyscaleChannel-1);
 
         // set the mode to greyscale
         m_pHistogramGenerator->setRMode(HistogramGenerator::RMODE_GREYSCALE);
