@@ -337,6 +337,18 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     //! use it after the creation process has finished, to dissasemble the widgets.
     int vmode = m_pItiOtbImageViewer->vmode();
 
+
+    //! use the visual mode of the viewer previously got and dissasemble the widgets if the viewer was previously on splitted mode
+    if(vmode){
+        disassembleWidgets();
+
+        m_pItiOtbImageViewerPanel->readDisplaySettings();
+
+        qDebug() << "final time elapsed : " << time.elapsed();
+
+        return;
+    }
+
     //! create the specialized factory item , now this is the default viewer
     m_pItiOtbImageFactory = new ItiOtbVectorImageViewerFactory(this);
 
@@ -379,12 +391,6 @@ void QGLOtbImageViewerWidget::setupByPort(Port *port){
     QList<int> sizlist;
     sizlist << 300 << 0;
     m_pvSplitter->setSizes(sizlist);
-
-    //! use the visual mode of the viewer previously got and dissasemble the widgets if the viewer was previously on splitted mode
-    if(vmode){
-        disassembleWidgets();
-        m_pItiOtbImageViewerPanel->readDisplaySettings();
-    }
 
     qDebug() << "final time elapsed : " << time.elapsed();
 }
