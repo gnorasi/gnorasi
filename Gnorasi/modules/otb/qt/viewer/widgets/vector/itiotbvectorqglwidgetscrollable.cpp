@@ -163,7 +163,7 @@ void ItiOtbVectorQGLWidgetScrollable::setupPaintingParametersAndVisibleArea(){
     m_pImageModelRenderer->setPaintingParameters(nb_d_cs,nb_d_rs,f_d_c,f_d_r);
 
     //! create a rect
-    QRect rect(f_d_c,bufferRegion.GetSize()[0] - nb_d_rs - f_d_r,nb_d_cs,nb_d_rs);
+    QRect rect(f_d_c,bufferRegion.GetSize()[1] - nb_d_rs - f_d_r,nb_d_cs,nb_d_rs);
 
     //! emit the signal
     emit visibleAreaChanged(rect);
