@@ -201,12 +201,12 @@ void ItiOtbVectorQGLWidgetFullView::updateObserver(ItiViewerObservable *observab
 
     QRect rect = region->region();
 
-    m_visibleRegion.setX(extent.GetIndex()[0] + (qAbs(rect.x()*m_IsotropicZoom)));
-    m_visibleRegion.setY(extent.GetIndex()[1]+(qAbs(rect.y()*m_IsotropicZoom) ));
-
     //! calculate the new width and height value;
     int nw = m_IsotropicZoom * rect.width();
     int nh = m_IsotropicZoom * rect.height();
+
+    m_visibleRegion.setX(extent.GetIndex()[0] + (qAbs(rect.x()*m_IsotropicZoom)));
+    m_visibleRegion.setY(extent.GetIndex()[1] + (qAbs(rect.y()*m_IsotropicZoom) ));
 
     //! set the new width and height to the visible region
     m_visibleRegion.setWidth(nw);
