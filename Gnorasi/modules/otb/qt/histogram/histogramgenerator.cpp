@@ -237,7 +237,7 @@ void HistogramGenerator::run(){
         MinMaxFilter::Pointer filterMinMax( MinMaxFilter::New() );
 
         filterMinMax->SetInput(img);
-        filterMinMax->GetFilter()->SetNoDataFlag(true);
+//        filterMinMax->GetFilter()->SetNoDataFlag(true);
         filterMinMax->Update();
 
         /*
