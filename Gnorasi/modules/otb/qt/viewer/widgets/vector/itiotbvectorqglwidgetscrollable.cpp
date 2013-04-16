@@ -785,6 +785,13 @@ ImageRegionType::IndexType ItiOtbVectorQGLWidgetScrollable::indexFromPoint(const
 }
 
 
+void ItiOtbVectorQGLWidgetScrollable::onModelReady(){
+    setupViewport(this->width(),this->height());
+
+    setupPaintingParametersAndVisibleArea();
+}
+
+
 //!
 ItiOtbVectorQGLWidgetScrollable::~ItiOtbVectorQGLWidgetScrollable(){
 //    ClearBuffer();

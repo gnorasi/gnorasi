@@ -95,6 +95,13 @@ public:
      */
     void draw();
 
+
+public slots:
+    /*!
+     * \brief onModelReady
+     */
+    void onModelReady();
+
 signals:
 
     /*!
