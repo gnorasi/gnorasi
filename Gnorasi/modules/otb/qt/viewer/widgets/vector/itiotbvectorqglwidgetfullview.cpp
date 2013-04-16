@@ -360,6 +360,19 @@ void ItiOtbVectorQGLWidgetFullView::mouseReleaseEvent(QMouseEvent *event){
 }
 
 
+void ItiOtbVectorQGLWidgetFullView::onModelReady(){
+    ImageRegionType bufferregion = m_pImageViewManipulator->bufferRegion();
+
+    m_visibleRegion.setX(0);
+    m_visibleRegion.setY(0);
+
+    emit visibleAreaTranslated(-1*bufferregion.GetSize()[0],-1*bufferregion.GetSize()[1]);
+
+    //! update widget
+    update();
+}
+
+
 //!
 ItiOtbVectorQGLWidgetFullView::~ItiOtbVectorQGLWidgetFullView(){
 

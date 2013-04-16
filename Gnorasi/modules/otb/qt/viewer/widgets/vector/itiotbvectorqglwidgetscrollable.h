@@ -104,6 +104,11 @@ public slots:
      */
     void resetZoom() { m_helperZoomCounter = 1.0; }
 
+    /*!
+     * \brief onModelReady
+     */
+    void onModelReady();
+
 signals:
     /*!
      * \brief visibleAreaChanged , this signal is emitted uppon the view resizing
@@ -209,6 +214,7 @@ private:
      * \param height
      */
     void setupViewport(int w, int h);
+
 
     /** OpenGl zoom factor */
     double m_IsotropicZoom;
