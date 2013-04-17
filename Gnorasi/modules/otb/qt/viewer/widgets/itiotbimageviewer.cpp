@@ -18,6 +18,5 @@ void ItiOtbImageViewer::setModel( AbstractModel* model )
 //        delete m_pAbstractImageModel;
 
     m_pAbstractImageModel = model;
-    connect(m_pAbstractImageModel,SIGNAL(ready()),this,SIGNAL(ready()));
     m_pAbstractImageModel ->setParent( this );
 }

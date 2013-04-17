@@ -73,25 +73,17 @@ void ItiOtbImageViewerPanelHistogramTab::setupHistogram(){
     if(!image )
         return;
 
-    emit histogramGenerationStarted();
-
     mgr->setHistogramReady(false);
 
     connect(m_pHistogramGenerator,SIGNAL(histogramGeneratedFinished(MyHistogramList*)),mgr,SLOT(onHistogramFinished(MyHistogramList*)));
 
     if(m_pItiOtbImageViewerPanel->isGreyscale()){
 
-        // get the graychannel value from the panel
-        int currentGreyscaleChannel = m_pItiOtbImageViewerPanel->currentGreyscaleChannel();
-
         // set the channel to the histogram generator
-        m_pHistogramGenerator->setCurrentGreyChannel(currentGreyscaleChannel-1);
+        m_pHistogramGenerator->setCurrentGreyChannel(m_pItiOtbImageViewerPanel->currentGreyscaleChannel()-1);
 
         // set the mode to greyscale
         m_pHistogramGenerator->setRMode(HistogramGenerator::RMODE_GREYSCALE);
-
-        // generate the histogram
-        m_pHistogramGenerator->generateHistogram(image);
 
         // set visibilities
         m_pHistogramViewBlue->setVisible(false);
@@ -110,16 +102,16 @@ void ItiOtbImageViewerPanelHistogramTab::setupHistogram(){
         // set the RGB mode
         m_pHistogramGenerator->setRMode(HistogramGenerator::RMODE_RGB);
 
-        // generate the histogam
-        m_pHistogramGenerator->generateHistogram(image);
-
-
         // set visibilities
         m_pHistogramViewGreyscale->setVisible(false);
+
         m_pHistogramViewBlue->setVisible(true);
         m_pHistogramViewGreen->setVisible(true);
         m_pHistogramViewRed->setVisible(true);
     }
+
+    // generate the histogam
+    m_pHistogramGenerator->generateHistogram(image);
 }
 
 void ItiOtbImageViewerPanelHistogramTab::onHistogramFinished(MyHistogramList* list){
