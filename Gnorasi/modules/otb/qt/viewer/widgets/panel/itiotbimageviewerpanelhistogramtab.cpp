@@ -73,6 +73,8 @@ void ItiOtbImageViewerPanelHistogramTab::setupHistogram(){
     if(!image )
         return;
 
+    qApp->setOverrideCursor(Qt::WaitCursor);
+
     mgr->setHistogramReady(false);
 
     connect(m_pHistogramGenerator,SIGNAL(histogramGeneratedFinished(MyHistogramList*)),mgr,SLOT(onHistogramFinished(MyHistogramList*)));
@@ -136,5 +138,6 @@ void ItiOtbImageViewerPanelHistogramTab::onHistogramFinished(MyHistogramList* li
         m_pHistogramViewRed->replot();
         m_pHistogramViewGreen->replot();
         m_pHistogramViewBlue->replot();
-}
 
+        qApp->restoreOverrideCursor();
+}
