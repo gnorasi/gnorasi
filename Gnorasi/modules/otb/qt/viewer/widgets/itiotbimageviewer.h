@@ -119,10 +119,6 @@ public:
     ItiOtbImageManager* manager()                                                       { return m_pManager; }
 
 
-signals:
-    void ready();
-
-
 protected:
     /*!
      * \brief m_vmode , a variable holding the VMODE value

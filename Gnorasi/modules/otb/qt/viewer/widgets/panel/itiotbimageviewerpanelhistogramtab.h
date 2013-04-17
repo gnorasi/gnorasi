@@ -58,9 +58,7 @@ public:
 
     // set the current channels
     void setCurrentChannels(int red, int green, int blue);
-    
-signals:
-    void histogramGenerationStarted();
+
 
 public slots:
 
