@@ -14,8 +14,9 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/ontologyport.cpp
     ${MOD_DIR}/ports/georuleport.cpp
     ${MOD_DIR}/ports/fuzzyruleport.cpp
-    ${MOD_DIR}/processors/fuzzypreprocessor.cpp
-    ${MOD_DIR}/processors/fuzzyrulesprocessor.cpp
+#    ${MOD_DIR}/processors/fuzzypreprocessor.cpp
+#    ${MOD_DIR}/processors/fuzzyrulesprocessor.cpp
+    ${MOD_DIR}/processors/fuzzyprocessor.cpp
 )
 
 SET(MOD_CORE_HEADERS 
@@ -28,8 +29,9 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/ontologyport.h
     ${MOD_DIR}/ports/georuleport.h
     ${MOD_DIR}/ports/fuzzyruleport.h
-    ${MOD_DIR}/processors/fuzzypreprocessor.h
-    ${MOD_DIR}/processors/fuzzyrulesprocessor.h
+#    ${MOD_DIR}/processors/fuzzypreprocessor.h
+#    ${MOD_DIR}/processors/fuzzyrulesprocessor.h
+    ${MOD_DIR}/processors/fuzzyprocessor.h
 )
 
 ################################################################################
@@ -58,9 +60,18 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/utils/rulewriter.cpp
     ${MOD_DIR}/qt/utils/ruleparser.cpp
     ${MOD_DIR}/qt/utils/fuzzylabelmaputility.cpp
-    ${MOD_DIR}/qt/processorwidgets/fuzzypreprocessorwidget.cpp
-    ${MOD_DIR}/qt/processorwidgets/fuzzyrulesprocessorwidget.cpp
+#    ${MOD_DIR}/qt/processorwidgets/fuzzypreprocessorwidget.cpp
+#    ${MOD_DIR}/qt/processorwidgets/fuzzyrulesprocessorwidget.cpp
     ${MOD_DIR}/qt/processorwidgets/doublespinboxdelegate.cpp
+    ${MOD_DIR}/qt/processorwidgets/fuzzyprocessorwidget.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyontologymanager.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyontologyclass.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctionrightshoulder.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctionleftshoulder.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctionfactory.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunction.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyattribute.cpp
+    ${MOD_DIR}/qt/processorwidgets/lineeditfornumbersdelegate.cpp
 )
 
 SET(MOD_QT_HEADERS
@@ -83,9 +94,18 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/utils/rulewriter.h
     ${MOD_DIR}/qt/utils/ruleparser.h
     ${MOD_DIR}/qt/utils/fuzzylabelmaputility.h
-    ${MOD_DIR}/qt/processorwidgets/fuzzypreprocessorwidget.h
-    ${MOD_DIR}/qt/processorwidgets/fuzzyrulesprocessorwidget.h
+#    ${MOD_DIR}/qt/processorwidgets/fuzzypreprocessorwidget.h
+#    ${MOD_DIR}/qt/processorwidgets/fuzzyrulesprocessorwidget.h
     ${MOD_DIR}/qt/processorwidgets/doublespinboxdelegate.h
+    ${MOD_DIR}/qt/processorwidgets/fuzzyprocessorwidget.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyontologymanager.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyontologyclass.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctionrightshoulder.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctionleftshoulder.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctionfactory.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunction.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyattribute.h
+    ${MOD_DIR}/qt/processorwidgets/lineeditfornumbersdelegate.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

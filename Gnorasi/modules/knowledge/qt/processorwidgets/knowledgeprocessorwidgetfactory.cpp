@@ -40,11 +40,11 @@
 #include "../../processors/geospatialclassificationprocessor.h"
 #include "geospatialclassificationwidget.h"
 
-#include "../../processors/fuzzypreprocessor.h"
-#include "fuzzypreprocessorwidget.h"
+//#include "../../processors/fuzzypreprocessor.h"
+//#include "fuzzypreprocessorwidget.h"
 
-#include "../../processors/fuzzyrulesprocessor.h"
-#include "fuzzyrulesprocessorwidget.h"
+//#include "../../processors/fuzzyrulesprocessor.h"
+//#include "fuzzyrulesprocessorwidget.h"
 
 #include "voreen/qt/voreenapplicationqt.h"
 #include <QWidget>
@@ -72,11 +72,11 @@ ProcessorWidget* KnowledgeProcessorWidgetFactory::createWidget(Processor* proces
     if(dynamic_cast<GeospatialClassificationProcessor*>(processor))
         return new GeoSpatialClassificationWidget(parent, static_cast<GeospatialClassificationProcessor*>(processor));
 
-    if(dynamic_cast<FuzzyPreProcessor*>(processor))
-        return new FuzzyPreProcessorWidget(parent, static_cast<FuzzyPreProcessor*>(processor));
+//    if(dynamic_cast<FuzzyPreProcessor*>(processor))
+//        return new FuzzyPreProcessorWidget(parent, static_cast<FuzzyPreProcessor*>(processor));
 
-    if(dynamic_cast<FuzzyRulesProcessor*>(processor))
-        return new FuzzyRulesProcessorWidget(parent,static_cast<FuzzyRulesProcessor*>(processor));
+//    if(dynamic_cast<FuzzyRulesProcessor*>(processor))
+//        return new FuzzyRulesProcessorWidget(parent,static_cast<FuzzyRulesProcessor*>(processor));
 
     return 0;
 }
