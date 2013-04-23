@@ -41,6 +41,7 @@ void FuzzyProcessorWidget::initialize(){
 
     QLabel *pLabelAvailableAttributesTitle = new QLabel(tr("Available Attributes"),this);
     QLabel *pLabelFuzzyAttributesTitle = new QLabel(tr("Fuzzy Attributes"),this);
+    QLabel *pLabelMinMaxTitle = new QLabel(tr("Min max : "),this);
 
     m_pPushButtonAdd = new QPushButton(this);
     m_pPushButtonRemove = new QPushButton(this);
@@ -60,16 +61,15 @@ void FuzzyProcessorWidget::initialize(){
     headers1 << tr("Attribute Name") << tr("Function name");
     int numberOfParameters = FuzzyFunction::MAXPARAMETERSCOUNT;
     for(int i = 0 ; i < numberOfParameters; i++){
-        headers << parameterCharacters.at(i);
+        headers1 << parameterCharacters.at(i);
     }
-
-    headers << tr("Operator") << tr("Value");
-
+    headers1 << tr("Operator") << tr("Value");
     m_pFuzzyAttributesModel->setHorizontalHeaderLabels(headers1);
 
     m_pAvailableAttributesListView= new QListView(this);
+
     m_pFuzzyAttributesTableView = new QTableView(this);
-    m_pFuzzyAttributesTableView->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
+    m_pAvailableAttributesListView->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
     m_pFuzzyAttributesTableView->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     m_pAvailableAttributesListView->setAlternatingRowColors(true);
     m_pFuzzyAttributesTableView->setAlternatingRowColors(true);
@@ -103,6 +103,7 @@ void FuzzyProcessorWidget::initialize(){
     QHBoxLayout *hboxLayout1 = new QHBoxLayout();
     hboxLayout1->addWidget(m_pOntologyClassComboBox);
     hboxLayout1->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Expanding,QSizePolicy::Fixed));
+    hboxLayout1->addWidget(pLabelMinMaxTitle);
     hboxLayout1->addWidget(m_pMinRadioButton);
     hboxLayout1->addWidget(m_pMaxRadioButton);
 
@@ -115,20 +116,22 @@ void FuzzyProcessorWidget::initialize(){
     QVBoxLayout *vboxLayout3 = new QVBoxLayout;
     vboxLayout3->addLayout(hboxLayout2);
     vboxLayout3->addLayout(hboxLayout1);
+    vboxLayout3->addWidget(pLabelFuzzyAttributesTitle);
     vboxLayout3->addWidget(m_pFuzzyAttributesTableView);
 
-    QVBoxLayout *vLayout = new QVBoxLayout;
-    vLayout->addLayout(vboxLayout1);
-    vLayout->addLayout(vboxLayout2);
-    vLayout->addLayout(vboxLayout3);
+    QHBoxLayout *hLayout = new QHBoxLayout;
+    hLayout->addLayout(vboxLayout1);
+    hLayout->addLayout(vboxLayout2);
+    hLayout->addLayout(vboxLayout3);
 
-    setLayout(vLayout);
+    setLayout(hLayout);
 
 
     m_pFuzzyLabelMapUtility = new FuzzyLabelMapUtility(this);
 
 
     setupItemDelegates();
+
 
     connect(m_pPushButtonAdd,SIGNAL(clicked()),this,SLOT(addSelection()));
     connect(m_pPushButtonCalculate,SIGNAL(clicked()),this,SLOT(calculate()));
@@ -167,16 +170,18 @@ void FuzzyProcessorWidget::setupItemDelegates(){
 void FuzzyProcessorWidget::updateFromProcessor(){
     FuzzyLabelMapUtility::LabelMapType *mapT = getMapFromPort();
     if(mapT){
+        // parse the fetched data by the port
         m_pFuzzyLabelMapUtility->parse(mapT);
 
+        // setup the data by the parsed map
         QStringList namesList = m_pFuzzyLabelMapUtility->getAttributeListNames();
 
         setupAvailableAttributesListViewByList(namesList);
-
-        QStringList list = getOntologyClassesFromPort();
-
-        setupOntologyClassItems(list);
     }
+
+    // now seutp the ontology classes
+    QStringList list = getOntologyClassesFromPort();
+    setupOntologyClassItems(list);
 }
 
 
@@ -310,8 +315,11 @@ void FuzzyProcessorWidget::processOntologyItem(OWLHelperItem *item, QStringList 
 }
 
 void FuzzyProcessorWidget::setupOntologyClassItems(const QStringList &list){
+    // clear all previously added ontolgogy classes
     FUZZYONTOLOGYCLASSMANAGER->clear();
     m_pOntologyClassComboBox->clear();
+
+
     QStringList::const_iterator i;
     int counter = 1;
     for(i = list.constBegin(); i!= list.constEnd(); i++){
@@ -373,6 +381,10 @@ QString FuzzyProcessorWidget::constructXmlFile(){
 
         if(pClass->isEmpty())
             continue;
+
+//        DomElement fuzzyRuleElement = doc.createElement(QLatin1String("fuzzyRule"));
+//        fuzzyRuleElement.setAttribute(QLatin1String("id"),pClass->id());
+//        fuzzyRuleElement.setAttribute(QLatin1String("operator"),pClass->minMaxType());
 
 //        QDomElement fuzzyRuleElemet = doc.createElement(QLatin1String("fuzzyRule"));
 //        fuzzyRuleElemet.setAttribute(QLatin1String("id"),pRule->id());

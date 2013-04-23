@@ -46,6 +46,9 @@
 //#include "../../processors/fuzzyrulesprocessor.h"
 //#include "fuzzyrulesprocessorwidget.h"
 
+#include "../../processors/fuzzyprocessor.h"
+#include "../../qt/processorwidgets/fuzzyprocessorwidget.h"
+
 #include "voreen/qt/voreenapplicationqt.h"
 #include <QWidget>
 #include <QMainWindow>
@@ -71,6 +74,9 @@ ProcessorWidget* KnowledgeProcessorWidgetFactory::createWidget(Processor* proces
 
     if(dynamic_cast<GeospatialClassificationProcessor*>(processor))
         return new GeoSpatialClassificationWidget(parent, static_cast<GeospatialClassificationProcessor*>(processor));
+
+    if(dynamic_cast<FuzzyProcessor*>(processor))
+        return new FuzzyProcessorWidget(parent,static_cast<FuzzyProcessor*>(processor));
 
 //    if(dynamic_cast<FuzzyPreProcessor*>(processor))
 //        return new FuzzyPreProcessorWidget(parent, static_cast<FuzzyPreProcessor*>(processor));

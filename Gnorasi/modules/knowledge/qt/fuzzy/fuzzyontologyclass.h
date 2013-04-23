@@ -7,6 +7,9 @@ class FuzzyAttribute;
 
 /*!
  * \brief The FuzzyOntologyClass class
+ *  The FuzzyOntologyClass class is related to a set of FuzzyAttribute items
+ *  The FuzzyOntologyClass item is also related to a min / max operator value.
+ *
  */
 class FuzzyOntologyClass : public QObject
 {
@@ -85,6 +88,13 @@ public:
      */
     bool isEmpty() { return m_fuzzyAttributeList.isEmpty(); }
 
+    /*!
+     * \brief addAttribute
+     *  setup and create a new FuzzyAttribute by a given name
+     * \param name
+     */
+    FuzzyAttribute* addAttribute(const QString &name);
+
 
 signals:
     
@@ -92,6 +102,8 @@ public slots:
 
 
 private:
+
+    QString createANewName(const QString &name);
 
     /*!
      * \brief m_className

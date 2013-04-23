@@ -8,6 +8,7 @@ class FuzzyFunction;
 
 /*!
  * \brief The FuzzyAttribute class
+ *  The FuzzyAttribute class is related to one FuzzyFunction , the values for the parameters and the membership value.
  */
 class FuzzyAttribute : public QObject
 {

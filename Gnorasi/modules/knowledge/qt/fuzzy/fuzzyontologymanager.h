@@ -22,7 +22,7 @@ public:
 
 
     static void deleteInstance();
-    
+
     /*!
      * \brief addFuzzyOntologyClass
      * \param c
