@@ -4,6 +4,7 @@
 #include <QObject>
 
 class FuzzyAttribute;
+class FuzzyFunctionFactory;
 
 /*!
  * \brief The FuzzyOntologyClass class
@@ -36,7 +37,13 @@ public:
      * \brief removeFuzzyAttribute
      * \param a
      */
-    void removeFuzzyAttribute(FuzzyAttribute *a) { m_fuzzyAttributeList.removeOne(a); }
+    bool removeFuzzyAttribute(FuzzyAttribute *a) { return m_fuzzyAttributeList.removeOne(a); }
+
+    /*!
+     * \brief removeFuzzyAttribute
+     * \param name
+     */
+    bool removeFuzzyAttribute(const QString &name);
 
     /*!
      * \brief fuzzyAttributes
@@ -74,7 +81,11 @@ public:
      */
     bool isMin() { return m_minMaxType == MMT_MIN? true: false; }
 
-
+    /*!
+     * \brief className
+     *  getter
+     * \return
+     */
     QString className() const { return m_className; }
     void setClassName(const QString &name) { m_className = name ; }
 
@@ -89,11 +100,23 @@ public:
     bool isEmpty() { return m_fuzzyAttributeList.isEmpty(); }
 
     /*!
-     * \brief addAttribute
-     *  setup and create a new FuzzyAttribute by a given name
-     * \param name
+     * \brief updateAttribute
+     * \return
      */
-    FuzzyAttribute* addAttribute(const QString &name);
+    bool updateAttribute(int , int , const QVariant&, FuzzyFunctionFactory* );
+
+    /*!
+     * \brief getAttributeByName
+     * \return
+     */
+    FuzzyAttribute* getAttributeByName(const QString &);
+
+    /*!
+     * \brief getAttributeByIndex
+     * \param index
+     * \return
+     */
+    FuzzyAttribute* getAttributeByIndex(int index);
 
 
 signals:

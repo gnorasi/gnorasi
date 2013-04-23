@@ -160,6 +160,13 @@ private:
      */
     void setupWidgetByCurrentOntologyClass();
 
+    /*!
+     * \brief createANewAttribute
+     *
+     *  Create and set a new attribute for the current FuzzyOntologyClass item
+     */
+    void createANewAttribute(const QString &);
+
 
     QStringList                             getOntologyClassesFromPort();
 

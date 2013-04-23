@@ -5,6 +5,7 @@
 #include <QStringList>
 
 class FuzzyFunction;
+class FuzzyFunctionFactory;
 
 /*!
  * \brief The FuzzyAttribute class
@@ -70,6 +71,11 @@ public:
     double parameterValueForIndex(int index) const ;
 
     /*!
+     * \brief setParameterValueForIndex
+     */
+    void setParameterValueForIndex(int , double );
+
+    /*!
      * \brief fuzzyOperator
      * \return
      */
@@ -82,6 +88,14 @@ public:
     void setFuzzyOperator(FUZZYOPERATORTYPE f) { m_fuzzyOperator = f; }
 
     /*!
+     * \brief fuzzyOperatorByName
+     *  get the operator index from the name
+     * \param name
+     * \return
+     */
+    FUZZYOPERATORTYPE fuzzyOperatorByName(const QString &name);
+
+    /*!
      * \brief fuzzyOperatorNames
      */
     static QStringList fuzzyOperatorNames;
@@ -91,6 +105,13 @@ public:
      * \return
      */
     QString fuzzyOperatorName() ;
+
+
+    /*!
+     * \brief updateAttribute
+     * \return
+     */
+    bool updateAttribute(int , const QVariant&, FuzzyFunctionFactory* );
 
 signals:
     

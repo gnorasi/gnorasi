@@ -26,7 +26,22 @@ public:
      * \return
      */
     double parameterFunctionForIndex(int index );
+
+    /*!
+     * \brief setParameterValudeForIndex
+     * \param index
+     * \param val
+     */
+    void setParameterValueForIndex(int index, double val);
     
+    /*!
+     * \brief calculate
+     *  Implementation
+     * \param val
+     * \return
+     */
+    double calculate(double val);
+
     /*!
      * \brief setParameterA
      * \param a
