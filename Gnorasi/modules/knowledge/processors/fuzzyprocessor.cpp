@@ -45,7 +45,7 @@ bool FuzzyProcessor::isReady() const {
 }
 
 std::string FuzzyProcessor::getProcessorInfo() const {
-    return "Fuzzy Calculation";
+    return "Fuzzy Processor";
 }
 
 void FuzzyProcessor::initialize() throw (VoreenException) {
@@ -61,27 +61,7 @@ void FuzzyProcessor::process() {
 //        outPort2_.setData(inPort2_.getData());
     }
 
-//    if(inLblMapPort_.isConnected() ){
-//        std::vector<const OTBLabelMapPort*> list = inPort_.getConnected();
-//        if(!list.empty())
-//        {
-//            const OTBLabelMapPort *iPort  = list.at(0);
-
-////            inLblMapPort_.setImagePath(iPort->imagePath());
-//        }else {
-//            std::vector<const OTBVectorImagePort*> list = inPort2_.getConnected();
-//            if(!list.empty())
-//            {
-//                const OTBVectorImagePort *vPort  = list.at(0);
-
-//                inPort2_.setImagePath(vPort->imagePath());
-//            }
-//        }
-//    }
-
     updateView();
-
-//    pTextData_.clear();
 }
 
 //

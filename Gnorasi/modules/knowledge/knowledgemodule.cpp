@@ -35,6 +35,8 @@
 
 #include "processors/knowledgewebserviceprocessor.h"
 
+#include "processors/fuzzyprocessor.h"
+
 //#include "processors/fuzzypreprocessor.h"
 //#include "processors/fuzzyrulesprocessor.h"
 
@@ -53,6 +55,8 @@ KnowledgeModule::KnowledgeModule(const std::string& moduleName)
     registerProcessor(new OntologyCreatorProcessor());
     registerProcessor(new GeospatialClassificationProcessor());
     registerProcessor(new KnowledgeWebServiceProcessor());
+
+    registerProcessor(new FuzzyProcessor());
 
 //    registerProcessor(new FuzzyPreProcessor());
 //    registerProcessor(new FuzzyRulesProcessor());
