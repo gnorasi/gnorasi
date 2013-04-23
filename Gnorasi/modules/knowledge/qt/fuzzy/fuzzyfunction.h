@@ -34,6 +34,23 @@ public:
     virtual double parameterFunctionForIndex(int i) = 0;
 
     /*!
+     * \brief setParameterValueForIndx
+     *
+     *  Update the parameter value for the given index, all concrete classes must implement this function
+     * \param index
+     * \param val
+     */
+    virtual void setParameterValueForIndex(int index , double val) = 0;
+
+    /*!
+     * \brief calculate
+     *  This is the function where the calculation is performed
+     * \param val
+     * \return
+     */
+    virtual double calculate(double val) = 0;
+
+    /*!
      * \brief MAXPARAMETERSCOUNT
      *  This is a general static value , for setting up the table view columns.
      */

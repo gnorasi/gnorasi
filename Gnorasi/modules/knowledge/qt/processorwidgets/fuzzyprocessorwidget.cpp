@@ -143,6 +143,8 @@ void FuzzyProcessorWidget::initialize(){
     connect(m_pMinRadioButton,SIGNAL(pressed()),this,SLOT(onRadioButtonMixMaxChanged()));
     connect(m_pMaxRadioButton,SIGNAL(pressed()),this,SLOT(onRadioButtonMixMaxChanged()));
 
+    connect(m_pFuzzyAttributesModel,SIGNAL(dataChanged(QStandardItem*)),this,SLOT(onFuzzyModelChanged(QStandardItem*)));
+
     hide();
 }
 
@@ -238,7 +240,30 @@ void FuzzyProcessorWidget::addSelection(){
     m_pFuzzyAttributesModel->appendRow(pItem);
 
     m_pFuzzyAttributesTableView->resizeColumnToContents(0);
+
+    createANewAttribute(pItem->text());
 }
+
+
+void FuzzyProcessorWidget::createANewAttribute(const QString &name){
+    Q_ASSERT(m_pCurrentFuzzyOntologyClass);
+
+    QList<FuzzyAttribute*> list = m_pCurrentFuzzyOntologyClass->fuzzyAttributes();
+    int counter = 1;
+    QList<FuzzyAttribute*>::const_iterator i;
+    for(i = list.constBegin(); i != list.constEnd(); i++){
+        FuzzyAttribute *pAttribute = *i;
+
+        if(!pAttribute->name().compare(name))
+            counter++;
+    }
+
+    QString newName = QString("Fuzzy%1%2").arg(name).arg(QString::number(counter));
+
+    FuzzyAttribute *pFuzzyAttribute = new FuzzyAttribute(newName,this);
+    m_pCurrentFuzzyOntologyClass->addFuzzyAttribute(pFuzzyAttribute);
+}
+
 
 void FuzzyProcessorWidget::removeSelection(){
     QModelIndex index = m_pFuzzyAttributesTableView->currentIndex();
@@ -246,8 +271,12 @@ void FuzzyProcessorWidget::removeSelection(){
     if(!index.isValid())
         return;
 
-    m_pFuzzyAttributesModel->removeRow(index.row());
+    QString name = m_pFuzzyAttributesModel->data(index,Qt::DisplayRole).toString();
+
+    if(m_pCurrentFuzzyOntologyClass->removeFuzzyAttribute(name))
+        m_pFuzzyAttributesModel->removeRow(index.row());
 }
+
 
 void FuzzyProcessorWidget::calculate(){
 
@@ -430,7 +459,13 @@ void FuzzyProcessorWidget::onComboboxCurrentIndexChanged(const QString &text){
 
 
 void FuzzyProcessorWidget::onFuzzyAttributeModelChanged(QStandardItem *pItem){
-    Q_UNUSED(pItem);
+    QVariant val = pItem->data(Qt::DisplayRole);
+
+    int index = pItem->column();
+
+    int row = pItem->row();
+
+    m_pCurrentFuzzyOntologyClass->updateAttribute(row,index,val,m_pFuzzuFunctionFactory);
 }
 
 

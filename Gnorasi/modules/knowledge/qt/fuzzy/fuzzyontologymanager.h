@@ -46,7 +46,11 @@ public:
      */
     void clear() { m_fuzzyOntolgyClassList.clear(); }
 
-
+    /*!
+     * \brief fuzzyByOntologyClassByName
+     * \param name
+     * \return
+     */
     FuzzyOntologyClass* fuzzyByOntologyClassByName(const QString &name);
 
 signals:
@@ -72,6 +76,7 @@ private:
      * \brief m_pInstance
      */
     static FuzzyOntologyManager *m_pInstance;
+
 
 };
 
