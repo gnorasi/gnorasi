@@ -51,6 +51,12 @@ public:
     virtual double calculate(double val) = 0;
 
     /*!
+     * \brief name
+     * \return
+     */
+    virtual QString name() const  = 0;
+
+    /*!
      * \brief MAXPARAMETERSCOUNT
      *  This is a general static value , for setting up the table view columns.
      */
