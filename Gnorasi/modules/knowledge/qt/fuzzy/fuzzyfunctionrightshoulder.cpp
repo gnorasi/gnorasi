@@ -9,7 +9,12 @@ FuzzyFunctionRightShoulder::FuzzyFunctionRightShoulder(QObject *parent) :
 
 
 double FuzzyFunctionRightShoulder::parameterFunctionForIndex(int index){
-    return index ? m_parameterA : m_parameterB;
+    if(!index) // 0
+        return m_parameterA;
+    else if(index == 1) // 1
+        return m_parameterB;
+    else
+        return 0.0;
 }
 
 

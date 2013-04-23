@@ -43,6 +43,12 @@ public:
     double calculate(double val);
 
     /*!
+     * \brief name
+     * \return
+     */
+    QString name() const { return tr("Left Shoulder"); }
+
+    /*!
      * \brief setParameterA
      * \param a
      */

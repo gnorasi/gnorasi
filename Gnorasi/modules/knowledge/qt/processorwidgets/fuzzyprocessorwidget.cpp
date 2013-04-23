@@ -475,34 +475,55 @@ void FuzzyProcessorWidget::setupWidgetByCurrentOntologyClass(){
 
     m_pFuzzyAttributesModel->removeRows(0,m_pFuzzyAttributesModel->rowCount());
 
-//    QString opr = m_pCurrentRule->opr();
-//    if(opr.compare(QString::fromAscii(MINOPERATOR)))
-//        m_pMinRadioButton->setChecked(true);
-//    else
-//        m_pMaxRadioButton->setChecked(true);
+    FuzzyOntologyClass::MINMAXTYPE mmt = m_pCurrentFuzzyOntologyClass->minMaxType();
+    if(mmt == FuzzyOntologyClass::MMT_MIN)
+        m_pMinRadioButton->setChecked(true);
+    else
+        m_pMaxRadioButton->setChecked(true);
 
-//    QList<FuzzyRestriction*> list = m_pCurrentRule->restrictions();
-//    QList<FuzzyRestriction*>::const_iterator i;
-//    for(i = list.constBegin(); i != list.constEnd(); i++){
-//        FuzzyRestriction *pRestriction = *i;
+    QList<FuzzyAttribute*> list = m_pCurrentFuzzyOntologyClass->fuzzyAttributes();
+    QList<FuzzyAttribute*>::const_iterator i;
+    for(i = list.constBegin(); i != list.constEnd(); i++){
+        FuzzyAttribute *pFuzzyAttribute = *i;
 
-//        QStandardItem *item0 = new QStandardItem;
-//        QStandardItem *item1 = new QStandardItem;
-//        QStandardItem *item2 = new QStandardItem;
+        FuzzyFunction *pFuzzyFunction = pFuzzyAttribute->fuzzuFunction();
+        if(!pFuzzyFunction)
+            continue;
 
-//        item0->setData(pRestriction->fuzzyProperty,Qt::DisplayRole);
-//        item1->setData(pRestriction->opr,Qt::DisplayRole);
-//        item2->setData(QString::number(pRestriction->val,'f',2),Qt::DisplayRole);
+        QList<QStandardItem*> l;
 
-//        QList<QStandardItem*> l;
-//        l << item0 << item1 << item2;
+        QStandardItem *item0 = new QStandardItem;
+        QStandardItem *item1 = new QStandardItem;
 
-//        m_pRulesModel->appendRow(l);
-//    }
+        item0->setData(pFuzzyAttribute->name(),Qt::DisplayRole);
+        item1->setData(pFuzzyFunction->name(),Qt::DisplayRole);
+
+        l << item0 << item1;
+
+        for(int j = 0; j < pFuzzyFunction->MAXPARAMETERSCOUNT; j++){
+            QStandardItem *pItem_ = new QStandardItem;
+            pItem_->setData(pFuzzyFunction->parameterFunctionForIndex(j));
+
+            l << pItem_;
+        }
+
+        QStandardItem *item2 = new QStandardItem;
+        item2->setData(QString::number(pFuzzyAttribute->fuzzyOperator(),'f',2),Qt::DisplayRole);
+
+        l << item2;
+
+        QStandardItem *item3 = new QStandardItem;
+        item3->setData(QString::number(pFuzzyAttribute->memberShipValue(),'f',2),Qt::DisplayRole);
+
+        l << item3;
+
+        m_pFuzzyAttributesModel->appendRow(l);
+    }
 }
 
 FuzzyProcessorWidget::~FuzzyProcessorWidget(){
 //    ItiOtbImageManager::deleteInstance();
+    FuzzyOntologyManager::deleteInstance();
 }
 
 } //namespace voreen

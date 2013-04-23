@@ -18,9 +18,15 @@ class FuzzyOntologyManager : public QObject
     Q_OBJECT
 public:
 
+    /*!
+     * \brief instance
+     * \return
+     */
     static FuzzyOntologyManager* instance() ;
 
-
+    /*!
+     * \brief deleteInstance
+     */
     static void deleteInstance();
 
     /*!
