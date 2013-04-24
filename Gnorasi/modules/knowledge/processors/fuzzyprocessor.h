@@ -9,6 +9,7 @@
 
 #include "../../otb/ports/otblabelmapport.h"
 #include "modules/knowledge/ports/ontologyport.h"
+#include "../ports/fuzzyruleport.h"
 
 namespace voreen {
 
@@ -31,11 +32,18 @@ public:
     std::string getFilePath(){ return pTextData_; }
 
     /*!
-     * \brief setOutputData
+     * \brief setTextOutputData
+     *  Set the text data in csv format
+     * \param text
      */
-    void setOutputData(const OTBLabelMapPort::LabelMapPointer& pointer) { outLblMapPort_.setData(pointer); }
-    
     void setTextOutputData(const std::string text) { outTextPort_.setData(text); }
+
+    /*!
+     * \brief setFuzzyRuleTextOutputData
+     *  Set the fuzzy rule data to xmk format
+     * \param text
+     */
+    void setFuzzyRuleTextOutputData(const std::string text) { outFuzzyRulePort_.setData(text); }
     
 protected:
     virtual void setDescriptions() {
@@ -49,11 +57,9 @@ private:
     void updateView();
 
     OTBLabelMapPort inLblMapPort_;
-    OTBLabelMapPort outLblMapPort_;
+    FuzzyRulePort   outFuzzyRulePort_;
 	OntologyPort    inOntologyPort_;
     TextPort        outTextPort_;
-
-    FileDialogProperty loadImageFile_;  ///< Path of the RDF file.
 
     std::string pTextData_;
     

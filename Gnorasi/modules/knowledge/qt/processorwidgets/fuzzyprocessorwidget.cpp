@@ -1,5 +1,8 @@
 #include "fuzzyprocessorwidget.h"
 
+#include <QDomDocument>
+#include <QDomElement>
+
 #include "voreen/qt/voreenapplicationqt.h"
 
 #include "doublespinboxdelegate.h"
@@ -20,9 +23,6 @@ using namespace otb;
 
 namespace voreen {
 
-
-QStringList FuzzyProcessorWidget::parameterCharacters = QStringList() << QLatin1String("a") << QLatin1String("b") << QLatin1String("c") << QLatin1String("d") << QLatin1String("e");
-
 const std::string FuzzyProcessorWidget::loggerCat_("voreen.FuzzyProcessorWidget");
 
 FuzzyProcessorWidget::FuzzyProcessorWidget(QWidget *parent, FuzzyProcessor *fuzzyProcessor)
@@ -41,7 +41,8 @@ void FuzzyProcessorWidget::initialize(){
 
     QLabel *pLabelAvailableAttributesTitle = new QLabel(tr("Available Attributes"),this);
     QLabel *pLabelFuzzyAttributesTitle = new QLabel(tr("Fuzzy Attributes"),this);
-    QLabel *pLabelMinMaxTitle = new QLabel(tr("Min max : "),this);
+    QLabel *pLabelMinTitle = new QLabel(tr("Min : "),this);
+    QLabel *pLabelMaxTitle = new QLabel(tr("Max : "),this);
 
     m_pPushButtonAdd = new QPushButton(this);
     m_pPushButtonRemove = new QPushButton(this);
@@ -61,7 +62,12 @@ void FuzzyProcessorWidget::initialize(){
     headers1 << tr("Attribute Name") << tr("Function name");
     int numberOfParameters = FuzzyFunction::MAXPARAMETERSCOUNT;
     for(int i = 0 ; i < numberOfParameters; i++){
-        headers1 << parameterCharacters.at(i);
+        int code = 97; // 'a'
+        code += i;
+
+        QString lstr = QString("%1").arg((char)code);
+
+        headers1 << lstr;
     }
     headers1 << tr("Operator") << tr("Value");
     m_pFuzzyAttributesModel->setHorizontalHeaderLabels(headers1);
@@ -99,13 +105,20 @@ void FuzzyProcessorWidget::initialize(){
     pGroup->addButton(m_pMinRadioButton);
     pGroup->addButton(m_pMaxRadioButton);
 
+    QVBoxLayout *vboxLayout4 = new QVBoxLayout;
+    vboxLayout4->addWidget(pLabelMinTitle);
+    vboxLayout4->addWidget(pLabelMaxTitle);
+
+    QVBoxLayout *vboxLayout5 = new QVBoxLayout;
+    vboxLayout5->addWidget(m_pMinRadioButton);
+    vboxLayout5->addWidget(m_pMaxRadioButton);
+
 
     QHBoxLayout *hboxLayout1 = new QHBoxLayout();
     hboxLayout1->addWidget(m_pOntologyClassComboBox);
     hboxLayout1->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Expanding,QSizePolicy::Fixed));
-    hboxLayout1->addWidget(pLabelMinMaxTitle);
-    hboxLayout1->addWidget(m_pMinRadioButton);
-    hboxLayout1->addWidget(m_pMaxRadioButton);
+    hboxLayout1->addLayout(vboxLayout4);
+    hboxLayout1->addLayout(vboxLayout5);
 
 
     QHBoxLayout *hboxLayout2 = new QHBoxLayout();
@@ -126,24 +139,22 @@ void FuzzyProcessorWidget::initialize(){
 
     setLayout(hLayout);
 
-
+    //
     m_pFuzzyLabelMapUtility = new FuzzyLabelMapUtility(this);
 
-
+    //
     setupItemDelegates();
 
+    //
+    m_pFuzzyFunctionFactory = new FuzzyFunctionFactory(this);
 
-    connect(m_pPushButtonAdd,SIGNAL(clicked()),this,SLOT(addSelection()));
+    connect(m_pPushButtonAdd,SIGNAL(clicked()),this,SLOT(createANewAttribute()));
     connect(m_pPushButtonCalculate,SIGNAL(clicked()),this,SLOT(calculate()));
     connect(m_pPushButtonRemove,SIGNAL(clicked()),this,SLOT(removeSelection()));
-
-    m_pFuzzuFunctionFactory = new FuzzyFunctionFactory(this);
-
     connect(m_pOntologyClassComboBox,SIGNAL(currentIndexChanged(QString)),this,SLOT(onComboboxCurrentIndexChanged(QString)));
     connect(m_pMinRadioButton,SIGNAL(pressed()),this,SLOT(onRadioButtonMixMaxChanged()));
     connect(m_pMaxRadioButton,SIGNAL(pressed()),this,SLOT(onRadioButtonMixMaxChanged()));
-
-    connect(m_pFuzzyAttributesModel,SIGNAL(dataChanged(QStandardItem*)),this,SLOT(onFuzzyModelChanged(QStandardItem*)));
+    connect(m_pFuzzyAttributesModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(onFuzzyAttributeModelChanged(QStandardItem*)));
 
     hide();
 }
@@ -152,7 +163,7 @@ void FuzzyProcessorWidget::setupItemDelegates(){
     DoubleSpinBoxDelegate *spinBoxDelegate = new DoubleSpinBoxDelegate(0.0, 1.0, 2, this);
     m_pFuzzyAttributesTableView->setItemDelegateForColumn(m_pFuzzyAttributesModel->columnCount()-1,spinBoxDelegate);
 
-    for(int i = 2;  i < FuzzyFunction::MAXPARAMETERSCOUNT; i++)
+    for(int i = 2;  i < FuzzyFunction::MAXPARAMETERSCOUNT+2; i++)
     {
         LineEditForNumbersDelegate *pDelegate = new LineEditForNumbersDelegate(2,this);
         m_pFuzzyAttributesTableView->setItemDelegateForColumn(i,pDelegate);
@@ -226,7 +237,10 @@ void FuzzyProcessorWidget::setupAvailableAttributesListViewByList(const QStringL
     }
 }
 
-void FuzzyProcessorWidget::addSelection(){
+
+void FuzzyProcessorWidget::createANewAttribute(){
+    Q_ASSERT(m_pCurrentFuzzyOntologyClass);
+
     QModelIndex index = m_pAvailableAttributesListView->currentIndex();
 
     if(!index.isValid())
@@ -234,34 +248,46 @@ void FuzzyProcessorWidget::addSelection(){
 
     QString name = m_pAvailableAttributesModel->data(index).toString();
 
+    int lastIndexOfSemicolon = name.lastIndexOf(":");
+    QString newName = name;
+    newName = newName.insert(lastIndexOfSemicolon+1,QLatin1String("Fuzzy"));
+
+    // parse all the class and attributes in order to get the number of attriutes already assigned to this kind of available attribute
+    int counter = 1;
+    QList<FuzzyOntologyClass*> oclasslist = FUZZYONTOLOGYCLASSMANAGER->fuzzyOntologyClasses();
+    QList<FuzzyOntologyClass*>::const_iterator o;
+    for(o = oclasslist.constBegin(); o != oclasslist.constEnd(); o++){
+        FuzzyOntologyClass *pClass = *o;
+        QList<FuzzyAttribute*> list = pClass->fuzzyAttributes();
+        QList<FuzzyAttribute*>::const_iterator i;
+
+        // now parse the attributes in order check for same name
+        for(i = list.constBegin(); i != list.constEnd(); i++){
+            FuzzyAttribute *pAttribute = *i;
+
+            QString atName = pAttribute->valueName();
+
+            if(atName.contains(newName))
+                counter++;
+        }
+    }
+
+    // then just append the counter number to the string
+    newName = newName.append(QString::number(counter));
+
+    // create a new attribute
+    FuzzyAttribute *pFuzzyAttribute = new FuzzyAttribute(name,newName,this);
+    m_pCurrentFuzzyOntologyClass->addFuzzyAttribute(pFuzzyAttribute);
+
+    // create a new item
     QStandardItem *pItem = new QStandardItem();
     pItem->setText(name);
+    pItem->setData(newName,Qt::UserRole);
 
+    // append a new row to the model based on the item previously created
     m_pFuzzyAttributesModel->appendRow(pItem);
 
     m_pFuzzyAttributesTableView->resizeColumnToContents(0);
-
-    createANewAttribute(pItem->text());
-}
-
-
-void FuzzyProcessorWidget::createANewAttribute(const QString &name){
-    Q_ASSERT(m_pCurrentFuzzyOntologyClass);
-
-    QList<FuzzyAttribute*> list = m_pCurrentFuzzyOntologyClass->fuzzyAttributes();
-    int counter = 1;
-    QList<FuzzyAttribute*>::const_iterator i;
-    for(i = list.constBegin(); i != list.constEnd(); i++){
-        FuzzyAttribute *pAttribute = *i;
-
-        if(!pAttribute->name().compare(name))
-            counter++;
-    }
-
-    QString newName = QString("Fuzzy%1%2").arg(name).arg(QString::number(counter));
-
-    FuzzyAttribute *pFuzzyAttribute = new FuzzyAttribute(newName,this);
-    m_pCurrentFuzzyOntologyClass->addFuzzyAttribute(pFuzzyAttribute);
 }
 
 
@@ -277,39 +303,61 @@ void FuzzyProcessorWidget::removeSelection(){
         m_pFuzzyAttributesModel->removeRow(index.row());
 }
 
-
+/*!
+ * \brief FuzzyProcessorWidget::calculate
+ */
 void FuzzyProcessorWidget::calculate(){
 
-    FuzzyLabelMapUtility::LabelMapType *lblMap = getMapFromPort();
-
-    for(int i = 0; i < m_pFuzzyAttributesModel->rowCount(); i++){
-        QStandardItem *pItem = m_pFuzzyAttributesModel->item(i,0);
-        QString atName = pItem->data(Qt::DisplayRole).toString();
-
-        QStandardItem *pItemA =m_pFuzzyAttributesModel->item(i,1);
-        if(!pItemA)
-            continue;
-
-        m_pFuzzyLabelMapUtility->updateMinValue(pItemA->data(Qt::DisplayRole).toDouble());
-
-        QStandardItem *pItemB = m_pFuzzyAttributesModel->item(i,2);
-        if(!pItemB)
-            continue;
-
-        m_pFuzzyLabelMapUtility->updateMaxValue(pItemB->data(Qt::DisplayRole).toDouble());
-
-        m_pFuzzyLabelMapUtility->calculateValues(lblMap,atName);
-    }
-
-    FuzzyProcessor *fProcessor = dynamic_cast<FuzzyProcessor*>(processor_);
+    FuzzyProcessor *fProcessor                              = dynamic_cast<FuzzyProcessor*>(processor_);
     if(!fProcessor)
         return;
 
-    fProcessor->setOutputData(lblMap);
 
-    QString text = m_pFuzzyLabelMapUtility->constructCsvFromLabelMap(lblMap);
+    // get all the avaialable attributes
+    QList<FuzzyAttribute*> aList                            = FUZZYONTOLOGYCLASSMANAGER->getAllAttributes();
 
-    fProcessor->setTextOutputData(text.toStdString());
+    // get the label map
+    FuzzyLabelMapUtility::LabelMapType *lblMap              = getMapFromPort();
+
+    // iterate through all the objects in the map
+    for(unsigned int i = 1; i < lblMap->GetNumberOfLabelObjects(); i++){
+        FuzzyLabelMapUtility::LabelObjectType* lblObject    = lblMap->GetLabelObject(i);
+
+        // iterate through all all the attributes
+        QList<FuzzyAttribute*>::const_iterator a;
+        for(a = aList.constBegin(); a != aList.constEnd(); a++){
+            FuzzyAttribute *pAtr = *a;
+
+            QString propName                                = pAtr->displayName();
+
+            double val                                      = (double)lblObject->GetAttribute(propName.toLatin1().constData());
+            double calcval                                  = pAtr->calculateMembershipValue(val);
+
+            int idx                                         = propName.lastIndexOf("::");
+            idx                                             += 2;
+
+            lblObject->SetAttribute(pAtr->valueName().toLatin1().constData(),calcval);
+        }
+    }
+
+    // construct csv text data
+    QString csvtextdata                                     = m_pFuzzyLabelMapUtility->constructCsvFromLabelMap(lblMap);
+    fProcessor->setTextOutputData(csvtextdata.toStdString());
+
+    // START OF TEST
+    QFile file(QFileDialog::getSaveFileName(this,tr("Save"),QDir::homePath()));
+    if(!file.fileName().isEmpty()){
+        if(file.open(QIODevice::WriteOnly)){
+            QTextStream out(&file);
+            out << csvtextdata;
+            file.close();
+        }
+    }
+    // END OF TEST
+
+    // set the fuzzy rules data to the processor in xml format
+    QString xmldata                                         = constructXmlFile();
+    fProcessor->setFuzzyRuleTextOutputData(xmldata.toStdString());
 
 }
 
@@ -404,6 +452,8 @@ QString FuzzyProcessorWidget::constructXmlFile(){
 
     QList<FuzzyOntologyClass*> fuzzyOntologyList = FUZZYONTOLOGYCLASSMANAGER->fuzzyOntologyClasses();
 
+    int counter = 1;
+
     QList<FuzzyOntologyClass*>::const_iterator i;
     for(i = fuzzyOntologyList.constBegin(); i != fuzzyOntologyList.constEnd(); i++){
         FuzzyOntologyClass *pClass = *i;
@@ -411,37 +461,45 @@ QString FuzzyProcessorWidget::constructXmlFile(){
         if(pClass->isEmpty())
             continue;
 
-//        DomElement fuzzyRuleElement = doc.createElement(QLatin1String("fuzzyRule"));
-//        fuzzyRuleElement.setAttribute(QLatin1String("id"),pClass->id());
-//        fuzzyRuleElement.setAttribute(QLatin1String("operator"),pClass->minMaxType());
+        QDomElement fuzzyRuleElement = doc.createElement(QLatin1String("fuzzyRule"));
+        fuzzyRuleElement.setAttribute(QLatin1String("id"),QString::number(counter++));
+        fuzzyRuleElement.setAttribute(QLatin1String("operator"),pClass->mixMaxName());
+        rootElement.appendChild(fuzzyRuleElement);
 
-//        QDomElement fuzzyRuleElemet = doc.createElement(QLatin1String("fuzzyRule"));
-//        fuzzyRuleElemet.setAttribute(QLatin1String("id"),pRule->id());
-//        fuzzyRuleElemet.setAttribute(QLatin1String("operator"),pRule->opr());
-//        rootElement.appendChild(fuzzyRuleElemet);
+        QDomElement bodyElement = doc.createElement(QLatin1String("body"));
+        fuzzyRuleElement.appendChild(bodyElement);
 
-//        QDomElement bodyElement = doc.createElement(QLatin1String("body"));
-//        fuzzyRuleElemet.appendChild(bodyElement);
+        QList<FuzzyAttribute*> aList = pClass->fuzzyAttributes();
+        QList<FuzzyAttribute*>::const_iterator j;
+        for(j = aList.constBegin(); j != aList.constEnd(); j++){
+            FuzzyAttribute *pAttr = *j;
 
-//        QList<FuzzyRestriction*> rlist = pRule->restrictions();
-//        QList<FuzzyRestriction*>::const_iterator j;
-//        for(j = rlist.constBegin(); j != rlist.constEnd(); j++){
-//            FuzzyRestriction *pRestriction = *j;
+            QDomElement fuzzyRestrictionElement = doc.createElement("restriction");
+            fuzzyRestrictionElement.setAttribute(QLatin1String("property"),pAttr->valueName());
+            fuzzyRestrictionElement.setAttribute(QLatin1String("value"),QString::number(pAttr->threshold(),'f',2));
+            fuzzyRestrictionElement.setAttribute(QLatin1String("operator"),pAttr->fuzzyOperatorXmlName());
+            bodyElement.appendChild(fuzzyRestrictionElement);
+        }
 
-//            QDomElement fuzzyRestrictionElement = doc.createElement("restriction");
-//            fuzzyRestrictionElement.setAttribute(QLatin1String("property"),pRestriction->fuzzyProperty);
-//            fuzzyRestrictionElement.setAttribute(QLatin1String("value"),QString::number(pRestriction->val,'f',2));
-//            fuzzyRestrictionElement.setAttribute(QLatin1String("operator"),getTextOperatorFromSymbol(pRestriction->opr));
-//            bodyElement.appendChild(fuzzyRestrictionElement);
-//        }
-
-//        QDomElement headElement = doc.createElement(QLatin1String("head"));
-//        headElement.setAttribute(QLatin1String("class"),pRule->className());
-//        fuzzyRuleElemet.appendChild(headElement);
+        QDomElement headElement = doc.createElement(QLatin1String("head"));
+        headElement.setAttribute(QLatin1String("class"),pClass->className());
+        fuzzyRuleElement.appendChild(headElement);
 
     }
 
     text = doc.toString(4);
+
+
+    // START OF TEST
+    QFile file(QFileDialog::getSaveFileName(this,tr("Save"),QDir::homePath()));
+    if(!file.fileName().isEmpty()){
+        if(file.open(QIODevice::WriteOnly)){
+            QTextStream out(&file);
+            out << text;
+            file.close();
+        }
+    }
+    // END OF TEST
 
     return text;
 }
@@ -459,19 +517,22 @@ void FuzzyProcessorWidget::onComboboxCurrentIndexChanged(const QString &text){
 
 
 void FuzzyProcessorWidget::onFuzzyAttributeModelChanged(QStandardItem *pItem){
+    // sanity check
+    Q_ASSERT(m_pCurrentFuzzyOntologyClass);
+
     QVariant val = pItem->data(Qt::DisplayRole);
 
     int index = pItem->column();
 
     int row = pItem->row();
 
-    m_pCurrentFuzzyOntologyClass->updateAttribute(row,index,val,m_pFuzzuFunctionFactory);
+    m_pCurrentFuzzyOntologyClass->updateAttribute(row,index,val,m_pFuzzyFunctionFactory);
 }
 
 
 void FuzzyProcessorWidget::setupWidgetByCurrentOntologyClass(){
-    if(!m_pCurrentFuzzyOntologyClass)
-        return;
+    // sanity check
+    Q_ASSERT(m_pCurrentFuzzyOntologyClass);
 
     m_pFuzzyAttributesModel->removeRows(0,m_pFuzzyAttributesModel->rowCount());
 
@@ -486,34 +547,36 @@ void FuzzyProcessorWidget::setupWidgetByCurrentOntologyClass(){
     for(i = list.constBegin(); i != list.constEnd(); i++){
         FuzzyAttribute *pFuzzyAttribute = *i;
 
-        FuzzyFunction *pFuzzyFunction = pFuzzyAttribute->fuzzuFunction();
-        if(!pFuzzyFunction)
-            continue;
-
         QList<QStandardItem*> l;
 
         QStandardItem *item0 = new QStandardItem;
         QStandardItem *item1 = new QStandardItem;
 
-        item0->setData(pFuzzyAttribute->name(),Qt::DisplayRole);
-        item1->setData(pFuzzyFunction->name(),Qt::DisplayRole);
+        item0->setData(pFuzzyAttribute->displayName(),Qt::DisplayRole);
+        item0->setData(pFuzzyAttribute->valueName(),Qt::UserRole);
+
+        FuzzyFunction *pFuzzyFunction = pFuzzyAttribute->fuzzyFunction();
+        if(pFuzzyFunction)
+            item1->setData(pFuzzyFunction->name(),Qt::DisplayRole);
 
         l << item0 << item1;
 
         for(int j = 0; j < pFuzzyFunction->MAXPARAMETERSCOUNT; j++){
             QStandardItem *pItem_ = new QStandardItem;
-            pItem_->setData(pFuzzyFunction->parameterFunctionForIndex(j));
+
+            if(pFuzzyFunction && j < pFuzzyFunction->parametersCount())
+                pItem_->setData(pFuzzyFunction->parameterFunctionForIndex(j),Qt::DisplayRole);
 
             l << pItem_;
         }
 
         QStandardItem *item2 = new QStandardItem;
-        item2->setData(QString::number(pFuzzyAttribute->fuzzyOperator(),'f',2),Qt::DisplayRole);
+        item2->setData(pFuzzyAttribute->fuzzyOperatorName(),Qt::DisplayRole);
 
         l << item2;
 
         QStandardItem *item3 = new QStandardItem;
-        item3->setData(QString::number(pFuzzyAttribute->memberShipValue(),'f',2),Qt::DisplayRole);
+        item3->setData(QString::number(pFuzzyAttribute->threshold(),'f',2),Qt::DisplayRole);
 
         l << item3;
 
@@ -521,8 +584,8 @@ void FuzzyProcessorWidget::setupWidgetByCurrentOntologyClass(){
     }
 }
 
+
 FuzzyProcessorWidget::~FuzzyProcessorWidget(){
-//    ItiOtbImageManager::deleteInstance();
     FuzzyOntologyManager::deleteInstance();
 }
 

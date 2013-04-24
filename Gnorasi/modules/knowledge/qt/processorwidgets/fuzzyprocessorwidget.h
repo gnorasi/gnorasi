@@ -75,9 +75,6 @@ public:
     static const std::string loggerCat_;
 
 
-    static QStringList parameterCharacters;
-
-
 signals:
     
 public slots:
@@ -87,13 +84,18 @@ public slots:
 private slots:
     /*!
      * \brief calculate
+     *  This is were the calculation is done. What it is actually done is to iterate over the
+     *  label map and the attributes set and calculate a value for each attribute based on
+     *  the function and the parameters set.
      */
     void calculate();
 
     /*!
-     * \brief addSelection
+     * \brief createANewAttribute
+     *
+     *  Create and set a new attribute for the current FuzzyOntologyClass item
      */
-    void addSelection();
+    void createANewAttribute();
 
     /*!
      * \brief removeSelection
@@ -129,6 +131,8 @@ private:
 
     /*!
      * \brief constructXmlFile
+     *  What is being done here is to create a new QDomDocument and take the text from it.
+     *  The structure of this document has been prototyped by Babis . ask him for more info.
      * \return
      */
     QString constructXmlFile() ;
@@ -160,26 +164,42 @@ private:
      */
     void setupWidgetByCurrentOntologyClass();
 
+
     /*!
-     * \brief createANewAttribute
-     *
-     *  Create and set a new attribute for the current FuzzyOntologyClass item
+     * \brief getOntologyClassesFromPort
+     *  This is a helper function
+     * \return
      */
-    void createANewAttribute(const QString &);
-
-
     QStringList                             getOntologyClassesFromPort();
 
-
+    /*!
+     * \brief getMapFromPort
+     * \return
+     */
     FuzzyLabelMapUtility::LabelMapType*     getMapFromPort();
 
+    /*!
+     * \brief m_pFuzzyLabelMapUtility
+     */
     FuzzyLabelMapUtility                    *m_pFuzzyLabelMapUtility;
 
+    /*!
+     * \brief m_pFuzzyFunctionFactory
+     */
+    FuzzyFunctionFactory                    *m_pFuzzyFunctionFactory;
+
+    /*!
+     * \brief m_pCurrentFuzzyOntologyClass
+     */
+    FuzzyOntologyClass                      *m_pCurrentFuzzyOntologyClass;
+
+    // helper list
+    QStringList                             m_fuzzyAttributesList;
+
+
+    // Qt Widgets
     QListView                               *m_pAvailableAttributesListView;
     QTableView                              *m_pFuzzyAttributesTableView;
-
-    QStandardItemModel                      *m_pAvailableAttributesModel;
-    QStandardItemModel                      *m_pFuzzyAttributesModel;
 
     QPushButton                             *m_pPushButtonAdd;
     QPushButton                             *m_pPushButtonRemove;
@@ -190,12 +210,10 @@ private:
 
     QComboBox*                              m_pOntologyClassComboBox;
 
-    FuzzyFunctionFactory                    *m_pFuzzuFunctionFactory;
 
-    QStringList                             m_fuzzyAttributesList;
-
-
-    FuzzyOntologyClass                      *m_pCurrentFuzzyOntologyClass;
+    // the two models
+    QStandardItemModel                      *m_pAvailableAttributesModel;
+    QStandardItemModel                      *m_pFuzzyAttributesModel;
 };
 
 }

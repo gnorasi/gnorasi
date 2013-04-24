@@ -9,13 +9,13 @@ const std::string FuzzyProcessor::loggerCat_("voreen.FuzzyProcessor");
 FuzzyProcessor::FuzzyProcessor()
     : Processor(),
     inLblMapPort_(Port::INPORT, "Input Label Map Port",0),
-    outLblMapPort_(Port::OUTPORT, "Output Label Map Port",0),
+    outFuzzyRulePort_(Port::OUTPORT, "Output Fuzzy Rule Port"),
     outTextPort_(Port::OUTPORT, "Output Text Port"),
     inOntologyPort_(Port::INPORT,"Input Ontology Port", 0)
 {
     // register ports and properties
     addPort(inLblMapPort_);
-    addPort(outLblMapPort_);
+    addPort(outFuzzyRulePort_);
     addPort(outTextPort_);
     addPort(inOntologyPort_);
     //OTB initialization
@@ -32,7 +32,7 @@ Processor* FuzzyProcessor::create() const {
 }
 
 bool FuzzyProcessor::isEndProcessor() const {
-    return (!outLblMapPort_.isConnected());
+    return (!outFuzzyRulePort_.isConnected());
 }
 
 bool FuzzyProcessor::isReady() const {
