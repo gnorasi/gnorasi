@@ -170,6 +170,12 @@ public:
      */
     void setThreshold(double t) { m_threshold = t; }
 
+    /*!
+     * \brief validate
+     * \return
+     */
+    bool isReady();
+
 signals:
     
 public slots:

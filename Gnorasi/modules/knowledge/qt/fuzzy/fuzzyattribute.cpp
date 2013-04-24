@@ -92,6 +92,11 @@ bool FuzzyAttribute::updateAttribute(int index, const QVariant &val, FuzzyFuncti
     return true;
 }
 
+bool FuzzyAttribute::isReady(){
+    return m_pFuzzyFunction->isReady();
+}
+
+
 double FuzzyAttribute::calculateMembershipValue(double val){
     if(m_pFuzzyFunction)
         return m_pFuzzyFunction->calculate(val);

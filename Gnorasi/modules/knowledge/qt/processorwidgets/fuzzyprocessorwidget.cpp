@@ -330,6 +330,9 @@ void FuzzyProcessorWidget::calculate(){
         for(a = aList.constBegin(); a != aList.constEnd(); a++){
             FuzzyAttribute *pAtr = *a;
 
+            if(!pAtr->isReady())
+                continue;
+
             QString propName                                = pAtr->displayName();
 
             double val                                      = (double)lblObject->GetAttribute(propName.toLatin1().constData());
@@ -347,14 +350,14 @@ void FuzzyProcessorWidget::calculate(){
     fProcessor->setTextOutputData(csvtextdata.toStdString());
 
     // START OF TEST
-    QFile file(QFileDialog::getSaveFileName(this,tr("Save"),QDir::homePath()));
-    if(!file.fileName().isEmpty()){
-        if(file.open(QIODevice::WriteOnly)){
-            QTextStream out(&file);
-            out << csvtextdata;
-            file.close();
-        }
-    }
+//    QFile file(QFileDialog::getSaveFileName(this,tr("Save"),QDir::homePath()));
+//    if(!file.fileName().isEmpty()){
+//        if(file.open(QIODevice::WriteOnly)){
+//            QTextStream out(&file);
+//            out << csvtextdata;
+//            file.close();
+//        }
+//    }
     // END OF TEST
 
     // set the fuzzy rules data to the processor in xml format
@@ -476,6 +479,9 @@ QString FuzzyProcessorWidget::constructXmlFile(){
         for(j = aList.constBegin(); j != aList.constEnd(); j++){
             FuzzyAttribute *pAttr = *j;
 
+            if(!pAttr->isReady())
+                continue;
+
             QDomElement fuzzyRestrictionElement = doc.createElement("restriction");
             fuzzyRestrictionElement.setAttribute(QLatin1String("property"),pAttr->valueName());
             fuzzyRestrictionElement.setAttribute(QLatin1String("value"),QString::number(pAttr->threshold(),'f',2));
@@ -491,16 +497,15 @@ QString FuzzyProcessorWidget::constructXmlFile(){
 
     text = doc.toString(4);
 
-
     // START OF TEST
-    QFile file(QFileDialog::getSaveFileName(this,tr("Save"),QDir::homePath()));
-    if(!file.fileName().isEmpty()){
-        if(file.open(QIODevice::WriteOnly)){
-            QTextStream out(&file);
-            out << text;
-            file.close();
-        }
-    }
+//    QFile file(QFileDialog::getSaveFileName(this,tr("Save"),QDir::homePath()));
+//    if(!file.fileName().isEmpty()){
+//        if(file.open(QIODevice::WriteOnly)){
+//            QTextStream out(&file);
+//            out << text;
+//            file.close();
+//        }
+//    }
     // END OF TEST
 
     return text;
