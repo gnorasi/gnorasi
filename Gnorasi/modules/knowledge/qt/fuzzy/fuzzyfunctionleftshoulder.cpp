@@ -30,8 +30,8 @@
 #include "fuzzyfunctionleftshoulder.h"
 
 FuzzyFunctionLeftShoulder::FuzzyFunctionLeftShoulder(QObject *parent) :
-    m_parameterA(0.0),
-    m_parameterB(0.0),
+    m_parameterA(-1.0),
+    m_parameterB(-1.0),
     FuzzyFunction(parent)
 {
 
@@ -66,4 +66,9 @@ double FuzzyFunctionLeftShoulder::calculate(double val){
         return 1.0;
     else
         return (val -m_parameterA)/(m_parameterB-m_parameterA);
+}
+
+
+bool FuzzyFunctionLeftShoulder::isReady(){
+    return m_parameterA >= 0 && m_parameterB >= 0;
 }

@@ -89,6 +89,14 @@ public:
     virtual QString name() const  = 0;
 
     /*!
+     * \brief isReady
+     *  This is a helper function, this function is used while creating the text output data , xml and label map properties.
+     *
+     * \return
+     */
+    virtual bool isReady() = 0;
+
+    /*!
      * \brief MAXPARAMETERSCOUNT
      *  This is a general static value , for setting up the table view columns.
      *  This might not be here , this was done for making things quickly finished

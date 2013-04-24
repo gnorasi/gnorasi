@@ -29,8 +29,8 @@
 #include "fuzzyfunctionrightshoulder.h"
 
 FuzzyFunctionRightShoulder::FuzzyFunctionRightShoulder(QObject *parent) :
-    m_parameterA(0.0),
-    m_parameterB(0.0),
+    m_parameterA(-1.0),
+    m_parameterB(-1.0),
     FuzzyFunction(parent)
 {
 }
@@ -60,4 +60,8 @@ double FuzzyFunctionRightShoulder::calculate(double val){
     double calcVal = 0.0;
 
     return calcVal;
+}
+
+bool FuzzyFunctionRightShoulder::isReady(){
+    return m_parameterA >= 0 && m_parameterB >= 0;
 }

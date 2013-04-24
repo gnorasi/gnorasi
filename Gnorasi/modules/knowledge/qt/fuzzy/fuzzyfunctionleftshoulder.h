@@ -89,6 +89,12 @@ public:
      */
     double parameterA() const { return m_parameterA; }
     double parameterB() const { return m_parameterB; }
+
+    /*!
+     * \brief isReady
+     * \return
+     */
+    bool isReady();
     
 
 signals:
