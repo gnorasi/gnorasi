@@ -97,6 +97,8 @@ void FuzzyProcessorWidget::initialize(){
 
     QLabel *pLabelOntologyClassComboboxTitle = new QLabel(tr("Ontology Classes"));
     m_pOntologyClassComboBox = new QComboBox(this);
+    m_pOntologyClassComboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+
     m_pMinRadioButton = new QRadioButton(this);
     m_pMaxRadioButton = new QRadioButton(this);
 
