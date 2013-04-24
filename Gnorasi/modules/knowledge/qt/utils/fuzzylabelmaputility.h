@@ -31,6 +31,10 @@ public:
      */
     void parse(LabelMapType* lblmap);
 
+    /*!
+     * \brief getAttributeListNames
+     * \return
+     */
     QStringList getAttributeListNames() const { return m_attributeList; }
 
     /*!
@@ -38,8 +42,12 @@ public:
      */
     void calculateValues(LabelMapType *lblMap, const QString& );
 
+    /*!
+     * \brief constructCsvFromLabelMap
+     * \param lblMap
+     * \return
+     */
     QString constructCsvFromLabelMap(LabelMapType *lblMap);
-
 
 signals:
     
