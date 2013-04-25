@@ -53,7 +53,7 @@ public:
      * \param index
      * \return
      */
-    double parameterFunctionForIndex(int index );
+    double parameterValueForIndex(int index );
 
     /*!
      * \brief setParameterValudeForIndex

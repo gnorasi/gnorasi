@@ -38,7 +38,7 @@ FuzzyFunctionLeftShoulder::FuzzyFunctionLeftShoulder(QObject *parent) :
 }
 
 
-double FuzzyFunctionLeftShoulder::parameterFunctionForIndex(int index){
+double FuzzyFunctionLeftShoulder::parameterValueForIndex(int index){
     if(!index) // 0
         return m_parameterA;
     else if(index == 1) // 1

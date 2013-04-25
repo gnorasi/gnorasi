@@ -45,7 +45,7 @@ FuzzyAttribute::FuzzyAttribute(const QString &n , const QString &vN, QObject *pa
 }
 
 double FuzzyAttribute::parameterValueForIndex(int index) const{
-    return m_pFuzzyFunction->parameterFunctionForIndex(index);
+    return m_pFuzzyFunction->parameterValueForIndex(index);
 }
 
 

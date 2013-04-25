@@ -572,7 +572,7 @@ void FuzzyProcessorWidget::setupWidgetByCurrentOntologyClass(){
             QStandardItem *pItem_ = new QStandardItem;
 
             if(pFuzzyFunction && j < pFuzzyFunction->parametersCount())
-                pItem_->setData(pFuzzyFunction->parameterFunctionForIndex(j),Qt::DisplayRole);
+                pItem_->setData(pFuzzyFunction->parameterValueForIndex(j),Qt::DisplayRole);
 
             l << pItem_;
         }
