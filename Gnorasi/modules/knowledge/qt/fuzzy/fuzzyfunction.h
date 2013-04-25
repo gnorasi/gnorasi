@@ -60,7 +60,7 @@ public:
      * \param i
      * \return
      */
-    virtual double parameterFunctionForIndex(int i) = 0;
+    virtual double parameterValueForIndex(int i) = 0;
 
     /*!
      * \brief setParameterValueForIndx
