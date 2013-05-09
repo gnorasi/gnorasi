@@ -269,6 +269,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbrescaleintensityimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbdotproductimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.cpp
@@ -338,6 +339,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbrescaleintensityimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbdotproductimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h

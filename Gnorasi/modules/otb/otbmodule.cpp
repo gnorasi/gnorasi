@@ -58,6 +58,7 @@
 #include "processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h"
 #include "processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h"
 #include "processors/BasicFilters/otbrescaleintensityimagefilterprocessor.h"
+#include "processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.h"
 #include "processors/BasicFilters/otbdotproductimagefilterprocessor.h"
 #include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
@@ -174,6 +175,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBLaplacianSegmentationLevelSetImageFilterProcessor());
     registerProcessor(new OTBRescaleIntensityImageFilterProcessor());
     registerProcessor(new OTBDotProductImageFilterProcessor());
+    registerProcessor(new OTBEstimateInnerProductPCAImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
