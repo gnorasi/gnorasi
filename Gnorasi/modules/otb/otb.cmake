@@ -52,56 +52,7 @@ ELSEIF(WIN32)
 
     # include paths
     SET(MOD_INCLUDE_DIRECTORIES
-                ${MOD_DIR}/ext/orfeotoolbox/include
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/ApplicationEngine
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/BasicFilters
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/ChangeDetection
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/Common
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/DisparityMap
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/FeatureExtraction
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/Fusion
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/Fuzzy
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/GeospatialAnalysis
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/Hyperspectral
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/IO
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/Learning
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/Markov
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/MultiScale
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/MultiTemporal
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/OBIA
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/ObjectDetection
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/Projections
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/Radiometry
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/SARPolarimetry
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/Segmentation
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/Simulation
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/SpatialReasoning
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/Testing
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/CurlAdapters
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/ITKPendingPatches
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/OssimAdapters
-                ${MOD_DIR}/ext/orfeotoolbox/include/Code/Visualization
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Algorithms
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/BasicFilters
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Common
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/IO
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Numerics
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Numerics/Statistics
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Patented
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Review
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/SpatialObject
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Utilities
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Utilities/vxl
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Utilities/vxl/vcl
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Utilities/vxl/core
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbconfigfile
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbedison
-                ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbedison/segm
+        ${MOD_DIR}/ext/orfeotoolbox/include
     )
 
 	# libraries
@@ -167,7 +118,6 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/OTBOGRAdapters.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/otbopenjpeg.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/otbossim.lib
-#                ${ORFEOTOOLBOX_LIB_DIR}/debug/ossim.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/OTBOssimAdapters.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/otbossimplugins.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/OTBProjections.lib
@@ -247,7 +197,6 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/release/OTBOGRAdapters.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/otbopenjpeg.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/otbossim.lib
-#                ${ORFEOTOOLBOX_LIB_DIR}/release/ossim.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/OTBOssimAdapters.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/otbossimplugins.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/OTBProjections.lib
@@ -318,6 +267,8 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbrescaleintensityimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbdotproductimagefilterprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.cpp
@@ -341,6 +292,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Segmentation/otbmeanshiftimagesegmentationprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/Segmentation/otbotsumultiplethresholdsimageprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbconfusionmatrixcalculatorprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.cpp
@@ -385,6 +337,8 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbrescaleintensityimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbdotproductimagefilterprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h
@@ -408,11 +362,12 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Segmentation/otbmeanshiftimagesegmentationprocessor.h
     ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.h
     ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h
+    ${MOD_DIR}/processors/Segmentation/otbotsumultiplethresholdsimageprocessor.h
     ${MOD_DIR}/processors/Classification/otbconfusionmatrixcalculatorprocessor.h
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
-#    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
+#   ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
 )
 
 #
@@ -496,7 +451,7 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/viewer/models/itiotbVectorImageModel.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcolorcompositiongreyscale.cpp
     ${MOD_DIR}/qt/viewer/commands/commandcolorcompositionrgb.cpp
-#    ${MOD_DIR}/qt/viewer/utils/itiotblevelutility.cpp
+    ${MOD_DIR}/qt/viewer/utils/itiotblevelutility.cpp
     ${MOD_DIR}/qt/viewer/utils/itiotblevel.cpp
     ${MOD_DIR}/qt/viewer/utils/itiotbregion.cpp
     ${MOD_DIR}/qt/viewer/utils/itiotblabelmapparser.cpp
@@ -555,7 +510,7 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/models/itiotbVectorImageModel.h
     ${MOD_DIR}/qt/viewer/commands/commandcolorcompositiongreyscale.h
     ${MOD_DIR}/qt/viewer/commands/commandcolorcompositionrgb.h
-#    ${MOD_DIR}/qt/viewer/utils/itiotblevelutility.h
+    ${MOD_DIR}/qt/viewer/utils/itiotblevelutility.h
     ${MOD_DIR}/qt/viewer/utils/itiotblevel.h
     ${MOD_DIR}/qt/viewer/utils/itiotbregion.h
     ${MOD_DIR}/qt/viewer/utils/itiotblabelmapparser.h
