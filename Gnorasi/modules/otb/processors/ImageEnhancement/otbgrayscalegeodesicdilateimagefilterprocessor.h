@@ -28,7 +28,7 @@
 #define OTBGRAYSCALEGEODESICDILATEIMAGEFILTERPROCESSOR_H
 
 #include "modules/otb/processors/BasicFilters/otbimagefilterprocessor.h"
-#include "itkGrayscaleGeodesicDilateImageFilter.h".h"
+#include "itkGrayscaleGeodesicDilateImageFilter.h"
 
 namespace voreen {
 
