@@ -57,6 +57,7 @@
 #include "processors/BasicFilters/otbleeimagefilterprocessor.h"
 #include "processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h"
 #include "processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h"
+#include "processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.h"
 #include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
@@ -172,6 +173,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBLAINDVIProcessor());
     registerProcessor(new OTBLaplacianSegmentationLevelSetImageFilterProcessor());
     registerProcessor(new OTBDEMCaracteristicsExtractor());
+    registerProcessor(new OTBGrayscaleConnectedOpeningImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
