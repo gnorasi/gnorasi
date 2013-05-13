@@ -71,6 +71,7 @@
 #include "processors/Radiometry/otbtwoimagebandmathprocessor.h"
 #include "processors/Radiometry/otbbayesianfusionfilterprocessor.h"
 #include "processors/Radiometry/otblaindviprocessor.h"
+#include "processors/Radiometry/otbdemcaracteristicsextractor.h"
 #include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 #include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 #include "processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.h"
@@ -170,6 +171,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBImageToSIFTKeyPointSetFilterProcessor());
     registerProcessor(new OTBLAINDVIProcessor());
     registerProcessor(new OTBLaplacianSegmentationLevelSetImageFilterProcessor());
+    registerProcessor(new OTBDEMCaracteristicsExtractor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
