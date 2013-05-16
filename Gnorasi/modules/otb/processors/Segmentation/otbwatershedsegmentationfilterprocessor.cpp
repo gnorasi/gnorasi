@@ -96,7 +96,6 @@ void OTBWatershedSegmentationFilterProcessor::process() {
         colormapImageFilter->SetInput(waterShedFilter->GetOutput());
         colormapImageFilter->SetColormap( RGBFilterType::Jet );
         colormapImageFilter->Update();
-
         //outPort_.setData(colormapImageFilter->GetOutput());
 
     }
