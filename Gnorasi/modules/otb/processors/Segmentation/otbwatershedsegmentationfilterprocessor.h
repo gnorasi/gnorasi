@@ -34,6 +34,7 @@
 #include "itkVectorGradientMagnitudeImageFilter.h"
 #include "itkWatershedImageFilter.h"
 #include "itkScalarToRGBColormapImageFilter.h"
+#include "otbWatershedSegmentationFilter.h"
 
 namespace voreen {
 
