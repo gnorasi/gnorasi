@@ -37,7 +37,7 @@ OTBMorphologicalWatershedImageFilterProcessor::OTBMorphologicalWatershedImageFil
       markWatershedLine_("Watershed pixel marked or not.", "Set Mark Watershed Line:", true),
       waterShedLevel_("waterShedLevel", "Level:", 0.005f, 0.0f, 1.0f),
       inPort_(Port::INPORT, "IN OTB Image Port",0),
-      outPort_(Port::OUTPORT, "OUT Label Image Port",0)
+      outPort_(Port::OUTPORT, "OUT OTB Image Port",0)
 {
     addProperty(enableSwitch_);
     addProperty(fullyConnected_);
@@ -83,11 +83,15 @@ void OTBMorphologicalWatershedImageFilterProcessor::process() {
         filter->SetLevel(waterShedLevel_.get());
         filter->SetInput(inPort_.getData());
         filter->SetFullyConnected(fullyConnected_.get());
+
+        //SetMarkWatershedLine() does not seem to be recognised
         //filter->SetMarkWateshedLine(markWatershedLine_.get());
-        //filter->SetMarkWateshedLine(true);
+
         filter->Update();
 
-        //outPort_.setData(filter->GetOutput());
+        caster->SetInput(filter->GetOutput());
+        outPort_.setData(caster->GetOutput());
+
 
         LINFO("Morphological Watershed Image Filter Connected!");
     }
