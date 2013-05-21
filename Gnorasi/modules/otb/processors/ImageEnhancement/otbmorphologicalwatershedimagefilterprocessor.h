@@ -56,9 +56,13 @@ public:
     //virtual void bypass(OTBImagePort *inport, OTBLabelImagePort *outport); ///< Passes the image from inport to outport without changes.
 
     typedef itk::Image<unsigned long, 2> LabeledImageType;
+    typedef otb::Image<double, 2> OTBImageType;
 
     typedef itk::MorphologicalWatershedImageFilter<ImageType, LabeledImageType> MorphologicalWatershedType;
     MorphologicalWatershedType::Pointer filter;
+
+    typedef itk::CastImageFilter<LabeledImageType, OTBImageType> casterType;
+    casterType::Pointer caster;
 
 protected:
 
@@ -79,7 +83,7 @@ private:
     BoolProperty markWatershedLine_;
 
     OTBImagePort inPort_;
-    OTBLabelImagePort outPort_;
+    OTBImagePort outPort_;
 
     static const std::string loggerCat_; ///< category used in logging
 };

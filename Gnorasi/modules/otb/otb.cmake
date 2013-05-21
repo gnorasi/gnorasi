@@ -272,6 +272,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicerodeimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.cpp
@@ -346,6 +347,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicerodeimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.h
+    ${MOD_DIR}/processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h
