@@ -57,6 +57,7 @@
 #include "processors/BasicFilters/otbleeimagefilterprocessor.h"
 #include "processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h"
 #include "processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h"
+#include "processors/BasicFilters/otbspectralangledistanceimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.h"
@@ -186,6 +187,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBMorphologicalWatershedImageFilterProcessor());
     registerProcessor(new OTBCurvatureAnisotropicDiffusionImageFilterProcessor());
     registerProcessor(new OTBZeroCrossingBasedEdgeDetectionImageFilterProcessor());
+    registerProcessor(new OTBSpectralAngleDistanceImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
