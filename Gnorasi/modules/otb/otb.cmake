@@ -267,6 +267,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbhistogrammatchingimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbspectralangledistanceimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.cpp
@@ -343,6 +344,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbhistogrammatchingimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbspectralangledistanceimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.h
