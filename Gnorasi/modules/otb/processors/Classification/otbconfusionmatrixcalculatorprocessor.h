@@ -71,6 +71,16 @@ public:
 
     ConfusionFilterType::Pointer                                        confusioncalculator;
         
+//****************************************************
+
+    /**
+    * Saves the image.
+    *
+    * @note The processor must have been initialized
+    *       before calling this function.
+    */
+   void saveToFile();
+
 
 protected:
     virtual void setDescriptions() {
@@ -83,6 +93,8 @@ protected:
 
     void update();
 
+
+
 private:
 
     OTBVectorImagePort  inPort_;
@@ -90,7 +102,13 @@ private:
     OTBVectorDataPort   inPort2_;
     OTBVectorDataPort   inPort3_;
 
-    ButtonProperty                                                      m_updateProperty;
+    ButtonProperty      m_updateProperty;
+
+
+    bool hasFile;
+    FileDialogProperty textFile_;  // Path of the saved text file.
+    ButtonProperty saveTextButton_;    // Saves the output to file.
+    ButtonProperty executeButton_; // Force manual execution of processing (since no output module is connected).
 
     static const std::string loggerCat_; ///< category used in logging
 };
