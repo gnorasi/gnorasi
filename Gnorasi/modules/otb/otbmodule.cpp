@@ -91,6 +91,7 @@
 #include "processors/FeatureExtraction/otblinesegmentdetectorprocessor.h"
 #include "processors/FeatureExtraction/otbroadextractionprocessor.h"
 #include "processors/FeatureExtraction/otbzerocrossingbasededgedetectionimagefilterprocessor.h"
+#include "processors/FeatureExtraction/otbclouddetectionimagefilterprocessor.h"
 #include "processors/Segmentation/otbmeanshiftimagesegmentationprocessor.h"
 #include "processors/Segmentation/otbwatershedsegmentationfilterprocessor.h"
 #include "processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h"
@@ -196,6 +197,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBGreyLevelCooccurrenceMatrixAdvancedTextureCoefficientsCalculatorProcessor());
     registerProcessor(new OTBEstimateInnerProductPCAImageFilterProcessor());
     registerProcessor(new OTBPerBandVectorImageFilterProcessor());
+    registerProcessor(new OTBCloudDetectionImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
