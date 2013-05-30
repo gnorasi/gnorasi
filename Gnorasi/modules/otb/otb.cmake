@@ -300,6 +300,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbzerocrossingbasededgedetectionimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otbclouddetectionimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/otbmeanshiftimagesegmentationprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.cpp
@@ -380,6 +381,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbzerocrossingbasededgedetectionimagefilterprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otbclouddetectionimagefilterprocessor.h
     ${MOD_DIR}/processors/Segmentation/otbmeanshiftimagesegmentationprocessor.h
     ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.h
     ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h
