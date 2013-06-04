@@ -72,6 +72,10 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/fuzzy/fuzzyfunction.cpp
     ${MOD_DIR}/qt/fuzzy/fuzzyattribute.cpp
     ${MOD_DIR}/qt/processorwidgets/lineeditfornumbersdelegate.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctionleftshoulder.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctionrightshoulder.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctiontriangular.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctiontrapezoidal.cpp
 )
 
 SET(MOD_QT_HEADERS
@@ -106,6 +110,10 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/fuzzy/fuzzyfunction.h
     ${MOD_DIR}/qt/fuzzy/fuzzyattribute.h
     ${MOD_DIR}/qt/processorwidgets/lineeditfornumbersdelegate.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctionleftshoulder.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctionrightshoulder.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctiontriangular.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctiontrapezoidal.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

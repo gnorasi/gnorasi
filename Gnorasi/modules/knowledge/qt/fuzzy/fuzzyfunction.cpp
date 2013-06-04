@@ -8,6 +8,7 @@
  * Copyright (c) Informatics and Telematics Institute                           *
  *	  Centre for Research and Technology Hellas. All rights reserved.           *
  * Copyright (c) National Technical University of Athens. All rights reserved.	*
+ * Copyright (c) Argyros Argyridis <arargyridis@gmail.com>. All rights reserved. *
  *                                                                              *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
@@ -29,5 +30,5 @@
 
 #include "fuzzyfunction.h"
 
-QStringList FuzzyFunction::availableFunctions = QStringList() << tr("Left Shoulder") << tr("Right Shoulder");
+QStringList FuzzyFunction::availableFunctions = QStringList() << tr("Left Shoulder") << tr("Right Shoulder") << tr("Triangular") << tr("Trapezoidal");
 
