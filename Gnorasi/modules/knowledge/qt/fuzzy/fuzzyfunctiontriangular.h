@@ -8,6 +8,7 @@
  * Copyright (c) Informatics and Telematics Institute                           *
  *	  Centre for Research and Technology Hellas. All rights reserved.           *
  * Copyright (c) National Technical University of Athens. All rights reserved.	*
+ * Copyright (c) Argyros Argyridis <arargyridis@gmail.com>. All rights reserved. *
  *                                                                              *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
@@ -26,113 +27,85 @@
  *                                                                              *
  ********************************************************************************/
 
-
-#ifndef FUZZYFUNCTION_H
-#define FUZZYFUNCTION_H
+#ifndef FUZZYFUNCTIONTRIANGULAR_H
+#define FUZZYFUNCTIONTRIANGULAR_H
 
 #include <QObject>
-#include <QStringList>
 
-#define MAXNUMBEROFPARAMETERS 4
-
-class FuzzyFunction;
+#include "fuzzyfunction.h"
 
 /*!
- * \brief The FuzzyFunction class
- *  This is an interface class that provides the interface for all specialized , concrete sub classes
- *  It supports a set of pure virtual functions
+ * \brief The FuzzyFunctionTriangular class
  */
-class FuzzyFunction : public QObject
+class FuzzyFunctionTriangular : public FuzzyFunction
 {
     Q_OBJECT
 public:
+    explicit FuzzyFunctionTriangular(QObject *parent = 0);
 
     /*!
-     * \brief parametersCount
-     *  This is used on enabling and disabling the table fields,
+     * \brief paramtersCount
      * \return
      */
-    virtual int parametersCount() const = 0;
-    
+    int parametersCount() const { return 2; }
+
     /*!
      * \brief parameterFunctionForIndex
-     *  This function supports fast access to the parameter values , from the GUI side.
-     * \param i
+     * \param index
      * \return
      */
-    virtual double parameterValueForIndex(int i) = 0;
+    double parameterValueForIndex(int index );
 
     /*!
-     * \brief setParameterValueForIndx
-     *
-     *  Update the parameter value for the given index, all concrete classes must implement this function
+     * \brief setParameterValudeForIndex
      * \param index
      * \param val
      */
-    virtual void setParameterValueForIndex(int index , double val) = 0;
-
+    void setParameterValueForIndex(int index, double val);
+    
     /*!
      * \brief calculate
-     *  This is the function where the calculation is performed.
-     *  Each subclass must implement this function. Inside here all the functionality and the calculation logic
-     *  is being encapsulated.
-     * \param val, the original value of the property
+     *  Implementation
+     *  ATM this function has not been implemented yet.
+     * \param val
      * \return
      */
-    virtual double calculate(double val) = 0;
+    double calculate(double val);
 
     /*!
      * \brief name
      * \return
      */
-    virtual QString name() const  = 0;
+    QString name() const { return tr("Triangular"); }
+
+    /*!
+     * \brief setParameterA
+     * \param a
+     */
+    void setParameterA( double a) { m_parameterList[0] = a; }
+    void setParameterB( double b) { m_parameterList[1] = b; }
+
+    /*!
+     * \brief parameterA
+     * \return
+     */
+    double parameterA() const{ return  m_parameterList[0]; }
+    double parameterB() const { return m_parameterList[1]; }
 
     /*!
      * \brief isReady
-     *  This is a helper function, this function is used while creating the text output data , xml and label map properties.
-     *
+     *  Implementation.
      * \return
      */
-    virtual bool isReady() = 0;
-
-    /*!
-     * \brief MAXPARAMETERSCOUNT
-     *  This is a general static value , for setting up the table view columns.
-     *  This might not be here , this was done for making things quickly finished
-     */
-    static const int MAXPARAMETERSCOUNT = MAXNUMBEROFPARAMETERS;
-
-
-
-    /*!
-     * \brief availableFunctions
-     *  Another list providing all the available names of the concrete function classes.
-     *
-     *        ** IMPORTANT **
-     *
-     *  When other subclasses are being created this list should be updated with the names of those function
-     *
-     *
-     */
-    static QStringList availableFunctions;
-
-
-protected:    
-
-    /*!
-     * \brief FuzzyFunction
-     * \param parent
-     */
-    explicit FuzzyFunction(QObject *parent = 0) : QObject(parent) { }
+    bool isReady();
 
 signals:
     
 public slots:
-    
+
 private:
-
-
-
+    double m_parameterList[2];
+    
 };
 
-#endif // FUZZYATTRIBUTE_H
+#endif // FUZZYFUNCTIONRIGHTSHOULDER_H

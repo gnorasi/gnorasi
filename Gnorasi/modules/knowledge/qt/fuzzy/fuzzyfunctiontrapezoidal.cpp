@@ -8,7 +8,7 @@
  * Copyright (c) Informatics and Telematics Institute                           *
  *	  Centre for Research and Technology Hellas. All rights reserved.           *
  * Copyright (c) National Technical University of Athens. All rights reserved.	*
- * Copyright (c) Argyros Argyridis <arargyridis@gmail.com>. All rights reserved. *
+ *Copyright (c) Argyros Argyridis <arargyridis@gmail.com>. All rights reserved.	*
  *                                                                              *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
@@ -27,36 +27,30 @@
  *                                                                              *
  ********************************************************************************/
 
-#include "fuzzyfunctionrightshoulder.h"
+#include "fuzzyfunctiontrapezoidal.h"
 #include <iostream>
-FuzzyFunctionRightShoulder::FuzzyFunctionRightShoulder(QObject *parent) :
+FuzzyFunctionTrapezoidal::FuzzyFunctionTrapezoidal(QObject *parent) :
     FuzzyFunction(parent)
 {
-    m_parameterList[0] = -1;
-    m_parameterList[1] = -1;
+    for (register int i = 0; i < parametersCount() ; i++)
+        m_parameterList[i] = -1;
 }
 
 
-double FuzzyFunctionRightShoulder::parameterValueForIndex(int index){
-    /*
-    if(!index) // 0
-        return m_parameterA;
-    else if(index == 1) // 1
-        return m_parameterB;
-    else
-        return 0.0;
-      */
-    if (index < 2)
+
+double FuzzyFunctionTrapezoidal::parameterValueForIndex(int index){
+
+    if (index < 4)
         return m_parameterList[index];
     else
         return -10000;
 }
 
 
-void FuzzyFunctionRightShoulder::setParameterValueForIndex(int index, double val)
+void FuzzyFunctionTrapezoidal::setParameterValueForIndex(int index, double val)
 {
 
-    if(index < 2)
+    if(index < MAXPARAMETERSCOUNT)
         m_parameterList[index] = val;
     else {
         std::cerr << "error, Index out of bounds \n";
@@ -66,23 +60,21 @@ void FuzzyFunctionRightShoulder::setParameterValueForIndex(int index, double val
 }
 
 
-double FuzzyFunctionRightShoulder::calculate(double val){
+double FuzzyFunctionTrapezoidal::calculate(double val){
 
     if ( isReady() ) {
-        if (( val  < parameterA() ) )
-                return 0;
-            else if ((val >= parameterA()) && (val <= parameterB()))
-                return (val - parameterA()) / (parameterB() - parameterA());
-            else
-                return 1;
+        double trpz = std::min( (val-m_parameterList[0])/(m_parameterList[1]-m_parameterList[0]), 1.0 );
+        trpz = std::min ( trpz, (m_parameterList[3] - val)/(m_parameterList[3] - m_parameterList[2]) );
+        trpz = std::max (trpz, 0.0);
+        return trpz;
     }
     else
           return -1;
 
 }
 
-bool FuzzyFunctionRightShoulder::isReady(){
-    return m_parameterList[0] != -1 && m_parameterList[1] != -1;
+bool FuzzyFunctionTrapezoidal::isReady(){
+    return m_parameterList[0] != -1 && m_parameterList[1] != -1 && m_parameterList[2] != -1 && m_parameterList[3] != -1  ;
 }
 
 

@@ -8,6 +8,7 @@
  * Copyright (c) Informatics and Telematics Institute                           *
  *	  Centre for Research and Technology Hellas. All rights reserved.           *
  * Copyright (c) National Technical University of Athens. All rights reserved.	*
+ * Copyright (c) Argyros Argyridis <arargyridis@gmail.com>. All rights reserved. *
  *                                                                              *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
@@ -80,15 +81,15 @@ public:
      * \brief setParameterA
      * \param a
      */
-    void setParameterA(double a) { m_parameterA = a; }
-    void setParameterB(double b) { m_parameterB = b; }
+    void setParameterA(double a) { m_parameterList[0] = a; }
+    void setParameterB(double b) { m_parameterList[1] = b; }
 
     /*!
      * \brief parameterA
      * \return
      */
-    double parameterA() const { return m_parameterA; }
-    double parameterB() const { return m_parameterB; }
+    double parameterA() const { return m_parameterList[0]; }
+    double parameterB() const { return m_parameterList[1]; }
 
     /*!
      * \brief isReady
@@ -103,8 +104,8 @@ public slots:
 
 private:
 
-    double m_parameterA;
-    double m_parameterB;
+    double m_parameterList[2];
+
     
 };
 

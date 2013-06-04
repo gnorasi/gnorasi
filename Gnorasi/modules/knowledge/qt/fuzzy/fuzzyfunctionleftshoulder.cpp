@@ -8,6 +8,7 @@
  * Copyright (c) Informatics and Telematics Institute                           *
  *	  Centre for Research and Technology Hellas. All rights reserved.           *
  * Copyright (c) National Technical University of Athens. All rights reserved.	*
+ * Copyright (c) Argyros Argyridis <arargyridis@gmail.com>. All rights reserved. *
  *                                                                              *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
@@ -28,31 +29,35 @@
 
 
 #include "fuzzyfunctionleftshoulder.h"
+#include <iostream>
 
 FuzzyFunctionLeftShoulder::FuzzyFunctionLeftShoulder(QObject *parent) :
-    m_parameterA(-1.0),
-    m_parameterB(-1.0),
+
     FuzzyFunction(parent)
 {
+    m_parameterList[0] = -1.0;
+    m_parameterList[1] = -1.0;
 
 }
 
 
 double FuzzyFunctionLeftShoulder::parameterValueForIndex(int index){
     if(!index) // 0
-        return m_parameterA;
+        return m_parameterList[0];
     else if(index == 1) // 1
-        return m_parameterB;
+        return m_parameterList[1];
     else
         return 0.0;
 }
 
 
 void FuzzyFunctionLeftShoulder::setParameterValueForIndex(int index, double val){
-    if(index == 0)
-        m_parameterA = val;
-    else if(index = 1)
-        m_parameterB = val;
+    if(index < 2)
+        m_parameterList[index] = val;
+    else {
+        std::cerr << "error, Index out of bounds \n";
+        exit(1);
+    }
 
 
 }
@@ -60,15 +65,20 @@ void FuzzyFunctionLeftShoulder::setParameterValueForIndex(int index, double val)
 
 double FuzzyFunctionLeftShoulder::calculate(double val){
 
-    if(val <= m_parameterA)
-        return 0.0;
-    else if(val >= m_parameterB)
-        return 1.0;
+    if ( isReady() ) {
+            if(val <= m_parameterList[0])
+                return 1.0;
+            else if(val >= m_parameterList[1])
+                return 0.0;
+            else
+                return (m_parameterList[1] - val)/(m_parameterList[1]-m_parameterList[0]);
+    }
     else
-        return (val -m_parameterA)/(m_parameterB-m_parameterA);
+        return -1;
 }
 
 
 bool FuzzyFunctionLeftShoulder::isReady(){
-    return m_parameterA >= 0 && m_parameterB >= 0;
+    return m_parameterList[0] != -1 && m_parameterList[1] != -1;
 }
+

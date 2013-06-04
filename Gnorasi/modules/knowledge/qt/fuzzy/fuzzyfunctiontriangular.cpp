@@ -8,7 +8,7 @@
  * Copyright (c) Informatics and Telematics Institute                           *
  *	  Centre for Research and Technology Hellas. All rights reserved.           *
  * Copyright (c) National Technical University of Athens. All rights reserved.	*
- * Copyright (c) Argyros Argyridis <arargyridis@gmail.com>. All rights reserved. *
+ * Copyright (c) Argyros Argyridis <arargyridis@gmail.com>. All rights reserved.	*
  *                                                                              *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
@@ -27,9 +27,9 @@
  *                                                                              *
  ********************************************************************************/
 
-#include "fuzzyfunctionrightshoulder.h"
+#include "fuzzyfunctiontriangular.h"
 #include <iostream>
-FuzzyFunctionRightShoulder::FuzzyFunctionRightShoulder(QObject *parent) :
+FuzzyFunctionTriangular::FuzzyFunctionTriangular(QObject *parent) :
     FuzzyFunction(parent)
 {
     m_parameterList[0] = -1;
@@ -37,27 +37,21 @@ FuzzyFunctionRightShoulder::FuzzyFunctionRightShoulder(QObject *parent) :
 }
 
 
-double FuzzyFunctionRightShoulder::parameterValueForIndex(int index){
-    /*
-    if(!index) // 0
-        return m_parameterA;
-    else if(index == 1) // 1
-        return m_parameterB;
-    else
-        return 0.0;
-      */
-    if (index < 2)
+double FuzzyFunctionTriangular::parameterValueForIndex(int index){
+
+    if (index < 4)
         return m_parameterList[index];
     else
         return -10000;
 }
 
 
-void FuzzyFunctionRightShoulder::setParameterValueForIndex(int index, double val)
+void FuzzyFunctionTriangular::setParameterValueForIndex(int index, double val)
 {
+    if(index < 4) {
 
-    if(index < 2)
         m_parameterList[index] = val;
+    }
     else {
         std::cerr << "error, Index out of bounds \n";
         exit(1);
@@ -66,22 +60,23 @@ void FuzzyFunctionRightShoulder::setParameterValueForIndex(int index, double val
 }
 
 
-double FuzzyFunctionRightShoulder::calculate(double val){
+double FuzzyFunctionTriangular::calculate(double val){
 
     if ( isReady() ) {
-        if (( val  < parameterA() ) )
-                return 0;
-            else if ((val >= parameterA()) && (val <= parameterB()))
-                return (val - parameterA()) / (parameterB() - parameterA());
-            else
-                return 1;
+      double c = 0.5 * ( m_parameterList[0] + m_parameterList[1] );
+      if ((val < m_parameterList[0]) || (val > m_parameterList[1]))
+	return 0;
+      else if ((val >= m_parameterList[0]) && (val <= c ))
+	return 2 * (val - m_parameterList[0]) / (m_parameterList[1] - m_parameterList[0]);
+      else if ((val <= m_parameterList[1]) && (val > c))
+	return 2 * (m_parameterList[1] - val) / (m_parameterList[1] - m_parameterList[0]);
     }
     else
           return -1;
 
 }
 
-bool FuzzyFunctionRightShoulder::isReady(){
+bool FuzzyFunctionTriangular::isReady(){
     return m_parameterList[0] != -1 && m_parameterList[1] != -1;
 }
 

@@ -8,6 +8,7 @@
  * Copyright (c) Informatics and Telematics Institute                           *
  *	  Centre for Research and Technology Hellas. All rights reserved.           *
  * Copyright (c) National Technical University of Athens. All rights reserved.	*
+ * Copyright (c) Argyros Argyridis <arargyridis@gmail.com>. All rights reserved. *
  *                                                                              *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
@@ -31,10 +32,17 @@
 
 #include "fuzzyfunctionleftshoulder.h"
 #include "fuzzyfunctionrightshoulder.h"
+#include "fuzzyfunctiontriangular.h"
+#include "fuzzyfunctiontrapezoidal.h"
 
 #define FUZZYFUNCTIONLEFTSHOULDER "Left Shoulder"
 #define FUZZYFUNCTIONRIGHTSHOULDER "Right Shoulder"
+#define FUZZYFUNCTIONTRIANGLULAR "Triangular"
+#define FUZZYFUNCTIONTRAPEZOIDAL "Trapezoidal"
 
+#include <iostream>
+
+using namespace std;
 FuzzyFunctionFactory::FuzzyFunctionFactory(QObject *parent) :
     QObject(parent)
 {
@@ -42,10 +50,15 @@ FuzzyFunctionFactory::FuzzyFunctionFactory(QObject *parent) :
 
 
 FuzzyFunction* FuzzyFunctionFactory::createFuzzyFunction(const QString &name){
-    if(!name.compare(QString::fromAscii(FUZZYFUNCTIONLEFTSHOULDER)))
-        return new FuzzyFunctionLeftShoulder(this);
-    else if(!name.compare(QString::fromAscii(FUZZYFUNCTIONRIGHTSHOULDER)))
-        return new FuzzyFunctionRightShoulder(this);
+
+    if(!name.compare(QString::fromLatin1(FUZZYFUNCTIONLEFTSHOULDER)))
+        return new FuzzyFunctionLeftShoulder();
+    else if(!name.compare(QString::fromLatin1(FUZZYFUNCTIONRIGHTSHOULDER)))
+        return new FuzzyFunctionRightShoulder();
+     else if(!name.compare(QString::fromLatin1(FUZZYFUNCTIONTRIANGLULAR)))
+            return new FuzzyFunctionTriangular();
+      else if(!name.compare(QString::fromLatin1(FUZZYFUNCTIONTRAPEZOIDAL)))
+        return new FuzzyFunctionTrapezoidal();
     else
-        return new FuzzyFunctionLeftShoulder(this); // this is the default fuzzy function
+        return new FuzzyFunctionLeftShoulder(); // this is the default fuzzy function
 }
