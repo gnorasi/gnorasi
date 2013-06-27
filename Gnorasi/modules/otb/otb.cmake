@@ -53,6 +53,55 @@ ELSEIF(WIN32)
     # include paths
     SET(MOD_INCLUDE_DIRECTORIES
         ${MOD_DIR}/ext/orfeotoolbox/include
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/ApplicationEngine
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/BasicFilters
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/ChangeDetection
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Common
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/DisparityMap
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/FeatureExtraction
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Fusion
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Fuzzy
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/GeospatialAnalysis
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Hyperspectral
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/IO
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Learning
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Markov
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/MultiScale
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/MultiTemporal
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/OBIA
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/ObjectDetection
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Projections
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Radiometry
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/SARPolarimetry
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Segmentation
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Simulation
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/SpatialReasoning
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Testing
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/CurlAdapters
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/ITKPendingPatches
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/OssimAdapters
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Visualization
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Algorithms
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/BasicFilters
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Common
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/IO
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Numerics
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Numerics/Statistics
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Patented
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Review
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/SpatialObject
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Utilities
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Utilities/vxl
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Utilities/vxl/vcl
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Utilities/vxl/core
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbconfigfile
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbedison
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbedison/segm
     )
 
 	# libraries

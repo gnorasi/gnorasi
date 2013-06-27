@@ -76,6 +76,13 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/fuzzy/fuzzyfunctionrightshoulder.cpp
     ${MOD_DIR}/qt/fuzzy/fuzzyfunctiontriangular.cpp
     ${MOD_DIR}/qt/fuzzy/fuzzyfunctiontrapezoidal.cpp
+    ${MOD_DIR}/qt/models/ontologyclass.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyrule.cpp
+    ${MOD_DIR}/qt/utils/ontologyclassificationmanager.cpp
+    ${MOD_DIR}/qt/utils/objectattribute.cpp
+    ${MOD_DIR}/qt/utils/objectattributemanager.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyoperator.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyoperatormanager.cpp
 )
 
 SET(MOD_QT_HEADERS
@@ -114,6 +121,13 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/fuzzy/fuzzyfunctionrightshoulder.h
     ${MOD_DIR}/qt/fuzzy/fuzzyfunctiontriangular.h
     ${MOD_DIR}/qt/fuzzy/fuzzyfunctiontrapezoidal.h
+    ${MOD_DIR}/qt/models/ontologyclass.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyrule.h
+    ${MOD_DIR}/qt/utils/ontologyclassificationmanager.h
+    ${MOD_DIR}/qt/utils/objectattribute.h
+    ${MOD_DIR}/qt/utils/objectattributemanager.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyoperator.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyoperatormanager.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

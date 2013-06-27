@@ -55,6 +55,7 @@ Gnorasi/ext/glew
 Gnorasi/ext/glut
 Gnorasi/ext/osgeo4w
 Gnorasi/ext/qwt
+build-*
 
 ============================================
 

@@ -2,7 +2,16 @@
 <VoreenData version="1">
     <Workspace version="2" GlobalDescription="">
         <ProcessorNetwork version="12">
-            <Processors />
+            <Processors>
+                <Processor type="Fuzzy Processor" name="Fuzzy Processor">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-327" y="-386" />
+                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="true" x="608" y="160" width="803" height="643" />
+                    </MetaData>
+                    <Properties />
+                    <InteractionHandlers />
+                </Processor>
+            </Processors>
             <Connections />
             <CoProcessorConnections />
             <PropertyLinks />
