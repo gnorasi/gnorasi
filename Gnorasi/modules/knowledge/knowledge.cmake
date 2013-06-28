@@ -17,6 +17,7 @@ SET(MOD_CORE_SOURCES
 #    ${MOD_DIR}/processors/fuzzypreprocessor.cpp
 #    ${MOD_DIR}/processors/fuzzyrulesprocessor.cpp
     ${MOD_DIR}/processors/fuzzyprocessor.cpp
+    ${MOD_DIR}/processors/ontologyclassificationprocessor.cpp
 )
 
 SET(MOD_CORE_HEADERS 
@@ -32,6 +33,7 @@ SET(MOD_CORE_HEADERS
 #    ${MOD_DIR}/processors/fuzzypreprocessor.h
 #    ${MOD_DIR}/processors/fuzzyrulesprocessor.h
     ${MOD_DIR}/processors/fuzzyprocessor.h
+    ${MOD_DIR}/processors/ontologyclassificationprocessor.h
 )
 
 ################################################################################
@@ -83,6 +85,7 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/utils/objectattributemanager.cpp
     ${MOD_DIR}/qt/fuzzy/fuzzyoperator.cpp
     ${MOD_DIR}/qt/fuzzy/fuzzyoperatormanager.cpp
+    ${MOD_DIR}/qt/utils/objectlevel.cpp
 )
 
 SET(MOD_QT_HEADERS
@@ -128,6 +131,7 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/utils/objectattributemanager.h
     ${MOD_DIR}/qt/fuzzy/fuzzyoperator.h
     ${MOD_DIR}/qt/fuzzy/fuzzyoperatormanager.h
+    ${MOD_DIR}/qt/utils/objectlevel.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

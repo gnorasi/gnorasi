@@ -40,6 +40,8 @@
 //#include "processors/fuzzypreprocessor.h"
 //#include "processors/fuzzyrulesprocessor.h"
 
+#include "processors/ontologyclassificationprocessor.h"
+
 namespace voreen {
 
 KnowledgeModule::KnowledgeModule(const std::string& moduleName) 
@@ -60,6 +62,8 @@ KnowledgeModule::KnowledgeModule(const std::string& moduleName)
 
 //    registerProcessor(new FuzzyPreProcessor());
 //    registerProcessor(new FuzzyRulesProcessor());
+
+    registerProcessor(new OntologyClassificationProcessor());
 
     // adds the module source glsl dir to the shader search path
     //addShaderPath(getModulesPath("knowledge/processors/glsl"));
