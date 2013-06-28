@@ -86,6 +86,7 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/fuzzy/fuzzyoperator.cpp
     ${MOD_DIR}/qt/fuzzy/fuzzyoperatormanager.cpp
     ${MOD_DIR}/qt/utils/objectlevel.cpp
+    ${MOD_DIR}/qt/utils/objectlevelmanager.cpp
 )
 
 SET(MOD_QT_HEADERS
@@ -132,6 +133,7 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/fuzzy/fuzzyoperator.h
     ${MOD_DIR}/qt/fuzzy/fuzzyoperatormanager.h
     ${MOD_DIR}/qt/utils/objectlevel.h
+    ${MOD_DIR}/qt/utils/objectlevelmanager.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC
