@@ -26,31 +26,45 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef OBJECTLEVEL_H
-#define OBJECTLEVEL_H
+#ifndef OBJECTLEVELMANAGER_H
+#define OBJECTLEVELMANAGER_H
 
 #include <QObject>
 
+class ObjectLevel;
 
-class ObjectLevel : public QObject
+class ObjectLevelManager : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
 public:
-    explicit ObjectLevel(QObject *parent = 0);
-    
-    int id() const {return m_id; }
-    void setId(int i){ m_id = i; }
+    static ObjectLevelManager* instance();
 
+    static void deleteInstance();
+
+    QList<ObjectLevel*> objectLevelList() const { return m_objectLevelList; }
+    void setObjectLevelList(const QList<ObjectLevel*> &l){ m_objectLevelList = l;}
+
+
+    void addObjectLevel(ObjectLevel* l) { m_objectLevelList.append(l); }
+    void removeObjectLevel(ObjectLevel *l) { m_objectLevelList.removeOne(l); }
+
+
+    void clear() { qDeleteAll(m_objectLevelList); m_objectLevelList.clear(); }
+
+
+    ObjectLevel* objectLevelById(int ) ;
+    
 signals:
-    void idChanged();
     
 public slots:
-
-private:
-    int m_id;
     
+private:
+    explicit ObjectLevelManager(QObject *parent = 0);
+    virtual ~ObjectLevelManager();
+
+    QList<ObjectLevel*> m_objectLevelList;
+
+    static ObjectLevelManager *m_pInstance;
 };
 
-
-#endif // OBJECTLEVEL_H
+#endif // OBJECTLEVELMANAGER_H

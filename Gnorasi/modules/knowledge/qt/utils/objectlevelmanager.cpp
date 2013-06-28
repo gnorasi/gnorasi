@@ -26,31 +26,44 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef OBJECTLEVEL_H
-#define OBJECTLEVEL_H
+#include "objectlevelmanager.h"
+#include "objectlevel.h"
 
-#include <QObject>
+ObjectLevelManager* ObjectLevelManager::m_pInstance = NULL;
 
-
-class ObjectLevel : public QObject
+ObjectLevelManager::ObjectLevelManager(QObject *parent) :
+    QObject(parent)
 {
-    Q_OBJECT
-    Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
-public:
-    explicit ObjectLevel(QObject *parent = 0);
-    
-    int id() const {return m_id; }
-    void setId(int i){ m_id = i; }
+}
 
-signals:
-    void idChanged();
-    
-public slots:
+ObjectLevel* ObjectLevelManager::objectLevelById(int id){
+    ObjectLevel *objectLevel = NULL;
+    QList<ObjectLevel*>::const_iterator i;
+    for(i = m_objectLevelList.constBegin(); i!= m_objectLevelList.constEnd(); i++){
+        objectLevel = *i;
+        if(objectLevel->id() == id)
+            return objectLevel;
+    }
 
-private:
-    int m_id;
-    
-};
+    return objectLevel;
+}
+
+ObjectLevelManager* ObjectLevelManager::instance(){
+    if(m_pInstance == NULL)
+        m_pInstance = new ObjectLevelManager();
+
+    return m_pInstance;
+}
 
 
-#endif // OBJECTLEVEL_H
+void ObjectLevelManager::deleteInstance(){
+    if(m_pInstance != NULL){
+        delete m_pInstance;
+        m_pInstance = NULL;
+    }
+}
+
+
+ObjectLevelManager::~ObjectLevelManager(){
+    clear();
+}
