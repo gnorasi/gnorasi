@@ -1,14 +1,15 @@
-#ifndef LEVEL_H
-#define LEVEL_H
+#ifndef OBJECTLEVEL_H
+#define OBJECTLEVEL_H
 
 #include <QObject>
 
-class Level : public QObject
+
+class ObjectLevel : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int id READ id WRITE setid NOTIFY idChanged)
+    Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
 public:
-    explicit Level(QObject *parent = 0);
+    explicit ObjectLevel(QObject *parent = 0);
     
     int id() const {return m_id; }
     void setId(int i){ m_id = i; }
@@ -23,4 +24,5 @@ private:
     
 };
 
-#endif // LEVEL_H
+
+#endif // OBJECTLEVEL_H
