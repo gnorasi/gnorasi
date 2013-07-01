@@ -287,6 +287,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/otbsmartpointerport.cpp
     ${MOD_DIR}/ports/otbkeypointsetport.cpp
     ${MOD_DIR}/ports/otbvectordataport.cpp
+    ${MOD_DIR}/ports/otblistlabelmapport.cpp
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.cpp
@@ -326,6 +327,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/OBIA/otblabelmapstatisticwriterprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbobjectclassificationtolabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelmaptoclassimageprocessor.cpp
+    ${MOD_DIR}/processors/OBIA/otbmultiplelabelimagetolabelmapprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbndviprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbmsaviprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.cpp
@@ -357,6 +359,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/otbsmartpointerport.h
     ${MOD_DIR}/ports/otbkeypointsetport.h
     ${MOD_DIR}/ports/otbvectordataport.h
+    ${MOD_DIR}/ports/otblistlabelmapport.h
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.h
@@ -396,6 +399,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/OBIA/otblabelmapstatisticwriterprocessor.h
     ${MOD_DIR}/processors/OBIA/otbobjectclassificationtolabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelmaptoclassimageprocessor.h
+    ${MOD_DIR}/processors/OBIA/otbmultiplelabelimagetolabelmapprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbndviprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbmsaviprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.h

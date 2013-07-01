@@ -52,6 +52,8 @@ public:
 
     void clear() { qDeleteAll(m_fuzzyOperatorList); m_fuzzyOperatorList.clear(); }
 
+
+
 signals:
     
 public slots:

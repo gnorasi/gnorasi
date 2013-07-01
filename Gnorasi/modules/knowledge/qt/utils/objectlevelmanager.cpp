@@ -36,6 +36,17 @@ ObjectLevelManager::ObjectLevelManager(QObject *parent) :
 {
 }
 
+int ObjectLevelManager::generateNextLevelId() const{
+    QList<ObjectLevel*>::const_iterator i;
+    int max = 0;
+    for(i = m_objectLevelList.constBegin(); i != m_objectLevelList.constEnd(); i++){
+        ObjectLevel *pO = *i;
+        max = qMax(max,pO->id()) + 1;
+    }
+
+    return max;
+}
+
 ObjectLevel* ObjectLevelManager::objectLevelById(int id){
     ObjectLevel *objectLevel = NULL;
     QList<ObjectLevel*>::const_iterator i;

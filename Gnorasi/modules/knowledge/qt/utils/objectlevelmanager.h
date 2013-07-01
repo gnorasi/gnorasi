@@ -33,6 +33,9 @@
 
 class ObjectLevel;
 
+// a helper macro
+#define OBJECTLEVELMANAGER ObjectLevelManager::instance()
+
 class ObjectLevelManager : public QObject
 {
     Q_OBJECT
@@ -53,6 +56,9 @@ public:
 
 
     ObjectLevel* objectLevelById(int ) ;
+
+
+    int generateNextLevelId() const;
     
 signals:
     

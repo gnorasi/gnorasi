@@ -8,15 +8,15 @@ const std::string OntologyClassificationProcessor::loggerCat_("voreen.OntologyCl
   
 OntologyClassificationProcessor::OntologyClassificationProcessor()
     : Processor(),
-    inLblMapPort_(Port::INPORT, "Input Label Map Port",1)
+    inLblMapPort_(Port::INPORT, "Input Object Map Port",1),
 //    outFuzzyRulePort_(Port::OUTPORT, "Output Fuzzy Rule Port"),
-//    outTextPort_(Port::OUTPORT, "Output Text Port"),
+    outTextPort_(Port::OUTPORT, "Output Text Port")
 //    inOntologyPort_(Port::INPORT,"Input Ontology Port", 0)
 {
     // register ports and properties
     addPort(inLblMapPort_);
 //    addPort(outFuzzyRulePort_);
-//    addPort(outTextPort_);
+    addPort(outTextPort_);
 //    addPort(inOntologyPort_);
     //OTB initialization
 
@@ -32,7 +32,7 @@ Processor* OntologyClassificationProcessor::create() const {
 }
 
 bool OntologyClassificationProcessor::isEndProcessor() const {
-//    return (!outFuzzyRulePort_.isConnected());
+    return (!outTextPort_.isConnected());
     return false;
 }
 

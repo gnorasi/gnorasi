@@ -32,7 +32,7 @@
 #include <QtCore>
 #include <QtGui>
 
-#include "../../../otb/ports/otblabelmapport.h"
+#include "../../../otb/ports/otblistlabelmapport.h"
 
 #include "../utils/fuzzylabelmaputility.h"
 
@@ -55,7 +55,7 @@ class VRN_QT_API OntologyClassificationProcessorWidget : public QProcessorWidget
 {
     Q_OBJECT
 public:
-    OntologyClassificationProcessorWidget(QWidget*, FuzzyProcessor* );
+    OntologyClassificationProcessorWidget(QWidget*, OntologyClassificationProcessor* );
 
     virtual ~OntologyClassificationProcessorWidget();
 
@@ -166,17 +166,13 @@ private:
 
 
     /*!
-     * \brief getOntologyClassesFromPort
-     *  This is a helper function
-     * \return
-     */
-//    QStringList                             getOntologyClassesFromPort();
-
-    /*!
      * \brief getMapFromPort
      * \return
      */
-    FuzzyLabelMapUtility::LabelMapType*     getMapFromPort();
+    void                                    processPortData();
+
+
+    void                                    processAttributeList(int, const QStringList &);
 
     /*!
      * \brief m_pFuzzyLabelMapUtility

@@ -34,6 +34,7 @@ SET(MOD_CORE_HEADERS
 #    ${MOD_DIR}/processors/fuzzyrulesprocessor.h
     ${MOD_DIR}/processors/fuzzyprocessor.h
     ${MOD_DIR}/processors/ontologyclassificationprocessor.h
+
 )
 
 ################################################################################
@@ -46,6 +47,7 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/processorwidgets/classifierwswidget.cpp
     ${MOD_DIR}/qt/processorwidgets/retrieveclassificationdatawidget.cpp
     ${MOD_DIR}/qt/processorwidgets/ontologycreatorwidget.cpp
+    ${MOD_DIR}/qt/processorwidgets/ontologyclassificationprocessorwidget.cpp
     ${MOD_DIR}/qt/models/ontologyclassmodel.cpp
     ${MOD_DIR}/qt/models/ontologyclassitem.cpp
     ${MOD_DIR}/qt/processorwidgets/ontologyclassview.cpp
@@ -93,6 +95,7 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/processorwidgets/classifierwswidget.h
     ${MOD_DIR}/qt/processorwidgets/retrieveclassificationdatawidget.h
     ${MOD_DIR}/qt/processorwidgets/ontologycreatorwidget.h
+    ${MOD_DIR}/qt/processorwidgets/ontologyclassificationprocessorwidget.h
     ${MOD_DIR}/qt/models/ontologyclassmodel.h
     ${MOD_DIR}/qt/models/ontologyclassitem.h
     ${MOD_DIR}/qt/processorwidgets/ontologyclassview.h
