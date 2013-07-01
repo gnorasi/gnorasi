@@ -30,6 +30,8 @@
 
 #include "objectattribute.h"
 
+#include <QStringList>
+
 ObjectAttributeManager* ObjectAttributeManager::m_pInstance = NULL;
 
 ObjectAttributeManager::ObjectAttributeManager(QObject *parent) :
@@ -57,9 +59,10 @@ ObjectAttributeManager::~ObjectAttributeManager(){
     clear();
 }
 
-ObjectAttribute* ObjectAttributeManager::objectAttributeById(const QString &idString){
+ObjectAttribute* ObjectAttributeManager::objectAttributeOfLevelById(int lid, const QString &idString){
+    QList<ObjectAttribute*> list = m_objectAttributeHash.values(lid);
     QList<ObjectAttribute*>::const_iterator i;
-    for(i = m_objectAttributeList.constBegin(); i != m_objectAttributeList.constEnd(); i++){
+    for(i = list.constBegin(); i != list.constEnd(); i++){
         ObjectAttribute *o = *i;
 
         if(!o->id().compare(idString))
@@ -69,10 +72,11 @@ ObjectAttribute* ObjectAttributeManager::objectAttributeById(const QString &idSt
     return 0;
 }
 
-ObjectAttribute* ObjectAttributeManager::objectAttributeById(int id){
+ObjectAttribute* ObjectAttributeManager::objectAttributeOfLevelById(int lid, int id){
     QString idString = QString::number(id);
+    QList<ObjectAttribute*> list = m_objectAttributeHash.values(lid);
     QList<ObjectAttribute*>::const_iterator i;
-    for(i = m_objectAttributeList.constBegin(); i != m_objectAttributeList.constEnd(); i++){
+    for(i = list.constBegin(); i != list.constEnd(); i++){
         ObjectAttribute *o = *i;
 
         if(!o->id().compare(idString))
@@ -80,4 +84,27 @@ ObjectAttribute* ObjectAttributeManager::objectAttributeById(int id){
     }
 
     return 0;
+}
+
+QList<ObjectAttribute*> ObjectAttributeManager::objectAttributeOfLevelList(int lid){
+    QList<ObjectAttribute*> list = m_objectAttributeHash.values(lid);
+    QList<ObjectAttribute*>::const_iterator i;
+    for(i = list.constBegin(); i != list.constEnd(); i++){
+        ObjectAttribute *oa = *i;
+        list << oa;
+    }
+
+    return list;
+}
+
+QStringList ObjectAttributeManager::objectAttributeNameOfLevelStringList(int lid){
+    QStringList list;
+    QList<ObjectAttribute*> helperList = m_objectAttributeHash.values(lid);
+    QList<ObjectAttribute*>::const_iterator i;
+    for(i = helperList.constBegin(); i != helperList.constEnd(); i++){
+        ObjectAttribute *oa = *i;
+        list << oa->name();
+    }
+
+    return list;
 }

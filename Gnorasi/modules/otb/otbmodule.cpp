@@ -89,6 +89,7 @@
 #include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
 #include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
 #include "processors/Visualization/otbimageviewerprocessor.h"
+#include "processors/OBIA/otbmultiplelabelimagetolabelmapprocessor.h"
 //#include "processors/Geometry/otborthorectifyprocessor.h"
 
 #ifdef WIN32
@@ -179,6 +180,8 @@ OTBModule::OTBModule(const std::string& moduleName)
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
+
+    registerProcessor(new OtbMultipleLabelImageToLabelMapProcessor());
 }
 
 } // namespace

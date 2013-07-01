@@ -34,8 +34,9 @@
 class ObjectAttribute : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
-    Q_PROPERTY(QString id   READ id   WRITE setId   NOTIFY idChanged)
+    Q_PROPERTY(QString  name    READ name       WRITE setName       NOTIFY nameChanged)
+    Q_PROPERTY(QString  id      READ id         WRITE setId         NOTIFY idChanged)
+    Q_PROPERTY(int      levelId READ levelId    WRITE setlevelId    NOTIFY levelIdChanged)
 public:
     explicit ObjectAttribute(QObject *parent = 0);
     
@@ -45,17 +46,20 @@ public:
     QString id() const { return m_id;}
     void setId(const QString &i) { m_id = i; }
 
-
+    int levelId() const { return m_levelid; }
+    void setlevelId(int l) { m_levelid = l; }
 signals:
     
     void nameChanged();
     void idChanged();
+    void levelIdChanged();
 
 public slots:
 
 private:
     QString m_name;
     QString m_id;
+    int m_levelid;
     
 };
 

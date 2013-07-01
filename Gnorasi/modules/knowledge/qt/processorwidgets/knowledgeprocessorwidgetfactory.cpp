@@ -49,6 +49,9 @@
 #include "../../processors/fuzzyprocessor.h"
 #include "../../qt/processorwidgets/fuzzyprocessorwidget.h"
 
+#include "../../processors/ontologyclassificationprocessor.h"
+#include "../../qt/processorwidgets/ontologyclassificationprocessorwidget.h"
+
 #include "voreen/qt/voreenapplicationqt.h"
 #include <QWidget>
 #include <QMainWindow>
@@ -77,6 +80,9 @@ ProcessorWidget* KnowledgeProcessorWidgetFactory::createWidget(Processor* proces
 
     if(dynamic_cast<FuzzyProcessor*>(processor))
         return new FuzzyProcessorWidget(parent,static_cast<FuzzyProcessor*>(processor));
+
+    if(dynamic_cast<OntologyClassificationProcessor*>(processor))
+        return new OntologyClassificationProcessorWidget(parent,static_cast<OntologyClassificationProcessor*>(processor));
 
 //    if(dynamic_cast<FuzzyPreProcessor*>(processor))
 //        return new FuzzyPreProcessorWidget(parent, static_cast<FuzzyPreProcessor*>(processor));

@@ -59,7 +59,7 @@ private:
     OTBLabelMapPort inLblMapPort_;
 //    FuzzyRulePort   outFuzzyRulePort_;
 //	OntologyPort    inOntologyPort_;
-//    TextPort        outTextPort_;
+    TextPort        outTextPort_;
 
     std::string pTextData_;
     

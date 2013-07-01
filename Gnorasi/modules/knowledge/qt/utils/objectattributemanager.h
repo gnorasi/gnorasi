@@ -30,6 +30,7 @@
 #define OBJECTATTRIBUTEMANAGER_H
 
 #include <QObject>
+#include <QMultiHash>
 
 class ObjectAttribute;
 
@@ -44,16 +45,19 @@ public:
     static ObjectAttributeManager* instance();
     static void deleteInstance();
     
-    QList<ObjectAttribute*> objectAttributeList() const {return m_objectAttributeList; }
-    void setObjectAttributeList(const QList<ObjectAttribute*> &l) { m_objectAttributeList = l; }
+    QMultiHash<int,ObjectAttribute*> objectAttributeHash() const {return m_objectAttributeHash; }
+    void setObjectAttributeHash(const QHash<int,ObjectAttribute*> &l) { m_objectAttributeHash = l; }
 
-    void addObjectAttribute(ObjectAttribute *l) { m_objectAttributeList.append(l); }
-    void removeObjectAttribute(ObjectAttribute *l) { m_objectAttributeList.removeOne(l); }
+    void addObjectAttribute(int lid, ObjectAttribute *l) { m_objectAttributeHash.insertMulti(lid,l); }
+    void removeObjectAttribute(int lid, ObjectAttribute *l) { m_objectAttributeHash.remove(lid, l); }
 
-    ObjectAttribute* objectAttributeById(const QString &idString) ;
-    ObjectAttribute* objectAttributeById(int id) ;
+    ObjectAttribute* objectAttributeOfLevelById(int lid, const QString &idString) ;
+    ObjectAttribute* objectAttributeOfLevelById(int lid, int id) ;
 
-    void clear() { qDeleteAll(m_objectAttributeList); m_objectAttributeList.clear(); }
+    void clear() { qDeleteAll(m_objectAttributeHash); m_objectAttributeHash.clear(); }
+
+    QList<ObjectAttribute*> objectAttributeOfLevelList(int );
+    QStringList objectAttributeNameOfLevelStringList(int );
 
 signals:
     
@@ -67,7 +71,7 @@ private:
 
     static ObjectAttributeManager *m_pInstance;
 
-    QList<ObjectAttribute*> m_objectAttributeList;
+    QMultiHash<int,ObjectAttribute*> m_objectAttributeHash;
     
 };
 
