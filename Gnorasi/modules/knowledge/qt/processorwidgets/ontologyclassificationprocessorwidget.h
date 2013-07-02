@@ -41,6 +41,8 @@
 #include "voreen/qt/voreenmoduleqt.h"
 #include "voreen/qt/widgets/processor/qprocessorwidget.h"
 
+class ClassHierarchyWidget;
+
 class FuzzyFunctionFactory;
 
 using namespace otb;
@@ -191,6 +193,9 @@ private:
 
     // helper list
     QStringList                             m_fuzzyAttributesList;
+
+    ClassHierarchyWidget                    *m_pClassHierarchyWidget;
+
 
 
 //    // Qt Widgets

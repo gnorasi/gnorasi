@@ -7,9 +7,9 @@ SET(MOD_CORE_MODULECLASS KnowledgeModule)
 SET(MOD_CORE_SOURCES 
     ${MOD_DIR}/processors/classifierwsprocessor.cpp
     ${MOD_DIR}/processors/retrieveclassificationdataprocessor.cpp
-    ${MOD_DIR}/processors/ontologycreatorprocessor.cpp
+#    ${MOD_DIR}/processors/ontologycreatorprocessor.cpp
     ${MOD_DIR}/processors/featureclassificationprocessor.cpp
-    ${MOD_DIR}/processors/geospatialclassificationprocessor.cpp
+#    ${MOD_DIR}/processors/geospatialclassificationprocessor.cpp
     ${MOD_DIR}/processors/knowledgewebserviceprocessor.cpp
     ${MOD_DIR}/ports/ontologyport.cpp
     ${MOD_DIR}/ports/georuleport.cpp
@@ -23,9 +23,9 @@ SET(MOD_CORE_SOURCES
 SET(MOD_CORE_HEADERS 
     ${MOD_DIR}/processors/classifierwsprocessor.h
     ${MOD_DIR}/processors/retrieveclassificationdataprocessor.h
-    ${MOD_DIR}/processors/ontologycreatorprocessor.h
+#    ${MOD_DIR}/processors/ontologycreatorprocessor.h
     ${MOD_DIR}/processors/featureclassificationprocessor.h
-    ${MOD_DIR}/processors/geospatialclassificationprocessor.h
+#    ${MOD_DIR}/processors/geospatialclassificationprocessor.h
     ${MOD_DIR}/processors/knowledgewebserviceprocessor.h
     ${MOD_DIR}/ports/ontologyport.h
     ${MOD_DIR}/ports/georuleport.h
@@ -46,15 +46,15 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/processorwidgets/knowledgeprocessorwidgetfactory.cpp
     ${MOD_DIR}/qt/processorwidgets/classifierwswidget.cpp
     ${MOD_DIR}/qt/processorwidgets/retrieveclassificationdatawidget.cpp
-    ${MOD_DIR}/qt/processorwidgets/ontologycreatorwidget.cpp
+#    ${MOD_DIR}/qt/processorwidgets/ontologycreatorwidget.cpp
     ${MOD_DIR}/qt/processorwidgets/ontologyclassificationprocessorwidget.cpp
-    ${MOD_DIR}/qt/models/ontologyclassmodel.cpp
+#    ${MOD_DIR}/qt/models/ontologyclassmodel.cpp
     ${MOD_DIR}/qt/models/ontologyclassitem.cpp
     ${MOD_DIR}/qt/processorwidgets/ontologyclassview.cpp
     ${MOD_DIR}/qt/utils/owlwriter.cpp
     ${MOD_DIR}/qt/utils/owlparser.cpp
     ${MOD_DIR}/qt/utils/owlhelperitem.cpp
-    ${MOD_DIR}/qt/processorwidgets/geospatialclassificationwidget.cpp
+#    ${MOD_DIR}/qt/processorwidgets/geospatialclassificationwidget.cpp
     ${MOD_DIR}/qt/processorwidgets/rulewidget.cpp
     ${MOD_DIR}/qt/processorwidgets/ruleitemview.cpp
     ${MOD_DIR}/qt/models/ruleitem.cpp
@@ -89,20 +89,25 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/fuzzy/fuzzyoperatormanager.cpp
     ${MOD_DIR}/qt/utils/objectlevel.cpp
     ${MOD_DIR}/qt/utils/objectlevelmanager.cpp
+    ${MOD_DIR}/qt/processorwidgets/classhierarchywidget.cpp
+    ${MOD_DIR}/qt/processorwidgets/classdescriptiondialog.cpp
+    ${MOD_DIR}/qt/processorwidgets/classexpressionsview.cpp
+    ${MOD_DIR}/qt/processorwidgets/membershipfunctionwidget.cpp
+    ${MOD_DIR}/qt/processorwidgets/insertexpressionwidget.cpp
 )
 
 SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/processorwidgets/classifierwswidget.h
     ${MOD_DIR}/qt/processorwidgets/retrieveclassificationdatawidget.h
-    ${MOD_DIR}/qt/processorwidgets/ontologycreatorwidget.h
+#    ${MOD_DIR}/qt/processorwidgets/ontologycreatorwidget.h
     ${MOD_DIR}/qt/processorwidgets/ontologyclassificationprocessorwidget.h
-    ${MOD_DIR}/qt/models/ontologyclassmodel.h
+#    ${MOD_DIR}/qt/models/ontologyclassmodel.h
     ${MOD_DIR}/qt/models/ontologyclassitem.h
     ${MOD_DIR}/qt/processorwidgets/ontologyclassview.h
     ${MOD_DIR}/qt/utils/owlwriter.h
     ${MOD_DIR}/qt/utils/owlparser.h
     ${MOD_DIR}/qt/utils/owlhelperitem.h
-    ${MOD_DIR}/qt/processorwidgets/geospatialclassificationwidget.h
+#    ${MOD_DIR}/qt/processorwidgets/geospatialclassificationwidget.h
     ${MOD_DIR}/qt/processorwidgets/rulewidget.h
     ${MOD_DIR}/qt/processorwidgets/ruleitemview.h
     ${MOD_DIR}/qt/models/ruleitem.h
@@ -137,6 +142,11 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/fuzzy/fuzzyoperatormanager.h
     ${MOD_DIR}/qt/utils/objectlevel.h
     ${MOD_DIR}/qt/utils/objectlevelmanager.h
+    ${MOD_DIR}/qt/processorwidgets/classhierarchywidget.h
+    ${MOD_DIR}/qt/processorwidgets/classdescriptiondialog.h
+    ${MOD_DIR}/qt/processorwidgets/classexpressionsview.h
+    ${MOD_DIR}/qt/processorwidgets/membershipfunctionwidget.h
+    ${MOD_DIR}/qt/processorwidgets/insertexpressionwidget.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

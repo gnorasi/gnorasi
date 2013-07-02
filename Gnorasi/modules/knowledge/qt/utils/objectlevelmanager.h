@@ -58,6 +58,9 @@ public:
     ObjectLevel* objectLevelById(int ) ;
 
 
+    int count() const { return m_objectLevelList.count(); }
+
+
     int generateNextLevelId() const;
     
 signals:

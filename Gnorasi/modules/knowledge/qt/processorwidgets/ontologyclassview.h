@@ -31,6 +31,8 @@
 
 #include <QtGui/QTreeView>
 
+class ClassDescriptionDialog;
+
 namespace voreen {
 
 class OntologyClassView : public QTreeView{
@@ -39,6 +41,8 @@ class OntologyClassView : public QTreeView{
 public:
 
     OntologyClassView(QWidget *parent = 0);
+
+//    ClassDescriptionWidget* classDescriptionWidget() { return m_pClassDescriptionWidget; }
 
 public slots:
     void onNameValidationError();
@@ -49,6 +53,7 @@ signals:
 protected:
     void contextMenuEvent(QContextMenuEvent *);
     void mousePressEvent(QMouseEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
 
 
 public slots:
@@ -58,6 +63,7 @@ public slots:
 
 private:
     QString getUniqueNameFromIndex(const QModelIndex& );
+
 
 };
 

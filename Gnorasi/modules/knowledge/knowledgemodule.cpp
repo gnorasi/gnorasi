@@ -30,8 +30,8 @@
 #include "processors/classifierwsprocessor.h"
 #include "processors/retrieveclassificationdataprocessor.h"
 
-#include "processors/ontologycreatorprocessor.h"
-#include "processors/geospatialclassificationprocessor.h"
+//#include "processors/ontologycreatorprocessor.h"
+//#include "processors/geospatialclassificationprocessor.h"
 
 #include "processors/knowledgewebserviceprocessor.h"
 
@@ -54,8 +54,8 @@ KnowledgeModule::KnowledgeModule(const std::string& moduleName)
     registerProcessor(new ClassifierWSProcessor());
     registerProcessor(new RetrieveClassificationDataProcessor());
 
-    registerProcessor(new OntologyCreatorProcessor());
-    registerProcessor(new GeospatialClassificationProcessor());
+//    registerProcessor(new OntologyCreatorProcessor());
+//    registerProcessor(new GeospatialClassificationProcessor());
     registerProcessor(new KnowledgeWebServiceProcessor());
 
     registerProcessor(new FuzzyProcessor());
