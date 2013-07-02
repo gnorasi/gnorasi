@@ -32,6 +32,7 @@
 #include <QObject>
 
 class                   FuzzyFunction;
+class                   FuzzyRuleModel;
 
 namespace voreen {
 
@@ -51,6 +52,9 @@ class                   FuzzyRule : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int      id          READ id         WRITE   setid           NOTIFY idChanged)
+    Q_PROPERTY(QString  name        READ name )
+    Q_PROPERTY(int      attribute   READ attribute  WRITE   setAttribute    NOTIFY attributeChanged)
+    Q_PROPERTY(int levelId READ levelId WRITE setlevelId NOTIFY levelIdChanged)
 //    Q_PROPERTY(int      headClass   READ headClass  WRITE   setHeadClass    NOTIFY headClassChanged)
 //    Q_PROPERTY(double   confidence  READ confidence WRITE   setConfidence   NOTIFY confidenceChanged)
 public:
@@ -59,6 +63,14 @@ public:
     //
     int                 id() const      { return m_id; }
     void                setid(int &cl)  { m_id = cl; }
+
+    QString             name() const ;
+
+    int                 attribute() const { return m_attributeId;}
+    void                setAttribute(int i ) { m_attributeId = i; }
+
+    int                 levelId() const { return m_levelId; }
+    void                setlevelId(int i) { m_levelId = i; }
 
     //
 //    QString             headClass() const { return m_headClass; }
@@ -97,19 +109,24 @@ signals:
     void                idChanged();
     void                headClassChanged();
     void                confidenceChanged();
+    void                attributeChanged();
+    void                levelIdChanged();
     
 public slots:
 
 private:
-    friend class        RuleUtility;
+    friend class        FuzzyRuleModel;
 
-    explicit            FuzzyRule(FuzzyFunction*, QObject *parent = 0);
+    explicit            FuzzyRule(FuzzyFunction *pFunction = 0, QObject *parent = 0);
 
 //    QList<RuleItem*>    m_ruleItemList;
 
     FuzzyFunction       *m_pFuzzyFunction;
 
     int                 m_id;
+
+    int                 m_attributeId;
+    int                 m_levelId;
 };
 
 } // end of namespace voreen

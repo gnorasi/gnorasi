@@ -19,8 +19,6 @@ OntologyClassificationProcessor::OntologyClassificationProcessor()
     addPort(outTextPort_);
 //    addPort(inOntologyPort_);
     //OTB initialization
-
-    
 }
 
 OntologyClassificationProcessor::~OntologyClassificationProcessor() {

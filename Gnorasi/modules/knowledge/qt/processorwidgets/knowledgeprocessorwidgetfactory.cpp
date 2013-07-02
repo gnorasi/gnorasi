@@ -34,11 +34,11 @@
 #include "../../processors/retrieveclassificationdataprocessor.h"
 #include "retrieveclassificationdatawidget.h"
 
-#include "../../processors/ontologycreatorprocessor.h"
-#include "ontologycreatorwidget.h"
+//#include "../../processors/ontologycreatorprocessor.h"
+//#include "ontologycreatorwidget.h"
 
-#include "../../processors/geospatialclassificationprocessor.h"
-#include "geospatialclassificationwidget.h"
+//#include "../../processors/geospatialclassificationprocessor.h"
+//#include "geospatialclassificationwidget.h"
 
 //#include "../../processors/fuzzypreprocessor.h"
 //#include "fuzzypreprocessorwidget.h"
@@ -72,11 +72,11 @@ ProcessorWidget* KnowledgeProcessorWidgetFactory::createWidget(Processor* proces
     if (dynamic_cast<ClassifierWSProcessor*>(processor))
         return new ClassifierWSWidget(parent, static_cast<ClassifierWSProcessor*>(processor));
 
-    if (dynamic_cast<OntologyCreatorProcessor*>(processor))
-        return new OntologyCreatorWidget(parent, static_cast<OntologyCreatorProcessor*>(processor));
+//    if (dynamic_cast<OntologyCreatorProcessor*>(processor))
+//        return new OntologyCreatorWidget(parent, static_cast<OntologyCreatorProcessor*>(processor));
 
-    if(dynamic_cast<GeospatialClassificationProcessor*>(processor))
-        return new GeoSpatialClassificationWidget(parent, static_cast<GeospatialClassificationProcessor*>(processor));
+//    if(dynamic_cast<GeospatialClassificationProcessor*>(processor))
+//        return new GeoSpatialClassificationWidget(parent, static_cast<GeospatialClassificationProcessor*>(processor));
 
     if(dynamic_cast<FuzzyProcessor*>(processor))
         return new FuzzyProcessorWidget(parent,static_cast<FuzzyProcessor*>(processor));

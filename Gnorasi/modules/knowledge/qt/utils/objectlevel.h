@@ -35,20 +35,25 @@
 class ObjectLevel : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
+    Q_PROPERTY(int      id      READ id     WRITE setId     NOTIFY idChanged)
+    Q_PROPERTY(QString  name    READ name   WRITE setName   NOTIFY nameChanged)
 public:
     explicit ObjectLevel(QObject *parent = 0);
     
     int id() const {return m_id; }
     void setId(int i){ m_id = i; }
 
+    QString name() const {return m_name; }
+    void setName(const QString &name) { m_name = name; }
+
 signals:
     void idChanged();
-    
+    void nameChanged();
 public slots:
 
 private:
     int m_id;
+    QString m_name;
     
 };
 

@@ -9,6 +9,8 @@
 #include "comboboxdelegate.h"
 #include "lineeditfornumbersdelegate.h"
 
+#include "classhierarchywidget.h"
+
 #include "../fuzzy/fuzzyoperatormanager.h"
 #include "../fuzzy/fuzzyattribute.h"
 #include "../fuzzy/fuzzyfunctionfactory.h"
@@ -57,6 +59,12 @@ void OntologyClassificationProcessorWidget::initialize(){
     /// \brief gui staff
     ///
 
+    m_pClassHierarchyWidget = new ClassHierarchyWidget(this);
+
+    QVBoxLayout *vboxlayout = new QVBoxLayout;
+    vboxlayout->addWidget(m_pClassHierarchyWidget);
+
+    setLayout(vboxlayout);
 
     hide();
 }
@@ -107,22 +115,23 @@ void OntologyClassificationProcessorWidget::processPortData(){
     }else{
         //! get the first port
         OBJECTATTRIBUTEMANAGER->clear();
-//        OBJECTLEVELMANAGER->clear();
         for(int i = 0; i < l.size(); i++){
+
+            OBJECTLEVELMANAGER->clear();
+
             Port *port = l.at(i);
             std::vector<const Port*> l1 = port->getConnected();
             for(int h = 0; h < l1.size(); h++){
 
+                ObjectLevel *oLevel = new ObjectLevel(this);
+                oLevel->setId(h);
+                oLevel->setName(QString("Level %1").arg(QString::number(h)));
+                OBJECTLEVELMANAGER->addObjectLevel(oLevel);
+
                 const Port *port1 = l1.at(h);
                 const OTBLabelMapPort *lblMapPort = static_cast<const OTBLabelMapPort*>(port1);
                 if(lblMapPort){
-//                    int levelid = OBJECTLEVELMANAGER->generateNextLevelId();
-//                    ObjectLevel *ol = new ObjectLevel(this);
-//                    ol->setId(levelid);
-//                    OBJECTLEVELMANAGER->addObjectLevel(ol);
                     OTBLabelMapPort::LabelMapType* dataMap = lblMapPort->getData();
-
-//                    FuzzyLabelMapUtility::LabelMapType *mapT = (FuzzyLabelMapUtility::LabelMapType*)dataMap;
 
                     m_pFuzzyLabelMapUtility->parse(dataMap);
 

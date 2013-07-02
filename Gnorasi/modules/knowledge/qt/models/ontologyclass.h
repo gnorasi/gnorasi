@@ -46,9 +46,10 @@ class OntologyClass : public QObject
     Q_PROPERTY(QString  id      READ id         WRITE setId         NOTIFY idChanged)
     Q_PROPERTY(QString  name    READ name       WRITE setName       NOTIFY nameChanged)
     Q_PROPERTY(QString  color   READ color      WRITE setColor      NOTIFY colorChanged)
-    Q_PROPERTY(QString  level   READ level      WRITE setLevel      NOTIFY levelChanged)
+    Q_PROPERTY(int      level   READ level      WRITE setLevel      NOTIFY levelChanged)
+    Q_PROPERTY(int parentId READ parentId WRITE setparentId NOTIFY parentIdChanged)
 public:
-    OntologyClass(const QVector<QVariant> &data, OntologyClass *parent = 0);
+    OntologyClass(OntologyClass *parent = 0);
     ~OntologyClass();
 
     QString id() const { return m_id; }
@@ -56,32 +57,31 @@ public:
 
     OntologyClass *child(int number);
     int childCount() const;
-    int columnCount() const;
-    QVariant data(int column) const;
-    bool insertChildren(int position, int count, int columns);
-    bool insertColumns(int position, int columns);
+
     OntologyClass *parent();
-    bool removeChildren(int position, int count);
-    bool removeColumns(int position, int columns);
+
     int childNumber() const;
-    bool setData(int column, const QVariant &value);
 
     QList<OntologyClass*> getChildItems() const { return childItems; }
 
+    void addChild(OntologyClass *o) { childItems.append(o); }
 
     QHash<int,FuzzyRule*> fuzzyRuleHash() const { return m_fuzzyRuleHash; }
     void setFuzzyRuleHash(const QHash<int,FuzzyRule*> &f) { m_fuzzyRuleHash = f; }
 
 
-    QString name() const { if(itemData.count() > 1) return itemData[2].toString(); return QString(); }
-    void setName(const QString &n) { itemData[1] = n; }
+    QString name() const { return m_name; }
+    void setName(const QString &n) { m_name = n; }
 
 
-    QString color() const { if(itemData.count() > 2) return itemData[2].toString();  return QString(); }
-    void setColor(const QString &n) { itemData[2] = n; }
+    QString color() const { return m_color; }
+    void setColor(const QString &n) { m_color = n; }
 
-    QString level() const { return m_level; }
-    void setLevel(const QString &l) { m_level = l; }
+    int level() const { return m_level; }
+    void setLevel(const int l) { m_level = l; }
+
+    int parentId() const  { return m_parentId; }
+    void setparentId(int i) { m_parentId = i; }
 
 
 signals:
@@ -89,17 +89,21 @@ signals:
     void nameChanged();
     void colorChanged();
     void levelChanged();
+    void parentIdChanged();
 
 private:
     QList<OntologyClass*> childItems;
-    QVector<QVariant> itemData;
     OntologyClass *parentItem;
 
-    QString m_level;
+    int m_level;
 
     QHash<int,FuzzyRule*> m_fuzzyRuleHash;
 
+    QString m_name;
+    QString m_color;
     QString m_id;
+
+    int m_parentId;
 };
 
 } // end of namespace voreen

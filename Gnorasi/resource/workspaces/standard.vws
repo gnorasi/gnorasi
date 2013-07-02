@@ -53,6 +53,14 @@
                     <Properties />
                     <InteractionHandlers />
                 </Processor>
+                <Processor type="OntologyClassification Processor" name="OntologyClassification Processor">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-912" y="-495" />
+                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="false" x="760" y="340" width="600" height="500" />
+                    </MetaData>
+                    <Properties />
+                    <InteractionHandlers />
+                </Processor>
             </Processors>
             <Connections>
                 <Connection>
