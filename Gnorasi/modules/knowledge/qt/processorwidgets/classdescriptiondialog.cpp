@@ -29,6 +29,26 @@ void ClassDescriptionDialog::clearFuzzyRules(){
     m_pFuzzyRuleModel->removeRows(0,m_pFuzzyRuleModel->rowCount());
 }
 
+void ClassDescriptionDialog::initializeFuzzyRuleTreeView(){
+    QStandardItem *pContainedItem = new QStandardItem();
+    pContainedItem->setData(tr("Contained"),Qt::DisplayRole);
+    pContainedItem->setData(-101);
+
+    m_pFuzzyRuleModel->insertRows(0,1);
+    m_pFuzzyRuleModel->setItem(0,pContainedItem);
+
+    QStandardItem *pInheritedItem = new QStandardItem();
+    pInheritedItem->setData(tr("Inherited"),Qt::DisplayRole);
+    pInheritedItem->setData(-102);
+
+    m_pFuzzyRuleModel->insertRows(1,1);
+    m_pFuzzyRuleModel->setItem(1,pInheritedItem);
+
+
+
+
+}
+
 void ClassDescriptionDialog::setupData(){
 
     OntologyClass *pClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassById(m_classId);
@@ -108,6 +128,8 @@ void ClassDescriptionDialog::initialize(){
     m_pFuzzyRuleModel->setHorizontalHeaderLabels(headers);
 
     setupObjectLevels();
+
+    initializeFuzzyRuleTreeView();
 
     setLayout(vboxlayout);
 

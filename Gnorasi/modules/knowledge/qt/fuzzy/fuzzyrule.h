@@ -72,6 +72,12 @@ public:
     int                 levelId() const { return m_levelId; }
     void                setlevelId(int i) { m_levelId = i; }
 
+    bool                header() const { return m_header; }
+    void                setHeader(bool h) { m_header = h; }
+
+    bool                operatorType() const { return m_operatorType; }
+    void                setoperatorType(bool v) { m_operatorType = v; }
+
     //
 //    QString             headClass() const { return m_headClass; }
 //    void                setHeadClass(const QString &cl) { m_headClass = cl; }
@@ -111,11 +117,14 @@ signals:
     void                confidenceChanged();
     void                attributeChanged();
     void                levelIdChanged();
+    void                headerChanged();
+    void                operatorTypeChanged();
     
 public slots:
 
 private:
     friend class        FuzzyRuleModel;
+    friend class        OntologyClass;
 
     explicit            FuzzyRule(FuzzyFunction *pFunction = 0, QObject *parent = 0);
 
@@ -127,6 +136,9 @@ private:
 
     int                 m_attributeId;
     int                 m_levelId;
+
+    bool                m_header;
+    bool                m_operatorType;
 };
 
 } // end of namespace voreen
