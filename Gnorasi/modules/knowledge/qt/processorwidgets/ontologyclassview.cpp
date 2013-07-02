@@ -137,11 +137,14 @@ void OntologyClassView::onAddChildClass(){
         pItem->setData(classId);
 
         QList<QStandardItem*> parentItemList = omodel->findItems(pClassDescriptionDialog->parentClassId());
-        if(parentItemList.isEmpty())
+        if(!parentItemList.isEmpty())
         {
             QStandardItem *pParentItem = parentItemList.first();
-            pParentItem->setChild(pParentItem->rowCount(),pItem);
-        }
+            pParentItem->setChild(pParentItem->rowCount()-1,pItem);
+        }else
+            omodel->setItem(omodel->rowCount(index)-1,pItem);
+
+        expand(index);
 
     }else{
         int childMax = omodel->rowCount();
@@ -152,8 +155,12 @@ void OntologyClassView::onAddChildClass(){
         pItem->setData(classId);
         omodel->setItem(omodel->rowCount()-1,pItem);
 
+        expand(index);
+
         setCurrentIndex(omodel->index(childMax,0));
     }
+
+
 }
 
 void OntologyClassView::onRemoveCurrentClass(){
@@ -193,7 +200,7 @@ void OntologyClassView::onAddSiblingClass(){
 
     ClassDescriptionDialog *pClassDescriptionDialog = new ClassDescriptionDialog(this);
 
-    pClassDescriptionDialog->setParentClassId(omodel->data(index).toString());
+    pClassDescriptionDialog->setParentClassId(omodel->data(index.parent()).toString());
 
     if(pClassDescriptionDialog->exec() == QDialog::Rejected)
         return;
@@ -206,7 +213,13 @@ void OntologyClassView::onAddSiblingClass(){
         pItem->setData(classId,Qt::DisplayRole);
         pItem->setData(classId);
 
-        omodel->setItem(omodel->rowCount()-1,pItem);
+        QList<QStandardItem*> parentItemList = omodel->findItems(pClassDescriptionDialog->parentClassId());
+        if(!parentItemList.isEmpty())
+        {
+            QStandardItem *pParentItem = parentItemList.first();
+            pParentItem->setChild(pParentItem->rowCount()-1,pItem);
+        }else
+            omodel->setItem(omodel->rowCount(index.parent())-1,pItem);
 
         setCurrentIndex(omodel->index(omodel->rowCount(index.parent())-1,0,index.parent()));
     }

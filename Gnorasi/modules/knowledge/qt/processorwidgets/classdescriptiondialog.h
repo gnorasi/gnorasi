@@ -42,6 +42,8 @@ private slots:
     void onCancelClicked();
 
 private:
+    void initializeFuzzyRuleTreeView();
+
     void createNewClass();
 
     void editClass();
@@ -53,6 +55,8 @@ private:
     void setupObjectLevels();
 
     QComboBox *m_pObjectLevelComboBox;
+
+    QComboBox *m_pOperatorComboBox;
 
     QLineEdit *m_pQLineEdit;
 
