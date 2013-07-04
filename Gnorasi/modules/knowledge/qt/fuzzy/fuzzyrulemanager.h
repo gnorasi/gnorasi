@@ -20,6 +20,9 @@ public:
     QList<FuzzyRule*> fuzzyRuleList() const {return m_fuzzyRuleList; }
 
     void clear() { qDeleteAll(m_fuzzyRuleList); m_fuzzyRuleList.clear(); }
+
+    void addFuzzyRule(FuzzyRule *pRule) { m_fuzzyRuleList.append(pRule); }
+    void removeFuzzyRule(FuzzyRule *pRule ) { m_fuzzyRuleList.removeOne(pRule); }
     
 signals:
     

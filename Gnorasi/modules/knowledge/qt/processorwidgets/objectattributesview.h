@@ -19,7 +19,7 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *event);
 
 signals:
-    
+    void fuzzyRuleAdded(int );
 public slots:
 
 private:

@@ -28,14 +28,15 @@ FuzzyFunctionManager::~FuzzyFunctionManager(){
     clear();
 }
 
-FuzzyFunction* FuzzyFunctionManager::fuzzyFunctionByName(const QString &n){
+FuzzyFunction* FuzzyFunctionManager::fuzzyFunctionById(int id){
     QList<FuzzyFunction*>::const_iterator i;
     for(i = m_fuzzyFunctionList.constBegin(); i!= m_fuzzyFunctionList.constEnd(); i++){
         FuzzyFunction *pFunction  = *i;
 
-        QString name = pFunction->name();
-        if(!name.compare(n)){
+        if(pFunction->id() == id){
             return pFunction;
         }
     }
+
+    return 0;
 }

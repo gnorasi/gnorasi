@@ -56,6 +56,7 @@ class                   FuzzyRule : public QObject
 //    Q_PROPERTY(int      headClass   READ headClass  WRITE   setHeadClass    NOTIFY headClassChanged)
 //    Q_PROPERTY(double   confidence  READ confidence WRITE   setConfidence   NOTIFY confidenceChanged)
 public:
+    explicit            FuzzyRule(FuzzyFunction *pFunction, QObject *parent = 0);
     virtual             ~FuzzyRule();
     
     //
@@ -121,12 +122,6 @@ signals:
 public slots:
 
 private:
-//    friend class        FuzzyRuleModel;
-//    friend class        OntologyClass;
-
-    explicit            FuzzyRule(FuzzyFunction *pFunction = 0, QObject *parent = 0);
-
-//    QList<RuleItem*>    m_ruleItemList;
 
     FuzzyFunction       *m_pFuzzyFunction;
 

@@ -22,6 +22,9 @@ ClassHierarchyWidget::ClassHierarchyWidget(QWidget *parent) :
 void ClassHierarchyWidget::initialize(){
 //    m_pOntologyClassModel = new OntologyClassModel(this);
     m_pOntologyClassModel = new QStandardItemModel(this);
+    QStringList headers;
+    headers << tr("Name");
+    m_pOntologyClassModel->setHorizontalHeaderLabels(headers);
 
     m_pOntologyClassView = new OntologyClassView(this);
     m_pOntologyClassView->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);

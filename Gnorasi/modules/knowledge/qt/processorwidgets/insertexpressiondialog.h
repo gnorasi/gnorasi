@@ -19,7 +19,8 @@ public:
     void setupByLevel(int );
     
 signals:
-    
+    void fuzzyRuleAdded(int );
+
 public slots:
 
 private slots:

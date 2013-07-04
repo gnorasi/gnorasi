@@ -43,6 +43,7 @@ InsertExpressionDialog::InsertExpressionDialog(QWidget *parent) :
 
     connect(m_pCancelButton,SIGNAL(clicked()),this,SLOT(onCancelClicked()));
     connect(m_pOkButton,SIGNAL(clicked()),this,SLOT(onOkClicked()));
+    connect(m_pObjectAttributesView,SIGNAL(fuzzyRuleAdded(int)),this,SIGNAL(fuzzyRuleAdded(int)));
 
     initialize();
 }

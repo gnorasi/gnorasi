@@ -40,15 +40,16 @@ private slots:
     void onOkClicked();
     void onLevelComboboxChanged(int );
     void onCancelClicked();
+    void onFuzzyRuleAdded(int );
 
 private:
     void initializeFuzzyOperators();
 
     void initializeFuzzyRuleTreeView();
 
-    void createNewClass();
+    bool createNewClass();
 
-    void editClass();
+    bool editClass();
 
     bool validateLabel(const QString& );
 

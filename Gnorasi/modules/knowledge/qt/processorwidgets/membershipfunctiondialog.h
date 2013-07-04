@@ -15,7 +15,7 @@ class MembershipFunctionDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit MembershipFunctionDialog(int lid, const QString&, QWidget *parent = 0);
+    explicit MembershipFunctionDialog(int lid, const QString &atid, QWidget *parent = 0);
 
     void setupByRuleId(int );
 
@@ -26,6 +26,7 @@ public:
     QString attributeId() const { return m_attributeId; }
     
 signals:
+    void fuzzyRuleAdded(int );
     
 public slots:
 
@@ -57,6 +58,8 @@ private:
     QString m_attributeId;
 
     int m_levelId;
+
+    int m_currentButtonId;
 
     QPushButton *m_pOkButton;
     QPushButton *m_pCancelButton;

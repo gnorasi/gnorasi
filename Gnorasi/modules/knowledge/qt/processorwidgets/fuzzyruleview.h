@@ -17,8 +17,12 @@ public:
     void setLevelId(int l) { m_levelId = l; }
 
     void setOperatorItem(QStandardItem *item) { m_pOperatorItem = item; }
+
+
+    void setClassId(const QString &o) { m_classId = o; }
     
 signals:
+    void fuzzyRuleAdded(int);
     
 public slots:
 
@@ -29,12 +33,15 @@ protected:
 
 private slots:
     void onAddExpressionItem();
-    void onDeleteExpressionItem();
+    void onDeleteFuzzyRule();
     void onEditExpressionItem();
+    void onChangeOperator();
 
 private:
 
     int m_levelId;
+
+    QString m_classId;
 
     QStandardItem *m_pOperatorItem;
 

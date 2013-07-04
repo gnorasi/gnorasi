@@ -48,7 +48,8 @@ class OntologyClass : public QObject
     Q_PROPERTY(QString  name    READ name       WRITE setName       NOTIFY nameChanged)
     Q_PROPERTY(QString  color   READ color      WRITE setColor      NOTIFY colorChanged)
     Q_PROPERTY(int      level   READ level      WRITE setLevel      NOTIFY levelChanged)
-    Q_PROPERTY(int parentId READ parentId WRITE setparentId NOTIFY parentIdChanged)
+    Q_PROPERTY(QString  parentId READ parentId WRITE setparentId NOTIFY parentIdChanged)
+    Q_PROPERTY(QString opername READ opername WRITE setopername NOTIFY opernameChanged)
 public:
     OntologyClass(OntologyClass *parent = 0);
     ~OntologyClass();
@@ -66,9 +67,14 @@ public:
     QList<OntologyClass*> getChildItems() const { return childItems; }
 
     void addChild(OntologyClass *o) { childItems.append(o); }
+    void removeChild(OntologyClass *o) { childItems.removeOne(o); }
 
     QHash<int,FuzzyRule*> fuzzyRuleHash() const { return m_fuzzyRuleHash; }
     void setFuzzyRuleHash(const QHash<int,FuzzyRule*> &f) { m_fuzzyRuleHash = f; }
+    void clearFuzzyRuleHash() { m_fuzzyRuleHash.clear(); }
+    void addFuzzyRule(int i, FuzzyRule *r) { m_fuzzyRuleHash.insertMulti(i,r); }
+    QList<FuzzyRule*> fuzzyRuleList(int i) const { return m_fuzzyRuleHash.values(i); }
+    void removeFuzzyRule(int i, FuzzyRule *r);
 
 
     QString name() const { return m_name; }
@@ -81,8 +87,12 @@ public:
     int level() const { return m_level; }
     void setLevel(const int l) { m_level = l; }
 
-    int parentId() const  { return m_parentId; }
-    void setparentId(int i) { m_parentId = i; }
+    QString parentId() const  { return m_parentId; }
+    void setparentId(const QString &i) { m_parentId = i; }
+
+
+    QString opername() const {return m_opername; }
+    void setopername(const QString &n) { m_opername = n; }
 
 
 signals:
@@ -91,22 +101,22 @@ signals:
     void colorChanged();
     void levelChanged();
     void parentIdChanged();
+    void opernameChanged();
 
 private:
-    QList<OntologyClass*> childItems;
+
     OntologyClass *parentItem;
 
-    FuzzyOperator *m_pOperator;
-
-    int m_level;
+    QList<OntologyClass*> childItems;
 
     QHash<int,FuzzyRule*> m_fuzzyRuleHash;
 
     QString m_name;
     QString m_color;
     QString m_id;
-
-    int m_parentId;
+    QString m_parentId;
+    QString m_opername;
+    int     m_level;
 };
 
 //} // end of namespace voreen
