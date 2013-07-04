@@ -93,7 +93,7 @@ void OntologyClassificationProcessorWidget::processAttributeList(int levelid, co
     for(i = list.constBegin(); i != list.constEnd(); i++){
         QString name = *i;
 
-        ObjectAttribute *oa = new ObjectAttribute(this);
+        ObjectAttribute *oa = new ObjectAttribute(OBJECTATTRIBUTEMANAGER);
         oa->setId(name);
         oa->setName(name);
         oa->setlevelId(levelid);
@@ -123,7 +123,7 @@ void OntologyClassificationProcessorWidget::processPortData(){
             std::vector<const Port*> l1 = port->getConnected();
             for(int h = 0; h < l1.size(); h++){
 
-                ObjectLevel *oLevel = new ObjectLevel(this);
+                ObjectLevel *oLevel = new ObjectLevel(OBJECTLEVELMANAGER);
                 oLevel->setId(h);
                 oLevel->setName(QString("Level %1").arg(QString::number(h)));
                 OBJECTLEVELMANAGER->addObjectLevel(oLevel);

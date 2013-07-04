@@ -31,4 +31,5 @@
 ObjectAttribute::ObjectAttribute(QObject *parent) :
     QObject(parent)
 {
+    m_otype = 1; //
 }

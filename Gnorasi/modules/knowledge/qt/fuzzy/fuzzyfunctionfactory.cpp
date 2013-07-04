@@ -35,11 +35,6 @@
 #include "fuzzyfunctiontriangular.h"
 #include "fuzzyfunctiontrapezoidal.h"
 
-#define FUZZYFUNCTIONLEFTSHOULDER "Left Shoulder"
-#define FUZZYFUNCTIONRIGHTSHOULDER "Right Shoulder"
-#define FUZZYFUNCTIONTRIANGLULAR "Triangular"
-#define FUZZYFUNCTIONTRAPEZOIDAL "Trapezoidal"
-
 #include <iostream>
 
 using namespace std;

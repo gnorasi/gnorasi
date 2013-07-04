@@ -30,7 +30,6 @@
 
 #include "../models/ontologyclass.h"
 
-using namespace voreen;
 
 OntologyClassificationManager* OntologyClassificationManager::m_pInstance = NULL;
 

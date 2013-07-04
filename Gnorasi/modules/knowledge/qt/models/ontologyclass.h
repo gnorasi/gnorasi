@@ -33,10 +33,11 @@
 #include <QVariant>
 #include <QVector>
 
-
-namespace voreen {
+class FuzzyOperator;
 
 class FuzzyRule;
+
+//namespace voreen {
 //!
 //! \brief This class stores data related to OntologyClass items handled by the OntologyClassModel
 //!
@@ -95,6 +96,8 @@ private:
     QList<OntologyClass*> childItems;
     OntologyClass *parentItem;
 
+    FuzzyOperator *m_pOperator;
+
     int m_level;
 
     QHash<int,FuzzyRule*> m_fuzzyRuleHash;
@@ -106,6 +109,6 @@ private:
     int m_parentId;
 };
 
-} // end of namespace voreen
+//} // end of namespace voreen
 
 #endif // ONTOLOGYCLASSITEM_H

@@ -2,7 +2,7 @@
 
 #include "ontologyclass.h"
 
-using namespace voreen;
+//using namespace voreen;
 
 #include "../fuzzy/fuzzyrule.h"
 

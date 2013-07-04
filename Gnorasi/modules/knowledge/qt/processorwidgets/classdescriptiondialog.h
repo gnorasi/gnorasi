@@ -8,7 +8,7 @@
 
 #include <QPushButton>
 
-class ClassExpressionsView;
+class FuzzyRuleView;
 
 class ClassDescriptionDialog : public QDialog
 {
@@ -38,10 +38,12 @@ public slots:
 
 private slots:
     void onOkClicked();
-
+    void onLevelComboboxChanged(int );
     void onCancelClicked();
 
 private:
+    void initializeFuzzyOperators();
+
     void initializeFuzzyRuleTreeView();
 
     void createNewClass();
@@ -60,7 +62,7 @@ private:
 
     QLineEdit *m_pQLineEdit;
 
-    ClassExpressionsView *m_pClassExpressionsView;
+    FuzzyRuleView *m_pFuzzyRuleView;
 
     QStandardItemModel *m_pFuzzyRuleModel;
     
@@ -70,6 +72,8 @@ private:
     QString m_classId;
 
     QString m_parentClassId;
+
+    QStandardItem *m_pOperatorItem;
 };
 
 #endif // CLASSDESCRIPTIONDIALOG_H

@@ -52,6 +52,9 @@ public:
 
     void clear() { qDeleteAll(m_fuzzyOperatorList); m_fuzzyOperatorList.clear(); }
 
+    FuzzyOperator* fuzzyOperatorByName(const QString& );
+
+    int count() const { return m_fuzzyOperatorList.count(); }
 
 
 signals:
