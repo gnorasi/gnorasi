@@ -37,6 +37,7 @@ class ObjectAttribute : public QObject
     Q_PROPERTY(QString  name    READ name       WRITE setName       NOTIFY nameChanged)
     Q_PROPERTY(QString  id      READ id         WRITE setId         NOTIFY idChanged)
     Q_PROPERTY(int      levelId READ levelId    WRITE setlevelId    NOTIFY levelIdChanged)
+    Q_PROPERTY(int      otype   READ otype      WRITE setotype      NOTIFY otypeChanged)
 public:
     explicit ObjectAttribute(QObject *parent = 0);
     
@@ -48,11 +49,15 @@ public:
 
     int levelId() const { return m_levelid; }
     void setlevelId(int l) { m_levelid = l; }
+
+    int otype() const { return m_otype; }
+    void setotype(int i) { m_otype = i; }
 signals:
     
     void nameChanged();
     void idChanged();
     void levelIdChanged();
+    void otypeChanged();
 
 public slots:
 
@@ -60,7 +65,14 @@ private:
     QString m_name;
     QString m_id;
     int m_levelid;
-    
+
+    /*!
+     * \brief m_otype
+     *  The otype variable can take the following values
+     *  [1] : Object Map Attributes ( the default value )
+     *  [2] : Spatial Attributes
+     */
+    int m_otype;
 };
 
 #endif // OBJECTATTRIBUTE_H

@@ -1,13 +1,12 @@
 #include "fuzzyrule.h"
 //#include "ruleitem.h"
-#include "../models/ontologyclass.h"
+//#include "../models/ontologyclass.h"
 #include "fuzzyfunction.h"
-#include "../models/fuzzyrulemodel.h"
+//#include "../models/fuzzyrulemodel.h"
 
 #include "../utils/objectattribute.h"
 #include "../utils/objectattributemanager.h"
 
-using namespace voreen;
 
 FuzzyRule::FuzzyRule(FuzzyFunction *p, QObject *parent) :
     m_pFuzzyFunction(p),  QObject(parent)

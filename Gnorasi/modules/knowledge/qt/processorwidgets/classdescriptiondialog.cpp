@@ -1,6 +1,6 @@
 #include "classdescriptiondialog.h"
 
-#include "classexpressionsview.h"
+#include "fuzzyruleview.h"
 
 #include <QLabel>
 #include <QHBoxLayout>
@@ -14,8 +14,8 @@
 #include "../fuzzy/fuzzyrule.h"
 #include "../utils/objectattribute.h"
 #include "../utils/objectattributemanager.h"
-
-#include "membershipfunctionwidget.h"
+#include "../fuzzy/fuzzyoperator.h"
+#include "../fuzzy/fuzzyoperatormanager.h"
 
 ClassDescriptionDialog::ClassDescriptionDialog(QWidget *parent) :
     QDialog(parent)
@@ -29,27 +29,54 @@ void ClassDescriptionDialog::clearFuzzyRules(){
     m_pFuzzyRuleModel->removeRows(0,m_pFuzzyRuleModel->rowCount());
 }
 
+void ClassDescriptionDialog::initializeFuzzyOperators(){
+    if(FUZZYOPERATORMANAGER->count())
+        return;
+
+    FuzzyOperator *pOperator = new FuzzyOperator(this);
+    pOperator->setName(tr("min"));
+    FUZZYOPERATORMANAGER->addOperator(pOperator);
+
+    pOperator = new FuzzyOperator(this);
+    pOperator->setName(tr("max"));
+    FUZZYOPERATORMANAGER->addOperator(pOperator);
+
+}
+
 void ClassDescriptionDialog::initializeFuzzyRuleTreeView(){
     QStandardItem *pContainedItem = new QStandardItem();
     pContainedItem->setData(tr("Contained"),Qt::DisplayRole);
     pContainedItem->setData(-101);
 
-    m_pFuzzyRuleModel->insertRows(0,1);
     m_pFuzzyRuleModel->setItem(0,pContainedItem);
 
     QStandardItem *pInheritedItem = new QStandardItem();
     pInheritedItem->setData(tr("Inherited"),Qt::DisplayRole);
     pInheritedItem->setData(-102);
 
-    m_pFuzzyRuleModel->insertRows(1,1);
     m_pFuzzyRuleModel->setItem(1,pInheritedItem);
 
+    QList<FuzzyOperator*> list = FUZZYOPERATORMANAGER->fuzzyOperatorList();
+    QList<FuzzyOperator*>::const_iterator i;
+    for(i = list.constBegin(); i != list.constEnd(); i++){
+        FuzzyOperator *pO = *i;
 
+        QString name = pO->name();
+        m_pOperatorItem = new QStandardItem();
+        m_pOperatorItem->setData(name,Qt::DisplayRole);
+        m_pOperatorItem->setData(-103);
+        pContainedItem->setChild(0,m_pOperatorItem);
 
+        m_pFuzzyRuleView->expand(m_pFuzzyRuleModel->indexFromItem(pContainedItem));
+
+        return;
+    }
 
 }
 
 void ClassDescriptionDialog::setupData(){
+
+    Q_ASSERT(m_pOperatorItem);
 
     OntologyClass *pClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassById(m_classId);
     if(!pClass)
@@ -65,6 +92,7 @@ void ClassDescriptionDialog::setupData(){
     m_pObjectLevelComboBox->setCurrentIndex(ci);
 
     m_pQLineEdit->setText(pClass->name());
+
 
     QHash<int,FuzzyRule*> rulesList = pClass->fuzzyRuleHash();
     QHash<int,FuzzyRule*>::const_iterator i;
@@ -83,7 +111,9 @@ void ClassDescriptionDialog::setupData(){
         pItem->setData(name,Qt::DisplayRole);
         pItem->setData(pRule->name());
 
-        m_pFuzzyRuleModel->setItem(m_pFuzzyRuleModel->rowCount(),pItem);
+        m_pOperatorItem->setChild(m_pOperatorItem->rowCount(),pItem);
+
+        m_pFuzzyRuleView->expand(m_pFuzzyRuleModel->indexFromItem(m_pOperatorItem));
     }
 }
 
@@ -111,15 +141,16 @@ void ClassDescriptionDialog::initialize(){
     hboxlayout2->addWidget(m_pCancelButton);
 
     m_pFuzzyRuleModel = new QStandardItemModel(this);
-    m_pClassExpressionsView = new ClassExpressionsView(this);
-    m_pClassExpressionsView->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    m_pClassExpressionsView->setModel(m_pFuzzyRuleModel);
+    m_pFuzzyRuleView = new FuzzyRuleView(this);
+    m_pFuzzyRuleView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_pFuzzyRuleView->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    m_pFuzzyRuleView->setModel(m_pFuzzyRuleModel);
 
     QVBoxLayout *vboxlayout     = new QVBoxLayout();
     vboxlayout->addWidget(pQGroupBox);
     vboxlayout->addWidget(pQGroupBox1);
     vboxlayout->addWidget(pLabel2);
-    vboxlayout->addWidget(m_pClassExpressionsView);
+    vboxlayout->addWidget(m_pFuzzyRuleView);
     vboxlayout->addLayout(hboxlayout2);
 
     QStringList headers;
@@ -129,12 +160,19 @@ void ClassDescriptionDialog::initialize(){
 
     setupObjectLevels();
 
+    initializeFuzzyOperators();
     initializeFuzzyRuleTreeView();
 
     setLayout(vboxlayout);
 
     connect(m_pOkButton,SIGNAL(clicked()),this,SLOT(onOkClicked()));
     connect(m_pCancelButton,SIGNAL(clicked()),this,SLOT(onCancelClicked()));
+    connect(m_pObjectLevelComboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(onLevelComboboxChanged(int)));
+}
+
+void ClassDescriptionDialog::onLevelComboboxChanged( int index){
+    int lid = levelId();
+    m_pFuzzyRuleView->setLevelId(lid);
 }
 
 int ClassDescriptionDialog::levelId() const{
@@ -230,6 +268,7 @@ void ClassDescriptionDialog::setupObjectLevels()
         int id = pLevel->id();
 
         m_pObjectLevelComboBox->addItem(name,id);
+        m_pFuzzyRuleView->setLevelId(id);
     }
 }
 

@@ -32,12 +32,10 @@
 #include <QObject>
 
 class                   FuzzyFunction;
-class                   FuzzyRuleModel;
-
-namespace voreen {
+//class                   FuzzyRuleModel;
 
 class                   RuleItem;
-class                   OntologyClass;
+//class                   OntologyClass;
 
 //!
 //! \brief The FuzzyRule class contains information about Rules the user can set through
@@ -53,7 +51,7 @@ class                   FuzzyRule : public QObject
     Q_OBJECT
     Q_PROPERTY(int      id          READ id         WRITE   setid           NOTIFY idChanged)
     Q_PROPERTY(QString  name        READ name )
-    Q_PROPERTY(int      attribute   READ attribute  WRITE   setAttribute    NOTIFY attributeChanged)
+    Q_PROPERTY(QString  attribute   READ attribute  WRITE   setAttribute    NOTIFY attributeChanged)
     Q_PROPERTY(int levelId READ levelId WRITE setlevelId NOTIFY levelIdChanged)
 //    Q_PROPERTY(int      headClass   READ headClass  WRITE   setHeadClass    NOTIFY headClassChanged)
 //    Q_PROPERTY(double   confidence  READ confidence WRITE   setConfidence   NOTIFY confidenceChanged)
@@ -66,8 +64,8 @@ public:
 
     QString             name() const ;
 
-    int                 attribute() const { return m_attributeId;}
-    void                setAttribute(int i ) { m_attributeId = i; }
+    QString             attribute() const { return m_attributeId;}
+    void                setAttribute(const QString &i ) { m_attributeId = i; }
 
     int                 levelId() const { return m_levelId; }
     void                setlevelId(int i) { m_levelId = i; }
@@ -123,8 +121,8 @@ signals:
 public slots:
 
 private:
-    friend class        FuzzyRuleModel;
-    friend class        OntologyClass;
+//    friend class        FuzzyRuleModel;
+//    friend class        OntologyClass;
 
     explicit            FuzzyRule(FuzzyFunction *pFunction = 0, QObject *parent = 0);
 
@@ -134,13 +132,11 @@ private:
 
     int                 m_id;
 
-    int                 m_attributeId;
+    QString             m_attributeId;
     int                 m_levelId;
 
     bool                m_header;
     bool                m_operatorType;
 };
-
-} // end of namespace voreen
 
 #endif // FUZZYRULE_H

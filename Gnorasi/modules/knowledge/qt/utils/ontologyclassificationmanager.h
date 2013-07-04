@@ -34,11 +34,7 @@
 // a helper macro
 #define ONTOLOGYCLASSIFICATIONMANAGER OntologyClassificationManager::instance()
 
-namespace voreen{
-    class OntologyClass;
-}
-
-using namespace voreen;
+class OntologyClass;
 
 class OntologyClassificationManager : public QObject
 {

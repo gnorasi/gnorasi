@@ -45,6 +45,7 @@ class FuzzyFunction;
 class FuzzyFunction : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString icon READ icon WRITE seticon NOTIFY iconChanged)
 public:
 
     /*!
@@ -117,6 +118,9 @@ public:
     static QStringList availableFunctions;
 
 
+    QString icon() const {return m_icon; }
+    void seticon(const QString &c) { m_icon = c; }
+
 protected:    
 
     /*!
@@ -126,12 +130,12 @@ protected:
     explicit FuzzyFunction(QObject *parent = 0) : QObject(parent) { }
 
 signals:
-    
+    void iconChanged();
+
 public slots:
     
 private:
-
-
+    QString m_icon;
 
 };
 

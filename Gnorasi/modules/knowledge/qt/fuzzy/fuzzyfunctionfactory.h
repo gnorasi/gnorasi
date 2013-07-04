@@ -32,6 +32,11 @@
 
 #include <QObject>
 
+#define FUZZYFUNCTIONLEFTSHOULDER "Left Shoulder"
+#define FUZZYFUNCTIONRIGHTSHOULDER "Right Shoulder"
+#define FUZZYFUNCTIONTRIANGLULAR "Triangular"
+#define FUZZYFUNCTIONTRAPEZOIDAL "Trapezoidal"
+
 class FuzzyFunction;
 
 /*!

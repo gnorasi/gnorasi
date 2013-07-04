@@ -89,11 +89,14 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/fuzzy/fuzzyoperatormanager.cpp
     ${MOD_DIR}/qt/utils/objectlevel.cpp
     ${MOD_DIR}/qt/utils/objectlevelmanager.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctionmanager.cpp
     ${MOD_DIR}/qt/processorwidgets/classhierarchywidget.cpp
     ${MOD_DIR}/qt/processorwidgets/classdescriptiondialog.cpp
-    ${MOD_DIR}/qt/processorwidgets/classexpressionsview.cpp
-    ${MOD_DIR}/qt/processorwidgets/membershipfunctionwidget.cpp
-    ${MOD_DIR}/qt/processorwidgets/insertexpressionwidget.cpp
+    ${MOD_DIR}/qt/processorwidgets/fuzzyruleview.cpp
+    ${MOD_DIR}/qt/processorwidgets/membershipfunctiondialog.cpp
+    ${MOD_DIR}/qt/processorwidgets/insertexpressiondialog.cpp
+    ${MOD_DIR}/qt/processorwidgets/objectattributesview.cpp
+    ${MOD_DIR}/qt/fuzzy/fuzzyrulemanager.cpp
 )
 
 SET(MOD_QT_HEADERS
@@ -142,11 +145,14 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/fuzzy/fuzzyoperatormanager.h
     ${MOD_DIR}/qt/utils/objectlevel.h
     ${MOD_DIR}/qt/utils/objectlevelmanager.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyfunctionmanager.h
     ${MOD_DIR}/qt/processorwidgets/classhierarchywidget.h
     ${MOD_DIR}/qt/processorwidgets/classdescriptiondialog.h
-    ${MOD_DIR}/qt/processorwidgets/classexpressionsview.h
-    ${MOD_DIR}/qt/processorwidgets/membershipfunctionwidget.h
-    ${MOD_DIR}/qt/processorwidgets/insertexpressionwidget.h
+    ${MOD_DIR}/qt/processorwidgets/fuzzyruleview.h
+    ${MOD_DIR}/qt/processorwidgets/membershipfunctiondialog.h
+    ${MOD_DIR}/qt/processorwidgets/insertexpressiondialog.h
+    ${MOD_DIR}/qt/processorwidgets/objectattributesview.h
+    ${MOD_DIR}/qt/fuzzy/fuzzyrulemanager.h
 )
 
 SET(MOD_QT_HEADERS_NONMOC

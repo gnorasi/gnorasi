@@ -27,6 +27,7 @@
  ********************************************************************************/
 
 #include "fuzzyoperatormanager.h"
+#include "fuzzyoperator.h"
 
 FuzzyOperatorManager* FuzzyOperatorManager::m_pInstance = NULL;
 
@@ -52,4 +53,18 @@ void FuzzyOperatorManager::deleteInstance(){
         delete m_pInstance;
         m_pInstance = NULL;
     }
+}
+
+FuzzyOperator* FuzzyOperatorManager::fuzzyOperatorByName(const QString &name){
+    QList<FuzzyOperator*>::const_iterator i;
+    for(i = m_fuzzyOperatorList.constBegin(); i != m_fuzzyOperatorList.constEnd(); i++){
+        FuzzyOperator *pOperator = *i;
+
+        QString n = pOperator->name();
+
+        if(!name.compare(n))
+            return pOperator;
+    }
+
+    return 0;
 }
