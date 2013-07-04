@@ -173,14 +173,29 @@ void OntologyClassView::onRemoveCurrentClass(){
     if(ret == QMessageBox::No)
         return;
 
-//    int ret = QMessageBox::warning(this, tr("Delete Class"),
-//                                    tr("Do you want to delete the Class?"),
-//                                    QMessageBox::Yes | QMessageBox::No);
-
     if(ret == QMessageBox::Yes){
         QStandardItemModel *omodel = qobject_cast<QStandardItemModel*>(model());
         if(!omodel)
             return;
+
+        QString id = omodel->data(index,Qt::DisplayRole).toString();
+        OntologyClass *pClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassById(id);
+        if(!pClass)
+            return;
+
+        if(pClass->childCount()){
+            QMessageBox::critical(this,tr("Delete Failed"),tr("Failed to delete the class. Delete all sub classes first and then try again."));
+
+            return;
+        }
+
+        OntologyClass *pParentClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassById(pClass->parentId());
+        if(pParentClass)
+            pParentClass->removeChild(pClass);
+
+        pClass->clearFuzzyRuleHash();
+
+        ONTOLOGYCLASSIFICATIONMANAGER->removeOntologyClass(pClass);
 
         omodel->removeRows(index.row(),1,index.parent());
     }

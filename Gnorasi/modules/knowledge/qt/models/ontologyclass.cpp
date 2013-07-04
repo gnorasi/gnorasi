@@ -45,4 +45,17 @@ OntologyClass *OntologyClass::parent()
     return parentItem;
 }
 
+void OntologyClass::removeFuzzyRule(int l, FuzzyRule *r){
+    QList<FuzzyRule*> rList = m_fuzzyRuleHash.values(l);
+    rList.removeOne(r);
+    m_fuzzyRuleHash.remove(l);
+
+    QList<FuzzyRule*>::const_iterator i;
+    for(i = rList.begin(); i != rList.end(); i++){
+        FuzzyRule *pr = *i;
+
+        m_fuzzyRuleHash.insertMulti(l,pr);
+    }
+}
+
 

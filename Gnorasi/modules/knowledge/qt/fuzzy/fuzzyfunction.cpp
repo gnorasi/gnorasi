@@ -32,3 +32,7 @@
 
 QStringList FuzzyFunction::availableFunctions = QStringList() << tr("Left Shoulder") << tr("Right Shoulder") << tr("Triangular") << tr("Trapezoidal");
 
+QStringList FuzzyFunction::availableIcons = QStringList() << QString(":/voreenve/icons/leftShoulder.jpg")
+                                                             << QString(":/voreenve/icons/rightShoulder.jpg")
+                                                                << QString(":/voreenve/icons/trapezoidal.jpg")
+                                                                   << QString(":/voreenve/icons/triangular.jpg");

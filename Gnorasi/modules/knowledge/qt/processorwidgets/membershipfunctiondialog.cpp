@@ -3,6 +3,7 @@
 #include <QGroupBox>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QMessageBox>
 
 #include "../fuzzy/fuzzyfunction.h"
 #include "../fuzzy/fuzzyfunctionmanager.h"
@@ -25,8 +26,6 @@ void MembershipFunctionDialog::setupByRuleId(int id){
     if(!prule)
         return;
 
-    m_pParameterModel->clear();
-
     QString atid = prule->attribute();
     m_attributeId = atid;
     ObjectAttribute *pAttr = OBJECTATTRIBUTEMANAGER->objectAttributeOfLevelById(m_levelId,atid);
@@ -36,6 +35,19 @@ void MembershipFunctionDialog::setupByRuleId(int id){
     FuzzyFunction *pFunction = prule->funzzyFunction();
     if(pFunction){
         // fucking do sth
+
+        QString compareName = pFunction->name();
+
+        QAbstractButton *button = NULL;
+        for(int b = 0; b < m_pButtonGroup->buttons().count(); b++){
+            button = m_pButtonGroup->button(b);
+            if(!button->text().compare(compareName)){
+                m_currentButtonId = b;
+                break;
+            }
+        }
+
+        m_pParameterModel->clear();
 
         int pcount = pFunction->parametersCount();
         QStringList headers;
@@ -57,40 +69,31 @@ void MembershipFunctionDialog::setupByRuleId(int id){
         QStringList hheaders;
         hheaders << tr("Value");
         m_pParameterModel->setHorizontalHeaderLabels(hheaders);
+
+        int maxcount = pFunction->parametersCount();
+        for(int i = 0; i < maxcount; i++){
+            QModelIndex index = m_pParameterModel->index(i,0);
+            if(index.isValid()){
+                m_pParameterModel->itemFromIndex(index)->setData(QString::number(pFunction->parameterValueForIndex(i),'f',2),Qt::DisplayRole);
+            }
+        }
     }
 }
 
 void MembershipFunctionDialog::setupAvailableFunctionsButtons(){
-    if(!FUZZYFUNCTIONMANAGER->count()){
-        FuzzyFunction *pFunction = m_pFuzzyFunctionFactory->createFuzzyFunction(QString::fromAscii(FUZZYFUNCTIONLEFTSHOULDER));
-        pFunction->seticon(QString(":/voreenve/icons/leftShoulder.jpg"));
-        FUZZYFUNCTIONMANAGER->addFuzzyFunction(pFunction);
-
-        pFunction = m_pFuzzyFunctionFactory->createFuzzyFunction(QString::fromAscii(FUZZYFUNCTIONRIGHTSHOULDER));
-        pFunction->seticon(QString(":/voreenve/icons/rightShoulder.jpg"));
-        FUZZYFUNCTIONMANAGER->addFuzzyFunction(pFunction);
-
-        pFunction = m_pFuzzyFunctionFactory->createFuzzyFunction(QString::fromAscii(FUZZYFUNCTIONTRAPEZOIDAL));
-        pFunction->seticon(QString(":/voreenve/icons/trapezoidal.jpg"));
-        FUZZYFUNCTIONMANAGER->addFuzzyFunction(pFunction);
-
-        pFunction = m_pFuzzyFunctionFactory->createFuzzyFunction(QString::fromAscii(FUZZYFUNCTIONTRIANGLULAR));
-        pFunction->seticon(QString(":/voreenve/icons/triangular.jpg"));
-        FUZZYFUNCTIONMANAGER->addFuzzyFunction(pFunction);
-    }
 
     createbuttons();
 }
 
 void MembershipFunctionDialog::createbuttons(){
+    QStringList afList = FuzzyFunction::availableFunctions;
+    QStringList iconList = FuzzyFunction::availableIcons;
     int counter = 0;
-    QList<FuzzyFunction*> list = FUZZYFUNCTIONMANAGER->fuzzyFunctionList();
-    QList<FuzzyFunction*>::const_iterator i;
-    for(i = list.constBegin(); i != list.constEnd(); i++){
+    QStringList::const_iterator i;
+    for(i = afList.constBegin(); i != afList.constEnd(); i++){
 
-        FuzzyFunction *pfunction = *i;
-        QString name = pfunction->name();
-        QString icon = pfunction->icon();
+        QString name = *i;
+        QString icon = iconList.value(counter);
         m_helperHash[counter] = name;
 
         QPushButton *button = new QPushButton(name,this);
@@ -102,6 +105,36 @@ void MembershipFunctionDialog::createbuttons(){
         m_pHBoxButtonLayout->addWidget(button);
 
         counter++;
+    }
+
+    if(m_helperHash.count()){
+        QString name = m_pButtonGroup->button(0)->text();
+        m_currentButtonId = 0;
+
+        FuzzyFunction *pFunction = m_pFuzzyFunctionFactory->createFuzzyFunction(name);
+
+        m_pParameterModel->clear();
+
+        int pcount = pFunction->parametersCount();
+        QStringList headers;
+        for(int i = 0; i < pcount; i++){
+
+            int code = 97; // 'a'
+            code += i;
+
+            QString lstr = QString("%1").arg((char)code);
+
+            headers << lstr;
+
+            QStandardItem *pItem = new QStandardItem();
+            m_pParameterModel->setItem(i,pItem);
+        }
+
+        m_pParameterModel->setVerticalHeaderLabels(headers);
+
+        QStringList hheaders;
+        hheaders << tr("Value");
+        m_pParameterModel->setHorizontalHeaderLabels(hheaders);
     }
 }
 
@@ -172,10 +205,14 @@ void MembershipFunctionDialog::initialize(){
 
 
 void MembershipFunctionDialog::onFuzzyFunctionButtonClicked(int id){
-    QString at = m_helperHash.value(id);
-    FuzzyFunction *pFunction = FUZZYFUNCTIONMANAGER->fuzzyFunctionByName(at);
-    if(!pFunction)
+    m_currentButtonId = id;
+    QAbstractButton *button = m_pButtonGroup->button(m_currentButtonId);
+    if(!button){
+        QMessageBox::critical(this,tr("Create Failed"),tr("Could not create the fuzzy rule,could not find the selected button.."));
         return;
+    }
+
+    FuzzyFunction *pFunction = m_pFuzzyFunctionFactory->createFuzzyFunction(button->text());
 
     m_pParameterModel->clear();
 
@@ -200,9 +237,57 @@ void MembershipFunctionDialog::onFuzzyFunctionButtonClicked(int id){
     hheaders << tr("Value");
     m_pParameterModel->setHorizontalHeaderLabels(hheaders);
 
+    delete pFunction;
+
 }
 
 void MembershipFunctionDialog::onOkClicked(){
+
+    QAbstractButton *button = m_pButtonGroup->button(m_currentButtonId);
+    if(!button){
+        QMessageBox::critical(this,tr("Create Failed"),tr("Could not create the fuzzy rule,could not find the selected button.."));
+        return;
+    }
+
+    ObjectAttribute *pAttr = OBJECTATTRIBUTEMANAGER->objectAttributeOfLevelById(m_levelId,m_attributeId);
+    if(!pAttr){
+        QMessageBox::critical(this,tr("Create Failed"),tr("Could not create the fuzzy rule,could not find the attribute.."));
+        return;
+    }
+
+    QString ffname = button->text();
+    FuzzyFunction *pFunction = m_pFuzzyFunctionFactory->createFuzzyFunction(ffname);
+    int uid = 1;
+    bool running = true;
+    while(running){
+        if(FUZZYRULEMANAGER->fuzzyRuleById(uid)) // a fuzzy rule with the same id exists already
+            uid++;
+        else
+            running = false;
+    }
+    pFunction->setid(uid);
+
+    for(int i =0; i < m_pParameterModel->rowCount();i++)
+        pFunction->setParameterValueForIndex(i,m_pParameterModel->data(m_pParameterModel->index(i,0)).toDouble());
+
+    FUZZYFUNCTIONMANAGER->addFuzzyFunction(pFunction);
+
+    uid = 1;
+    running = true;
+    while(running){
+        if(FUZZYRULEMANAGER->fuzzyRuleById(uid)) // a fuzzy rule with the same id exists already
+            uid++;
+        else
+            running = false;
+    }
+
+    FuzzyRule *pRule = new FuzzyRule(pFunction,FUZZYFUNCTIONMANAGER);
+    pRule->setid(uid);
+    pRule->setAttribute(pAttr->id());
+    pRule->setlevelId(m_levelId);
+    FUZZYRULEMANAGER->addFuzzyRule(pRule);
+
+    emit fuzzyRuleAdded(uid);
 
     accept();
 }

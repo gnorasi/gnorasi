@@ -45,6 +45,7 @@ class FuzzyFunction;
 class FuzzyFunction : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int id READ id WRITE setid NOTIFY idChanged)
     Q_PROPERTY(QString icon READ icon WRITE seticon NOTIFY iconChanged)
 public:
 
@@ -117,9 +118,15 @@ public:
      */
     static QStringList availableFunctions;
 
+    static QStringList availableIcons;
+
 
     QString icon() const {return m_icon; }
     void seticon(const QString &c) { m_icon = c; }
+
+
+    int id() const { return m_id; }
+    void setid(int i) { m_id = i; }
 
 protected:    
 
@@ -131,11 +138,13 @@ protected:
 
 signals:
     void iconChanged();
+    void idChanged();
 
 public slots:
     
 private:
     QString m_icon;
+    int m_id;
 
 };
 

@@ -21,7 +21,7 @@ public:
 
     void clear() { qDeleteAll(m_fuzzyFunctionList); m_fuzzyFunctionList.clear(); }
 
-    FuzzyFunction* fuzzyFunctionByName(const QString &);
+    FuzzyFunction* fuzzyFunctionById(int );
 
     int count() const { return m_fuzzyFunctionList.count(); }
 

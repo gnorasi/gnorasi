@@ -56,6 +56,7 @@ void ObjectAttributesView::mouseDoubleClickEvent(QMouseEvent *event){
             else{
                 QString atid = item->data(Qt::DisplayRole).toString();
                 MembershipFunctionDialog *dialog = new MembershipFunctionDialog(m_levelId,atid,this);
+                connect(dialog,SIGNAL(fuzzyRuleAdded(int)),this,SIGNAL(fuzzyRuleAdded(int)));
                 dialog->exec();
             }
         }

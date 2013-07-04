@@ -16,6 +16,7 @@
 #include "../utils/objectattributemanager.h"
 #include "../fuzzy/fuzzyoperator.h"
 #include "../fuzzy/fuzzyoperatormanager.h"
+#include "../fuzzy/fuzzyrulemanager.h"
 
 ClassDescriptionDialog::ClassDescriptionDialog(QWidget *parent) :
     QDialog(parent)
@@ -67,6 +68,8 @@ void ClassDescriptionDialog::initializeFuzzyRuleTreeView(){
         m_pOperatorItem->setData(-103);
         pContainedItem->setChild(0,m_pOperatorItem);
 
+        m_pFuzzyRuleView->setOperatorItem(m_pOperatorItem);
+
         m_pFuzzyRuleView->expand(m_pFuzzyRuleModel->indexFromItem(pContainedItem));
 
         return;
@@ -82,6 +85,8 @@ void ClassDescriptionDialog::setupData(){
     if(!pClass)
         return;
 
+    m_pFuzzyRuleView->setClassId(pClass->id());
+
     int levelId = pClass->level();
     ObjectLevel *pOL = OBJECTLEVELMANAGER->objectLevelById(levelId);
     if(!pOL)
@@ -93,28 +98,27 @@ void ClassDescriptionDialog::setupData(){
 
     m_pQLineEdit->setText(pClass->name());
 
+    QString opername = pClass->opername();
+    m_pOperatorItem->setData(opername,Qt::DisplayRole);
 
-    QHash<int,FuzzyRule*> rulesList = pClass->fuzzyRuleHash();
-    QHash<int,FuzzyRule*>::const_iterator i;
-    for(i = rulesList.constBegin(); i != rulesList.constEnd(); i++){
-        int attributeId = i.key();
+    QList<FuzzyRule*> fList = pClass->fuzzyRuleList(levelId);
 
-        FuzzyRule *pRule = i.value();
+    QList<FuzzyRule*>::const_iterator i;
+    for(i = fList.constBegin(); i != fList.constEnd(); i++){
 
-        ObjectAttribute *pAttribute = OBJECTATTRIBUTEMANAGER->objectAttributeOfLevelById(levelId,attributeId);
-        if(!pAttribute)
-            continue;
+        FuzzyRule *pRule = *i;
 
-        QString name = pAttribute->name();
+        QString name = pRule->name();
 
         QStandardItem *pItem = new QStandardItem();
         pItem->setData(name,Qt::DisplayRole);
-        pItem->setData(pRule->name());
+        pItem->setData(pRule->id());
 
         m_pOperatorItem->setChild(m_pOperatorItem->rowCount(),pItem);
-
-        m_pFuzzyRuleView->expand(m_pFuzzyRuleModel->indexFromItem(m_pOperatorItem));
     }
+
+    m_pFuzzyRuleView->expand(m_pFuzzyRuleModel->indexFromItem(m_pOperatorItem));
+
 }
 
 void ClassDescriptionDialog::initialize(){
@@ -168,6 +172,7 @@ void ClassDescriptionDialog::initialize(){
     connect(m_pOkButton,SIGNAL(clicked()),this,SLOT(onOkClicked()));
     connect(m_pCancelButton,SIGNAL(clicked()),this,SLOT(onCancelClicked()));
     connect(m_pObjectLevelComboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(onLevelComboboxChanged(int)));
+    connect(m_pFuzzyRuleView,SIGNAL(fuzzyRuleAdded(int)),this,SLOT(onFuzzyRuleAdded(int)));
 }
 
 void ClassDescriptionDialog::onLevelComboboxChanged( int index){
@@ -187,12 +192,12 @@ int ClassDescriptionDialog::levelId() const{
     return levelId;
 }
 
-void ClassDescriptionDialog::createNewClass(){
+bool ClassDescriptionDialog::createNewClass(){
 
     QString name = m_pQLineEdit->text();
     if(!validateLabel(name)){
         QMessageBox::critical(this,tr("Create error"),tr("Could not create the ontology class,please change the name and try again."),QMessageBox::Ok);
-        return;
+        return false;
     }
 
     int lId = levelId();
@@ -207,17 +212,22 @@ void ClassDescriptionDialog::createNewClass(){
     pClass->setName(name);
     pClass->setId(name);
     pClass->setLevel(lId);
+    pClass->setopername(m_pOperatorItem->data(Qt::DisplayRole).toString());
     m_classId = name;
     ONTOLOGYCLASSIFICATIONMANAGER->addOntologyClass(pClass);
 
-    if(pParentClass)
+    if(pParentClass){
         pParentClass->addChild(pClass);
+        pClass->setparentId(pParentClass->id());
+    }
+
+    return true;
 }
 
-void ClassDescriptionDialog::editClass(){
+bool ClassDescriptionDialog::editClass(){
     OntologyClass *pClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassById(m_classId);
     if(!pClass)
-        return;
+        return false;
 
     QString name = m_pQLineEdit->text();
 
@@ -225,7 +235,7 @@ void ClassDescriptionDialog::editClass(){
 
         if(!validateLabel(name)){
             QMessageBox::critical(this,tr("Create error"),tr("Could not create the ontology class,please change the name and try again."),QMessageBox::Ok);
-            return;
+            return false;
         }
 
         pClass->setName(name);
@@ -233,16 +243,21 @@ void ClassDescriptionDialog::editClass(){
     }
 
     int lId = levelId();
+    QString opername = m_pOperatorItem->data(Qt::DisplayRole).toString();
 
     pClass->setLevel(lId);
+    pClass->setopername(opername);
     m_classId = name;
+
+    return true;
 }
 
 void ClassDescriptionDialog::onOkClicked(){
-    if(m_classId.isEmpty())
-        createNewClass();
-    else
-        editClass();
+    if(m_classId.isEmpty()){
+        if(!createNewClass())
+            return;
+    } else if (!editClass())
+        return;
 
     accept();
 }
@@ -288,4 +303,24 @@ bool ClassDescriptionDialog::validateLabel(const QString &name){
     }
 
     return true;
+}
+
+
+void ClassDescriptionDialog::onFuzzyRuleAdded(int id){
+    FuzzyRule *pRule = FUZZYRULEMANAGER->fuzzyRuleById(id);
+    if(!pRule)
+        return;
+
+    OntologyClass *pClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassById(m_classId);
+    if(!pClass)
+        return;
+
+    pClass->addFuzzyRule(levelId(),pRule);
+
+    QStandardItem *pItem = new QStandardItem();
+    pItem->setData(pRule->name(),Qt::DisplayRole);
+    pItem->setData(pRule->id());
+
+    m_pOperatorItem->setChild(m_pOperatorItem->rowCount(),pItem);
+    m_pFuzzyRuleView->expand(m_pFuzzyRuleModel->indexFromItem(m_pOperatorItem));
 }
