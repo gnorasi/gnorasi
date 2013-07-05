@@ -23,6 +23,8 @@ public:
 
     void addFuzzyRule(FuzzyRule *pRule) { m_fuzzyRuleList.append(pRule); }
     void removeFuzzyRule(FuzzyRule *pRule ) { m_fuzzyRuleList.removeOne(pRule); }
+
+    QStringList fuzzyRulesNames();
     
 signals:
     

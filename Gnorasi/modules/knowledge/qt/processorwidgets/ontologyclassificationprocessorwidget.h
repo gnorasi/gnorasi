@@ -137,7 +137,7 @@ private:
      *  The structure of this document has been prototyped by Babis . ask him for more info.
      * \return
      */
-    QString constructXmlFile() ;
+    QString constructXmlFile();
 
     /*!
      * \brief processOntologyItem
@@ -194,26 +194,10 @@ private:
     // helper list
     QStringList                             m_fuzzyAttributesList;
 
+    // Qt Widgets
     ClassHierarchyWidget                    *m_pClassHierarchyWidget;
+    QPushButton                             *m_pPushButtonCalculate;
 
-
-
-//    // Qt Widgets
-//    QListView                               *m_pAvailableAttributesListView;
-//    QTableView                              *m_pFuzzyAttributesTableView;
-
-//    QPushButton                             *m_pPushButtonAdd;
-//    QPushButton                             *m_pPushButtonRemove;
-//    QPushButton                             *m_pPushButtonCalculate;
-
-//    QRadioButton*                           m_pMinRadioButton;
-//    QRadioButton*                           m_pMaxRadioButton;
-
-//    QComboBox*                              m_pOntologyClassComboBox;
-
-//    // the two models
-//    QStandardItemModel                      *m_pAvailableAttributesModel;
-//    QStandardItemModel                      *m_pFuzzyAttributesModel;
 };
 
 }

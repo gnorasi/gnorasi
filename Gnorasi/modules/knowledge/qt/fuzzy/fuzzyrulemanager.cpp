@@ -2,6 +2,8 @@
 
 #include "fuzzyrule.h"
 
+#include <QStringList>
+
 FuzzyRuleManager* FuzzyRuleManager::m_pInstance = NULL;
 
 FuzzyRuleManager::FuzzyRuleManager(QObject *parent) :
@@ -37,4 +39,19 @@ FuzzyRule* FuzzyRuleManager::fuzzyRuleById(int id){
     }
 
     return 0;
+}
+
+QStringList FuzzyRuleManager::fuzzyRulesNames(){
+    QStringList list;
+    QList<FuzzyRule*>::const_iterator i;
+    for(i = m_fuzzyRuleList.constBegin(); i != m_fuzzyRuleList.constEnd(); i++){
+        FuzzyRule *pRule = *i;
+
+        QString name = pRule->name();
+
+        if(!list.contains(name))
+            list << name;
+    }
+
+    return list;
 }

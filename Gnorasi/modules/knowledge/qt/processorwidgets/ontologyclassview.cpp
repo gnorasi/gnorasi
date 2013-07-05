@@ -78,7 +78,7 @@ void OntologyClassView::mouseDoubleClickEvent(QMouseEvent *event){
         if(!omodel)
             return;
 
-        QStandardItem *pItem = omodel->item(index.row());
+        QStandardItem *pItem = omodel->itemFromIndex(index);
         if(pItem){
             ClassDescriptionDialog *pClassDescriptionDialog = new ClassDescriptionDialog(this);
             QString classId = pItem->data(Qt::DisplayRole).toString();
@@ -131,29 +131,27 @@ void OntologyClassView::onAddChildClass(){
 
     if(index.isValid()){
 
-        omodel->insertRows(omodel->rowCount(index),1,index);
         QStandardItem *pItem = new QStandardItem();
         pItem->setData(classId,Qt::DisplayRole);
         pItem->setData(classId);
 
-        QList<QStandardItem*> parentItemList = omodel->findItems(pClassDescriptionDialog->parentClassId());
+        QList<QStandardItem*> parentItemList = omodel->findItems(pClassDescriptionDialog->parentClassId(),Qt::MatchExactly | Qt::MatchRecursive);
         if(!parentItemList.isEmpty())
         {
             QStandardItem *pParentItem = parentItemList.first();
-            pParentItem->setChild(pParentItem->rowCount()-1,pItem);
+            pParentItem->setChild(pParentItem->rowCount(),pItem);
         }else
-            omodel->setItem(omodel->rowCount(index)-1,pItem);
+            omodel->setItem(omodel->rowCount(index),pItem);
 
         expand(index);
 
     }else{
         int childMax = omodel->rowCount();
 
-        omodel->insertRows(childMax,1);
         QStandardItem *pItem = new QStandardItem();
         pItem->setData(classId,Qt::DisplayRole);
         pItem->setData(classId);
-        omodel->setItem(omodel->rowCount()-1,pItem);
+        omodel->setItem(omodel->rowCount(),pItem);
 
         expand(index);
 
@@ -222,22 +220,22 @@ void OntologyClassView::onAddSiblingClass(){
 
     QString classId = pClassDescriptionDialog->classId();
 
-    if(omodel->insertRows(omodel->rowCount(index.parent()),1,index.parent())){
+//    if(omodel->insertRows(omodel->rowCount(index.parent()),1,index.parent())){
 
         QStandardItem *pItem = new QStandardItem();
         pItem->setData(classId,Qt::DisplayRole);
         pItem->setData(classId);
 
-        QList<QStandardItem*> parentItemList = omodel->findItems(pClassDescriptionDialog->parentClassId());
+        QList<QStandardItem*> parentItemList = omodel->findItems(pClassDescriptionDialog->parentClassId(),Qt::MatchExactly | Qt::MatchRecursive);
         if(!parentItemList.isEmpty())
         {
             QStandardItem *pParentItem = parentItemList.first();
-            pParentItem->setChild(pParentItem->rowCount()-1,pItem);
+            pParentItem->setChild(pParentItem->rowCount(),pItem);
         }else
-            omodel->setItem(omodel->rowCount(index.parent())-1,pItem);
+            omodel->setItem(omodel->rowCount(index.parent()),pItem);
 
-        setCurrentIndex(omodel->index(omodel->rowCount(index.parent())-1,0,index.parent()));
-    }
+        setCurrentIndex(omodel->index(omodel->rowCount(index.parent()),0,index.parent()));
+//    }
 }
 
 QString OntologyClassView::getUniqueNameFromIndex(const QModelIndex &index){
