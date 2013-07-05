@@ -14,7 +14,7 @@ SelectOperatorDialog::SelectOperatorDialog(QWidget *parent) :
     m_pTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     m_pTreeView->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     m_pOkbutton = new QPushButton(tr("Ok"),this);
-    m_pCancelbutton = new QPushButton(tr("Ok"),this);
+    m_pCancelbutton = new QPushButton(tr("Cancel"),this);
     m_pTreeView->setModel(m_pModel);
 
     QStringList headers;

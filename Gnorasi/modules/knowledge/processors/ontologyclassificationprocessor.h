@@ -60,6 +60,7 @@ private:
 //    FuzzyRulePort   outFuzzyRulePort_;
 //	OntologyPort    inOntologyPort_;
     TextPort        outTextPort_;
+    TextPort        outXmlPort;
 
     std::string pTextData_;
     

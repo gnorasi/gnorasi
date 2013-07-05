@@ -10,13 +10,17 @@ OntologyClassificationProcessor::OntologyClassificationProcessor()
     : Processor(),
     inLblMapPort_(Port::INPORT, "Input Object Map Port",1),
 //    outFuzzyRulePort_(Port::OUTPORT, "Output Fuzzy Rule Port"),
-    outTextPort_(Port::OUTPORT, "Output Text Port")
+    outTextPort_(Port::OUTPORT, "CSV Text Port"),
+    outXmlPort(Port::OUTPORT,"XML Port")
 //    inOntologyPort_(Port::INPORT,"Input Ontology Port", 0)
 {
+    outTextPort_.setDescription("1");
+    outXmlPort.setDescription("2");
     // register ports and properties
     addPort(inLblMapPort_);
 //    addPort(outFuzzyRulePort_);
     addPort(outTextPort_);
+    addPort(outXmlPort);
 //    addPort(inOntologyPort_);
     //OTB initialization
 }

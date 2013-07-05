@@ -49,8 +49,9 @@ QStringList FuzzyRuleManager::fuzzyRulesNames(){
 
         QString name = pRule->name();
 
-        if(!list.contains(name))
+        if(!list.contains(name)){
             list << name;
+        }
     }
 
     return list;
