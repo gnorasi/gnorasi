@@ -3,6 +3,13 @@
 #include <QDebug>
 
 #include "../models/ontologyclassitem.h"
+#include "../models/ontologyclass.h"
+#include "../fuzzy/fuzzyrule.h"
+#include "../fuzzy/fuzzyrulemanager.h"
+#include "../utils/ontologyclassificationmanager.h"
+#include "../models/ontologyclass.h"
+#include "../utils/objectattribute.h"
+#include "../utils/objectattributemanager.h"
 
 #include <QtXml/QDomProcessingInstruction>
 
@@ -86,21 +93,51 @@ void OwlWriter::createDocument(){
     doc.appendChild(xmlDeclaration);
 
     // create the root element
-    rootElement = doc.createElement(QString::fromAscii(OWL_RDFTAGNAME));
+    owlrootElement = doc.createElement(QString::fromAscii(OWL_RDFTAGNAME));
 
-    rootElement.setAttribute(QString::fromAscii(XMLNS_GEOKEY),QString::fromAscii(XMLNS_GEOVALUE));
-    rootElement.setAttribute(QString::fromAscii(XMLNS_OWLKEY),QString::fromAscii(XMLNS_OWLVALUE));
-    rootElement.setAttribute(QString::fromAscii(XMLNS_RDFKEY),QString::fromAscii(XMLNS_RDFVALUE));
-    rootElement.setAttribute(QString::fromAscii(XMLNS_RDFSKEY),QString::fromAscii(XMLNS_RDFSVALUE));
-    rootElement.setAttribute(QString::fromAscii(XMLNS_XSDKEY),QString::fromAscii(XMLNS_XSDVALUE));
-    rootElement.setAttribute(QString::fromAscii(XMLNS_GNOKEY),QString::fromAscii(XMLNS_GNOVALUE));
+    owlrootElement.setAttribute(QString::fromAscii(XMLNS_GEOKEY),QString::fromAscii(XMLNS_GEOVALUE));
+    owlrootElement.setAttribute(QString::fromAscii(XMLNS_OWLKEY),QString::fromAscii(XMLNS_OWLVALUE));
+    owlrootElement.setAttribute(QString::fromAscii(XMLNS_RDFKEY),QString::fromAscii(XMLNS_RDFVALUE));
+    owlrootElement.setAttribute(QString::fromAscii(XMLNS_RDFSKEY),QString::fromAscii(XMLNS_RDFSVALUE));
+    owlrootElement.setAttribute(QString::fromAscii(XMLNS_XSDKEY),QString::fromAscii(XMLNS_XSDVALUE));
+    owlrootElement.setAttribute(QString::fromAscii(XMLNS_GNOKEY),QString::fromAscii(XMLNS_GNOVALUE));
 
-    doc.appendChild(rootElement);
+    doc.appendChild(owlrootElement);
 
     //! create the Ontology class element
     QDomElement element = doc.createElement(QString::fromAscii(OWL_ONTOLOGYTAGNAME));
     element.setAttribute(QString::fromAscii(OWL_ABOUTKEY),QString(""));
-    rootElement.appendChild(element);
+    owlrootElement.appendChild(element);
+}
+
+void OwlWriter::createDocumentVersion2(){
+    helperCounter = 0;
+
+    doc = QDomDocument();
+
+    QDomProcessingInstruction xmlDeclaration = doc.createProcessingInstruction("xml", "version=\"1.0\"");
+    doc.appendChild(xmlDeclaration);
+
+    //
+    QDomElement hierrarchyElement = doc.createElement(QLatin1String("hierarchy"));
+    doc.appendChild(hierrarchyElement);
+
+    // create the element
+    owlrootElement = doc.createElement(QString::fromAscii(OWL_RDFTAGNAME));
+
+    owlrootElement.setAttribute(QString::fromAscii(XMLNS_GEOKEY),QString::fromAscii(XMLNS_GEOVALUE));
+    owlrootElement.setAttribute(QString::fromAscii(XMLNS_OWLKEY),QString::fromAscii(XMLNS_OWLVALUE));
+    owlrootElement.setAttribute(QString::fromAscii(XMLNS_RDFKEY),QString::fromAscii(XMLNS_RDFVALUE));
+    owlrootElement.setAttribute(QString::fromAscii(XMLNS_RDFSKEY),QString::fromAscii(XMLNS_RDFSVALUE));
+    owlrootElement.setAttribute(QString::fromAscii(XMLNS_XSDKEY),QString::fromAscii(XMLNS_XSDVALUE));
+    owlrootElement.setAttribute(QString::fromAscii(XMLNS_GNOKEY),QString::fromAscii(XMLNS_GNOVALUE));
+
+    hierrarchyElement.appendChild(owlrootElement);
+
+    //! create the Ontology class element
+    QDomElement element = doc.createElement(QString::fromAscii(OWL_ONTOLOGYTAGNAME));
+    element.setAttribute(QString::fromAscii(OWL_ABOUTKEY),QString(""));
+    owlrootElement.appendChild(element);
 }
 
 void OwlWriter::appendData(OntologyClassItem *item){
@@ -141,7 +178,7 @@ void OwlWriter::appendData(OntologyClassItem *item){
     classElement.appendChild(subclassofElement);
 
     // append the class element to the root node
-    rootElement.appendChild(classElement);
+    owlrootElement.appendChild(classElement);
 
     // Create an individual element and append it to the root node.
     QDomElement individualElement = doc.createElement(QString::fromAscii(OWL_DESCRIPTIONKTAG));
@@ -158,13 +195,84 @@ void OwlWriter::appendData(OntologyClassItem *item){
     individualElement.appendChild(hasObjectIdElement);
 
     // append the individual element to the root Element
-    rootElement.appendChild(individualElement);
+    owlrootElement.appendChild(individualElement);
 
     // now iterate children to create recursively the nodes
     QList<OntologyClassItem*> list = item->getChildItems();
     QList<OntologyClassItem*>::const_iterator i;
     for(i = list.constBegin(); i != list.constEnd(); i++){
         OntologyClassItem *child = *i;
+
+        appendData(child);
+    }
+}
+
+
+void OwlWriter::appendData(OntologyClass *item){
+    QString label   = item->id();
+//    QString comment = item->data(1).toString();
+    QString id      = item->name();
+
+    // create the class element
+    QDomElement classElement = doc.createElement(QString::fromAscii(OWL_CLASSTAGNAME));
+    classElement.setAttribute(QString::fromAscii(OWL_IDKEY),id);
+
+    // create the label element
+    QDomElement labelElement = doc.createElement(QString::fromAscii(OWL_LABELTAGNAME));
+    labelElement.setAttribute(QString::fromAscii(OWL_STRINGDATATYPEKEY),QString::fromAscii(OWL_STRINGDATATYPEVAL));
+    QDomText labelTextElement = doc.createTextNode(label);
+    labelElement.appendChild(labelTextElement);
+    classElement.appendChild(labelElement);
+
+    // create the commnet element
+//    QDomElement commentElement = doc.createElement(QString::fromAscii(OWL_COMMENTTAGNAME));
+//    commentElement.setAttribute(QString::fromAscii(OWL_STRINGDATATYPEKEY),QString::fromAscii(OWL_STRINGDATATYPEVAL));
+//    QDomText commentTextElement = doc.createTextNode(comment);
+//    commentElement.appendChild(commentTextElement);
+//    classElement.appendChild(commentElement);
+
+    // create the subclass element
+    QDomElement subclassofElement = doc.createElement(OWL_SUBCLASSOFTAGNAME);
+    QDomElement childClassElement = doc.createElement(QString::fromAscii(OWL_CLASSTAGNAME));
+    OntologyClass *parentItem = item->parent();
+    if(parentItem){
+        QString parentId = parentItem->id();
+        if(!parentId.compare(QString::fromAscii(OBJECTDEPICTION_VALUE)))
+            childClassElement.setAttribute(QString::fromAscii(OWL_ABOUTKEY),parentItem->id());
+        else
+            childClassElement.setAttribute(QString::fromAscii(OWL_IDKEY),parentItem->id());
+    }
+    subclassofElement.appendChild(childClassElement);
+    classElement.appendChild(subclassofElement);
+
+    // append the class element to the root node
+    owlrootElement.appendChild(classElement);
+
+    // Create an individual element and append it to the root node.
+    QDomElement individualElement = doc.createElement(QString::fromAscii(OWL_DESCRIPTIONKTAG));
+    individualElement.setAttribute(QString::fromAscii(OWL_IDKEY),QString("ins_%1").arg(id.toLower()));
+    // create the type element
+    QDomElement typeElement = doc.createElement(QString::fromAscii(OWL_TYPETAG));
+    typeElement.setAttribute(QString::fromAscii(OWL_RESOURCEKEY),QString("%1%2").arg(m_namespaceXmlns).arg(id));
+    // create the hasObjectIdTExtElement
+    QDomElement hasObjectIdElement = doc.createElement(QString::fromAscii(OWL_GNOHASOBJIDTAG));
+    hasObjectIdElement.setAttribute(QString::fromAscii(OWL_STRINGDATATYPEKEY),QString::fromAscii(OWL_INTDATATYPEVAL));
+    QDomText hasObjectIDTextElement = doc.createTextNode(QString::number(helperCounter++));
+    QDomElement segmentationLevelElement = doc.createElement(QLatin1String("gno:definedForSegmentationLevel"));
+    segmentationLevelElement.setAttribute(QLatin1String("rdf:resource"),QString("#segmentationLevel_%1").arg(QString::number(item->level())));
+    hasObjectIdElement.appendChild(hasObjectIDTextElement);
+    individualElement.appendChild(typeElement);
+    individualElement.appendChild(hasObjectIdElement);
+    individualElement.appendChild(segmentationLevelElement);
+
+    // append the individual element to the root Element
+    owlrootElement.appendChild(individualElement);
+
+    // now iterate children to create recursively the nodes
+    QList<OntologyClass*> list = item->getChildItems();
+    QList<OntologyClass*>::const_iterator i;
+    for(i = list.constBegin(); i != list.constEnd(); i++){
+        OntologyClass *child = *i;
 
         appendData(child);
     }
@@ -197,4 +305,41 @@ void OwlWriter::setupNamespaces(const QString &nsXmlns, const QString &nsXmlBase
 
     if(list.isEmpty())
         qDebug() << "rdf list is empty no rdf node found ..";
+}
+
+
+void OwlWriter::appendRulesData(){
+
+    QDomElement rootElement = doc.createElement(QLatin1String("classes"));
+    doc.appendChild(rootElement);
+
+    QList<OntologyClass*> list = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassList();
+    QList<OntologyClass*>::const_iterator i;
+    for(i = list.constBegin(); i != list.constEnd(); i++){
+        OntologyClass *pClass = *i;
+
+        QDomElement classElement = doc.createElement(QLatin1String("class"));
+        classElement.setAttribute(tr("id"),pClass->id());
+        rootElement.appendChild(classElement);
+
+        QDomElement fuzzyRuleRootElement = doc.createElement(QLatin1String("fuzzyRules"));
+        fuzzyRuleRootElement.setAttribute(QLatin1String("operator"),pClass->opername());
+        classElement.appendChild(fuzzyRuleRootElement);
+
+        QHash<int,FuzzyRule*> fuzzyrulehash = pClass->fuzzyRuleHash();
+        QHash<int,FuzzyRule*>::const_iterator h;
+        for(h = fuzzyrulehash.constBegin(); h != fuzzyrulehash.constEnd(); h++){
+            int lid = h.key();
+            FuzzyRule *pRule = h.value();
+
+            QString attributeName = pRule->attribute();
+            attributeName = attributeName.remove(":");
+            attributeName = QString("Fuzzy%1").arg(attributeName);
+
+            QDomElement element = doc.createElement(QLatin1String("attributeRule"));
+            element.setAttribute(QLatin1String("id"),pRule->id());
+            element.setAttribute(QLatin1String("property"),attributeName);
+            fuzzyRuleRootElement.appendChild(element);
+        }
+    }
 }

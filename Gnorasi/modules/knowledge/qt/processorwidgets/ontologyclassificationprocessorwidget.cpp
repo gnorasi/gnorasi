@@ -27,6 +27,7 @@
 #include "../utils/objectlevelmanager.h"
 #include "../utils/objectlevel.h"
 #include "../utils/ontologyclassificationmanager.h"
+#include "../utils/owlwriter.h"
 
 #include "../models/ontologyclass.h"
 
@@ -237,61 +238,123 @@ void OntologyClassificationProcessorWidget::processPortData(){
 //}
 
 
+QString OntologyClassificationProcessorWidget::constructCSVText(){
+
+    OntologyClassificationProcessor *ocProcessor                              = dynamic_cast<OntologyClassificationProcessor*>(processor_);
+    if(!ocProcessor)
+        return QString();
+
+    std::vector<Port*> l = ocProcessor->getInports();
+    if(l.empty())
+        return QString();
+
+    QStringList lines;
+    QString firstline = QString("id;level");
+
+    QList<FuzzyRule*> fuzzyRuleList = FUZZYRULEMANAGER->fuzzyRuleList();
+    QList<FuzzyRule*>::const_iterator k;
+    for(k = fuzzyRuleList.constBegin(); k != fuzzyRuleList.constEnd(); k++){
+        FuzzyRule *pFuzzyRule = *k;
+
+        QString name = pFuzzyRule->name();
+        QString fname = name.remove("::");
+
+        fname = QString("Fuzzy%1%2").arg(fname).arg(QString::number(pFuzzyRule->id()));
+        firstline.append(";");
+        firstline.append(fname);
+    }
+
+    lines << firstline;
+
+    //! get the first port
+    for(int i = 0; i < l.size(); i++){
+
+        Port *port = l.at(i);
+        std::vector<const Port*> l1 = port->getConnected();
+        for(int h = 0; h < l1.size(); h++){
+
+            const Port *port1 = l1.at(h);
+            const OTBLabelMapPort *lblMapPort = static_cast<const OTBLabelMapPort*>(port1);
+            if(lblMapPort){
+                OTBLabelMapPort::LabelMapType* dataMap = lblMapPort->getData();
+
+                // iterate through all the objects in the map
+                for(unsigned int i = 1; i < dataMap->GetNumberOfLabelObjects(); i++){
+                    FuzzyLabelMapUtility::LabelObjectType* lblObject    = dataMap->GetLabelObject(i);
+
+                    QString line;
+                    line.append(QString::number(i));
+                    line.append(";");
+                    line.append(QString::number(h));
+
+                    for(k = fuzzyRuleList.constBegin(); k != fuzzyRuleList.constEnd(); k++){
+                        FuzzyRule *pFuzzyRule = *k;
+
+                        FuzzyFunction *ffunction = pFuzzyRule->funzzyFunction();
+                        if(!ffunction)
+                            continue;
+
+                        QString attname = pFuzzyRule->name();
+                        double val                                      = (double)lblObject->GetAttribute(attname.toLatin1().constData());
+                        double calcval = ffunction->calculate(val);
+
+                        line.append(";");
+                        line.append(QString::number(calcval,'f',3));
+                    }
+
+                    lines << line;
+                }
+            }
+        }
+    }
+
+    return lines.join("\n");
+}
+
 /*!
  * \brief OntologyClassificationProcessorWidget::calculate
  */
 void OntologyClassificationProcessorWidget::calculate(){
-
     OntologyClassificationProcessor *ocProcessor                              = dynamic_cast<OntologyClassificationProcessor*>(processor_);
     if(!ocProcessor)
         return;
 
-//    QStringList fuzzyrulenames = FUZZYRULEMANAGER->fuzzyRulesNames();
+    ////
+    /// \brief csvText, the csv text constructed
+    ///
+    QString csvText = constructCSVText();
 
-//    std::vector<Port*> l = ocProcessor->getInports();
-//    if(l.empty()){
-//        qDebug() << "label map port list is empty..";
+//    QFile file(QFileDialog::getSaveFileName(this,tr("Ok"),QDir::homePath()));
+//    file.open(QIODevice::WriteOnly);
+//    QTextStream out(&file);
+//    out << csvText;
+//    file.close();
 
-//    }else{
-//        //! get the first port
-//        for(int i = 0; i < l.size(); i++){
+    ////
+    /// \brief xmltext, the xml constructed text
+    ///
+    QString xmltext = constructXmlFile();
+//    QFile file1(QFileDialog::getSaveFileName(this,tr("Ok"),QDir::homePath()));
+//    file1.open(QIODevice::WriteOnly);
+//    QTextStream out1(&file1);
+//    out1 << xmltext;
+//    file1.close();
 
-//            Port *port = l.at(i);
-//            std::vector<const Port*> l1 = port->getConnected();
-//            for(int h = 0; h < l1.size(); h++){
+    std::vector<Port*> outv = ocProcessor->getOutports();
+    for(int i = 0; i < outv.size(); i++){
+        Port *port = outv.at(i);
+        TextPort *textPort = dynamic_cast<TextPort*>(port);
+        if(!textPort)
+            continue;
 
-//                const Port *port1 = l1.at(h);
-//                const OTBLabelMapPort *lblMapPort = static_cast<const OTBLabelMapPort*>(port1);
-//                if(lblMapPort){
-//                    OTBLabelMapPort::LabelMapType* dataMap = lblMapPort->getData();
+        QString desc = QString::fromStdString(port->getDescription());
 
-//                    // iterate through all the objects in the map
-//                    for(unsigned int i = 1; i < dataMap->GetNumberOfLabelObjects(); i++){
-//                        FuzzyLabelMapUtility::LabelObjectType* lblObject    = dataMap->GetLabelObject(i);
-
-//                        // iterate through all all the attributes
-//                        QList<FuzzyAttribute*>::const_iterator a;
-//                        for(a = aList.constBegin(); a != aList.constEnd(); a++){
-//                            FuzzyAttribute *pAtr = *a;
-
-//                            if(!pAtr->isReady())
-//                                continue;
-
-//                            QString propName                                = pAtr->displayName();
-
-//                            double val                                      = (double)lblObject->GetAttribute(propName.toLatin1().constData());
-//                            double calcval                                  = pAtr->calculateMembershipValue(val);
-
-//                            int idx                                         = propName.lastIndexOf("::");
-//                            idx                                             += 2;
-
-//                            lblObject->SetAttribute(pAtr->valueName().toLatin1().constData(),calcval);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
+        if(!desc.compare(QLatin1String("1"))) { // this is the text port
+            textPort->setData(csvText.toStdString());
+        }else if(!desc.compare(QLatin1String("2"))) { // this is the xml port
+            textPort->setData(xmltext.toStdString());
+        }
+    }
 
 
 
@@ -408,57 +471,18 @@ void OntologyClassificationProcessorWidget::updateOutPortTextData(){
 QString OntologyClassificationProcessorWidget::constructXmlFile(){
     QString text;
 
-    QDomDocument doc = QDomDocument();
+//    QDomDocument doc = QDomDocument();
 
-    QDomProcessingInstruction xmlDeclaration = doc.createProcessingInstruction("xml", "version=\"1.0\"");
-    doc.appendChild(xmlDeclaration);
+//    QDomProcessingInstruction xmlDeclaration = doc.createProcessingInstruction("xml", "version=\"1.0\"");
+//    doc.appendChild(xmlDeclaration);
 
-    QDomElement rootElement = doc.createElement(QLatin1String("fuzzy"));
-    doc.appendChild(rootElement);
+//    QDomElement rootElement = doc.createElement(QLatin1String("fuzzy"));
+//    doc.appendChild(rootElement);
 
-//    QList<FuzzyOntologyClass*> fuzzyOntologyList = FUZZYONTOLOGYCLASSMANAGER->fuzzyOntologyClasses();
 
-//    int counter = 1;
+//    text = doc.toString(4);
 
-//    QList<FuzzyOntologyClass*>::const_iterator i;
-//    for(i = fuzzyOntologyList.constBegin(); i != fuzzyOntologyList.constEnd(); i++){
-//        FuzzyOntologyClass *pClass = *i;
-
-//        if(pClass->isEmpty())
-//            continue;
-
-//        QDomElement fuzzyRuleElement = doc.createElement(QLatin1String("fuzzyRule"));
-//        fuzzyRuleElement.setAttribute(QLatin1String("id"),QString::number(counter++));
-//        fuzzyRuleElement.setAttribute(QLatin1String("operator"),pClass->mixMaxName());
-//        rootElement.appendChild(fuzzyRuleElement);
-
-//        QDomElement bodyElement = doc.createElement(QLatin1String("body"));
-//        fuzzyRuleElement.appendChild(bodyElement);
-
-//        QList<FuzzyAttribute*> aList = pClass->fuzzyAttributes();
-//        QList<FuzzyAttribute*>::const_iterator j;
-//        for(j = aList.constBegin(); j != aList.constEnd(); j++){
-//            FuzzyAttribute *pAttr = *j;
-
-//            if(!pAttr->isReady())
-//                continue;
-
-//            QDomElement fuzzyRestrictionElement = doc.createElement("restriction");
-//            fuzzyRestrictionElement.setAttribute(QLatin1String("property"),pAttr->valueName());
-//            fuzzyRestrictionElement.setAttribute(QLatin1String("value"),QString::number(pAttr->threshold(),'f',2));
-//            fuzzyRestrictionElement.setAttribute(QLatin1String("operator"),pAttr->fuzzyOperatorXmlName());
-//            bodyElement.appendChild(fuzzyRestrictionElement);
-//        }
-
-//        QDomElement headElement = doc.createElement(QLatin1String("head"));
-//        headElement.setAttribute(QLatin1String("class"),pClass->className());
-//        fuzzyRuleElement.appendChild(headElement);
-
-//    }
-
-    text = doc.toString(4);
-
-    // START OF TEST
+//    // START OF TEST
 //    QFile file(QFileDialog::getSaveFileName(this,tr("Save"),QDir::homePath()));
 //    if(!file.fileName().isEmpty()){
 //        if(file.open(QIODevice::WriteOnly)){
@@ -467,7 +491,33 @@ QString OntologyClassificationProcessorWidget::constructXmlFile(){
 //            file.close();
 //        }
 //    }
-    // END OF TEST
+//    // END OF TEST
+
+
+    OwlWriter writter;
+    writter.createDocumentVersion2();
+
+    QList<OntologyClass*> helperlist;
+    QList<OntologyClass*> list = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassList();
+    QList<OntologyClass*>::const_iterator i;
+    for(i = list.constBegin(); i != list.constEnd(); i++){
+        OntologyClass *pClass = *i;
+        if(pClass->childCount())
+            continue;
+        else
+            helperlist << pClass;
+    }
+
+    QList<OntologyClass*>::const_iterator h;
+    for(h = helperlist.constBegin(); h != helperlist.constEnd(); h++){
+        OntologyClass *pClass = *h;
+
+        writter.appendData(pClass);
+    }
+
+    writter.appendRulesData();
+
+    text = writter.docToText();
 
     return text;
 }

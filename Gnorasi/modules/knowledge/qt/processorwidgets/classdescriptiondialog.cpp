@@ -219,6 +219,7 @@ bool ClassDescriptionDialog::createNewClass(){
     if(pParentClass){
         pParentClass->addChild(pClass);
         pClass->setparentId(pParentClass->id());
+        pClass->setParent(pParentClass);
     }
 
     return true;

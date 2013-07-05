@@ -139,6 +139,9 @@ private:
      */
     QString constructXmlFile();
 
+
+    QString constructCSVText();
+
     /*!
      * \brief processOntologyItem
      */
