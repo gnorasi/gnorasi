@@ -16,6 +16,8 @@
 #include "../fuzzy/fuzzyfunctionfactory.h"
 #include "../fuzzy/fuzzyfunction.h"
 #include "../utils/fuzzylabelmaputility.h"
+#include "../fuzzy/fuzzyrule.h"
+#include "../fuzzy/fuzzyrulemanager.h"
 
 
 #include "../utils/owlparser.h"
@@ -58,13 +60,22 @@ void OntologyClassificationProcessorWidget::initialize(){
     /////////////////////////////////////////////////////////////////////
     /// \brief gui staff
     ///
+    ///
+
+    m_pPushButtonCalculate = new QPushButton(tr("Calculate"),this);
+    QHBoxLayout *hboxlayout = new QHBoxLayout;
+    hboxlayout->addSpacerItem(new QSpacerItem(100,10,QSizePolicy::Expanding,QSizePolicy::Fixed));
+    hboxlayout->addWidget(m_pPushButtonCalculate);
 
     m_pClassHierarchyWidget = new ClassHierarchyWidget(this);
 
     QVBoxLayout *vboxlayout = new QVBoxLayout;
+    vboxlayout->addLayout(hboxlayout);
     vboxlayout->addWidget(m_pClassHierarchyWidget);
 
     setLayout(vboxlayout);
+
+    connect(m_pPushButtonCalculate,SIGNAL(clicked()),this,SLOT(calculate()));
 
     hide();
 }
@@ -225,6 +236,7 @@ void OntologyClassificationProcessorWidget::processPortData(){
 //        m_pFuzzyAttributesModel->removeRow(index.row());
 //}
 
+
 /*!
  * \brief OntologyClassificationProcessorWidget::calculate
  */
@@ -233,6 +245,54 @@ void OntologyClassificationProcessorWidget::calculate(){
     OntologyClassificationProcessor *ocProcessor                              = dynamic_cast<OntologyClassificationProcessor*>(processor_);
     if(!ocProcessor)
         return;
+
+//    QStringList fuzzyrulenames = FUZZYRULEMANAGER->fuzzyRulesNames();
+
+//    std::vector<Port*> l = ocProcessor->getInports();
+//    if(l.empty()){
+//        qDebug() << "label map port list is empty..";
+
+//    }else{
+//        //! get the first port
+//        for(int i = 0; i < l.size(); i++){
+
+//            Port *port = l.at(i);
+//            std::vector<const Port*> l1 = port->getConnected();
+//            for(int h = 0; h < l1.size(); h++){
+
+//                const Port *port1 = l1.at(h);
+//                const OTBLabelMapPort *lblMapPort = static_cast<const OTBLabelMapPort*>(port1);
+//                if(lblMapPort){
+//                    OTBLabelMapPort::LabelMapType* dataMap = lblMapPort->getData();
+
+//                    // iterate through all the objects in the map
+//                    for(unsigned int i = 1; i < dataMap->GetNumberOfLabelObjects(); i++){
+//                        FuzzyLabelMapUtility::LabelObjectType* lblObject    = dataMap->GetLabelObject(i);
+
+//                        // iterate through all all the attributes
+//                        QList<FuzzyAttribute*>::const_iterator a;
+//                        for(a = aList.constBegin(); a != aList.constEnd(); a++){
+//                            FuzzyAttribute *pAtr = *a;
+
+//                            if(!pAtr->isReady())
+//                                continue;
+
+//                            QString propName                                = pAtr->displayName();
+
+//                            double val                                      = (double)lblObject->GetAttribute(propName.toLatin1().constData());
+//                            double calcval                                  = pAtr->calculateMembershipValue(val);
+
+//                            int idx                                         = propName.lastIndexOf("::");
+//                            idx                                             += 2;
+
+//                            lblObject->SetAttribute(pAtr->valueName().toLatin1().constData(),calcval);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+
 
 
 //    // get all the avaialable attributes
