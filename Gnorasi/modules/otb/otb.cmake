@@ -307,6 +307,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbconfusionmatrixcalculatorprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.cpp
+    ${MOD_DIR}/processors/Classification/otbbayesianclassifierimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.cpp
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
@@ -389,6 +390,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.h
     ${MOD_DIR}/processors/Classification/otbconfusionmatrixcalculatorprocessor.h
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.h
+    ${MOD_DIR}/processors/Classification/otbbayesianclassifierimagefilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
