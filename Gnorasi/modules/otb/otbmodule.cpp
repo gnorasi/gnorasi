@@ -98,6 +98,7 @@
 #include "processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.h"
 #include "processors/Classification/otbconfusionmatrixcalculatorprocessor.h"
 #include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
+#include "processors/Classification/otbbayesianclassifierimagefilterprocessor.h"
 #include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
 #include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
 #include "processors/Visualization/otbimageviewerprocessor.h"
@@ -199,6 +200,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBEstimateInnerProductPCAImageFilterProcessor());
     registerProcessor(new OTBPerBandVectorImageFilterProcessor());
     registerProcessor(new OTBCloudDetectionImageFilterProcessor());
+    registerProcessor(new OTBBayesianClassifierImageFilterProcessor());
     registerProcessor(new OTBGeodesicActiveContourLevelSetImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
