@@ -68,6 +68,7 @@
 #include "processors/ImageEnhancement/otbgrayscalegeodesicerodeimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.h"
+#include "processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h"
 #include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
@@ -206,6 +207,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBGeodesicActiveContourLevelSetImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DLinesImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DCirclesImageFilterProcessor());
+    registerProcessor(new OTBLmvmPanSharpeningFusionImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
