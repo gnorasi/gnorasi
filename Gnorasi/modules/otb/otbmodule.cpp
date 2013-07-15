@@ -99,6 +99,7 @@
 #include "processors/Segmentation/otbwatershedsegmentationfilterprocessor.h"
 #include "processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h"
 #include "processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.h"
+#include "processors/Segmentation/otbshapedetectionlevelsetimagefilterprocessor.h"
 #include "processors/Classification/otbconfusionmatrixcalculatorprocessor.h"
 #include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
 #include "processors/Classification/otbbayesianclassifierimagefilterprocessor.h"
@@ -208,6 +209,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBHoughTransform2DLinesImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DCirclesImageFilterProcessor());
     registerProcessor(new OTBLmvmPanSharpeningFusionImageFilterProcessor());
+    registerProcessor(new OTBShapeDetectionLevelSetImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
