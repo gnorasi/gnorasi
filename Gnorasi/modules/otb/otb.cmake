@@ -308,6 +308,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/Segmentation/otbshapedetectionlevelsetimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbconfusionmatrixcalculatorprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbbayesianclassifierimagefilterprocessor.cpp
@@ -394,6 +395,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.h
     ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h
     ${MOD_DIR}/processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.h
+    ${MOD_DIR}/processors/Segmentation/otbshapedetectionlevelsetimagefilterprocessor.h
     ${MOD_DIR}/processors/Classification/otbconfusionmatrixcalculatorprocessor.h
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.h
     ${MOD_DIR}/processors/Classification/otbbayesianclassifierimagefilterprocessor.h
