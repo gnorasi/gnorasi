@@ -126,7 +126,7 @@ void OTBGeodesicActiveContourLevelSetImageFilterProcessor::process() {
         testOutPort2_.setData(gradientMagnitude->GetOutput());
 
         //Sigmoid
-        portToCharCaster->SetInput(inPort_.getData());
+        portToCharCaster->SetInput(gradientMagnitude->GetOutput());
         sigmoid->SetInput(portToCharCaster->GetOutput());
         sigmoid->SetOutputMinimum(0);
         sigmoid->SetOutputMaximum(255);
