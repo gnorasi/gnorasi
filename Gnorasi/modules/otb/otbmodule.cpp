@@ -103,6 +103,7 @@
 #include "processors/Classification/otbconfusionmatrixcalculatorprocessor.h"
 #include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
 #include "processors/Classification/otbbayesianclassifierimagefilterprocessor.h"
+#include "processors/Classification/otbmrfenergygaussianclassificationfilterprocessor.h"
 #include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
 #include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
 #include "processors/Visualization/otbimageviewerprocessor.h"
@@ -210,6 +211,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBHoughTransform2DCirclesImageFilterProcessor());
     registerProcessor(new OTBLmvmPanSharpeningFusionImageFilterProcessor());
     registerProcessor(new OTBShapeDetectionLevelSetImageFilterProcessor());
+    registerProcessor(new OTBMRFEnergyGaussianClassificationFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
