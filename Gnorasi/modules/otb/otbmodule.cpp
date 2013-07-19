@@ -37,6 +37,7 @@
 #include "processors/ImageIO/otbcsvwriterprocessor.h"
 #include "processors/ImageIO/otbcsvreaderprocessor.h"
 #include "processors/ImageIO/otbmultichannelextractroiprocessor.h"
+#include "processors/ImageIO/otbsommapreaderprocessor.h"
 #include "processors/BasicFilters/otbconvolutionimagefilterprocessor.h"
 #include "processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h"
 #include "processors/BasicFilters/otbcannyedgedetectionimagefilterprocessor.h"
@@ -104,6 +105,7 @@
 #include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
 #include "processors/Classification/otbbayesianclassifierimagefilterprocessor.h"
 #include "processors/Classification/otbmrfenergygaussianclassificationfilterprocessor.h"
+#include "processors/Classification/otbsomimageclassificationfilterprocessor.h"
 #include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
 #include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
 #include "processors/Visualization/otbimageviewerprocessor.h"
@@ -212,6 +214,8 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBLmvmPanSharpeningFusionImageFilterProcessor());
     registerProcessor(new OTBShapeDetectionLevelSetImageFilterProcessor());
     registerProcessor(new OTBMRFEnergyGaussianClassificationFilterProcessor());
+    registerProcessor(new OTBSOMImageClassificationFilterProcessor());
+    registerProcessor(new OTBSOMMapReaderProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());

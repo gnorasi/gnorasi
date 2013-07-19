@@ -238,6 +238,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/otbsmartpointerport.cpp
     ${MOD_DIR}/ports/otbkeypointsetport.cpp
     ${MOD_DIR}/ports/otbvectordataport.cpp
+    ${MOD_DIR}/ports/otbsommapport.cpp
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.cpp
@@ -246,6 +247,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/ImageIO/otbcsvwriterprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbcsvreaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbmultichannelextractroiprocessor.cpp
+    ${MOD_DIR}/processors/ImageIO/otbsommapreaderprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbconvolutionimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbfftconvolutionimagefilterprocessor.cpp
@@ -313,6 +315,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbbayesianclassifierimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbmrfenergygaussianclassificationfilterprocessor.cpp
+    ${MOD_DIR}/processors/Classification/otbsomimageclassificationfilterprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.cpp
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
@@ -326,6 +329,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/otbsmartpointerport.h
     ${MOD_DIR}/ports/otbkeypointsetport.h
     ${MOD_DIR}/ports/otbvectordataport.h
+    ${MOD_DIR}/ports/otbsommapport.h
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.h
@@ -333,6 +337,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/ImageIO/otblabelimagewriterprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbcsvwriterprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbcsvreaderprocessor.h
+    ${MOD_DIR}/processors/ImageIO/otbsommapreaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbmultichannelextractroiprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbconvolutionimagefilterprocessor.h
@@ -401,6 +406,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.h
     ${MOD_DIR}/processors/Classification/otbbayesianclassifierimagefilterprocessor.h
     ${MOD_DIR}/processors/Classification/otbmrfenergygaussianclassificationfilterprocessor.h
+    ${MOD_DIR}/processors/Classification/otbsomimageclassificationfilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
