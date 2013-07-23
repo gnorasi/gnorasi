@@ -36,6 +36,8 @@
 #include "voreen/qt/voreenmoduleqt.h"
 
 class OntologyClass;
+class ObjectLevel;
+
 
 namespace voreen {
 
@@ -78,6 +80,8 @@ public:
      * \brief appendRulesData
      */
     void appendRulesData();
+
+    void processObjectLevel(ObjectLevel* );
 
 private:
 
