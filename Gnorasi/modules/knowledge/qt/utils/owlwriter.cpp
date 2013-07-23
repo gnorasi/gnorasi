@@ -369,6 +369,6 @@ void OwlWriter::processObjectLevel(ObjectLevel *level){
      owlrootElement.appendChild(descriptionElement);
 
      QDomElement typeElement = doc.createElement(QLatin1String("rdf:type"));
-     typeElement.setAttribute(QLatin1String("rdf:resource"),QString("http://www.gnorasi.gr/ontology#SegmentationLevel").append(QString::number(level->id())));
+     typeElement.setAttribute(QLatin1String("rdf:resource"),QString("http://www.gnorasi.gr/ontology#SegmentationLevel"));
      descriptionElement.appendChild(typeElement);
 }
