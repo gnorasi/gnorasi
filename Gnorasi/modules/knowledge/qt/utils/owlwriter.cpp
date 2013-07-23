@@ -118,9 +118,12 @@ void OwlWriter::createDocumentVersion2(){
     QDomProcessingInstruction xmlDeclaration = doc.createProcessingInstruction("xml", "version=\"1.0\"");
     doc.appendChild(xmlDeclaration);
 
+    QDomElement rootelement = doc.createElement(QLatin1String("root"));
+    doc.appendChild(rootelement);
+
     //
     QDomElement hierrarchyElement = doc.createElement(QLatin1String("hierarchy"));
-    doc.appendChild(hierrarchyElement);
+    rootelement.appendChild(hierrarchyElement);
 
     // create the element
     owlrootElement = doc.createElement(QString::fromAscii(OWL_RDFTAGNAME));
@@ -310,8 +313,12 @@ void OwlWriter::setupNamespaces(const QString &nsXmlns, const QString &nsXmlBase
 
 void OwlWriter::appendRulesData(){
 
-    QDomElement rootElement = doc.createElement(QLatin1String("classes"));
-    doc.appendChild(rootElement);
+    QDomNode rootNode = doc.lastChild();
+    if(rootNode.isNull())
+        return;
+
+    QDomElement classesElement = doc.createElement(QLatin1String("classes"));
+    rootNode.appendChild(classesElement);
 
     QList<OntologyClass*> list = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassList();
     QList<OntologyClass*>::const_iterator i;
@@ -320,7 +327,7 @@ void OwlWriter::appendRulesData(){
 
         QDomElement classElement = doc.createElement(QLatin1String("class"));
         classElement.setAttribute(tr("id"),pClass->id());
-        rootElement.appendChild(classElement);
+        classesElement.appendChild(classElement);
 
         QDomElement fuzzyRuleRootElement = doc.createElement(QLatin1String("fuzzyRules"));
         fuzzyRuleRootElement.setAttribute(QLatin1String("operator"),pClass->opername());
