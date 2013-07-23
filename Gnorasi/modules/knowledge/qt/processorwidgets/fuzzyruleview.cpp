@@ -25,6 +25,7 @@ FuzzyRuleView::FuzzyRuleView(QWidget *parent) :
     QTreeView(parent)
 {
     m_pInsertExpressionDialog = new InsertExpressionDialog(this);
+    connect(m_pInsertExpressionDialog,SIGNAL(fuzzyRuleAdded(int)),this,SIGNAL(fuzzyRuleAdded(int)));
 }
 
 void FuzzyRuleView::onChangeOperator(){
@@ -160,7 +161,6 @@ void FuzzyRuleView::mouseDoubleClickEvent(QMouseEvent *event){
         if(iid == -103)
         {
             m_pInsertExpressionDialog->setupByLevel(m_levelId);
-            connect(m_pInsertExpressionDialog,SIGNAL(fuzzyRuleAdded(int)),this,SIGNAL(fuzzyRuleAdded(int)));
             m_pInsertExpressionDialog->exec();
 
         }else if(iid > 0){

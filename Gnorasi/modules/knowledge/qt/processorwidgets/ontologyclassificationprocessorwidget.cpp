@@ -519,6 +519,14 @@ QString OntologyClassificationProcessorWidget::constructXmlFile(){
 
     text = writter.docToText();
 
+    QFile file(QFileDialog::getSaveFileName(this,tr("save"),QDir::homePath()));
+    if(file.open(QIODevice::WriteOnly)){
+        QTextStream out(&file);
+        out << text;
+
+        file.close();
+    }
+
     return text;
 }
 
