@@ -471,49 +471,34 @@ void OntologyClassificationProcessorWidget::updateOutPortTextData(){
 QString OntologyClassificationProcessorWidget::constructXmlFile(){
     QString text;
 
-//    QDomDocument doc = QDomDocument();
-
-//    QDomProcessingInstruction xmlDeclaration = doc.createProcessingInstruction("xml", "version=\"1.0\"");
-//    doc.appendChild(xmlDeclaration);
-
-//    QDomElement rootElement = doc.createElement(QLatin1String("fuzzy"));
-//    doc.appendChild(rootElement);
-
-
-//    text = doc.toString(4);
-
-//    // START OF TEST
-//    QFile file(QFileDialog::getSaveFileName(this,tr("Save"),QDir::homePath()));
-//    if(!file.fileName().isEmpty()){
-//        if(file.open(QIODevice::WriteOnly)){
-//            QTextStream out(&file);
-//            out << text;
-//            file.close();
-//        }
-//    }
-//    // END OF TEST
-
-
     OwlWriter writter;
     writter.createDocumentVersion2();
 
-    QList<OntologyClass*> helperlist;
+//    QList<OntologyClass*> helperlist;
     QList<OntologyClass*> list = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassList();
     QList<OntologyClass*>::const_iterator i;
     for(i = list.constBegin(); i != list.constEnd(); i++){
+
         OntologyClass *pClass = *i;
-        if(pClass->childCount())
-            continue;
-        else
-            helperlist << pClass;
+        if(pClass->childCount() && !pClass->parent())
+            writter.appendData(pClass);
     }
 
-    QList<OntologyClass*>::const_iterator h;
-    for(h = helperlist.constBegin(); h != helperlist.constEnd(); h++){
-        OntologyClass *pClass = *h;
+    QList<ObjectLevel*> llist = OBJECTLEVELMANAGER->objectLevelList();
+    QList<ObjectLevel*>::const_iterator l;
+    for(l = llist.constBegin(); l != llist.constEnd(); l++){
+        ObjectLevel *level = *l;
 
-        writter.appendData(pClass);
+        writter.processObjectLevel(level);
+
     }
+
+//    QList<OntologyClass*>::const_iterator h;
+//    for(h = helperlist.constBegin(); h != helperlist.constEnd(); h++){
+//        OntologyClass *pClass = *h;
+
+//        writter.appendData(pClass);
+//    }
 
     writter.appendRulesData();
 

@@ -1,6 +1,7 @@
 #include "owlwriter.h"
 
 #include <QDebug>
+#include <QDateTime>
 
 #include "../models/ontologyclassitem.h"
 #include "../models/ontologyclass.h"
@@ -10,6 +11,8 @@
 #include "../models/ontologyclass.h"
 #include "../utils/objectattribute.h"
 #include "../utils/objectattributemanager.h"
+#include "../utils/objectlevel.h"
+#include "../utils/objectlevelmanager.h"
 
 #include <QtXml/QDomProcessingInstruction>
 
@@ -78,6 +81,8 @@ OwlWriter::OwlWriter(QObject *parent)
     : QObject(parent)
 {
     helperCounter = 0;
+
+    m_namespaceXmlns = "#";
 }
 
 QString OwlWriter::docToText(){
@@ -128,6 +133,7 @@ void OwlWriter::createDocumentVersion2(){
     // create the element
     owlrootElement = doc.createElement(QString::fromAscii(OWL_RDFTAGNAME));
 
+    owlrootElement.setAttribute(QLatin1String("xmlns"),QString("http://www.gnorasi.gr/ontology/generated_%1#").arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss")));
     owlrootElement.setAttribute(QString::fromAscii(XMLNS_GEOKEY),QString::fromAscii(XMLNS_GEOVALUE));
     owlrootElement.setAttribute(QString::fromAscii(XMLNS_OWLKEY),QString::fromAscii(XMLNS_OWLVALUE));
     owlrootElement.setAttribute(QString::fromAscii(XMLNS_RDFKEY),QString::fromAscii(XMLNS_RDFVALUE));
@@ -244,6 +250,8 @@ void OwlWriter::appendData(OntologyClass *item){
             childClassElement.setAttribute(QString::fromAscii(OWL_ABOUTKEY),parentItem->id());
         else
             childClassElement.setAttribute(QString::fromAscii(OWL_IDKEY),parentItem->id());
+    }else{
+        childClassElement.setAttribute(QString::fromAscii(OWL_ABOUTKEY),QLatin1String("http://www.gnorasi.gr/ontology#ObjectDepiction"));
     }
     subclassofElement.appendChild(childClassElement);
     classElement.appendChild(subclassofElement);
@@ -349,4 +357,18 @@ void OwlWriter::appendRulesData(){
             fuzzyRuleRootElement.appendChild(element);
         }
     }
+}
+
+
+void OwlWriter::processObjectLevel(ObjectLevel *level){
+//    <rdf:Description rdf:ID="segmentationLevel_1">
+//        <rdf:type rdf:resource="http://www.gnorasi.gr/ontology#SegmentationLevel"/>
+//    </rdf:Description>
+     QDomElement descriptionElement = doc.createElement(QLatin1String("rdf:Description"));
+     descriptionElement.setAttribute(QLatin1String("rdf:ID"),QString("segmentationLevel_").append(QString::number(level->id())));
+     owlrootElement.appendChild(descriptionElement);
+
+     QDomElement typeElement = doc.createElement(QLatin1String("rdf:type"));
+     typeElement.setAttribute(QLatin1String("rdf:resource"),QString("http://www.gnorasi.gr/ontology#SegmentationLevel").append(QString::number(level->id())));
+     descriptionElement.appendChild(typeElement);
 }
