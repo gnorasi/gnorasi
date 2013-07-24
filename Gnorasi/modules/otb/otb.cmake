@@ -289,6 +289,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/OBIA/otblabelmapstatisticwriterprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbobjectclassificationtolabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelmaptoclassimageprocessor.cpp
+    ${MOD_DIR}/processors/OBIA/otblabelmaptobinaryimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbndviprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbmsaviprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.cpp
@@ -381,6 +382,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/OBIA/otblabelmapstatisticwriterprocessor.h
     ${MOD_DIR}/processors/OBIA/otbobjectclassificationtolabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelmaptoclassimageprocessor.h
+    ${MOD_DIR}/processors/OBIA/otblabelmaptobinaryimagefilterprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbndviprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbmsaviprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.h
