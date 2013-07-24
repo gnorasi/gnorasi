@@ -78,6 +78,7 @@
 #include "processors/OBIA/otblabelmapstatisticwriterprocessor.h"
 #include "processors/OBIA/otbobjectclassificationtolabelmapprocessor.h"
 #include "processors/OBIA/otblabelmaptoclassimageprocessor.h"
+#include "processors/OBIA/otblabelmaptobinaryimagefilterprocessor.h"
 #include "processors/Radiometry/otbndviprocessor.h"
 #include "processors/Radiometry/otbmsaviprocessor.h"
 #include "processors/Radiometry/otbndwiprocessor.h"
@@ -218,6 +219,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBSOMImageClassificationFilterProcessor());
     registerProcessor(new OTBSOMMapReaderProcessor());
     registerProcessor(new OTBAttributesMapOpeningLabelMapFilterProcessor());
+    registerProcessor(new OTBLabelMapToBinaryImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
