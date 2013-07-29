@@ -57,29 +57,35 @@ void ItiOtbImageViewerPanelHistogramTab::initialize(){
 
     // set the layout
     setLayout(layout);
+
+    connect(m_pHistogramGenerator,SIGNAL(histogramGeneratedFinished(MyHistogramList*)),SLOT(onHistogramFinished(MyHistogramList*)));
 }
 
 void ItiOtbImageViewerPanelHistogramTab::setupHistogram(){
 
+    ItiOtbImageManager *mgr = m_pItiOtbImageViewerPanel->manager();
+
+    Q_ASSERT(mgr);
+
     // get the imge and perform an error check
-    VectorImageType *image = m_pItiOtbImageViewerPanel->manager()->image();
+    VectorImageType *image = mgr->image();
 
     if(!image )
         return;
 
+    qApp->setOverrideCursor(Qt::WaitCursor);
+
+    mgr->setHistogramReady(false);
+
+    connect(m_pHistogramGenerator,SIGNAL(histogramGeneratedFinished(MyHistogramList*)),mgr,SLOT(onHistogramFinished(MyHistogramList*)));
+
     if(m_pItiOtbImageViewerPanel->isGreyscale()){
 
-        // get the graychannel value from the panel
-        int currentGreyscaleChannel = m_pItiOtbImageViewerPanel->currentGreyscaleChannel();
-
         // set the channel to the histogram generator
-        m_pHistogramGenerator->setCurrentGreyChannel(currentGreyscaleChannel);
+        m_pHistogramGenerator->setCurrentGreyChannel(m_pItiOtbImageViewerPanel->currentGreyscaleChannel()-1);
 
         // set the mode to greyscale
         m_pHistogramGenerator->setRMode(HistogramGenerator::RMODE_GREYSCALE);
-
-        // generate the histogram
-        m_pHistogramGenerator->generateHistogram(image);
 
         // set visibilities
         m_pHistogramViewBlue->setVisible(false);
@@ -87,13 +93,6 @@ void ItiOtbImageViewerPanelHistogramTab::setupHistogram(){
         m_pHistogramViewRed->setVisible(false);
 
         m_pHistogramViewGreyscale->setVisible(true);
-
-        // get the data
-        QHash<int,double> grcd = m_pHistogramGenerator->greyscaleChannelData();
-
-        // setup the data and replot
-        m_pHistogramViewGreyscale->setupData(grcd);
-        m_pHistogramViewGreyscale->replot();
     }
     else{
 
@@ -105,29 +104,40 @@ void ItiOtbImageViewerPanelHistogramTab::setupHistogram(){
         // set the RGB mode
         m_pHistogramGenerator->setRMode(HistogramGenerator::RMODE_RGB);
 
-        // generate the histogam
-        m_pHistogramGenerator->generateHistogram(image);
-
         // set visibilities
         m_pHistogramViewGreyscale->setVisible(false);
+
         m_pHistogramViewBlue->setVisible(true);
         m_pHistogramViewGreen->setVisible(true);
         m_pHistogramViewRed->setVisible(true);
+    }
 
-        // get channel data
-        QHash<int,double> rcd = m_pHistogramGenerator->redChannelData();
-        QHash<int,double> gcd = m_pHistogramGenerator->greenChannelData();
-        QHash<int,double> bcd = m_pHistogramGenerator->blueChannelData();
+    // generate the histogam
+    m_pHistogramGenerator->generateHistogram(image);
+}
 
-        // setup the data
+void ItiOtbImageViewerPanelHistogramTab::onHistogramFinished(MyHistogramList* list){
+    // get the data
+        QHash<int,double> grcd = list->greyscaleChannelData();
+
+    // setup the data and replot
+        m_pHistogramViewGreyscale->setupData(grcd);
+        m_pHistogramViewGreyscale->replot();
+
+    // get channel data
+        QHash<int,double> rcd = list->redChannelData();
+        QHash<int,double> gcd = list->greenChannelData();
+        QHash<int,double> bcd = list->blueChannelData();
+
+     // setup the data
         m_pHistogramViewBlue->setupData(bcd);
         m_pHistogramViewGreen->setupData(gcd);
         m_pHistogramViewRed->setupData(rcd);
 
-        // now replot the histogram
+//     // now replot the histogram
         m_pHistogramViewRed->replot();
         m_pHistogramViewGreen->replot();
         m_pHistogramViewBlue->replot();
-    }
-}
 
+        qApp->restoreOverrideCursor();
+}

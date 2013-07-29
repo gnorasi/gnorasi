@@ -35,7 +35,11 @@
 #include "voreen/core/processors/processor.h"
 
 #include "../vector_globaldefs.h"
+//#include "../../histogram/histogramgenerator.h"
 
+
+class HistogramGenerator;
+class MyHistogramList;
 
 namespace itiviewer{
 
@@ -199,6 +203,31 @@ public:
      */
     bool isPortEmpty(voreen::Port *port);
 
+    /*!
+     * \brief histogramGenerator
+     * \return
+     */
+    MyHistogramList* histogramList() { return m_pMyHistogramList; }
+
+    /*!
+     * \brief setHistogramGenerator
+     * \param hg
+     */
+//    void setHistogramGenerator(HistogramGenerator *hg) { m_pHistogramGenerator = hg; }
+
+
+    bool isHistogramReady() const { return m_isHistogramReady; }
+    void setHistogramReady(bool b) { m_isHistogramReady = b; ; emit histogramChanged(m_isHistogramReady); }
+
+
+signals:
+    void histogramFinished(MyHistogramList* );
+
+    void histogramChanged(bool );
+
+public slots:
+    void onHistogramFinished(MyHistogramList*);
+
 private:
 
 
@@ -283,6 +312,14 @@ private:
      *  a container holding the clasficaiton ids and a string values for names
      */
     QHash<int ,QString> m_classficationNamesIds;
+
+    /*!
+     * \brief m_pHistogramGenerator
+     */
+    MyHistogramList*                   m_pMyHistogramList;
+
+
+    bool m_isHistogramReady;
 };
 
 

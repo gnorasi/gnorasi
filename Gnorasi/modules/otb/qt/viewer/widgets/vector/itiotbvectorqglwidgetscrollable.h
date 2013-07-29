@@ -105,9 +105,9 @@ public slots:
     void resetZoom() { m_helperZoomCounter = 1.0; }
 
     /*!
-     * \brief enableMouseTracking
+     * \brief onModelReady
      */
-    void enableMouseTracking();
+    void onModelReady();
 
 signals:
     /*!
@@ -175,6 +175,12 @@ protected:
     void mouseReleaseEvent(QMouseEvent *);
 
 private:
+
+    /*!
+     * \brief setupPaintingParameters
+     */
+    void setupPaintingParametersAndVisibleArea();
+
     /*!
      * \brief indexFromPoint
      * \return
@@ -208,6 +214,7 @@ private:
      * \param height
      */
     void setupViewport(int w, int h);
+
 
     /** OpenGl zoom factor */
     double m_IsotropicZoom;

@@ -37,9 +37,11 @@ OTBShapeAttributesLabelMapProcessor::OTBShapeAttributesLabelMapProcessor()
     : Processor(),
     reducedProperties_("reduced", "Only Basic Properties", true),
     update_("updateButton", "Update"),
+    automaticUpdate("automaticUpdate", "Automatic Update", false),
     inPort_(Port::INPORT, "Input Object Map", 0),
     outPort_(Port::OUTPORT, "Output Object Map", 0)
 {
+    addProperty(automaticUpdate);
     addProperty(reducedProperties_);
     update_.onChange(CallMemberAction<OTBShapeAttributesLabelMapProcessor>(this, &OTBShapeAttributesLabelMapProcessor::update));
     addProperty(update_);
@@ -86,6 +88,9 @@ void OTBShapeAttributesLabelMapProcessor::process() {
     shapeLabelMapFilter->SetComputePerimeter(true);
 //	(reducedProperties_.get()) ? shapeLabelMapFilter->ReducedAttributeSetOn() :
 //				     shapeLabelMapFilter->ReducedAttributeSetOff();
+    if(automaticUpdate.get())
+        shapeLabelMapFilter->Update();
+
 	outPort_.setData(shapeLabelMapFilter->GetOutput());
 	LINFO("Shape Properties on Object Map Processed");
     }
@@ -100,6 +105,11 @@ void OTBShapeAttributesLabelMapProcessor::process() {
 void OTBShapeAttributesLabelMapProcessor::update() {
     process();
     shapeLabelMapFilter->Update();
+}
+
+void OTBShapeAttributesLabelMapProcessor::forceUpdate(){
+    if(automaticUpdate.get())
+        process();
 }
 
 

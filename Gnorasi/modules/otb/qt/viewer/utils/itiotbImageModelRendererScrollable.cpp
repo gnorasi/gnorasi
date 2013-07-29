@@ -71,6 +71,10 @@ void ImageModelRendererScrollable::paintGL( const RenderingContext& context )
     const_cast<AbstractImageModel*>(context.m_AbstractImageModel)
     );
 
+    ItiOtbImageManager *mgr = viModel->itiOtbImageManager();
+    if(!mgr->isHistogramReady())
+        return;
+
     ImageRegionType bufferedRegion = context.m_ImageRegion;
 
     // margin validation checks

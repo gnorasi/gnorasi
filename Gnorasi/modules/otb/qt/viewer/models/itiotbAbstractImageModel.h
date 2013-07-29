@@ -41,6 +41,12 @@ public:
   /** Destructor */
   virtual ~AbstractImageModel();
 
+    /*!
+    * \brief itiOtbImageManager
+    * \return
+    */
+    ItiOtbImageManager* itiOtbImageManager() { return m_pManager; }
+
 //
 // SIGNALS.
 signals:

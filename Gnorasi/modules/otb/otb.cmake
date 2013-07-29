@@ -53,6 +53,55 @@ ELSEIF(WIN32)
     # include paths
     SET(MOD_INCLUDE_DIRECTORIES
         ${MOD_DIR}/ext/orfeotoolbox/include
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/ApplicationEngine
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/BasicFilters
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/ChangeDetection
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Common
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/DisparityMap
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/FeatureExtraction
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Fusion
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Fuzzy
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/GeospatialAnalysis
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Hyperspectral
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/IO
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Learning
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Markov
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/MultiScale
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/MultiTemporal
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/OBIA
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/ObjectDetection
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Projections
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Radiometry
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/SARPolarimetry
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Segmentation
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Simulation
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/SpatialReasoning
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Testing
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/CurlAdapters
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/ITKPendingPatches
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/OssimAdapters
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/Visualization
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Algorithms
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/BasicFilters
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Common
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/IO
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Numerics
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Numerics/Statistics
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Patented
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Review
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/SpatialObject
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Utilities
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Utilities/vxl
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Utilities/vxl/vcl
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Utilities/vxl/core
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbconfigfile
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbedison
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbedison/segm
     )
 
 	# libraries
@@ -238,6 +287,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/otbsmartpointerport.cpp
     ${MOD_DIR}/ports/otbkeypointsetport.cpp
     ${MOD_DIR}/ports/otbvectordataport.cpp
+    ${MOD_DIR}/ports/otblistlabelmapport.cpp
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.cpp
@@ -267,6 +317,9 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbrescaleintensityimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbdotproductimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.cpp
@@ -274,6 +327,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/OBIA/otblabelmapstatisticwriterprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbobjectclassificationtolabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelmaptoclassimageprocessor.cpp
+    ${MOD_DIR}/processors/OBIA/otbmultiplelabelimagetolabelmapprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbndviprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbmsaviprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.cpp
@@ -305,6 +359,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/otbsmartpointerport.h
     ${MOD_DIR}/ports/otbkeypointsetport.h
     ${MOD_DIR}/ports/otbvectordataport.h
+    ${MOD_DIR}/ports/otblistlabelmapport.h
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.h
@@ -334,6 +389,9 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbleeimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbrescaleintensityimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbdotproductimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h
@@ -341,6 +399,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/OBIA/otblabelmapstatisticwriterprocessor.h
     ${MOD_DIR}/processors/OBIA/otbobjectclassificationtolabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelmaptoclassimageprocessor.h
+    ${MOD_DIR}/processors/OBIA/otbmultiplelabelimagetolabelmapprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbndviprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbmsaviprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.h
@@ -361,7 +420,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
-#    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
+#   ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
 )
 
 #

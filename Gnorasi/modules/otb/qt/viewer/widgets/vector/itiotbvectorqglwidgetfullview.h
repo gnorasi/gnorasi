@@ -95,11 +95,12 @@ public:
      */
     void draw();
 
+
 public slots:
     /*!
-     * \brief enableMouseTracking
+     * \brief onModelReady
      */
-    void enableMouseTracking();
+    void onModelReady();
 
 signals:
 
@@ -118,6 +119,7 @@ signals:
      * \brief visibleAreaTranslated
      */
     void visibleAreaTranslated(int, int);
+
 
 protected:
 
@@ -145,12 +147,6 @@ protected:
      * \param event
      */
     void mouseMoveEvent(QMouseEvent *event);
-
-    /*!
-     * \brief resizeEvent
-     * \param event
-     */
-//    void resizeEvent(QResizeEvent* event);
 
     /*!
      * \brief mousePressEvent

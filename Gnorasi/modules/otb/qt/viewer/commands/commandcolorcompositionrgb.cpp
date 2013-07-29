@@ -31,10 +31,10 @@
 
 #include "commandcolorcompositionrgb.h"
 
+
 #include "../widgets/vector/itiotbvectorimageviewer.h"
 #include "../models/itiotbVectorImageModel.h"
 #include "../vector_globaldefs.h"
-
 
 using namespace itiviewer;
 using namespace otb;
@@ -70,8 +70,6 @@ void CommandColorCompositionRGB::execute(){
 
     // Apply the new rendering function to the Image layer
     renderer->SetAutoMinMax(false);
-
-//    vModel->setRenderingFuction(renderer);
 
     vModel->resetData();
 

@@ -35,6 +35,10 @@
 
 #include "voreen/qt/voreenmoduleqt.h"
 
+class OntologyClass;
+class ObjectLevel;
+
+
 namespace voreen {
 
 class OntologyClassItem;
@@ -48,8 +52,13 @@ public:
 
     void createDocument();
 
+    void createDocumentVersion2();
+
     //! append the data from the OntologyClassItem
     void appendData(OntologyClassItem* );
+
+
+    void appendData(OntologyClass *);
 
     //!
     //! set the namespaces edited by the user
@@ -67,6 +76,13 @@ public:
     //! returns the QDomDocument
     QDomDocument domDocument() { return doc; }
 
+    /*!
+     * \brief appendRulesData
+     */
+    void appendRulesData();
+
+    void processObjectLevel(ObjectLevel* );
+
 private:
 
     //!
@@ -80,7 +96,7 @@ private:
 
     QDomDocument doc;
 
-    QDomElement rootElement;
+    QDomElement owlrootElement;
 }; // OWLWRITER_H
 
 } // end of namespace voreen
