@@ -79,6 +79,7 @@ private:
     bool DataWritten;
     
     ButtonProperty update_;    ///< Updates the text data.
+
     
     static const std::string loggerCat_; ///< category used in logging
 };

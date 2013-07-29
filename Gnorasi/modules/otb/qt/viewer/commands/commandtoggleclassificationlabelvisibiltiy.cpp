@@ -10,7 +10,7 @@
 using namespace itiviewer;
 
 CommandToggleClassificationLabelVisibiltiy::CommandToggleClassificationLabelVisibiltiy(ItiOtbVectorImageViewer *viewer, QObject *parent) :
-    m_pItiOtbVectorImageViewer(viewer), Command(parent)
+    m_pItiOtbVectorImageViewer(viewer), m_visible(true), m_classLabelId(-1), Command(parent)
 {
 }
 

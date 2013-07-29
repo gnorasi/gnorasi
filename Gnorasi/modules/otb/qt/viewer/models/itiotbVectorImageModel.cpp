@@ -41,6 +41,8 @@
 #include "itkImageRegionConstIteratorWithIndex.h"
 
 
+#include "../../histogram/histogramgenerator.h"
+
 using namespace otb;
 
 
@@ -77,41 +79,49 @@ void
 VectorImageModel
 ::loadFile( const QString& filename )
 {
-  DefaultImageFileReaderType::Pointer imageFileReader(
-    DefaultImageFileReaderType::New()
-  );
+    Q_UNUSED(filename);
 
-  m_lastPath = filename;
+    otb::ImageMetadataInterfaceBase::Pointer metaData =  otb::ImageMetadataInterfaceFactory::CreateIMI(ToImageBase()->GetMetaDataDictionary());
 
-  imageFileReader->SetFileName( filename.toLatin1().data() );
-  imageFileReader->UpdateOutputInformation();
+  // Ensure default display returns valid band indices (see OTB bug).
+  Q_ASSERT(  metaData->GetDefaultDisplay().size()==3 );
+#if 0
+  Q_ASSERT( metaData->GetDefaultDisplay()[ 0 ]
+      < m_Image->GetNumberOfComponentsPerPixel() );
+  Q_ASSERT( metaData->GetDefaultDisplay()[ 1 ]
+      < m_Image->GetNumberOfComponentsPerPixel() );
+  Q_ASSERT( metaData->GetDefaultDisplay()[ 2 ]
+      < m_Image->GetNumberOfComponentsPerPixel() );
+#endif
 
-  m_ImageFileReader = imageFileReader;
+  // Patch invalid band indices of default-display (see OTB bug).
+  std::vector<unsigned int> rgb( metaData->GetDefaultDisplay() );
 
-  // Before doing anything, check if region is inside the buffered
-  // region of image
-  unsigned int currentIndex = 0;
-  const DefaultImageType* image =  this->GetOutput(currentIndex);
-  if(!image)
-      return;
+  unsigned int ncpp = m_pManager->image()->GetNumberOfComponentsPerPixel();
 
-  // initialize the channel list for the rendering needs following the
-  // input image
-  // TODO : See if if needs to be moved somewhere else
-  // TODO : use the default display
-//  if (m_ImageFileReader->GetOutput()->GetNumberOfComponentsPerPixel()  < 3)
-  if(image->GetNumberOfComponentsPerPixel() < 3)
+//  qDebug() << "m_pManager->image()->GetNumberOfComponentsPerPixel() : " << m_pManager->image()->GetNumberOfComponentsPerPixel();
+//  qDebug() << "rgb[ 0 ] : " << rgb[ 0 ];
+//  qDebug() << "rgb[ 1 ] : " << rgb[ 1 ];
+//  qDebug() << "rgb[ 2 ] : " << rgb[ 2 ];
+
+  if( rgb[ 0 ]>= ncpp )
     {
-    m_Channels.resize(1);
-    m_Channels[0]  = 0;
+    rgb[ 0 ] = 0;
     }
-  else
+
+  if( rgb[ 1 ]>= ncpp )
     {
-    m_Channels.resize(3);
-    m_Channels[0]  = 0;
-    m_Channels[1]  = 1;
-    m_Channels[2]  = 2;
+    rgb[ 1 ] = 0;
     }
+
+  if( rgb[ 2 ]>= ncpp )
+    {
+    rgb[ 2 ] = 0;
+    }
+
+  Q_ASSERT(m_Channels.empty() || m_Channels.size() == rgb.size());
+
+  m_Channels = rgb;
 
   m_RenderingFilter->GetRenderingFunction()->SetChannelList(m_Channels);
 
@@ -240,79 +250,97 @@ VectorImageModel
 ::DumpImagePixelsWithinRegionIntoBuffer(const ImageRegionType& region)
 {
 
-//    QTime time;
-//    qDebug() << "Start of DumpImagePixelsWithinRegionIntoBuffer...";
-//    time.restart();
+    QTime time;
+    qDebug() << "Start of DumpImagePixelsWithinRegionIntoBuffer...";
+    time.restart();
 
-  // Before doing anything, check if region is inside the buffered
-  // region of image
-  unsigned int currentIndex = 0;
+    // Before doing anything, check if region is inside the buffered
+    // region of image
+    unsigned int currentIndex = 0;
 
-  // TODO : add some checking
-  const DefaultImageType* image =  this->GetOutput(currentIndex);
-  if(!image)
-      return;
+    // TODO : add some checking
+    const DefaultImageType* image =  this->GetOutput(currentIndex);
+    if(!image)
+        return;
 
-  // some checking
-  if (!image->GetBufferedRegion().IsInside(region))
+    // some checking
+    if (!image->GetBufferedRegion().IsInside(region))
     {
     //itkExceptionMacro(<< "Region to read is oustside of the buffered region.");
     }
 
 
-  //test to strech image in 8bit
-  ByteRescalerFilterType::Pointer  byterescaler;
-  byterescaler = ByteRescalerFilterType::New();
-  //image->UpdateOutputInformation();
-  ByteImageType::PixelType minimum, maximum;
-  int bands = image->GetNumberOfComponentsPerPixel();
-  minimum.SetSize(bands);
-  maximum.SetSize(bands);
-  minimum.Fill(0);
-  maximum.Fill(255);
-  byterescaler->SetInput(image);
-  byterescaler->SetOutputMinimum(minimum);
-  byterescaler->SetOutputMaximum(maximum);
-  byterescaler->SetClampThreshold(0.01);
-  ByteImageType::Pointer image8;
-  image8 = byterescaler->GetOutput();
-//  byterescaler->Update();
-  //end test
+    Q_ASSERT(image);
 
-  // Extract the region of interest in the image
-  m_ExtractFilter->SetInput(image8);
-  m_ExtractFilter->SetExtractionRegion(region);
+    Q_ASSERT(!m_ExtractFilter.IsNull());
 
-  // Use the rendering filter to get
-  m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());
-  m_RenderingFilter->GetOutput()->SetRequestedRegion(region);
-  m_RenderingFilter->Update();
+    // Extract the region of interest in the image
+    m_ExtractFilter->SetInput(image);
+    m_ExtractFilter->SetExtractionRegion(region);
 
-//  qDebug() << "End of m_RenderingFilter \nmilliseconds elapsed : " << time.elapsed();
+    Q_ASSERT(!m_RenderingFilter.IsNull());
 
+    m_RenderingFilter->GetRenderingFunction()->SetAutoMinMax(false);
 
-  // Declare the iterator
-  itk::ImageRegionConstIteratorWithIndex< RenderingFilterType::OutputImageType >
-    it(m_RenderingFilter->GetOutput(), region);
+    Q_ASSERT(m_pManager->histogramList());
 
-  // Go to begin
-  it.GoToBegin();
+    std::vector<unsigned int> clist = m_RenderingFilter->GetRenderingFunction()->GetChannelList();
 
-  while (!it.IsAtEnd())
+  // ----------------------------------
+    RenderingFilterType::RenderingFunctionType::ParametersType  paramsMinMax;
+    paramsMinMax.SetSize(6);
+
+    // Update the parameters
+    for (unsigned int i = 0; i < paramsMinMax.Size(); i = i + 2)
     {
-    // Fill the buffer
-    unsigned int index = 0;
-    index = ComputeXAxisFlippedBufferIndex(it.GetIndex(), m_Region);
+        unsigned int band = clist.at(i/2);
 
-    // Fill the buffer
-    m_RasterizedBuffer[index]  = it.Get()[0];
-    m_RasterizedBuffer[index + 1] = it.Get()[1];
-    m_RasterizedBuffer[index + 2] = it.Get()[2];
-    ++it;
+        double val = m_pManager->histogramList()->Quantile(band,0.02,BOUND_LOWER);
+
+        paramsMinMax.SetElement(i,val);
+
+//        qDebug() << "m_pHistogramGenerator->Quantile(band,0.02,HistogramGenerator::BOUND_LOWER); : " << band << "\t" << val;
+
+        val = m_pManager->histogramList()->Quantile(band,0.02,BOUND_UPPER);
+
+        paramsMinMax.SetElement(i+1,val);
+
+//        qDebug() << "m_pHistogramGenerator->Quantile(band,0.02,HistogramGenerator::BOUND_UPPER); : " << band << "\t" << val;
     }
 
+    m_RenderingFilter->GetRenderingFunction()->SetParameters(paramsMinMax);
 
-//    qDebug() << "End of DumpImagePixelsWithinRegionIntoBuffer \nmilliseconds elapsed : " << time.elapsed();
+    // Use the rendering filter to get
+    m_RenderingFilter->SetInput(m_ExtractFilter->GetOutput());
+    //  m_RenderingFilter->GetOutput()->SetRequestedRegion(region);
+    m_RenderingFilter->Update();
+
+    qDebug() << "End of m_RenderingFilter \nmilliseconds elapsed : " << time.elapsed();
+
+
+    // Declare the iterator
+    itk::ImageRegionConstIteratorWithIndex< RenderingFilterType::OutputImageType >
+    it(m_RenderingFilter->GetOutput(), region);
+
+    // Go to begin
+    it.GoToBegin();
+
+    while (!it.IsAtEnd())
+    {
+        // Fill the buffer
+        unsigned int index = 0;
+        index = ComputeXAxisFlippedBufferIndex(it.GetIndex(), m_Region);
+
+        // Fill the buffer
+        m_RasterizedBuffer[index]  = it.Get()[0];
+        m_RasterizedBuffer[index + 1] = it.Get()[1];
+        m_RasterizedBuffer[index + 2] = it.Get()[2];
+        ++it;
+    }
+
+    emit ready();
+
+    qDebug() << "End of DumpImagePixelsWithinRegionIntoBuffer \nmilliseconds elapsed : " << time.elapsed();
 }
 
 
@@ -391,17 +419,36 @@ VectorImageModel
 
 
 ImageRegionType VectorImageModel::GetLargestPossibleRegion() const{
+
     ImageRegionType region;
-    if(!lastPath().isEmpty())
-        region = m_ImageFileReader->GetOutput()->GetLargestPossibleRegion();
+
+    if(m_pManager->image())
+        return m_pManager->image()->GetLargestPossibleRegion();
 
     return region;
+
 }
 
 
 void VectorImageModel::setRenderingFuction(RenderingFunctionType *rType){
 
     m_RenderingFilter->SetRenderingFunction(rType);
+}
+
+/*******************************************************************************/
+ImageBaseType::ConstPointer
+VectorImageModel
+::ToImageBase() const
+{
+  return ImageBaseType::ConstPointer( m_pManager->image() );
+}
+
+/*******************************************************************************/
+ImageBaseType::Pointer
+VectorImageModel
+::ToImageBase()
+{
+  return ImageBaseType::Pointer( m_pManager->image() );
 }
 
 

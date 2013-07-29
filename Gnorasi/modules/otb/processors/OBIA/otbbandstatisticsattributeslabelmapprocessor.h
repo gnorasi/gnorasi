@@ -68,6 +68,11 @@ public:
 							StatisticsLabelMapFilterType;
 
     StatisticsLabelMapFilterType::Pointer statisticsLabelMapFilter;
+
+    /*!
+     * \brief forceUpdate
+     */
+    void forceUpdate();
     
 protected:
     virtual void setDescriptions() {
@@ -79,6 +84,9 @@ protected:
     virtual void deinitialize() throw (tgt::Exception);
     BoolProperty reducedProperties_; ///< Calculate reduced number of shape properties
     ButtonProperty update_;      ///< Executes clearImage().
+
+    //! test
+    BoolProperty automaticUpdate;
 
 private:
 

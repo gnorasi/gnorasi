@@ -66,9 +66,8 @@ signals:
      */
     void titleChanged();
 
-private:
 
-    QGroupBox *m_pGroupBox;
+private:
 
     /*!
      * \brief m_title
@@ -76,9 +75,8 @@ private:
     QString m_title;
 
     /*!
-     * \brief m_pTextEdit
+     * \brief m_pLabel
      */
-//    QTextEdit *m_pTextEdit;
     QLabel *m_pLabel;
 
     /*!

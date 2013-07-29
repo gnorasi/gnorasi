@@ -23,6 +23,8 @@ public:
      */
     explicit Level(QObject *parent = 0);
 
+    ~Level();
+
     int id() const { return m_id; }
     void setId(int i) { m_id = i; }
 

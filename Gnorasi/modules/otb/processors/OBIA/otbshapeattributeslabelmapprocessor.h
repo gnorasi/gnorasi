@@ -61,6 +61,11 @@ public:
     typedef otb::ShapeAttributesLabelMapFilter<LabelMapType> ShapeLabelMapFilterType;
 
     ShapeLabelMapFilterType::Pointer shapeLabelMapFilter;
+
+    /*!
+     * \brief forceUpdate
+     */
+    void forceUpdate();
     
     
 protected:
@@ -73,6 +78,9 @@ protected:
     virtual void deinitialize() throw (tgt::Exception);
     BoolProperty reducedProperties_; ///< Calculate reduced number of shape properties
     ButtonProperty update_;      ///< Updates the chain
+
+    //! test
+    BoolProperty automaticUpdate;
 
 private:
 

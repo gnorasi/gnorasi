@@ -64,9 +64,9 @@ void CommandColorCompositionGreyscale::execute(){
     ChannelListType channels;
 
     channels.resize(3);
-    channels[0] = m_channel;
-    channels[1] = m_channel;
-    channels[2] = m_channel;
+    channels[0] = m_channel-1;
+    channels[1] = m_channel-1;
+    channels[2] = m_channel-1;
     renderer->SetChannelList(channels);
 
     // Apply the new rendering function to the Image layer
