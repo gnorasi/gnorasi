@@ -59,6 +59,7 @@
 #include "processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h"
 #include "processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h"
 #include "processors/BasicFilters/otbhistogrammatchingimagefilterprocessor.h"
+//#include "processors/BasicFilters/otbmnfimagefilterprocessor.h"
 #include "processors/BasicFilters/otbspectralangledistanceimagefilterprocessor.h"
 #include "processors/BasicFilters/otbgreylevelcooccurrencematrixadvancedtexturecoefficientscalculatorprocessor.h"
 #include "processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.h"
@@ -109,8 +110,10 @@
 #include "processors/Classification/otbbayesianclassifierimagefilterprocessor.h"
 #include "processors/Classification/otbmrfenergygaussianclassificationfilterprocessor.h"
 #include "processors/Classification/otbsomimageclassificationfilterprocessor.h"
+//#include "processors/Classification/otbsvmimageclassificationfilterprocessor.h"
 #include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
 #include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
+//#include "processors/ChangeDetection/otblocalrxdetectorfilterprocessor.h"
 #include "processors/Visualization/otbimageviewerprocessor.h"
 //#include "processors/Geometry/otborthorectifyprocessor.h"
 
@@ -212,14 +215,17 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBCloudDetectionImageFilterProcessor());
     registerProcessor(new OTBBayesianClassifierImageFilterProcessor());
     registerProcessor(new OTBGeodesicActiveContourLevelSetImageFilterProcessor());
+//    registerProcessor(new OTBMNFImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DLinesImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DCirclesImageFilterProcessor());
     registerProcessor(new OTBLmvmPanSharpeningFusionImageFilterProcessor());
     registerProcessor(new OTBShapeDetectionLevelSetImageFilterProcessor());
     registerProcessor(new OTBMRFEnergyGaussianClassificationFilterProcessor());
     registerProcessor(new OTBSOMImageClassificationFilterProcessor());
+//    registerProcessor(new OTBSVMImageClassificationFilterProcessor());
     registerProcessor(new OTBSOMMapReaderProcessor());
     registerProcessor(new OTBAttributesMapOpeningLabelMapFilterProcessor());
+//    registerProcessor(new OTBLocalRXDetectorFilterProcessor());
     registerProcessor(new OTBLabelMapToBinaryImageFilterProcessor());
     registerProcessor(new OTBGenericRoadExtractionFilterProcessor());
 

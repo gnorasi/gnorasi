@@ -270,6 +270,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbhistogrammatchingimagefilterprocessor.cpp
+#    ${MOD_DIR}/processors/BasicFilters/otbmnfimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbspectralangledistanceimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbgreylevelcooccurrencematrixadvancedtexturecoefficientscalculatorprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.cpp
@@ -319,8 +320,10 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Classification/otbbayesianclassifierimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbmrfenergygaussianclassificationfilterprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbsomimageclassificationfilterprocessor.cpp
+#    ${MOD_DIR}/processors/Classification/otbsvmimageclassificationfilterprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.cpp
+#    ${MOD_DIR}/processors/ChangeDetection/otblocalrxdetectorfilterprocessor.cpp
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
 )
 
@@ -364,6 +367,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbhistogrammatchingimagefilterprocessor.h
+#    ${MOD_DIR}/processors/BasicFilters/otbmnfimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbspectralangledistanceimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbgreylevelcooccurrencematrixadvancedtexturecoefficientscalculatorprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.h
@@ -413,8 +417,10 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Classification/otbbayesianclassifierimagefilterprocessor.h
     ${MOD_DIR}/processors/Classification/otbmrfenergygaussianclassificationfilterprocessor.h
     ${MOD_DIR}/processors/Classification/otbsomimageclassificationfilterprocessor.h
+#    ${MOD_DIR}/processors/Classification/otbsvmimageclassificationfilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
+#    ${MOD_DIR}/processors/ChangeDetection/otblocalrxdetectorfilterprocessor.h
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
 )
 
