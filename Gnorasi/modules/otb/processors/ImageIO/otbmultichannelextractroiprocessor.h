@@ -4,7 +4,7 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.               *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -32,6 +32,9 @@
 #include "../BasicFilters/otbimagefilterprocessor.h"
 #include "../../ports/otbvectorimageport.h"
 #include "otbMultiChannelExtractROI.h"
+#include "otbExtractROI.h"
+#include "itkVectorCastImageFilter.h"
+#include "otbVectorRescaleIntensityImageFilter.h"
 
 namespace voreen {
   
@@ -59,6 +62,7 @@ public:
 
     typedef otb::MultiChannelExtractROI<InputPixelType,
         InputPixelType>                                     MultiChannelExtractROIType;
+    MultiChannelExtractROIType::Pointer multichannelextractor;
 
 
 protected:
@@ -75,6 +79,10 @@ protected:
     void updateUseSingleChannel();
     void updateUseMultipleChannel();
 
+    void updateUseSpatialSubsetting();
+
+    virtual void bypass(OTBVectorImagePort *inport, OTBVectorImagePort *outport); ///< Passes the image from inport to outport without changes.
+
 private:
 
     OTBVectorImagePort inPort_;
@@ -85,6 +93,12 @@ private:
     IntProperty         m_channelEndProperty;
     BoolProperty        m_useSingleChannelProperty;
     BoolProperty        m_useMultipleChannelProperty;
+
+    IntProperty         startX_;
+    IntProperty         startY_;
+    IntProperty         sizeX_;
+    IntProperty         sizeY_;
+    BoolProperty        useSpatialSubsetting_;
 
     static const std::string loggerCat_; ///< category used in logging
 };
