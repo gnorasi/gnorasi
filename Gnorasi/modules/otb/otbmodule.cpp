@@ -64,6 +64,7 @@
 #include "processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.h"
 #include "processors/BasicFilters/otbperbandvectorimagefilterprocessor.h"
 #include "processors/BasicFilters/otbmdmdnmfimagefilterprocessor.h"
+#include "processors/BasicFilters/otbsigmoidimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.h"
@@ -226,6 +227,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBGenericRoadExtractionFilterProcessor());
     registerProcessor(new OTBRGBToLuminanceImageFilterProcessor());
     registerProcessor(new OTBMDMDNMFImageFilterProcessor());
+    registerProcessor(new OTBSigmoidImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
