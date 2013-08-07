@@ -36,29 +36,37 @@ OTBCloudDetectionImageFilterProcessor::OTBCloudDetectionImageFilterProcessor()
       gaussianVarianceValue_("gaussianVarianceValue", "Gaussian Variance Value:", 1.0f, 0.0f, 1024.0f),
       maxThreshold_("max", "Maximum Threshold:", 1.0f, 0.0f, 1.0f),
       minThreshold_("min", "Minimum Threshold:", 0.0f, 0.0f, 1.0f),
-      //referencePixelProperty("referencePixel", "Reference Pixel Property"),
-      refPixel0_("refPixel0","Reference Pixel Band 1:", 1,1,3000),
-      refPixel1_("refPixel1","Reference Pixel Band 2:", 1,1,3000),
-      refPixel2_("refPixel2","Reference Pixel Band 3:", 1,1,3000),
-      refPixel3_("refPixel3","Reference Pixel Band 4:", 1,1,3000),
-
+      refPixel0_("refPixel0","Reference Pixel #1:", 1,1,3000),
+      refPixel1_("refPixel1","Reference Pixel #2:", 1,1,3000),
+      refPixel2_("refPixel2","Reference Pixel #3:", 1,1,3000),
+      refPixel3_("refPixel3","Reference Pixel #4:", 1,1,3000),
+      refPixel4_("refPixel4","Reference Pixel #5:", 1,1,3000),
+      refPixel5_("refPixel5","Reference Pixel #6:", 1,1,3000),
+      refPixel6_("refPixel6","Reference Pixel #7:", 1,1,3000),
+      refPixel7_("refPixel7","Reference Pixel #8:", 1,1,3000),
       inPort_(Port::INPORT, "IN Vector Image", 0),
       outPort_(Port::OUTPORT, "OUT OTB Image", 0)
 {
-    addProperty(enableSwitch_);
     addProperty(gaussianVarianceValue_);
     addProperty(maxThreshold_);
     addProperty(minThreshold_);
-    //addProperty(referencePixelProperty);
     addProperty(refPixel0_);
     addProperty(refPixel1_);
     addProperty(refPixel2_);
     addProperty(refPixel3_);
+    addProperty(refPixel4_);
+    addProperty(refPixel5_);
+    addProperty(refPixel6_);
+    addProperty(refPixel7_);
 
     refPixel0_.setVisible(false);
     refPixel1_.setVisible(false);
     refPixel2_.setVisible(false);
     refPixel3_.setVisible(false);
+    refPixel4_.setVisible(false);
+    refPixel5_.setVisible(false);
+    refPixel6_.setVisible(false);
+    refPixel7_.setVisible(false);
 
     addPort(inPort_);
     addPort(outPort_);
@@ -86,49 +94,108 @@ std::string OTBCloudDetectionImageFilterProcessor::getProcessorInfo() const {
     return "Cloud Detection Image Filter Processor";
 }
 
-void OTBCloudDetectionImageFilterProcessor::updatePixelSize() {
+void OTBCloudDetectionImageFilterProcessor::updateBands(int bands) {
 
-    //get the number of spectral band directly from the image
-    //and set the visibility of intProperties according to this
-    size = inPort_.getData()->GetNumberOfComponentsPerPixel();
-
-    if (size==1) {
+    //Display the corresponding number of properties
+    //depending on input image's spectral bands.
+    switch (bands) {
+    case 1: {
         refPixel0_.setVisible(true);
         refPixel1_.setVisible(false);
         refPixel2_.setVisible(false);
         refPixel3_.setVisible(false);
-    } else if (size==2) {
+        refPixel4_.setVisible(false);
+        refPixel5_.setVisible(false);
+        refPixel6_.setVisible(false);
+        refPixel7_.setVisible(false);
+        break;
+    }
+    case 2: {
         refPixel0_.setVisible(true);
         refPixel1_.setVisible(true);
         refPixel2_.setVisible(false);
         refPixel3_.setVisible(false);
-    } else if (size==3) {
+        refPixel4_.setVisible(false);
+        refPixel5_.setVisible(false);
+        refPixel6_.setVisible(false);
+        refPixel7_.setVisible(false);
+        break;
+    }
+    case 3: {
         refPixel0_.setVisible(true);
         refPixel1_.setVisible(true);
         refPixel2_.setVisible(true);
         refPixel3_.setVisible(false);
-    } else if (size==4) {
+        refPixel4_.setVisible(false);
+        refPixel5_.setVisible(false);
+        refPixel6_.setVisible(false);
+        refPixel7_.setVisible(false);
+        break;
+    }
+    case 4: {
         refPixel0_.setVisible(true);
         refPixel1_.setVisible(true);
         refPixel2_.setVisible(true);
         refPixel3_.setVisible(true);
+        refPixel4_.setVisible(false);
+        refPixel5_.setVisible(false);
+        refPixel6_.setVisible(false);
+        refPixel7_.setVisible(false);
+        break;
     }
+    case 5: {
+        refPixel0_.setVisible(true);
+        refPixel1_.setVisible(true);
+        refPixel2_.setVisible(true);
+        refPixel3_.setVisible(true);
+        refPixel4_.setVisible(true);
+        refPixel5_.setVisible(false);
+        refPixel6_.setVisible(false);
+        refPixel7_.setVisible(false);
+        break;
+    }
+    case 6: {
+        refPixel0_.setVisible(true);
+        refPixel1_.setVisible(true);
+        refPixel2_.setVisible(true);
+        refPixel3_.setVisible(true);
+        refPixel4_.setVisible(true);
+        refPixel5_.setVisible(true);
+        refPixel6_.setVisible(false);
+        refPixel7_.setVisible(false);
+        break;
+    }
+    case 7: {
+        refPixel0_.setVisible(true);
+        refPixel1_.setVisible(true);
+        refPixel2_.setVisible(true);
+        refPixel3_.setVisible(true);
+        refPixel4_.setVisible(true);
+        refPixel5_.setVisible(true);
+        refPixel6_.setVisible(true);
+        refPixel7_.setVisible(false);
+        break;
+    }
+    case 8: {
+        refPixel0_.setVisible(true);
+        refPixel1_.setVisible(true);
+        refPixel2_.setVisible(true);
+        refPixel3_.setVisible(true);
+        refPixel4_.setVisible(true);
+        refPixel5_.setVisible(true);
+        refPixel6_.setVisible(true);
+        refPixel7_.setVisible(true);
+        break;
+    }
+    }
+    LINFO("Pixel size has been updated!");
 }
 
 void OTBCloudDetectionImageFilterProcessor::process() {
 
-    //check bypass switch
-
-//    if (!enableSwitch_.get()) {
-//        bypass(&inPort_, &outPort_);
-//        return;
-//    }
-
     try
     {
         //REFERENCE PIXELS PROPERTY
-
-        VectorPixelType referencePixel;
 
         // *CLASSIC METHOD
         //obtain number of spectral bands manually from user by analyzing a stringProperty
@@ -153,34 +220,97 @@ void OTBCloudDetectionImageFilterProcessor::process() {
         //get number of spectral bands from image after the processor is connected
         //and display the equivalent number of intPropertiesto get the reference pixel values
 
-        updatePixelSize();
-        referencePixel.SetSize(size);
-        referencePixel.Fill(0.);
+        //Detect the number of spectral bands the input image has.
+        nbBands = inPort_.getData()->GetNumberOfComponentsPerPixel();
+        LINFO("Number of Bands detected: " << nbBands);
+        updateBands(nbBands);
 
-        if (size==1) {
-            referencePixel[0] = refPixel0_.get();
-        } else if (size==2) {
-            referencePixel[0] = refPixel0_.get();
-            referencePixel[1] = refPixel1_.get();
-        } else if (size==3) {
-            referencePixel[0] = refPixel0_.get();
-            referencePixel[1] = refPixel1_.get();
-            referencePixel[2] = refPixel2_.get();
-        } else if (size==4) {
-            referencePixel[0] = refPixel0_.get();
-            referencePixel[1] = refPixel1_.get();
-            referencePixel[2] = refPixel2_.get();
-            referencePixel[3] = refPixel3_.get();
+        VectorImageType::PixelType pixelRef;
+
+        //Pass the parameters to filter
+        //depending on input image's spectral bands.
+        switch (nbBands) {
+        case 1: {
+            pixelRef.SetSize(1);
+            pixelRef[0] = refPixel0_.get();
+            break;
+        }
+        case 2: {
+            pixelRef.SetSize(2);
+            pixelRef[0] = refPixel0_.get();
+            pixelRef[1] = refPixel1_.get();
+            break;
+        }
+        case 3: {
+            pixelRef.SetSize(3);
+            pixelRef[0] = refPixel0_.get();
+            pixelRef[1] = refPixel1_.get();
+            pixelRef[2] = refPixel2_.get();
+            break;
+        }
+        case 4: {
+            pixelRef.SetSize(4);
+            pixelRef[0] = refPixel0_.get();
+            pixelRef[1] = refPixel1_.get();
+            pixelRef[2] = refPixel2_.get();
+            pixelRef[3] = refPixel3_.get();
+            break;
+        }
+        case 5: {
+            pixelRef.SetSize(5);
+            pixelRef[0] = refPixel0_.get();
+            pixelRef[1] = refPixel1_.get();
+            pixelRef[2] = refPixel2_.get();
+            pixelRef[3] = refPixel3_.get();
+            pixelRef[4] = refPixel4_.get();
+            break;
+        }
+        case 6: {
+            pixelRef.SetSize(6);
+            pixelRef[0] = refPixel0_.get();
+            pixelRef[1] = refPixel1_.get();
+            pixelRef[2] = refPixel2_.get();
+            pixelRef[3] = refPixel3_.get();
+            pixelRef[4] = refPixel4_.get();
+            pixelRef[5] = refPixel5_.get();
+            break;
+        }
+        case 7: {
+            pixelRef.SetSize(7);
+            pixelRef[0] = refPixel0_.get();
+            pixelRef[1] = refPixel1_.get();
+            pixelRef[2] = refPixel2_.get();
+            pixelRef[3] = refPixel3_.get();
+            pixelRef[4] = refPixel4_.get();
+            pixelRef[5] = refPixel5_.get();
+            pixelRef[6] = refPixel6_.get();
+            break;
+        }
+        case 8: {
+            pixelRef.SetSize(8);
+            pixelRef[0] = refPixel0_.get();
+            pixelRef[1] = refPixel1_.get();
+            pixelRef[2] = refPixel2_.get();
+            pixelRef[3] = refPixel3_.get();
+            pixelRef[4] = refPixel4_.get();
+            pixelRef[5] = refPixel5_.get();
+            pixelRef[6] = refPixel6_.get();
+            pixelRef[7] = refPixel7_.get();
+            break;
+        }
         }
 
         //SET FILTER PARAMETERS
+        filter->SetInput(inPort_.getData());
 
-        filter->SetReferencePixel(referencePixel);
+        filter->SetReferencePixel(pixelRef);
         filter->SetVariance(gaussianVarianceValue_.get());
         filter->SetMinThreshold(minThreshold_.get());
         filter->SetMaxThreshold(maxThreshold_.get());
-        filter->SetInput(inPort_.getData());
-        //filter->Update();
+
+        filter->UpdateLargestPossibleRegion();
+        filter->Update();
+
         outPort_.setData(filter->GetOutput());
         LINFO("Cloud Detection Image Filter Connected!");
 
@@ -191,12 +321,6 @@ void OTBCloudDetectionImageFilterProcessor::process() {
         return;
     }
 
-}
-
-void OTBCloudDetectionImageFilterProcessor::bypass(OTBVectorImagePort *inport, OTBImagePort *outport) {
-
-    //TODO: bypass needs to convert from VectorImage to OTBImage
-    //outport->setData(inport->getData());
 }
 
 }   // namespace
