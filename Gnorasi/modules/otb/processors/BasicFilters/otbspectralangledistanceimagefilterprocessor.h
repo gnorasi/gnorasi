@@ -67,19 +67,23 @@ protected:
     void process();
     virtual void initialize() throw (tgt::Exception);
     virtual void deinitialize() throw (tgt::Exception);
-    virtual void updateSpectralAngleDistance();
-
-    //virtual void bypass(OTBVectorImagePort *inport, OTBImagePort *outport); ///< Passes the image from inport to outport without changes.
+    virtual void updateBands(int bands);    //Updates the display of properties
 
 private:
 
     OTBVectorImagePort inPort_;
     OTBImagePort outPort_;
-    IntProperty size_;
+
+    //this filter so far supports only images with 8 spectral bands max
     IntProperty refPixel0_;
     IntProperty refPixel1_;
     IntProperty refPixel2_;
     IntProperty refPixel3_;
+    IntProperty refPixel4_;
+    IntProperty refPixel5_;
+    IntProperty refPixel6_;
+    IntProperty refPixel7_;
+    unsigned int nbBands;
 
     static const std::string loggerCat_; ///< category used in logging
 };
