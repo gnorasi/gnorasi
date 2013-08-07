@@ -299,6 +299,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/otbbayesianfusionfilterprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbdemcaracteristicsextractor.cpp
+#    ${MOD_DIR}/processors/Radiometry/otbimagetoreflectanceimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosiftkeypointsetfilterprocessor.cpp
@@ -396,6 +397,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Radiometry/otbbayesianfusionfilterprocessor.h 
     ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbdemcaracteristicsextractor.h
+#    ${MOD_DIR}/processors/Radiometry/otbimagetoreflectanceimagefilterprocessor.h
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosiftkeypointsetfilterprocessor.h

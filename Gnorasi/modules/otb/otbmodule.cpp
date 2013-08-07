@@ -88,6 +88,7 @@
 #include "processors/Radiometry/otbbayesianfusionfilterprocessor.h"
 #include "processors/Radiometry/otblaindviprocessor.h"
 #include "processors/Radiometry/otbdemcaracteristicsextractor.h"
+//#include "processors/Radiometry/otbimagetoreflectanceimagefilterprocessor.h"
 #include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 #include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 #include "processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.h"
@@ -228,6 +229,7 @@ OTBModule::OTBModule(const std::string& moduleName)
 //    registerProcessor(new OTBLocalRXDetectorFilterProcessor());
     registerProcessor(new OTBLabelMapToBinaryImageFilterProcessor());
     registerProcessor(new OTBGenericRoadExtractionFilterProcessor());
+//    registerProcessor(new OTBImageToReflectanceImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
