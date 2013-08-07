@@ -71,6 +71,7 @@
 #include "processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.h"
 #include "processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h"
+#include "processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.h"
 #include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
@@ -222,6 +223,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBAttributesMapOpeningLabelMapFilterProcessor());
     registerProcessor(new OTBLabelMapToBinaryImageFilterProcessor());
     registerProcessor(new OTBGenericRoadExtractionFilterProcessor());
+    registerProcessor(new OTBRGBToLuminanceImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
