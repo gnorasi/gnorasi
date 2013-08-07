@@ -72,8 +72,7 @@ protected:
     void process();
     virtual void initialize() throw (tgt::Exception);
     virtual void deinitialize() throw (tgt::Exception);
-    virtual void bypass(OTBVectorImagePort *inport, OTBImagePort *outport); ///< Passes the image from inport to outport without changes.
-    virtual void updatePixelSize(); ///< updates property visibility according to spectral bands number.
+    virtual void updateBands(int bands); ///< Updates property visibility according to spectral bands number.
 
 private:
 
@@ -81,12 +80,16 @@ private:
     FloatProperty minThreshold_;
     FloatProperty maxThreshold_;
 
-    StringProperty referencePixelProperty;
+    //this filter so far supports only images with 8 spectral bands max
     IntProperty refPixel0_;
     IntProperty refPixel1_;
     IntProperty refPixel2_;
     IntProperty refPixel3_;
-    int size;
+    IntProperty refPixel4_;
+    IntProperty refPixel5_;
+    IntProperty refPixel6_;
+    IntProperty refPixel7_;
+    unsigned int nbBands;
 
     OTBVectorImagePort inPort_;
     OTBImagePort outPort_;
