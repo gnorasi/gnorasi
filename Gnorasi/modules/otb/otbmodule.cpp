@@ -102,6 +102,7 @@
 #include "processors/FeatureExtraction/otbhoughtransform2dlinesimagefilterprocessor.h"
 #include "processors/FeatureExtraction/otbclouddetectionimagefilterprocessor.h"
 #include "processors/FeatureExtraction/otbgenericroadextractionfilterprocessor.h"
+#include "processors/FeatureExtraction/otbcloudestimatorfilterprocessor.h"
 #include "processors/Segmentation/otbmeanshiftimagesegmentationprocessor.h"
 #include "processors/Segmentation/otbwatershedsegmentationfilterprocessor.h"
 #include "processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h"
@@ -228,6 +229,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBRGBToLuminanceImageFilterProcessor());
     registerProcessor(new OTBMDMDNMFImageFilterProcessor());
     registerProcessor(new OTBSigmoidImageFilterProcessor());
+    registerProcessor(new OTBCloudEstimatorFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
