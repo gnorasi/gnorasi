@@ -74,6 +74,7 @@
 #include "processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.h"
 #include "processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.h"
+#include "processors/ImageEnhancement/otbbinarythinningimagefilterprocessor.h"
 #include "processors/OBIA/otblabelimagetolabelmapprocessor.h"
 #include "processors/OBIA/otbshapeattributeslabelmapprocessor.h"
 #include "processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h"
@@ -232,6 +233,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBSigmoidImageFilterProcessor());
     registerProcessor(new OTBCloudEstimatorFilterProcessor());
     registerProcessor(new OTBDerivativeImageFilterProcessor());
+    registerProcessor(new OTBBinaryThinningImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());

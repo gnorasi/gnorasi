@@ -285,6 +285,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/ImageEnhancement/otbbinarythinningimagefilterprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.cpp
@@ -384,6 +385,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.h
+    ${MOD_DIR}/processors/ImageEnhancement/otbbinarythinningimagefilterprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h
