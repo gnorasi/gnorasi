@@ -279,6 +279,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbmdmdnmfimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbsigmoidimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otblabelimagetovectordatafilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otblabelmaptovectordatafilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.cpp
@@ -384,6 +385,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbmdmdnmfimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbsigmoidimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otblabelimagetovectordatafilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otblabelmaptovectordatafilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.h

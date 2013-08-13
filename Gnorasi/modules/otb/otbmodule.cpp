@@ -68,6 +68,7 @@
 #include "processors/BasicFilters/otbmdmdnmfimagefilterprocessor.h"
 #include "processors/BasicFilters/otbsigmoidimagefilterprocessor.h"
 #include "processors/BasicFilters/otblabelimagetovectordatafilterprocessor.h"
+#include "processors/BasicFilters/otblabelmaptovectordatafilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.h"
@@ -244,6 +245,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBVectorDataReaderProcessor());
     registerProcessor(new OTBVectorDataWriterProcessor());
     registerProcessor(new OTBLabelImageToVectorDataFilterProcessor());
+    registerProcessor(new OTBLabelMapToVectorDataFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
