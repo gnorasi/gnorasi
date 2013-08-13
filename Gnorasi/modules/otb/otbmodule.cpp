@@ -38,6 +38,8 @@
 #include "processors/ImageIO/otbcsvreaderprocessor.h"
 #include "processors/ImageIO/otbmultichannelextractroiprocessor.h"
 #include "processors/ImageIO/otbsommapreaderprocessor.h"
+#include "processors/ImageIO/otbvectordatareaderprocessor.h"
+#include "processors/ImageIO/otbvectordatawriterprocessor.h"
 #include "processors/BasicFilters/otbconvolutionimagefilterprocessor.h"
 #include "processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h"
 #include "processors/BasicFilters/otbcannyedgedetectionimagefilterprocessor.h"
@@ -65,6 +67,7 @@
 #include "processors/BasicFilters/otbperbandvectorimagefilterprocessor.h"
 #include "processors/BasicFilters/otbmdmdnmfimagefilterprocessor.h"
 #include "processors/BasicFilters/otbsigmoidimagefilterprocessor.h"
+#include "processors/BasicFilters/otblabelimagetovectordatafilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.h"
@@ -238,6 +241,9 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBBinaryThinningImageFilterProcessor());
     registerProcessor(new OTBGeodesicMorphologyLevelingFilterProcessor());
     registerProcessor(new OTBHarrisImageFilterProcessor());
+    registerProcessor(new OTBVectorDataReaderProcessor());
+    registerProcessor(new OTBVectorDataWriterProcessor());
+    registerProcessor(new OTBLabelImageToVectorDataFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());

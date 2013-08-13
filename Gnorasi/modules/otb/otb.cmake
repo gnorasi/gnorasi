@@ -248,6 +248,8 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/ImageIO/otbcsvreaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbmultichannelextractroiprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbsommapreaderprocessor.cpp
+    ${MOD_DIR}/processors/ImageIO/otbvectordatareaderprocessor.cpp
+    ${MOD_DIR}/processors/ImageIO/otbvectordatawriterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbconvolutionimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbfftconvolutionimagefilterprocessor.cpp
@@ -276,6 +278,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbperbandvectorimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbmdmdnmfimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbsigmoidimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otblabelimagetovectordatafilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.cpp
@@ -350,6 +353,8 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/ImageIO/otbcsvreaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbsommapreaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbmultichannelextractroiprocessor.h
+    ${MOD_DIR}/processors/ImageIO/otbvectordatareaderprocessor.h
+    ${MOD_DIR}/processors/ImageIO/otbvectordatawriterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbconvolutionimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h
@@ -378,6 +383,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbperbandvectorimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbmdmdnmfimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbsigmoidimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otblabelimagetovectordatafilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.h
@@ -432,6 +438,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
+
 )
 
 #
