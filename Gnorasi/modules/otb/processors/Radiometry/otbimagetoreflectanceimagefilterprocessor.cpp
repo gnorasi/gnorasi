@@ -40,6 +40,7 @@ OTBImageToReflectanceImageFilterProcessor::OTBImageToReflectanceImageFilterProce
     addPort(inPort_);
     addPort(outPort_);
 
+    //FIXME: triggers linking error
     filter = FilterType::New();
 }
 

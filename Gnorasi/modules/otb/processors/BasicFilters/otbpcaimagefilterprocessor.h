@@ -4,9 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
- * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
- * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -24,38 +24,37 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef OTBLOCALRXDETECTORFILTERPROCESSOR_H
-#define OTBLOCALRXDETECTORFILTERPROCESSOR_H
+#ifndef OTBPCAIMAGEFILTERPROCESSOR_H
+#define OTBPCAIMAGEFILTERPROCESSOR_H
 
-#include "../BasicFilters/otbimagefilterprocessor.h"
+#include "otbimagefilterprocessor.h"
 #include "otbVectorImage.h"
 #include "modules/otb/ports/otbvectorimageport.h"
 #include "voreen/core/properties/boolproperty.h"
 #include "voreen/core/properties/intproperty.h"
-#include "otbLocalRxDetectorFilter.h"   //FIXME: Triggers linking error
+#include "otbPCAImageFilter.h"
 
 namespace voreen {
 
-class OTBLocalRXDetectorFilterProcessor : public OTBImageFilterProcessor
+class OTBPCAImageFilterProcessor : public OTBImageFilterProcessor
 {
 public:
-    OTBLocalRXDetectorFilterProcessor();
+    OTBPCAImageFilterProcessor();
 
-    virtual ~OTBLocalRXDetectorFilterProcessor();
+    virtual ~OTBPCAImageFilterProcessor();
 
     virtual Processor* create() const;
 
-    virtual std::string getCategory() const { return "Change Detection"; }
-    virtual std::string getClassName() const { return "Local RX Detector Filter"; }
+    virtual std::string getCategory() const { return "Basic Filters"; }
+    virtual std::string getClassName() const { return "Spectral Angle Distance Image Filter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL;}//STABLE, TESTING, EXPERIMENTAL
 
     virtual std::string getProcessorInfo() const;
 
-    typedef otb::VectorImage<double, 2> VectorImageType;
+    typedef otb::VectorImage<double, 2> VectorImage;
 
-    typedef otb::LocalRxDetectorFilter<VectorImageType, VectorImageType> FilterType;
-
-    FilterType::Pointer filter;
+    typedef otb::PCAImageFilter<VectorImage, VectorImage, otb::Transform::FORWARD> PCAFilterType;
+    PCAFilterType::Pointer filter;
 
 protected:
 
@@ -65,18 +64,27 @@ protected:
     void process();
     virtual void initialize() throw (tgt::Exception);
     virtual void deinitialize() throw (tgt::Exception);
-
-    virtual void bypass(OTBVectorImagePort *inport, OTBVectorImagePort *outport); ///< Passes the image from inport to outport without changes.
+    virtual void updateBands(int bands);    //Updates the display of properties
 
 private:
 
     OTBVectorImagePort inPort_;
-    OTBVectorImagePort outPort_;
+    OTBImagePort outPort_;
+
+    //this filter so far supports only images with 8 spectral bands max
+    IntProperty refPixel0_;
+    IntProperty refPixel1_;
+    IntProperty refPixel2_;
+    IntProperty refPixel3_;
+    IntProperty refPixel4_;
+    IntProperty refPixel5_;
+    IntProperty refPixel6_;
+    IntProperty refPixel7_;
+    unsigned int nbBands;
 
     static const std::string loggerCat_; ///< category used in logging
 };
 
 } // namespace
 
-#endif // OTBLOCALRXDETECTORFILTERPROCESSOR_H
-
+#endif // OTBPCAIMAGEFILTERPROCESSOR_H

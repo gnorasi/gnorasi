@@ -64,6 +64,7 @@
 #include "processors/BasicFilters/otbgreylevelcooccurrencematrixadvancedtexturecoefficientscalculatorprocessor.h"
 #include "processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.h"
 #include "processors/BasicFilters/otbperbandvectorimagefilterprocessor.h"
+//#include "processors/BasicFilters/otbpcaimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.h"
@@ -230,6 +231,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBLabelMapToBinaryImageFilterProcessor());
     registerProcessor(new OTBGenericRoadExtractionFilterProcessor());
 //    registerProcessor(new OTBImageToReflectanceImageFilterProcessor());
+//    registerProcessor(new OTBPCAImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());

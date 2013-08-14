@@ -42,8 +42,8 @@ OTBSVMImageClassificationFilterProcessor::OTBSVMImageClassificationFilterProcess
 
 
     //***FIXME: TRIGGERS LINKING ERROR***
-//    filter = ClassificationFilterType::New();
-//    model = ModelType::New();
+    filter = ClassificationFilterType::New();
+    model = ModelType::New();
 
     labelToPortCaster = LabelToPortCastingFilterType::New();
 }

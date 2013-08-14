@@ -4,7 +4,7 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.             	*
  * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
  * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
  *                                                                              *
@@ -24,73 +24,79 @@
  *                                                                              *
  ********************************************************************************/
 
-#include "otblocalrxdetectorfilterprocessor.h"
+#include "otbpcaimagefilterprocessor.h"
 #include "voreen/core/voreenapplication.h"
 
 namespace voreen {
 
-const std::string OTBLocalRXDetectorFilterProcessor::loggerCat_("voreen.OTBEstimateInnerProductPCAProcessor");
+const std::string OTBPCAImageFilterProcessor::loggerCat_("voreen.OTBPCAImageFilterProcessor");
 
-OTBLocalRXDetectorFilterProcessor::OTBLocalRXDetectorFilterProcessor()
+OTBPCAImageFilterProcessor::OTBPCAImageFilterProcessor()
     :OTBImageFilterProcessor(),
       inPort_(Port::INPORT, "IN MultiBand Image", 0),
       outPort_(Port::OUTPORT, "OUT MultiBand Image", 0)
+
 {
-      addProperty(enableSwitch_);
-      addPort(inPort_);
-      addPort(outPort_);
+    addProperty(enableSwitch_);
 
-      filter = FilterType::New();
-}
+    addPort(inPort_);
+    addPort(outPort_);
 
-Processor* OTBLocalRXDetectorFilterProcessor::create() const {
-    return new OTBLocalRXDetectorFilterProcessor();
-}
-
-OTBLocalRXDetectorFilterProcessor::~OTBLocalRXDetectorFilterProcessor() {
+//    filter = FilterType::New();
 
 }
 
-void OTBLocalRXDetectorFilterProcessor::initialize() throw (tgt::Exception) {
+Processor* OTBPCAImageFilterProcessor::create() const {
+    return new OTBPCAImageFilterProcessor();
+}
+
+OTBPCAImageFilterProcessor::~OTBPCAImageFilterProcessor() {
+
+}
+
+void OTBPCAImageFilterProcessor::initialize() throw (tgt::Exception) {
     Processor::initialize();
 }
 
-void OTBLocalRXDetectorFilterProcessor::deinitialize() throw (tgt::Exception) {
+void OTBPCAImageFilterProcessor::deinitialize() throw (tgt::Exception) {
     Processor::deinitialize();
 }
 
-std::string OTBLocalRXDetectorFilterProcessor::getProcessorInfo() const {
-    return "Local RX Detector Filter";
+std::string OTBPCAImageFilterProcessor::getProcessorInfo() const {
+    return "PCA Image Filter";
 }
 
-void OTBLocalRXDetectorFilterProcessor::process() {
+void OTBPCAImageFilterProcessor::process() {
+
 
     //check bypass switch
     if (!enableSwitch_.get()) {
         bypass(&inPort_, &outPort_);
         return;
     }
+    LINFO("PCA Image Filter Enabled!");
 
     try
     {
+
 //        filter->SetInput(inPort_.getData());
 //        filter->Update();
 //        outPort_.setData(filter->GetOutput());
-        LINFO("Local RX Detector Filter Connected!");
+
+//        LINFO("PCA Filter Connected!");
 
     }
     catch (int e)
     {
-        LERROR("Error in Local RX Detector Filter");
+        LERROR("Error in PCA Image Filter");
         return;
     }
 
 }
 
-void OTBLocalRXDetectorFilterProcessor::bypass(OTBVectorImagePort *inport, OTBVectorImagePort *outport) {
+void OTBPCAImageFilterProcessor::bypass(OTBVectorImagePort *inport, OTBVectorImagePort *outport) {
 
     outport->setData(inport->getData());
 }
 
 }   // namespace
-
