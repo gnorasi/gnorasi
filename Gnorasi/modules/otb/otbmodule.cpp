@@ -65,6 +65,7 @@
 #include "processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.h"
 #include "processors/BasicFilters/otbperbandvectorimagefilterprocessor.h"
 //#include "processors/BasicFilters/otbpcaimagefilterprocessor.h"
+//#include "processors/BasicFilters/otbvcaimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.h"
@@ -234,6 +235,7 @@ OTBModule::OTBModule(const std::string& moduleName)
 //    registerProcessor(new OTBImageToReflectanceImageFilterProcessor());
 //    registerProcessor(new OTBPCAImageFilterProcessor());
 //    registerProcessor(new OTBSiftFastImageFilterProcessor());
+//    registerProcessor(new OTBVCAImageFilterProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());

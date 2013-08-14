@@ -276,6 +276,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbperbandvectorimagefilterprocessor.cpp
 #    ${MOD_DIR}/processors/BasicFilters/otbpcaimagefilterprocessor.cpp
+#    ${MOD_DIR}/processors/BasicFilters/otbvcaimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.cpp
@@ -376,6 +377,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbperbandvectorimagefilterprocessor.h
 #    ${MOD_DIR}/processors/BasicFilters/otbpcaimagefilterprocessor.h
+#    ${MOD_DIR}/processors/BasicFilters/otbvcaimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.h
