@@ -325,6 +325,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Classification/otbmrfenergygaussianclassificationfilterprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbsomimageclassificationfilterprocessor.cpp
 #    ${MOD_DIR}/processors/Classification/otbsvmimageclassificationfilterprocessor.cpp
+#    ${MOD_DIR}/processors/Classification/otblabelmapsvmclassifierprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.cpp
 #    ${MOD_DIR}/processors/ChangeDetection/otblocalrxdetectorfilterprocessor.cpp
@@ -426,6 +427,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Classification/otbmrfenergygaussianclassificationfilterprocessor.h
     ${MOD_DIR}/processors/Classification/otbsomimageclassificationfilterprocessor.h
 #    ${MOD_DIR}/processors/Classification/otbsvmimageclassificationfilterprocessor.h
+#    ${MOD_DIR}/processors/Classification/otblabelmapsvmclassifierprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
 #    ${MOD_DIR}/processors/ChangeDetection/otblocalrxdetectorfilterprocessor.h

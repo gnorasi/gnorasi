@@ -114,6 +114,7 @@
 #include "processors/Classification/otbbayesianclassifierimagefilterprocessor.h"
 #include "processors/Classification/otbmrfenergygaussianclassificationfilterprocessor.h"
 #include "processors/Classification/otbsomimageclassificationfilterprocessor.h"
+//#include "processors/Classification/otblabelmapsvmclassifierprocessor.h"
 //#include "processors/Classification/otbsvmimageclassificationfilterprocessor.h"
 #include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
 #include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
@@ -236,6 +237,7 @@ OTBModule::OTBModule(const std::string& moduleName)
 //    registerProcessor(new OTBPCAImageFilterProcessor());
 //    registerProcessor(new OTBSiftFastImageFilterProcessor());
 //    registerProcessor(new OTBVCAImageFilterProcessor());
+//    registerProcessor(new OTBLabelMapSVMClassifierProcessor());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
