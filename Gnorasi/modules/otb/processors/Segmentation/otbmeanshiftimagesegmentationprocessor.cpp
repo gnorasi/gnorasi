@@ -29,9 +29,16 @@
 #include "otbmeanshiftimagesegmentationprocessor.h"
 #include "voreen/core/voreenapplication.h"
 
+#include "boost/thread.hpp"
+
 
 namespace voreen {
 const std::string OTBMeanShiftSegmentationProcessor::loggerCat_("voreen.OTBMeanShiftSegmentationProcessor");
+
+//class HelperCalculator {
+//public:
+//    HelperCalculator(int sr, float r, int mrs, float sc);
+//};
 
 OTBMeanShiftSegmentationProcessor::OTBMeanShiftSegmentationProcessor()
     : OTBImageFilterProcessor(),
@@ -111,7 +118,7 @@ void OTBMeanShiftSegmentationProcessor::process() {
 	filter->SetRangeRadius(rangeRadius_.get());
 	filter->SetMinimumRegionSize(minRegionSize_.get());
 	filter->SetScale(scale_.get());
-	filter->SetNumberOfThreads(1);
+    filter->SetNumberOfThreads(1);
     filter->SetInput(inPort_.getData());
 
     // test

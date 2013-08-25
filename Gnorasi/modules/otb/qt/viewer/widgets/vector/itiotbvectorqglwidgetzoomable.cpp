@@ -665,11 +665,6 @@ ImageRegionType::IndexType ItiOtbVectorQGLWidgetZoomable::indexFromPoint(const Q
     return idx;
 }
 
-void ItiOtbVectorQGLWidgetZoomable::enableMouseTracking(){
-    //! mouse tracking is disabled on startup, set it on
-    setMouseTracking(true);
-}
-
 //!
 ItiOtbVectorQGLWidgetZoomable::~ItiOtbVectorQGLWidgetZoomable(){
 //    ClearBuffer();

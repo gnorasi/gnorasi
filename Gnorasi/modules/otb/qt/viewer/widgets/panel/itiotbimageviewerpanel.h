@@ -203,8 +203,6 @@ public slots:
      */
     void setupHistogram();
 
-signals:
-
     
 private slots:
 

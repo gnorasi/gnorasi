@@ -1,6 +1,6 @@
 #include <QtGui>
 
-#include "ontologyclassitem.h"
+#include "ontologyclass.h"
 #include "ontologyclassmodel.h"
 
 #include "../utils/owlhelperitem.h"
@@ -21,7 +21,7 @@ OntologyClassModel::OntologyClassModel(QObject *parent, bool editable)
     QVector<QVariant> rootData;
     rootData << tr("Name") << tr("Comment");
 
-    rootItem = new OntologyClassItem(rootData);
+    rootItem = new OntologyClass(rootData);
     rootItem->setId(QString::fromAscii(OBJECTDEPICTION_VALUE));
 }
 
@@ -44,7 +44,7 @@ QVariant OntologyClassModel::data(const QModelIndex &index, int role) const
     if (role != Qt::DisplayRole && role != Qt::EditRole)
         return QVariant();
 
-    OntologyClassItem *item = getItem(index);
+    OntologyClass *item = getItem(index);
 
     return item->data(index.column());
 }
@@ -63,10 +63,10 @@ Qt::ItemFlags OntologyClassModel::flags(const QModelIndex &index) const
 
 
 
-OntologyClassItem *OntologyClassModel::getItem(const QModelIndex &index) const
+OntologyClass *OntologyClassModel::getItem(const QModelIndex &index) const
 {
     if (index.isValid()) {
-        OntologyClassItem *item = static_cast<OntologyClassItem*>(index.internalPointer());
+        OntologyClass *item = static_cast<OntologyClass*>(index.internalPointer());
         if (item) return item;
     }
     return rootItem;
@@ -88,9 +88,9 @@ QModelIndex OntologyClassModel::index(int row, int column, const QModelIndex &pa
     if (parent.isValid() && parent.column() != 0)
         return QModelIndex();
 
-    OntologyClassItem *parentItem = getItem(parent);
+    OntologyClass *parentItem = getItem(parent);
 
-    OntologyClassItem *childItem = parentItem->child(row);
+    OntologyClass *childItem = parentItem->child(row);
     if (childItem)
         return createIndex(row, column, childItem);
     else
@@ -112,7 +112,7 @@ bool OntologyClassModel::insertColumns(int position, int columns, const QModelIn
 
 bool OntologyClassModel::insertRows(int position, int rows, const QModelIndex &parent)
 {
-    OntologyClassItem *parentItem = getItem(parent);
+    OntologyClass *parentItem = getItem(parent);
     bool success;
 
     beginInsertRows(parent, position, position + rows - 1);
@@ -128,8 +128,8 @@ QModelIndex OntologyClassModel::parent(const QModelIndex &index) const
     if (!index.isValid())
         return QModelIndex();
 
-    OntologyClassItem *childItem = getItem(index);
-    OntologyClassItem *parentItem = childItem->parent();
+    OntologyClass *childItem = getItem(index);
+    OntologyClass *parentItem = childItem->parent();
 
     if (parentItem == rootItem)
         return QModelIndex();
@@ -155,7 +155,7 @@ bool OntologyClassModel::removeColumns(int position, int columns, const QModelIn
 
 bool OntologyClassModel::removeRows(int position, int rows, const QModelIndex &parent)
 {
-    OntologyClassItem *parentItem = getItem(parent);
+    OntologyClass *parentItem = getItem(parent);
     bool success = true;
 
     beginRemoveRows(parent, position, position + rows - 1);
@@ -168,7 +168,7 @@ bool OntologyClassModel::removeRows(int position, int rows, const QModelIndex &p
 
 int OntologyClassModel::rowCount(const QModelIndex &parent) const
 {
-    OntologyClassItem *parentItem = getItem(parent);
+    OntologyClass *parentItem = getItem(parent);
 
     return parentItem->childCount();
 }
@@ -177,6 +177,13 @@ int OntologyClassModel::rowCount(const QModelIndex &parent) const
 bool OntologyClassModel::setData(const QModelIndex &index, const QVariant &value,
                         int role)
 {
+    if(role == Qt::UserRole){
+        OntologyClass *item = getItem(index);
+        bool result = item->setData(index.column(), value);
+
+        return result;
+    }
+
     if (role != Qt::EditRole)
         return false;
 
@@ -209,7 +216,7 @@ bool OntologyClassModel::setData(const QModelIndex &index, const QVariant &value
         }
     }
 
-    OntologyClassItem *item = getItem(index);
+    OntologyClass *item = getItem(index);
     bool result = item->setData(index.column(), value);
 
     if(index.column()==0){
@@ -239,10 +246,10 @@ bool OntologyClassModel::setHeaderData(int section, Qt::Orientation orientation,
     return result;
 }
 
-//! This functions traverses the OntologyClassItem hierarchy and using the OWLHelperItem item
-//! creates the respective OntologyClassItem hierrarchey
+//! This functions traverses the OntologyClass hierarchy and using the OWLHelperItem item
+//! creates the respective OntologyClass hierrarchey
 //! This funciton is called recursive as there is parent child relation of the OWLHelperItem class
-void OntologyClassModel::traverseHierarchy(OWLHelperItem *owlItem, OntologyClassItem *ontologyItem){
+void OntologyClassModel::traverseHierarchy(OWLHelperItem *owlItem, OntologyClass *ontologyItem){
     QList<OWLHelperItem*> list = owlItem->owlChildren();
     QList<OWLHelperItem*>::const_iterator i;
     for(i = list.constBegin(); i != list.constEnd(); i++){
@@ -259,12 +266,12 @@ void OntologyClassModel::traverseHierarchy(OWLHelperItem *owlItem, OntologyClass
 }
 
 //! getter
-QStringList OntologyClassModel::classIdList(OntologyClassItem *item) const {
+QStringList OntologyClassModel::classIdList(OntologyClass *item) const {
     QStringList list;
-    QList<OntologyClassItem*> ilist = item->getChildItems();
-    QList<OntologyClassItem*>::const_iterator i;
+    QList<OntologyClass*> ilist = item->getChildItems();
+    QList<OntologyClass*>::const_iterator i;
     for(i = ilist.constBegin(); i != ilist.constEnd(); i++){
-        OntologyClassItem *oitem = *i;
+        OntologyClass *oitem = *i;
         list.append(oitem->id());
 
         list.append(classIdList(oitem));
@@ -324,7 +331,7 @@ void OntologyClassModel::updateRules(const QString &oldname, const QString &newn
     }
 }
 
-//! this is a validation label functionality . Al it does is to check for already added OntologyClassItem and
+//! this is a validation label functionality . Al it does is to check for already added OntologyClass and
 //! return false if there are already functions and true if no
 bool OntologyClassModel::validateLabel(const QVariant &val){
     QModelIndex index_ = index(0,0);

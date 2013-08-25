@@ -86,13 +86,15 @@ protected:
      */
     void keyPressEvent(QKeyEvent *);
 
+    /*!
+     * \brief showEvent
+     */
+    void showEvent(QShowEvent *);
+
 signals:
     
 public slots:
     //!
-
-
-private slots:
 
 
 private:

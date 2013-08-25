@@ -539,6 +539,14 @@ void VoreenMainWindow::createMenus() {
     modeApplicationAction_->setCheckable(true);
     modeApplicationAction_->setShortcut(tr("F4"));
 
+    viewMenu_->addSeparator();
+
+    forceUpdateAction_ = new QAction(QIcon(":/voreenve/icons/player-start.png"),
+                                     tr("&Force Update Processors"), this);
+    forceUpdateAction_->setCheckable(true);
+    forceUpdateAction_->setShortcut(tr("F10"));
+    connect(forceUpdateAction_,SIGNAL(triggered()),this,SLOT(processorsForceUpdate()));
+
     QActionGroup* guiModeGroup = new QActionGroup(this);
     guiModeGroup->addAction(modeApplicationAction_);
     guiModeGroup->addAction(modeDevelopmentAction_);
@@ -547,6 +555,8 @@ void VoreenMainWindow::createMenus() {
 
     viewMenu_->addAction(modeDevelopmentAction_);
     viewMenu_->addAction(modeApplicationAction_);
+    viewMenu_->addSeparator();
+    viewMenu_->addAction(forceUpdateAction_);
     viewMenu_->addSeparator();
 
 
@@ -665,6 +675,8 @@ void VoreenMainWindow::createToolBars() {
 
     viewToolBar_->addAction(modeDevelopmentAction_);
     viewToolBar_->addAction(modeApplicationAction_);
+    viewToolBar_->addSeparator();
+    viewToolBar_->addAction(forceUpdateAction_);
     viewToolBar_->addSeparator();
 
     // tools toolbar
@@ -1728,5 +1740,13 @@ void VoreenMainWindow::screenshotActionTriggered(bool /*triggered*/) {
     }
 }
 
+
+void VoreenMainWindow::processorsForceUpdate(){
+    NetworkEvaluator *ev = vis_->getEvaluator();
+    if(!ev)
+        return;
+
+    ev->forceCallNonCalledUpdateProcessorsFunction();
+}
 
 } // namespace

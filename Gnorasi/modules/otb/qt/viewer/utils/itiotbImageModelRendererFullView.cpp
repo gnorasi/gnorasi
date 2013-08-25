@@ -67,6 +67,10 @@ void ImageModelRendererFullView::paintGL( const RenderingContext& context )
     const_cast<AbstractImageModel*>(context.m_AbstractImageModel)
     );
 
+    ItiOtbImageManager *mgr = viModel->itiOtbImageManager();
+    if(!mgr->isHistogramReady())
+        return;
+
     ImageRegionType extent = context.m_extent;
     ImageRegionType bufferedRegion = context.m_ImageRegion;
     unsigned char* buffer = viModel->RasterizeRegion(bufferedRegion);

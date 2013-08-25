@@ -39,103 +39,122 @@ const double ZOOM_VALUE = 0.125;
 
 const unsigned int VDimension = 2;
 
-typedef double                                                              VPixelType;
-typedef otb::VectorImage<VPixelType, VDimension>                            VectorImageType;
+typedef double                                                                                              VPixelType;
+typedef otb::VectorImage<VPixelType, VDimension>                                                            VectorImageType;
 
 /**
  */
-typedef itk::RGBAPixel< unsigned char >                                     RGBAPixelType;
+typedef itk::RGBAPixel< unsigned char >                                                                     RGBAPixelType;
 /**
  */
-typedef otb::Image< RGBAPixelType, VDimension >                             RGBAImageType;
-
-/**
- */
-typedef itk::ImageRegion<VDimension >                                       ImageRegionType;
+typedef otb::Image< RGBAPixelType, VDimension >                                                             RGBAImageType;
 
 /**
  */
-typedef itk::Index< VDimension >                                            IndexType;
+typedef itk::ImageRegion<VDimension >                                                                       ImageRegionType;
 
-typedef VectorImageType                                                     DefaultImageType;
-typedef VectorImageType::RegionType                                         VectorRegionType;
-typedef VectorImageType::IndexType                                          VectorIndexType;
-typedef VectorImageType::SizeType                                           VectorSizeType;
+/**
+ */
+typedef itk::Index< VDimension >                                                                            IndexType;
 
-typedef unsigned char                                                       BytePixelType;
-typedef otb::VectorImage<BytePixelType, 2>                                  ByteImageType;
+/*******************************************************************************/
+/* Type definitions of scalar values.                                          */
+/**
+ */
+typedef unsigned int                                                                                        CountType;
 
-typedef itk::ConstNeighborhoodIterator<RasterImageType>                     NeighborhoodIteratorType;
-typedef itk::ImageRegionIterator<RasterImageType>                           IteratorType;
+/**
+ */
+enum Bound
+{
+  BOUND_LOWER = 0,
+  BOUND_UPPER,
+  BOUND_COUNT
+};
+
+/**
+ */
+typedef itk::ImageBase< 2 >                                                                                 ImageBaseType;
+
+typedef VectorImageType                                                                                     DefaultImageType;
+typedef VectorImageType::RegionType                                                                         VectorRegionType;
+typedef VectorImageType::IndexType                                                                          VectorIndexType;
+typedef VectorImageType::SizeType                                                                           VectorSizeType;
+
+typedef unsigned char                                                                                       BytePixelType;
+typedef otb::VectorImage<BytePixelType, 2>                                                                  ByteImageType;
+
+typedef itk::ConstNeighborhoodIterator<RasterImageType>                                                     NeighborhoodIteratorType;
+typedef itk::ImageRegionIterator<RasterImageType>                                                           IteratorType;
 
 typedef itk::NeighborhoodAlgorithm
-::ImageBoundaryFacesCalculator<RasterImageType>                             FaceCalculatorType;
+::ImageBoundaryFacesCalculator<RasterImageType>                                                             FaceCalculatorType;
 
 typedef otb::ImageToVectorImageCastFilter<RasterImageType,
-VectorImageType>                                                            ImageToVectorImageCastFilterType;
+VectorImageType>                                                                                            ImageToVectorImageCastFilterType;
 
-typedef otb::VectorImage<RGBAImageType::PixelType,VDimension>               ByteVectorImageType;
+typedef otb::VectorImage<RGBAImageType::PixelType,VDimension>                                               ByteVectorImageType;
 
 typedef otb::ImageToVectorImageCastFilter<RGBAImageType,
-ByteVectorImageType>                                                        ByteImageToVectorImageCastFilterType;
+ByteVectorImageType>                                                                                        ByteImageToVectorImageCastFilterType;
 
-typedef otb::ImageFileReader<VectorImageType>                               ReaderType;
+typedef otb::ImageFileReader<VectorImageType>                                                               ReaderType;
 
 
 //typedef itk::Statistics::ListSample<VectorImageType::PixelType>             SampleListType;
-typedef itk::Statistics::ListSample<ByteImageType::PixelType>               SampleListType;
+typedef itk::Statistics::ListSample<ByteImageType::PixelType>                                               SampleListType;
 
-typedef otb::ImageList<RasterImageType>                                     ImageListType;
-typedef otb::VectorImageToImageListFilter<VectorImageType, ImageListType>   VectorImageToImageListType;
+typedef otb::ImageList<RasterImageType>                                                                     ImageListType;
+typedef otb::VectorImageToImageListFilter<VectorImageType, ImageListType>                                   VectorImageToImageListType;
 
 /**
  */
-typedef otb::ImageFileReader< VectorImageType >                             VectorImageFileReaderType;
+typedef otb::ImageFileReader< VectorImageType >                                                             VectorImageFileReaderType;
 
 /** Rendering filter */
 /** Rendering part */
-//typedef RenderingImageFilter<VectorImageType, RGBAImageType>                RenderingFilterType;
-typedef RenderingImageFilter<ByteImageType, RGBAImageType>                  RenderingFilterType;
+typedef RenderingImageFilter<VectorImageType, RGBAImageType>                                                RenderingFilterType;
+//typedef RenderingImageFilter<ByteImageType, RGBAImageType>                  RenderingFilterType;
 
 
 /** Rendering function */
-//typedef Function::RenderingFunction<VectorImageType::PixelType, RGBAPixelType> RenderingFunctionType;
-typedef Function::RenderingFunction<ByteImageType::PixelType, RGBAPixelType> RenderingFunctionType;
+typedef Function::RenderingFunction<VectorImageType::PixelType, RGBAPixelType>                              RenderingFunctionType;
+//typedef Function::RenderingFunction<ByteImageType::PixelType, RGBAPixelType> RenderingFunctionType;
 
-//typedef Function::StandardRenderingFunction<VectorImageType::PixelType,
+typedef Function::StandardRenderingFunction<VectorImageType::PixelType,
+                                            RGBAPixelType>                                                  StandardRenderingFunctionType;
+typedef StandardRenderingFunctionType::ChannelListType                                                      ChannelListType;
+typedef StandardRenderingFunctionType::ParametersType                                                       ParametersType;
+
+typedef Function::NoStretchRenderingFunction<VectorImageType::PixelType,
+                                             RGBAPixelType>                                                 NoStretchRenderingFunctionType;
+
+typedef Function::SquareRootRenderingFunction<VectorImageType::PixelType,
+                                              RGBAPixelType>                                                SquareRootRenderingFunctionType;
+
+typedef Function::GaussianRenderingFunction<VectorImageType::PixelType,
+                                            RGBAPixelType>                                                  GaussianRenderingFunctionType;
+//typedef Function::StandardRenderingFunction<ByteImageType::PixelType,
 //                                            RGBAPixelType> StandardRenderingFunctionType;
 //typedef StandardRenderingFunctionType::ChannelListType    ChannelListType;
 //typedef StandardRenderingFunctionType::ParametersType     ParametersType;
 
-//typedef Function::NoStretchRenderingFunction<VectorImageType::PixelType,
+//typedef Function::NoStretchRenderingFunction<ByteImageType::PixelType,
 //                                             RGBAPixelType> NoStretchRenderingFunctionType;
 
-//typedef Function::SquareRootRenderingFunction<VectorImageType::PixelType,
+//typedef Function::SquareRootRenderingFunction<ByteImageType::PixelType,
 //                                              RGBAPixelType> SquareRootRenderingFunctionType;
 
-//typedef Function::GaussianRenderingFunction<VectorImageType::PixelType,
+//typedef Function::GaussianRenderingFunction<ByteImageType::PixelType,
 //                                            RGBAPixelType> GaussianRenderingFunctionType;
-typedef Function::StandardRenderingFunction<ByteImageType::PixelType,
-                                            RGBAPixelType> StandardRenderingFunctionType;
-typedef StandardRenderingFunctionType::ChannelListType    ChannelListType;
-typedef StandardRenderingFunctionType::ParametersType     ParametersType;
-
-typedef Function::NoStretchRenderingFunction<ByteImageType::PixelType,
-                                             RGBAPixelType> NoStretchRenderingFunctionType;
-
-typedef Function::SquareRootRenderingFunction<ByteImageType::PixelType,
-                                              RGBAPixelType> SquareRootRenderingFunctionType;
-
-typedef Function::GaussianRenderingFunction<ByteImageType::PixelType,
-                                            RGBAPixelType> GaussianRenderingFunctionType;
 
 /**
  */
-typedef VectorImageFileReaderType                                           DefaultImageFileReaderType;
+typedef VectorImageFileReaderType                                                                           DefaultImageFileReaderType;
 
 
 typedef otb::VectorRescaleIntensityImageFilter<
-DefaultImageType, ByteImageType>                                            ByteRescalerFilterType;
+DefaultImageType, ByteImageType>                                                                            ByteRescalerFilterType;
 
 
 /**

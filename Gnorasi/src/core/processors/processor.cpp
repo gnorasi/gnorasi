@@ -657,4 +657,6 @@ bool Processor::usesExpensiveComputation() const {
     return false;
 }
 
+
+
 } // namespace voreen
