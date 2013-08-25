@@ -339,7 +339,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicerodeimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.cpp
-    ${MOD_DIR}/processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.cpp
+    #${MOD_DIR}/processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.cpp
@@ -379,8 +379,8 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Segmentation/otbmeanshiftimagesegmentationprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.cpp
-    ${MOD_DIR}/processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.cpp
-    ${MOD_DIR}/processors/Segmentation/otbshapedetectionlevelsetimagefilterprocessor.cpp
+    #${MOD_DIR}/processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.cpp
+    #${MOD_DIR}/processors/Segmentation/otbshapedetectionlevelsetimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbconfusionmatrixcalculatorprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbbayesianclassifierimagefilterprocessor.cpp
@@ -451,7 +451,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicerodeimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.h
-    ${MOD_DIR}/processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.h
+    #${MOD_DIR}/processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.h
@@ -491,8 +491,8 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Segmentation/otbmeanshiftimagesegmentationprocessor.h
     ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.h
     ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h
-    ${MOD_DIR}/processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.h
-    ${MOD_DIR}/processors/Segmentation/otbshapedetectionlevelsetimagefilterprocessor.h
+    #${MOD_DIR}/processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.h
+    #${MOD_DIR}/processors/Segmentation/otbshapedetectionlevelsetimagefilterprocessor.h
     ${MOD_DIR}/processors/Classification/otbconfusionmatrixcalculatorprocessor.h
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.h
     ${MOD_DIR}/processors/Classification/otbbayesianclassifierimagefilterprocessor.h
