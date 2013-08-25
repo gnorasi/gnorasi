@@ -78,7 +78,7 @@
 #include "processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgrayscalegeodesicerodeimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.h"
-#include "processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.h"
+//#include "processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.h"
 #include "processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.h"
@@ -118,8 +118,8 @@
 #include "processors/Segmentation/otbmeanshiftimagesegmentationprocessor.h"
 #include "processors/Segmentation/otbwatershedsegmentationfilterprocessor.h"
 #include "processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h"
-#include "processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.h"
-#include "processors/Segmentation/otbshapedetectionlevelsetimagefilterprocessor.h"
+//#include "processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.h"
+//#include "processors/Segmentation/otbshapedetectionlevelsetimagefilterprocessor.h"
 #include "processors/Classification/otbconfusionmatrixcalculatorprocessor.h"
 #include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
 #include "processors/Classification/otbbayesianclassifierimagefilterprocessor.h"
@@ -221,7 +221,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBGrayscaleConnectedClosingImageFilterProcessor());
     registerProcessor(new OTBGrayscaleGeodesicDilateImageFilterProcessor());
     registerProcessor(new OTBGrayscaleGeodesicErodeImageFilterProcessor());
-    registerProcessor(new OTBMorphologicalWatershedImageFilterProcessor());
+    //registerProcessor(new OTBMorphologicalWatershedImageFilterProcessor());
     registerProcessor(new OTBCurvatureAnisotropicDiffusionImageFilterProcessor());
     registerProcessor(new OTBZeroCrossingBasedEdgeDetectionImageFilterProcessor());
     registerProcessor(new OTBSpectralAngleDistanceImageFilterProcessor());
@@ -231,11 +231,11 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBPerBandVectorImageFilterProcessor());
     registerProcessor(new OTBCloudDetectionImageFilterProcessor());
     registerProcessor(new OTBBayesianClassifierImageFilterProcessor());
-    registerProcessor(new OTBGeodesicActiveContourLevelSetImageFilterProcessor());
+    //registerProcessor(new OTBGeodesicActiveContourLevelSetImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DLinesImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DCirclesImageFilterProcessor());
     registerProcessor(new OTBLmvmPanSharpeningFusionImageFilterProcessor());
-    registerProcessor(new OTBShapeDetectionLevelSetImageFilterProcessor());
+    //registerProcessor(new OTBShapeDetectionLevelSetImageFilterProcessor());
     registerProcessor(new OTBMRFEnergyGaussianClassificationFilterProcessor());
     registerProcessor(new OTBSOMImageClassificationFilterProcessor());
     registerProcessor(new OTBSOMMapReaderProcessor());
