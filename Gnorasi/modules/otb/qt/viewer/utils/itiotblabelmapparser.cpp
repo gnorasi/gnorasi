@@ -89,7 +89,7 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
         pollist.append(plgon);
 
-        Region *pRegion = new Region(this);
+        Region *pRegion = new Region();
         pRegion->setArea(plgon);
         pRegion->setSegmentationId(counter++);
 

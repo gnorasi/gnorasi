@@ -50,7 +50,7 @@ ItiOtbVectorImageViewer::ItiOtbVectorImageViewer(QWidget *parent) :
     ItiOtbImageViewer(parent)
 {
     //! set the visual mode to packed
-    m_vmode                             = VMODE_PACKED;
+    m_vmode                                 = VMODE_PACKED;
 
     //!
     setupLayout();
@@ -72,9 +72,9 @@ void ItiOtbVectorImageViewer::setupLayout(){
     m_labelCss = QString("QLabel { color: blue; font: bold 13px; } ");
 
     // initialize instances
-    m_pLabelScrollableResolution        = new QLabel(tr("Scrollable View"),this);
-    m_pLabelFullView                    = new QLabel(tr("Full View"),this);
-    m_pLabelZoomView                    = new QLabel(tr("Zoomable View"),this);
+    m_pLabelScrollableResolution            = new QLabel(tr("Scrollable View"),this);
+    m_pLabelFullView                        = new QLabel(tr("Full View"),this);
+    m_pLabelZoomView                        = new QLabel(tr("Zoomable View"),this);
 
     //!
     m_pLabelFullView->setStyleSheet(m_labelCss);
@@ -91,51 +91,51 @@ void ItiOtbVectorImageViewer::setupLayout(){
 
     //!
     // create the views opengl views
-    m_pItiOtbVectorImageWidgetScroll      = new ItiOtbVectorQGLWidgetScrollable(this);
+    m_pItiOtbVectorImageWidgetScroll        = new ItiOtbVectorQGLWidgetScrollable(this);
     m_pItiOtbVectorImageWidgetScroll->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    m_pItiOtbVectorImageWidgetFullView    = new ItiOtbVectorQGLWidgetFullView(this);
-    m_pItiOtbVectorImageWidgetFullView->setMinimumSize(10,10);
+    m_pItiOtbVectorImageWidgetFullView      = new ItiOtbVectorQGLWidgetFullView(this);
+//    m_pItiOtbVectorImageWidgetFullView->setMinimumSize(10,10);
     m_pItiOtbVectorImageWidgetScroll->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-    m_pItiOtbVectorImageWidgetZoomable    = new ItiOtbVectorQGLWidgetZoomable(this);
-    m_pItiOtbVectorImageWidgetZoomable->setMinimumSize(10,10);
+    m_pItiOtbVectorImageWidgetZoomable      = new ItiOtbVectorQGLWidgetZoomable(this);
+//    m_pItiOtbVectorImageWidgetZoomable->setMinimumSize(10,10);
     m_pItiOtbVectorImageWidgetScroll->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
     //! TODO
     //!
     //! create the metadata widget, also a widget for showing pixel info metadata
     //!
-    m_pItiViewerPixelInfoWidget         = new ItiViewerPixelInfoWidget(this);
+    m_pItiViewerPixelInfoWidget             = new ItiViewerPixelInfoWidget(this);
     m_pItiViewerPixelInfoWidget->setGeometry(0,0,160,140);
     m_pItiViewerPixelInfoWidget->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
     //! setup the left layout
-    m_pvBoxLayoutLeft                   = new QVBoxLayout();
+    m_pvBoxLayoutLeft                       = new QVBoxLayout();
     m_pvBoxLayoutLeft->addWidget(m_pLabelFullView);
     m_pvBoxLayoutLeft->addWidget(m_pItiOtbVectorImageWidgetFullView);
     m_pvBoxLayoutLeft->addWidget(m_pLabelZoomView);
     m_pvBoxLayoutLeft->addWidget(m_pItiOtbVectorImageWidgetZoomable);
     m_pvBoxLayoutLeft->addWidget(m_pItiViewerPixelInfoWidget);
-    QWidget *pWidgetLeft                = new QWidget(this);
+    QWidget *pWidgetLeft                    = new QWidget(this);
     pWidgetLeft->setLayout(m_pvBoxLayoutLeft);
 
     //! setup the right layout
-    m_pVboxLayoutRight                  = new QVBoxLayout();
+    m_pVboxLayoutRight                      = new QVBoxLayout();
     m_pVboxLayoutRight->addWidget(m_pLabelScrollableResolution);
     m_pVboxLayoutRight->addWidget(m_pItiOtbVectorImageWidgetScroll);
     //! create the widget
-    QWidget *pWidgetRight               = new QWidget(this);
+    QWidget *pWidgetRight                   = new QWidget(this);
     pWidgetRight->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     pWidgetRight->setLayout(m_pVboxLayoutRight);
 
     //! setup the splitter
-    m_pSplitter                         = new QSplitter(Qt::Horizontal,this);
+    m_pSplitter                             = new QSplitter(Qt::Horizontal,this);
     m_pSplitter->addWidget(pWidgetLeft);
     m_pSplitter->addWidget(pWidgetRight);
     m_pSplitter->setStretchFactor(1,1.1);
     m_pSplitter->setChildrenCollapsible(false);
 
     //!
-    m_pMainLayout                       = new QVBoxLayout();
+    m_pMainLayout                           = new QVBoxLayout();
     m_pMainLayout->addWidget(m_pSplitter);
     m_pMainLayout->setContentsMargins(2,2,2,2);
     setLayout(m_pMainLayout);
@@ -146,7 +146,7 @@ void ItiOtbVectorImageViewer::setupLayout(){
  */
 void ItiOtbVectorImageViewer::disassembleWidgets(){
     //!
-    m_vmode                             = VMODE_SPLITTED;
+    m_vmode                                 = VMODE_SPLITTED;
 
     //! remove the widget
     m_pMainLayout->removeWidget(m_pSplitter);
@@ -167,19 +167,19 @@ void ItiOtbVectorImageViewer::disassembleWidgets(){
     //! create the views
 
     //! scrollable view
-    m_pItiOtbVectorImageWidgetScroll      = new ItiOtbVectorQGLWidgetScrollable(this);
+    m_pItiOtbVectorImageWidgetScroll        = new ItiOtbVectorQGLWidgetScrollable(this);
     m_pItiOtbVectorImageWidgetScroll->setWindowTitle(m_pLabelScrollableResolution->text());
 
     //! full view
-    m_pItiOtbVectorImageWidgetFullView    = new ItiOtbVectorQGLWidgetFullView(this);
+    m_pItiOtbVectorImageWidgetFullView      = new ItiOtbVectorQGLWidgetFullView(this);
     m_pItiOtbVectorImageWidgetFullView->setWindowTitle(m_pLabelFullView->text());
 
     //! zoomable view
-    m_pItiOtbVectorImageWidgetZoomable    = new ItiOtbVectorQGLWidgetZoomable(this);
+    m_pItiOtbVectorImageWidgetZoomable      = new ItiOtbVectorQGLWidgetZoomable(this);
     m_pItiOtbVectorImageWidgetZoomable->setWindowTitle(m_pLabelZoomView->text());
 
     //! pixel info view
-    m_pItiViewerPixelInfoWidget         = new ItiViewerPixelInfoWidget(this);
+    m_pItiViewerPixelInfoWidget             = new ItiViewerPixelInfoWidget(this);
     m_pItiViewerPixelInfoWidget->setWindowTitle(m_pItiViewerPixelInfoWidget->title());
     m_pItiViewerPixelInfoWidget->setWindowFlags(Qt::Window);
     m_pItiViewerPixelInfoWidget->setGeometry(QApplication::desktop()->width()/2 - 80,QApplication::desktop()->height()/2 - 80,200,200);
@@ -189,27 +189,27 @@ void ItiOtbVectorImageViewer::disassembleWidgets(){
     //!
 
     //! setup the zoom viewe
-    m_pphelperWidgetScroll = new QWidget(this,Qt::Window);
+    m_pphelperWidgetScroll                  = new QWidget(this,Qt::Window);
     m_pphelperWidgetScroll->setWindowTitle(m_pLabelScrollableResolution->text());
     m_pphelperWidgetScroll->setGeometry(QApplication::desktop()->width()/2 - 200,QApplication::desktop()->height()/2 - 200,200,200);
-    QVBoxLayout *vboxLayout = new QVBoxLayout();
+    QVBoxLayout *vboxLayout                 = new QVBoxLayout();
     vboxLayout->addWidget(m_pItiOtbVectorImageWidgetScroll);
     m_pphelperWidgetScroll->setLayout(vboxLayout);
 
     //! setup the full viewe
-    m_pphelperWidgetFullView = new QWidget(this,Qt::Window);
+    m_pphelperWidgetFullView                = new QWidget(this,Qt::Window);
     m_pphelperWidgetFullView->setWindowTitle(m_pLabelFullView->text());
     m_pphelperWidgetFullView->setGeometry(QApplication::desktop()->width()/2 - 160,QApplication::desktop()->height()/2 - 160,200,200);
-    QVBoxLayout *vboxLayout1 = new QVBoxLayout();
+    QVBoxLayout *vboxLayout1                = new QVBoxLayout();
     vboxLayout1->addWidget(m_pItiOtbVectorImageWidgetFullView);
     m_pphelperWidgetFullView->setLayout(vboxLayout1);
 
 
     //! setup the zoom viewe
-    m_pphelperWidgetZoomView = new QWidget(this,Qt::Window);
+    m_pphelperWidgetZoomView                = new QWidget(this,Qt::Window);
     m_pphelperWidgetZoomView->setWindowTitle(m_pLabelZoomView->text());
     m_pphelperWidgetZoomView->setGeometry(QApplication::desktop()->width()/2 - 120,QApplication::desktop()->height()/2 - 120,200,200);
-    QVBoxLayout *vboxLayout2 = new QVBoxLayout();
+    QVBoxLayout *vboxLayout2                = new QVBoxLayout();
     vboxLayout2->addWidget(m_pItiOtbVectorImageWidgetZoomable);
     m_pphelperWidgetZoomView->setLayout(vboxLayout2);
 
@@ -239,7 +239,7 @@ void ItiOtbVectorImageViewer::assembleWidgets(){
     //! Though it may needed , as  the assembling operation creates a new instance of this class
     //!
 
-    m_vmode                             = VMODE_PACKED;
+    m_vmode                                 = VMODE_PACKED;
 }
 
 /*!
@@ -247,6 +247,11 @@ void ItiOtbVectorImageViewer::assembleWidgets(){
  *  This is where all the painting is done.
  */
 void ItiOtbVectorImageViewer::draw(){
+
+    m_pItiOtbVectorImageWidgetFullView->setMouseTracking(false);
+    m_pItiOtbVectorImageWidgetZoomable->setMouseTracking(false);
+    m_pItiOtbVectorImageWidgetScroll->setMouseTracking(false);
+
     //!
     setupModel();
 
@@ -258,6 +263,14 @@ void ItiOtbVectorImageViewer::draw(){
 
     //!
     m_pItiOtbVectorImageWidgetZoomable->draw();
+
+    VectorImageModel *model = qobject_cast<VectorImageModel*>(m_pAbstractImageModel);
+
+    if(model){
+        connect(model,SIGNAL(ready()),this,SLOT(enableMouseTrackingState()));
+        connect(model,SIGNAL(ready()),m_pItiOtbVectorImageWidgetFullView,SLOT(onModelReady()));
+        connect(model,SIGNAL(ready()),m_pItiOtbVectorImageWidgetScroll,SLOT(onModelReady()));
+    }
 }
 
 //!
@@ -271,10 +284,10 @@ void ItiOtbVectorImageViewer::resetObserverMechanism(){
 //!
 void ItiOtbVectorImageViewer::setupObserverMechanism(){
     //! setup observer mechanism
-    m_pFocusRegion                      = new ItiViewerObservableRegion(this);
+    m_pFocusRegion                          = new ItiViewerObservableRegion(this);
     m_pFocusRegion->registerObserver(m_pItiOtbVectorImageWidgetScroll);
     m_pFocusRegion->registerObserver(m_pItiOtbVectorImageWidgetZoomable);
-    m_pVisibleRegion                    = new ItiViewerObservableRegion(this);
+    m_pVisibleRegion                        = new ItiViewerObservableRegion(this);
 //    m_pVisibleRegion->registerObserver(m_pItiOtbVectorImageWidgetScroll);
     m_pVisibleRegion->registerObserver(m_pItiOtbVectorImageWidgetFullView);
 }
@@ -282,15 +295,14 @@ void ItiOtbVectorImageViewer::setupObserverMechanism(){
 //!
 void ItiOtbVectorImageViewer::setupConnections(){
     //!
-    connect(m_pItiOtbVectorImageWidgetScroll, SIGNAL(visibleAreaChanged(QRect)),this,SLOT(onScrollableWidgetSizeChanged(QRect)));
-    connect(m_pItiOtbVectorImageWidgetScroll, SIGNAL(focusRegionChanged(QRect)),m_pItiOtbVectorImageWidgetZoomable,SLOT(onFocusRegionChanged(QRect)));
-    connect(m_pItiOtbVectorImageWidgetZoomable, SIGNAL(focusAreaChanged(QRect,double)),this,SLOT(onZoomableWidgetSizeChanged(QRect,double)));
-    connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(visibleAreaTranslated(int,int)),m_pItiOtbVectorImageWidgetScroll,SLOT(translate(int,int)));
-//    connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(visibleAreaTranslated(int,int)),m_pItiOtbVectorImageWidgetZoomable,SLOT(translate(int,int)));
-    connect(m_pItiOtbVectorImageWidgetZoomable,SIGNAL(readyToClearZoom()),m_pItiOtbVectorImageWidgetScroll,SLOT(resetZoom()));
-    connect(m_pItiOtbVectorImageWidgetFullView,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
-    connect(m_pItiOtbVectorImageWidgetZoomable,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
-    connect(m_pItiOtbVectorImageWidgetScroll,SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,SLOT(updateText(QString)));
+    connect(m_pItiOtbVectorImageWidgetScroll,   SIGNAL(visibleAreaChanged(QRect)),this,                                 SLOT(onScrollableWidgetSizeChanged(QRect)));
+    connect(m_pItiOtbVectorImageWidgetScroll,   SIGNAL(focusRegionChanged(QRect)),m_pItiOtbVectorImageWidgetZoomable,   SLOT(onFocusRegionChanged(QRect)));
+    connect(m_pItiOtbVectorImageWidgetZoomable, SIGNAL(focusAreaChanged(QRect,double)),this,                            SLOT(onZoomableWidgetSizeChanged(QRect,double)));
+    connect(m_pItiOtbVectorImageWidgetFullView, SIGNAL(visibleAreaTranslated(int,int)),m_pItiOtbVectorImageWidgetScroll,SLOT(translate(int,int)));
+    connect(m_pItiOtbVectorImageWidgetZoomable, SIGNAL(readyToClearZoom()),m_pItiOtbVectorImageWidgetScroll,            SLOT(resetZoom()));
+    connect(m_pItiOtbVectorImageWidgetFullView, SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,       SLOT(updateText(QString)));
+    connect(m_pItiOtbVectorImageWidgetZoomable, SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,       SLOT(updateText(QString)));
+    connect(m_pItiOtbVectorImageWidgetScroll,   SIGNAL(currentIndexChanged(QString)),m_pItiViewerPixelInfoWidget,       SLOT(updateText(QString)));
 }
 
 //! update regions to notify observers
@@ -324,10 +336,6 @@ void ItiOtbVectorImageViewer::setupModel(){
 
     if(model)
         model->loadFile(path);
-
-    m_pItiOtbVectorImageWidgetFullView->enableMouseTracking();
-    m_pItiOtbVectorImageWidgetScroll->enableMouseTracking();
-    m_pItiOtbVectorImageWidgetZoomable->enableMouseTracking();
 
     emit modelChanged();
 }
@@ -401,6 +409,12 @@ void ItiOtbVectorImageViewer::forceUpdates(){
     m_pItiOtbVectorImageWidgetZoomable->update();
 }
 
+
+void ItiOtbVectorImageViewer::enableMouseTrackingState(){
+    m_pItiOtbVectorImageWidgetFullView->setMouseTracking(true);
+    m_pItiOtbVectorImageWidgetZoomable->setMouseTracking(true);
+    m_pItiOtbVectorImageWidgetScroll->setMouseTracking(true);
+}
 
 ItiOtbVectorImageViewer::~ItiOtbVectorImageViewer(){
 

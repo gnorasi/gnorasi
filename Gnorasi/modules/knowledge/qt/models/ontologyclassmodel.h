@@ -35,7 +35,7 @@
 
 namespace voreen {
 
-class OntologyClassItem;
+class OntologyClass;
 class OWLHelperItem;
 
 //!
@@ -78,17 +78,17 @@ public:
     bool removeRows(int position, int rows,
                     const QModelIndex &parent = QModelIndex());
 
-    OntologyClassItem* getRootItem() { return rootItem; }
+    OntologyClass* getRootItem() { return rootItem; }
 
-    void traverseHierarchy(OWLHelperItem* , OntologyClassItem*);
+    void traverseHierarchy(OWLHelperItem* , OntologyClass*);
 
-    void setRootItem(OntologyClassItem *ri) { rootItem = ri; }
+    void setRootItem(OntologyClass *ri) { rootItem = ri; }
 
     bool validateLabel(const QVariant& );
 
     bool isEditable(){ return m_editable; }
 
-    QStringList classIdList(OntologyClassItem*) const;
+    QStringList classIdList(OntologyClass*) const;
 
     bool hasRules(const QString&) const;
 
@@ -99,9 +99,9 @@ signals:
 
 private:
 
-    OntologyClassItem *getItem(const QModelIndex &index) const;
+    OntologyClass *getItem(const QModelIndex &index) const;
 
-    OntologyClassItem *rootItem;
+    OntologyClass *rootItem;
 
     bool m_editable;
 };

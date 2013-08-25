@@ -35,6 +35,7 @@ class QPushButton;
 
 class HistogramView;
 class HistogramGenerator;
+class MyHistogramList;
 
 namespace itiviewer{
 
@@ -57,13 +58,13 @@ public:
 
     // set the current channels
     void setCurrentChannels(int red, int green, int blue);
-    
-signals:
-    
+
+
 public slots:
 
 private slots:
 //    void onClicked();
+    void onHistogramFinished(MyHistogramList* );
 
 private:
     void initialize();

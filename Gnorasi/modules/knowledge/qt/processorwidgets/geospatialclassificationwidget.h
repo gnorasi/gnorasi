@@ -35,7 +35,7 @@
 #include "voreen/qt/voreenmoduleqt.h"
 
 #include "../models/ontologyclassitem.h"
-#include "../models/ontologyclassmodel.h"
+//#include "../models/ontologyclassmodel.h"
 
 #include "../processorwidgets/rulewidget.h"
 #include "../processorwidgets/ontologyclassview.h"

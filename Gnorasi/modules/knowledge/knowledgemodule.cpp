@@ -30,13 +30,17 @@
 #include "processors/classifierwsprocessor.h"
 #include "processors/retrieveclassificationdataprocessor.h"
 
-#include "processors/ontologycreatorprocessor.h"
-#include "processors/geospatialclassificationprocessor.h"
+//#include "processors/ontologycreatorprocessor.h"
+//#include "processors/geospatialclassificationprocessor.h"
 
 #include "processors/knowledgewebserviceprocessor.h"
 
-#include "processors/fuzzypreprocessor.h"
-#include "processors/fuzzyrulesprocessor.h"
+#include "processors/fuzzyprocessor.h"
+
+//#include "processors/fuzzypreprocessor.h"
+//#include "processors/fuzzyrulesprocessor.h"
+
+#include "processors/ontologyclassificationprocessor.h"
 
 namespace voreen {
 
@@ -50,12 +54,16 @@ KnowledgeModule::KnowledgeModule(const std::string& moduleName)
     registerProcessor(new ClassifierWSProcessor());
     registerProcessor(new RetrieveClassificationDataProcessor());
 
-    registerProcessor(new OntologyCreatorProcessor());
-    registerProcessor(new GeospatialClassificationProcessor());
+//    registerProcessor(new OntologyCreatorProcessor());
+//    registerProcessor(new GeospatialClassificationProcessor());
     registerProcessor(new KnowledgeWebServiceProcessor());
 
-    registerProcessor(new FuzzyPreProcessor());
-    registerProcessor(new FuzzyRulesProcessor());
+    registerProcessor(new FuzzyProcessor());
+
+//    registerProcessor(new FuzzyPreProcessor());
+//    registerProcessor(new FuzzyRulesProcessor());
+
+    registerProcessor(new OntologyClassificationProcessor());
 
     // adds the module source glsl dir to the shader search path
     //addShaderPath(getModulesPath("knowledge/processors/glsl"));

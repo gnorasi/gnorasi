@@ -60,6 +60,9 @@
 #include "processors/BasicFilters/otbleeimagefilterprocessor.h"
 #include "processors/BasicFilters/otbscalarimagetotexturesfilterprocessor.h"
 #include "processors/BasicFilters/otbgradientmagnitudeimagefilterprocessor.h"
+#include "processors/BasicFilters/otbrescaleintensityimagefilterprocessor.h"
+#include "processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.h"
+#include "processors/BasicFilters/otbdotproductimagefilterprocessor.h"
 #include "processors/BasicFilters/otbhistogrammatchingimagefilterprocessor.h"
 #include "processors/BasicFilters/otbspectralangledistanceimagefilterprocessor.h"
 #include "processors/BasicFilters/otbgreylevelcooccurrencematrixadvancedtexturecoefficientscalculatorprocessor.h"
@@ -125,6 +128,7 @@
 #include "processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h"
 #include "processors/ChangeDetection/otbcbamichangedetectorprocessor.h"
 #include "processors/Visualization/otbimageviewerprocessor.h"
+#include "processors/OBIA/otbmultiplelabelimagetolabelmapprocessor.h"
 //#include "processors/Geometry/otborthorectifyprocessor.h"
 
 #ifdef WIN32
@@ -209,6 +213,9 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBImageToSIFTKeyPointSetFilterProcessor());
     registerProcessor(new OTBLAINDVIProcessor());
     registerProcessor(new OTBLaplacianSegmentationLevelSetImageFilterProcessor());
+    registerProcessor(new OTBRescaleIntensityImageFilterProcessor());
+    registerProcessor(new OTBDotProductImageFilterProcessor());
+    registerProcessor(new OTBEstimateInnerProductPCAImageFilterProcessor());
     registerProcessor(new OTBDEMCaracteristicsExtractor());
     registerProcessor(new OTBGrayscaleConnectedOpeningImageFilterProcessor());
     registerProcessor(new OTBGrayscaleConnectedClosingImageFilterProcessor());
@@ -251,6 +258,8 @@ OTBModule::OTBModule(const std::string& moduleName)
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
+
+    registerProcessor(new OtbMultipleLabelImageToLabelMapProcessor());
 }
 
 } // namespace

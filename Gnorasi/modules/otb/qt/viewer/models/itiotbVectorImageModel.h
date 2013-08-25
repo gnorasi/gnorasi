@@ -48,6 +48,9 @@
 
 #include "otbGaussianRenderingFunction.h"
 
+
+#include "../vector_globaldefs.h"
+
 //
 // External classes pre-declaration.
 namespace
@@ -148,11 +151,17 @@ public:
    */
   void resetData();
 
-  /*!
-   * \brief lastPath
-   * \return
+
+  /**
+   * Get a smart-pointer to the current LOD image-base.
    */
-  QString lastPath() const { return m_lastPath; }
+  ImageBaseType::ConstPointer ToImageBase() const;
+
+  /**
+   * Get a smart-pointer to the current LOD image-base.
+   */
+  ImageBaseType::Pointer ToImageBase();
+
 
 //
 // SIGNALS.
@@ -161,9 +170,6 @@ signals:
    * \brief changed
    */
   void changed();
-
-  //
-  void ready();
 
 //
 // Protected methods.
@@ -193,12 +199,12 @@ private:
   /**
    * Extract filter.
    */
-//  typedef
-//    itk::ExtractImageFilter< SourceImageType, SourceImageType >
-//    ExtractFilterType;
   typedef
-    itk::ExtractImageFilter< ByteImageType, ByteImageType >
+    itk::ExtractImageFilter< SourceImageType, SourceImageType >
     ExtractFilterType;
+//  typedef
+//    itk::ExtractImageFilter< ByteImageType, ByteImageType >
+//    ExtractFilterType;
 
 //
 // Private methods.
@@ -262,8 +268,6 @@ private:
 //
 // Private attributes.
 private:
-  // Default image reader
-  DefaultImageFileReaderType::Pointer   m_ImageFileReader;
 
   // Buffer where to store the image pixels needed by the renderer
   unsigned char *                       m_RasterizedBuffer;
@@ -287,15 +291,11 @@ private:
   // Vector storing the region to load
   std::vector<VectorRegionType >        m_RegionsToLoadVector;
 
-  /*!
-   * \brief m_lastPath
-   */
-  QString                               m_lastPath;
-
 //
 // SLOTS.
 private slots:
 
+protected:
 
 public:
   /*!
@@ -303,6 +303,7 @@ public:
    */
   void setRenderingFuction(RenderingFunctionType* );
 };
+
 
 } // end namespace 'mvd'
 

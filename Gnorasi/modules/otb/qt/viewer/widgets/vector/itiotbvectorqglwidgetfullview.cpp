@@ -86,8 +86,24 @@ void ItiOtbVectorQGLWidgetFullView::setupViewport(int w, int h){
 
     ImageRegionType bufferedRegion = m_pImageViewManipulator->bufferRegion();
 
+    double bratio = (double)bufferedRegion.GetSize()[0] / (double)bufferedRegion.GetSize()[1];
+
+    double viewportratio = (double)w/(double)h;
+
+    if(w < h){
+        if(bratio > viewportratio)
+            m_IsotropicZoom = static_cast<double>(w)/ static_cast<double>(bufferedRegion.GetSize()[0]);
+        else
+            m_IsotropicZoom = static_cast<double>(h)/ static_cast<double>(bufferedRegion.GetSize()[1]);
+    }else{
+        if(bratio > viewportratio)
+            m_IsotropicZoom = static_cast<double>(w)/ static_cast<double>(bufferedRegion.GetSize()[0]);
+        else
+            m_IsotropicZoom = static_cast<double>(h)/ static_cast<double>(bufferedRegion.GetSize()[1]);
+    }
+
     // setup the isotropic zoom value, check whether the width is greater than height
-    m_IsotropicZoom = w < h ? static_cast<double>(w)/ static_cast<double>(bufferedRegion.GetSize()[0]) : static_cast<double>(h)/ static_cast<double>(bufferedRegion.GetSize()[1]);
+//    m_IsotropicZoom = w < h || bratio > viewportratio ? static_cast<double>(w)/ static_cast<double>(bufferedRegion.GetSize()[0]) : static_cast<double>(h)/ static_cast<double>(bufferedRegion.GetSize()[1]);
 
     VectorSizeType size;
     size [0] = static_cast<unsigned int>(m_IsotropicZoom * static_cast<double>(bufferedRegion.GetSize()[0]));
@@ -185,12 +201,12 @@ void ItiOtbVectorQGLWidgetFullView::updateObserver(ItiViewerObservable *observab
 
     QRect rect = region->region();
 
-    m_visibleRegion.setX(extent.GetIndex()[0] + (qAbs(rect.x()*m_IsotropicZoom)));
-    m_visibleRegion.setY(extent.GetIndex()[1]+(qAbs(rect.y()*m_IsotropicZoom) ));
-
     //! calculate the new width and height value;
     int nw = m_IsotropicZoom * rect.width();
     int nh = m_IsotropicZoom * rect.height();
+
+    m_visibleRegion.setX(extent.GetIndex()[0] + (qAbs(rect.x()*m_IsotropicZoom)));
+    m_visibleRegion.setY(extent.GetIndex()[1] + (qAbs(rect.y()*m_IsotropicZoom) ));
 
     //! set the new width and height to the visible region
     m_visibleRegion.setWidth(nw);
@@ -219,7 +235,6 @@ void ItiOtbVectorQGLWidgetFullView::mouseMoveEvent(QMouseEvent *event){
     }
 
     // pixel info related functionality follows
-
     if(hasMouseTracking()){
         VectorImageModel *vModel = qobject_cast<VectorImageModel*>(m_pItiOtbVectorImageViewer->model());
         if(vModel){
@@ -304,7 +319,9 @@ void ItiOtbVectorQGLWidgetFullView::translate(const QPoint &previousCenter, cons
     //! create helper values
     int dx = 0, dy = 0;
 
+    //!
     //! check if the new rect right border exceeds the extends' width value
+    //!
     if(point.x()+ qRound((double)m_visibleRegion.width()/2.0) > extent.GetSize()[0] + extent.GetIndex()[0]){
         dx = extent.GetIndex()[0] + extent.GetSize()[0] - qRound((double)m_visibleRegion.width()/2.0) - previousCenter.x();
     } //! check if the new rect left border exceeds the extend's index x value
@@ -343,17 +360,20 @@ void ItiOtbVectorQGLWidgetFullView::mouseReleaseEvent(QMouseEvent *event){
 }
 
 
-//void ItiOtbVectorQGLWidgetFullView::resizeEvent(QResizeEvent *event){
-//    m_pImageViewManipulator->resizeEvent(event);
-//}
+void ItiOtbVectorQGLWidgetFullView::onModelReady(){
+    ImageRegionType bufferregion = m_pImageViewManipulator->bufferRegion();
 
-void ItiOtbVectorQGLWidgetFullView::enableMouseTracking(){
-    //! mouse tracking is disabled on startup, set it on
-    setMouseTracking(true);
+    m_visibleRegion.setX(0);
+    m_visibleRegion.setY(0);
+
+    emit visibleAreaTranslated(-1*bufferregion.GetSize()[0],-1*bufferregion.GetSize()[1]);
+
+    //! update widget
+    update();
 }
 
 
 //!
 ItiOtbVectorQGLWidgetFullView::~ItiOtbVectorQGLWidgetFullView(){
-//    ClearBuffer();
+
 }

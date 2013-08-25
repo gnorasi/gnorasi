@@ -445,6 +445,67 @@ void NetworkEvaluator::process() {
     }
 }
 
+
+void NetworkEvaluator::forceCallNonCalledUpdateProcessorsFunction(){
+    if (!network_)
+        return;
+
+    if (isLocked()) {
+        LDEBUG("process() called on locked evaluator. Scheduling.");
+        processPending_ = true;
+        return;
+    }
+
+    // re-analyze and initialize network, if its topology has changed since last process() call
+    if (networkChanged_ || checkForInvalidPorts()) {
+        onNetworkChange();
+    }
+
+    // prevent parallel execution in multithreaded/event dispatching environments
+    lock();
+
+    if (renderingOrder_.empty()) {
+        LDEBUG("process(): rendering order is not defined!");
+    }
+
+    // Iterate over processing in rendering order
+    for (size_t i = 0; i < renderingOrder_.size(); ++i) {
+        Processor* const currentProcessor = renderingOrder_[i];
+
+        currentProcessor->forceUpdate();
+    }
+
+    if (glMode_)
+        LGL_ERROR;
+
+    // mark processed processor for validation
+    // note: we need to wait until all processors have been processed
+    // before validating them, in order to allow multiple occurrences of
+    // processors in the rendering order (loops)
+    std::set<Processor*> processed;
+
+    // assumption: a processor is valid after calling process(), except ports or processor itself is invalid
+    for (std::set<Processor*>::iterator iter = processed.begin(); iter != processed.end(); ++iter)
+        if ((*iter)->getInvalidationLevel() < Processor::INVALID_PORTS)
+            (*iter)->setValid();
+    if (glMode_)
+        LGL_ERROR;
+
+    unlock();
+
+    // notify process wrappers
+    for (size_t j = 0; j < processWrappers_.size(); ++j)
+        processWrappers_[j]->afterNetworkProcess();
+    if (glMode_)
+        LGL_ERROR;
+
+    if (processPending_) {
+        // make sure that canvases are repainted, if their update has been blocked by the locked evaluator
+        processPending_ = false;
+        updateCanvases();
+    }
+}
+
 void NetworkEvaluator::removeProcessWrapper(const ProcessWrapper* w)  {
     std::vector<ProcessWrapper*>::iterator it = std::find(processWrappers_.begin(), processWrappers_.end(), w);
     if (it != processWrappers_.end())

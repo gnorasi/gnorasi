@@ -118,6 +118,7 @@ public:
     void forceUpdates();
 
 
+
 public slots:
 
 
@@ -142,6 +143,11 @@ private slots:
      * \param rect
      */
     void onFocusRegionChanged(const QRect &rect);
+
+    /*!
+     * \brief updateMouseTrackingState
+     */
+    void enableMouseTrackingState();
 
 
 signals:

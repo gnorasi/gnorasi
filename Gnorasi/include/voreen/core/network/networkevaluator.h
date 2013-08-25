@@ -101,6 +101,13 @@ public:
      */
     void process();
 
+
+    /*!
+     * \brief forceCallNonCalledUpdateProcessorsFunction
+     */
+    void forceCallNonCalledUpdateProcessorsFunction();
+
+
     /**
      * Performs all necessary updates whenever the network has changed. Call this
      * method carefully and only if the NETWORK changed, not the connections. I.e.,

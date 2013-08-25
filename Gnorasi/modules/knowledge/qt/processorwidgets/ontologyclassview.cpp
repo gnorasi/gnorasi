@@ -1,13 +1,21 @@
 #include "ontologyclassview.h"
 
-#include "../models/ontologyclassitem.h"
-#include "../models/ontologyclassmodel.h"
+#include "../models/ontologyclass.h"
+//#include "../models/ontologyclassmodel.h"
+#include "../utils/ontologyclassificationmanager.h"
+#include "../utils/objectlevelmanager.h"
+
+#include "classdescriptiondialog.h"
 
 #include <QtGui/QMenu>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QMessageBox>
 
+#include <QStandardItemModel>
+
 #include <QtCore/QDebug>
+
+
 
 using namespace voreen;
 
@@ -15,18 +23,25 @@ OntologyClassView::OntologyClassView(QWidget *parent)
     : QTreeView(parent)
 {
     setAlternatingRowColors(true);
+    setEditTriggers(QAbstractItemView::NoEditTriggers);
 //    setSortingEnabled(true);
 }
 
 void OntologyClassView::contextMenuEvent ( QContextMenuEvent * e )
 {
-    OntologyClassModel *omodel = qobject_cast<OntologyClassModel*>(model());
+    QStandardItemModel *omodel = qobject_cast<QStandardItemModel*>(model());
     if(!omodel){
         QAbstractItemView::contextMenuEvent(e);
         return;
     }
 
-    if(!omodel->isEditable()){
+//    if(!omodel->isEditable()){
+//        QAbstractItemView::contextMenuEvent(e);
+//        return;
+//    }
+
+    if(!OBJECTLEVELMANAGER->count())
+    {
         QAbstractItemView::contextMenuEvent(e);
         return;
     }
@@ -55,52 +70,95 @@ void OntologyClassView::mousePressEvent(QMouseEvent *event){
     QAbstractItemView::mousePressEvent(event);
 }
 
+
+void OntologyClassView::mouseDoubleClickEvent(QMouseEvent *event){
+    QModelIndex index = indexAt(event->pos());
+    if(index.isValid()){
+        QStandardItemModel *omodel = qobject_cast<QStandardItemModel*>(model());
+        if(!omodel)
+            return;
+
+        QStandardItem *pItem = omodel->itemFromIndex(index);
+        if(pItem){
+            ClassDescriptionDialog *pClassDescriptionDialog = new ClassDescriptionDialog(this);
+            QString classId = pItem->data(Qt::DisplayRole).toString();
+            pClassDescriptionDialog->setClassId(classId);
+            pClassDescriptionDialog->setupData();
+
+            QModelIndex parentindex = index.parent();
+            if(parentindex.isValid()){
+                pClassDescriptionDialog->setParentClassId(omodel->data(parentindex).toString());
+            }
+
+            if(pClassDescriptionDialog->exec() == QDialog::Rejected){
+                QAbstractItemView::mouseDoubleClickEvent(event);
+                return;
+            }
+
+            QString className = pClassDescriptionDialog->classId();
+
+            pItem->setData(className,Qt::DisplayRole);
+            pItem->setData(className);
+
+        }
+    }
+
+    QAbstractItemView::mouseDoubleClickEvent(event);
+}
+
 void OntologyClassView::onAddChildClass(){
-    OntologyClassModel *omodel = qobject_cast<OntologyClassModel*>(model());
+    if(!OBJECTLEVELMANAGER->count())
+    {
+        return;
+    }
+
+    QStandardItemModel *omodel = qobject_cast<QStandardItemModel*>(model());
     if(!omodel)
         return;
 
+
+    ClassDescriptionDialog *pClassDescriptionDialog = new ClassDescriptionDialog(this);
+
     QModelIndex index = selectionModel()->currentIndex();
     if(index.isValid()){
-
-        if(omodel->insertRows(omodel->rowCount(index),1,index)){
-
-            QString name = getUniqueNameFromIndex(omodel->index(omodel->rowCount(index)-1,0,index));
-
-            if(!omodel->validateLabel(name)){
-                int counter = 1;
-                name = tr("Custom Item %1").arg(QString::number(counter));
-                while(!omodel->validateLabel(name)){
-                    name = tr("Custom Item %1").arg(QString::number(++counter));
-                }
-            }
-
-            omodel->setData(omodel->index(omodel->rowCount(index)-1,0,index),name);
-
-            expand(index);
-
-            setCurrentIndex(omodel->index(omodel->rowCount(index)-1,0,index));
-        }
-    }else{
-        int childMax = omodel->getRootItem()->childCount();
-
-        if(omodel->insertRows(childMax,1)){
-
-            QString name = tr("New Item_%1").arg(QString::number(childMax));
-
-            if(!omodel->validateLabel(name)){
-                int counter = 1;
-                name = tr("Custom Item %1").arg(QString::number(counter));
-                while(!omodel->validateLabel(name)){
-                    name = tr("Custom Item %1").arg(QString::number(++counter));
-                }
-            }
-
-            omodel->setData(omodel->index(childMax,0),name);
-
-            setCurrentIndex(omodel->index(childMax,0));
-        }
+        pClassDescriptionDialog->setParentClassId(omodel->data(index).toString());
     }
+
+    if(pClassDescriptionDialog->exec() == QDialog::Rejected)
+        return;
+
+    QString classId = pClassDescriptionDialog->classId();
+
+    if(index.isValid()){
+
+        QStandardItem *pItem = new QStandardItem();
+        pItem->setData(classId,Qt::DisplayRole);
+        pItem->setData(classId);
+
+        QList<QStandardItem*> parentItemList = omodel->findItems(pClassDescriptionDialog->parentClassId(),Qt::MatchExactly | Qt::MatchRecursive);
+        if(!parentItemList.isEmpty())
+        {
+            QStandardItem *pParentItem = parentItemList.first();
+            pParentItem->setChild(pParentItem->rowCount(),pItem);
+        }else
+            omodel->setItem(omodel->rowCount(index),pItem);
+
+        expand(index);
+
+    }else{
+        int childMax = omodel->rowCount();
+
+        QStandardItem *pItem = new QStandardItem();
+        pItem->setData(classId,Qt::DisplayRole);
+        pItem->setData(classId);
+        omodel->setItem(omodel->rowCount(),pItem);
+
+        expand(index);
+
+        setCurrentIndex(omodel->index(childMax,0));
+    }
+
+
 }
 
 void OntologyClassView::onRemoveCurrentClass(){
@@ -113,47 +171,75 @@ void OntologyClassView::onRemoveCurrentClass(){
     if(ret == QMessageBox::No)
         return;
 
-//    int ret = QMessageBox::warning(this, tr("Delete Class"),
-//                                    tr("Do you want to delete the Class?"),
-//                                    QMessageBox::Yes | QMessageBox::No);
-
     if(ret == QMessageBox::Yes){
-        OntologyClassModel *omodel = qobject_cast<OntologyClassModel*>(model());
+        QStandardItemModel *omodel = qobject_cast<QStandardItemModel*>(model());
         if(!omodel)
             return;
+
+        QString id = omodel->data(index,Qt::DisplayRole).toString();
+        OntologyClass *pClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassById(id);
+        if(!pClass)
+            return;
+
+        if(pClass->childCount()){
+            QMessageBox::critical(this,tr("Delete Failed"),tr("Failed to delete the class. Delete all sub classes first and then try again."));
+
+            return;
+        }
+
+        OntologyClass *pParentClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassById(pClass->parentId());
+        if(pParentClass)
+            pParentClass->removeChild(pClass);
+
+        pClass->clearFuzzyRuleHash();
+
+        ONTOLOGYCLASSIFICATIONMANAGER->removeOntologyClass(pClass);
 
         omodel->removeRows(index.row(),1,index.parent());
     }
 }
 
 void OntologyClassView::onAddSiblingClass(){
+    if(!OBJECTLEVELMANAGER->count())
+        return;
+
     QModelIndex index = selectionModel()->currentIndex();
     if(!index.isValid())
         return;
 
-    OntologyClassModel *omodel = qobject_cast<OntologyClassModel*>(model());
+    QStandardItemModel *omodel = qobject_cast<QStandardItemModel*>(model());
     if(!omodel)
         return;
 
-    if(omodel->insertRows(omodel->rowCount(index.parent()),1,index.parent())){
+    ClassDescriptionDialog *pClassDescriptionDialog = new ClassDescriptionDialog(this);
 
-        QString name = getUniqueNameFromIndex(omodel->index(omodel->rowCount(index.parent())-1,0,index.parent()));
+    pClassDescriptionDialog->setParentClassId(omodel->data(index.parent()).toString());
 
-        if(!omodel->validateLabel(name)){
-            int counter = 1;
-            name = tr("Custom Item %1").arg(QString::number(counter));
-            while(!omodel->validateLabel(name))
-                counter++;
-        }
+    if(pClassDescriptionDialog->exec() == QDialog::Rejected)
+        return;
 
-        omodel->setData(omodel->index(omodel->rowCount(index.parent())-1,0,index.parent()),name);
+    QString classId = pClassDescriptionDialog->classId();
 
-        setCurrentIndex(omodel->index(omodel->rowCount(index.parent())-1,0,index.parent()));
-    }
+//    if(omodel->insertRows(omodel->rowCount(index.parent()),1,index.parent())){
+
+        QStandardItem *pItem = new QStandardItem();
+        pItem->setData(classId,Qt::DisplayRole);
+        pItem->setData(classId);
+
+        QList<QStandardItem*> parentItemList = omodel->findItems(pClassDescriptionDialog->parentClassId(),Qt::MatchExactly | Qt::MatchRecursive);
+        if(!parentItemList.isEmpty())
+        {
+            QStandardItem *pParentItem = parentItemList.first();
+            pParentItem->setChild(pParentItem->rowCount(),pItem);
+        }else
+            omodel->setItem(omodel->rowCount(index.parent()),pItem);
+
+        setCurrentIndex(omodel->index(omodel->rowCount(index.parent()),0,index.parent()));
+//    }
 }
 
 QString OntologyClassView::getUniqueNameFromIndex(const QModelIndex &index){
-    OntologyClassModel *omodel = qobject_cast<OntologyClassModel*>(model());
+    QStandardItemModel *omodel = qobject_cast<QStandardItemModel*>(model());
     if(!omodel)
         return QString();
 
@@ -174,7 +260,7 @@ QString OntologyClassView::getUniqueNameFromIndex(const QModelIndex &index){
 }
 
 void OntologyClassView::onNameValidationError(){
-    OntologyClassModel *omodel = qobject_cast<OntologyClassModel*>(model());
+    QStandardItemModel *omodel = qobject_cast<QStandardItemModel*>(model());
     if(!omodel)
         return;
 

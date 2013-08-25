@@ -137,6 +137,11 @@ public slots:
     // further slots
     void guiModeChanged();
 
+    /*!
+     * \brief forceUpdate
+     */
+    void processorsForceUpdate();
+
 protected:
     void changeEvent(QEvent* event);
 
@@ -257,6 +262,8 @@ private:
 
     QAction* modeApplicationAction_;
     QAction* modeDevelopmentAction_;
+
+    QAction* forceUpdateAction_;
 
     QAction* screenshotAction_;
 
