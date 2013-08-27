@@ -272,6 +272,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbhistogrammatchingimagefilterprocessor.cpp
 #    ${MOD_DIR}/processors/BasicFilters/otbmnfimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbspectralangledistanceimagefilterprocessor.cpp
+#    ${MOD_DIR}/processors/BasicFilters/otbprospectmodelprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbgreylevelcooccurrencematrixadvancedtexturecoefficientscalculatorprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbperbandvectorimagefilterprocessor.cpp
@@ -374,6 +375,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbhistogrammatchingimagefilterprocessor.h
 #    ${MOD_DIR}/processors/BasicFilters/otbmnfimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbspectralangledistanceimagefilterprocessor.h
+#    ${MOD_DIR}/processors/BasicFilters/otbprospectmodelprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbgreylevelcooccurrencematrixadvancedtexturecoefficientscalculatorprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbperbandvectorimagefilterprocessor.h
