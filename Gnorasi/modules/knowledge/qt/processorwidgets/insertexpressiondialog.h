@@ -39,6 +39,8 @@ private:
 
     QStandardItem *m_pObjectMapAttributeRootItem;
     QStandardItem *m_pSpatialAttributeRootItem;
+    QStandardItem *m_pShapeAttributeRootItem;
+    QStandardItem *m_pSpatialRelationAttributeRootItem;
 
     
 };

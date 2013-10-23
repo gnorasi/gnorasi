@@ -108,3 +108,47 @@ QStringList ObjectAttributeManager::objectAttributeNameOfLevelStringList(int lid
 
     return list;
 }
+
+
+void ObjectAttributeManager::createPreDefinedAttribute(int levelId, const QString &name, int otype){
+
+    ObjectAttribute *pOA = new ObjectAttribute(OBJECTATTRIBUTEMANAGER);
+    pOA->setId(name);
+    pOA->setlevelId(levelId);
+    pOA->setName(name);
+    pOA->setotype(otype);
+    OBJECTATTRIBUTEMANAGER->addObjectAttribute(levelId,pOA);
+
+}
+
+void ObjectAttributeManager::createPreDefinedAttributesForLevel(int l){
+
+//
+// SHAPE
+//
+    createPreDefinedAttribute(l,QLatin1String("Area"),2);
+    createPreDefinedAttribute(l,QLatin1String("Length"),2);
+    createPreDefinedAttribute(l,QLatin1String("Width"),2);
+    createPreDefinedAttribute(l,QLatin1String("Border length"),2);
+    createPreDefinedAttribute(l,QLatin1String("Length/width"),2);
+    createPreDefinedAttribute(l,QLatin1String("Shape index"),2);
+    createPreDefinedAttribute(l,QLatin1String("Density"),2);
+    createPreDefinedAttribute(l,QLatin1String("Main direction"),2);
+    createPreDefinedAttribute(l,QLatin1String("Assymetry"),2);
+
+//
+// Spatial relations
+//
+    createPreDefinedAttribute(l,QLatin1String("Contains"),3);
+    createPreDefinedAttribute(l,QLatin1String("ContainsProperly"),3);
+    createPreDefinedAttribute(l,QLatin1String("Covers"),3);
+    createPreDefinedAttribute(l,QLatin1String("CoveredBy"),3);
+    createPreDefinedAttribute(l,QLatin1String("Crosses"),3);
+    createPreDefinedAttribute(l,QLatin1String("Disjoint"),3);
+    createPreDefinedAttribute(l,QLatin1String("Equals"),3);
+    createPreDefinedAttribute(l,QLatin1String("Intersects"),3);
+    createPreDefinedAttribute(l,QLatin1String("Overlaps"),3);
+    createPreDefinedAttribute(l,QLatin1String("Relate"),3);
+    createPreDefinedAttribute(l,QLatin1String("Touches"),3);
+    createPreDefinedAttribute(l,QLatin1String("Within"),3);
+}
