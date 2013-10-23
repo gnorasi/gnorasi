@@ -101,6 +101,8 @@ void OntologyClassificationProcessorWidget::updateFromProcessor(){
 }
 
 void OntologyClassificationProcessorWidget::processAttributeList(int levelid, const QStringList &list){
+
+    QString shapeString = QLatin1String("SHAPE");
     QStringList::const_iterator i;
     for(i = list.constBegin(); i != list.constEnd(); i++){
         QString name = *i;
@@ -109,6 +111,9 @@ void OntologyClassificationProcessorWidget::processAttributeList(int levelid, co
         oa->setId(name);
         oa->setName(name);
         oa->setlevelId(levelid);
+
+        if(name.startsWith(shapeString))
+            oa->setotype(4);
 
         OBJECTATTRIBUTEMANAGER->addObjectAttribute(levelid,oa);
     }
