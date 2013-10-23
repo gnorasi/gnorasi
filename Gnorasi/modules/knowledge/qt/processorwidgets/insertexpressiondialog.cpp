@@ -87,6 +87,7 @@ void InsertExpressionDialog::setupByLevel(int level){
         }
     }
 
+
     m_pObjectAttributesView->setLeveLId(level);
     m_pObjectAttributesView->expand(m_pSIM->indexFromItem(m_pObjectMapAttributeRootItem));
     m_pObjectAttributesView->expand(m_pSIM->indexFromItem(m_pSpatialAttributeRootItem));
