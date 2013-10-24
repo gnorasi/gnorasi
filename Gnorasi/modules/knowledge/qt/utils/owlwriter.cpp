@@ -7,6 +7,7 @@
 #include "../models/ontologyclass.h"
 #include "../fuzzy/fuzzyrule.h"
 #include "../fuzzy/fuzzyrulemanager.h"
+#include "../fuzzy/fuzzyfunction.h"
 #include "../utils/ontologyclassificationmanager.h"
 #include "../models/ontologyclass.h"
 #include "../utils/objectattribute.h"
@@ -348,14 +349,107 @@ void OwlWriter::appendRulesData(){
             FuzzyRule *pRule = h.value();
 
             QString attributeName = pRule->attribute();
+
+            ObjectAttribute *pOA = OBJECTATTRIBUTEMANAGER->objectAttributeOfLevelById(lid,attributeName);
+            if(!(pOA->otype() == 1 || pOA->otype() == 2))
+                continue;
+
             attributeName = attributeName.remove(":");
             attributeName = QString("Fuzzy%1").arg(attributeName);
 
-            QDomElement element = doc.createElement(QLatin1String("attributeRule"));
+            if(pOA->otype()==1){
+                QDomElement element = doc.createElement(QLatin1String("attributeRule"));
+                element.setAttribute(QLatin1String("id"),pRule->id());
+                element.setAttribute(QLatin1String("property"),attributeName);
+                fuzzyRuleRootElement.appendChild(element);
+            }else{
+                QDomElement element = doc.createElement(QLatin1String("shapeRule"));
+                element.setAttribute(QLatin1String("id"),pRule->id());
+                element.setAttribute(QLatin1String("property"),attributeName);
+                fuzzyRuleRootElement.appendChild(element);
+            }
+        }
+    }
+}
+
+
+void OwlWriter::appendSpatialData(){
+
+    QDomNode rootNode = doc.lastChild();
+    if(rootNode.isNull())
+        return;
+
+    QString distancetTitle = QLatin1String("distance");
+
+    QDomElement classesElement = doc.createElement(QLatin1String("classes"));
+    rootNode.appendChild(classesElement);
+
+    QList<OntologyClass*> list = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassList();
+    QList<OntologyClass*>::const_iterator i;
+    for(i = list.constBegin(); i != list.constEnd(); i++){
+        OntologyClass *pClass = *i;
+
+        QDomElement classElement = doc.createElement(QLatin1String("class"));
+        classElement.setAttribute(tr("id"),pClass->id());
+        classesElement.appendChild(classElement);
+
+        QDomElement fuzzyRuleRootElement = doc.createElement(QLatin1String("spatialRules"));
+        fuzzyRuleRootElement.setAttribute(QLatin1String("operator"),pClass->opername());
+        classElement.appendChild(fuzzyRuleRootElement);
+
+        QHash<int,FuzzyRule*> fuzzyrulehash = pClass->fuzzyRuleHash();
+        QHash<int,FuzzyRule*>::const_iterator h;
+        for(h = fuzzyrulehash.constBegin(); h != fuzzyrulehash.constEnd(); h++){
+            int lid = h.key();
+            FuzzyRule *pRule = h.value();
+
+            QString attributeName = pRule->attribute();
+
+            ObjectAttribute *pOA = OBJECTATTRIBUTEMANAGER->objectAttributeOfLevelById(lid,attributeName);
+            if(pOA->otype() != 3)
+                continue;
+
+            QDomElement element = doc.createElement(QLatin1String("spatialRule"));
             element.setAttribute(QLatin1String("id"),pRule->id());
             element.setAttribute(QLatin1String("property"),attributeName);
+            if(attributeName.compare(distancetTitle)){
+
+                QString fuzzyfunctiontext ;
+
+                FuzzyFunction *pFF = pRule->funzzyFunction();
+                QString ffname = pFF->name();
+                fuzzyfunctiontext += ffname;
+                fuzzyfunctiontext += ";";
+
+                QStringList parameterkeyvaluelist;
+
+                for(int fp = 0; fp < pFF->parametersCount(); fp++){
+
+                    int code = 97; // 'a'
+                    code += fp;
+
+                    QString lstr = QString("%1").arg((char)code);
+                    double val = pFF->parameterValueForIndex(fp);
+
+                    parameterkeyvaluelist << QString("%1=%2").arg(lstr).arg(QString::number(val,'f',3));
+                }
+
+                fuzzyfunctiontext += parameterkeyvaluelist.join(QLatin1String(";"));
+                element.setAttribute(QLatin1String("fuzzyFunction"),fuzzyfunctiontext);
+            }
+
             fuzzyRuleRootElement.appendChild(element);
         }
+    }
+
+    QString distance = QLatin1String("distance");
+
+    QList<FuzzyRule*> fuzzyrulelist = FUZZYRULEMANAGER->fuzzyRuleListByAttribute(distance);
+    if(fuzzyrulelist.count() == 1)
+    {
+        FuzzyRule *prule = fuzzyrulelist.first();
+
+        // write sth with that rule
     }
 }
 

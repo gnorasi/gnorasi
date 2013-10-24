@@ -1,5 +1,5 @@
 #include "fuzzyrulemanager.h"
-
+#include "fuzzyfunction.h"
 #include "fuzzyrule.h"
 
 #include <QStringList>
@@ -52,6 +52,23 @@ QStringList FuzzyRuleManager::fuzzyRulesNames(){
         if(!list.contains(name)){
             list << name;
         }
+    }
+
+    return list;
+}
+
+
+QList<FuzzyRule*> FuzzyRuleManager::fuzzyRuleListByAttribute(const QString &name){
+
+    QList<FuzzyRule*> list;
+
+    QList<FuzzyRule*>::const_iterator i;
+    for(i = m_fuzzyRuleList.constBegin(); i != m_fuzzyRuleList.constEnd(); i++){
+
+        FuzzyRule *pRule = *i;
+
+        if(!pRule->attribute().compare(name))
+            list << pRule;
     }
 
     return list;

@@ -126,15 +126,15 @@ void ObjectAttributeManager::createPreDefinedAttributesForLevel(int l){
 //
 // SHAPE
 //
-    createPreDefinedAttribute(l,QLatin1String("Area"),2);
-    createPreDefinedAttribute(l,QLatin1String("Length"),2);
-    createPreDefinedAttribute(l,QLatin1String("Width"),2);
-    createPreDefinedAttribute(l,QLatin1String("Border length"),2);
-    createPreDefinedAttribute(l,QLatin1String("Length/width"),2);
-    createPreDefinedAttribute(l,QLatin1String("Shape index"),2);
-    createPreDefinedAttribute(l,QLatin1String("Density"),2);
-    createPreDefinedAttribute(l,QLatin1String("Main direction"),2);
-    createPreDefinedAttribute(l,QLatin1String("Assymetry"),2);
+//    createPreDefinedAttribute(l,QLatin1String("Area"),2);
+//    createPreDefinedAttribute(l,QLatin1String("Length"),2);
+//    createPreDefinedAttribute(l,QLatin1String("Width"),2);
+//    createPreDefinedAttribute(l,QLatin1String("Border length"),2);
+//    createPreDefinedAttribute(l,QLatin1String("Length/width"),2);
+//    createPreDefinedAttribute(l,QLatin1String("Shape index"),2);
+//    createPreDefinedAttribute(l,QLatin1String("Density"),2);
+//    createPreDefinedAttribute(l,QLatin1String("Main direction"),2);
+//    createPreDefinedAttribute(l,QLatin1String("Assymetry"),2);
 
 //
 // Spatial relations
@@ -151,4 +151,5 @@ void ObjectAttributeManager::createPreDefinedAttributesForLevel(int l){
     createPreDefinedAttribute(l,QLatin1String("Relate"),3);
     createPreDefinedAttribute(l,QLatin1String("Touches"),3);
     createPreDefinedAttribute(l,QLatin1String("Within"),3);
+    createPreDefinedAttribute(l,QLatin1String("Distance"),3);
 }

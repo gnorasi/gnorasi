@@ -113,7 +113,7 @@ void OntologyClassificationProcessorWidget::processAttributeList(int levelid, co
         oa->setlevelId(levelid);
 
         if(name.startsWith(shapeString))
-            oa->setotype(4);
+            oa->setotype(2);
 
         OBJECTATTRIBUTEMANAGER->addObjectAttribute(levelid,oa);
     }
@@ -156,6 +156,8 @@ void OntologyClassificationProcessorWidget::processPortData(){
                     QStringList namesList = m_pFuzzyLabelMapUtility->getAttributeListNames();
 
                     processAttributeList(h,namesList);
+
+                    OBJECTATTRIBUTEMANAGER->createPreDefinedAttributesForLevel(h);
                 }
             }
         }
@@ -300,6 +302,11 @@ QString OntologyClassificationProcessorWidget::constructCSVText(){
                             continue;
 
                         QString attname = pFuzzyRule->name();
+
+                        ObjectAttribute *pAttr = OBJECTATTRIBUTEMANAGER->objectAttributeOfLevelById(h,attname);
+                        if(pAttr->otype() == 3)
+                            continue;
+
                         double val                                      = (double)lblObject->GetAttribute(attname.toLatin1().constData());
                         double calcval = ffunction->calculate(val);
 
@@ -507,18 +514,20 @@ QString OntologyClassificationProcessorWidget::constructXmlFile(){
 
     writter.appendRulesData();
 
+    writter.appendSpatialData();
+
     text = writter.docToText();
 
     ////////////////////////////
     /// \brief testing
     ///
-//    QFile file(QFileDialog::getSaveFileName(this,tr("save"),QDir::homePath()));
-//    if(file.open(QIODevice::WriteOnly)){
-//        QTextStream out(&file);
-//        out << text;
+    QFile file(QFileDialog::getSaveFileName(this,tr("save"),QDir::homePath()));
+    if(file.open(QIODevice::WriteOnly)){
+        QTextStream out(&file);
+        out << text;
 
-//        file.close();
-//    }
+        file.close();
+    }
 
     return text;
 }
