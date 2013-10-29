@@ -34,6 +34,7 @@ FuzzyFunctionTriangular::FuzzyFunctionTriangular(QObject *parent) :
 {
     m_parameterList[0] = -1;
     m_parameterList[1] = -1;
+    m_parameterList[2] = -1;
 }
 
 
@@ -48,7 +49,7 @@ double FuzzyFunctionTriangular::parameterValueForIndex(int index){
 
 void FuzzyFunctionTriangular::setParameterValueForIndex(int index, double val)
 {
-    if(index < 4) {
+    if(index > 0 && index < 3) {
 
         m_parameterList[index] = val;
     }
@@ -77,7 +78,7 @@ double FuzzyFunctionTriangular::calculate(double val){
 }
 
 bool FuzzyFunctionTriangular::isReady(){
-    return m_parameterList[0] != -1 && m_parameterList[1] != -1;
+    return m_parameterList[0] != -1 && m_parameterList[1] != -1 && m_parameterList[2] != -1;
 }
 
 

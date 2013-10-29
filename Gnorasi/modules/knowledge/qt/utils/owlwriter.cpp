@@ -134,7 +134,10 @@ void OwlWriter::createDocumentVersion2(){
     // create the element
     owlrootElement = doc.createElement(QString::fromAscii(OWL_RDFTAGNAME));
 
-    owlrootElement.setAttribute(QLatin1String("xmlns"),QString("http://www.gnorasi.gr/ontology/generated_%1#").arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss")));
+    QString cdt = QDateTime::currentDateTime().toString("yyyyMMddhhmmss");
+
+    owlrootElement.setAttribute(QLatin1String("xmlns"),QString::fromLatin1("http://www.gnorasi.gr/ontology/generated_%1#").arg(cdt));
+    owlrootElement.setAttribute(QString::fromAscii(XMLNS_BASEKEY),QString::fromLatin1("http://www.gnorasi.gr/ontology/generated_%1").arg(cdt));
     owlrootElement.setAttribute(QString::fromAscii(XMLNS_GEOKEY),QString::fromAscii(XMLNS_GEOVALUE));
     owlrootElement.setAttribute(QString::fromAscii(XMLNS_OWLKEY),QString::fromAscii(XMLNS_OWLVALUE));
     owlrootElement.setAttribute(QString::fromAscii(XMLNS_RDFKEY),QString::fromAscii(XMLNS_RDFVALUE));
@@ -406,6 +409,9 @@ void OwlWriter::appendSpatialData(){
             QString attributeName = pRule->attribute();
 
             ObjectAttribute *pOA = OBJECTATTRIBUTEMANAGER->objectAttributeOfLevelById(lid,attributeName);
+
+            Q_ASSERT(pOA);
+
             if(pOA->otype() != 3)
                 continue;
 
