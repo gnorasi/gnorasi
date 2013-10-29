@@ -47,7 +47,7 @@ public:
      * \brief paramtersCount
      * \return
      */
-    int parametersCount() const { return 2; }
+    int parametersCount() const { return 3; }
 
     /*!
      * \brief parameterFunctionForIndex
@@ -84,6 +84,7 @@ public:
      */
     void setParameterA( double a) { m_parameterList[0] = a; }
     void setParameterB( double b) { m_parameterList[1] = b; }
+    void setParameterC( double c) { m_parameterList[2] = c; }
 
     /*!
      * \brief parameterA
@@ -91,6 +92,7 @@ public:
      */
     double parameterA() const{ return  m_parameterList[0]; }
     double parameterB() const { return m_parameterList[1]; }
+    double parameterC() const { return m_parameterList[2]; }
 
     /*!
      * \brief isReady
@@ -104,7 +106,7 @@ signals:
 public slots:
 
 private:
-    double m_parameterList[2];
+    double m_parameterList[3];
     
 };
 
