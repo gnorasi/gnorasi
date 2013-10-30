@@ -338,7 +338,7 @@ void OwlWriter::appendRulesData(){
         OntologyClass *pClass = *i;
 
         QDomElement classElement = doc.createElement(QLatin1String("class"));
-        classElement.setAttribute(tr("id"),pClass->id());
+        classElement.setAttribute(QLatin1String("id"),pClass->id());
         classesElement.appendChild(classElement);
 
         QDomElement fuzzyRuleRootElement = doc.createElement(QLatin1String("fuzzyRules"));
@@ -385,16 +385,35 @@ void OwlWriter::appendSpatialData(){
     QString distancetTitle = QLatin1String("distance");
 
     QDomNode classesNode = rootNode.lastChild();
-    QDomElement classesElement = classesNode.toElement();
 
     QList<OntologyClass*> list = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassList();
     QList<OntologyClass*>::const_iterator i;
     for(i = list.constBegin(); i != list.constEnd(); i++){
         OntologyClass *pClass = *i;
 
-        QDomElement classElement = doc.createElement(QLatin1String("class"));
-        classElement.setAttribute(tr("id"),pClass->id());
-        classesElement.appendChild(classElement);
+        QDomElement classElement;
+        QString oid = pClass->id();
+        QDomNode classNode = classesNode.firstChild();
+        while(!classNode.isNull()){
+
+            if(classNode.isElement()){
+
+                classElement = classNode.toElement();
+                QString ceaid = classElement.attribute(QLatin1String("id"),0);
+
+                qDebug() << "ceaid : " << ceaid << ", oid : " << oid;
+
+                if(!ceaid.compare(oid))
+                    break;
+            }
+
+            classNode = classNode.nextSibling();
+        }
+
+        if(classElement.isNull()){
+            qDebug() << "error, could not find the class , id : " << oid;
+            continue;
+        }
 
         QDomElement fuzzyRuleRootElement = doc.createElement(QLatin1String("spatialRules"));
         fuzzyRuleRootElement.setAttribute(QLatin1String("operator"),pClass->opername());
