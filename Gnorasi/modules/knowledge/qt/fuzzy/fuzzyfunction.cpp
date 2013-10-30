@@ -34,5 +34,5 @@ QStringList FuzzyFunction::availableFunctions = QStringList() << tr("Left Should
 
 QStringList FuzzyFunction::availableIcons = QStringList() << QString(":/voreenve/icons/leftShoulder.jpg")
                                                              << QString(":/voreenve/icons/rightShoulder.jpg")
-                                                                << QString(":/voreenve/icons/trapezoidal.jpg")
-                                                                   << QString(":/voreenve/icons/triangular.jpg");
+                                                                << QString(":/voreenve/icons/triangular.jpg")
+                                                                << QString(":/voreenve/icons/trapezoidal.jpg");
