@@ -223,10 +223,6 @@ void MembershipFunctionDialog::onFuzzyFunctionButtonClicked(int id){
         return;
     }
 
-    FuzzyRule *pFuzzyRule = FUZZYRULEMANAGER->fuzzyRuleById(m_ruleId);
-
-//    FuzzyFunction *pFunction = FUZZYFUNCTIONMANAGER
-
     FuzzyFunction *pFunction = m_pFuzzyFunctionFactory->createFuzzyFunction(button->text());
 
     m_pParameterModel->clear();
@@ -268,6 +264,12 @@ void MembershipFunctionDialog::onOkClicked(){
     if(!pAttr){
         QMessageBox::critical(this,tr("Create Failed"),tr("Could not create the fuzzy rule,could not find the attribute.."));
         return;
+    }
+
+    FuzzyRule *pFuzzyRule = FUZZYRULEMANAGER->fuzzyRuleById(m_ruleId);
+    if(pFuzzyRule){
+
+        FUZZYRULEMANAGER->removeFuzzyRule(pFuzzyRule);
     }
 
     QString ffname = button->text();
