@@ -15,10 +15,10 @@
         <file alias="add1.png">icons/add1.png</file>
         <file alias="add2.png">icons/add2.png</file>
         <file alias="delete.png">icons/delete.png</file>
-        <file>icons/leftShoulder.jpg</file>
-        <file>icons/rightShoulder.jpg</file>
-        <file>icons/trapezoidal.jpg</file>
-        <file>icons/triangular.jpg</file>
+        <file alias="leftShoulder.jpg">icons/leftShoulder.jpg</file>
+        <file alias="rightShoulder.jpg">icons/rightShoulder.jpg</file>
+        <file alias="trapezoidal.jpg">icons/trapezoidal.jpg</file>
+        <file alias="triangular.jpg">icons/triangular.jpg</file>
     </qresource>
     <qresource prefix="/voreenve/image">
         <file alias="aboutbox.png">image/aboutbox.png</file>
