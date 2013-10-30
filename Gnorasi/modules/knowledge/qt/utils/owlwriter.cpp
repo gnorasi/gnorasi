@@ -384,7 +384,7 @@ void OwlWriter::appendSpatialData(){
 
     QString distancetTitle = QLatin1String("distance");
 
-    QDomNode classesNode = rootNode.firstChild();
+    QDomNode classesNode = rootNode.lastChild();
     QDomElement classesElement = classesNode.toElement();
 
     QList<OntologyClass*> list = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassList();
