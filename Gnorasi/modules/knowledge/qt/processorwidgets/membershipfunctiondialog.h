@@ -61,6 +61,8 @@ private:
 
     int m_currentButtonId;
 
+    int m_ruleId;
+
     QPushButton *m_pOkButton;
     QPushButton *m_pCancelButton;
 

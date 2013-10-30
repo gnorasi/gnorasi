@@ -17,7 +17,7 @@
 #include "../fuzzy/fuzzyrulemanager.h"
 
 MembershipFunctionDialog::MembershipFunctionDialog(int lid, const QString &atid, QWidget *parent) :
-    m_levelId(lid), m_attributeId(atid), QDialog(parent)
+    m_levelId(lid), m_attributeId(atid), m_ruleId(0), QDialog(parent)
 {
     initialize();
 }
@@ -27,6 +27,8 @@ void MembershipFunctionDialog::setupByRuleId(int id){
     FuzzyRule *prule = FUZZYRULEMANAGER->fuzzyRuleById(id);
     if(!prule)
         return;
+
+    m_ruleId = id;
 
     QString atid = prule->attribute();
     m_attributeId = atid;
@@ -220,6 +222,10 @@ void MembershipFunctionDialog::onFuzzyFunctionButtonClicked(int id){
         QMessageBox::critical(this,tr("Create Failed"),tr("Could not create the fuzzy rule,could not find the selected button.."));
         return;
     }
+
+    FuzzyRule *pFuzzyRule = FUZZYRULEMANAGER->fuzzyRuleById(m_ruleId);
+
+//    FuzzyFunction *pFunction = FUZZYFUNCTIONMANAGER
 
     FuzzyFunction *pFunction = m_pFuzzyFunctionFactory->createFuzzyFunction(button->text());
 
