@@ -92,6 +92,12 @@ private slots:
      */
     void calculate();
 
+
+    void save();
+
+
+    void load();
+
     /*!
      * \brief createANewAttribute
      *
@@ -141,6 +147,9 @@ private:
 
 
     QString constructCSVText();
+
+
+    QString getFilePath();
 
     /*!
      * \brief processOntologyItem
@@ -200,6 +209,8 @@ private:
     // Qt Widgets
     ClassHierarchyWidget                    *m_pClassHierarchyWidget;
     QPushButton                             *m_pPushButtonCalculate;
+    QPushButton                             *m_pPushButtonSave;
+    QPushButton                             *m_pPushButtonLoad;
 
 };
 
