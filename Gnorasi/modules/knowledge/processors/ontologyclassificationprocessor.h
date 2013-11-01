@@ -29,7 +29,7 @@ public:
 	
 //	std::string getOntologyData() { return inOntologyPort_.getData(); }
 
-    std::string getFilePath(){ return pTextData_; }
+    std::string getFilePath();
 
     /*!
      * \brief setTextOutputData
@@ -63,6 +63,8 @@ private:
     TextPort        outXmlPort;
 
     std::string pTextData_;
+
+    FileDialogProperty XMLFile_;  ///< Path of the saved image file.
     
     static const std::string loggerCat_; ///< category used in logging
 };

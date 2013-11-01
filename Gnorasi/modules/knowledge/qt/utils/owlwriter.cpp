@@ -359,17 +359,44 @@ void OwlWriter::appendRulesData(){
 
             attributeName = attributeName.remove(":");
             attributeName = QString("Fuzzy%1").arg(attributeName);
+            QDomElement element;
 
             if(pOA->otype()==1){
-                QDomElement element = doc.createElement(QLatin1String("attributeRule"));
+
+                element = doc.createElement(QLatin1String("attributeRule"));
                 element.setAttribute(QLatin1String("id"),pRule->id());
                 element.setAttribute(QLatin1String("property"),attributeName);
                 fuzzyRuleRootElement.appendChild(element);
             }else{
-                QDomElement element = doc.createElement(QLatin1String("shapeRule"));
+
+                element = doc.createElement(QLatin1String("shapeRule"));
                 element.setAttribute(QLatin1String("id"),pRule->id());
                 element.setAttribute(QLatin1String("property"),attributeName);
                 fuzzyRuleRootElement.appendChild(element);
+            }
+
+            FuzzyFunction *pfuzzyFunction = pRule->funzzyFunction();
+            if(pfuzzyFunction){
+                QDomElement functionElement = doc.createElement(QLatin1String("function"));
+                functionElement.setAttribute(QLatin1String("name"),pfuzzyFunction->name());
+                element.appendChild(functionElement);
+
+                QDomElement parametersElement = doc.createElement(QLatin1String("parameters"));
+                functionElement.appendChild(parametersElement);
+
+                for(int i = 0; i < pfuzzyFunction->parametersCount(); i++){
+
+                    int code = 97; // 'a'
+                    code += i;
+
+                    QString lstr = QString("%1").arg((char)code);
+                    double val = pfuzzyFunction->parameterValueForIndex(i);
+
+                    QDomElement parameterElement = doc.createElement(QLatin1String("parameter"));
+                    parameterElement.setAttribute(QLatin1String("name"),lstr);
+                    parameterElement.setAttribute(QLatin1String("value"),QString::number(val,'f',3));
+                    parametersElement.appendChild(parameterElement);
+                }
             }
         }
     }
@@ -381,8 +408,6 @@ void OwlWriter::appendSpatialData(){
     QDomNode rootNode = doc.lastChild();
     if(rootNode.isNull())
         return;
-
-    QString distancetTitle = QLatin1String("distance");
 
     QDomNode classesNode = rootNode.lastChild();
 
@@ -437,44 +462,33 @@ void OwlWriter::appendSpatialData(){
             QDomElement element = doc.createElement(QLatin1String("spatialRule"));
             element.setAttribute(QLatin1String("id"),pRule->id());
             element.setAttribute(QLatin1String("property"),attributeName);
-            if(attributeName.compare(distancetTitle)){
 
-                QString fuzzyfunctiontext ;
+            FuzzyFunction *pfuzzyFunction = pRule->funzzyFunction();
+            if(pfuzzyFunction){
+                QDomElement functionElement = doc.createElement(QLatin1String("function"));
+                functionElement.setAttribute(QLatin1String("name"),pfuzzyFunction->name());
+                element.appendChild(functionElement);
 
-                FuzzyFunction *pFF = pRule->funzzyFunction();
-                QString ffname = pFF->name();
-                fuzzyfunctiontext += ffname;
-                fuzzyfunctiontext += ";";
+                QDomElement parametersElement = doc.createElement(QLatin1String("parameters"));
+                functionElement.appendChild(parametersElement);
 
-                QStringList parameterkeyvaluelist;
-
-                for(int fp = 0; fp < pFF->parametersCount(); fp++){
+                for(int i = 0; i < pfuzzyFunction->parametersCount(); i++){
 
                     int code = 97; // 'a'
-                    code += fp;
+                    code += i;
 
                     QString lstr = QString("%1").arg((char)code);
-                    double val = pFF->parameterValueForIndex(fp);
+                    double val = pfuzzyFunction->parameterValueForIndex(i);
 
-                    parameterkeyvaluelist << QString("%1=%2").arg(lstr).arg(QString::number(val,'f',3));
+                    QDomElement parameterElement = doc.createElement(QLatin1String("parameter"));
+                    parameterElement.setAttribute(QLatin1String("name"),lstr);
+                    parameterElement.setAttribute(QLatin1String("value"),QString::number(val,'f',3));
+                    parametersElement.appendChild(parameterElement);
                 }
-
-                fuzzyfunctiontext += parameterkeyvaluelist.join(QLatin1String(";"));
-                element.setAttribute(QLatin1String("fuzzyFunction"),fuzzyfunctiontext);
             }
 
             fuzzyRuleRootElement.appendChild(element);
         }
-    }
-
-    QString distance = QLatin1String("distance");
-
-    QList<FuzzyRule*> fuzzyrulelist = FUZZYRULEMANAGER->fuzzyRuleListByAttribute(distance);
-    if(fuzzyrulelist.count() == 1)
-    {
-        FuzzyRule *prule = fuzzyrulelist.first();
-
-        // write sth with that rule
     }
 }
 
