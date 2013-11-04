@@ -31,6 +31,8 @@ void ClassDescriptionDialog::clearFuzzyRules(){
 }
 
 void ClassDescriptionDialog::initializeFuzzyOperators(){
+    FUZZYOPERATORMANAGER->clear();
+
     if(FUZZYOPERATORMANAGER->count())
         return;
 

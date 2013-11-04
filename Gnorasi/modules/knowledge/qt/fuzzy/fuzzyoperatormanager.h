@@ -50,7 +50,7 @@ public:
     void addOperator(FuzzyOperator *f) { m_fuzzyOperatorList.append(f); }
     void removeOperator(FuzzyOperator *f) { m_fuzzyOperatorList.removeOne(f); }
 
-    void clear() { qDeleteAll(m_fuzzyOperatorList); m_fuzzyOperatorList.clear(); }
+    void clear() { /*qDeleteAll(m_fuzzyOperatorList); */m_fuzzyOperatorList.clear(); }
 
     FuzzyOperator* fuzzyOperatorByName(const QString& );
 
