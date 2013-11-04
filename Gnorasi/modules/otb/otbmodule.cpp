@@ -31,6 +31,7 @@
 
 #include "processors/Applications/otbsarradiometriccalibrationapplication.h"
 #include "processors/Applications/otblocalstatisticextractionapplication.h"
+#include "processors/Applications/otbsfstextureextractionapplication.h"
 #include "processors/ImageIO/otbimagereaderprocessor.h"
 #include "processors/ImageIO/otblabelimagereaderprocessor.h"
 #include "processors/ImageIO/otbvectorimagereaderprocessor.h"
@@ -259,6 +260,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBRasterizeVectorDataFilterProcessor());
     registerProcessor(new OTBSARRadiometricCalibrationApplication());
     registerProcessor(new OTBLocalStatisticExtractionApplication());
+    registerProcessor(new OTBSFSTextureExtractionApplication());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
