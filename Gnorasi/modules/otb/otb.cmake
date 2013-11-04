@@ -406,7 +406,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/otbsommapport.h
     ${MOD_DIR}/processors/Applications/otbsarradiometriccalibrationapplication.h
     ${MOD_DIR}/processors/Applications/otblocalstatisticextractionapplication.h
-    ${MOD_DIR}/processors/Applications/otbsfstextureextractionapplication.cpp
+    ${MOD_DIR}/processors/Applications/otbsfstextureextractionapplication.h
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.h
