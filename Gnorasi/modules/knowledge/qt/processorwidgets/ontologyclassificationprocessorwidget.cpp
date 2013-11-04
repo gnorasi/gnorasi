@@ -331,8 +331,13 @@ void OntologyClassificationProcessorWidget::load(){
 
     qDebug() << "loading document path : " << path;
 
+    ONTOLOGYCLASSIFICATIONMANAGER->clear();
+    FUZZYRULEMANAGER->clear();
+
     OntologyClassificationFileReader reader;
     reader.parse(path);
+
+    m_pClassHierarchyWidget->setupModel();
 }
 
 void OntologyClassificationProcessorWidget::updateOutPortTextData(){
