@@ -326,7 +326,7 @@ void OntologyClassificationProcessorWidget::load(){
     QString path = getFilePath();
 
     if(path.isEmpty()){
-        QMessageBox::critical(this,tr("Error"),tr("Could not save the file.\nError message : Path is empty.\mPlease select a file path and try again"));
+        QMessageBox::critical(this,tr("Error"),tr("Could not open the file.\nError message : Path is empty.\mPlease select a file path and try again"));
         return;
     }
 

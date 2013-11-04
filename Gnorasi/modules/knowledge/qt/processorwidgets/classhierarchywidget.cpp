@@ -11,6 +11,7 @@
 
 #include "../processorwidgets/ontologyclassview.h"
 
+#include <QDebug>
 
 
 using namespace voreen;
@@ -80,6 +81,8 @@ void ClassHierarchyWidget::setupModel(){
 
         if(!pClass->parent()){
 
+            qDebug() << "processing class : " << pClass->id() << " with no parent class : " ;
+
             processOntology(pClass);
         }
     }
@@ -91,10 +94,13 @@ void ClassHierarchyWidget::processOntology(OntologyClass *pClass, QStandardItem 
     pItem->setData(pClass->name(),Qt::DisplayRole);
     pItem->setData(pClass->id());
 
-    if(pParentItem)
+    if(pParentItem){
+
         pParentItem->setChild(pParentItem->rowCount(),pItem);
-    else
+    }
+    else{
         m_pOntologyClassModel->setItem(m_pOntologyClassModel->rowCount(),pItem);
+    }
 
     QList<OntologyClass*> childlist = pClass->getChildItems();
     QList<OntologyClass*>::const_iterator i;
