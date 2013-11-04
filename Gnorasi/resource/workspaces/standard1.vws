@@ -5,7 +5,7 @@
             <MetaData>
                 <MetaItem name="ProcessorSelection" type="SelectionMetaData::Processor">
                     <values>
-                        <item type="OntologyClassification Processor" ref="ref5" />
+                        <item type="Calculate Shape Properties for Objects" ref="ref4" />
                     </values>
                 </MetaItem>
                 <MetaItem name="Zoom" type="ZoomMetaData">
