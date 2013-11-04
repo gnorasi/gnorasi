@@ -51,7 +51,7 @@ public:
     void addOntologyClass(OntologyClass *p) { m_OntoloyClassList.append(p); }
     void removeOntologyClass(OntologyClass *p) { m_OntoloyClassList.removeOne(p); }
 
-    void clear(){ qDeleteAll(m_OntoloyClassList); m_OntoloyClassList.clear(); }
+    void clear(){ /*qDeleteAll(m_OntoloyClassList);*/ m_OntoloyClassList.clear(); }
 
     OntologyClass* ontologyClassById(int );
 
