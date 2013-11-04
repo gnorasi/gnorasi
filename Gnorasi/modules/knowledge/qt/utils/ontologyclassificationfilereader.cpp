@@ -212,7 +212,7 @@ void OntologyClassificationFileReader::parseClasses(const QDomDocument &doc, con
     }
 }
 
-void OntologyClassificationFileReader::parsesHierrarchy(const QDomDocument &doc, const QDomNode &node){
+void OntologyClassificationFileReader::parseHierrarchy(const QDomNode &node){
 
     //! helper headers
     QString classTagName            = QLatin1String("owl:Class");
@@ -261,6 +261,9 @@ void OntologyClassificationFileReader::parsesHierrarchy(const QDomDocument &doc,
                         pParentClass->addChild(pClass);
                         pClass->setParent(pParentClass);
                         pClass->setparentId(pParentClass->id());
+
+
+                        qDebug() << "added child classes, parent class : " << pParentClass->id() << " , child  class : " << pClass->id();
                     }
                 }
             }
@@ -299,5 +302,5 @@ void OntologyClassificationFileReader::parse(const QString &path){
     QDomNode classesNode = rootNode.lastChild();
 
     parseClasses(doc,classesNode);
-    parsesHierrarchy(doc,hierrarchyNode);
+    parseHierrarchy(hierrarchyNode);
 }

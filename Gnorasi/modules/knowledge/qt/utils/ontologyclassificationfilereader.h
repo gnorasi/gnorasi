@@ -32,7 +32,7 @@ private:
     void parseClasses(const QDomDocument& , const QDomNode& );
 
 
-    void parsesHierrarchy(const QDomDocument& , const QDomNode& );
+    void parseHierrarchy(const QDomNode& );
 
 
     void parseClass(OntologyClass*, const QDomNode& );
