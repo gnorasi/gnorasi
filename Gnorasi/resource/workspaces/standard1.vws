@@ -5,14 +5,19 @@
             <MetaData>
                 <MetaItem name="ProcessorSelection" type="SelectionMetaData::Processor">
                     <values>
-                        <item type="Calculate Band Statistics for Objects" ref="ref2" />
+                        <item type="OntologyClassification Processor" ref="ref5" />
                     </values>
+                </MetaItem>
+                <MetaItem name="Zoom" type="ZoomMetaData">
+                    <transform.row0 x="1.125" y="0" z="0" />
+                    <transform.row1 x="0" y="1.125" z="0" />
+                    <transform.row2 x="511.27130126953125" y="422.37506103515625" z="1" />
                 </MetaItem>
             </MetaData>
             <Processors>
                 <Processor type="MultiBand Image File Reader" name="MultiBand Image File Reader" id="ref0">
                     <MetaData>
-                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-477" y="-802" />
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-416" y="-743" />
                     </MetaData>
                     <Properties>
                         <Property name="clearButton" />
@@ -24,7 +29,7 @@
                 </Processor>
                 <Processor type="Mean Shift Segmentation" name="Mean Shift Segmentation" id="ref1">
                     <MetaData>
-                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-736" y="-646" />
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-692" y="-674" />
                     </MetaData>
                     <Properties>
                         <Property name="enable" value="true" />
@@ -37,7 +42,7 @@
                 </Processor>
                 <Processor type="Calculate Band Statistics for Objects" name="Calculate Band Statistics for Objects" id="ref2">
                     <MetaData>
-                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-540" y="-414" />
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-589" y="-483" />
                     </MetaData>
                     <Properties>
                         <Property name="automaticUpdate" value="false" />
@@ -48,17 +53,30 @@
                 </Processor>
                 <Processor type="Label Image to Object Map" name="Label Image to Object Map" id="ref3">
                     <MetaData>
-                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-676" y="-518" />
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-778" y="-567" />
                     </MetaData>
                     <Properties />
                     <InteractionHandlers />
                 </Processor>
-                <Processor type="OntologyClassification Processor" name="OntologyClassification Processor">
+                <Processor type="OntologyClassification Processor" name="OntologyClassification Processor" id="ref5">
                     <MetaData>
-                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-912" y="-495" />
-                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="false" x="760" y="340" width="600" height="500" />
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-417" y="-252" />
+                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="false" x="387" y="318" width="600" height="500" />
                     </MetaData>
-                    <Properties />
+                    <Properties>
+                        <Property name="xmlfile" noPathSet="false" value="C:/Users/nikger/Desktop/classificationsample.xml" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Calculate Shape Properties for Objects" name="Calculate Shape Properties for Objects" id="ref4">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-738" y="-371" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="automaticUpdate" value="false" />
+                        <Property name="reduced" value="true" />
+                        <Property name="updateButton" />
+                    </Properties>
                     <InteractionHandlers />
                 </Processor>
             </Processors>
@@ -88,11 +106,27 @@
                     </Inport>
                 </Connection>
                 <Connection>
+                    <Outport name="Output Object Map">
+                        <Processor type="Calculate Band Statistics for Objects" ref="ref2" />
+                    </Outport>
+                    <Inport name="Input Object Map">
+                        <Processor type="Calculate Shape Properties for Objects" ref="ref4" />
+                    </Inport>
+                </Connection>
+                <Connection>
                     <Outport name="Object Map">
                         <Processor type="Label Image to Object Map" ref="ref3" />
                     </Outport>
                     <Inport name="Input Object Map">
                         <Processor type="Calculate Band Statistics for Objects" ref="ref2" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Output Object Map">
+                        <Processor type="Calculate Shape Properties for Objects" ref="ref4" />
+                    </Outport>
+                    <Inport name="Input Object Map Port">
+                        <Processor type="OntologyClassification Processor" ref="ref5" />
                     </Inport>
                 </Connection>
             </Connections>

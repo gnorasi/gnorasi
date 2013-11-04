@@ -92,10 +92,16 @@ private slots:
      */
     void calculate();
 
-
+    /*!
+     * \brief save
+     *  Saves the hierrarchy and fuzzy rules data in an external file.
+     */
     void save();
 
-
+    /*!
+     * \brief save
+     *  Load the hierrarchy and fuzzy rules data from an external file.
+     */
     void load();
 
     /*!

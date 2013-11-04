@@ -30,6 +30,9 @@
 #include "../utils/owlwriter.h"
 
 #include "../models/ontologyclass.h"
+#include "../utils/ontologyclassificationfilereader.h"
+
+#include "voreen/core/voreenapplication.h"
 
 using namespace otb;
 //using namespace itiviewer;
@@ -82,6 +85,7 @@ void OntologyClassificationProcessorWidget::initialize(){
 
     connect(m_pPushButtonCalculate,SIGNAL(clicked()),this,SLOT(calculate()));
     connect(m_pPushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
+    connect(m_pPushButtonLoad,SIGNAL(clicked()),this,SLOT(load()));
 
     hide();
 }
@@ -280,7 +284,15 @@ QString OntologyClassificationProcessorWidget::getFilePath(){
     if(!ocProcessor)
         return path;
 
+    //
+    // This may not work on Linux
+    //
     path = QString::fromStdString(ocProcessor->getFilePath());
+    QString workspacepath = QString::fromStdString(VoreenApplication::app()->getResourcePath("workspaces"));
+    path.remove(workspacepath);
+    path.remove(0,1);
+
+    qDebug() << "path : " << path << "workspacepath : " << workspacepath;
 
     return path;
 }
@@ -317,7 +329,10 @@ void OntologyClassificationProcessorWidget::load(){
         return;
     }
 
+    qDebug() << "loading document path : " << path;
 
+    OntologyClassificationFileReader reader;
+    reader.parse(path);
 }
 
 void OntologyClassificationProcessorWidget::updateOutPortTextData(){
@@ -344,7 +359,7 @@ QString OntologyClassificationProcessorWidget::constructXmlFile(){
     for(i = list.constBegin(); i != list.constEnd(); i++){
 
         OntologyClass *pClass = *i;
-        if(pClass->childCount() && !pClass->parent())
+        if(!pClass->parent())
             writter.appendData(pClass);
     }
 

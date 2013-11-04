@@ -5,6 +5,9 @@
 
 #include <QtXml/QDomDocument>
 
+class OntologyClass;
+class FuzzyFunctionFactory;
+
 class OntologyClassificationFileReader : public QObject
 {
     Q_OBJECT
@@ -15,13 +18,33 @@ public:
     void parse(const QString & );
 
     //! parse the content given by the QString parameter
-    void parseContent(const QString &);
+//    void parseContent(const QString &);
 
 signals:
 
 public slots:
 
 private:
+
+    int getLevelOfClass(const QDomDocument&, const QString &name);
+
+
+    void parseClasses(const QDomDocument& , const QDomNode& );
+
+
+    void parsesHierrarchy(const QDomDocument& , const QDomNode& );
+
+
+    void parseClass(OntologyClass*, const QDomNode& );
+
+
+    void parseRulesOfClass(OntologyClass*, const QDomNode& );
+
+
+    QString getAttributeName(const QString& , const QString& );
+
+
+    FuzzyFunctionFactory *m_pFuzzyFunctionFactory;
 
 
 };

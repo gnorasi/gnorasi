@@ -17,9 +17,14 @@ class ClassHierarchyWidget : public QWidget
 {
     Q_OBJECT
 public:
+
     explicit ClassHierarchyWidget(QWidget *parent = 0);
 
+
     void initialize();
+
+
+    QStandardItemModel* ontologyClassModel() { return m_pOntologyClassModel; }
     
 signals:
     
