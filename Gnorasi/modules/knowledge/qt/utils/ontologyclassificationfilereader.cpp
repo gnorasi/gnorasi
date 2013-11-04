@@ -68,7 +68,14 @@ QString OntologyClassificationFileReader::getAttributeName(const QString &proper
 
     QString name = propertyname;
 
-    if(tagname.compare(QLatin1String("spatialRule"))){
+    if(!tagname.compare(QLatin1String("attributeRule"))){
+
+        name.remove(QLatin1String("Fuzzy"));
+        name.insert(5,QLatin1String("::"));
+
+        int idx = name.indexOf(QLatin1String("Band"));
+        name.insert(idx+5,QLatin1String("::"));
+    }else if(!tagname.compare(QLatin1String("shapeRule"))){
 
         name.remove(QLatin1String("Fuzzy"));
         name.insert(5,QLatin1String("::"));
@@ -120,13 +127,12 @@ void OntologyClassificationFileReader::parseRulesOfClass(OntologyClass *pClass, 
                     if(parameterNode.isElement()){
 
                         QDomElement parameterElement = parameterNode.toElement();
-//                        QString lstr = parameterElement.attribute(QLatin1String("name"));
                         double val = parameterElement.attribute(QLatin1String("value")).toDouble();
-
                         pFunction->setParameterValueForIndex(counter_,val);
-
                         counter_++;
                     }
+
+                    parameterNode = parameterNode.nextSibling();
                 }
 
                 FUZZYFUNCTIONMANAGER->addFuzzyFunction(pFunction);
@@ -147,8 +153,9 @@ void OntologyClassificationFileReader::parseRulesOfClass(OntologyClass *pClass, 
                 pRule->setAttribute(pAttr->id());
                 pRule->setlevelId(pClass->level());
                 FUZZYRULEMANAGER->addFuzzyRule(pRule);
+                pClass->addFuzzyRule(pClass->level(),pRule);
 
-                qDebug() << "adding fuzzy function id : " << pRule->attribute();
+                qDebug() << "adding fuzzy rule attribute id : " << pRule->attribute();
             }
         }
 
