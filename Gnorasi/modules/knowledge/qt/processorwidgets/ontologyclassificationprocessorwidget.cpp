@@ -290,7 +290,8 @@ QString OntologyClassificationProcessorWidget::getFilePath(){
     path = QString::fromStdString(ocProcessor->getFilePath());
     QString workspacepath = QString::fromStdString(VoreenApplication::app()->getResourcePath("workspaces"));
     path.remove(workspacepath);
-    path.remove(0,1);
+    if(path.at(0) == QDir::separator())
+        path.remove(0,1);
 
     qDebug() << "path : " << path << "workspacepath : " << workspacepath;
 
