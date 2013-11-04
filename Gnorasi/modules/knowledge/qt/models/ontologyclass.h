@@ -97,9 +97,6 @@ public:
     void setopername(const QString &n) { m_opername = n; }
 
 
-    void parseChildren(const QDomDocument& );
-
-
 signals:
     void idChanged();
     void nameChanged();
@@ -115,10 +112,6 @@ private:
     QList<OntologyClass*> childItems;
 
     QHash<int,FuzzyRule*> m_fuzzyRuleHash;
-
-    bool checkSiblings(const QString &);
-
-    void parseSiblings(const QDomDocument &doc);
 
     QString m_name;
     QString m_color;
