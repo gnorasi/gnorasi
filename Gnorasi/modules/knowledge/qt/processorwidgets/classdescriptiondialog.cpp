@@ -156,14 +156,8 @@ void ClassDescriptionDialog::setupData(){
 
         QString name = pRule->name();
 
-        FuzzyFunction *pFuzzyFunction = pRule->funzzyFunction();
-        QString icon;
-        if(pFuzzyFunction)
-            icon = pFuzzyFunction->icon();
-
         QStandardItem *pItem = new QStandardItem();
         pItem->setData(name,Qt::DisplayRole);
-        pItem->setData(QIcon(icon),Qt::DecorationRole);
         pItem->setData(pRule->id());
 
         m_pOperatorItem->setChild(m_pOperatorItem->rowCount(),pItem);
@@ -376,14 +370,8 @@ void ClassDescriptionDialog::onFuzzyRuleAdded(int id){
 
     pClass->addFuzzyRule(levelId(),pRule);
 
-    FuzzyFunction *pFuzzyFunction = pRule->funzzyFunction();
-    QString icon;
-    if(pFuzzyFunction)
-        icon = pFuzzyFunction->icon();
-
     QStandardItem *pItem = new QStandardItem();
     pItem->setData(pRule->name(),Qt::DisplayRole);
-    pItem->setData(QIcon(icon),Qt::DecorationRole);
     pItem->setData(pRule->id());
 
     m_pOperatorItem->setChild(m_pOperatorItem->rowCount(),pItem);
