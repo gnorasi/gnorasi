@@ -34,6 +34,9 @@ FuzzyFunctionTrapezoidal::FuzzyFunctionTrapezoidal(QObject *parent) :
 {
     for (register int i = 0; i < parametersCount() ; i++)
         m_parameterList[i] = -1;
+
+    QStringList iconlist = FuzzyFunction::availableIcons;
+    seticon(iconlist.at(3));
 }
 
 
