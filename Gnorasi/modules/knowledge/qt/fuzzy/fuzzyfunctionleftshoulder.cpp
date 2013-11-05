@@ -38,6 +38,8 @@ FuzzyFunctionLeftShoulder::FuzzyFunctionLeftShoulder(QObject *parent) :
     m_parameterList[0] = -1.0;
     m_parameterList[1] = -1.0;
 
+    QStringList iconlist = FuzzyFunction::availableIcons;
+    seticon(iconlist.at(0));
 }
 
 

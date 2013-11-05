@@ -35,6 +35,9 @@ FuzzyFunctionTriangular::FuzzyFunctionTriangular(QObject *parent) :
     m_parameterList[0] = -1;
     m_parameterList[1] = -1;
     m_parameterList[2] = -1;
+
+    QStringList iconlist = FuzzyFunction::availableIcons;
+    seticon(iconlist.at(2));
 }
 
 

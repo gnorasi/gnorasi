@@ -91,21 +91,21 @@ void FuzzyRuleView::contextMenuEvent(QContextMenuEvent *event){
 
     QStandardItemModel *omodel = qobject_cast<QStandardItemModel*>(model());
     if(!omodel){
-        QAbstractItemView::contextMenuEvent(event);
+        QTreeView::contextMenuEvent(event);
         return;
     }
 
     QModelIndex index = indexAt(event->pos());
     if(!index.isValid())
     {
-        QAbstractItemView::contextMenuEvent(event);
+        QTreeView::contextMenuEvent(event);
         return;
     }
 
     QStandardItem *pItem = omodel->itemFromIndex(index);
     int iid = pItem->data().toInt();
     if( iid == -101 || iid == -102){
-        QAbstractItemView::contextMenuEvent(event);
+        QTreeView::contextMenuEvent(event);
         return;
     }
 
@@ -121,7 +121,7 @@ void FuzzyRuleView::contextMenuEvent(QContextMenuEvent *event){
 
     menu->exec(QCursor::pos());
 
-    QAbstractItemView::contextMenuEvent(event);
+    QTreeView::contextMenuEvent(event);
 }
 
 //
@@ -130,7 +130,7 @@ void FuzzyRuleView::mousePressEvent(QMouseEvent *event){
     if (!index.isValid())
         selectionModel()->clearSelection();
 
-    QAbstractItemView::mousePressEvent(event);
+    QTreeView::mousePressEvent(event);
 
 }
 
@@ -139,7 +139,7 @@ void FuzzyRuleView::mouseDoubleClickEvent(QMouseEvent *event){
     QModelIndex index = indexAt(event->pos());
     if(!index.isValid())
     {
-        QAbstractItemView::mouseDoubleClickEvent(event);
+        QTreeView::mouseDoubleClickEvent(event);
         return;
     }
 
@@ -147,14 +147,14 @@ void FuzzyRuleView::mouseDoubleClickEvent(QMouseEvent *event){
     if(mdl){
         QStandardItem *item = mdl->itemFromIndex(index);
         if(!item){
-            QAbstractItemView::mouseDoubleClickEvent(event);
+            QTreeView::mouseDoubleClickEvent(event);
             return;
         }
 
         int iid = item->data().toInt();
 
         if( iid == -101 || iid == -102){
-            QAbstractItemView::mouseDoubleClickEvent(event);
+            QTreeView::mouseDoubleClickEvent(event);
             return;
         }
 
@@ -175,5 +175,5 @@ void FuzzyRuleView::mouseDoubleClickEvent(QMouseEvent *event){
         }
     }
 
-    QAbstractItemView::mouseDoubleClickEvent(event);
+    QTreeView::mouseDoubleClickEvent(event);
 }

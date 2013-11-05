@@ -17,6 +17,10 @@
 #include "../fuzzy/fuzzyoperator.h"
 #include "../fuzzy/fuzzyoperatormanager.h"
 #include "../fuzzy/fuzzyrulemanager.h"
+#include "../fuzzy/fuzzyfunction.h"
+#include "../fuzzy/fuzzyfunctionmanager.h"
+
+#include <QDebug>
 
 ClassDescriptionDialog::ClassDescriptionDialog(QWidget *parent) :
     QDialog(parent)
@@ -53,11 +57,11 @@ void ClassDescriptionDialog::initializeFuzzyRuleTreeView(){
 
     m_pFuzzyRuleModel->setItem(0,pContainedItem);
 
-    QStandardItem *pInheritedItem = new QStandardItem();
-    pInheritedItem->setData(tr("Inherited"),Qt::DisplayRole);
-    pInheritedItem->setData(-102);
+    m_pInheritedItem = new QStandardItem();
+    m_pInheritedItem->setData(tr("Inherited"),Qt::DisplayRole);
+    m_pInheritedItem->setData(-102);
 
-    m_pFuzzyRuleModel->setItem(1,pInheritedItem);
+    m_pFuzzyRuleModel->setItem(1,m_pInheritedItem);
 
     QList<FuzzyOperator*> list = FUZZYOPERATORMANAGER->fuzzyOperatorList();
     QList<FuzzyOperator*>::const_iterator i;
@@ -78,6 +82,48 @@ void ClassDescriptionDialog::initializeFuzzyRuleTreeView(){
     }
 
 }
+
+
+void ClassDescriptionDialog::processParentClass(OntologyClass *pClass){
+    QFont font;
+    font.setBold(true);
+
+    QString opername = pClass->opername();
+    QStandardItem *pOperatorItem = new QStandardItem();
+    pOperatorItem->setData(-103);
+    pOperatorItem->setData(QString("and (%1) (%2)").arg(opername).arg(pClass->name()),Qt::DisplayRole);
+    pOperatorItem->setData(font, Qt::FontRole);
+    m_pInheritedItem->setChild(m_pInheritedItem->rowCount(),pOperatorItem);
+
+    QList<FuzzyRule*> fList = pClass->fuzzyRuleList(pClass->level());
+
+    QList<FuzzyRule*>::const_iterator i;
+    for(i = fList.constBegin(); i != fList.constEnd(); i++){
+
+        FuzzyRule *pRule = *i;
+
+        QString name = pRule->name();
+
+        FuzzyFunction *pFunction = pRule->funzzyFunction();
+        QString icon;
+        if(pFunction)
+            icon = pFunction->icon();
+
+        qDebug() << "icon : " << icon << " , function name : " << pFunction->name();
+
+        QStandardItem *pItem = new QStandardItem();
+        pItem->setData(name,Qt::DisplayRole);
+        pItem->setIcon(QIcon(icon));
+        pItem->setData(pRule->id());
+
+        pOperatorItem->setChild(pOperatorItem->rowCount(),pItem);
+    }
+
+    OntologyClass *pParentClass = pClass->parent();
+    if(pParentClass)
+        processParentClass(pParentClass);
+}
+
 
 void ClassDescriptionDialog::setupData(){
 
@@ -112,8 +158,14 @@ void ClassDescriptionDialog::setupData(){
 
         QString name = pRule->name();
 
+        FuzzyFunction *pFuzzyFunction = pRule->funzzyFunction();
+        QString icon;
+        if(pFuzzyFunction)
+            icon = pFuzzyFunction->icon();
+
         QStandardItem *pItem = new QStandardItem();
         pItem->setData(name,Qt::DisplayRole);
+        pItem->setData(QIcon(icon),Qt::DecorationRole);
         pItem->setData(pRule->id());
 
         m_pOperatorItem->setChild(m_pOperatorItem->rowCount(),pItem);
@@ -121,7 +173,13 @@ void ClassDescriptionDialog::setupData(){
 
     m_pFuzzyRuleView->expand(m_pFuzzyRuleModel->indexFromItem(m_pOperatorItem));
 
+    OntologyClass *pParentClass = pClass->parent();
+    if(pParentClass)
+        processParentClass(pParentClass);
+
+    m_pFuzzyRuleView->expandAll();
 }
+
 
 void ClassDescriptionDialog::initialize(){
     QGroupBox *pQGroupBox       = new QGroupBox(tr("Name"),this);
@@ -320,8 +378,14 @@ void ClassDescriptionDialog::onFuzzyRuleAdded(int id){
 
     pClass->addFuzzyRule(levelId(),pRule);
 
+    FuzzyFunction *pFuzzyFunction = pRule->funzzyFunction();
+    QString icon;
+    if(pFuzzyFunction)
+        icon = pFuzzyFunction->icon();
+
     QStandardItem *pItem = new QStandardItem();
     pItem->setData(pRule->name(),Qt::DisplayRole);
+    pItem->setData(icon,Qt::DecorationRole);
     pItem->setData(pRule->id());
 
     m_pOperatorItem->setChild(m_pOperatorItem->rowCount(),pItem);
