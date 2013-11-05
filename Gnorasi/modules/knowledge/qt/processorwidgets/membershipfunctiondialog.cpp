@@ -100,8 +100,6 @@ void MembershipFunctionDialog::createbuttons(){
         QString name = *i;
         QString icon = iconList.value(counter);
 
-        qDebug() << "icon : " << icon;
-
         m_helperHash[counter] = name;
 
         QPushButton *button = new QPushButton(QIcon(icon),name,this);
