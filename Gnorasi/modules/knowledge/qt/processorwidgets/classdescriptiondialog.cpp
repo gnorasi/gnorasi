@@ -91,7 +91,7 @@ void ClassDescriptionDialog::processParentClass(OntologyClass *pClass){
     QString opername = pClass->opername();
     QStandardItem *pOperatorItem = new QStandardItem();
     pOperatorItem->setData(-103);
-    pOperatorItem->setData(QString("and (%1) (%2)").arg(opername).arg(pClass->name()),Qt::DisplayRole);
+    pOperatorItem->setData(QString("%1 (%2)").arg(opername).arg(pClass->name()),Qt::DisplayRole);
     pOperatorItem->setData(font, Qt::FontRole);
     m_pInheritedItem->setChild(m_pInheritedItem->rowCount(),pOperatorItem);
 
