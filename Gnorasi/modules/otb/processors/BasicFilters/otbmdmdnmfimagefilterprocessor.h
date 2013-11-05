@@ -54,11 +54,11 @@ public:
 
     typedef otb::VectorImage<double, 2> VectorImageType;
 
-    typedef otb::VectorImageToMatrixImageFilter<VectorImageType> VectorImageToMatrixImageFilterType;
-    typedef otb::MDMDNMFImageFilter<VectorImageType, VectorImageType> FilterType;
+    typedef otb::MDMDNMFImageFilter<VectorImageType, VectorImageType> MDMDNMFUnmixingFilterType;
+    MDMDNMFUnmixingFilterType::Pointer filter;
 
+    typedef otb::VectorImageToMatrixImageFilter<VectorImageType> VectorImageToMatrixImageFilterType;
     VectorImageToMatrixImageFilterType::Pointer endMember2Matrix;
-    FilterType::Pointer filter;
 
 protected:
 
@@ -75,6 +75,7 @@ private:
 
     OTBVectorImagePort inPort_;
     OTBVectorImagePort outPort_;
+    OTBVectorImagePort endmembersInPort_;
 
     static const std::string loggerCat_; ///< category used in logging
 };
