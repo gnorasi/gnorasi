@@ -104,14 +104,8 @@ void ClassDescriptionDialog::processParentClass(OntologyClass *pClass){
 
         QString name = pRule->name();
 
-        FuzzyFunction *pFunction = pRule->funzzyFunction();
-        QString icon;
-        if(pFunction)
-            icon = pFunction->icon();
-
         QStandardItem *pItem = new QStandardItem();
         pItem->setData(name,Qt::DisplayRole);
-        pItem->setIcon(QIcon(icon));
         pItem->setData(pRule->id());
 
         pOperatorItem->setChild(pOperatorItem->rowCount(),pItem);
