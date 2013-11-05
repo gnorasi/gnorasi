@@ -109,6 +109,11 @@ void FuzzyRuleView::contextMenuEvent(QContextMenuEvent *event){
         return;
     }
 
+    if(inheritsFromInheritedItem(pItem)){
+        QTreeView::contextMenuEvent(event);
+        return;
+    }
+
     QMenu *menu = new QMenu(this);
 
     int helperId = m_pOperatorItem->data().toInt();
@@ -135,6 +140,20 @@ void FuzzyRuleView::mousePressEvent(QMouseEvent *event){
 }
 
 
+bool FuzzyRuleView::inheritsFromInheritedItem(QStandardItem *item){
+
+    QStandardItem *pParentItem = item->parent();
+    if(pParentItem ){
+
+        if(!pParentItem->data(Qt::DisplayRole).toString().compare(QLatin1String("Inherited")))
+            return true;
+
+        return inheritsFromInheritedItem(pParentItem);
+    }
+
+    return false;
+}
+
 void FuzzyRuleView::mouseDoubleClickEvent(QMouseEvent *event){
     QModelIndex index = indexAt(event->pos());
     if(!index.isValid())
@@ -147,6 +166,12 @@ void FuzzyRuleView::mouseDoubleClickEvent(QMouseEvent *event){
     if(mdl){
         QStandardItem *item = mdl->itemFromIndex(index);
         if(!item){
+            QTreeView::mouseDoubleClickEvent(event);
+            return;
+        }
+
+        if(inheritsFromInheritedItem(item)){
+
             QTreeView::mouseDoubleClickEvent(event);
             return;
         }
