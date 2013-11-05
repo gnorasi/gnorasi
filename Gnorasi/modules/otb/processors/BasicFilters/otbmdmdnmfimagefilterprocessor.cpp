@@ -34,13 +34,15 @@ const std::string OTBMDMDNMFImageFilterProcessor::loggerCat_("voreen.OTBMDMDNMFI
 OTBMDMDNMFImageFilterProcessor::OTBMDMDNMFImageFilterProcessor()
     :OTBImageFilterProcessor(),
       inPort_(Port::INPORT, "IN MultiBand Image", 0),
+      endmembersInPort_(Port::INPORT, "Endmembers Multispectral Image", 0),
       outPort_(Port::OUTPORT, "OUT MultiBand Image", 0)
 {
       addProperty(enableSwitch_);
       addPort(inPort_);
+      addPort(endmembersInPort_);
       addPort(outPort_);
 
-      filter = FilterType::New();
+      filter = MDMDNMFUnmixingFilterType::New();
       endMember2Matrix = VectorImageToMatrixImageFilterType::New();
 }
 
@@ -74,28 +76,15 @@ void OTBMDMDNMFImageFilterProcessor::process() {
     try
     {
 
-        endMember2Matrix->SetInput(inPort_.getData());
+        endMember2Matrix->SetInput(endmembersInPort_.getData());
         endMember2Matrix->Update();
-//        LINFO("Endmembers matrix: " << endMember2Matrix->GetMatrix());
+
+        LINFO("Endmembers matrix: ");
+        LINFO(endMember2Matrix->GetMatrix());
 
         filter->SetInput(inPort_.getData());
         filter->SetEndmembersMatrix(endMember2Matrix->GetMatrix());
-
-//        filter->SetAbortGenerateData(false);
-//        filter->SetCritStopValue(10.0);
-//        filter->SetDelt(1.0);
-//        filter->SetLambdD(10.0);
-//        filter->SetLambdS(1.0);
-//        filter->SetMaxIter(3);
-//        filter->SetNumberOfThreads(1);
-//        filter->SetReferenceCount(2);
-//        filter->SetReleaseDataBeforeUpdateFlag(false);
-//        filter->SetReleaseDataFlag(false);
-
-        /// FIXME: Update() on MDMDNMF crashes GNORASIS on module connection
-        /// bypassing Update() gets distorted output
         filter->Update();
-        filter->UpdateLargestPossibleRegion();
         outPort_.setData(filter->GetOutput());
 
         LINFO("MDMDNMF Image Filter Connected!");
