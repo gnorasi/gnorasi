@@ -369,5 +369,5 @@ void ClassDescriptionDialog::onFuzzyRuleAdded(int id){
     pItem->setData(pRule->id());
 
     m_pOperatorItem->setChild(m_pOperatorItem->rowCount(),pItem);
-    m_pFuzzyRuleView->expand(m_pFuzzyRuleModel->indexFromItem(m_pOperatorItem));
+    m_pFuzzyRuleView->expandAll();
 }

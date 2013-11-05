@@ -72,6 +72,9 @@ void OntologyClassView::mousePressEvent(QMouseEvent *event){
 
 
 void OntologyClassView::mouseDoubleClickEvent(QMouseEvent *event){
+
+//    QTreeView::mouseDoubleClickEvent(event);
+
     QModelIndex index = indexAt(event->pos());
     if(index.isValid()){
         QStandardItemModel *omodel = qobject_cast<QStandardItemModel*>(model());
@@ -91,7 +94,7 @@ void OntologyClassView::mouseDoubleClickEvent(QMouseEvent *event){
             }
 
             if(pClassDescriptionDialog->exec() == QDialog::Rejected){
-                QAbstractItemView::mouseDoubleClickEvent(event);
+//                QTreeView::mouseDoubleClickEvent(event);
                 return;
             }
 
@@ -102,8 +105,6 @@ void OntologyClassView::mouseDoubleClickEvent(QMouseEvent *event){
 
         }
     }
-
-    QTreeView::mouseDoubleClickEvent(event);
 }
 
 void OntologyClassView::onAddChildClass(){

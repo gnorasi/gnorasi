@@ -166,13 +166,13 @@ void FuzzyRuleView::mouseDoubleClickEvent(QMouseEvent *event){
     if(mdl){
         QStandardItem *item = mdl->itemFromIndex(index);
         if(!item){
-            QTreeView::mouseDoubleClickEvent(event);
+//            QTreeView::mouseDoubleClickEvent(event);
             return;
         }
 
         if(inheritsFromInheritedItem(item)){
 
-            QTreeView::mouseDoubleClickEvent(event);
+//            QTreeView::mouseDoubleClickEvent(event);
             return;
         }
 
@@ -200,5 +200,5 @@ void FuzzyRuleView::mouseDoubleClickEvent(QMouseEvent *event){
         }
     }
 
-    QTreeView::mouseDoubleClickEvent(event);
+//    QTreeView::mouseDoubleClickEvent(event);
 }
