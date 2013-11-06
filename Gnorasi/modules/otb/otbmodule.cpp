@@ -33,6 +33,7 @@
 #include "processors/Applications/otblocalstatisticextractionapplication.h"
 #include "processors/Applications/otbsfstextureextractionapplication.h"
 #include "processors/Applications/otbhypespectralunmixingapplication.h"
+#include "processors/Applications/otbcomputeimagesstatisticsapplication.h"
 #include "processors/ImageIO/otbimagereaderprocessor.h"
 #include "processors/ImageIO/otblabelimagereaderprocessor.h"
 #include "processors/ImageIO/otbvectorimagereaderprocessor.h"
@@ -263,6 +264,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBLocalStatisticExtractionApplication());
     registerProcessor(new OTBSFSTextureExtractionApplication());
     registerProcessor(new OTBHypespectralUnmixingApplication());
+    registerProcessor(new OTBComputeImagesStatisticsApplication());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
