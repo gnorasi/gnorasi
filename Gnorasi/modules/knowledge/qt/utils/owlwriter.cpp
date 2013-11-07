@@ -358,7 +358,7 @@ void OwlWriter::appendRulesData(){
                 continue;
 
             attributeName = attributeName.remove(":");
-            attributeName = QString("Fuzzy%1").arg(attributeName);
+            attributeName = QString("Fuzzy%1%2").arg(attributeName).arg(pRule->id());
             QDomElement element;
 
             if(pOA->otype()==1){
