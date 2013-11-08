@@ -31,6 +31,7 @@
 
 //#include "processors/Applications/otbopticalcalibrationapplication.h"
 //#include "processors/Applications/otbdimensionalityreductionapplication.h"
+//#include "processors/Applications/otbvertexcomponentanalysisapplication.h"
 #include "processors/ImageIO/otbimagereaderprocessor.h"
 #include "processors/ImageIO/otblabelimagereaderprocessor.h"
 #include "processors/ImageIO/otbvectorimagereaderprocessor.h"
@@ -244,6 +245,7 @@ OTBModule::OTBModule(const std::string& moduleName)
 //    registerProcessor(new OTBProspectModelProcessor());
 //    registerProcessor(new OTBOpticalCalibrationApplication());
 //    registerProcessor(new OTBDimensionalityReductionApplication());
+//    registerProcessor(new OTBVertexComponentAnalysisApplication());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
