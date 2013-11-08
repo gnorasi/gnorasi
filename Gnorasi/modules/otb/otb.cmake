@@ -240,6 +240,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/otbvectordataport.cpp
     ${MOD_DIR}/ports/otbsommapport.cpp
 #    ${MOD_DIR}/processors/Applications/otbopticalcalibrationapplication.cpp
+#    ${MOD_DIR}/processors/Applications/otbdimensionalityreductionapplication.cpp
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.cpp
@@ -344,6 +345,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/otbvectordataport.h
     ${MOD_DIR}/ports/otbsommapport.h
 #    ${MOD_DIR}/processors/Applications/otbopticalcalibrationapplication.h
+#    ${MOD_DIR}/processors/Applications/otbdimensionalityreductionapplication.h
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.h
