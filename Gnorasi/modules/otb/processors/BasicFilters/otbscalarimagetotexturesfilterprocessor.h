@@ -26,9 +26,10 @@
 #define OTBSCALARIMAGETOTEXTURESFILTERPROCESSOR_H
 
 #include "voreen/core/properties/intproperty.h"
-#include "voreen/core/properties/floatproperty.h"
 #include "otbimagefilterprocessor.h"
 #include "otbScalarImageToTexturesFilter.h"
+#include "voreen/core/properties/stringproperty.h"
+#include "voreen/core/properties/optionproperty.h"
 
 namespace voreen {
 
@@ -46,9 +47,12 @@ public:
     virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
 
     virtual std::string getProcessorInfo() const;
+//    typedef ImageType::RegionType ImageRegionType;
+//    typedef ImageRegionType::SizeType ImageSizeType;
 
-    typedef otb::ScalarImageToTexturesFilter<OTBImageFilterProcessor::ImageType,OTBImageFilterProcessor::ImageType> FilterType;
+    typedef otb::ScalarImageToTexturesFilter<ImageType,ImageType> FilterType;
 
+    typedef FilterType::SizeType SizeType;
     typedef FilterType::OffsetType OffsetType;
 
     FilterType::Pointer filter;
@@ -74,16 +78,13 @@ private:
     //CHECK whether to make this offset automatically.
     IntProperty offSetX_;
     IntProperty offSetY_;
-
-
+    //IntProperty numberOfBinsPerAxis_;
+    StringOptionProperty imageType_;///< Select output image type
 
     OTBImagePort inPort_;
     OTBImagePort outPort_;
 
-
     static const std::string loggerCat_; ///< category used in logging
-
-
 
 };
 

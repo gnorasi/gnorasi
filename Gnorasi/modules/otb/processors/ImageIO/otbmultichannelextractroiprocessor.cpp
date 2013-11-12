@@ -4,7 +4,7 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
+ * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.               *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -35,10 +35,16 @@ OTBMultiChannelExtractROIProcessor::OTBMultiChannelExtractROIProcessor()
     m_useSingleChannelProperty("useSingleChannel", "Use Single Channel"),
     m_singleChannelProperty("singleChannel", "Single Channel",2),
     m_useMultipleChannelProperty("multipleChannel", "Use Multiple Channels"),
-    m_channelFromProperty("channelFrom", "Channel From",0,0,1024),
-    m_channelEndProperty("channelEnd", "Channel End",2,0,1024)
+    m_channelFromProperty("channelFrom", "Channel From",0,0,10),
+    m_channelEndProperty("channelEnd", "Channel To",0,0,10),
+    useSpatialSubsetting_("useSpatialSubsetting_", "Use Spatial Subsetting:", false),
+    startX_("startX_", "Start Point X:",0,0,3000),
+    startY_("startY_", "Start Point Y:",0,0,3000),
+    sizeX_("sizeX_", "Set Extract Area Size X:",100,1,3000),
+    sizeY_("sizeY_", "Set Extract Area Size Y:",100,1,3000)
 
 {
+    addProperty(enableSwitch_);
     addPort(inPort_);
     addPort(outPort_);
 
@@ -47,16 +53,28 @@ OTBMultiChannelExtractROIProcessor::OTBMultiChannelExtractROIProcessor()
     addProperty(m_useMultipleChannelProperty);
     addProperty(m_channelFromProperty);
     addProperty(m_channelEndProperty);
+    addProperty(useSpatialSubsetting_);
+    addProperty(startX_);
+    addProperty(startY_);
+    addProperty(sizeX_);
+    addProperty(sizeY_);
 
     m_singleChannelProperty.setVisible(false);
     m_channelFromProperty.setVisible(false);
     m_channelEndProperty.setVisible(false);
+    startX_.setVisible(false);
+    startY_.setVisible(false);
+    sizeX_.setVisible(false);
+    sizeY_.setVisible(false);
 
     m_useSingleChannelProperty.onChange(CallMemberAction<OTBMultiChannelExtractROIProcessor>(this,
                                             &OTBMultiChannelExtractROIProcessor::updateUseSingleChannel));
     m_useMultipleChannelProperty.onChange(CallMemberAction<OTBMultiChannelExtractROIProcessor>(this,
                                             &OTBMultiChannelExtractROIProcessor::updateUseMultipleChannel));
+    useSpatialSubsetting_.onChange(CallMemberAction<OTBMultiChannelExtractROIProcessor>(this,
+                                            &OTBMultiChannelExtractROIProcessor::updateUseSpatialSubsetting));
 
+    multichannelextractor = MultiChannelExtractROIType::New();
 }
 
 void OTBMultiChannelExtractROIProcessor::updateUseSingleChannel(){
@@ -76,6 +94,13 @@ void OTBMultiChannelExtractROIProcessor::updateUseMultipleChannel(){
 
     if(m_useSingleChannelProperty.get())
         m_useSingleChannelProperty.set(!val);
+}
+
+void OTBMultiChannelExtractROIProcessor::updateUseSpatialSubsetting(){
+        startX_.setVisible(useSpatialSubsetting_.get());
+        startY_.setVisible(useSpatialSubsetting_.get());
+        sizeX_.setVisible(useSpatialSubsetting_.get());
+        sizeY_.setVisible(useSpatialSubsetting_.get());
 }
 
 void OTBMultiChannelExtractROIProcessor::update(){
@@ -107,28 +132,48 @@ std::string OTBMultiChannelExtractROIProcessor::getProcessorInfo() const {
 
 void OTBMultiChannelExtractROIProcessor::process() {
   
+    if (!enableSwitch_.get()) {
+        bypass(&inPort_, &outPort_);
+        LINFO("Multi Channel Extract ROI filter disabled!");
+        return;
+    }
+
     try
     {
-        InputImageType *img = inPort_.getData();
-        if(!img)
-            return;
+        multichannelextractor->SetInput(inPort_.getData());
 
-        MultiChannelExtractROIType::Pointer multichannelextractor = MultiChannelExtractROIType::New();
-
-        multichannelextractor->SetInput(img);
-
-        if(m_useSingleChannelProperty.get())
+        if(m_useSingleChannelProperty.get()) {
             multichannelextractor->SetChannel(m_singleChannelProperty.get());
+            LINFO("Single channel extraction enabled! [" << m_singleChannelProperty.get() << "]");
+        }
 
         if(m_useMultipleChannelProperty.get()){
             multichannelextractor->SetFirstChannel(m_channelFromProperty.get());
             multichannelextractor->SetLastChannel(m_channelEndProperty.get());
+            LINFO("Multi-channel extraction enabled! [" << m_channelFromProperty.get() <<
+                  ".." << m_channelEndProperty.get() << "]");
         }
 
-        multichannelextractor->Update();
+        //Spatial Subsetting functionality added
+        if(useSpatialSubsetting_.get()) {
+            multichannelextractor->SetStartX(startX_.get());
+            multichannelextractor->SetStartY(startY_.get());
+            multichannelextractor->SetSizeX(sizeX_.get());
+            multichannelextractor->SetSizeY(sizeY_.get());
+            LINFO("Spatial Subsetting enabled!");
+       }
 
+//        multichannelextractor->UpdateOutputInformation();
+//        multichannelextractor->UpdateLargestPossibleRegion();
+
+        multichannelextractor->Update();
         outPort_.setData(multichannelextractor->GetOutput());
 
+        if(useSpatialSubsetting_.get()) {
+            LINFO("Extraction region size: " << multichannelextractor->GetExtractionRegion().GetSize());
+            LINFO("Extraction region index: " << multichannelextractor->GetExtractionRegion().GetIndex());
+        }
+        LINFO("Multi Channel Extract ROI filter connected!");
     }
     catch (int e)
     {
@@ -136,6 +181,10 @@ void OTBMultiChannelExtractROIProcessor::process() {
 	return;
     }
     
+}
+void OTBMultiChannelExtractROIProcessor::bypass(OTBVectorImagePort *inport, OTBVectorImagePort *outport) {
+
+    outport->setData(inport->getData());
 }
 
 } // namespace

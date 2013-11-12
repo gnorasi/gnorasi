@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*                                                                              *
+ * Copyright (c) ALTEC SA - All rights reserved.                                *
+ * Copyright (c) ALTEC SA - All rights reserved.                                *
+ * Copyright (c) ALTEC SA - All rights reserved.                                *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -22,8 +24,8 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef VRN_OTBCONFUSIONMATRIXCALCULATORPROCESSOR_H
-#define VRN_OTBCONFUSIONMATRIXCALCULATORPROCESSOR_H
+#ifndef OTBSOMIMAGECLASSIFICATIONFILTERPROCESSOR_H
+#define OTBSOMIMAGECLASSIFICATIONFILTERPROCESSOR_H
 
 #include "voreen/core/properties/intproperty.h"
 #include "voreen/core/properties/floatproperty.h"
@@ -31,60 +33,45 @@
 #include "voreen/core/properties/buttonproperty.h"
 #include "../BasicFilters/otbimagefilterprocessor.h"
 #include "../../ports/otbvectorimageport.h"
-#include "../../ports/otbvectordataport.h"
-#include "otbVectorData.h"
-#include "otbListSampleGenerator.h"
-#include "otbConfusionMatrixCalculator.h"
+#include "../../ports/otbsommapport.h"
+#include "itkCastImageFilter.h"
+#include "otbSOMImageClassificationFilter.h"
+#include "otbSOMMap.h"
+
 
 namespace voreen {
-  
-class OTBConfusionMatrixCalculatorProcessor : public OTBImageFilterProcessor {
+
+class OTBSOMImageClassificationFilterProcessor : public OTBImageFilterProcessor {
 public:
-    OTBConfusionMatrixCalculatorProcessor();
-    virtual ~OTBConfusionMatrixCalculatorProcessor();
-    
+    OTBSOMImageClassificationFilterProcessor();
+    virtual ~OTBSOMImageClassificationFilterProcessor();
+
     virtual Processor* create() const;
-    
+
     virtual std::string getCategory() const { return "Classification"; }
-    virtual std::string getClassName() const { return "Confusion Matrix"; }
+    virtual std::string getClassName() const { return "SOM Image Classification"; }
     virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
-    
+
     virtual std::string getProcessorInfo() const;
 
     static const unsigned int                                           Dimension = 2;
-    typedef double                                                      PixelType;
-    typedef double LabeledPixelType;
-    typedef otb::VectorImage<PixelType,Dimension>                       VImageType;
+    typedef unsigned short                                              LabeledPixelType;
+    typedef otb::VectorImage<PixelType,Dimension>                       VectorImageType;
     typedef otb::Image<LabeledPixelType,Dimension>                      LabeledImageType;
-    typedef otb::VectorData<double, 2>                                  VectorDataType;
 
-    // SampleList manipulation
-    typedef otb::ListSampleGenerator<VImageType, VectorDataType>        ListSampleGeneratorType;
-    typedef ListSampleGeneratorType::ListLabelType                      LabelListSampleType;
+    typedef otb::SOMMap<VectorImageType::PixelType>                     SOMMapType;
+    typedef otb::SOMImageClassificationFilter<VectorImageType, LabeledImageType, SOMMapType> ClassificationFilterType;
+    ClassificationFilterType::Pointer filter;
 
-    typedef otb::ConfusionMatrixCalculator<LabelListSampleType,
-    LabelListSampleType>                                                ConfusionFilterType;
+    typedef itk::CastImageFilter<LabeledImageType, ImageType> LabelToPortCastingFilterType;
+    LabelToPortCastingFilterType::Pointer labelToPortCaster;
 
-    // Projection of a vectorData
-    typedef otb::VectorDataProjectionFilter<VectorDataType,
-        VectorDataType>                                                 VectorDataProjectionFilterType;
-
-    ConfusionFilterType::Pointer                                        confusioncalculator;
-        
-//****************************************************
-
-    /**
-    * Saves the image.
-    *
-    * @note The processor must have been initialized
-    *       before calling this function.
-    */
-   void saveToFile();
-
+//    typedef itk::CastImageFilter<VectorDoubleImageType, InputImageType> VectorCastingFilterType;
+//    VectorCastingFilterType::Pointer vectorCaster;
 
 protected:
     virtual void setDescriptions() {
-	setDescription("processor.");
+    setDescription("processor.");
     }
     void process();
 
@@ -93,26 +80,15 @@ protected:
 
     void update();
 
-
-
 private:
 
-    OTBVectorImagePort  inPort_;
-    OTBVectorImagePort  inPort1_;
-    OTBVectorDataPort   inPort2_;
-    OTBVectorDataPort   inPort3_;
-
-    ButtonProperty      m_updateProperty;
-
-
-    bool hasFile;
-    FileDialogProperty textFile_;  // Path of the saved text file.
-    ButtonProperty saveTextButton_;    // Saves the output to file.
-    ButtonProperty executeButton_; // Force manual execution of processing (since no output module is connected).
+    OTBVectorImagePort inPort_;
+    OTBSOMMapPort SOMMapPort_;
+    OTBImagePort outPort_;
 
     static const std::string loggerCat_; ///< category used in logging
 };
 
 } // namespace
 
-#endif // VRN_OTBCONFUSIONMATRIXCALCULATORPROCESSOR_H
+#endif // OTBSOMIMAGECLASSIFICATIONFILTERPROCESSOR_H

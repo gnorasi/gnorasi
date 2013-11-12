@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.               *
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.			*
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -22,64 +24,60 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef VRN_OTBMULTICHANNELEXTRACTROIPROCESSOR_H
-#define VRN_OTBMULTICHANNELEXTRACTROIPROCESSOR_H
+#ifndef OTBSFSTEXTUREEXTRACTIONAPPLICATION_H
+#define OTBSFSTEXTUREEXTRACTIONAPPLICATION_H
 
+#include "otbVectorImage.h"
+#include "modules/otb/ports/otbvectorimageport.h"
 #include "voreen/core/properties/intproperty.h"
 #include "voreen/core/properties/floatproperty.h"
-#include "voreen/core/properties/boolproperty.h"
-#include "voreen/core/properties/buttonproperty.h"
+
 #include "../BasicFilters/otbimagefilterprocessor.h"
-#include "../../ports/otbvectorimageport.h"
-#include "otbMultiChannelExtractROI.h"
-#include "otbExtractROI.h"
-#include "itkVectorCastImageFilter.h"
-#include "otbVectorRescaleIntensityImageFilter.h"
+#include "otbSFSTexturesImageFilter.h"
+#include "otbMultiToMonoChannelExtractROI.h"
+#include "otbImageList.h"
+#include "otbImageListToVectorImageFilter.h"
+#include "itkTimeProbe.h"
 
 namespace voreen {
-  
-class OTBMultiChannelExtractROIProcessor : public OTBImageFilterProcessor {
-public:
-    OTBMultiChannelExtractROIProcessor();
-    virtual ~OTBMultiChannelExtractROIProcessor();
-    
-    virtual Processor* create() const;
-    
-    virtual std::string getCategory() const { return "Image IO"; }
 
-    virtual std::string getClassName() const { return "Multi Channel Extract ROI"; }
-    virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
-    
+class OTBSFSTextureExtractionApplication : public OTBImageFilterProcessor
+{
+public:
+    OTBSFSTextureExtractionApplication();
+
+    virtual ~OTBSFSTextureExtractionApplication();
+
+    virtual Processor* create() const;
+
+    virtual std::string getCategory() const { return "Applications"; }
+    virtual std::string getClassName() const { return "SFS Texture Extraction Application"; }
+    virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL;}//STABLE, TESTING, EXPERIMENTAL
+
     virtual std::string getProcessorInfo() const;
 
-    // Define the dimension of the images
-    static const unsigned int Dimension = 2;
-        
-    typedef double                                          InputPixelType;
-    typedef double                                          OutputPixelType;
-    typedef otb::VectorImage<InputPixelType, Dimension>     InputImageType;
-    typedef otb::VectorImage<OutputPixelType, Dimension>    OutputImageType;
+    typedef otb::VectorImage<double, 2> VectorImageType;
 
-    typedef otb::MultiChannelExtractROI<InputPixelType,
-        InputPixelType>                                     MultiChannelExtractROIType;
-    MultiChannelExtractROIType::Pointer multichannelextractor;
+    typedef otb::MultiToMonoChannelExtractROI<VectorImageType::InternalPixelType,VectorImageType::InternalPixelType> ExtractorFilterType;
+    ExtractorFilterType::Pointer extractor;
 
+    typedef otb::SFSTexturesImageFilter<ImageType, ImageType> SFSTexturesFilterType;
+    SFSTexturesFilterType::Pointer TexFilter;
+
+    typedef otb::ImageList<ImageType> ImageListType;
+    ImageListType::Pointer ImageListFilter;
+
+    typedef otb::ImageListToVectorImageFilter<ImageListType, VectorImageType> ImageListToVectorImageFilterType;
+    ImageListToVectorImageFilterType::Pointer Concatener;
 
 protected:
+
     virtual void setDescriptions() {
-	setDescription("processor.");
+        setDescription("Computes Structural Feature Set textures on every pixel of the input image selected channel");
     }
     void process();
-
     virtual void initialize() throw (tgt::Exception);
     virtual void deinitialize() throw (tgt::Exception);
-
-    void update();
-
-    void updateUseSingleChannel();
-    void updateUseMultipleChannel();
-
-    void updateUseSpatialSubsetting();
 
     virtual void bypass(OTBVectorImagePort *inport, OTBVectorImagePort *outport); ///< Passes the image from inport to outport without changes.
 
@@ -88,21 +86,16 @@ private:
     OTBVectorImagePort inPort_;
     OTBVectorImagePort outPort_;
 
-    IntProperty         m_singleChannelProperty;
-    IntProperty         m_channelFromProperty;
-    IntProperty         m_channelEndProperty;
-    BoolProperty        m_useSingleChannelProperty;
-    BoolProperty        m_useMultipleChannelProperty;
-
-    IntProperty         startX_;
-    IntProperty         startY_;
-    IntProperty         sizeX_;
-    IntProperty         sizeY_;
-    BoolProperty        useSpatialSubsetting_;
+    IntProperty channel_;
+    FloatProperty spethre_;
+    IntProperty spathre_;
+    IntProperty nbdir_;
+    FloatProperty alpha_;
+    IntProperty ratioMaxCons_;
 
     static const std::string loggerCat_; ///< category used in logging
 };
 
 } // namespace
 
-#endif // VRN_OTBMULTICHANNELEXTRACTROIPROCESSOR_H
+#endif // OTBSFSTEXTUREEXTRACTIONAPPLICATION_H

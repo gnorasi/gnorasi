@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.               *
+ * Copyright (c) ALTEC SA - All rights reserved.                                *
+ * Copyright (c) ALTEC SA - All rights reserved.                                *
+ * Copyright (c) ALTEC SA - All rights reserved.                                *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -22,87 +24,83 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef VRN_OTBMULTICHANNELEXTRACTROIPROCESSOR_H
-#define VRN_OTBMULTICHANNELEXTRACTROIPROCESSOR_H
+#ifndef OTBMRFENERGYGAUSSIANCLASSIFICATIONFILTERPROCESSOR_H
+#define OTBMRFENERGYGAUSSIANCLASSIFICATIONFILTERPROCESSOR_H
 
 #include "voreen/core/properties/intproperty.h"
 #include "voreen/core/properties/floatproperty.h"
 #include "voreen/core/properties/boolproperty.h"
-#include "voreen/core/properties/buttonproperty.h"
 #include "../BasicFilters/otbimagefilterprocessor.h"
-#include "../../ports/otbvectorimageport.h"
-#include "otbMultiChannelExtractROI.h"
-#include "otbExtractROI.h"
-#include "itkVectorCastImageFilter.h"
-#include "otbVectorRescaleIntensityImageFilter.h"
+#include "itkRescaleIntensityImageFilter.h"
+#include "itkCastImageFilter.h"
+#include "otbMarkovRandomFieldFilter.h"
+#include "otbMRFEnergyPotts.h"
+#include "otbMRFEnergyGaussianClassification.h"
+#include "otbMRFOptimizerMetropolis.h"
+#include "otbMRFSamplerRandom.h"
 
 namespace voreen {
-  
-class OTBMultiChannelExtractROIProcessor : public OTBImageFilterProcessor {
-public:
-    OTBMultiChannelExtractROIProcessor();
-    virtual ~OTBMultiChannelExtractROIProcessor();
-    
-    virtual Processor* create() const;
-    
-    virtual std::string getCategory() const { return "Image IO"; }
 
-    virtual std::string getClassName() const { return "Multi Channel Extract ROI"; }
+class OTBMRFEnergyGaussianClassificationFilterProcessor : public OTBImageFilterProcessor {
+public:
+    OTBMRFEnergyGaussianClassificationFilterProcessor();
+    virtual ~OTBMRFEnergyGaussianClassificationFilterProcessor();
+
+    virtual Processor* create() const;
+
+    virtual std::string getCategory() const { return "Classification"; }
+    virtual std::string getClassName() const { return "Markov Classification Filter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
-    
+
     virtual std::string getProcessorInfo() const;
 
-    // Define the dimension of the images
-    static const unsigned int Dimension = 2;
-        
-    typedef double                                          InputPixelType;
-    typedef double                                          OutputPixelType;
-    typedef otb::VectorImage<InputPixelType, Dimension>     InputImageType;
-    typedef otb::VectorImage<OutputPixelType, Dimension>    OutputImageType;
+    static const unsigned int                       Dimension = 2;
+    typedef unsigned char                           LabelledPixelType;
+    typedef otb::Image<LabelledPixelType,Dimension> LabelledImageType;
 
-    typedef otb::MultiChannelExtractROI<InputPixelType,
-        InputPixelType>                                     MultiChannelExtractROIType;
-    MultiChannelExtractROIType::Pointer multichannelextractor;
+    typedef otb::MarkovRandomFieldFilter<ImageType, LabelledImageType> MarkovRandomFieldFilterType;
+    MarkovRandomFieldFilterType::Pointer markovFilter;
 
+    typedef otb::MRFSamplerRandom<ImageType, LabelledImageType> SamplerType;
+    SamplerType::Pointer sampler;
+
+    typedef otb::MRFOptimizerMetropolis OptimizerType;
+    OptimizerType::Pointer optimizer;
+
+    typedef otb::MRFEnergyPotts<LabelledImageType, LabelledImageType> EnergyRegularizationType;
+    EnergyRegularizationType::Pointer energyRegularization;
+
+    typedef otb::MRFEnergyGaussianClassification<ImageType, LabelledImageType> EnergyFidelityType;
+    EnergyFidelityType::Pointer energyFidelity;
+
+    typedef itk::RescaleIntensityImageFilter<LabelledImageType, LabelledImageType> RescalerType;
+    RescalerType::Pointer rescaler;
+
+    typedef itk::CastImageFilter<LabelledImageType, ImageType> LabelToPortCastingFilterType;
+    LabelToPortCastingFilterType::Pointer labelToPortCaster;
 
 protected:
     virtual void setDescriptions() {
-	setDescription("processor.");
+    setDescription("processor.");
     }
     void process();
 
     virtual void initialize() throw (tgt::Exception);
     virtual void deinitialize() throw (tgt::Exception);
 
-    void update();
-
-    void updateUseSingleChannel();
-    void updateUseMultipleChannel();
-
-    void updateUseSpatialSubsetting();
-
-    virtual void bypass(OTBVectorImagePort *inport, OTBVectorImagePort *outport); ///< Passes the image from inport to outport without changes.
-
 private:
 
-    OTBVectorImagePort inPort_;
-    OTBVectorImagePort outPort_;
+    OTBImagePort inPort_;
+    OTBImagePort outPort_;
 
-    IntProperty         m_singleChannelProperty;
-    IntProperty         m_channelFromProperty;
-    IntProperty         m_channelEndProperty;
-    BoolProperty        m_useSingleChannelProperty;
-    BoolProperty        m_useMultipleChannelProperty;
-
-    IntProperty         startX_;
-    IntProperty         startY_;
-    IntProperty         sizeX_;
-    IntProperty         sizeY_;
-    BoolProperty        useSpatialSubsetting_;
+    FloatProperty lambda_;
+    FloatProperty optimizerTemperature_;
+    IntProperty numberOfIterations_;
+    BoolProperty useRandomValue_;
 
     static const std::string loggerCat_; ///< category used in logging
 };
 
 } // namespace
 
-#endif // VRN_OTBMULTICHANNELEXTRACTROIPROCESSOR_H
+#endif // OTBMRFENERGYGAUSSIANCLASSIFICATIONFILTERPROCESSOR_H
