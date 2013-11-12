@@ -5,9 +5,14 @@
 #include <QtGui/QLabel>
 
 #include "../models/ontologyclassitem.h"
+#include "../models/ontologyclass.h"
+#include "../utils/ontologyclassificationmanager.h"
 //#include "../models/ontologyclassmodel.h"
 
 #include "../processorwidgets/ontologyclassview.h"
+
+#include <QDebug>
+
 
 using namespace voreen;
 
@@ -61,6 +66,49 @@ void ClassHierarchyWidget::initialize(){
     connect(addSubClassButton,SIGNAL(clicked()),m_pOntologyClassView,SLOT(onAddChildClass()));
     connect(addSiblingClassButton,SIGNAL(clicked()),m_pOntologyClassView,SLOT(onAddSiblingClass()));
     connect(deleteClassButton,SIGNAL(clicked()),m_pOntologyClassView,SLOT(onRemoveCurrentClass()));
+}
+
+
+void ClassHierarchyWidget::setupModel(){
+
+    m_pOntologyClassModel->removeRows(0,m_pOntologyClassModel->rowCount());
+
+    QList<OntologyClass*> list = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassList();
+    QList<OntologyClass*>::const_iterator i;
+    for(i = list.constBegin(); i  != list.constEnd(); i++){
+
+        OntologyClass *pClass  = *i;
+
+        if(!pClass->parent()){
+
+            qDebug() << "processing class : " << pClass->id() << " with no parent class : " ;
+
+            processOntology(pClass);
+        }
+    }
+}
+
+void ClassHierarchyWidget::processOntology(OntologyClass *pClass, QStandardItem *pParentItem ){
+
+    QStandardItem *pItem = new QStandardItem();
+    pItem->setData(pClass->name(),Qt::DisplayRole);
+    pItem->setData(pClass->id());
+
+    if(pParentItem){
+
+        pParentItem->setChild(pParentItem->rowCount(),pItem);
+    }
+    else{
+        m_pOntologyClassModel->setItem(m_pOntologyClassModel->rowCount(),pItem);
+    }
+
+    QList<OntologyClass*> childlist = pClass->getChildItems();
+    QList<OntologyClass*>::const_iterator i;
+    for(i = childlist.constBegin(); i != childlist.constEnd(); i++){
+
+        OntologyClass *pChildClass = *i;
+        processOntology(pChildClass,pItem);
+    }
 }
 
 void ClassHierarchyWidget::onModelDataChanged(QModelIndex index, QModelIndex index_){

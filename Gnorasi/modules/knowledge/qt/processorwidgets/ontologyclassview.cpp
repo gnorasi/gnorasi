@@ -42,7 +42,7 @@ void OntologyClassView::contextMenuEvent ( QContextMenuEvent * e )
 
     if(!OBJECTLEVELMANAGER->count())
     {
-        QAbstractItemView::contextMenuEvent(e);
+        QTreeView::contextMenuEvent(e);
         return;
     }
 
@@ -58,7 +58,7 @@ void OntologyClassView::contextMenuEvent ( QContextMenuEvent * e )
 
     menu->exec(QCursor::pos());
 
-    QAbstractItemView::contextMenuEvent(e);
+    QTreeView::contextMenuEvent(e);
 }
 
 void OntologyClassView::mousePressEvent(QMouseEvent *event){
@@ -67,11 +67,14 @@ void OntologyClassView::mousePressEvent(QMouseEvent *event){
         selectionModel()->clear();
     }
 
-    QAbstractItemView::mousePressEvent(event);
+    QTreeView::mousePressEvent(event);
 }
 
 
 void OntologyClassView::mouseDoubleClickEvent(QMouseEvent *event){
+
+//    QTreeView::mouseDoubleClickEvent(event);
+
     QModelIndex index = indexAt(event->pos());
     if(index.isValid()){
         QStandardItemModel *omodel = qobject_cast<QStandardItemModel*>(model());
@@ -91,7 +94,7 @@ void OntologyClassView::mouseDoubleClickEvent(QMouseEvent *event){
             }
 
             if(pClassDescriptionDialog->exec() == QDialog::Rejected){
-                QAbstractItemView::mouseDoubleClickEvent(event);
+//                QTreeView::mouseDoubleClickEvent(event);
                 return;
             }
 
@@ -102,8 +105,6 @@ void OntologyClassView::mouseDoubleClickEvent(QMouseEvent *event){
 
         }
     }
-
-    QAbstractItemView::mouseDoubleClickEvent(event);
 }
 
 void OntologyClassView::onAddChildClass(){

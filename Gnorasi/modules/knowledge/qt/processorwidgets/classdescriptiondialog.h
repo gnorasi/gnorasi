@@ -9,6 +9,7 @@
 #include <QPushButton>
 
 class FuzzyRuleView;
+class OntologyClass;
 
 class ClassDescriptionDialog : public QDialog
 {
@@ -57,6 +58,8 @@ private:
 
     void setupObjectLevels();
 
+    void processParentClass(OntologyClass* );
+
     QComboBox *m_pObjectLevelComboBox;
 
     QComboBox *m_pOperatorComboBox;
@@ -75,6 +78,7 @@ private:
     QString m_parentClassId;
 
     QStandardItem *m_pOperatorItem;
+    QStandardItem *m_pInheritedItem;
 };
 
 #endif // CLASSDESCRIPTIONDIALOG_H

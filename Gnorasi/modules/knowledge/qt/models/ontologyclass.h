@@ -33,6 +33,8 @@
 #include <QVariant>
 #include <QVector>
 
+#include <QDomDocument>
+
 class FuzzyOperator;
 
 class FuzzyRule;
@@ -61,6 +63,7 @@ public:
     int childCount() const;
 
     OntologyClass *parent();
+    void setParent(OntologyClass *pClass) { parentItem = pClass; QObject::setParent(pClass); }
 
     int childNumber() const;
 
