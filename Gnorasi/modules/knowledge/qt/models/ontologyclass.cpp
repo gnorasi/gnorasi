@@ -57,5 +57,3 @@ void OntologyClass::removeFuzzyRule(int l, FuzzyRule *r){
         m_fuzzyRuleHash.insertMulti(l,pr);
     }
 }
-
-

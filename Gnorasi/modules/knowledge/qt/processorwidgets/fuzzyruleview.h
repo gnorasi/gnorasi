@@ -39,6 +39,8 @@ private slots:
 
 private:
 
+    bool inheritsFromInheritedItem(QStandardItem* );
+
     int m_levelId;
 
     QString m_classId;

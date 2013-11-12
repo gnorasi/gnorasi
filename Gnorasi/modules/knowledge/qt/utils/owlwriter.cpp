@@ -7,6 +7,7 @@
 #include "../models/ontologyclass.h"
 #include "../fuzzy/fuzzyrule.h"
 #include "../fuzzy/fuzzyrulemanager.h"
+#include "../fuzzy/fuzzyfunction.h"
 #include "../utils/ontologyclassificationmanager.h"
 #include "../models/ontologyclass.h"
 #include "../utils/objectattribute.h"
@@ -133,7 +134,10 @@ void OwlWriter::createDocumentVersion2(){
     // create the element
     owlrootElement = doc.createElement(QString::fromAscii(OWL_RDFTAGNAME));
 
-    owlrootElement.setAttribute(QLatin1String("xmlns"),QString("http://www.gnorasi.gr/ontology/generated_%1#").arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss")));
+    QString cdt = QDateTime::currentDateTime().toString("yyyyMMddhhmmss");
+
+    owlrootElement.setAttribute(QLatin1String("xmlns"),QString::fromLatin1("http://www.gnorasi.gr/ontology/generated_%1#").arg(cdt));
+    owlrootElement.setAttribute(QString::fromAscii(XMLNS_BASEKEY),QString::fromLatin1("http://www.gnorasi.gr/ontology/generated_%1").arg(cdt));
     owlrootElement.setAttribute(QString::fromAscii(XMLNS_GEOKEY),QString::fromAscii(XMLNS_GEOVALUE));
     owlrootElement.setAttribute(QString::fromAscii(XMLNS_OWLKEY),QString::fromAscii(XMLNS_OWLVALUE));
     owlrootElement.setAttribute(QString::fromAscii(XMLNS_RDFKEY),QString::fromAscii(XMLNS_RDFVALUE));
@@ -334,7 +338,7 @@ void OwlWriter::appendRulesData(){
         OntologyClass *pClass = *i;
 
         QDomElement classElement = doc.createElement(QLatin1String("class"));
-        classElement.setAttribute(tr("id"),pClass->id());
+        classElement.setAttribute(QLatin1String("id"),pClass->id());
         classesElement.appendChild(classElement);
 
         QDomElement fuzzyRuleRootElement = doc.createElement(QLatin1String("fuzzyRules"));
@@ -348,12 +352,141 @@ void OwlWriter::appendRulesData(){
             FuzzyRule *pRule = h.value();
 
             QString attributeName = pRule->attribute();
-            attributeName = attributeName.remove(":");
-            attributeName = QString("Fuzzy%1").arg(attributeName);
 
-            QDomElement element = doc.createElement(QLatin1String("attributeRule"));
+            ObjectAttribute *pOA = OBJECTATTRIBUTEMANAGER->objectAttributeOfLevelById(lid,attributeName);
+            if(!(pOA->otype() == 1 || pOA->otype() == 2))
+                continue;
+
+            attributeName = attributeName.remove(":");
+            attributeName = QString("Fuzzy%1%2").arg(attributeName).arg(pRule->id());
+            QDomElement element;
+
+            if(pOA->otype()==1){
+
+                element = doc.createElement(QLatin1String("attributeRule"));
+                element.setAttribute(QLatin1String("id"),pRule->id());
+                element.setAttribute(QLatin1String("property"),attributeName);
+                fuzzyRuleRootElement.appendChild(element);
+            }else{
+
+                element = doc.createElement(QLatin1String("shapeRule"));
+                element.setAttribute(QLatin1String("id"),pRule->id());
+                element.setAttribute(QLatin1String("property"),attributeName);
+                fuzzyRuleRootElement.appendChild(element);
+            }
+
+            FuzzyFunction *pfuzzyFunction = pRule->funzzyFunction();
+            if(pfuzzyFunction){
+                QDomElement functionElement = doc.createElement(QLatin1String("function"));
+                functionElement.setAttribute(QLatin1String("name"),pfuzzyFunction->name());
+                element.appendChild(functionElement);
+
+                QDomElement parametersElement = doc.createElement(QLatin1String("parameters"));
+                functionElement.appendChild(parametersElement);
+
+                for(int i = 0; i < pfuzzyFunction->parametersCount(); i++){
+
+                    int code = 97; // 'a'
+                    code += i;
+
+                    QString lstr = QString("%1").arg((char)code);
+                    double val = pfuzzyFunction->parameterValueForIndex(i);
+
+                    QDomElement parameterElement = doc.createElement(QLatin1String("parameter"));
+                    parameterElement.setAttribute(QLatin1String("name"),lstr);
+                    parameterElement.setAttribute(QLatin1String("value"),QString::number(val,'f',3));
+                    parametersElement.appendChild(parameterElement);
+                }
+            }
+        }
+    }
+}
+
+
+void OwlWriter::appendSpatialData(){
+
+    QDomNode rootNode = doc.lastChild();
+    if(rootNode.isNull())
+        return;
+
+    QDomNode classesNode = rootNode.lastChild();
+
+    QList<OntologyClass*> list = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassList();
+    QList<OntologyClass*>::const_iterator i;
+    for(i = list.constBegin(); i != list.constEnd(); i++){
+        OntologyClass *pClass = *i;
+
+        QDomElement classElement;
+        QString oid = pClass->id();
+        QDomNode classNode = classesNode.firstChild();
+        while(!classNode.isNull()){
+
+            if(classNode.isElement()){
+
+                classElement = classNode.toElement();
+                QString ceaid = classElement.attribute(QLatin1String("id"),0);
+
+                qDebug() << "ceaid : " << ceaid << ", oid : " << oid;
+
+                if(!ceaid.compare(oid))
+                    break;
+            }
+
+            classNode = classNode.nextSibling();
+        }
+
+        if(classElement.isNull()){
+            qDebug() << "error, could not find the class , id : " << oid;
+            continue;
+        }
+
+        QDomElement fuzzyRuleRootElement = doc.createElement(QLatin1String("spatialRules"));
+        fuzzyRuleRootElement.setAttribute(QLatin1String("operator"),pClass->opername());
+        classElement.appendChild(fuzzyRuleRootElement);
+
+        QHash<int,FuzzyRule*> fuzzyrulehash = pClass->fuzzyRuleHash();
+        QHash<int,FuzzyRule*>::const_iterator h;
+        for(h = fuzzyrulehash.constBegin(); h != fuzzyrulehash.constEnd(); h++){
+            int lid = h.key();
+            FuzzyRule *pRule = h.value();
+
+            QString attributeName = pRule->attribute();
+
+            ObjectAttribute *pOA = OBJECTATTRIBUTEMANAGER->objectAttributeOfLevelById(lid,attributeName);
+
+            Q_ASSERT(pOA);
+
+            if(pOA->otype() != 3)
+                continue;
+
+            QDomElement element = doc.createElement(QLatin1String("spatialRule"));
             element.setAttribute(QLatin1String("id"),pRule->id());
             element.setAttribute(QLatin1String("property"),attributeName);
+
+            FuzzyFunction *pfuzzyFunction = pRule->funzzyFunction();
+            if(pfuzzyFunction){
+                QDomElement functionElement = doc.createElement(QLatin1String("function"));
+                functionElement.setAttribute(QLatin1String("name"),pfuzzyFunction->name());
+                element.appendChild(functionElement);
+
+                QDomElement parametersElement = doc.createElement(QLatin1String("parameters"));
+                functionElement.appendChild(parametersElement);
+
+                for(int i = 0; i < pfuzzyFunction->parametersCount(); i++){
+
+                    int code = 97; // 'a'
+                    code += i;
+
+                    QString lstr = QString("%1").arg((char)code);
+                    double val = pfuzzyFunction->parameterValueForIndex(i);
+
+                    QDomElement parameterElement = doc.createElement(QLatin1String("parameter"));
+                    parameterElement.setAttribute(QLatin1String("name"),lstr);
+                    parameterElement.setAttribute(QLatin1String("value"),QString::number(val,'f',3));
+                    parametersElement.appendChild(parameterElement);
+                }
+            }
+
             fuzzyRuleRootElement.appendChild(element);
         }
     }

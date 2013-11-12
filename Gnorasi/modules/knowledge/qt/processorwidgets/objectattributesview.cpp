@@ -36,7 +36,7 @@ void ObjectAttributesView::mousePressEvent(QMouseEvent *event){
     if (!index.isValid())
         selectionModel()->clearSelection();
 
-    QAbstractItemView::mousePressEvent(event);
+    QTreeView::mousePressEvent(event);
 
 }
 
@@ -62,5 +62,5 @@ void ObjectAttributesView::mouseDoubleClickEvent(QMouseEvent *event){
         }
     }
 
-    QAbstractItemView::mouseDoubleClickEvent(event);
+    QTreeView::mouseDoubleClickEvent(event);
 }

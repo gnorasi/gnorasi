@@ -93,6 +93,18 @@ private slots:
     void calculate();
 
     /*!
+     * \brief save
+     *  Saves the hierrarchy and fuzzy rules data in an external file.
+     */
+    void save();
+
+    /*!
+     * \brief save
+     *  Load the hierrarchy and fuzzy rules data from an external file.
+     */
+    void load();
+
+    /*!
      * \brief createANewAttribute
      *
      *  Create and set a new attribute for the current FuzzyOntologyClass item
@@ -141,6 +153,9 @@ private:
 
 
     QString constructCSVText();
+
+
+    QString getFilePath();
 
     /*!
      * \brief processOntologyItem
@@ -200,6 +215,8 @@ private:
     // Qt Widgets
     ClassHierarchyWidget                    *m_pClassHierarchyWidget;
     QPushButton                             *m_pPushButtonCalculate;
+    QPushButton                             *m_pPushButtonSave;
+    QPushButton                             *m_pPushButtonLoad;
 
 };
 

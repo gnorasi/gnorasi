@@ -81,6 +81,10 @@ public:
      */
     void appendRulesData();
 
+
+    void appendSpatialData();
+
+
     void processObjectLevel(ObjectLevel* );
 
 private:

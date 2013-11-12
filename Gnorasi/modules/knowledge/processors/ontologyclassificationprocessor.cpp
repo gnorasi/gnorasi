@@ -9,20 +9,20 @@ const std::string OntologyClassificationProcessor::loggerCat_("voreen.OntologyCl
 OntologyClassificationProcessor::OntologyClassificationProcessor()
     : Processor(),
     inLblMapPort_(Port::INPORT, "Input Object Map Port",1),
-//    outFuzzyRulePort_(Port::OUTPORT, "Output Fuzzy Rule Port"),
     outTextPort_(Port::OUTPORT, "CSV Text Port"),
-    outXmlPort(Port::OUTPORT,"XML Port")
-//    inOntologyPort_(Port::INPORT,"Input Ontology Port", 0)
+    outXmlPort(Port::OUTPORT,"XML Port"),
+    XMLFile_("xmlfile", "Output File", "Output File Name", VoreenApplication::app()->getUserDataPath(), "XML Ontology Classification file (*.xml)", FileDialogProperty::SAVE_FILE)
 {
     outTextPort_.setDescription("1");
     outXmlPort.setDescription("2");
+
     // register ports and properties
     addPort(inLblMapPort_);
-//    addPort(outFuzzyRulePort_);
     addPort(outTextPort_);
     addPort(outXmlPort);
-//    addPort(inOntologyPort_);
-    //OTB initialization
+
+    addProperty(XMLFile_);
+
 }
 
 OntologyClassificationProcessor::~OntologyClassificationProcessor() {
@@ -61,7 +61,7 @@ void OntologyClassificationProcessor::deinitialize() throw (VoreenException) {
 
 void OntologyClassificationProcessor::process() {
     if(!isEndProcessor()){
-//        outPort2_.setData(inPort2_.getData());
+
     }
 
     updateView();
@@ -72,6 +72,11 @@ void OntologyClassificationProcessor::updateView() {
     if (getProcessorWidget()){
         getProcessorWidget()->updateFromProcessor();
     }
+}
+
+std::string OntologyClassificationProcessor::getFilePath(){
+
+    return XMLFile_.get();
 }
 
 

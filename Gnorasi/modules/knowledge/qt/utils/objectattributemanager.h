@@ -59,6 +59,8 @@ public:
     QList<ObjectAttribute*> objectAttributeOfLevelList(int );
     QStringList objectAttributeNameOfLevelStringList(int );
 
+    void createPreDefinedAttributesForLevel(int l);
+
 signals:
     
 public slots:
@@ -68,6 +70,8 @@ public slots:
 private:
     explicit ObjectAttributeManager(QObject *parent = 0);
     ~ObjectAttributeManager();
+
+    void createPreDefinedAttribute(int levelId, const QString &name, int otype);
 
     static ObjectAttributeManager *m_pInstance;
 

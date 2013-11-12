@@ -13,16 +13,27 @@ class FuzzyRuleManager : public QObject
 public:
     static FuzzyRuleManager* instance();
 
+
     static void deleteInstance();
+
 
     FuzzyRule* fuzzyRuleById(int );
 
+
     QList<FuzzyRule*> fuzzyRuleList() const {return m_fuzzyRuleList; }
+
+
+    QList<FuzzyRule*> fuzzyRuleListByAttribute(const QString &);
+
 
     void clear() { qDeleteAll(m_fuzzyRuleList); m_fuzzyRuleList.clear(); }
 
+
     void addFuzzyRule(FuzzyRule *pRule) { m_fuzzyRuleList.append(pRule); }
+
+
     void removeFuzzyRule(FuzzyRule *pRule ) { m_fuzzyRuleList.removeOne(pRule); }
+
 
     QStringList fuzzyRulesNames();
     

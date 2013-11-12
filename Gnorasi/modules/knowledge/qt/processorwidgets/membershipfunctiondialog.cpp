@@ -5,6 +5,8 @@
 #include <QPushButton>
 #include <QMessageBox>
 
+#include <QDebug>
+
 #include "../fuzzy/fuzzyfunction.h"
 #include "../fuzzy/fuzzyfunctionmanager.h"
 #include "../fuzzy/fuzzyfunctionfactory.h"
@@ -15,7 +17,7 @@
 #include "../fuzzy/fuzzyrulemanager.h"
 
 MembershipFunctionDialog::MembershipFunctionDialog(int lid, const QString &atid, QWidget *parent) :
-    m_levelId(lid), m_attributeId(atid), QDialog(parent)
+    m_levelId(lid), m_attributeId(atid), m_ruleId(0), QDialog(parent)
 {
     initialize();
 }
@@ -25,6 +27,8 @@ void MembershipFunctionDialog::setupByRuleId(int id){
     FuzzyRule *prule = FUZZYRULEMANAGER->fuzzyRuleById(id);
     if(!prule)
         return;
+
+    m_ruleId = id;
 
     QString atid = prule->attribute();
     m_attributeId = atid;
@@ -43,6 +47,7 @@ void MembershipFunctionDialog::setupByRuleId(int id){
             button = m_pButtonGroup->button(b);
             if(!button->text().compare(compareName)){
                 m_currentButtonId = b;
+                button->setChecked(true);
                 break;
             }
         }
@@ -94,11 +99,14 @@ void MembershipFunctionDialog::createbuttons(){
 
         QString name = *i;
         QString icon = iconList.value(counter);
+
         m_helperHash[counter] = name;
 
-        QPushButton *button = new QPushButton(name,this);
-        button->setMinimumHeight(120);
-        button->setIcon(QIcon(icon));
+        QPushButton *button = new QPushButton(QIcon(icon),name,this);
+        button->setFlat(true);
+        button->setCheckable(true);
+        button->setChecked(false);
+        button->setIconSize(QSize(92,92));
 
         m_pButtonGroup->addButton(button,counter);
 
@@ -172,6 +180,7 @@ void MembershipFunctionDialog::initialize(){
 
     QGroupBox *pGroupBox1 = new QGroupBox(tr("Initialize"),this);
     m_pButtonGroup = new QButtonGroup(this);
+    m_pButtonGroup->setExclusive(true);
     m_pHBoxButtonLayout = new QHBoxLayout;
     pGroupBox1->setLayout(m_pHBoxButtonLayout);
 
@@ -255,6 +264,12 @@ void MembershipFunctionDialog::onOkClicked(){
         return;
     }
 
+    FuzzyRule *pFuzzyRule = FUZZYRULEMANAGER->fuzzyRuleById(m_ruleId);
+    if(pFuzzyRule){
+
+        FUZZYRULEMANAGER->removeFuzzyRule(pFuzzyRule);
+    }
+
     QString ffname = button->text();
     FuzzyFunction *pFunction = m_pFuzzyFunctionFactory->createFuzzyFunction(ffname);
     int uid = 1;
@@ -267,8 +282,17 @@ void MembershipFunctionDialog::onOkClicked(){
     }
     pFunction->setid(uid);
 
-    for(int i =0; i < m_pParameterModel->rowCount();i++)
-        pFunction->setParameterValueForIndex(i,m_pParameterModel->data(m_pParameterModel->index(i,0)).toDouble());
+    qDebug() << "pFunction uid : " << uid << "function name : " << pFunction->name();
+
+    for(int i =0; i < m_pParameterModel->rowCount();i++){
+
+        if(m_pParameterModel->rowCount() && i >= 0 && i < pFunction->parametersCount() && i < m_pParameterModel->rowCount()){
+
+            qDebug() << "trying to set the parameter from model to the function , for index : " << i;
+
+            pFunction->setParameterValueForIndex(i,m_pParameterModel->data(m_pParameterModel->index(i,0)).toDouble());
+        }
+    }
 
     FUZZYFUNCTIONMANAGER->addFuzzyFunction(pFunction);
 
