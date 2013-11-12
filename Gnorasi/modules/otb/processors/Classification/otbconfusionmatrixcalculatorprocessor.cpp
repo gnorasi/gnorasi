@@ -24,6 +24,8 @@
 
 #include "otbconfusionmatrixcalculatorprocessor.h"
 #include "voreen/core/voreenapplication.h"
+#include <iostream>
+#include <fstream>
 
 namespace voreen {
 const std::string OTBConfusionMatrixCalculatorProcessor::loggerCat_("voreen.OTBConfusionMatrixCalculatorProcessor");
@@ -33,15 +35,24 @@ OTBConfusionMatrixCalculatorProcessor::OTBConfusionMatrixCalculatorProcessor()
     inPort_(Port::INPORT, "Referenced Vector Image Input", 0),
     inPort1_(Port::OUTPORT, "Produced Vector Image Output", 0),
     inPort2_(Port::INPORT, "Referenced Vector Data Input", 0),
-    inPort3_(Port::OUTPORT, "Produced Vector Data Input",0)
+    inPort3_(Port::OUTPORT, "Produced Vector Data Input",0),
+    textFile_("textFile", "Output Text File:", "Text File", VoreenApplication::app()->getUserDataPath(), "Text file (*.txt)", FileDialogProperty::SAVE_FILE),
+    saveTextButton_("saveButton", "Write Output to File"),
+    executeButton_("executeButton", "Force Calculate")
+
 {
     addPort(inPort_);
     addPort(inPort1_);
     addPort(inPort2_);
     addPort(inPort3_);
+    addProperty(executeButton_);
+    addProperty(textFile_);
+    addProperty(saveTextButton_);
 
     confusioncalculator = ConfusionFilterType::New();
-
+    hasFile=false;
+    saveTextButton_.onChange(CallMemberAction<OTBConfusionMatrixCalculatorProcessor>(this, &OTBConfusionMatrixCalculatorProcessor::saveToFile));
+    executeButton_.onChange(CallMemberAction<OTBConfusionMatrixCalculatorProcessor>(this, &OTBConfusionMatrixCalculatorProcessor::process));
 }
 
 void OTBConfusionMatrixCalculatorProcessor::update(){
@@ -75,6 +86,7 @@ void OTBConfusionMatrixCalculatorProcessor::process() {
   
     try
     {
+
         VImageType *imgref = inPort_.getData();
         VImageType *imgpro = inPort1_.getData();
         VectorDataType *vdataref = inPort2_.getData();
@@ -123,27 +135,55 @@ void OTBConfusionMatrixCalculatorProcessor::process() {
         LabelListSampleType::Pointer validationLabeledListSampleRef = sampleGenerator_ref->GetValidationListLabel();
         LabelListSampleType::Pointer validationLabeledListSamplePro = sampleGenerator_pro->GetValidationListLabel();
 
-
-
         confusioncalculator->SetReferenceLabels(validationLabeledListSampleRef);
         confusioncalculator->SetProducedLabels(validationLabeledListSamplePro);
 
         confusioncalculator->Update();
 
-        //
-        // TODO !
-        //
-        // pass the data to the outport
-        // or store the data to a file maybe..
-        //
-
+        LINFO("Force Calculate completed successfully!");
     }
     catch (int e)
     {
     LERROR("Problem with confusion matrix!");
 	return;
     }
-    
+
 }
+
+void OTBConfusionMatrixCalculatorProcessor::saveToFile() {
+
+    std::string filename = textFile_.get();
+    if (!filename.empty())
+    {
+        hasFile = true;
+    }
+
+    if(hasFile)
+    {
+        // open the specified text file, write output and close
+        std::ofstream myfile (filename.c_str());
+        if (myfile.is_open())
+        {
+            // Has NOT been tested. Maybe a loop is needed for other outputs.
+            myfile << "Confusion Matrix Calculator\n";
+            myfile << "---------------------------\n";
+            myfile << "OUTPUT\n";
+            myfile << "======\n";
+            myfile << "Confusion matrix: " << confusioncalculator->GetConfusionMatrix() << "\n";
+            myfile.close();
+            LINFO("File output written succesfully!");
+        }else {
+            LWARNING("Unable to open file");
+
+        }
+    }else if(!hasFile){
+        LWARNING("Text File Path Not Set");
+        return;
+    }else if (!enableSwitch_.get()) {
+        LWARNING("Processor is disabled");
+        return;
+    }
+}
+
 
 } // namespace

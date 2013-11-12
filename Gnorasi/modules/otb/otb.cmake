@@ -288,6 +288,12 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/otbkeypointsetport.cpp
     ${MOD_DIR}/ports/otbvectordataport.cpp
     ${MOD_DIR}/ports/otblistlabelmapport.cpp
+    ${MOD_DIR}/ports/otbsommapport.cpp
+    ${MOD_DIR}/processors/Applications/otbsarradiometriccalibrationapplication.cpp
+    ${MOD_DIR}/processors/Applications/otblocalstatisticextractionapplication.cpp
+    ${MOD_DIR}/processors/Applications/otbsfstextureextractionapplication.cpp
+    ${MOD_DIR}/processors/Applications/otbhypespectralunmixingapplication.cpp
+    ${MOD_DIR}/processors/Applications/otbcomputeimagesstatisticsapplication.cpp
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.cpp
@@ -296,6 +302,9 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/ImageIO/otbcsvwriterprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbcsvreaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbmultichannelextractroiprocessor.cpp
+    ${MOD_DIR}/processors/ImageIO/otbsommapreaderprocessor.cpp
+    ${MOD_DIR}/processors/ImageIO/otbvectordatareaderprocessor.cpp
+    ${MOD_DIR}/processors/ImageIO/otbvectordatawriterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbconvolutionimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbfftconvolutionimagefilterprocessor.cpp
@@ -320,6 +329,27 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbrescaleintensityimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbdotproductimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbhistogrammatchingimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbspectralangledistanceimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbgreylevelcooccurrencematrixadvancedtexturecoefficientscalculatorprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbperbandvectorimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbmdmdnmfimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbsigmoidimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otblabelimagetovectordatafilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otblabelmaptovectordatafilterprocessor.cpp
+    ${MOD_DIR}/processors/BasicFilters/otbrasterizevectordatafilterprocessor.cpp
+    ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicerodeimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.cpp
+    #${MOD_DIR}/processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.cpp
+    ${MOD_DIR}/processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/ImageEnhancement/otbbinarythinningimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/ImageEnhancement/otbgeodesicmorphologylevelingfilterprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.cpp
@@ -328,6 +358,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/OBIA/otbobjectclassificationtolabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelmaptoclassimageprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbmultiplelabelimagetolabelmapprocessor.cpp
+    ${MOD_DIR}/processors/OBIA/otblabelmaptobinaryimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbndviprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbmsaviprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.cpp
@@ -335,17 +366,31 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbbayesianfusionfilterprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.cpp
+    ${MOD_DIR}/processors/Radiometry/otbdemcaracteristicsextractor.cpp
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosiftkeypointsetfilterprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otbzerocrossingbasededgedetectionimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otbhoughtransform2dcirclesimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otbhoughtransform2dlinesimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otbclouddetectionimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otbgenericroadextractionfilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otbcloudestimatorfilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otbderivativeimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/FeatureExtraction/otbharrisimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/otbmeanshiftimagesegmentationprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.cpp
     ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.cpp
+    #${MOD_DIR}/processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.cpp
+    #${MOD_DIR}/processors/Segmentation/otbshapedetectionlevelsetimagefilterprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbconfusionmatrixcalculatorprocessor.cpp
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.cpp
+    ${MOD_DIR}/processors/Classification/otbbayesianclassifierimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/Classification/otbmrfenergygaussianclassificationfilterprocessor.cpp
+    ${MOD_DIR}/processors/Classification/otbsomimageclassificationfilterprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.cpp
 #    ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.cpp
@@ -360,6 +405,12 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/otbkeypointsetport.h
     ${MOD_DIR}/ports/otbvectordataport.h
     ${MOD_DIR}/ports/otblistlabelmapport.h
+    ${MOD_DIR}/ports/otbsommapport.h
+    ${MOD_DIR}/processors/Applications/otbsarradiometriccalibrationapplication.h
+    ${MOD_DIR}/processors/Applications/otblocalstatisticextractionapplication.h
+    ${MOD_DIR}/processors/Applications/otbsfstextureextractionapplication.h
+    ${MOD_DIR}/processors/Applications/otbhypespectralunmixingapplication.h
+    ${MOD_DIR}/processors/Applications/otbcomputeimagesstatisticsapplication.h
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.h
@@ -367,7 +418,10 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/ImageIO/otblabelimagewriterprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbcsvwriterprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbcsvreaderprocessor.h
+    ${MOD_DIR}/processors/ImageIO/otbsommapreaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbmultichannelextractroiprocessor.h
+    ${MOD_DIR}/processors/ImageIO/otbvectordatareaderprocessor.h
+    ${MOD_DIR}/processors/ImageIO/otbvectordatawriterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbconvolutionimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbfftconvolutionimagefilterprocessor.h
@@ -392,6 +446,27 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbrescaleintensityimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbdotproductimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbhistogrammatchingimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbspectralangledistanceimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbgreylevelcooccurrencematrixadvancedtexturecoefficientscalculatorprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbestimateinnerproductpcaimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbperbandvectorimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbmdmdnmfimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbsigmoidimagefilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otblabelimagetovectordatafilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otblabelmaptovectordatafilterprocessor.h
+    ${MOD_DIR}/processors/BasicFilters/otbrasterizevectordatafilterprocessor.h
+    ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.h
+    ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.h
+    ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicdilateimagefilterprocessor.h
+    ${MOD_DIR}/processors/ImageEnhancement/otbgrayscalegeodesicerodeimagefilterprocessor.h
+    ${MOD_DIR}/processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.h
+    #${MOD_DIR}/processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.h
+    ${MOD_DIR}/processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.h
+    ${MOD_DIR}/processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h
+    ${MOD_DIR}/processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.h
+    ${MOD_DIR}/processors/ImageEnhancement/otbbinarythinningimagefilterprocessor.h
+    ${MOD_DIR}/processors/ImageEnhancement/otbgeodesicmorphologylevelingfilterprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelimagetolabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbshapeattributeslabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otbbandstatisticsattributeslabelmapprocessor.h
@@ -400,6 +475,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/OBIA/otbobjectclassificationtolabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelmaptoclassimageprocessor.h
     ${MOD_DIR}/processors/OBIA/otbmultiplelabelimagetolabelmapprocessor.h
+    ${MOD_DIR}/processors/OBIA/otblabelmaptobinaryimagefilterprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbndviprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbmsaviprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.h
@@ -407,20 +483,35 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbbayesianfusionfilterprocessor.h 
     ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.h
+    ${MOD_DIR}/processors/Radiometry/otbdemcaracteristicsextractor.h
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosiftkeypointsetfilterprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otblineratiodetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otblinesegmentdetectorprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbroadextractionprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otbzerocrossingbasededgedetectionimagefilterprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otbhoughtransform2dcirclesimagefilterprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otbhoughtransform2dlinesimagefilterprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otbclouddetectionimagefilterprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otbgenericroadextractionfilterprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otbcloudestimatorfilterprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otbderivativeimagefilterprocessor.h
+    ${MOD_DIR}/processors/FeatureExtraction/otbharrisimagefilterprocessor.h
     ${MOD_DIR}/processors/Segmentation/otbmeanshiftimagesegmentationprocessor.h
     ${MOD_DIR}/processors/Segmentation/otbwatershedsegmentationfilterprocessor.h
     ${MOD_DIR}/processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h
+    #${MOD_DIR}/processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.h
+    #${MOD_DIR}/processors/Segmentation/otbshapedetectionlevelsetimagefilterprocessor.h
     ${MOD_DIR}/processors/Classification/otbconfusionmatrixcalculatorprocessor.h
     ${MOD_DIR}/processors/Classification/otbkmeansimageclassificationfilterprocessor.h
+    ${MOD_DIR}/processors/Classification/otbbayesianclassifierimagefilterprocessor.h
+    ${MOD_DIR}/processors/Classification/otbmrfenergygaussianclassificationfilterprocessor.h
+    ${MOD_DIR}/processors/Classification/otbsomimageclassificationfilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbmultialterationdetectorimagefilterprocessor.h
     ${MOD_DIR}/processors/ChangeDetection/otbcbamichangedetectorprocessor.h
 #   ${MOD_DIR}/processors/Geometry/otborthorectifyprocessor.h
+
 )
 
 #

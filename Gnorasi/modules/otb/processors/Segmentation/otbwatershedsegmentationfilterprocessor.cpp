@@ -4,9 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
- * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved. 	*
- * Copyright (c) National Technical University of Athens. All rights reserved.	*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -23,6 +23,7 @@
  * If not, see <http://www.gnu.org/licenses/>.                                  *
  *                                                                              *
  ********************************************************************************/
+
 #include "otbwatershedsegmentationfilterprocessor.h"
 #include "voreen/core/voreenapplication.h"
 
@@ -32,19 +33,43 @@ const std::string OTBWatershedSegmentationFilterProcessor::loggerCat_("voreen.OT
 
 OTBWatershedSegmentationFilterProcessor::OTBWatershedSegmentationFilterProcessor()
     :OTBImageFilterProcessor(),
-    waterShedLevel_("waterShedLevel", "Level", 0.005f, 0.0f, 1.0f),
-    waterShedThreshold_("waterShedThreshold", "Threshold", 0.05f, 0.0f, 1.0f),
-    inPort_(Port::INPORT, "OTBImage.inport", 0),
-    outPort_(Port::OUTPORT, "OTBImage.outport", 0)
+      numberOfIterations_("numberOfIterations", "Iterations", 4, 1, 20),
+      timeStep_("timeStep", "Time Step", 0.125f, 0.0f, 10.0f),
+      conductance_("conductance", "Conductance", 2.0f, 0.0f, 100.0f),
+      gradientMode_("gradientMode_", "Use Principle Components", true),
+      waterShedLevel_("waterShedLevel", "Level", 0.05f, 0.0f, 1.0f),
+      waterShedThreshold_("waterShedThreshold", "Threshold", 0.05f, 0.0f, 1.0f),
+      vectorInPort_(Port::INPORT, "IN Multiband Image", 0),
+      labelOutPort_(Port::OUTPORT, "Label Image port", 0),
+      mapOutPort_(Port::OUTPORT, "Label Map port", 0),
+      rgbOutPort_(Port::OUTPORT, "RGB Image port", 0),
+      outPort_(Port::OUTPORT, "OTB Image port", 0)
+
 {
-    addProperty(enableSwitch_);
+//    addProperty(enableSwitch_);   //no vector outport available
+    addProperty(numberOfIterations_);
+    addProperty(timeStep_);
+    addProperty(conductance_);
+    addProperty(gradientMode_);
     addProperty(waterShedLevel_);
     addProperty(waterShedThreshold_);
 
-    addPort(inPort_);
+    addPort(vectorInPort_);
+    addPort(labelOutPort_);
+    addPort(mapOutPort_);
+//    addPort(rgbOutPort_);
     addPort(outPort_);
 
-    waterShedFilter = WatershedFilterType::New();
+    diffusion = DiffusionFilterType::New();
+    gradient = GradientMagnitudeFilterType::New();
+    watershedFilter = WatershedFilterType::New();
+
+    labelCaster = LabelImageCastFilterType::New();
+    vectorCaster = VectorCastFilterType::New();
+    otbCaster = ImageCastFilterType::New();
+
+    labelMapFilter = LabelMapFilterType::New();
+    colormapper = ColorMapFilterType::New();
 }
 
 Processor* OTBWatershedSegmentationFilterProcessor::create() const {
@@ -70,34 +95,62 @@ std::string OTBWatershedSegmentationFilterProcessor::getProcessorInfo() const {
   return "OTBWatershedSegmentationFilter Processor";
 }
 
+bool OTBWatershedSegmentationFilterProcessor::isReady() const {
+    if (!isInitialized())
+        return false;
+
+    if(!vectorInPort_.isConnected()) return false;
+
+    if(!labelOutPort_.isConnected() && !mapOutPort_.isConnected() && !rgbOutPort_.isConnected() && !outPort_.isConnected()) return false;
+
+    return true;
+}
+
 void OTBWatershedSegmentationFilterProcessor::process() {
     //check bypass switch
-    if (!enableSwitch_.get()){
-        bypass(&inPort_, &outPort_);
-        return;
-    }
+//    if (!enableSwitch_.get()){
+//        bypass(&inPort_, &outPort_);
+//        return;
+//    }
 
     try
     {
-        /*
-         * There are two parameters. Level controls watershed depth, and Threshold controls the lower thresholding of the input.
-         * Both parameters are set as a percentage (0.0 - 1.0) of the maximum depth in the input image.
-         */
-        waterShedFilter->SetLevel(waterShedLevel_.get());
-        waterShedFilter->SetThreshold(waterShedThreshold_.get());
+        vectorCaster->SetInput(vectorInPort_.getData());
+        diffusion->SetInput(vectorCaster->GetOutput());
 
-        waterShedFilter->SetInput(inPort_.getData());
+        diffusion->SetNumberOfIterations(numberOfIterations_.get());
+        diffusion->SetConductanceParameter(conductance_.get());
+        diffusion->SetTimeStep(timeStep_.get());
 
-        waterShedFilter->Update();
+        gradient->SetInput(diffusion->GetOutput());
 
-        typedef itk::ScalarToRGBColormapImageFilter<LabeledImageType, RGBImageType> RGBFilterType;
-          RGBFilterType::Pointer colormapImageFilter = RGBFilterType::New();
+        gradient->SetUsePrincipleComponents(gradientMode_.get());
 
-        colormapImageFilter->SetInput(waterShedFilter->GetOutput());
-        colormapImageFilter->SetColormap( RGBFilterType::Jet );
-        colormapImageFilter->Update();
+        watershedFilter->SetInput(gradient->GetOutput());
 
-        //outPort_.setData(colormapImageFilter->GetOutput());
+        watershedFilter->SetLevel(waterShedLevel_.get());
+        watershedFilter->SetThreshold(waterShedThreshold_.get());
+        watershedFilter->Update();
+
+        //*RGBcolormap Output*
+        colormapper->SetInput(watershedFilter->GetOutput());
+        /// TODO: RGBImagePort needed
+//        rgbOutPort_.setData(colormapper->GetOutput());
+
+        //LabelImage Output
+        labelCaster->SetInput(watershedFilter->GetOutput());
+        labelOutPort_.setData(labelCaster->GetOutput());
+
+        //LabelMap Output
+        labelMapFilter->SetInput(watershedFilter->GetOutput());
+        labelMapFilter->SetBackgroundValue(itk::NumericTraits<unsigned long>::min());
+        labelMapFilter->Update();
+
+        //OTBImage Output
+        otbCaster->SetInput(watershedFilter->GetOutput());
+        outPort_.setData(otbCaster->GetOutput());
+
+        mapOutPort_.setData(labelMapFilter->GetOutput());
 
     }
     catch (int e)

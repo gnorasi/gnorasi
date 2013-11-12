@@ -34,13 +34,26 @@ OTBScalarImageToTexturesFilterProcessor::OTBScalarImageToTexturesFilterProcessor
     radius_("radiusWindowValue", "Filter Radius", 3, 3, 25),
     offSetX_("OffsetX", "Offset Array used in X", 3, 0, 4096),
     offSetY_("OffsetY", "Offset Array used in Y", 3, 0, 4096),
+    //numberOfBinsPerAxis_("numberOfBinsPerAxis","Number of Bins per Axis:", 256, 1,1000),
+    imageType_("outputImageType", "Output Image Type:"),
     inPort_(Port::INPORT, "OTBImage.inport", 0),
     outPort_(Port::OUTPORT, "OTBImage.outport", 0)
 {
+    imageType_.addOption("energy", "Energy Output");
+    imageType_.addOption("entropy", "Entropy Output");
+    imageType_.addOption("correlation", "Correlation Output");
+    imageType_.addOption("inverseDifferenceMoment", "Inverse Difference Moment Output");
+    imageType_.addOption("inertia", "Inertia Output");
+    imageType_.addOption("clusterShade", "Cluster Shade Output");
+    imageType_.addOption("clusterProminence", "Cluster Prominence Output");
+    imageType_.addOption("HaralickCorrelation", "Haralick Correlation Output");
+
     addProperty(enableSwitch_);
     addProperty(radius_);
     addProperty(offSetX_);
     addProperty(offSetY_);
+    //addProperty(numberOfBinsPerAxis_);
+    addProperty(imageType_);
 
     addPort(inPort_);
     addPort(outPort_);
@@ -86,18 +99,15 @@ void OTBScalarImageToTexturesFilterProcessor::process() {
     //To tune co-occurence histogram resolution, you can use the SetNumberOfBinsPerAxis() method.
     try
     {
-        filter->SetInput(inPort_.getData());
-
-        FilterType::SizeType Radius;
-        Radius[0] = radius_.get();
-        Radius[1] = radius_.get();
-        filter->SetRadius(Radius);
-
+        SizeType radius;
+        radius.Fill(radius_.get());
 
         OffsetType offset;
         offset[0] = offSetX_.get();
         offset[1] = offSetY_.get();
 
+        filter->SetInput(inPort_.getData());
+        filter->SetRadius(radius);
         filter->SetOffset(offset);
 
         //CHECK TO DO HERE GET Minimum & Maximum
@@ -105,10 +115,29 @@ void OTBScalarImageToTexturesFilterProcessor::process() {
         filter->SetInputImageMinimum(0);
         filter->SetInputImageMaximum(255);
 
-        filter->SetInput(inPort_.getData());
-	
-	//TODO: Add more options for output here
-        outPort_.setData(filter->GetInertiaOutput());
+        //filter->SetNumberOfBinsPerAxis(numberOfBinsPerAxis_.get());
+
+        //filter->Update();
+
+    //FIXED: Options for output here:
+
+        if (imageType_.get()=="energy") {
+           outPort_.setData(filter->GetEnergyOutput());
+        } else if (imageType_.get()=="entropy") {
+            outPort_.setData(filter->GetEntropyOutput());
+        } else if (imageType_.get()=="correlation") {
+            outPort_.setData(filter->GetCorrelationOutput());
+        } else if (imageType_.get()=="inverseDifferenceMoment") {
+            outPort_.setData(filter->GetInverseDifferenceMomentOutput());
+        } else if (imageType_.get()=="inertia") {
+            outPort_.setData(filter->GetInertiaOutput());
+        } else if (imageType_.get()=="clusterShade") {
+            outPort_.setData(filter->GetClusterShadeOutput());
+        } else if (imageType_.get()=="clusterProminence") {
+            outPort_.setData(filter->GetClusterProminenceOutput());
+        } else if (imageType_.get()=="haralickCorrelation") {
+            outPort_.setData(filter->GetHaralickCorrelationOutput());
+        }
     }
     catch (int e)
     {
@@ -118,7 +147,6 @@ void OTBScalarImageToTexturesFilterProcessor::process() {
 }
 
 } //namespace
-
 
 
 

@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*                                                                              *
+ * Copyright (c) ALTEC SA - All rights reserved.                                *
+ * Copyright (c) ALTEC SA - All rights reserved.                                *
+ * Copyright (c) ALTEC SA - All rights reserved.                                *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -21,9 +23,8 @@
  * If not, see <http://www.gnu.org/licenses/>.                                  *
  *                                                                              *
  ********************************************************************************/
-
-#ifndef VRN_OTBCONFUSIONMATRIXCALCULATORPROCESSOR_H
-#define VRN_OTBCONFUSIONMATRIXCALCULATORPROCESSOR_H
+#ifndef OTBBAYESIANCLASSIFIERIMAGEFILTERPROCESSOR_H
+#define OTBBAYESIANCLASSIFIERIMAGEFILTERPROCESSOR_H
 
 #include "voreen/core/properties/intproperty.h"
 #include "voreen/core/properties/floatproperty.h"
@@ -31,60 +32,63 @@
 #include "voreen/core/properties/buttonproperty.h"
 #include "../BasicFilters/otbimagefilterprocessor.h"
 #include "../../ports/otbvectorimageport.h"
-#include "../../ports/otbvectordataport.h"
-#include "otbVectorData.h"
-#include "otbListSampleGenerator.h"
-#include "otbConfusionMatrixCalculator.h"
+#include "itkBayesianClassifierImageFilter.h"
+#include "itkGradientAnisotropicDiffusionImageFilter.h"
+#include "itkRescaleIntensityImageFilter.h"
+#include "itkCastImageFilter.h"
 
 namespace voreen {
-  
-class OTBConfusionMatrixCalculatorProcessor : public OTBImageFilterProcessor {
+
+class OTBBayesianClassifierImageFilterProcessor : public OTBImageFilterProcessor {
 public:
-    OTBConfusionMatrixCalculatorProcessor();
-    virtual ~OTBConfusionMatrixCalculatorProcessor();
-    
+    OTBBayesianClassifierImageFilterProcessor();
+    virtual ~OTBBayesianClassifierImageFilterProcessor();
+
     virtual Processor* create() const;
-    
+
     virtual std::string getCategory() const { return "Classification"; }
-    virtual std::string getClassName() const { return "Confusion Matrix"; }
+    virtual std::string getClassName() const { return "Bayesian Classifier Image Filter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
-    
+
     virtual std::string getProcessorInfo() const;
 
     static const unsigned int                                           Dimension = 2;
-    typedef double                                                      PixelType;
-    typedef double LabeledPixelType;
-    typedef otb::VectorImage<PixelType,Dimension>                       VImageType;
-    typedef otb::Image<LabeledPixelType,Dimension>                      LabeledImageType;
-    typedef otb::VectorData<double, 2>                                  VectorDataType;
+    typedef float                                                       InputPixelType;
+    typedef itk::VectorImage<InputPixelType,Dimension>                  InputImageType;
 
-    // SampleList manipulation
-    typedef otb::ListSampleGenerator<VImageType, VectorDataType>        ListSampleGeneratorType;
-    typedef ListSampleGeneratorType::ListLabelType                      LabelListSampleType;
+    typedef itk::Image<unsigned char,Dimension>                         OutputImageType;
 
-    typedef otb::ConfusionMatrixCalculator<LabelListSampleType,
-    LabelListSampleType>                                                ConfusionFilterType;
+    typedef otb::Image<double, 2> DoubleImageType;
+    typedef itk::VectorImage<double, 2> VectorDoubleImageType;
 
-    // Projection of a vectorData
-    typedef otb::VectorDataProjectionFilter<VectorDataType,
-        VectorDataType>                                                 VectorDataProjectionFilterType;
+    typedef itk::Image<double, 2>                                       PortImageType;
 
-    ConfusionFilterType::Pointer                                        confusioncalculator;
-        
-//****************************************************
 
-    /**
-    * Saves the image.
-    *
-    * @note The processor must have been initialized
-    *       before calling this function.
-    */
-   void saveToFile();
+    typedef unsigned char                                               LabelType;
+    typedef float                                                       PriorType;
+    typedef float                                                       PosteriorType;
 
+    typedef itk::BayesianClassifierImageFilter<InputImageType,LabelType,PosteriorType,PriorType> ClassifierFilterType;
+    ClassifierFilterType::Pointer filter;
+
+    typedef ClassifierFilterType::ExtractedComponentImageType ExtractedComponentImageType;
+    typedef itk::GradientAnisotropicDiffusionImageFilter<ExtractedComponentImageType, ExtractedComponentImageType> SmoothingFilterType;
+    SmoothingFilterType::Pointer smoother;
+
+    typedef ClassifierFilterType::OutputImageType ClassifierOutputImageType;
+
+    typedef itk::RescaleIntensityImageFilter<ClassifierOutputImageType, OutputImageType> RescalerType;
+    RescalerType::Pointer rescaler;
+
+    typedef itk::CastImageFilter<OutputImageType, DoubleImageType> CharToPortCastingFilterType;
+    CharToPortCastingFilterType::Pointer charToPortCaster;
+
+    typedef itk::CastImageFilter<VectorDoubleImageType, InputImageType> VectorCastingFilterType;
+    VectorCastingFilterType::Pointer vectorCaster;
 
 protected:
     virtual void setDescriptions() {
-	setDescription("processor.");
+    setDescription("processor.");
     }
     void process();
 
@@ -93,26 +97,16 @@ protected:
 
     void update();
 
-
-
 private:
 
-    OTBVectorImagePort  inPort_;
-    OTBVectorImagePort  inPort1_;
-    OTBVectorDataPort   inPort2_;
-    OTBVectorDataPort   inPort3_;
+    OTBVectorImagePort inPort_;
+    OTBImagePort outPort_;
 
-    ButtonProperty      m_updateProperty;
-
-
-    bool hasFile;
-    FileDialogProperty textFile_;  // Path of the saved text file.
-    ButtonProperty saveTextButton_;    // Saves the output to file.
-    ButtonProperty executeButton_; // Force manual execution of processing (since no output module is connected).
+    IntProperty         numberOfSmoothingIterations_;
 
     static const std::string loggerCat_; ///< category used in logging
 };
 
 } // namespace
 
-#endif // VRN_OTBCONFUSIONMATRIXCALCULATORPROCESSOR_H
+#endif // OTBBAYESIANCLASSIFIERIMAGEFILTERPROCESSOR_H
