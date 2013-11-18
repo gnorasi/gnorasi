@@ -36,6 +36,7 @@
 #include "processors/Applications/otbcomputeimagesstatisticsapplication.h"
 #include "processors/Applications/otbsegmentationapplication.h"
 #include "processors/Applications/otbcomputeconfusionmatrixapplication.h"
+#include "processors/Applications/otbfusionofclassificationsapplication.h"
 #include "processors/ImageIO/otbimagereaderprocessor.h"
 #include "processors/ImageIO/otblabelimagereaderprocessor.h"
 #include "processors/ImageIO/otbvectorimagereaderprocessor.h"
@@ -269,6 +270,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBComputeImagesStatisticsApplication());
     registerProcessor(new OTBSegmentationApplication());
     registerProcessor(new OTBComputeConfusionMatrixApplication());
+    registerProcessor(new OTBFusionOfClassificationsApplication());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
