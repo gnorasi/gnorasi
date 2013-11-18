@@ -81,7 +81,7 @@ using namespace voreen;
 OwlWriter::OwlWriter(QObject *parent)
     : QObject(parent)
 {
-    helperCounter = 0;
+//    helperCounter = 0;
 
     m_namespaceXmlns = "#";
 }
@@ -91,7 +91,7 @@ QString OwlWriter::docToText(){
 }
 
 void OwlWriter::createDocument(){
-    helperCounter = 0;
+//    helperCounter = 0;
 
     doc = QDomDocument();
 
@@ -117,7 +117,7 @@ void OwlWriter::createDocument(){
 }
 
 void OwlWriter::createDocumentVersion2(){
-    helperCounter = 0;
+//    helperCounter = 0;
 
     doc = QDomDocument();
 
@@ -202,7 +202,8 @@ void OwlWriter::appendData(OntologyClassItem *item){
     // create the hasObjectIdTExtElement
     QDomElement hasObjectIdElement = doc.createElement(QString::fromAscii(OWL_GNOHASOBJIDTAG));
     hasObjectIdElement.setAttribute(QString::fromAscii(OWL_STRINGDATATYPEKEY),QString::fromAscii(OWL_INTDATATYPEVAL));
-    QDomText hasObjectIDTextElement = doc.createTextNode(QString::number(helperCounter++));
+//    QDomText hasObjectIDTextElement = doc.createTextNode(QString::number(helperCounter++));
+    QDomText hasObjectIDTextElement = doc.createTextNode(QString::number(0));
     hasObjectIdElement.appendChild(hasObjectIDTextElement);
     individualElement.appendChild(typeElement);
     individualElement.appendChild(hasObjectIdElement);
@@ -272,7 +273,8 @@ void OwlWriter::appendData(OntologyClass *item){
     // create the hasObjectIdTExtElement
     QDomElement hasObjectIdElement = doc.createElement(QString::fromAscii(OWL_GNOHASOBJIDTAG));
     hasObjectIdElement.setAttribute(QString::fromAscii(OWL_STRINGDATATYPEKEY),QString::fromAscii(OWL_INTDATATYPEVAL));
-    QDomText hasObjectIDTextElement = doc.createTextNode(QString::number(helperCounter++));
+//    QDomText hasObjectIDTextElement = doc.createTextNode(QString::number(helperCounter++));
+    QDomText hasObjectIDTextElement = doc.createTextNode(QString::number(item->idx()));
     QDomElement segmentationLevelElement = doc.createElement(QLatin1String("gno:definedForSegmentationLevel"));
     segmentationLevelElement.setAttribute(QLatin1String("rdf:resource"),QString("#segmentationLevel_%1").arg(QString::number(item->level())));
     hasObjectIdElement.appendChild(hasObjectIDTextElement);
@@ -339,6 +341,7 @@ void OwlWriter::appendRulesData(){
 
         QDomElement classElement = doc.createElement(QLatin1String("class"));
         classElement.setAttribute(QLatin1String("id"),pClass->id());
+        classElement.setAttribute(QLatin1String("idx"),pClass->idx());
         classesElement.appendChild(classElement);
 
         QDomElement fuzzyRuleRootElement = doc.createElement(QLatin1String("fuzzyRules"));
