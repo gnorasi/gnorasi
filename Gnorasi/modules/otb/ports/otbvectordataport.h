@@ -60,7 +60,7 @@ public:
     /**
      * Returns the file path
      */
-    std::string getDataPath() const;
+    std::string DataPath() const;
 
     /**
      * Sets the file path, if it's an outport
