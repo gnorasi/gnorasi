@@ -81,7 +81,7 @@ bool OTBVectorDataPort::hasData() const {
     return true;
 }
 
-std::string OTBVectorDataPort::getDataPath() const {
+std::string OTBVectorDataPort::DataPath() const {
     if (isOutport())
         return m_DataPath;
     else {
@@ -91,7 +91,7 @@ std::string OTBVectorDataPort::getDataPath() const {
 
             OTBVectorDataPort* p = static_cast< OTBVectorDataPort* >(connectedPorts_[i]);
             if (p)
-                return p->getDataPath();
+                return p->DataPath();
         }
     }
     std::string po;
