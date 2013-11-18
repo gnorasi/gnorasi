@@ -89,6 +89,7 @@ void OTBVectorDataReaderProcessor::loadVectorData() {
 
         //Pass them to vector data outport
         outPort_.setData(reader->GetOutput());
+        outPort_.setDataPath(filename);
 
         if (!outPort_.hasData()) {
             LERROR("No Vector Data passed!");
@@ -98,7 +99,6 @@ void OTBVectorDataReaderProcessor::loadVectorData() {
         LWARNING("Vector Data File Name Not Set");
         return;
     }
-
     LINFO("Vector Data loaded successfully!");
 }
 

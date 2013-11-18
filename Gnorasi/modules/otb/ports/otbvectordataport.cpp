@@ -81,4 +81,30 @@ bool OTBVectorDataPort::hasData() const {
     return true;
 }
 
+std::string OTBVectorDataPort::getDataPath() const {
+    if (isOutport())
+        return m_DataPath;
+    else {
+        for (size_t i = 0; i < connectedPorts_.size(); ++i) {
+            if (!connectedPorts_[i]->isOutport())
+                continue;
+
+            OTBVectorDataPort* p = static_cast< OTBVectorDataPort* >(connectedPorts_[i]);
+            if (p)
+                return p->getDataPath();
+        }
+    }
+    std::string po;
+    return po;
+}
+
+void OTBVectorDataPort::setDataPath(const std::string p) {
+    tgtAssert(isOutport(), "called setDataPath on inport!");
+    m_DataPath = p;
+    invalidate();
+
+}
+
+
+
 } // namespace
