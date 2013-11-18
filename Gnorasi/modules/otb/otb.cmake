@@ -289,6 +289,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/otbvectordataport.cpp
     ${MOD_DIR}/ports/otblistlabelmapport.cpp
     ${MOD_DIR}/ports/otbsommapport.cpp
+    ${MOD_DIR}/ports/otbcsvtextport.cpp
     ${MOD_DIR}/processors/Applications/otbsarradiometriccalibrationapplication.cpp
     ${MOD_DIR}/processors/Applications/otblocalstatisticextractionapplication.cpp
     ${MOD_DIR}/processors/Applications/otbsfstextureextractionapplication.cpp
@@ -408,6 +409,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/otbvectordataport.h
     ${MOD_DIR}/ports/otblistlabelmapport.h
     ${MOD_DIR}/ports/otbsommapport.h
+    ${MOD_DIR}/ports/otbcsvtextport.h
     ${MOD_DIR}/processors/Applications/otbsarradiometriccalibrationapplication.h
     ${MOD_DIR}/processors/Applications/otblocalstatisticextractionapplication.h
     ${MOD_DIR}/processors/Applications/otbsfstextureextractionapplication.h
