@@ -93,6 +93,7 @@ void OTBCSVReaderProcessor::loadCSV() {
 	infile.close();
 	
 	outPort_.setData(buffer.str());
+    outPort_.setDataPath(filename);
 	
 	
     }else if(!hasFileName){
