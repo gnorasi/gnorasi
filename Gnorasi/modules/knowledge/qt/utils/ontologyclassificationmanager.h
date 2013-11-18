@@ -57,6 +57,10 @@ public:
 
     OntologyClass* ontologyClassById(const QString& );
 
+    OntologyClass* ontologyByIdx(int idx);
+
+    int uniqueIdx();
+
 signals:
     
 public slots:

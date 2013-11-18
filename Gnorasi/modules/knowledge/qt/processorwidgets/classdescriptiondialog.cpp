@@ -259,6 +259,7 @@ bool ClassDescriptionDialog::createNewClass(){
     pClass->setId(name);
     pClass->setLevel(lId);
     pClass->setopername(m_pOperatorItem->data(Qt::DisplayRole).toString());
+    pClass->setIdx(ONTOLOGYCLASSIFICATIONMANAGER->uniqueIdx());
     m_classId = name;
     ONTOLOGYCLASSIFICATIONMANAGER->addOntologyClass(pClass);
 

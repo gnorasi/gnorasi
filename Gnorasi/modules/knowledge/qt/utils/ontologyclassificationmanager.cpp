@@ -81,3 +81,28 @@ OntologyClass* OntologyClassificationManager::ontologyClassById(const QString &i
     return 0;
 }
 
+
+OntologyClass* OntologyClassificationManager::ontologyByIdx(int idx){
+
+    QList<OntologyClass*>::const_iterator i;
+    for(i = m_OntoloyClassList.constBegin(); i != m_OntoloyClassList.constEnd(); i++){
+        OntologyClass *p = *i;
+        if(p->idx() == idx)
+            return p;
+    }
+
+    return 0;
+}
+
+int OntologyClassificationManager::uniqueIdx(){
+
+    int helper = 0;
+    OntologyClass *pClass = ontologyByIdx(helper);
+    while(pClass){
+
+        helper++;
+        pClass = ontologyByIdx(helper);
+    }
+
+    return helper;
+}

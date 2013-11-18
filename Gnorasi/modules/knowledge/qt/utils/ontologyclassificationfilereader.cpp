@@ -200,6 +200,15 @@ void OntologyClassificationFileReader::parseClasses(const QDomDocument &doc, con
                 pClass->setName(id);
                 pClass->setLevel(level);
 
+                int idx = 0;
+                if(classElement.hasAttribute(QLatin1String("idx"))){
+                    idx = classElement.attribute(QLatin1String("idx")).toInt();
+                }
+
+                if(!idx)
+                    idx = ONTOLOGYCLASSIFICATIONMANAGER->uniqueIdx();
+                pClass->setIdx(idx);
+
                 ONTOLOGYCLASSIFICATIONMANAGER->addOntologyClass(pClass);
 
                 qDebug() << "adding class id : " << id;

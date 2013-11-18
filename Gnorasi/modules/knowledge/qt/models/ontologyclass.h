@@ -46,12 +46,13 @@ class FuzzyRule;
 class OntologyClass : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString  id      READ id         WRITE setId         NOTIFY idChanged)
-    Q_PROPERTY(QString  name    READ name       WRITE setName       NOTIFY nameChanged)
-    Q_PROPERTY(QString  color   READ color      WRITE setColor      NOTIFY colorChanged)
-    Q_PROPERTY(int      level   READ level      WRITE setLevel      NOTIFY levelChanged)
-    Q_PROPERTY(QString  parentId READ parentId WRITE setparentId NOTIFY parentIdChanged)
-    Q_PROPERTY(QString opername READ opername WRITE setopername NOTIFY opernameChanged)
+    Q_PROPERTY(QString  id          READ id         WRITE setId         NOTIFY idChanged)
+    Q_PROPERTY(QString  name        READ name       WRITE setName       NOTIFY nameChanged)
+    Q_PROPERTY(QString  color       READ color      WRITE setColor      NOTIFY colorChanged)
+    Q_PROPERTY(int      level       READ level      WRITE setLevel      NOTIFY levelChanged)
+    Q_PROPERTY(QString  parentId    READ parentId   WRITE setparentId   NOTIFY parentIdChanged)
+    Q_PROPERTY(QString  opername    READ opername   WRITE setopername   NOTIFY opernameChanged)
+    Q_PROPERTY(int      idx         READ idx        WRITE setIdx        NOTIFY idxChanged)
 public:
     OntologyClass(OntologyClass *parent = 0);
     ~OntologyClass();
@@ -98,6 +99,10 @@ public:
     void setopername(const QString &n) { m_opername = n; }
 
 
+    int idx() const { return m_idx; }
+    void setIdx(int i) { m_idx = i; }
+
+
 signals:
     void idChanged();
     void nameChanged();
@@ -105,6 +110,7 @@ signals:
     void levelChanged();
     void parentIdChanged();
     void opernameChanged();
+    void idxChanged();
 
 private:
 
@@ -120,6 +126,7 @@ private:
     QString m_parentId;
     QString m_opername;
     int     m_level;
+    int     m_idx;
 };
 
 //} // end of namespace voreen

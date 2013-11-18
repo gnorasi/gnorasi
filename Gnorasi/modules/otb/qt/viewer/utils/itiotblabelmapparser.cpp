@@ -13,6 +13,9 @@
 
 #include "itiotbimagemanager.h"
 
+#include "../../../../knowledge/qt/utils/ontologyclassificationmanager.h"
+#include "../../../../knowledge/qt/models/ontologyclass.h"
+
 using namespace itiviewer;
 using namespace otb;
 
@@ -99,37 +102,45 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
             if(!m_classLabelIdsNames.contains(classificationId)){
 
+                OntologyClass *pOntologyClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyByIdx(classificationId);
+                if(pOntologyClass){
 
-                std::vector<std::string> attrList = lblObject->GetAvailableAttributes();
-                if(!attrList.empty()){
-                    qDebug() << QString("The following id does not exist on the hash map : ").append(QString::number(classificationId));
+                    QString ontologyClassName = pOntologyClass->name();
+                    qDebug() << "found the ontology class name : " << ontologyClassName << " , ontology class id : " << classificationId;
+                    m_classLabelIdsNames[classificationId] = ontologyClassName;
+                }else
+                    qDebug() << "could not find the ontology class , ontology class id : " << classificationId;
 
-                    std::string clname = attrList.at(attrList.size()-1);
-                    QString cname = QString::fromStdString(clname);
+//                std::vector<std::string> attrList = lblObject->GetAvailableAttributes();
+//                if(!attrList.empty()){
+//                    qDebug() << QString("The following id does not exist on the hash map : ").append(QString::number(classificationId));
 
-                    if(!cname.startsWith("SHAPE:"))
-                        m_classLabelIdsNames[classificationId] = cname;
-                    else{
-                        clname = attrList.at(0);
-                        cname = QString::fromStdString(clname);
-//                        val = lblObject->GetAttribute(cname.toUtf8().constData());
-//                        if(val - 666.666 < 0.1 )
-                            m_classLabelIdsNames[classificationId] = cname;
-                    }
-//                    double val = lblObject->GetAttribute(cname.toUtf8().constData());
-//                    if(val - 666.666 < 0.1 )
+//                    std::string clname = attrList.at(attrList.size()-1);
+//                    QString cname = QString::fromStdString(clname);
+
+//                    if(!cname.startsWith("SHAPE:"))
 //                        m_classLabelIdsNames[classificationId] = cname;
 //                    else{
 //                        clname = attrList.at(0);
 //                        cname = QString::fromStdString(clname);
-//                        val = lblObject->GetAttribute(cname.toUtf8().constData());
-//                        if(val - 666.666 < 0.1 )
+////                        val = lblObject->GetAttribute(cname.toUtf8().constData());
+////                        if(val - 666.666 < 0.1 )
 //                            m_classLabelIdsNames[classificationId] = cname;
 //                    }
-                }
-                else{
-                    qDebug() << QString("The following id does not exist on the hash map but the attributes vector is a empty : ").append(QString::number(classificationId));
-                }
+////                    double val = lblObject->GetAttribute(cname.toUtf8().constData());
+////                    if(val - 666.666 < 0.1 )
+////                        m_classLabelIdsNames[classificationId] = cname;
+////                    else{
+////                        clname = attrList.at(0);
+////                        cname = QString::fromStdString(clname);
+////                        val = lblObject->GetAttribute(cname.toUtf8().constData());
+////                        if(val - 666.666 < 0.1 )
+////                            m_classLabelIdsNames[classificationId] = cname;
+////                    }
+//                }
+//                else{
+//                    qDebug() << QString("The following id does not exist on the hash map but the attributes vector is a empty : ").append(QString::number(classificationId));
+//                }
             }
 
             pRegion->setClassificationId(classificationId);

@@ -96,7 +96,7 @@ private:
     QString m_namespaceXmlBase;
 
     //!
-    int helperCounter;
+//    int helperCounter;
 
     QDomDocument doc;
 
