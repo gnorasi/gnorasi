@@ -57,11 +57,15 @@ public:
      */
     virtual bool isReady() const;
 
-    //!
-    std::string DataPath() const { return m_DataPath; }
+    /**
+     * Returns the file path
+     */
+    std::string getDataPath() const;
 
-    //!
-    void setDataPath(const std::string p) { m_DataPath = p; }
+    /**
+     * Sets the file path, if it's an outport
+     */
+    void setDataPath(const std::string);
 
 protected:
     DataPointer portData_;
