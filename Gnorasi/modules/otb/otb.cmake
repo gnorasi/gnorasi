@@ -297,6 +297,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Applications/otbcomputeimagesstatisticsapplication.cpp
     ${MOD_DIR}/processors/Applications/otbsegmentationapplication.cpp
     ${MOD_DIR}/processors/Applications/otbcomputeconfusionmatrixapplication.cpp
+    ${MOD_DIR}/processors/Applications/otbfusionofclassificationsapplication.cpp
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.cpp
@@ -417,6 +418,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Applications/otbcomputeimagesstatisticsapplication.h
     ${MOD_DIR}/processors/Applications/otbsegmentationapplication.h
     ${MOD_DIR}/processors/Applications/otbcomputeconfusionmatrixapplication.h
+    ${MOD_DIR}/processors/Applications/otbfusionofclassificationsapplication.h
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.h
