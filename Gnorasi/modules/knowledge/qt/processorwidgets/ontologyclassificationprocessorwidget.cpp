@@ -400,6 +400,11 @@ QString OntologyClassificationProcessorWidget::constructXmlFile(){
 
 OntologyClassificationProcessorWidget::~OntologyClassificationProcessorWidget(){
 //    FuzzyOntologyManager::deleteInstance();
+    ONTOLOGYCLASSIFICATIONMANAGER->deleteInstance();
+    OBJECTLEVELMANAGER->deleteInstance();
+    FUZZYRULEMANAGER->deleteInstance();
+    OBJECTATTRIBUTEMANAGER->deleteInstance();
+
 }
 
 } //namespace voreen
