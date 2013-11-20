@@ -24,7 +24,7 @@ public:
     virtual CodeState getCodeState() const   { return CODE_STATE_EXPERIMENTAL; } //STABLE, TESTING, EXPERIMENTAL
     virtual std::string getProcessorInfo() const;
     
-    virtual bool isEndProcessor() const;
+//    virtual bool isEndProcessor() const;
     virtual bool isReady() const;
 	
 //	std::string getOntologyData() { return inOntologyPort_.getData(); }

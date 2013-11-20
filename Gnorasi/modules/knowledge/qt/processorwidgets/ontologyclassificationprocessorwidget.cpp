@@ -290,7 +290,7 @@ QString OntologyClassificationProcessorWidget::getFilePath(){
     path = QString::fromStdString(ocProcessor->getFilePath());
     QString workspacepath = QString::fromStdString(VoreenApplication::app()->getResourcePath("workspaces"));
     path.remove(workspacepath);
-    if(path.at(0) == QDir::separator())
+    if(!path.isEmpty() && path.at(0) == QDir::separator())
         path.remove(0,1);
 
     qDebug() << "path : " << path << "workspacepath : " << workspacepath;
@@ -303,7 +303,7 @@ void OntologyClassificationProcessorWidget::save(){
     QString path = getFilePath();
 
     if(path.isEmpty()){
-        QMessageBox::critical(this,tr("Error"),tr("Could not save the file.\nError message : Path is empty.\mPlease select a file path and try again"));
+        QMessageBox::critical(this,tr("Error"),tr("Could not save the file.\nError message : Path is empty.\nPlease select a file path and try again"));
         return;
     }
 
@@ -326,7 +326,7 @@ void OntologyClassificationProcessorWidget::load(){
     QString path = getFilePath();
 
     if(path.isEmpty()){
-        QMessageBox::critical(this,tr("Error"),tr("Could not open the file.\nError message : Path is empty.\mPlease select a file path and try again"));
+        QMessageBox::critical(this,tr("Error"),tr("Could not open the file.\nError message : Path is empty.\nPlease select a file path and try again"));
         return;
     }
 
