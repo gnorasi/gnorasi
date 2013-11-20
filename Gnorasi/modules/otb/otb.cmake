@@ -244,6 +244,8 @@ SET(MOD_CORE_SOURCES
 #    ${MOD_DIR}/processors/Applications/otbdimensionalityreductionapplication.cpp
 #    ${MOD_DIR}/processors/Applications/otbvertexcomponentanalysisapplication.cpp
 #    ${MOD_DIR}/processors/Applications/otbimageclassifierapplication.cpp
+#    ${MOD_DIR}/processors/Applications/otbtrainimagesclassifierapplication.cpp
+#    ${MOD_DIR}/processors/Applications/otbtrainimagesclassifierproperties.cpp
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.cpp
@@ -352,6 +354,7 @@ SET(MOD_CORE_HEADERS
 #    ${MOD_DIR}/processors/Applications/otbdimensionalityreductionapplication.h
 #    ${MOD_DIR}/processors/Applications/otbvertexcomponentanalysisapplication.h
 #    ${MOD_DIR}/processors/Applications/otbimageclassifierapplication.h
+#    ${MOD_DIR}/processors/Applications/otbtrainimagesclassifierapplication.h
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.h
