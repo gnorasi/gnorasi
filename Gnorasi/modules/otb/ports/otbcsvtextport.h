@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -22,41 +24,21 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef VRN_OTBVECTORDATAPORT_H
-#define VRN_OTBVECTORDATAPORT_H
+#ifndef OTBCSVTEXTPORT_H
+#define OTBCSVTEXTPORT_H
 
 #include "voreen/core/voreencoreapi.h"
 #include "voreen/core/ports/port.h"
-
-#include "otbVectorData.h"
+#include "voreen/core/ports/textport.h"
 
 namespace voreen {
 
-class VRN_CORE_API OTBVectorDataPort : public Port {
+class VRN_CORE_API OTBCSVTextPort : public TextPort {
 public:
-    explicit OTBVectorDataPort(PortDirection direction, const std::string& name,
+    explicit OTBCSVTextPort(PortDirection direction, const std::string& name,
                         bool allowMultipleConnections = false,
                         Processor::InvalidationLevel invalidationLevel = Processor::INVALID_PARAMETERS);
-    ~OTBVectorDataPort();
-    
-    typedef otb::VectorData<double, 2> DataType;
-    typedef DataType::Pointer DataSmartPointer;
-    typedef DataType* DataPointer;
-
-    virtual void setData(const DataPointer& pointer);
-
-    virtual DataPointer getData() const;
-
-    /// Returns true.
-    virtual bool hasData() const;
-
-    std::vector<const OTBVectorDataPort* > getConnected() const;
-
-    /**
-     * Returns true, if the port is connected
-     */
-    virtual bool isReady() const;
-
+    ~OTBCSVTextPort();
     /**
      * Returns the file path
      */
@@ -68,7 +50,6 @@ public:
     void setDataPath(const std::string);
 
 protected:
-    DataPointer portData_;
 
     std::string m_DataPath;
 
@@ -77,4 +58,4 @@ protected:
 
 } // namespace
 
-#endif // VRN_OTBVECTORDATAPORT_H
+#endif // OTBCSVTEXTPORT_H

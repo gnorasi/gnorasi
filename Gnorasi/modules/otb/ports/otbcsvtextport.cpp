@@ -4,7 +4,9 @@
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
- * Copyright (c) Draxis SA - www.draxis.gr - All rights reserved.		*
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
+ * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
  *                                                                              *
  * This file is part of the GNORASI software package. GNORASI is free           *
  * software: you can redistribute it and/or modify it under the terms           *
@@ -22,59 +24,46 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef VRN_OTBVECTORDATAPORT_H
-#define VRN_OTBVECTORDATAPORT_H
-
-#include "voreen/core/voreencoreapi.h"
-#include "voreen/core/ports/port.h"
-
-#include "otbVectorData.h"
+#include "otbcsvtextport.h"
+#include "voreen/core/datastructures/rendertarget.h"
+#include "voreen/core/processors/renderprocessor.h"
+#include "tgt/event/event.h"
 
 namespace voreen {
 
-class VRN_CORE_API OTBVectorDataPort : public Port {
-public:
-    explicit OTBVectorDataPort(PortDirection direction, const std::string& name,
-                        bool allowMultipleConnections = false,
-                        Processor::InvalidationLevel invalidationLevel = Processor::INVALID_PARAMETERS);
-    ~OTBVectorDataPort();
-    
-    typedef otb::VectorData<double, 2> DataType;
-    typedef DataType::Pointer DataSmartPointer;
-    typedef DataType* DataPointer;
+const std::string OTBCSVTextPort::loggerCat_("voreen.OTBCSVTextPort");
 
-    virtual void setData(const DataPointer& pointer);
+OTBCSVTextPort::OTBCSVTextPort(PortDirection direction, const std::string& name,
+                   bool allowMultipleConnections, Processor::InvalidationLevel invalidationLevel)
+    : TextPort(direction, name, allowMultipleConnections, invalidationLevel)
+{
+}
 
-    virtual DataPointer getData() const;
+OTBCSVTextPort::~OTBCSVTextPort() {
+}
 
-    /// Returns true.
-    virtual bool hasData() const;
+std::string OTBCSVTextPort::DataPath() const {
+    if (isOutport())
+        return m_DataPath;
+    else {
+        for (size_t i = 0; i < connectedPorts_.size(); ++i) {
+            if (!connectedPorts_[i]->isOutport())
+                continue;
 
-    std::vector<const OTBVectorDataPort* > getConnected() const;
+            OTBCSVTextPort* p = static_cast< OTBCSVTextPort* >(connectedPorts_[i]);
+            if (p)
+                return p->DataPath();
+        }
+    }
+    std::string po;
+    return po;
+}
 
-    /**
-     * Returns true, if the port is connected
-     */
-    virtual bool isReady() const;
+void OTBCSVTextPort::setDataPath(const std::string p) {
+    tgtAssert(isOutport(), "called setDataPath on inport!");
+    m_DataPath = p;
+    invalidate();
 
-    /**
-     * Returns the file path
-     */
-    std::string DataPath() const;
-
-    /**
-     * Sets the file path, if it's an outport
-     */
-    void setDataPath(const std::string);
-
-protected:
-    DataPointer portData_;
-
-    std::string m_DataPath;
-
-    static const std::string loggerCat_; ///< category used in logging
-};
+}
 
 } // namespace
-
-#endif // VRN_OTBVECTORDATAPORT_H

@@ -33,7 +33,7 @@
 #include "voreen/core/properties/filedialogproperty.h"
 #include "voreen/core/properties/buttonproperty.h"
 #include "voreen/core/properties/stringproperty.h"
-#include "voreen/core/ports/textport.h"
+#include "modules/otb/ports/otbcsvtextport.h"
 #include <fstream>
 #include <sstream>
 
@@ -66,7 +66,7 @@ private:
    
     bool hasFileName;
   
-    TextPort inPort_;
+    OTBCSVTextPort inPort_;
     
     std::string inData;
     

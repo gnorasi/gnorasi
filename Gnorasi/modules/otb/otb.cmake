@@ -239,6 +239,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/otbkeypointsetport.cpp
     ${MOD_DIR}/ports/otbvectordataport.cpp
     ${MOD_DIR}/ports/otbsommapport.cpp
+    ${MOD_DIR}/ports/otbcsvtextport.cpp
 #    ${MOD_DIR}/processors/Applications/otbopticalcalibrationapplication.cpp
 #    ${MOD_DIR}/processors/Applications/otbdimensionalityreductionapplication.cpp
 #    ${MOD_DIR}/processors/Applications/otbvertexcomponentanalysisapplication.cpp
@@ -346,6 +347,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/otbkeypointsetport.h
     ${MOD_DIR}/ports/otbvectordataport.h
     ${MOD_DIR}/ports/otbsommapport.h
+    ${MOD_DIR}/ports/otbcsvtextport.h
 #    ${MOD_DIR}/processors/Applications/otbopticalcalibrationapplication.h
 #    ${MOD_DIR}/processors/Applications/otbdimensionalityreductionapplication.h
 #    ${MOD_DIR}/processors/Applications/otbvertexcomponentanalysisapplication.h
