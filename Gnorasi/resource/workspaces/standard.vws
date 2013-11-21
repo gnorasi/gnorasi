@@ -49,7 +49,7 @@
                 </Processor>
                 <Processor type="Calculate Band Statistics for Objects" name="Calculate Band Statistics for Objects" id="ref2">
                     <MetaData>
-                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-841" y="-459" />
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-848" y="-448" />
                     </MetaData>
                     <Properties>
                         <Property name="automaticUpdate" value="false" />
@@ -60,7 +60,7 @@
                 </Processor>
                 <Processor type="Calculate Shape Properties for Objects" name="Calculate Shape Properties for Objects" id="ref6">
                     <MetaData>
-                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-736" y="-349" />
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-757" y="-337" />
                     </MetaData>
                     <Properties>
                         <Property name="automaticUpdate" value="false" />
@@ -72,10 +72,10 @@
                 <Processor type="OntologyClassification Processor" name="OntologyClassification Processor" id="ref7">
                     <MetaData>
                         <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-317" y="-632" />
-                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="true" x="594" y="465" width="600" height="500" />
+                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="false" x="594" y="465" width="600" height="500" />
                     </MetaData>
                     <Properties>
-                        <Property name="xmlfile" noPathSet="false" value="C:/Users/nikger/Desktop/classificationsample2.xml" />
+                        <Property name="xmlfile" noPathSet="false" value="C:/Users/nikger/Desktop/classificationsample.xml" />
                     </Properties>
                     <InteractionHandlers />
                 </Processor>
@@ -101,7 +101,7 @@
                 <Processor type="Otb Image Viewer" name="Otb Image Viewer" id="ref3">
                     <MetaData>
                         <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-198" y="-109" />
-                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="true" x="699" y="551" width="660" height="713" />
+                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="false" x="699" y="551" width="661" height="714" />
                     </MetaData>
                     <Properties>
                         <Property name="imageFile" noPathSet="true" value="" />
@@ -112,7 +112,7 @@
                 <Processor type="Otb Image Viewer" name="Otb Image Viewer 2" id="ref4">
                     <MetaData>
                         <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-1082" y="-426" />
-                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="true" x="-151" y="347" width="812" height="641" />
+                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="false" x="760" y="340" width="813" height="642" />
                     </MetaData>
                     <Properties>
                         <Property name="imageFile" noPathSet="true" value="" />
