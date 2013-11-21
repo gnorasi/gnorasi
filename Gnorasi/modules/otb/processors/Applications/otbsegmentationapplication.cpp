@@ -475,7 +475,7 @@ void OTBSegmentationApplication::writeImageToFile(ImageType *output) {
     writer = FileWriterType::New();
     writer->SetFileName(imageFile_.get());
     writer->SetInput(output);
-    writer->WriteGeomFileOn();
+//    writer->WriteGeomFileOn();
     try
     {
         writer->Update();
