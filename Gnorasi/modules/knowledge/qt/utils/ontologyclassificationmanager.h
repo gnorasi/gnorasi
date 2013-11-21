@@ -61,6 +61,9 @@ public:
 
     int uniqueIdx();
 
+    QString filePath() const { return m_filePath; }
+    void setFilePath(const QString fp) { m_filePath = fp; }
+
 signals:
     
 public slots:
@@ -74,6 +77,8 @@ private:
 
     QList<OntologyClass*> m_OntoloyClassList;
     
+
+    QString m_filePath;
 };
 
 
