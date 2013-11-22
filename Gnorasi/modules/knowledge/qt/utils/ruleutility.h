@@ -34,7 +34,6 @@
 namespace voreen {
 
 
-class Rule;
 class OntologyClassItem;
 
 //!

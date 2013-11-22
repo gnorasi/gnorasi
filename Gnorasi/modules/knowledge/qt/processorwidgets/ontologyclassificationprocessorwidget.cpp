@@ -307,6 +307,8 @@ void OntologyClassificationProcessorWidget::save(){
         return;
     }
 
+    ONTOLOGYCLASSIFICATIONMANAGER->setFilePath(path);
+
     QString text = constructXmlFile();
 
     QFile file(path);
@@ -333,6 +335,7 @@ void OntologyClassificationProcessorWidget::load(){
     qDebug() << "loading document path : " << path;
 
     ONTOLOGYCLASSIFICATIONMANAGER->clear();
+    ONTOLOGYCLASSIFICATIONMANAGER->setFilePath(path);
     FUZZYRULEMANAGER->clear();
 
     OntologyClassificationFileReader reader;

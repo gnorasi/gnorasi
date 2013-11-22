@@ -28,27 +28,6 @@
 
 #include "knowledgeprocessorwidgetfactory.h"
 
-#include "../../processors/classifierwsprocessor.h"
-#include "classifierwswidget.h"
-
-#include "../../processors/retrieveclassificationdataprocessor.h"
-#include "retrieveclassificationdatawidget.h"
-
-//#include "../../processors/ontologycreatorprocessor.h"
-//#include "ontologycreatorwidget.h"
-
-//#include "../../processors/geospatialclassificationprocessor.h"
-//#include "geospatialclassificationwidget.h"
-
-//#include "../../processors/fuzzypreprocessor.h"
-//#include "fuzzypreprocessorwidget.h"
-
-//#include "../../processors/fuzzyrulesprocessor.h"
-//#include "fuzzyrulesprocessorwidget.h"
-
-#include "../../processors/fuzzyprocessor.h"
-#include "../../qt/processorwidgets/fuzzyprocessorwidget.h"
-
 #include "../../processors/ontologyclassificationprocessor.h"
 #include "../../qt/processorwidgets/ontologyclassificationprocessorwidget.h"
 
@@ -66,29 +45,8 @@ ProcessorWidget* KnowledgeProcessorWidgetFactory::createWidget(Processor* proces
     }
     QWidget* parent = VoreenApplicationQt::qtApp()->getMainWindow();
 
-    if (dynamic_cast<RetrieveClassificationDataProcessor*>(processor))
-        return new RetrieveClassificationDataWidget(parent, static_cast<RetrieveClassificationDataProcessor*>(processor));
-
-    if (dynamic_cast<ClassifierWSProcessor*>(processor))
-        return new ClassifierWSWidget(parent, static_cast<ClassifierWSProcessor*>(processor));
-
-//    if (dynamic_cast<OntologyCreatorProcessor*>(processor))
-//        return new OntologyCreatorWidget(parent, static_cast<OntologyCreatorProcessor*>(processor));
-
-//    if(dynamic_cast<GeospatialClassificationProcessor*>(processor))
-//        return new GeoSpatialClassificationWidget(parent, static_cast<GeospatialClassificationProcessor*>(processor));
-
-    if(dynamic_cast<FuzzyProcessor*>(processor))
-        return new FuzzyProcessorWidget(parent,static_cast<FuzzyProcessor*>(processor));
-
     if(dynamic_cast<OntologyClassificationProcessor*>(processor))
         return new OntologyClassificationProcessorWidget(parent,static_cast<OntologyClassificationProcessor*>(processor));
-
-//    if(dynamic_cast<FuzzyPreProcessor*>(processor))
-//        return new FuzzyPreProcessorWidget(parent, static_cast<FuzzyPreProcessor*>(processor));
-
-//    if(dynamic_cast<FuzzyRulesProcessor*>(processor))
-//        return new FuzzyRulesProcessorWidget(parent,static_cast<FuzzyRulesProcessor*>(processor));
 
     return 0;
 }
