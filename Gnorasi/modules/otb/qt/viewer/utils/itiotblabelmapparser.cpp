@@ -71,6 +71,7 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
             bool val = img->TransformPhysicalPointToIndex(cit,index);
 
             if(val){
+
                 x = index[0];
                 y = index[1];
 
@@ -85,10 +86,7 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
         if(plgon.isEmpty())
             continue;
 
-        plgon.remove(plgon.size()-1);
-
-        if(!LabelMapParser::validatePolygon(plgon))
-            continue;
+        LabelMapParser::validatePolygon(plgon);
 
         pollist.append(plgon);
 
