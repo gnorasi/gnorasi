@@ -10,6 +10,11 @@
 #include "itkShapeLabelObject.h"
 #include "itkPolyLineParametricPath.h"
 #include "itkVectorContainer.h"
+#include "otbVectorData.h"
+#include "otbLabelMapToVectorDataFilter.h"
+#include "itkPreOrderTreeIterator.h"
+#include "otbObjectList.h"
+#include "otbPolygon.h"
 
 #include "itiotbimagemanager.h"
 
@@ -25,142 +30,201 @@ LabelMapParser::LabelMapParser(QObject *parent) :
 }
 
 
+//QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
+
+//    const unsigned int VDimension = 2;
+//    typedef itk::ContinuousIndex<double,VDimension>    ContinuousIndexType;
+//    typedef itk::Index<  VDimension >                  IndexType;
+//    typedef itk::Offset< VDimension >                  OffsetType;
+//    typedef itk::Point<double,VDimension>              PointType;
+//    typedef itk::Vector<double,VDimension>             VectorType;
+//    typedef ContinuousIndexType                   VertexType;
+//    typedef itk::VectorContainer<unsigned, VertexType> VertexListType;
+
+//    QList<Region*> list;
+
+//    VectorImageType *img = m_pManager->image();
+//    if(!img)
+//        return list;
+
+//    int x       = 0;
+//    int y       = 0;
+//    int counter = 0;
+
+//    QList<QPolygon> pollist;
+
+//    qDebug() << "number of labelobjects in labelmap : " << lblmap->GetNumberOfLabelObjects();
+
+//    m_classLabelIdsNames.clear();
+//    m_classLabelIdsNames[1001] = tr("Unclassified");
+
+//    for(unsigned int i = 1; i < lblmap->GetNumberOfLabelObjects(); i++){
+//        LabelObjectType* lblObject = lblmap->GetLabelObject(i);
+
+//        PolygonType *pol = lblObject->GetPolygon();
+
+//        QPolygon plgon;
+
+//        const VertexListType *vList = pol->GetVertexList();
+//        VertexListType::const_iterator point = vList->begin();
+//        while(point != vList->end())
+//        {
+//            ContinuousIndexType cit = *point;
+
+//            VectorIndexType index;
+
+//            bool val = img->TransformPhysicalPointToIndex(cit,index);
+
+//            if(val){
+
+//                x = index[0];
+//                y = index[1];
+
+//                QPoint p(x,y);
+
+//                plgon.append(p);
+//            }
+
+//            point++;
+//        }
+
+//        if(plgon.isEmpty())
+//            continue;
+
+//        LabelMapParser::validatePolygon(plgon);
+
+//        pollist.append(plgon);
+
+//        Region *pRegion = new Region();
+//        pRegion->setArea(plgon);
+//        pRegion->setSegmentationId(counter++);
+
+//        if(lblObject->HasClassLabel()){
+
+//            int classificationId = (int)lblObject->GetClassLabel();
+
+//            if(!m_classLabelIdsNames.contains(classificationId)){
+
+//                OntologyClass *pOntologyClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyByIdx(classificationId);
+//                if(pOntologyClass){
+
+//                    QString ontologyClassName = pOntologyClass->name();
+//                    qDebug() << "found the ontology class name : " << ontologyClassName << " , ontology class id : " << classificationId;
+//                    m_classLabelIdsNames[classificationId] = ontologyClassName;
+//                }else
+//                    qDebug() << "could not find the ontology class , ontology class id : " << classificationId;
+//            }
+
+//            pRegion->setClassificationId(classificationId);
+//        }
+
+//        list << pRegion;
+//    }
+
+//    qDebug() << "Number of classification ids : " << m_classLabelIdsNames.size();
+
+//    //    QString path = QFileDialog::getSaveFileName(0,QLatin1String("Save"),QDir::homePath());
+//    //    if(!path.contains(".csv"))
+//    //        path.append(".csv");
+
+//    //    QFile file(path);
+//    //    if(!file.open(QIODevice::WriteOnly))
+//    //        return list;
+
+//    //    QTextStream out(&file);
+//    //    out << LabelMapParser::contructTextFromPolygonList(pollist);
+
+//    //    file.close();
+
+
+
+//    return list;
+//}
+
+
 QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
-
-    const unsigned int VDimension = 2;
-    typedef itk::ContinuousIndex<double,VDimension>    ContinuousIndexType;
-    typedef itk::Index<  VDimension >                  IndexType;
-    typedef itk::Offset< VDimension >                  OffsetType;
-    typedef itk::Point<double,VDimension>              PointType;
-    typedef itk::Vector<double,VDimension>             VectorType;
-    typedef ContinuousIndexType                   VertexType;
-    typedef itk::VectorContainer<unsigned, VertexType> VertexListType;
-
-    QList<Region*> list;
-
-    VectorImageType *img = m_pManager->image();
-    if(!img)
-        return list;
 
     int x       = 0;
     int y       = 0;
     int counter = 0;
 
+    QList<Region*> list;
     QList<QPolygon> pollist;
 
-    qDebug() << "number of labelobjects in labelmap : " << lblmap->GetNumberOfLabelObjects();
+    const unsigned int VDimension = 2;
+    typedef itk::ContinuousIndex<double,VDimension>    ContinuousIndexType;
+    typedef ContinuousIndexType                   VertexType;
+    typedef itk::VectorContainer<unsigned, VertexType> VertexListType;
+    typedef double                                                                  ValuePrecision;
+    const int dimension = 2;
+    typedef unsigned int                                                            PixelType;//pas le choix de prendre unsigned int comme type
+    typedef otb::VectorData<PixelType, dimension, ValuePrecision>                   VectorDataType;
+    typedef otb::LabelMapToVectorDataFilter<LabelMapType, VectorDataType>           LabelMapToVectorDataFilterType;
 
-    m_classLabelIdsNames.clear();
-    m_classLabelIdsNames[1001] = tr("Unclassified");
+    LabelMapToVectorDataFilterType::Pointer LabelMapToVectorDataFilter = LabelMapToVectorDataFilterType::New();
+    LabelMapToVectorDataFilter->SetInput(lblmap);
+    LabelMapToVectorDataFilter->Update();
 
-    for(unsigned int i = 1; i < lblmap->GetNumberOfLabelObjects(); i++){
-        LabelObjectType* lblObject = lblmap->GetLabelObject(i);
+    VectorDataType *vdt = LabelMapToVectorDataFilter->GetOutput();
 
-        PolygonType *pol = lblObject->GetPolygon();
+    int sz = vdt->Size();
 
-        QPolygon plgon;
+    qDebug() << "size of LabelMapToVectorDataFilter : " << sz;
 
-        const VertexListType *vList = pol->GetVertexList();
-        VertexListType::const_iterator point = vList->begin();
-        while(point != vList->end())
+    typedef VectorDataType::DataTreeType            DataTreeType;
+    typedef VectorDataType::DataNodeType            DataNodeType;
+    typedef itk::PreOrderTreeIterator<DataTreeType> TreeIteratorType;
+
+    typedef otb::Polygon<double>                     PolygonType;
+    typedef PolygonType::VertexListConstIteratorType PolygonIteratorType;
+    typedef otb::ObjectList<PolygonType>             PolygonListType;
+
+    typedef PolygonListType::Iterator               PolygonListIteratorType;
+
+    PolygonListType::Pointer polygonList = PolygonListType::New();
+
+    TreeIteratorType it(vdt->GetDataTree());
+
+    it.GoToBegin();
+
+    while (!it.IsAtEnd())
+    {
+        if (it.Get()->IsPolygonFeature())
         {
-            ContinuousIndexType cit = *point;
 
-            VectorIndexType index;
+            PolygonType::Pointer pt = it.Get()->GetPolygonExteriorRing();
 
-            bool val = img->TransformPhysicalPointToIndex(cit,index);
+            QPolygon plgon;
+            const VertexListType *vList = pt->GetVertexList();
+            VertexListType::const_iterator point = vList->begin();
+            while(point != vList->end())
+            {
+                ContinuousIndexType cit = *point;
 
-            if(val){
-
-                x = index[0];
-                y = index[1];
+                x = cit[0];
+                y = cit[1];
 
                 QPoint p(x,y);
 
                 plgon.append(p);
+
+                point++;
             }
 
-            point++;
+            qDebug() << plgon;
+
+            pollist.append(plgon);
+
+            Region *pRegion = new Region();
+            pRegion->setArea(plgon);
+            pRegion->setSegmentationId(counter++);
+            pRegion->setClassificationId(0);
+
+            list << pRegion;
         }
 
-        if(plgon.isEmpty())
-            continue;
-
-        LabelMapParser::validatePolygon(plgon);
-
-        pollist.append(plgon);
-
-        Region *pRegion = new Region();
-        pRegion->setArea(plgon);
-        pRegion->setSegmentationId(counter++);
-
-        if(lblObject->HasClassLabel()){
-
-            int classificationId = (int)lblObject->GetClassLabel();
-
-            if(!m_classLabelIdsNames.contains(classificationId)){
-
-                OntologyClass *pOntologyClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyByIdx(classificationId);
-                if(pOntologyClass){
-
-                    QString ontologyClassName = pOntologyClass->name();
-                    qDebug() << "found the ontology class name : " << ontologyClassName << " , ontology class id : " << classificationId;
-                    m_classLabelIdsNames[classificationId] = ontologyClassName;
-                }else
-                    qDebug() << "could not find the ontology class , ontology class id : " << classificationId;
-
-//                std::vector<std::string> attrList = lblObject->GetAvailableAttributes();
-//                if(!attrList.empty()){
-//                    qDebug() << QString("The following id does not exist on the hash map : ").append(QString::number(classificationId));
-
-//                    std::string clname = attrList.at(attrList.size()-1);
-//                    QString cname = QString::fromStdString(clname);
-
-//                    if(!cname.startsWith("SHAPE:"))
-//                        m_classLabelIdsNames[classificationId] = cname;
-//                    else{
-//                        clname = attrList.at(0);
-//                        cname = QString::fromStdString(clname);
-////                        val = lblObject->GetAttribute(cname.toUtf8().constData());
-////                        if(val - 666.666 < 0.1 )
-//                            m_classLabelIdsNames[classificationId] = cname;
-//                    }
-////                    double val = lblObject->GetAttribute(cname.toUtf8().constData());
-////                    if(val - 666.666 < 0.1 )
-////                        m_classLabelIdsNames[classificationId] = cname;
-////                    else{
-////                        clname = attrList.at(0);
-////                        cname = QString::fromStdString(clname);
-////                        val = lblObject->GetAttribute(cname.toUtf8().constData());
-////                        if(val - 666.666 < 0.1 )
-////                            m_classLabelIdsNames[classificationId] = cname;
-////                    }
-//                }
-//                else{
-//                    qDebug() << QString("The following id does not exist on the hash map but the attributes vector is a empty : ").append(QString::number(classificationId));
-//                }
-            }
-
-            pRegion->setClassificationId(classificationId);
-        }
-
-        list << pRegion;
+        ++it;
     }
-
-    qDebug() << "Number of classification ids : " << m_classLabelIdsNames.size();
-
-    //    QString path = QFileDialog::getSaveFileName(0,QLatin1String("Save"),QDir::homePath());
-    //    if(!path.contains(".csv"))
-    //        path.append(".csv");
-
-    //    QFile file(path);
-    //    if(!file.open(QIODevice::WriteOnly))
-    //        return list;
-
-    //    QTextStream out(&file);
-    //    out << LabelMapParser::contructTextFromPolygonList(pollist);
-
-    //    file.close();
 
 
 
