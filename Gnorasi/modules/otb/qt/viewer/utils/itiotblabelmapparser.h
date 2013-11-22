@@ -53,7 +53,7 @@ private:
 
     static inline QString contructTextFromPolygonList(const QList<QPolygon> &list);
 
-    static inline bool validatePolygon(const QPolygon &pol);
+    static inline bool validatePolygon(QPolygon &pol);
 
     QHash<int,QString> m_classLabelIdsNames;
 
@@ -87,7 +87,7 @@ QString LabelMapParser::contructTextFromPolygonList(const QList<QPolygon> &list)
     return textList.join("\n");
 }
 
-bool LabelMapParser::validatePolygon(const QPolygon &pol){
+bool LabelMapParser::validatePolygon(QPolygon &pol){
     QList<QPoint> helperlist;
 
     QPolygon::const_iterator i;
@@ -95,10 +95,14 @@ bool LabelMapParser::validatePolygon(const QPolygon &pol){
     for(i = pol.constBegin(); i != pol.constEnd(); i++){
         QPoint p = *i;
 
-        if(helperlist.contains(p))
-            return false;
+        if(!helperlist.contains(p))
+            helperlist << p;
+    }
 
-        helperlist.append(p);
+    pol.clear();
+    QList<QPoint>::const_iterator j;
+    for(j = helperlist.constBegin(); j != helperlist.constEnd(); j++){
+        pol << *j;
     }
 
     return true;

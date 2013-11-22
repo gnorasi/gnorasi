@@ -14,7 +14,8 @@ Region::Region(QObject *parent) :
     m_color = Qt::transparent;
     m_brush = QBrush(m_color);
 
-    m_pen = QPen(QBrush(Qt::black),2.0);
+//    m_pen = QPen(QBrush(Qt::black),2.0);
+    m_pen = QPen(QBrush(Qt::transparent),0.0);
 }
 
 void Region::drawRegion(QPainter *painter, ImageRegionType &extent, const QRectF &rect, double iz){
