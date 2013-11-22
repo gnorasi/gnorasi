@@ -169,12 +169,6 @@ private:
 //    void setupAvailableAttributesListViewByList(const QStringList &list);
 
     /*!
-     * \brief setupOntologyClassItems
-     * \param list
-     */
-//    void setupOntologyClassItems(const QStringList &list);
-
-    /*!
      * \brief setupItemDelegates
      */
 //    void setupItemDelegates();
@@ -203,11 +197,6 @@ private:
      * \brief m_pFuzzyFunctionFactory
      */
     FuzzyFunctionFactory                    *m_pFuzzyFunctionFactory;
-
-    /*!
-     * \brief m_pCurrentFuzzyOntologyClass
-     */
-    FuzzyOntologyClass                      *m_pCurrentFuzzyOntologyClass;
 
     // helper list
     QStringList                             m_fuzzyAttributesList;
