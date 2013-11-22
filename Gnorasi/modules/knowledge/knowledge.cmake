@@ -30,7 +30,6 @@ SET(MOD_QT_SOURCES
     ${MOD_DIR}/qt/processorwidgets/ontologyclassificationprocessorwidget.cpp
     ${MOD_DIR}/qt/processorwidgets/ontologyclassview.cpp
     ${MOD_DIR}/qt/utils/owlwriter.cpp
-    ${MOD_DIR}/qt/utils/owlparser.cpp
     ${MOD_DIR}/qt/utils/owlhelperitem.cpp
     ${MOD_DIR}/qt/models/ruleitem.cpp
     ${MOD_DIR}/qt/processorwidgets/comboboxdelegate.cpp
@@ -71,7 +70,6 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/processorwidgets/ontologyclassificationprocessorwidget.h
     ${MOD_DIR}/qt/processorwidgets/ontologyclassview.h
     ${MOD_DIR}/qt/utils/owlwriter.h
-    ${MOD_DIR}/qt/utils/owlparser.h
     ${MOD_DIR}/qt/utils/owlhelperitem.h
     ${MOD_DIR}/qt/models/ruleitem.h
     ${MOD_DIR}/qt/processorwidgets/comboboxdelegate.h
