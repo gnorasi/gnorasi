@@ -14,6 +14,7 @@
 //#include "itiotblevelutility.h"
 
 #include "../../../ports/otblabelimageport.h"
+#include "../../../ports/otbvectordataport.h"
 
 #include "../models/itiotbVectorImageModel.h"
 
@@ -185,9 +186,37 @@ QString ItiOtbImageManager::getPathFromReaderProcessor(voreen::Processor *proc) 
 }
 
 
+VectorDataPointer ItiOtbImageManager::getVectorDataType(){
+
+    voreen::Processor *proc = m_pPort->getProcessor();
+    const std::vector<voreen::Port*> list = proc->getPorts();
+
+    for(int i = 0; i < list.size(); i++){
+
+        voreen::Port* port = list.at(i);
+
+        QString className = QString::fromStdString(port->getName());
+
+        if(!className.compare(QLatin1String("Vector Data Input")) && port->isConnected()){
+
+            OTBVectorDataPort *vdtPort = dynamic_cast<OTBVectorDataPort*>(port);
+
+            VectorDataPointer vdt = vdtPort->getData();
+
+            return vdt;
+        }
+    }
+
+    return 0;
+}
+
 void ItiOtbImageManager::createRegions(){
 
     clearLevels();
+
+    VectorDataPointer vdt = getVectorDataType();
+    if(!vdt)
+        return;
 
     voreen::Processor *proc = m_pPort->getProcessor();
     const std::vector<voreen::Port*> list = proc->getPorts();
@@ -201,6 +230,7 @@ void ItiOtbImageManager::createRegions(){
 
             OTBLabelMapPort *lblPort = dynamic_cast<OTBLabelMapPort*>(port);
             if(lblPort && lblPort->isConnected()){
+
                 LabelMapParser::LabelMapType *mapT = (LabelMapParser::LabelMapType*)lblPort->getData();
 
                 if(mapT){
@@ -210,7 +240,7 @@ void ItiOtbImageManager::createRegions(){
 
                     Level *pLevel = new Level(this);
 
-                    QList<Region*> regionList = parser->parse(mapT);
+                    QList<Region*> regionList = parser->parse(mapT, vdt);
                     m_classficationNamesIds = parser->classLabelIdsNames();
 
                     pLevel->setRegions(regionList);

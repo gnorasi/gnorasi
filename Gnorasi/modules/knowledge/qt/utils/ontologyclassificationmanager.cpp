@@ -96,7 +96,7 @@ OntologyClass* OntologyClassificationManager::ontologyByIdx(int idx){
 
 int OntologyClassificationManager::uniqueIdx(){
 
-    int helper = 0;
+    int helper = 1;
     OntologyClass *pClass = ontologyByIdx(helper);
     while(pClass){
 

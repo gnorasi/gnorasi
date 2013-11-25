@@ -23,6 +23,7 @@
 #include "otbVectorRescaleIntensityImageFilter.h"
 #include "otbStreamingImageFileWriter.h"
 #include "otbGCPsToRPCSensorModelImageFilter.h"
+#include "otbVectorData.h"
 
 #include "otbOrthoRectificationFilter.h"
 #include "otbMapProjections.h"
@@ -172,6 +173,12 @@ typedef otb::GCPsToRPCSensorModelImageFilter<VectorImageType>                   
 
 typedef GCPsToSensorModelFilterType::Point2DType                                                            Point2DType;
 typedef GCPsToSensorModelFilterType::Point3DType                                                            Point3DType;
+
+
+typedef double                                                                                              ValuePrecision;
+typedef otb::VectorData<double, 2, ValuePrecision>                                                          VectorDataType;
+typedef VectorDataType::Pointer                                                                             VectorDataSmartPointer;
+typedef VectorDataType*                                                                                     VectorDataPointer;
 
 
 #endif // VECTOR_GLOBALDEFS_H
