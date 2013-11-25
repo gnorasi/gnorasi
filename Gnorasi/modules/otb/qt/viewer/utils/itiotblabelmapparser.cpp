@@ -357,7 +357,7 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap, VectorData
                 point++;
             }
 
-//            LabelMapParser::validatePolygon(plgon);
+            LabelMapParser::validatePolygon(plgon);
 
             if(counter < list.size()){
 
