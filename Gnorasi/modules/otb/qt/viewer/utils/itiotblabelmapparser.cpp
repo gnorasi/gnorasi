@@ -23,6 +23,7 @@
 
 using namespace itiviewer;
 using namespace otb;
+using namespace voreen;
 
 LabelMapParser::LabelMapParser(QObject *parent) :
     QObject(parent)
@@ -142,7 +143,121 @@ LabelMapParser::LabelMapParser(QObject *parent) :
 //}
 
 
-QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
+//QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
+
+//    const unsigned int VDimension = 2;
+//    typedef itk::ContinuousIndex<double,VDimension>                             ContinuousIndexType;
+//    typedef ContinuousIndexType                                                 VertexType;
+//    typedef itk::VectorContainer<unsigned, VertexType>                          VertexListType;
+//    typedef double                                                              ValuePrecision;
+//    const int dimension = 2;
+//    typedef unsigned int                                                        PixelType;//pas le choix de prendre unsigned int comme type
+//    typedef otb::VectorData<PixelType, dimension, ValuePrecision>               VectorDataType;
+//    typedef otb::LabelMapToVectorDataFilter<LabelMapType, VectorDataType>       LabelMapToVectorDataFilterType;
+//    typedef VectorDataType::DataTreeType                                        DataTreeType;
+//    typedef itk::PreOrderTreeIterator<DataTreeType>                             TreeIteratorType;
+//    typedef otb::Polygon<double>                                                PolygonType;
+//    typedef PolygonType::VertexListConstIteratorType                            PolygonIteratorType;
+
+//    int x       = 0;
+//    int y       = 0;
+//    int counter = 0;
+
+//    QList<Region*> list;
+//    QList<QPolygon> pollist;
+
+//    m_classLabelIdsNames.clear();
+//    m_classLabelIdsNames[1001] = tr("Unclassified");
+
+
+//    for(unsigned int i = 1; i < lblmap->GetNumberOfLabelObjects(); i++){
+
+//        LabelObjectType* lblObject = lblmap->GetLabelObject(i);
+
+//        if(lblObject->HasClassLabel()){
+
+//            int classificationId = (int)lblObject->GetClassLabel();
+
+//            if(!m_classLabelIdsNames.contains(classificationId)){
+
+//                OntologyClass *pOntologyClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyByIdx(classificationId);
+//                if(pOntologyClass){
+
+//                    QString ontologyClassName = pOntologyClass->name();
+//                    qDebug() << "found the ontology class name : " << ontologyClassName << " , ontology class id : " << classificationId;
+//                    m_classLabelIdsNames[classificationId] = ontologyClassName;
+//                }else
+//                    qDebug() << "could not find the ontology class , ontology class id : " << classificationId;
+//            }
+
+//            Region *pRegion = new Region();
+//            pRegion->setClassificationId(classificationId);
+//            pRegion->setSegmentationId(counter++);
+
+//            list << pRegion;
+//        }else
+//            qDebug() << "\n HasClassLabel returns false \n";
+//    }
+
+//    LabelMapToVectorDataFilterType::Pointer LabelMapToVectorDataFilter = LabelMapToVectorDataFilterType::New();
+//    LabelMapToVectorDataFilter->SetInput(lblmap);
+//    LabelMapToVectorDataFilter->Update();
+
+//    VectorDataType *vdt = LabelMapToVectorDataFilter->GetOutput();
+
+//    counter = 0;
+//    TreeIteratorType it(vdt->GetDataTree());
+//    it.GoToBegin();
+//    while (!it.IsAtEnd())
+//    {
+//        if (it.Get()->IsPolygonFeature())
+//        {
+
+//            PolygonType::Pointer pt = it.Get()->GetPolygonExteriorRing();
+
+//            QPolygon plgon;
+//            const VertexListType *vList = pt->GetVertexList();
+//            VertexListType::const_iterator point = vList->begin();
+//            while(point != vList->end())
+//            {
+//                ContinuousIndexType cit = *point;
+
+//                x = cit[0];
+//                y = cit[1];
+
+//                QPoint p(x,y);
+
+//                plgon.append(p);
+
+//                point++;
+//            }
+
+////            pollist.append(plgon);
+
+//            LabelMapParser::validatePolygon(plgon);
+
+//            if(counter < list.size()){
+
+//                Region *pRegion = list.at(counter);
+//                pRegion->setArea(plgon);
+
+//                qDebug() << plgon;
+
+//                counter++;
+//            }
+//        }else{
+//            qDebug() << "\n IsPolygonFeature returns false \n";
+//        }
+
+//        ++it;
+//    }
+
+
+
+//    return list;
+//}
+
+QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap, VectorDataPointer vdt ){
 
     const unsigned int VDimension = 2;
     typedef itk::ContinuousIndex<double,VDimension>                             ContinuousIndexType;
@@ -151,7 +266,7 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
     typedef double                                                              ValuePrecision;
     const int dimension = 2;
     typedef unsigned int                                                        PixelType;//pas le choix de prendre unsigned int comme type
-    typedef otb::VectorData<PixelType, dimension, ValuePrecision>               VectorDataType;
+//    typedef otb::VectorData<PixelType, dimension, ValuePrecision>               VectorDataType;
     typedef otb::LabelMapToVectorDataFilter<LabelMapType, VectorDataType>       LabelMapToVectorDataFilterType;
     typedef VectorDataType::DataTreeType                                        DataTreeType;
     typedef itk::PreOrderTreeIterator<DataTreeType>                             TreeIteratorType;
@@ -198,12 +313,6 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
             qDebug() << "\n HasClassLabel returns false \n";
     }
 
-    LabelMapToVectorDataFilterType::Pointer LabelMapToVectorDataFilter = LabelMapToVectorDataFilterType::New();
-    LabelMapToVectorDataFilter->SetInput(lblmap);
-    LabelMapToVectorDataFilter->Update();
-
-    VectorDataType *vdt = LabelMapToVectorDataFilter->GetOutput();
-
     counter = 0;
     TreeIteratorType it(vdt->GetDataTree());
     it.GoToBegin();
@@ -233,7 +342,7 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
 //            pollist.append(plgon);
 
-            LabelMapParser::validatePolygon(plgon);
+//            LabelMapParser::validatePolygon(plgon);
 
             if(counter < list.size()){
 
@@ -255,3 +364,4 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap){
 
     return list;
 }
+

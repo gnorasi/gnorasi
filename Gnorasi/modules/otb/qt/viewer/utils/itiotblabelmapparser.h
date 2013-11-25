@@ -8,6 +8,7 @@
 #include <QStringList>
 
 #include "../../../ports/otblabelmapport.h"
+#include "../vector_globaldefs.h"
 
 //#include "itkShapeLabelObject.h"
 
@@ -36,7 +37,8 @@ public:
      * \param lblmap
      * \return
      */
-    QList<itiviewer::Region*> parse(LabelMapType* lblmap);
+//    QList<itiviewer::Region*> parse(LabelMapType* lblmap);
+    QList<itiviewer::Region*> parse(LabelMapType* lblmap, VectorDataPointer );
 
 
     QHash<int,QString> classLabelIdsNames() const {return m_classLabelIdsNames; }
