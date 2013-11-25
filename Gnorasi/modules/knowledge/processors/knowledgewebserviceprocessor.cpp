@@ -143,16 +143,17 @@ void KnowledgeWebServiceProcessor::process() {
         LINFO(retData);
         retData = "";
 
+
         parseHierarchyAndRules(curlHandle);
-        LINFO(retData);
+        //LINFO(retData);
         retData = "";
 
         processUserOntology(curlHandle);
-        LINFO(retData);
+        //LINFO(retData);
         retData = "";
 
         processFuzzyProperties(curlHandle);
-        LINFO(retData);
+        //LINFO(retData);
         retData = "";
 
         processUserRules(curlHandle);
@@ -161,8 +162,21 @@ void KnowledgeWebServiceProcessor::process() {
 
         getClassificationResults(curlHandle);
 
+        //single call classification
+        //performClassification(curlHandle);
+
+        int lines = countNewlines(retData);
+        if (lines < 2)
+            LERROR("Classification results not obtained!");
+        else {
+            char *info = new char[100];
+            std::sprintf(info, "%d objects were classified", lines-1);
+            //std::string info = std::to_string((long double)lines-1);
+            //LINFO(retData);
+            LINFO(info);
+        }
+
         setTextDataOut(retData);
-        LINFO(retData);
         retData = "";
 
         closeConnection(curlHandle);
@@ -374,5 +388,43 @@ void KnowledgeWebServiceProcessor::getQueryResults(CURL* curlHandle, char *query
     curl_free(queryEncoded);
 }
 
+void KnowledgeWebServiceProcessor::performClassification(CURL *curlHandle) {
+    char *url = composeURL("/performClassification");
+    curl_easy_setopt(curlHandle, CURLOPT_URL, url);
+
+    char *csvInputEncoded = curl_escape(getCSVData().c_str(),0);
+    char *xmlInputEncoded = curl_escape(getXMLData().c_str(),0);
+
+    char *postfields = new char[strlen(csvInputEncoded)+strlen(xmlInputEncoded)+100];
+    sprintf(postfields,"xmlcontents=%s&csvcontents=%s&context=", xmlInputEncoded, csvInputEncoded);
+
+    curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, postfields);
+
+    CURLcode curlErr = curl_easy_perform(curlHandle);
+    if(curlErr) {
+        LWARNING(curl_easy_strerror(curlErr));
+    }
+
+    //revert to HTTP GET
+    curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, NULL);
+    curl_easy_setopt(curlHandle, CURLOPT_HTTPGET, 1L);
+
+    delete[] postfields;
+    delete[] url;
+    curl_free(csvInputEncoded);
+    curl_free(xmlInputEncoded);
+}
+
+
+int KnowledgeWebServiceProcessor::countNewlines(std::string str) {
+    int counter = 0;
+    std::size_t found = 0;
+
+    while ((found = str.find("\n", found+1)) != std::string::npos) {
+        counter++;
+    }
+
+    return counter;
+}
 
 }//namespace
