@@ -264,10 +264,10 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap, VectorData
     typedef ContinuousIndexType                                                 VertexType;
     typedef itk::VectorContainer<unsigned, VertexType>                          VertexListType;
     typedef double                                                              ValuePrecision;
-    const int dimension = 2;
-    typedef unsigned int                                                        PixelType;//pas le choix de prendre unsigned int comme type
+//    const int dimension = 2;
+//    typedef unsigned int                                                        PixelType;//pas le choix de prendre unsigned int comme type
 //    typedef otb::VectorData<PixelType, dimension, ValuePrecision>               VectorDataType;
-    typedef otb::LabelMapToVectorDataFilter<LabelMapType, VectorDataType>       LabelMapToVectorDataFilterType;
+//    typedef otb::LabelMapToVectorDataFilter<LabelMapType, VectorDataType>       LabelMapToVectorDataFilterType;
     typedef VectorDataType::DataTreeType                                        DataTreeType;
     typedef itk::PreOrderTreeIterator<DataTreeType>                             TreeIteratorType;
     typedef otb::Polygon<double>                                                PolygonType;
@@ -278,10 +278,13 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap, VectorData
     int counter = 0;
 
     QList<Region*> list;
-    QList<QPolygon> pollist;
+
+    VectorImageType *img = m_pManager->image();
+    if(!img)
+        return list;
 
     m_classLabelIdsNames.clear();
-    m_classLabelIdsNames[1001] = tr("Unclassified");
+    m_classLabelIdsNames[0] = tr("Unclassified");
 
 
     for(unsigned int i = 1; i < lblmap->GetNumberOfLabelObjects(); i++){
@@ -330,17 +333,29 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap, VectorData
             {
                 ContinuousIndexType cit = *point;
 
-                x = cit[0];
-                y = cit[1];
+                VectorIndexType index;
 
-                QPoint p(x,y);
+                bool val = img->TransformPhysicalPointToIndex(cit,index);
 
-                plgon.append(p);
+                if(val){
+
+                    x = index[0];
+                    y = index[1];
+
+                    QPoint p(x,y);
+
+                    plgon.append(p);
+                }
+
+//                x = cit[0];
+//                y = cit[1];
+
+//                QPoint p(x,y);
+
+//                plgon.append(p);
 
                 point++;
             }
-
-//            pollist.append(plgon);
 
 //            LabelMapParser::validatePolygon(plgon);
 
