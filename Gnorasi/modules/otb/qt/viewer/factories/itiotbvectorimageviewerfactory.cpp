@@ -12,6 +12,7 @@
 #include "../commands/commandcolorcompositiongreyscale.h"
 #include "../commands/commandcolorcompositionrgb.h"
 #include "../commands/commandtoggleclassificationlabelvisibiltiy.h"
+#include "../commands/commandchangeclasscolor.h"
 
 #include "../utils/itiotbimagevectorchannelprovider.h"
 
@@ -67,6 +68,11 @@ void ItiOtbVectorImageViewerFactory::setupPanelData(ItiOtbImageViewerPanel *pane
         Command *cmdTV              = createCommandToggleClassLabelVisible(sTab);
         if(cmdTV)
             panel->setCommand(ItiOtbImageViewerPanel::SLOT_CL_TOGGLEVISIBLE,cmdTV);
+
+
+        Command *cmdCC              = createCommandChangeClassColor(sTab);
+        if(cmdTV)
+            panel->setCommand(ItiOtbImageViewerPanel::SLOT_CL_CHANGECOLOR,cmdTV);
 
         connect(provider,SIGNAL(channelsChanged()),panel,SLOT(setupChannels()));
         connect(provider,SIGNAL(channelsChanged()),panel,SLOT(setupHistogram()));
@@ -166,6 +172,20 @@ Command* ItiOtbVectorImageViewerFactory::createCommandToggleClassLabelVisible(It
     CommandToggleClassificationLabelVisibiltiy *cd = new CommandToggleClassificationLabelVisibiltiy(vv,this);
 
     connect(sTab,SIGNAL(classLabelToggled(bool,int)),cd,SLOT(updateData(bool,int)));
+
+    return cd;
+
+}
+
+Command* ItiOtbVectorImageViewerFactory::createCommandChangeClassColor(ItiOtbImageViewerPanelSetupTab *sTab){
+    ItiOtbVectorImageViewer *vv  = qobject_cast<ItiOtbVectorImageViewer*>(m_pItiOtbImageViewer);
+
+    if(!vv)
+        return 0;
+
+    CommandChangeClassColor *cd = new CommandChangeClassColor(vv,this);
+
+    connect(sTab,SIGNAL(colorChanged(QColor,int)),cd,SLOT(updateData(QColor,int)));
 
     return cd;
 

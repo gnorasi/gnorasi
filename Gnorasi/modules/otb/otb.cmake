@@ -613,6 +613,7 @@ SET(MOD_QT_SOURCES
 #    ${MOD_DIR}/qt/widgets/qotborthorectifywidget.cpp
     ${MOD_DIR}/qt/histogram/histogramgenerator.cpp
     ${MOD_DIR}/qt/histogram/histogramview.cpp
+    ${MOD_DIR}/qt/viewer/commands/commandchangeclasscolor.cpp
 )
 ################################################################################
 # Qt headers
@@ -669,6 +670,7 @@ SET(MOD_QT_HEADERS
     ${MOD_DIR}/qt/viewer/commands/commandtoggleclassificationlabelvisibiltiy.h
     ${MOD_DIR}/qt/histogram/histogramgenerator.h
     ${MOD_DIR}/qt/histogram/histogramview.h
+    ${MOD_DIR}/qt/viewer/commands/commandchangeclasscolor.h
 #    ${MOD_DIR}/qt/viewer/utils/itiotblabelimageparser.h
 #    ${MOD_DIR}/qt/orthorectify/otborthorectifyutility.h
 #    ${MOD_DIR}/qt/widgets/qotborthorectifywidget.h

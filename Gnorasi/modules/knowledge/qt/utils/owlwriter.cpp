@@ -3,7 +3,6 @@
 #include <QDebug>
 #include <QDateTime>
 
-#include "../models/ontologyclassitem.h"
 #include "../models/ontologyclass.h"
 #include "../fuzzy/fuzzyrule.h"
 #include "../fuzzy/fuzzyrulemanager.h"
@@ -81,7 +80,7 @@ using namespace voreen;
 OwlWriter::OwlWriter(QObject *parent)
     : QObject(parent)
 {
-    helperCounter = 0;
+//    helperCounter = 0;
 
     m_namespaceXmlns = "#";
 }
@@ -91,7 +90,7 @@ QString OwlWriter::docToText(){
 }
 
 void OwlWriter::createDocument(){
-    helperCounter = 0;
+//    helperCounter = 0;
 
     doc = QDomDocument();
 
@@ -117,7 +116,7 @@ void OwlWriter::createDocument(){
 }
 
 void OwlWriter::createDocumentVersion2(){
-    helperCounter = 0;
+//    helperCounter = 0;
 
     doc = QDomDocument();
 
@@ -151,73 +150,6 @@ void OwlWriter::createDocumentVersion2(){
     QDomElement element = doc.createElement(QString::fromAscii(OWL_ONTOLOGYTAGNAME));
     element.setAttribute(QString::fromAscii(OWL_ABOUTKEY),QString(""));
     owlrootElement.appendChild(element);
-}
-
-void OwlWriter::appendData(OntologyClassItem *item){
-    QString label   = item->data(0).toString();
-    QString comment = item->data(1).toString();
-    QString id      = item->id();
-
-    // create the class element
-    QDomElement classElement = doc.createElement(QString::fromAscii(OWL_CLASSTAGNAME));
-    classElement.setAttribute(QString::fromAscii(OWL_IDKEY),id);
-
-    // create the label element
-    QDomElement labelElement = doc.createElement(QString::fromAscii(OWL_LABELTAGNAME));
-    labelElement.setAttribute(QString::fromAscii(OWL_STRINGDATATYPEKEY),QString::fromAscii(OWL_STRINGDATATYPEVAL));
-    QDomText labelTextElement = doc.createTextNode(label);
-    labelElement.appendChild(labelTextElement);
-    classElement.appendChild(labelElement);
-
-    // create the commnet element
-    QDomElement commentElement = doc.createElement(QString::fromAscii(OWL_COMMENTTAGNAME));
-    commentElement.setAttribute(QString::fromAscii(OWL_STRINGDATATYPEKEY),QString::fromAscii(OWL_STRINGDATATYPEVAL));
-    QDomText commentTextElement = doc.createTextNode(comment);
-    commentElement.appendChild(commentTextElement);
-    classElement.appendChild(commentElement);
-
-    // create the subclass element
-    QDomElement subclassofElement = doc.createElement(OWL_SUBCLASSOFTAGNAME);
-    QDomElement childClassElement = doc.createElement(QString::fromAscii(OWL_CLASSTAGNAME));
-    OntologyClassItem *parentItem = item->parent();
-    if(parentItem){
-        QString parentId = parentItem->id();
-        if(!parentId.compare(QString::fromAscii(OBJECTDEPICTION_VALUE)))
-            childClassElement.setAttribute(QString::fromAscii(OWL_ABOUTKEY),parentItem->id());
-        else
-            childClassElement.setAttribute(QString::fromAscii(OWL_IDKEY),parentItem->id());
-    }
-    subclassofElement.appendChild(childClassElement);
-    classElement.appendChild(subclassofElement);
-
-    // append the class element to the root node
-    owlrootElement.appendChild(classElement);
-
-    // Create an individual element and append it to the root node.
-    QDomElement individualElement = doc.createElement(QString::fromAscii(OWL_DESCRIPTIONKTAG));
-    individualElement.setAttribute(QString::fromAscii(OWL_IDKEY),QString("ins_%1").arg(id.toLower()));
-    // create the type element
-    QDomElement typeElement = doc.createElement(QString::fromAscii(OWL_TYPETAG));
-    typeElement.setAttribute(QString::fromAscii(OWL_RESOURCEKEY),QString("%1%2").arg(m_namespaceXmlns).arg(id));
-    // create the hasObjectIdTExtElement
-    QDomElement hasObjectIdElement = doc.createElement(QString::fromAscii(OWL_GNOHASOBJIDTAG));
-    hasObjectIdElement.setAttribute(QString::fromAscii(OWL_STRINGDATATYPEKEY),QString::fromAscii(OWL_INTDATATYPEVAL));
-    QDomText hasObjectIDTextElement = doc.createTextNode(QString::number(helperCounter++));
-    hasObjectIdElement.appendChild(hasObjectIDTextElement);
-    individualElement.appendChild(typeElement);
-    individualElement.appendChild(hasObjectIdElement);
-
-    // append the individual element to the root Element
-    owlrootElement.appendChild(individualElement);
-
-    // now iterate children to create recursively the nodes
-    QList<OntologyClassItem*> list = item->getChildItems();
-    QList<OntologyClassItem*>::const_iterator i;
-    for(i = list.constBegin(); i != list.constEnd(); i++){
-        OntologyClassItem *child = *i;
-
-        appendData(child);
-    }
 }
 
 
@@ -272,7 +204,8 @@ void OwlWriter::appendData(OntologyClass *item){
     // create the hasObjectIdTExtElement
     QDomElement hasObjectIdElement = doc.createElement(QString::fromAscii(OWL_GNOHASOBJIDTAG));
     hasObjectIdElement.setAttribute(QString::fromAscii(OWL_STRINGDATATYPEKEY),QString::fromAscii(OWL_INTDATATYPEVAL));
-    QDomText hasObjectIDTextElement = doc.createTextNode(QString::number(helperCounter++));
+//    QDomText hasObjectIDTextElement = doc.createTextNode(QString::number(helperCounter++));
+    QDomText hasObjectIDTextElement = doc.createTextNode(QString::number(item->idx()));
     QDomElement segmentationLevelElement = doc.createElement(QLatin1String("gno:definedForSegmentationLevel"));
     segmentationLevelElement.setAttribute(QLatin1String("rdf:resource"),QString("#segmentationLevel_%1").arg(QString::number(item->level())));
     hasObjectIdElement.appendChild(hasObjectIDTextElement);
@@ -339,6 +272,7 @@ void OwlWriter::appendRulesData(){
 
         QDomElement classElement = doc.createElement(QLatin1String("class"));
         classElement.setAttribute(QLatin1String("id"),pClass->id());
+        classElement.setAttribute(QLatin1String("idx"),pClass->idx());
         classesElement.appendChild(classElement);
 
         QDomElement fuzzyRuleRootElement = doc.createElement(QLatin1String("fuzzyRules"));

@@ -8,7 +8,7 @@ const std::string OntologyClassificationProcessor::loggerCat_("voreen.OntologyCl
   
 OntologyClassificationProcessor::OntologyClassificationProcessor()
     : Processor(),
-    inLblMapPort_(Port::INPORT, "Input Object Map Port",1),
+    inLblMapPort_(Port::INPORT, "Input Object Map Port",0),
     outTextPort_(Port::OUTPORT, "CSV Text Port"),
     outXmlPort(Port::OUTPORT,"XML Port"),
     XMLFile_("xmlfile", "Output File", "Output File Name", VoreenApplication::app()->getUserDataPath(), "XML Ontology Classification file (*.xml)", FileDialogProperty::SAVE_FILE)
@@ -33,10 +33,10 @@ Processor* OntologyClassificationProcessor::create() const {
     return new OntologyClassificationProcessor();
 }
 
-bool OntologyClassificationProcessor::isEndProcessor() const {
-    return (!outTextPort_.isConnected());
-    return false;
-}
+//bool OntologyClassificationProcessor::isEndProcessor() const {
+//    return (!outTextPort_.isConnected());
+//    return false;
+//}
 
 bool OntologyClassificationProcessor::isReady() const {
     if (!isInitialized())
@@ -60,11 +60,24 @@ void OntologyClassificationProcessor::deinitialize() throw (VoreenException) {
 }
 
 void OntologyClassificationProcessor::process() {
-    if(!isEndProcessor()){
 
+    if(!inLblMapPort_.isConnected())
+    {
+        LWARNING("Object map is not connected");
+        return;
     }
 
-    updateView();
+    try{
+        updateView();
+
+        LINFO("Ontology Classificaction Processor Processed");
+        return;
+    }
+    catch (int e)
+    {
+        LERROR("Problem with processing the ontology classification data");
+        return;
+    }
 }
 
 //
