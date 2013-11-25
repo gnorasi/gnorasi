@@ -52,6 +52,7 @@ void ItiOtbImageViewerPanel::initialize(){
     connect(m_pSetupTab,SIGNAL(applyColorCompositionGreyscale()),this,SLOT(applyColorCompositionGreyscale()));
     connect(m_pSetupTab,SIGNAL(applyColorCompositionRGB()),this,SLOT(applyColorCompositionRGB()));
     connect(m_pSetupTab,SIGNAL(classLabelChanged()),this,SLOT(applyToggleClassLabelVisible()));
+    connect(m_pSetupTab,SIGNAL(colorChanged(QColor,int)),this,SLOT(applyChangeColorClass()));
 
     //! setup layout
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -112,6 +113,12 @@ void ItiOtbImageViewerPanel::applyToggleClassLabelVisible(){
         pCommand->execute();
 }
 
+
+void ItiOtbImageViewerPanel::applyChangeColorClass(){
+    Command *pCommand = m_commandHash[(int)SLOT_CL_CHANGECOLOR];
+    if(pCommand)
+        pCommand->execute();
+}
 //!
 void ItiOtbImageViewerPanel::setupChannels(){
     m_pSetupTab->setupChannels();

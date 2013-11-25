@@ -82,7 +82,8 @@ public:
         SLOT_CE_SQUAREROOT      = 5,     //! square root
         SLOT_CC_GREYSCALE       = 6,    //! grey scale
         SLOT_CC_RGB             = 7,
-        SLOT_CL_TOGGLEVISIBLE   = 11    //! toggle the visibility of class label
+        SLOT_CL_TOGGLEVISIBLE   = 11,    //! toggle the visibility of class label
+        SLOT_CL_CHANGECOLOR     = 12
     };
 
     /*!
@@ -240,6 +241,12 @@ private slots:
      * \brief applyToggleClassLabelVisible , triggers the respective command's execution call
      */
     void applyToggleClassLabelVisible();
+
+
+    /*!
+     * \brief applyChangeColorClass , triggers the respective command's execution call
+     */
+    void applyChangeColorClass();
 
 private:
 

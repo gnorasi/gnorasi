@@ -1,4 +1,4 @@
-#include "commandtoggleclassificationlabelvisibiltiy.h"
+#include "commandchangeclasscolor.h"
 
 #include "../utils/itiotbimagemanager.h"
 #include "../utils/itiotbregion.h"
@@ -9,20 +9,18 @@
 
 using namespace itiviewer;
 
-CommandToggleClassificationLabelVisibiltiy::CommandToggleClassificationLabelVisibiltiy(ItiOtbVectorImageViewer *viewer, QObject *parent) :
-    m_pItiOtbVectorImageViewer(viewer), m_visible(true), m_classLabelId(-1), Command(parent)
+CommandChangeClassColor::CommandChangeClassColor(ItiOtbVectorImageViewer *viewer, QObject *parent) :
+    m_pItiOtbVectorImageViewer(viewer), m_classLabelId(-1), Command(parent)
 {
 }
 
-void CommandToggleClassificationLabelVisibiltiy::execute(){
-
+void CommandChangeClassColor::execute(){
     ItiOtbImageManager *manager = m_pItiOtbVectorImageViewer->manager();
 
     QList<Level*> levelList = manager->levels();
 
     QList<Level*>::const_iterator i;
     for(i = levelList.constBegin(); i != levelList.constEnd(); i++){
-
         Level *pLevel = *i;
 
         QList<Region*> rList = pLevel->regions();
@@ -34,7 +32,7 @@ void CommandToggleClassificationLabelVisibiltiy::execute(){
             int clfId = pRegion->classificationId();
 
             if(clfId == m_classLabelId)
-                pRegion->setVisible(m_visible);
+                pRegion->setColor(m_color);
         }
     }
 }

@@ -102,6 +102,9 @@ signals:
     //!
     void classLabelToggled(bool, int);
 
+
+    void colorChanged(const QColor& , int);
+
     /*!
      * \brief deviationChanged
      */
@@ -188,6 +191,9 @@ private slots:
      */
     void onClassLabelCheckstateToggled(QStandardItem*);
 
+
+    void onClassificationTreeViewDoubleClick(const QModelIndex& );
+
 private:
     //
     void setupClassificationData();
@@ -243,6 +249,9 @@ private:
      * \brief m_pItiOtbImageViewerPanel
      */
     ItiOtbImageViewerPanel* m_pItiOtbImageViewerPanel;
+
+
+    QHash<int ,QColor> m_colordata;
 
 
     bool            m_isGreyscale;
