@@ -58,6 +58,9 @@ private:
     void processUserOntology(CURL* curlHandle);
     void processFuzzyProperties(CURL* curlHandle);
     void processUserRules(CURL* curlHandle);
+    void performClassification(CURL *curlHandle);
+
+    int countNewlines(std::string str);
 
     TextPort inXMLPort_;
     TextPort inCSVPort_;
