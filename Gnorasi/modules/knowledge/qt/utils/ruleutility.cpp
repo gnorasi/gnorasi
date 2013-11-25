@@ -1,5 +1,4 @@
 #include "ruleutility.h"
-#include "../models/rule.h"
 #include "../models/ruleitem.h"
 #include "../models/ontologyclassitem.h"
 

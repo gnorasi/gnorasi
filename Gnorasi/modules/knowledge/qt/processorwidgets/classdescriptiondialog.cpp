@@ -242,7 +242,7 @@ bool ClassDescriptionDialog::createNewClass(){
 
     QString name = m_pQLineEdit->text();
     if(!validateLabel(name)){
-        QMessageBox::critical(this,tr("Create error"),tr("Could not create the ontology class,please change the name and try again."),QMessageBox::Ok);
+        QMessageBox::critical(this,tr("Create error"),tr("Could not create the ontology class, please change the name and try again."),QMessageBox::Ok);
         return false;
     }
 
@@ -259,6 +259,7 @@ bool ClassDescriptionDialog::createNewClass(){
     pClass->setId(name);
     pClass->setLevel(lId);
     pClass->setopername(m_pOperatorItem->data(Qt::DisplayRole).toString());
+    pClass->setIdx(ONTOLOGYCLASSIFICATIONMANAGER->uniqueIdx());
     m_classId = name;
     ONTOLOGYCLASSIFICATIONMANAGER->addOntologyClass(pClass);
 

@@ -31,10 +31,8 @@ public:
     /// sets the link to the TextData object after calling WS (outport data actually)
     void setTextDataOut(std::string);
     /// returns the link to the TextData object (inport data actually...)
-    const std::string getOntologyData() const;
-    const std::string getGeoRuleData() const;
-    const std::string getFuzzyRuleData() const;
-    const std::string getObjectMapData() const;
+    const std::string getXMLData() const;
+    const std::string getCSVData() const;
     char* composeURL(std::string target);
 
 
@@ -53,23 +51,23 @@ private:
     static size_t getRequestData(void *ptr, size_t size, size_t nmemb, std::string *stream);
     void initConnection(CURL* curlHandle, char *truncate);
     void closeConnection(CURL* curlHandle);
-    void sendOntology(CURL* curlHandle);
-    void sendObjectMapData(CURL* curlHandle, char *srid, char *parseFeatures);
-    void sendFuzzyRules(CURL* curlHandle);
-    void sendGeoRules(CURL* curlHandle);
     void getClassificationResults(CURL* curlHandle);
     void getQueryResults(CURL* curlHandle, char *query);
 
-    OntologyPort inOntologyPort_;
-    GeoRulePort inGeoRulePort_;
-    FuzzyRulePort inFuzzyRulePort_;
-    TextPort inObjectMapPort_;
+    void parseHierarchyAndRules(CURL* curlHandle);
+    void processUserOntology(CURL* curlHandle);
+    void processFuzzyProperties(CURL* curlHandle);
+    void processUserRules(CURL* curlHandle);
+    void performClassification(CURL *curlHandle);
+
+    int countNewlines(std::string str);
+
+    TextPort inXMLPort_;
+    TextPort inCSVPort_;
     TextPort outPort_;
 
-    std::string pOntologyData_;
-    std::string pGeoRuleData_;
-    std::string pFuzzyRuleData_;
-    std::string pObjectMapData_;
+    std::string pXMLData_;
+    std::string pCSVData_;
     std::string pTextDataOut_;
 
     StringProperty serverURLupdate_;

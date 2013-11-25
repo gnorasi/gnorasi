@@ -94,6 +94,9 @@ void OntologyClassificationFileReader::parseRulesOfClass(OntologyClass *pClass, 
             QDomElement ruleElement = ruleNode.toElement();
             QString propertyname = ruleElement.attribute(QLatin1String("property"));
             QString tagname = ruleElement.tagName();
+            QString idvalue = ruleElement.attribute(QLatin1String("id"));
+            int lidx = propertyname.lastIndexOf(idvalue);
+            propertyname = propertyname.mid(0,lidx);
             QString attribute = getAttributeName(propertyname,tagname);
 
             ObjectAttribute *pAttr = OBJECTATTRIBUTEMANAGER->objectAttributeOfLevelById(pClass->level(),attribute);
@@ -173,7 +176,6 @@ void OntologyClassificationFileReader::parseClass(OntologyClass *pClass, const Q
         QString operatorname = fuzzyRulesElement.attribute(QLatin1String("operator"));
         pClass->setopername(operatorname);
     }
-
     parseRulesOfClass(pClass,fuzzyRulesNode);
 
     QDomNode spatialRulesNode = node.lastChild();
@@ -197,6 +199,15 @@ void OntologyClassificationFileReader::parseClasses(const QDomDocument &doc, con
                 pClass->setId(id);
                 pClass->setName(id);
                 pClass->setLevel(level);
+
+                int idx = 0;
+                if(classElement.hasAttribute(QLatin1String("idx"))){
+                    idx = classElement.attribute(QLatin1String("idx")).toInt();
+                }
+
+                if(!idx)
+                    idx = ONTOLOGYCLASSIFICATIONMANAGER->uniqueIdx();
+                pClass->setIdx(idx);
 
                 ONTOLOGYCLASSIFICATIONMANAGER->addOntologyClass(pClass);
 

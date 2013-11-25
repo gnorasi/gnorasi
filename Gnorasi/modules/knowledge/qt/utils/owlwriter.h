@@ -41,8 +41,6 @@ class ObjectLevel;
 
 namespace voreen {
 
-class OntologyClassItem;
-
 class OwlWriter : public QObject{
     Q_OBJECT
 
@@ -53,10 +51,6 @@ public:
     void createDocument();
 
     void createDocumentVersion2();
-
-    //! append the data from the OntologyClassItem
-    void appendData(OntologyClassItem* );
-
 
     void appendData(OntologyClass *);
 
@@ -96,7 +90,7 @@ private:
     QString m_namespaceXmlBase;
 
     //!
-    int helperCounter;
+//    int helperCounter;
 
     QDomDocument doc;
 

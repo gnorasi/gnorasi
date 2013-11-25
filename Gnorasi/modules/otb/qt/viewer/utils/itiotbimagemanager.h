@@ -220,6 +220,7 @@ public:
     void setHistogramReady(bool b) { m_isHistogramReady = b; ; emit histogramChanged(m_isHistogramReady); }
 
 
+
 signals:
     void histogramFinished(MyHistogramList* );
 
@@ -229,6 +230,8 @@ public slots:
     void onHistogramFinished(MyHistogramList*);
 
 private:
+
+    VectorDataPointer getVectorDataType();
 
 
     /*!

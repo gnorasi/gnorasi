@@ -191,6 +191,7 @@ void ItiOtbImageViewerPanelSetupTab::setupClassficationGroupBox(){
     m_pGroupBoxClassification->setVisible(false);
 
     connect(m_pClassificationModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(onClassLabelCheckstateToggled(QStandardItem*)));
+    connect(m_pTreeViewClassfication,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(onClassificationTreeViewDoubleClick(QModelIndex)));
 }
 
 //!
@@ -393,7 +394,7 @@ void ItiOtbImageViewerPanelSetupTab::onColorCompositionApplyButtonClicked(){
 void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
     m_pClassificationModel->clear();
 
-    QHash<int ,QColor> cdata = m_pItiOtbImageViewerPanel->manager()->classificationColorsIds();
+    m_colordata = m_pItiOtbImageViewerPanel->manager()->classificationColorsIds();
 
     QList<Level*> rlist = m_pItiOtbImageViewerPanel->manager()->levels();
     if(rlist.isEmpty())
@@ -413,7 +414,7 @@ void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
         int id = i.key();
 
         QStandardItem *pItem = new QStandardItem(name);
-        QColor c = cdata.value(id);
+        QColor c = m_colordata.value(id);
         pItem->setData(c, Qt::DecorationRole);
         pItem->setData(id,Qt::UserRole);
         pItem->setData(Qt::Checked,Qt::CheckStateRole);
@@ -436,12 +437,11 @@ void ItiOtbImageViewerPanelSetupTab::setupClassificationData(){
         QList<Region*> regionlist = pLevel->regions();
         text += tr("Level %1. Number of segmentation regions : %2").arg(QString::number(pLevel->id())).arg(QString::number(regionlist.size()));
         text += "<br/>";
-
     }
 
     m_pLabelClassificationOutput->setText(text);
 
-    if(cdata.isEmpty())
+    if(m_colordata.isEmpty())
         m_pGroupBoxClassification->setVisible(false);
     else
         m_pGroupBoxClassification->setVisible(true);
@@ -462,4 +462,21 @@ void ItiOtbImageViewerPanelSetupTab::onClassLabelCheckstateToggled(QStandardItem
 
         emit classLabelChanged();
     }
+}
+
+
+void ItiOtbImageViewerPanelSetupTab::onClassificationTreeViewDoubleClick(const QModelIndex &index){
+
+    QStandardItem *pItem = m_pClassificationModel->itemFromIndex(index);
+    QColor currentColor = pItem->data(Qt::DecorationRole).value<QColor>();
+
+    QColor color = QColorDialog::getColor(currentColor,this,tr("Select Color"));
+    if(!color.isValid())
+        return;
+
+    int cid = pItem->data(Qt::UserRole).toInt();
+    m_colordata[cid] = color;
+    pItem->setData(color,Qt::DecorationRole);
+
+   emit colorChanged(color,cid);
 }

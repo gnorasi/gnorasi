@@ -9,20 +9,16 @@ const std::string KnowledgeWebServiceProcessor::loggerCat_("voreen.KnowledgeWebS
 
 KnowledgeWebServiceProcessor::KnowledgeWebServiceProcessor()
     : Processor()
-    , inOntologyPort_(Port::INPORT, "Input ontology", 0)
-    , inGeoRulePort_(Port::INPORT, "Input geo rules", 0)
-    , inFuzzyRulePort_(Port::INPORT, "Input fuzzy rules", 0)
-    , inObjectMapPort_(Port::INPORT, "Input object map data", 0)
+    , inXMLPort_(Port::INPORT, "Input XML user hierarchy", 0)
+    , inCSVPort_(Port::INPORT, "Input CSV fuzzy data", 0)
     , outPort_(Port::OUTPORT, "CSV output classification", 0)
     , serverURLupdate_("serverURLupdate_", "Web service endpoint", "http://localhost:9998/georulesservice")
     , update_("updateButton", "Send request")
     , pTextDataOut_("")
 {
     // register ports and properties
-    addPort(inFuzzyRulePort_);
-    addPort(inObjectMapPort_);
-    addPort(inOntologyPort_);
-    addPort(inGeoRulePort_);
+    addPort(inXMLPort_);
+    addPort(inCSVPort_);
 
     addPort(outPort_);
     addProperty(serverURLupdate_);
@@ -51,9 +47,9 @@ void KnowledgeWebServiceProcessor::deinitialize() throw (tgt::Exception) {
     //outPort_.setData("");
 
     //pTextData_ = "";
-    pOntologyData_ = "";
-    pGeoRuleData_ = "";
-    pFuzzyRuleData_ = "";
+
+    pXMLData_ = "";
+    pCSVData_ = "";
 
     pTextDataOut_ = "";
 
@@ -86,22 +82,14 @@ void KnowledgeWebServiceProcessor::setTextDataOut(std::string outTextData) {
     setOutPortData();
 }
 
-const std::string KnowledgeWebServiceProcessor::getOntologyData() const {
-    return pOntologyData_;
+const std::string KnowledgeWebServiceProcessor::getXMLData() const {
+    return pXMLData_;
 }
 
-const std::string KnowledgeWebServiceProcessor::getGeoRuleData() const {
-    return pGeoRuleData_;
+const std::string KnowledgeWebServiceProcessor::getCSVData() const {
+    return pCSVData_;
 }
 
-const std::string KnowledgeWebServiceProcessor::getFuzzyRuleData() const {
-    return pFuzzyRuleData_;
-}
-
-
-const std::string KnowledgeWebServiceProcessor::getObjectMapData() const {
-    return pObjectMapData_;
-}
 
 std::string KnowledgeWebServiceProcessor::getProcessorInfo() const {
     return "Perform classification using a knowledge web service";
@@ -109,17 +97,11 @@ std::string KnowledgeWebServiceProcessor::getProcessorInfo() const {
 
 void KnowledgeWebServiceProcessor::readData() {
 
-    if (inOntologyPort_.hasData() && inOntologyPort_.hasChanged())
-        pOntologyData_ = inOntologyPort_.getData();
+    if (inXMLPort_.hasData() && inXMLPort_.hasChanged())
+        pXMLData_ = inXMLPort_.getData();
 
-    if (inGeoRulePort_.hasData() && inGeoRulePort_.hasChanged())
-        pGeoRuleData_ = inGeoRulePort_.getData();
-
-    if (inFuzzyRulePort_.hasData() && inFuzzyRulePort_.hasChanged())
-        pFuzzyRuleData_ = inFuzzyRulePort_.getData();
-
-    if (inObjectMapPort_.hasData() && inObjectMapPort_.hasChanged())
-        pObjectMapData_ = inObjectMapPort_.getData();
+    if (inCSVPort_.hasData() && inCSVPort_.hasChanged())
+        pCSVData_ = inCSVPort_.getData();
 
     //pTextData_ = inPort_.getData();
 }
@@ -140,14 +122,14 @@ void KnowledgeWebServiceProcessor::process() {
     int exitStatus = 0;
     std::string retData;
 
-    //1. initialize connection GET
-    //2. send ontology PUT
-    //3. send region and features (with flag for region ids only or with regions ids with feature) PUT
-    //4. send geo rules POST
-    //5. send fuzzy rules POST
-    //6. execute fuzzy rules GET
-    //7. execute geo rules GET
-    //8. get classification ids GET
+    /*
+    1. initialize connection, GET initConnection
+    2. parse and separate XML input to ontology and rules, POST parseHierarchyAndRules
+    3. add the ontology to the classification service, GET processUserOntology
+    4. add the fuzzy properties data from CSV to the service, POST processFuzzyProperties
+    5. execute the rules on the data, GET processUserRules
+    6. get classification ids, GET getClassificationResults
+    */
 
     curl_global_init(CURL_GLOBAL_ALL);
     char* curlErrStr = new char[CURL_ERROR_SIZE];
@@ -161,28 +143,40 @@ void KnowledgeWebServiceProcessor::process() {
         LINFO(retData);
         retData = "";
 
-        sendOntology(curlHandle);
-        LINFO(retData);
+
+        parseHierarchyAndRules(curlHandle);
+        //LINFO(retData);
         retData = "";
 
-        sendObjectMapData(curlHandle, "2100", "false");
-        LINFO(retData);
+        processUserOntology(curlHandle);
+        //LINFO(retData);
         retData = "";
 
-        sendFuzzyRules(curlHandle);
-        LINFO(retData);
+        processFuzzyProperties(curlHandle);
+        //LINFO(retData);
         retData = "";
 
-        sendGeoRules(curlHandle);
-        LINFO(retData);
+        processUserRules(curlHandle);
+        //LINFO(retData);
         retData = "";
 
         getClassificationResults(curlHandle);
 
-        //getQueryResults(curlHandle, "SELECT ?regions WHERE {?regions rdf:type gno:Region}");
+        //single call classification
+        //performClassification(curlHandle);
+
+        int lines = countNewlines(retData);
+        if (lines < 2)
+            LERROR("Classification results not obtained!");
+        else {
+            char *info = new char[100];
+            std::sprintf(info, "%d objects were classified", lines-1);
+            //std::string info = std::to_string((long double)lines-1);
+            //LINFO(retData);
+            LINFO(info);
+        }
 
         setTextDataOut(retData);
-        LINFO(retData);
         retData = "";
 
         closeConnection(curlHandle);
@@ -274,47 +268,16 @@ void KnowledgeWebServiceProcessor::closeConnection(CURL* curlHandle) {
     delete[] url;
 }
 
-void KnowledgeWebServiceProcessor::sendOntology(CURL* curlHandle) {
-    char *url = composeURL("/sendUserOntology");
-    curl_easy_setopt(curlHandle, CURLOPT_URL, url);
-    //wchar_t *temp;
-
-    char *dataEncoded = curl_escape(getOntologyData().c_str(),0);
-    char *postfields = new char[strlen(dataEncoded)+50];
-    sprintf(postfields,"ontology=%s&context=", dataEncoded);
-
-    curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, postfields);
-
-    curl_easy_setopt(curlHandle, CURLOPT_CUSTOMREQUEST, "PUT");
-
-    CURLcode curlErr = curl_easy_perform(curlHandle);
-    if(curlErr) {
-        LWARNING(curl_easy_strerror(curlErr));
-    }
-
-    //revert to HTTP GET
-    curl_easy_setopt(curlHandle, CURLOPT_HTTPGET, 1L);
-    curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, NULL);
-    curl_easy_setopt(curlHandle, CURLOPT_CUSTOMREQUEST, NULL);
-
-    delete[] url;
-    delete[] postfields;
-    curl_free(dataEncoded);
-}
-
-void KnowledgeWebServiceProcessor::sendObjectMapData(CURL* curlHandle, char *srid, char *parseFeatures) {
-    char *url = composeURL("/sendCSVDataString");
+void KnowledgeWebServiceProcessor::parseHierarchyAndRules(CURL *curlHandle) {
+    char *url = composeURL("/parseGnorasiHierarchyAndRules");
     curl_easy_setopt(curlHandle, CURLOPT_URL, url);
 
-    //LINFO(getObjectMapData().c_str());
+    char *xmlInputEncoded = curl_escape(getXMLData().c_str(),0);
 
-    char *urlEncoded = curl_escape(getObjectMapData().c_str(),0);
-    char *postfields = new char[strlen(urlEncoded)+50];
-    sprintf(postfields,"csvstring=%s&srid=%s&context=&parsefeatures=%s", urlEncoded, srid, parseFeatures);
+    char *postfields = new char[strlen(xmlInputEncoded)+100];
+    sprintf(postfields,"contents=%s&context=", xmlInputEncoded);
 
     curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, postfields);
-
-    curl_easy_setopt(curlHandle, CURLOPT_CUSTOMREQUEST, "PUT");
 
     CURLcode curlErr = curl_easy_perform(curlHandle);
     if(curlErr) {
@@ -323,66 +286,70 @@ void KnowledgeWebServiceProcessor::sendObjectMapData(CURL* curlHandle, char *sri
 
     //revert to HTTP GET
     curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, NULL);
-    curl_easy_setopt(curlHandle, CURLOPT_CUSTOMREQUEST, NULL);
     curl_easy_setopt(curlHandle, CURLOPT_HTTPGET, 1L);
 
-    delete[] url;
     delete[] postfields;
-    curl_free(urlEncoded);
+    delete[] url;
+    curl_free(xmlInputEncoded);
 }
 
-void KnowledgeWebServiceProcessor::sendFuzzyRules(CURL* curlHandle) {
-    if (getFuzzyRuleData().compare("") != 0) {
-        char *url = composeURL("/execFuzzyRules");
-        curl_easy_setopt(curlHandle, CURLOPT_URL, url);
+void KnowledgeWebServiceProcessor::processUserOntology(CURL *curlHandle) {
+    char *url = composeURL("/processGnorasiUserOntology");
 
-        char *fuzzyRulesEncoded = curl_escape(getFuzzyRuleData().c_str(),0);
+     char *params = new char[strlen(url)+50];
+    sprintf(params, "%s?context=", url);
 
-        char *postfields = new char[strlen(fuzzyRulesEncoded)+100];
-        sprintf(postfields,"rules=%s&context=", fuzzyRulesEncoded);
+    curl_easy_setopt(curlHandle, CURLOPT_URL, params);
 
-        curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, postfields);
-
-        CURLcode curlErr = curl_easy_perform(curlHandle);
-        if(curlErr) {
-            LWARNING(curl_easy_strerror(curlErr));
-        }
-
-        //revert to HTTP GET
-        curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, NULL);
-        curl_easy_setopt(curlHandle, CURLOPT_HTTPGET, 1L);
-
-        delete[] postfields;
-        delete[] url;
-        curl_free(fuzzyRulesEncoded);
+    CURLcode curlErr = curl_easy_perform(curlHandle);
+    if(curlErr) {
+        LWARNING(curl_easy_strerror(curlErr));
     }
+
+    delete[] url;
+    delete[] params;
 }
 
-void KnowledgeWebServiceProcessor::sendGeoRules(CURL* curlHandle) {
-    if (getGeoRuleData().compare("") != 0) {
-        char *url = composeURL("/ruleString");
-        curl_easy_setopt(curlHandle, CURLOPT_URL, url);
+void KnowledgeWebServiceProcessor::processFuzzyProperties(CURL *curlHandle) {
+    char *url = composeURL("/processGnorasiFuzzyProperties");
+    curl_easy_setopt(curlHandle, CURLOPT_URL, url);
 
-        char *geoRulesEncoded = curl_escape(getGeoRuleData().c_str(),0);
+    char *csvInputEncoded = curl_escape(getCSVData().c_str(),0);
 
-        char *postfields = new char[strlen(geoRulesEncoded)+100];
-        sprintf(postfields,"rules=%s&context=", geoRulesEncoded);
+    char *postfields = new char[strlen(csvInputEncoded)+100];
+    sprintf(postfields,"contents=%s&context=", csvInputEncoded);
 
-        curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, postfields);
+    curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, postfields);
 
-        CURLcode curlErr = curl_easy_perform(curlHandle);
-        if(curlErr) {
-            LWARNING(curl_easy_strerror(curlErr));
-        }
-
-        //revert to HTTP GET
-        curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, NULL);
-        curl_easy_setopt(curlHandle, CURLOPT_HTTPGET, 1L);
-
-        delete[] postfields;
-        delete[] url;
-        curl_free(geoRulesEncoded);
+    CURLcode curlErr = curl_easy_perform(curlHandle);
+    if(curlErr) {
+        LWARNING(curl_easy_strerror(curlErr));
     }
+
+    //revert to HTTP GET
+    curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, NULL);
+    curl_easy_setopt(curlHandle, CURLOPT_HTTPGET, 1L);
+
+    delete[] postfields;
+    delete[] url;
+    curl_free(csvInputEncoded);
+}
+
+void KnowledgeWebServiceProcessor::processUserRules(CURL *curlHandle) {
+    char *url = composeURL("/processGnorasiUserRules");
+
+     char *params = new char[strlen(url)+50];
+    sprintf(params, "%s?context=", url);
+
+    curl_easy_setopt(curlHandle, CURLOPT_URL, params);
+
+    CURLcode curlErr = curl_easy_perform(curlHandle);
+    if(curlErr) {
+        LWARNING(curl_easy_strerror(curlErr));
+    }
+
+    delete[] url;
+    delete[] params;
 }
 
 void KnowledgeWebServiceProcessor::getClassificationResults(CURL* curlHandle) {
@@ -421,5 +388,43 @@ void KnowledgeWebServiceProcessor::getQueryResults(CURL* curlHandle, char *query
     curl_free(queryEncoded);
 }
 
+void KnowledgeWebServiceProcessor::performClassification(CURL *curlHandle) {
+    char *url = composeURL("/performClassification");
+    curl_easy_setopt(curlHandle, CURLOPT_URL, url);
+
+    char *csvInputEncoded = curl_escape(getCSVData().c_str(),0);
+    char *xmlInputEncoded = curl_escape(getXMLData().c_str(),0);
+
+    char *postfields = new char[strlen(csvInputEncoded)+strlen(xmlInputEncoded)+100];
+    sprintf(postfields,"xmlcontents=%s&csvcontents=%s&context=", xmlInputEncoded, csvInputEncoded);
+
+    curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, postfields);
+
+    CURLcode curlErr = curl_easy_perform(curlHandle);
+    if(curlErr) {
+        LWARNING(curl_easy_strerror(curlErr));
+    }
+
+    //revert to HTTP GET
+    curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, NULL);
+    curl_easy_setopt(curlHandle, CURLOPT_HTTPGET, 1L);
+
+    delete[] postfields;
+    delete[] url;
+    curl_free(csvInputEncoded);
+    curl_free(xmlInputEncoded);
+}
+
+
+int KnowledgeWebServiceProcessor::countNewlines(std::string str) {
+    int counter = 0;
+    std::size_t found = 0;
+
+    while ((found = str.find("\n", found+1)) != std::string::npos) {
+        counter++;
+    }
+
+    return counter;
+}
 
 }//namespace
