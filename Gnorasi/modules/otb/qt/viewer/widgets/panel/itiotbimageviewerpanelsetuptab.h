@@ -103,7 +103,10 @@ signals:
     void classLabelToggled(bool, int);
 
 
-    void colorChanged(const QColor& , int);
+    void classColorChanged(const QString& , int);
+
+
+    void colorChanged();
 
     /*!
      * \brief deviationChanged

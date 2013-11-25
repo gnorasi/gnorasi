@@ -72,7 +72,7 @@ void ItiOtbVectorImageViewerFactory::setupPanelData(ItiOtbImageViewerPanel *pane
 
         Command *cmdCC              = createCommandChangeClassColor(sTab);
         if(cmdTV)
-            panel->setCommand(ItiOtbImageViewerPanel::SLOT_CL_CHANGECOLOR,cmdTV);
+            panel->setCommand(ItiOtbImageViewerPanel::SLOT_CL_CHANGECOLOR,cmdCC);
 
         connect(provider,SIGNAL(channelsChanged()),panel,SLOT(setupChannels()));
         connect(provider,SIGNAL(channelsChanged()),panel,SLOT(setupHistogram()));
@@ -185,7 +185,7 @@ Command* ItiOtbVectorImageViewerFactory::createCommandChangeClassColor(ItiOtbIma
 
     CommandChangeClassColor *cd = new CommandChangeClassColor(vv,this);
 
-    connect(sTab,SIGNAL(colorChanged(QColor,int)),cd,SLOT(updateData(QColor,int)));
+    connect(sTab,SIGNAL(classColorChanged(QString,int)),cd,SLOT(updateData(QString,int)));
 
     return cd;
 
