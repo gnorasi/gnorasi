@@ -174,6 +174,8 @@ void ClassDescriptionDialog::initialize(){
     m_pQLineEdit                = new QLineEdit(this);
     m_pObjectLevelComboBox      = new QComboBox(this);
 
+    m_pQLineEdit->setValidator(new QRegExpValidator(QRegExp("[A-Za-z0-9_]+"), this ));
+
     QHBoxLayout *hboxlayout     = new QHBoxLayout();
     hboxlayout->addWidget(m_pQLineEdit);
     pQGroupBox->setLayout(hboxlayout);
