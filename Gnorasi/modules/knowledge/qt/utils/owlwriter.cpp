@@ -291,7 +291,7 @@ void OwlWriter::appendRulesData(){
             if(!(pOA->otype() == 1 || pOA->otype() == 2))
                 continue;
 
-            attributeName = attributeName.remove(":");
+            attributeName = attributeName.replace(QLatin1String("::"),QLatin1String("_"));
             attributeName = QString("Fuzzy%1%2").arg(attributeName).arg(pRule->id());
             QDomElement element;
 
