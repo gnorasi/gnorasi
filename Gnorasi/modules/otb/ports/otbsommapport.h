@@ -48,7 +48,8 @@ public:
     typedef itk::VariableLengthVector<InputPixelType> PixelType;
 
     typedef itk::Statistics::EuclideanDistance<PixelType>  DistanceType;
-    typedef otb::SOMMap<PixelType, DistanceType, 2> SOMMapType;
+    static const unsigned int VDimension = 2;
+    typedef otb::SOMMap<PixelType, DistanceType, VDimension> SOMMapType;
 
     typedef SOMMapType::Pointer SOMMapSmartPointer;
     typedef SOMMapType* SOMMapPointer;

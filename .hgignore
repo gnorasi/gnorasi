@@ -11,6 +11,7 @@ Gnorasi/bin
 #Build dir
 Gnorasi-build
 qtcreator-build
+Gnorasi-build2
 
 ============================================
 
@@ -54,6 +55,7 @@ Gnorasi/ext/boost
 Gnorasi/ext/glew
 Gnorasi/ext/glut
 Gnorasi/ext/osgeo4w
+Gnorasi/ext/osgeo4w_bak
 Gnorasi/ext/qwt
 build-*
 
@@ -61,6 +63,7 @@ build-*
 
 #otb related directories
 Gnorasi/modules/otb/ext
+Gnorasi/modules/otb/ext2
 
 ============================================
 

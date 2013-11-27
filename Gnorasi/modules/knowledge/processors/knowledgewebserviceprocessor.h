@@ -5,8 +5,8 @@
 #include "voreen/core/properties/stringproperty.h"
 #include "voreen/core/properties/buttonproperty.h"
 #include "voreen/core/ports/textport.h"
-#include "../ports/ontologyport.h"
-#include "../ports/georuleport.h"
+//#include "../ports/ontologyport.h"
+//#include "../ports/georuleport.h"
 #include "../ports/fuzzyruleport.h"
 
 #include "curl/curl.h"

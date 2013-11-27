@@ -81,9 +81,12 @@ ELSEIF(WIN32)
         ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters
         ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/CurlAdapters
         ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/ITKPendingPatches
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/OGRAdapters
         ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/OssimAdapters
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/TinyXMLAdapters
         ${MOD_DIR}/ext/orfeotoolbox/include/Code/Visualization
         ${MOD_DIR}/ext/orfeotoolbox/include/Utilities
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/InsightJournal
         ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK
         ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code
         ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Algorithms
@@ -102,6 +105,11 @@ ELSEIF(WIN32)
         ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbconfigfile
         ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbedison
         ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbedison/segm
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbmsinttypes
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbmuparser
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbossim
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbossimplugins
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/tinyXMLlib
     )
 
 	# libraries
@@ -166,7 +174,7 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/OTBObjectDetection.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/OTBOGRAdapters.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/otbopenjpeg.lib
-                ${ORFEOTOOLBOX_LIB_DIR}/debug/otbossim.lib
+#                ${ORFEOTOOLBOX_LIB_DIR}/debug/otbossim.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/OTBOssimAdapters.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/otbossimplugins.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/OTBProjections.lib
@@ -189,6 +197,7 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/jpeg12_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/libtiff_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/libcurl_imp.lib
+                ${ORFEOTOOLBOX_LIB_DIR}/debug/libexpat.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/qwtd.lib
     )
 
@@ -245,7 +254,7 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/release/OTBObjectDetection.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/OTBOGRAdapters.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/otbopenjpeg.lib
-                ${ORFEOTOOLBOX_LIB_DIR}/release/otbossim.lib
+#                ${ORFEOTOOLBOX_LIB_DIR}/release/otbossim.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/OTBOssimAdapters.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/otbossimplugins.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/OTBProjections.lib
@@ -269,6 +278,8 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/release/libtiff_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/libcurl_imp.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/qwt.lib
+                ${ORFEOTOOLBOX_LIB_DIR}/release/libexpat.lib
+                ${ORFEOTOOLBOX_LIB_DIR}/release/ossim.lib
     )
 
 ENDIF(UNIX)
@@ -290,14 +301,14 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/ports/otblistlabelmapport.cpp
     ${MOD_DIR}/ports/otbsommapport.cpp
     ${MOD_DIR}/ports/otbcsvtextport.cpp
-    ${MOD_DIR}/processors/Applications/otbsarradiometriccalibrationapplication.cpp
-    ${MOD_DIR}/processors/Applications/otblocalstatisticextractionapplication.cpp
-    ${MOD_DIR}/processors/Applications/otbsfstextureextractionapplication.cpp
-    ${MOD_DIR}/processors/Applications/otbhypespectralunmixingapplication.cpp
-    ${MOD_DIR}/processors/Applications/otbcomputeimagesstatisticsapplication.cpp
-    ${MOD_DIR}/processors/Applications/otbsegmentationapplication.cpp
-    ${MOD_DIR}/processors/Applications/otbcomputeconfusionmatrixapplication.cpp
-    ${MOD_DIR}/processors/Applications/otbfusionofclassificationsapplication.cpp
+#    ${MOD_DIR}/processors/Applications/otbsarradiometriccalibrationapplication.cpp
+#    ${MOD_DIR}/processors/Applications/otblocalstatisticextractionapplication.cpp
+#    ${MOD_DIR}/processors/Applications/otbsfstextureextractionapplication.cpp
+#    ${MOD_DIR}/processors/Applications/otbhypespectralunmixingapplication.cpp
+#    ${MOD_DIR}/processors/Applications/otbcomputeimagesstatisticsapplication.cpp
+#    ${MOD_DIR}/processors/Applications/otbsegmentationapplication.cpp
+#    ${MOD_DIR}/processors/Applications/otbcomputeconfusionmatrixapplication.cpp
+#    ${MOD_DIR}/processors/Applications/otbfusionofclassificationsapplication.cpp
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.cpp
@@ -317,7 +328,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbmedianimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbsobelimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbgradientanisotropicdiffusionfilterprocessor.cpp
-    ${MOD_DIR}/processors/BasicFilters/otbbinarythresholdfilterprocessor.cpp
+#    ${MOD_DIR}/processors/BasicFilters/otbbinarythresholdfilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbbinarydilatefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaledilatefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbbinaryerodefilterprocessor.cpp
@@ -350,7 +361,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.cpp
     #${MOD_DIR}/processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.cpp
-    ${MOD_DIR}/processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.cpp
+#    ${MOD_DIR}/processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbbinarythinningimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgeodesicmorphologylevelingfilterprocessor.cpp
@@ -370,7 +381,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbbayesianfusionfilterprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.cpp
-    ${MOD_DIR}/processors/Radiometry/otbdemcaracteristicsextractor.cpp
+#    ${MOD_DIR}/processors/Radiometry/otbdemcaracteristicsextractor.cpp
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosiftkeypointsetfilterprocessor.cpp
@@ -411,14 +422,14 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/ports/otblistlabelmapport.h
     ${MOD_DIR}/ports/otbsommapport.h
     ${MOD_DIR}/ports/otbcsvtextport.h
-    ${MOD_DIR}/processors/Applications/otbsarradiometriccalibrationapplication.h
-    ${MOD_DIR}/processors/Applications/otblocalstatisticextractionapplication.h
-    ${MOD_DIR}/processors/Applications/otbsfstextureextractionapplication.h
-    ${MOD_DIR}/processors/Applications/otbhypespectralunmixingapplication.h
-    ${MOD_DIR}/processors/Applications/otbcomputeimagesstatisticsapplication.h
-    ${MOD_DIR}/processors/Applications/otbsegmentationapplication.h
-    ${MOD_DIR}/processors/Applications/otbcomputeconfusionmatrixapplication.h
-    ${MOD_DIR}/processors/Applications/otbfusionofclassificationsapplication.h
+#    ${MOD_DIR}/processors/Applications/otbsarradiometriccalibrationapplication.h
+#    ${MOD_DIR}/processors/Applications/otblocalstatisticextractionapplication.h
+#    ${MOD_DIR}/processors/Applications/otbsfstextureextractionapplication.h
+#    ${MOD_DIR}/processors/Applications/otbhypespectralunmixingapplication.h
+#    ${MOD_DIR}/processors/Applications/otbcomputeimagesstatisticsapplication.h
+#    ${MOD_DIR}/processors/Applications/otbsegmentationapplication.h
+#    ${MOD_DIR}/processors/Applications/otbcomputeconfusionmatrixapplication.h
+#    ${MOD_DIR}/processors/Applications/otbfusionofclassificationsapplication.h
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.h
@@ -438,7 +449,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbmedianimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbsobelimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbgradientanisotropicdiffusionfilterprocessor.h
-    ${MOD_DIR}/processors/BasicFilters/otbbinarythresholdfilterprocessor.h
+#    ${MOD_DIR}/processors/BasicFilters/otbbinarythresholdfilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbbinarydilatefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbgrayscaledilatefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbbinaryerodefilterprocessor.h
@@ -471,7 +482,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.h
     #${MOD_DIR}/processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.h
-    ${MOD_DIR}/processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h
+#    ${MOD_DIR}/processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbbinarythinningimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgeodesicmorphologylevelingfilterprocessor.h
@@ -491,7 +502,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbbayesianfusionfilterprocessor.h 
     ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.h
-    ${MOD_DIR}/processors/Radiometry/otbdemcaracteristicsextractor.h
+#    ${MOD_DIR}/processors/Radiometry/otbdemcaracteristicsextractor.h
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosiftkeypointsetfilterprocessor.h

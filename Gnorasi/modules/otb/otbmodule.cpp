@@ -29,14 +29,14 @@
 
 #include "otbmodule.h"
 
-#include "processors/Applications/otbsarradiometriccalibrationapplication.h"
-#include "processors/Applications/otblocalstatisticextractionapplication.h"
-#include "processors/Applications/otbsfstextureextractionapplication.h"
-#include "processors/Applications/otbhypespectralunmixingapplication.h"
-#include "processors/Applications/otbcomputeimagesstatisticsapplication.h"
-#include "processors/Applications/otbsegmentationapplication.h"
-#include "processors/Applications/otbcomputeconfusionmatrixapplication.h"
-#include "processors/Applications/otbfusionofclassificationsapplication.h"
+//#include "processors/Applications/otbsarradiometriccalibrationapplication.h"
+//#include "processors/Applications/otblocalstatisticextractionapplication.h"
+//#include "processors/Applications/otbsfstextureextractionapplication.h"
+//#include "processors/Applications/otbhypespectralunmixingapplication.h"
+//#include "processors/Applications/otbcomputeimagesstatisticsapplication.h"
+//#include "processors/Applications/otbsegmentationapplication.h"
+//#include "processors/Applications/otbcomputeconfusionmatrixapplication.h"
+//#include "processors/Applications/otbfusionofclassificationsapplication.h"
 #include "processors/ImageIO/otbimagereaderprocessor.h"
 #include "processors/ImageIO/otblabelimagereaderprocessor.h"
 #include "processors/ImageIO/otbvectorimagereaderprocessor.h"
@@ -55,7 +55,7 @@
 #include "processors/BasicFilters/otbmeanimagefilterprocessor.h"
 #include "processors/BasicFilters/otbmedianimagefilterprocessor.h"
 #include "processors/BasicFilters/otbsobelimagefilterprocessor.h"
-#include "processors/BasicFilters/otbbinarythresholdfilterprocessor.h"
+//#include "processors/BasicFilters/otbbinarythresholdfilterprocessor.h"
 #include "processors/BasicFilters/otbbinarydilatefilterprocessor.h"
 #include "processors/BasicFilters/otbgrayscaledilatefilterprocessor.h"
 #include "processors/BasicFilters/otbbinaryerodefilterprocessor.h"
@@ -88,7 +88,7 @@
 #include "processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.h"
 //#include "processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.h"
-#include "processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h"
+//#include "processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbbinarythinningimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgeodesicmorphologylevelingfilterprocessor.h"
@@ -107,7 +107,7 @@
 #include "processors/Radiometry/otbtwoimagebandmathprocessor.h"
 #include "processors/Radiometry/otbbayesianfusionfilterprocessor.h"
 #include "processors/Radiometry/otblaindviprocessor.h"
-#include "processors/Radiometry/otbdemcaracteristicsextractor.h"
+//#include "processors/Radiometry/otbdemcaracteristicsextractor.h"
 #include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 #include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 #include "processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.h"
@@ -177,7 +177,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBConvolutionImageFilterProcessor());
     registerProcessor(new OTBCannyEdgeDetectionImageFilterProcessor());
     registerProcessor(new OTBMeanImageFilterProcessor());
-    registerProcessor(new OTBBinaryThresholdFilterProcessor());
+//    registerProcessor(new OTBBinaryThresholdFilterProcessor());
     registerProcessor(new OTBBinaryDilateFilterProcessor());
     registerProcessor(new OTBGrayscaleDilateFilterProcessor());
     registerProcessor(new OTBGrayscaleErodeFilterProcessor());
@@ -224,7 +224,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBRescaleIntensityImageFilterProcessor());
     registerProcessor(new OTBDotProductImageFilterProcessor());
     registerProcessor(new OTBEstimateInnerProductPCAImageFilterProcessor());
-    registerProcessor(new OTBDEMCaracteristicsExtractor());
+//    registerProcessor(new OTBDEMCaracteristicsExtractor());
     registerProcessor(new OTBGrayscaleConnectedOpeningImageFilterProcessor());
     registerProcessor(new OTBGrayscaleConnectedClosingImageFilterProcessor());
     registerProcessor(new OTBGrayscaleGeodesicDilateImageFilterProcessor());
@@ -242,7 +242,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     //registerProcessor(new OTBGeodesicActiveContourLevelSetImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DLinesImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DCirclesImageFilterProcessor());
-    registerProcessor(new OTBLmvmPanSharpeningFusionImageFilterProcessor());
+//    registerProcessor(new OTBLmvmPanSharpeningFusionImageFilterProcessor());
     //registerProcessor(new OTBShapeDetectionLevelSetImageFilterProcessor());
     registerProcessor(new OTBMRFEnergyGaussianClassificationFilterProcessor());
     registerProcessor(new OTBSOMImageClassificationFilterProcessor());
@@ -263,14 +263,14 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBLabelImageToVectorDataFilterProcessor());
     registerProcessor(new OTBLabelMapToVectorDataFilterProcessor());
     registerProcessor(new OTBRasterizeVectorDataFilterProcessor());
-    registerProcessor(new OTBSARRadiometricCalibrationApplication());
-    registerProcessor(new OTBLocalStatisticExtractionApplication());
-    registerProcessor(new OTBSFSTextureExtractionApplication());
-    registerProcessor(new OTBHypespectralUnmixingApplication());
-    registerProcessor(new OTBComputeImagesStatisticsApplication());
-    registerProcessor(new OTBSegmentationApplication());
-    registerProcessor(new OTBComputeConfusionMatrixApplication());
-    registerProcessor(new OTBFusionOfClassificationsApplication());
+//    registerProcessor(new OTBSARRadiometricCalibrationApplication());
+//    registerProcessor(new OTBLocalStatisticExtractionApplication());
+//    registerProcessor(new OTBSFSTextureExtractionApplication());
+//    registerProcessor(new OTBHypespectralUnmixingApplication());
+//    registerProcessor(new OTBComputeImagesStatisticsApplication());
+//    registerProcessor(new OTBSegmentationApplication());
+//    registerProcessor(new OTBComputeConfusionMatrixApplication());
+//    registerProcessor(new OTBFusionOfClassificationsApplication());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
