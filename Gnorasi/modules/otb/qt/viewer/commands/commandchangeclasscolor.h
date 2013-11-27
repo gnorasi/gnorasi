@@ -34,7 +34,7 @@ signals:
     void classLabelIdChanged();
 
 public slots:
-    void updateData(const QColor &color, int cid) { m_color = color; m_classLabelId = cid; }
+    void updateData(const QString &color, int cid) { m_color.setNamedColor(color); m_classLabelId = cid; }
 
 private:
     QColor m_color;

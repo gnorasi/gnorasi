@@ -1,10 +1,17 @@
 package gr.iti.gnorasi.utils;
 
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -69,5 +76,18 @@ public class XMLDoc {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public String nodeToString(Node node) {
+	    StringWriter buf = new StringWriter();
+	    try {
+		    Transformer xform = TransformerFactory.newInstance().newTransformer();
+		    xform.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+		    xform.transform(new DOMSource(node), new StreamResult(buf));
+	    }catch (TransformerException e) {
+	    	e.toString();
+	    }
+	    
+	    return(buf.toString());
 	}
 }

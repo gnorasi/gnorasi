@@ -1,1 +1,0 @@
-bin\rdfserver.bat
