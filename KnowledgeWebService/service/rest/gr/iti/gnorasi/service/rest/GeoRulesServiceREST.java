@@ -1,6 +1,10 @@
 package gr.iti.gnorasi.service.rest;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 import gr.iti.gnorasi.utils.Constants;
+import gr.iti.gnorasi.utils.Utilities;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -30,12 +34,20 @@ public class GeoRulesServiceREST {
 		}
 	}
 	
+	@GET
+	@Path("/test")
+	@Produces(MediaType.TEXT_HTML)
+	public String test() {
+				
+		return "<html><body>REST: test!!!</body></html>";
+	}
+	
 	@POST
 	@Path("/init")
 	@Produces(MediaType.TEXT_XML)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public String init(@FormParam("truncate") String truncate) {
-		
+
 		GeoRulesServiceSingleton.instance.getService().initializeRepository(truncate);
 		
 		return "REST: init started";
@@ -45,6 +57,7 @@ public class GeoRulesServiceREST {
 	@Path("/close")
 	@Produces(MediaType.TEXT_XML)
 	public String closeConnection() {
+		
 		GeoRulesServiceSingleton.instance.getService().closeConnections();
 		
 		return "REST: closed connections";
@@ -59,63 +72,83 @@ public class GeoRulesServiceREST {
 		System.out.println(context);
 	}
 	
+	//start multi-object classification
 	@POST
-	@Path("/featureRuleString")
+	@Path("/processGnorasiFile")
 	@Produces(MediaType.TEXT_XML)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public String featureRuleExecString(@FormParam("rules") String inString, 
-										@FormParam("context") String context) {
-		
-		GeoRulesServiceSingleton.instance.getService().executeFeatureRules(inString, getUserContext(context));
+	public String processGnorasiFile(@FormParam("file") String inString) {
 
-		
-		return "REST: feature rule string executed";
-	}
+		String contents = Utilities.fileToString(inString);
+		GeoRulesServiceSingleton.instance.getService().separateXMLinput(contents);
 
-	@POST
-	@Path("/ruleString")
-	@Produces(MediaType.TEXT_XML)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public String ruleExecString(@FormParam("rules") String inString, 
-								 @FormParam("context") String context) {
-		GeoRulesServiceSingleton.instance.getService().executeRules(inString, getUserContext(context));
-
-		
-		return "REST: geo rule string executed";
+		return "REST: processGnorasiFile executed";
 	}
 	
 	@POST
-	@Path("/execFuzzyRules")
+	@Path("/parseGnorasiHierarchyAndRules")
 	@Produces(MediaType.TEXT_XML)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public String fuzzyExecString(@FormParam("rules") String inString, 
-								  @FormParam("context") String context) {
-		GeoRulesServiceSingleton.instance.getService().execFuzzyRules(inString, getUserContext(context));
+	public String parseGnorasiHierarchyAndRules(@FormParam("contents") String contents) {
 
-		
-		return "REST: fuzzy rule string executed";
+		//String contents = Utilities.fileToString(inString);
+		GeoRulesServiceSingleton.instance.getService().separateXMLinput(contents);
+
+		return "REST: processGnorasiFile executed";
 	}
-
-	@PUT
-	@Path("/sendCSVDataString")
+	
+	@GET
+	@Path("/processGnorasiUserOntology")
+	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public String sendCSVString(@FormParam("csvstring") String csvString, 
-								@FormParam("srid") String srid, 
-								@FormParam("parsefeatures") String parseFeatures,
-								@FormParam("context") String context) {
+	public String processGnorasiUserOntology(@QueryParam("context") String context) {
 		
-		int srid_int;
-		try {
-			srid_int = Integer.valueOf(srid).intValue();
-		}catch (NumberFormatException e) {
-			srid_int = 2100; //default to GGRS
-		}
-		boolean parseFeatures_bool = Boolean.valueOf(parseFeatures);
-		GeoRulesServiceSingleton.instance.getService().parseCSVString2Ontology(csvString, srid_int, getUserContext(context), parseFeatures_bool);
+		GeoRulesServiceSingleton.instance.getService().addGnorasiUserOntology(context);
+		System.out.println(context);
 		
-		return "REST: CSV string sent";
+		return "REST: ontology added";
 	}
+	
+	@GET
+	@Path("/processGnorasiUserRules")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String processGnorasiUserRules(@QueryParam("context") String context) {
+		
+		GeoRulesServiceSingleton.instance.getService().executeClassificationRules(context);
+		System.out.println(context);
+		
+		return "REST: rules executed";
+	}
+
+	
+	@POST
+	@Path("/processFuzzyPropertiesFile")
+	@Produces(MediaType.TEXT_XML)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public String processFuzzyPropertiesFile(@FormParam("file") String inString, 
+											 @FormParam("context") String context) {
+
+		String contents = Utilities.fileToString(inString);
+		GeoRulesServiceSingleton.instance.getService().parseFuzzyPropertiesCSV(contents, context);
+
+		return "REST: processFuzzyPropertiesFile executed";
+	}
+	
+	@POST
+	@Path("/processGnorasiFuzzyProperties")
+	@Produces(MediaType.TEXT_XML)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public String processGnorasiFuzzyProperties(@FormParam("contents") String contents, 
+											 @FormParam("context") String context) {
+
+		GeoRulesServiceSingleton.instance.getService().parseFuzzyPropertiesCSV(contents, context);
+
+		return "REST: processFuzzyPropertiesFile executed";
+	}
+
+	//end multi-object classification
+	
 	
 	@PUT
 	@Path("/sendUserOntology")
@@ -132,11 +165,12 @@ public class GeoRulesServiceREST {
 	
 	@GET
 	@Path("/getResults")
-	@Consumes(MediaType.TEXT_PLAIN)
+	//@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getClassificationResults(@QueryParam("context") String context) {
-		String results = GeoRulesServiceSingleton.instance.getService().parseOntologyResults2CSV(getUserContext(context));
 		
+		String results = GeoRulesServiceSingleton.instance.getService().parseOntologyResults2CSV(getUserContext(context));
 		System.out.println(context);
 		
 		return results;
@@ -147,54 +181,30 @@ public class GeoRulesServiceREST {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getQueryResults(@QueryParam("query") String query) {
+		
 		String results = GeoRulesServiceSingleton.instance.getService().parseQueryResults2CSV(query);
-		
-		System.out.println(query);
-		System.out.println(results);
-		
 		return results;
 	}
 	
 	@POST
 	@Path("/performClassification")
-	@Produces(MediaType.TEXT_XML)
+	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public String performClassification(@FormParam("truncate") String truncate,
-										@FormParam("ontology") String ontology,
-										@FormParam("csvstring") String csvString, 
-										@FormParam("srid") String srid, 
-										@FormParam("parsefeatures") String parseFeatures,
-										@FormParam("fuzzyrules") String fuzzyRules,
-										@FormParam("georules") String geoRules,
+	public String performClassification(@FormParam("xmlcontents") String xmlContents, 
+										@FormParam("csvcontents") String csvContents,
 										@FormParam("context") String context) {
+
+		GeoRulesServiceSingleton.instance.getService().separateXMLinput(xmlContents);
+		GeoRulesServiceSingleton.instance.getService().addGnorasiUserOntology(context);
+		GeoRulesServiceSingleton.instance.getService().parseFuzzyPropertiesCSV(csvContents, context);
+		GeoRulesServiceSingleton.instance.getService().executeClassificationRules(context);
+		String results = GeoRulesServiceSingleton.instance.getService().parseOntologyResults2CSV(getUserContext(context));
+
+		System.out.println(results);
 		
-		GeoRulesServiceSingleton.instance.getService().initializeRepository(truncate);
-		System.out.println("init connection");
+		return results;
 		
-		GeoRulesServiceSingleton.instance.getService().addUserOntology(ontology, getUserContext(context));
-		System.out.println("Received ontology");
-		
-		int srid_int = Integer.valueOf(srid).intValue();
-		boolean parseFeatures_bool = Boolean.valueOf(parseFeatures);
-		GeoRulesServiceSingleton.instance.getService().parseCSVString2Ontology(csvString, srid_int, getUserContext(context), parseFeatures_bool);
-		System.out.println("Object data received");
-		
-		GeoRulesServiceSingleton.instance.getService().execFuzzyRules(fuzzyRules, getUserContext(context));
-		System.out.println("Fuzzy rules executed");
-		
-		GeoRulesServiceSingleton.instance.getService().executeRules(geoRules, getUserContext(context));
-		System.out.println("Geo rules executed");
-				
-		String q = "SELECT ?id ?obj (MAX(?conf) AS ?confidence) WHERE { \n"+
-		 		"?x gno:"+Constants.depicts+" ?y . \n" +
-		 		"?x gno:"+Constants.regionHasID+" ?id . \n"+
-		 		"?y gno:"+Constants.depictsObject+" ?obj. \n" +
-		 		"?y gno:"+Constants.withConfidence+" ?conf . \n" +
-				"} GROUP BY ?x";
-		String results = GeoRulesServiceSingleton.instance.getService().parseQueryResults2CSV(q);
-		System.out.println("Results:\n"+results);
-		
-		return "REST: classification finished";
+		//return "REST: processFuzzyPropertiesFile executed";
 	}
 
 }

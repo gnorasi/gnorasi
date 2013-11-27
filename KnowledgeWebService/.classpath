@@ -14,7 +14,6 @@
 	<classpathentry kind="lib" path="lib/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/openrdf-sesame-2.6.10-onejar.jar"/>
 	<classpathentry kind="lib" path="lib/owlim-lite-5.3.jar"/>
-	<classpathentry kind="lib" path="lib/useekm-core-1.2.0-a3.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
 	<classpathentry kind="lib" path="lib/geotools/common-2.6.0.jar"/>
 	<classpathentry kind="lib" path="lib/geotools/commons-collections-3.1.jar"/>
@@ -49,5 +48,7 @@
 	<classpathentry kind="lib" path="lib/rest/jersey-grizzly2-1.15.jar"/>
 	<classpathentry kind="lib" path="lib/rest/jersey-server-1.15.jar"/>
 	<classpathentry kind="lib" path="lib/rest/jsr311-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/useekm-core-1.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/geotools/geotk-bundle-referencing-3.21.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

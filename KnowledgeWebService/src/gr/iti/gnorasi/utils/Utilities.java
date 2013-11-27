@@ -1,6 +1,8 @@
 package gr.iti.gnorasi.utils;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
@@ -53,6 +55,24 @@ public class Utilities {
 			print += l.get(i).toString()+", ";
 		}
 		System.out.println(print);
+	}
+	
+	public static String fileToString(String path) {
+		String line = "";
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(path));
+			
+			StringBuffer lineBuffer = new StringBuffer(1000);
+			while ((line = reader.readLine()) != null) {
+				lineBuffer.append(line).append("\n");
+			}
+			line = lineBuffer.toString();
+			reader.close();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return line;
 	}
 	
 	public static boolean contains(Object[] haystack, Object needle) {

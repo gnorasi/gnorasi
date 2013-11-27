@@ -33,24 +33,28 @@ public class UserOntology {
 	public String assign(String ontology, RepositoryConnection con, String context) {
 		InputStream is = new ByteArrayInputStream(ontology.getBytes());
 		is.mark(5000);
-		String context1;
+		String context1 = "";
 		if (context != null) {
 			if (!context.equals("")) {
 				context1 = context;
 			}
-			else context1 = Utilities.getBaseNamespace(is); 
+			else 
+				context1 = Utilities.getBaseNamespace(is);
 		}
-		else context1 = Utilities.getBaseNamespace(is);
+		else 
+			context1 = Utilities.getBaseNamespace(is);
 		
 		try {	
 			is.reset();
-			Constants.userNS = Utilities.getBaseNamespace(is);
+			//Constants.userNS = Utilities.getBaseNamespace(is);
+			Constants.userNS = context1;
+			Constants.userNSURI = con.getValueFactory().createURI(Constants.userNS);
 			
 			is.reset();
 			Repository myRepository = new SailRepository(new MemoryStore());
 			myRepository.initialize();
-			URI uriContext = null;
-			uriContext = con.getValueFactory().createURI(context1);
+			//URI uriContext = null;
+			//uriContext = con.getValueFactory().createURI(context1);
 			
 			userCon = myRepository.getConnection();
 			
@@ -59,8 +63,10 @@ public class UserOntology {
 			RepositoryResult<Statement> iter = userCon.getStatements(null, null, null, false);
 			while (iter.hasNext()) {
 				Statement s = iter.next();
-				if (uriContext != null)
-					con.add(s, uriContext);
+				//if (uriContext != null)
+				//	con.add(s, uriContext);
+				if (Constants.userNSURI != null)
+					con.add(s, Constants.userNSURI);
 				else
 					con.add(s);
 			}
@@ -114,21 +120,4 @@ public class UserOntology {
 		}
 	}
 	
-/*	public static void main(String[] args) {
-		try {
-			BufferedReader br = new BufferedReader(new FileReader("ontology/userOntology.owl"));
-			String content="";
-			String line = "";
-			while ((line = br.readLine()) != null) {
-				content += line;
-			}
-			
-			UserOntology u = new UserOntology();
-			u.assign(content, null);
-			br.close();
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-*/
 }

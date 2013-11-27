@@ -41,6 +41,20 @@
     <rdfs:range rdf:resource="#FeatureType"/>
     <rdfs:domain rdf:resource="#RegionFeature"/>
   </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="depictsObjectSuperproperty">
+    <rdfs:range rdf:resource="#ObjectDepiction"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Depiction"/>
+          <owl:Class rdf:about="#Region"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="depictsInheritedObject">
+    <rdfs:subPropertyOf rdf:resource="#depictsObjectSuperproperty"/>
+  </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="depicts">
     <rdfs:range rdf:resource="#Depiction"/>
     <rdfs:domain rdf:resource="#Region"/>
@@ -57,15 +71,7 @@
     <rdfs:domain rdf:resource="#RegionFeature"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="depictsObject">
-    <rdfs:domain>
-      <owl:Class>
-        <owl:unionOf rdf:parseType="Collection">
-          <owl:Class rdf:about="#Region"/>
-          <owl:Class rdf:about="#Depiction"/>
-        </owl:unionOf>
-      </owl:Class>
-    </rdfs:domain>
-    <rdfs:range rdf:resource="#ObjectDepiction"/>
+    <rdfs:subPropertyOf rdf:resource="#depictsObjectSuperproperty"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://rdf.opensahara.com/type/geo/hasGeometry">
     <rdfs:domain rdf:resource="#Region"/>
