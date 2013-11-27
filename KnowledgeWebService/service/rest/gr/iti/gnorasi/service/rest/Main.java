@@ -13,74 +13,91 @@ import com.sun.jersey.api.representation.Form;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.glassfish.grizzly.http.server.HttpServer;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
  
-import gr.iti.gnorasi.utils.Constants;
-
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
  
 public class Main {
 	
 	private static Logger logger = Logger.getLogger(Main.class);
-	private static String polygon = "\"POLYGON ((35.33960634474316 25.13427050949077, 35.33960627246974 25.134278211699, 35.33959996130932 25.13427812349545, 35.33959974448613 25.1343012301182, 35.339606055646506 25.13430131832355, 35.339605983371115 25.13430902053167, 35.33959967221076 25.134308932325723, 35.339599599934886 25.134316634533228, 35.33958697761419 25.13431645812022, 35.33958690533786 25.134324160326504, 35.339580594177534 25.134324072119448, 35.339580666453834 25.13431636991376, 35.33958073872966 25.13430866770806, 35.33958704989002 25.134308755913924, 35.339587122165376 25.13430105370759, 35.339593433325746 25.134301141912882, 35.33959365014888 25.134278035291924, 35.33958733898845 25.13427794708843, 35.339587411261824 25.13427024488199, 35.33960634474316 25.13427050949077))\"^^<http://rdf.opensahara.com/type/geo/wkt>";
-	 	 
+	private static String host = "locahost";
+	private static int port = 9998;
+	public static String context = "";
+	
+	static {
+		ServiceConfiguration.readConfigurationFile("conf/service.properties");
+		
+		String temp = ServiceConfiguration.getProperty("service.host");
+		if (temp != null)
+    		host = temp;
+		
+		temp = ServiceConfiguration.getProperty("service.port");
+		if (temp != null) {
+    		try {
+    			port = Integer.parseInt(temp);
+    		}catch (NumberFormatException e) {
+    			logger.error(e.getStackTrace());
+    		}
+    	}
+	}
+	
     private static URI getBaseURI() {
-        return UriBuilder.fromUri("http://localhost/").port(9998).build();
+        return UriBuilder.fromUri("http://"+host+"/").port(port).build();
     }
  
     public static final URI BASE_URI = getBaseURI();
-    //public static final String context = "http://www.gnorasi.gr/serviceData";
-    public static final String context = "";
- 
+         
     protected static HttpServer startServer() throws IOException {
     	System.out.println("Starting grizzly...");
     	ResourceConfig rc = new PackagesResourceConfig("gr.iti.gnorasi.service.rest");
+    	Map<String, Object> map = new HashMap<String, Object>(); 
+    	map.put(ResourceConfig.FEATURE_DISABLE_WADL, true);
+    	rc.setPropertiesAndFeatures(map);
     	return GrizzlyServerFactory.createHttpServer(BASE_URI, rc);
     }
      
     public static void main(String[] args) throws IOException {
     	PropertyConfigurator.configure("log4j.properties");
-    	//PrintStream printStream = new PrintStream(new FileOutputStream(new File("log/sysout.log")));
-    	//System.setOut(printStream);
-    	//PrintStream printStream1 = new PrintStream(new FileOutputStream(new File("log/syserr.log")));
-    	//System.setErr(printStream1);
     	 
     	HttpServer httpServer = startServer();
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...",
                BASE_URI));
-         
-        /*ClientCalls call = new ClientCalls();
-         
-        //Launch the service
+        
+        /*
+        ClientCalls call = new ClientCalls();
+        
+        //call.tempReplace("C:/Projects/GNORASI/Development/HgRepository/gnorasi-clone/data/bandStatistics+wkt_Data.csv", "C:/Projects/GNORASI/Development/HgRepository/gnorasi-clone/data/ontologyClassificationProcessor_2.csv");
+        
+        //Launch the service 
         logger.info(call.initConnection());
          
-        //Send user ontology file
-        logger.info(call.sendUserOntologyFromFile());
+        logger.info(call.processGnorasiFile());
+        logger.info(call.addGnorasiUserOntology());
+        
         long start = System.currentTimeMillis();
-        logger.info(call.sendCSVFile());
+        logger.info(call.processGnorasiFuzzyFeaturesFile());
         long end = System.currentTimeMillis();
         System.out.println("Data loaded in "+(end-start)+"ms");
         
-        logger.info(call.sendFuzzyProperties());
-        logger.info(call.execFuzzyRulesFromFile());
-        //logger.info(call.getResults(q));
+        start = System.currentTimeMillis();
+        logger.info(call.addGnorasiUserRules());
+        end = System.currentTimeMillis();
+        System.out.println("Rules executed in "+(end-start)+"ms");
         
-        //logger.info(call.sendFeatureRule(updateQuery));
-        logger.info(call.sendGeoRule());
-        //logger.info(call.getResults());
-        logger.info(call.getResults(q));
-         
         logger.info(call.closeConnection());
-         */
+        */
         
         System.in.read(); //pause 
         httpServer.stop();
@@ -111,8 +128,58 @@ public class Main {
     		            .type(MediaType.APPLICATION_FORM_URLENCODED)
     		            .post(ClientResponse.class, form);
     		    
-    		 return response.getEntity(String.class); 
+    		 return response.getEntity(String.class);
     	 }
+    	 
+    	 // start multi-object map classification
+    	 public String processGnorasiFile() {
+    		 Form form = new Form();
+    		 //form.add("file", "C:/Projects/GNORASI/Development/HgRepository/gnorasi-clone/data/ontologyClassificationProcessor-data_2_Water.xml");
+    		 form.add("file", "C:/Projects/GNORASI/Development/HgRepository/gnorasi-mklab2/data/csv2.csv");
+    		 form.add("context", context);
+    		 
+    		 ClientResponse response = service.path("georulesservice").path("processGnorasiFile")
+    		            .type(MediaType.APPLICATION_FORM_URLENCODED)
+    		            .post(ClientResponse.class, form);
+    		    
+    		 return response.getEntity(String.class);
+    	 }
+    	 
+    	 public String processGnorasiFuzzyFeaturesFile() {
+    		 Form form = new Form();
+    		 //form.add("file", "C:/Projects/GNORASI/Development/HgRepository/gnorasi-clone/data/ontologyClassificationProcessor_2.csv");
+    		 //form.add("file", "C:/temp/tempReplace.csv");
+    		 form.add("file", "C:/Projects/GNORASI/Development/HgRepository/gnorasi-mklab2/data/csv1.csv");
+    		 form.add("context", context);
+    		    
+    		 ClientResponse response = service.path("georulesservice").path("processFuzzyPropertiesFile")
+    		            .type(MediaType.APPLICATION_FORM_URLENCODED)
+    		            .post(ClientResponse.class, form);
+    		    
+    		 return response.getEntity(String.class);
+    	 }
+    	 
+    	 public String addGnorasiUserOntology() {
+    		 
+    		 String ret = service.path("georulesservice").path("processGnorasiUserOntology")
+    				 	.queryParam("context", context)
+    				 	.accept(MediaType.TEXT_PLAIN)
+    				 	.get(String.class);
+    		 
+    		 return ret;
+    	 }
+    	 
+    	 public String addGnorasiUserRules() {
+    		 
+    		 String ret = service.path("georulesservice").path("processGnorasiUserRules")
+    				 	.queryParam("context", context)
+    				 	.accept(MediaType.TEXT_PLAIN)
+    				 	.get(String.class);
+    		 
+    		 return ret;
+    	 }
+    	// end multi-object map classification
+    	 
     	 
     	 public String sendUserOntologyFromFile() {
     		 Form form = new Form();
@@ -126,108 +193,10 @@ public class Main {
     		 return response.getEntity(String.class);
     	 }
     	 
-    	 public String sendFeatureRule(String rule) {
-    		 Form form = new Form();
-    		 form.add("rules", rule);
-    		 form.add("context", context);
-    		 
-    		 long start = System.currentTimeMillis();
-    		 ClientResponse response = service.path("georulesservice").path("featureRuleString")
-    		            .type(MediaType.APPLICATION_FORM_URLENCODED)
-    		            .post(ClientResponse.class, form);
-    		 long end = System.currentTimeMillis();
-    		 System.out.println("Feature rule executed in "+(end-start)+"ms");
-    		 
-    		 return response.getEntity(String.class);
-    	 }
-    	 
-    	 public String execFuzzyRulesFromFile() {
-    		 Form form = new Form();
-    		 form.add("ruleFile", "fuzzy/fuzzy_v2.xml");
-    		 form.add("context", context);
-    		 
-    		 long start = System.currentTimeMillis();
-    		 ClientResponse response = service.path("georulesservice").path("execFuzzyRulesFromFile")
-    		            .type(MediaType.APPLICATION_FORM_URLENCODED)
-    		            .post(ClientResponse.class, form);
-    		 long end = System.currentTimeMillis();
-    		 
-    		 System.out.println("Fuzzy rules executed in "+(end-start)+"ms");
-    		    
-    		 return response.getEntity(String.class);
-    	 }
-    	 
-    	 public String sendFuzzyProperties() {
-    		 Form form = new Form();
-    		 form.add("propertiesFile", "data/fuzzyValues.csv");
-    		 form.add("context", context);
-    		 
-    		 long start = System.currentTimeMillis();
-    		 ClientResponse response = service.path("georulesservice").path("parseFuzzyPropertiesFromFile")
-    		            .type(MediaType.APPLICATION_FORM_URLENCODED)
-    		            .put(ClientResponse.class, form);
-    		 long end = System.currentTimeMillis();
-    		 
-    		 System.out.println("Fuzzy properties parsed in "+(end-start)+"ms");
-    		    
-    		 return response.getEntity(String.class);
-    	 }
-    	 
-    	 public String sendGeoRule() {
-    		 Form form = new Form();
-    		 form.add("rulefile", "testRules/try7.xml");
-    		 form.add("context", context);
-    		 
-    		 long start = System.currentTimeMillis();
-    		 ClientResponse response = service.path("georulesservice").path("ruleFile")
-    		            .type(MediaType.APPLICATION_FORM_URLENCODED)
-    		            .post(ClientResponse.class, form);
-    		 long end = System.currentTimeMillis();
-    		 System.out.println("Geo rule executed in "+(end-start)+"ms");
-    		    
-    		 return response.getEntity(String.class);
-    	 }
     	 
     	 public String closeConnection() {
     		 return service.path("georulesservice").path("close")
              .accept(MediaType.TEXT_XML).get(String.class);
-    	 }
-    	 
-    	 public String sendCSVFile() {
-    		 Form form = new Form();
-    		 //form.add("csvfile", "C:/Projects/GNORASI/Development/EclipseWorkspace/Sesame_uSeekM/data/dataFile.csv");
-    		 form.add("csvfile", "C:/Projects/GNORASI/Development/EclipseWorkspace/Sesame_uSeekM/data/feature+wkt_Data.csv");
-    		 form.add("srid", "2100");
-    		 form.add("context", context);
-    		    
-    		 ClientResponse response = service.path("georulesservice").path("sendCSVDataFile")
-    		            .type(MediaType.APPLICATION_FORM_URLENCODED)
-    		            .put(ClientResponse.class, form);
-    		    
-    		 return response.getEntity(String.class);
-    	 }
-    	 
-    	 public String getResults() {
-    		 
-    		 /*String q = "SELECT * WHERE {" +
-    		 				"?x gno:depicts ?y . " +
-    		 				"?y gno:depictsObject ?obj. " +
-    		 				"?y gno:withConfidence ?conf" +
-    		 				"}";*/
-    		 String q = "SELECT ?id ?obj (MAX(?conf) AS ?confidence) WHERE { \n"+
-    				 		"?x gno:"+Constants.depicts+" ?y . \n" +
-    				 		"?x gno:"+Constants.regionHasID+" ?id . \n"+
-    				 		"?y gno:"+Constants.depictsObject+" ?obj. \n" +
-    				 		"?y gno:"+Constants.withConfidence+" ?conf . \n" +
-		 				"} GROUP BY ?x";
-    		     		 
-    		 String ret = service.path("georulesservice").path("getResultsQuery")
-    				 	.queryParam("query", q)
-    				 	.type(MediaType.APPLICATION_FORM_URLENCODED)
-    				 	.accept(MediaType.TEXT_PLAIN)
-    				 	.get(String.class);
-    		 
-    		 return ret;
     	 }
     	 
     	 public String getResults(String q) {
@@ -238,6 +207,36 @@ public class Main {
     				 	.get(String.class);
     		 
     		 return ret;
+    	 }
+    	 
+    	 public void tempReplace(String sourceFile, String targetFile) {
+    		 try {
+    			 String outFile = "C:/temp/tempReplace.csv";
+    			 BufferedReader sourceReader = new BufferedReader(new FileReader(sourceFile));
+    			 BufferedReader targetReader = new BufferedReader(new FileReader(targetFile));
+    			 BufferedWriter targetWriter = new BufferedWriter(new FileWriter(outFile));
+    			 
+    			 String sourceLine, targetLine;
+    			 while ((targetLine = targetReader.readLine()) != null) {
+    				 sourceLine = sourceReader.readLine();
+    				 if (sourceLine != null) {
+    					 Pattern WKTPattern = Pattern.compile("POLYGON [^\\n]+");
+    					 Matcher m = WKTPattern.matcher(sourceLine);
+    					 if (m.find()) {
+	    					 targetLine += ";\"" + m.group();
+	    					 targetWriter.append(targetLine);
+	    					 targetWriter.newLine();
+    					 }
+    				 }
+    				 else
+    					 break;
+    			 }
+    			 sourceReader.close();
+    			 targetReader.close();
+    			 targetWriter.close();
+    		 }catch (Exception e) {
+    			 e.printStackTrace();
+    		 }
     	 }
      }
  }

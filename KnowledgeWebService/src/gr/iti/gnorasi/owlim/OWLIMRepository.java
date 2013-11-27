@@ -3,9 +3,7 @@ package gr.iti.gnorasi.owlim;
 import gr.iti.gnorasi.utils.Constants;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -29,11 +27,9 @@ import org.openrdf.repository.manager.RepositoryManager;
 import org.openrdf.rio.RDFFormat;
 import org.openrdf.rio.RDFHandler;
 import org.openrdf.rio.RDFHandlerException;
-import org.openrdf.rio.RDFParseException;
 import org.openrdf.rio.RDFParser;
 import org.openrdf.rio.Rio;
 import org.openrdf.sail.Sail;
-import org.openrdf.sail.config.SailConfigException;
 
 import com.ontotext.trree.owlim_ext.config.OWLIMSailConfig;
 import com.ontotext.trree.owlim_ext.config.OWLIMSailFactory;
@@ -134,7 +130,7 @@ public class OWLIMRepository {
 			//configMap.put(f.createURI("http://www.ontotext.com/trree/owlim#jobsize"), "200");
 			//configMap.put(f.createURI("http://www.ontotext.com/trree/owlim#repository-type"), "in-memory-repository");
 			//configMap.put(f.createURI("http://www.ontotext.com/trree/owlim#imports"), path+"ontology/gnorasi_v2.owl");
-			configMap.put(f.createURI("http://www.ontotext.com/trree/owlim#imports"), path+"ontology/demo_gnorasi_v4.owl");
+			configMap.put(f.createURI("http://www.ontotext.com/trree/owlim#imports"), path+"ontology/demo_gnorasi_v5.owl");
 			configMap.put(f.createURI("http://www.ontotext.com/trree/owlim#defaultNS"), Constants.mainNS);
 			
 			owlimConfig.setConfigParams(configMap);

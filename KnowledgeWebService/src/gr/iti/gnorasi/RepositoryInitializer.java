@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.log4j.Logger;
 import org.openrdf.repository.Repository;
 import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
@@ -23,6 +24,7 @@ import com.useekm.indexing.postgis.PostgisIndexerSettings;
 public class RepositoryInitializer {
 	BasicDataSource pgDatasource;
 	RepositoryConnection conn;
+	private static Logger logger = Logger.getLogger(RepositoryInitializer.class);
 	
 	public RepositoryInitializer() {
 		pgDatasource = null;
@@ -88,6 +90,17 @@ public class RepositoryInitializer {
 		return repository;
 	}
 	
+	public Repository setRepository(Sail sail) {
+		Repository repository = new SailRepository(sail);
+		try {
+			repository.initialize();
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+		}
+		
+		return repository;
+	}
+	
 	public void setRepositoryConnection(Repository rep) throws RepositoryException {
 		conn = rep.getConnection();
 		conn.setAutoCommit(false);
@@ -113,23 +126,40 @@ public class RepositoryInitializer {
 		return conn;	
 	}
 	
+	public RepositoryConnection acquireRepositoryConnection(Sail sail) {
+		try {
+			Repository rep = setRepository(sail);
+			setRepositoryConnection(rep);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return conn;
+	}
+	
 	public void closeAll() {
 		try {
 			if (conn != null) {
+				conn.clear();
+				conn.commit();
 				conn.close();
 				conn = null;
 				System.out.println("Repository connection is closed...");
+				logger.info("Repository connection is closed...");
 			}
 			if (pgDatasource != null) {
 				pgDatasource.close();
 				pgDatasource = null;
 				System.out.println("Datasource connection is closed...");
+				logger.info("Datasource connection is closed...");
 			}
 		}catch (RepositoryException e) {
 			System.out.println("Repository cannot be closed");
+			logger.info("Repository connection cannot be closed...");
 			e.printStackTrace();
 		}catch (SQLException e) {
 			System.out.println("Datasource cannot be closed");
+			logger.info("Datasource connection cannot be closed...");
 			e.printStackTrace();
 		}
 	}

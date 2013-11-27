@@ -1,75 +1,68 @@
 package gr.iti.gnorasi;
 
-import gr.iti.gnorasi.csvparser.CSV2SPARQL;
+import gr.iti.gnorasi.classification.ClassificationRulesBuilder;
+import gr.iti.gnorasi.classification.ClassificationRulesFire;
+import gr.iti.gnorasi.csvparser.Retrieval;
+import gr.iti.gnorasi.csvparser.FuzzyCsvParser;
 import gr.iti.gnorasi.ontology.UserOntology;
 import gr.iti.gnorasi.owlim.OWLIMRepositoryFactory;
-import gr.iti.gnorasi.rules.feature.FeatureRule;
-import gr.iti.gnorasi.rules.fuzzy.FuzzyCSV2SPARQL;
-import gr.iti.gnorasi.rules.fuzzy.FuzzyRestriction;
-import gr.iti.gnorasi.rules.fuzzy.FuzzyToConstruct;
-import gr.iti.gnorasi.rules.geo.RuleBuilder;
-import gr.iti.gnorasi.rules.geo.RuleFireAssignedRegions;
-import gr.iti.gnorasi.rules.geo.RuleFireUnassignedRegions;
-import gr.iti.gnorasi.service.rest.Main;
+import gr.iti.gnorasi.service.rest.ServiceConfiguration;
 import gr.iti.gnorasi.utils.Constants;
+import gr.iti.gnorasi.utils.XMLDoc;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.HashMap;
-import java.util.Properties;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.repository.RepositoryException;
 import org.openrdf.sail.Sail;
-import org.openrdf.sail.memory.MemoryStore;
-import org.openrdf.sail.inferencer.fc.ForwardChainingRDFSInferencer;
-
-import com.useekm.indexing.postgis.PostgisIndexMatcher;
+import org.w3c.dom.NodeList;
 
 public class GeoRulesService {
 	RepositoryInitializer ri = null;
 	String userContext = "";
+	String hierarchyOntology = "";
+	String classificationRules = "";
 	private static Logger logger = Logger.getLogger(GeoRulesService.class);
 	
 	public String getUserContext() {
 		return userContext;
 	}
 	
+	public String getHierarchyOntology() {
+		return hierarchyOntology;
+	}
+	
+	public String getClassificationRules() {
+		return classificationRules;
+	}
+	
 	public void initializeRepository(String truncate) {
-		com.useekm.indexing.internal.QueryEvaluatorUtil.setEvaluator(
+		/*com.useekm.indexing.internal.QueryEvaluatorUtil.setEvaluator(
 				com.ontotext.trree.owlim_ext.SailImpl.class,
 				com.useekm.indexing.internal.SesameNativeQueryEvaluator.INSTANCE
-		);
-		
+		);*/
+		logger.setLevel(Level.INFO);
 		Sail sail = OWLIMRepositoryFactory.getLiteSail();
 		//Sail sail = new MemoryStore();
 		//Sail sail = new ForwardChainingRDFSInferencer(new MemoryStore());
-				
+		
 		HashMap<String, String> matchers = new HashMap<String, String>();
 		matchers.put(Constants.geoNS+Constants.asWKT, Constants.POSTGISINDEX);
 		//matchers.put("http://www.w3.org/2000/01/rdf-schema#label", Constants.TEXTINDEX);
 		
-		Properties prop = new Properties();
 		String user="",pass="",url="";
-		try {
-	    	prop.load(new FileInputStream("conf/indexingSail.properties"));
-	 
-	    	url = prop.getProperty("postgres.url");
-	        user = prop.getProperty("postgres.user");
-	        pass = prop.getProperty("postgres.password");
-    	}catch (IOException ex) {
-    		ex.printStackTrace();
-        }
+		url = ServiceConfiguration.getProperty("postgres.url");
+		user = ServiceConfiguration.getProperty("postgres.user");
+        pass = ServiceConfiguration.getProperty("postgres.password");
 		
-		if (truncate.equals("truncate"))
+		if (url.equals(""))
+			initializeRepository(sail);
+		else if (truncate.equals("truncate"))
 			initializeRepository(url, user, pass, matchers, sail, true);
 		else if (truncate.equals("append"))
 			initializeRepository(url, user, pass, matchers, sail, false);
@@ -93,6 +86,11 @@ public class GeoRulesService {
 		ri.acquireRepositoryConnection(sail, matchers, truncate);
 	}
 	
+	public void initializeRepository(Sail sail) {
+		ri = new RepositoryInitializer();
+		ri.acquireRepositoryConnection(sail);
+	}
+	
 	public void closeConnections() {
 		try {
 			/*if (ri.getDatasource() != null)
@@ -114,94 +112,71 @@ public class GeoRulesService {
 		}
 	}
 	
-	public void executeRules(String inString, String context) {
-		/*try {
-			RuleBuilder rb = new RuleBuilder(new ByteArrayInputStream(inString.getBytes()));
-			rb.parseRules();
-			rb.fireAllRulesIterative(ri.getDatasource(), ri.getRepositoryConnection(), ri.getRepositoryConnection().getValueFactory().createURI(context));
-		}catch (Exception e) {
-			e.printStackTrace();
-		}*/
-		try {
-			RuleBuilder rb = new RuleBuilder(new ByteArrayInputStream(inString.getBytes()));
-			rb.parseRules();
-			RuleFireUnassignedRegions rf = new RuleFireUnassignedRegions();
-			rf.fireAll(rb.getRules(), ri.getDatasource(), ri.getRepositoryConnection(), ri.getRepositoryConnection().getValueFactory().createURI(context));
-			
-			RuleFireAssignedRegions rf2 = new RuleFireAssignedRegions();
-			rf2.fireAll(rb.getRules(), ri.getDatasource(), ri.getRepositoryConnection(), ri.getRepositoryConnection().getValueFactory().createURI(context));
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void executeRulesFromFile(String inFile, String context) {
-		/*try {
-			if ((new File(inFile)).isFile()) {
-				RuleBuilder rb = new RuleBuilder(new FileInputStream(inFile));
-				rb.parseRules();
-				rb.fireAllRulesIterative(ri.getDatasource(), ri.getRepositoryConnection(), ri.getRepositoryConnection().getValueFactory().createURI(context));
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-		}*/
-		try {
-			if ((new File(inFile)).isFile()) {
-				RuleBuilder rb = new RuleBuilder(new FileInputStream(inFile));
-				rb.parseRules();
-				RuleFireUnassignedRegions rf = new RuleFireUnassignedRegions();
-				rf.fireAll(rb.getRules(), ri.getDatasource(), ri.getRepositoryConnection(), ri.getRepositoryConnection().getValueFactory().createURI(context));
-				RuleFireAssignedRegions rf2 = new RuleFireAssignedRegions();
-				rf2.fireAll(rb.getRules(), ri.getDatasource(), ri.getRepositoryConnection(), ri.getRepositoryConnection().getValueFactory().createURI(context));
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	
-	public void parseCSVString2Ontology(String csvString, int srid, String context, boolean parseFeatures) {
-		CSV2SPARQL test = new CSV2SPARQL();
-		test.setMappingsFile("conf/mappings_v2.xml");
+	/*public void separateXML(String inputXML) {
+		ByteArrayInputStream inputXMLStream = new ByteArrayInputStream(inputXML.getBytes());
+		XMLDoc doc = new XMLDoc(inputXMLStream);
+		NodeList hierarchy = doc.getXPathNodes("output/hierarchy/RDF");
+		xmlOntology = doc.nodeToString(hierarchy.item(0));
 		
-		BufferedReader reader = new BufferedReader(new StringReader(csvString));
-		test.parseCSV(reader, ri.getRepositoryConnection(), context, srid, true, parseFeatures);
-		try {
-			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		NodeList classes = doc.getXPathNodes("output/classes");
+		fuzzyRules = doc.nodeToString(classes.item(0));
+	}*/
+	
+	///start multi object classification
+	public void separateXMLinput(String xmlInput) {
+		ByteArrayInputStream inStream = new ByteArrayInputStream(xmlInput.getBytes());
+		XMLDoc doc = new XMLDoc(inStream);
+		NodeList nodes = doc.getXPathNodes("root/hierarchy/RDF");
+		hierarchyOntology = doc.nodeToString(nodes.item(0));
+		nodes = doc.getXPathNodes("root/classes");
+		classificationRules = doc.nodeToString(nodes.item(0));
+		
+		logger.info("Ontology:");
+		logger.info(hierarchyOntology);
+		logger.info("Rules");
+		logger.info(classificationRules);
 	}
 	
-	public void parseCSVFile2Ontology(String csvFile, int srid, String context, boolean parseFeatures) {
-		System.out.println("Inside 'parseCSVFile2Ontology'");
-		CSV2SPARQL test = new CSV2SPARQL();
-		test.setMappingsFile("conf/mappings_v2.xml");
-		BufferedReader reader = null;
+	public void addGnorasiUserOntology(String context) {
+		addUserOntology(hierarchyOntology, context);
+	}
+	
+	public void parseFuzzyPropertiesCSV(String csvString, String context) {
 		try {
-			if ((new File(csvFile)).isFile()) {
-				System.out.println("Found '"+csvFile+"'.");
-				reader = new BufferedReader(new FileReader(csvFile));
-				test.parseCSV(reader, ri.getRepositoryConnection(), context, srid, false, parseFeatures);
-				reader.close();
-			}
-			else {
-				System.out.println("File '"+csvFile+"' not present or corrupted.");
-			}
+			FuzzyCsvParser p = new FuzzyCsvParser(csvString);
+			p.parse(ri.getRepositoryConnection());
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public void executeClassificationRules(String context) {
+		try {
+			ClassificationRulesBuilder builder = new ClassificationRulesBuilder();
+			builder.buildRules(classificationRules);
+			ClassificationRulesFire fire = new ClassificationRulesFire();
+			
+			//fire.testGeospatialQuery(ri.getRepositoryConnection());
+			fire.iterativeFireMethod2(builder.getRulesList(), ri.getRepositoryConnection());
+			
+			/*for (ClassificationRules rule : builder.getRulesList()) {
+				fire.fireMethod1(rule, ri.getRepositoryConnection());
+			}*/
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	///end multi object classification
 	
 	public String parseOntologyResults2CSV(String context) {
-		CSV2SPARQL test = new CSV2SPARQL();
+		Retrieval test = new Retrieval();
 		String res = test.getResults2CSV(ri.getRepositoryConnection(), context);
 		
 		return res;
 	}
 	
 	public String parseQueryResults2CSV(String query) {
-		CSV2SPARQL test = new CSV2SPARQL();
+		Retrieval test = new Retrieval();
 		
 		String res = test.getQueryResults2CSV(ri.getRepositoryConnection(), query);
 		
@@ -220,57 +195,10 @@ public class GeoRulesService {
 		u.closeConnection();
 	}
 	
-	public void addFuzzyPropertiesFromFile(String propertiesFile, String context) {
-		FuzzyCSV2SPARQL f = new FuzzyCSV2SPARQL();
-		BufferedReader reader = null;
-		try {
-			if ((new File(propertiesFile)).isFile()) {
-				System.out.println("Found '"+propertiesFile+"'.");
-				reader = new BufferedReader(new FileReader(propertiesFile));
-				f.parseCSV(reader, ri.getRepositoryConnection(), context, false);
-			}
-			else {
-				System.out.println("File '"+propertiesFile+"' not present or corrupted.");
-			}
-		}catch (Exception e) {
-			System.out.println("File '"+propertiesFile+"' not present or corrupted.");
-			e.printStackTrace();
-		}
-		finally {
-			if (reader != null)
-				try {
-					reader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-		}
-	}
-	
-	public void execFuzzyRules(String rules, String context) {
-		FuzzyToConstruct ftc = new FuzzyToConstruct();
-		//ftc.parseRestrictions(new ByteArrayInputStream(rules.getBytes()));
-		ftc.parseRules(new ByteArrayInputStream(rules.getBytes()));
-		ftc.exec(ri.getRepositoryConnection(), context);
-	}
-	
-	public void execFuzzyRulesFromFile(String file, String context) {
-		try {
-			FuzzyToConstruct ftc = new FuzzyToConstruct();
-			ftc.parseRules(new FileInputStream(file));
-			ftc.exec(ri.getRepositoryConnection(), context);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public void executeFeatureRules(String ruleString, String context) {
-		logger.info("inside featureService");
-		if (!ruleString.equals("")) {
-			FeatureRule f = new FeatureRule();
-			f.parseRules(ruleString);
-			f.runRules(ri.getRepositoryConnection(), context);
-		}
+	public void addUserOntology(String context) {
+		UserOntology u = new UserOntology();
+		userContext = u.assign(hierarchyOntology, ri.getRepositoryConnection(), context);
+		u.closeConnection();
 	}
 	
 	public void reset(String context) {
