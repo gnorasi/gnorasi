@@ -1,1 +1,0 @@
-In order to use a .ttl file, rename it to "joseki-config.ttl" and copy it to JOSEKIROOT

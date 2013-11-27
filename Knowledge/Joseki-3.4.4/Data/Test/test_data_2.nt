@@ -1,4 +1,0 @@
-# No bnodes in this data
-<http://jena/resource1> <http://jena/property1> "LITERAL-1" .
-<http://jena/resource1> <http://jena/property2>  <http://jena/resource2> .
-<http://jena/resource2> <http://jena/property3> "LITERAL-2" .
