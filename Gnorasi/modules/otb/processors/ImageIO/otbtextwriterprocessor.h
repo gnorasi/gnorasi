@@ -26,8 +26,8 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_OTBCSVWRITERPROCESSOR_H
-#define VRN_OTBCSVWRITERPROCESSOR_H
+#ifndef VRN_OTBTEXTWRITERPROCESSOR_H
+#define VRN_OTBTEXTWRITERPROCESSOR_H
 
 #include "voreen/core/processors/processor.h"
 #include "voreen/core/properties/filedialogproperty.h"

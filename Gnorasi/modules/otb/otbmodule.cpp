@@ -176,6 +176,8 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBLabelImageWriterProcessor());
     registerProcessor(new OTBCSVWriterProcessor());
     registerProcessor(new OTBCSVReaderProcessor());
+    registerProcessor(new OTBTextWriterProcessor());
+    registerProcessor(new OTBTextReaderProcessor());
     registerProcessor(new OTBConvolutionImageFilterProcessor());
     registerProcessor(new OTBCannyEdgeDetectionImageFilterProcessor());
     registerProcessor(new OTBMeanImageFilterProcessor());

@@ -26,8 +26,8 @@
  *                                                                    		*
  ********************************************************************************/
 
-#ifndef VRN_OTBCSVREADERPROCESSOR_H
-#define VRN_OTBCSVREADERPROCESSOR_H
+#ifndef VRN_OTBTEXTREADERPROCESSOR_H
+#define VRN_OTBTEXTREADERPROCESSOR_H
 
 #include "voreen/core/processors/processor.h"
 #include "voreen/core/properties/filedialogproperty.h"
@@ -44,7 +44,7 @@ public:
     OTBTextReaderProcessor();
     virtual Processor* create() const;
 
-    virtual std::string getClassName() const { return "CSV File Reader"; }
+    virtual std::string getClassName() const { return "Text File Reader"; }
     virtual std::string getCategory() const  { return "Image IO"; }
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; } //STABLE, TESTING, EXPERIMENTAL
     virtual std::string getProcessorInfo() const;
