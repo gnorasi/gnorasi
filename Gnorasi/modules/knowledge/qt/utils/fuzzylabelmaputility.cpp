@@ -21,8 +21,9 @@ void FuzzyLabelMapUtility::parse(LabelMapType *lblmap){
 
     m_attributeList.clear();
 
-    for(unsigned int i = 1; i < lblmap->GetNumberOfLabelObjects(); i++){
+    for(unsigned int i = 0; i < lblmap->GetNumberOfLabelObjects(); i++){
         LabelObjectType* lblObject = lblmap->GetLabelObject(i);
+	//LabelObjectType* lblObject = lblmap->GetNthLabelObject(i);
 
         std::vector<std::string> attrList = lblObject->GetAvailableAttributes();
         if(!attrList.empty()){
@@ -40,8 +41,9 @@ void FuzzyLabelMapUtility::parse(LabelMapType *lblmap){
 
 
 void FuzzyLabelMapUtility::calculateValues(LabelMapType *lblMap, const QString &propName){
-    for(unsigned int i = 1; i < lblMap->GetNumberOfLabelObjects(); i++){
+    for(unsigned int i = 0; i < lblMap->GetNumberOfLabelObjects(); i++){
         LabelObjectType* lblObject = lblMap->GetLabelObject(i);
+	//LabelObjectType* lblObject = lblMap->GetNthLabelObject(i);
 
         double val = (double)lblObject->GetAttribute(propName.toLatin1().constData());
 
@@ -64,8 +66,9 @@ QString FuzzyLabelMapUtility::constructCsvFromLabelMap(LabelMapType *lblMap){
 
     bool headersSetup = false;
 
-    for(unsigned int i = 1; i < lblMap->GetNumberOfLabelObjects(); i++){
+    for(unsigned int i = 0; i < lblMap->GetNumberOfLabelObjects(); i++){
         LabelObjectType* lblObject = lblMap->GetLabelObject(i);
+	//LabelObjectType* lblObject = lblMap->GetNthLabelObject(i);
 
         std::vector<std::string> atList = lblObject->GetAvailableAttributes();
 

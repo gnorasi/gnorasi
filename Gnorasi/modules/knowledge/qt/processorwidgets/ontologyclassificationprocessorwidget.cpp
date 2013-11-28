@@ -202,8 +202,9 @@ QString OntologyClassificationProcessorWidget::constructCSVText(){
                 OTBLabelMapPort::LabelMapType* dataMap = lblMapPort->getData();
 
                 // iterate through all the objects in the map
-                for(unsigned int i = 1; i < dataMap->GetNumberOfLabelObjects(); i++){
+                for(unsigned int i = 0; i < dataMap->GetNumberOfLabelObjects(); i++){
                     FuzzyLabelMapUtility::LabelObjectType* lblObject    = dataMap->GetLabelObject(i);
+		    //FuzzyLabelMapUtility::LabelObjectType* lblObject    = dataMap->GetNthLabelObject(i);
 
                     QString line;
                     line.append(QString::number(i));
