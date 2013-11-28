@@ -52,7 +52,7 @@ void ItiOtbImageViewerPanel::initialize(){
     connect(m_pSetupTab,SIGNAL(applyColorCompositionGreyscale()),this,SLOT(applyColorCompositionGreyscale()));
     connect(m_pSetupTab,SIGNAL(applyColorCompositionRGB()),this,SLOT(applyColorCompositionRGB()));
     connect(m_pSetupTab,SIGNAL(classLabelChanged()),this,SLOT(applyToggleClassLabelVisible()));
-    connect(m_pSetupTab,SIGNAL(colorChanged(QColor,int)),this,SLOT(applyChangeColorClass()));
+    connect(m_pSetupTab,SIGNAL(classColorChanged()),this,SLOT(applyChangeColorClass()));
 
     //! setup layout
     QVBoxLayout *layout = new QVBoxLayout(this);

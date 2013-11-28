@@ -478,5 +478,6 @@ void ItiOtbImageViewerPanelSetupTab::onClassificationTreeViewDoubleClick(const Q
     m_colordata[cid] = color;
     pItem->setData(color,Qt::DecorationRole);
 
-   emit colorChanged(color,cid);
+   emit colorChanged(color.name(),cid);
+   emit classColorChanged();
 }

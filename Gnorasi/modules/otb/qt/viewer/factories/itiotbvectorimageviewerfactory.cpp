@@ -185,7 +185,7 @@ Command* ItiOtbVectorImageViewerFactory::createCommandChangeClassColor(ItiOtbIma
 
     CommandChangeClassColor *cd = new CommandChangeClassColor(vv,this);
 
-    connect(sTab,SIGNAL(colorChanged(QColor,int)),cd,SLOT(updateData(QColor,int)));
+    connect(sTab,SIGNAL(colorChanged(QString,int)),cd,SLOT(updateData(QString,int)));
 
     return cd;
 

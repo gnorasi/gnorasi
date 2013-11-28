@@ -102,8 +102,15 @@ signals:
     //!
     void classLabelToggled(bool, int);
 
+    /*!
+     * \brief classColorChanged
+     */
+    void classColorChanged();
 
-    void colorChanged(const QColor& , int);
+    /*!
+     * \brief colorChanged
+     */
+    void colorChanged(const QString& , int);
 
     /*!
      * \brief deviationChanged
