@@ -305,6 +305,8 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/ImageIO/otblabelimagewriterprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbcsvwriterprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbcsvreaderprocessor.cpp
+    ${MOD_DIR}/processors/ImageIO/otbtextwriterprocessor.cpp
+    ${MOD_DIR}/processors/ImageIO/otbtextreaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbmultichannelextractroiprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbsommapreaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbvectordatareaderprocessor.cpp
@@ -426,6 +428,8 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/ImageIO/otblabelimagewriterprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbcsvwriterprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbcsvreaderprocessor.h
+    ${MOD_DIR}/processors/ImageIO/otbtextwriterprocessor.h
+    ${MOD_DIR}/processors/ImageIO/otbtextreaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbsommapreaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbmultichannelextractroiprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectordatareaderprocessor.h

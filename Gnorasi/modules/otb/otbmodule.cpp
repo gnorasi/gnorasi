@@ -44,6 +44,8 @@
 #include "processors/ImageIO/otblabelimagewriterprocessor.h"
 #include "processors/ImageIO/otbcsvwriterprocessor.h"
 #include "processors/ImageIO/otbcsvreaderprocessor.h"
+#include "processors/ImageIO/otbtextwriterprocessor.h"
+#include "processors/ImageIO/otbtextreaderprocessor.h"
 #include "processors/ImageIO/otbmultichannelextractroiprocessor.h"
 #include "processors/ImageIO/otbsommapreaderprocessor.h"
 #include "processors/ImageIO/otbvectordatareaderprocessor.h"
