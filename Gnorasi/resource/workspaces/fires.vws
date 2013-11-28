@@ -5,7 +5,7 @@
             <MetaData>
                 <MetaItem name="ProcessorSelection" type="SelectionMetaData::Processor">
                     <values>
-                        <item type="Image File Writer" ref="ref6" />
+                        <item type="Image to MultiBand Image Converter" ref="ref4" />
                     </values>
                 </MetaItem>
                 <MetaItem name="Zoom" type="ZoomMetaData">
@@ -22,7 +22,7 @@
                     <Properties>
                         <Property name="clearButton" />
                         <Property name="enableSignleBand" value="false" />
-                        <Property name="imageFile" noPathSet="false" value="FIRE_242_250.img" />
+                        <Property name="imageFile" noPathSet="false" value="../../data/FIRE_242_250.img" />
                         <Property name="outputBand" value="1" />
                     </Properties>
                     <InteractionHandlers />
@@ -34,7 +34,7 @@
                     <Properties>
                         <Property name="clearButton" />
                         <Property name="enableSignleBand" value="false" />
-                        <Property name="imageFile" noPathSet="false" value="FIRE_230_250.img" />
+                        <Property name="imageFile" noPathSet="false" value="../../data/FIRE_230_250.img" />
                         <Property name="outputBand" value="1" />
                     </Properties>
                     <InteractionHandlers />
@@ -106,7 +106,7 @@
                     </Properties>
                     <InteractionHandlers />
                 </Processor>
-                <Processor type="Image File Writer" name="Image File Writer" id="ref6">
+                <Processor type="Image File Writer" name="Image File Writer">
                     <MetaData>
                         <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-174" y="353" />
                     </MetaData>

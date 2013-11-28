@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<root>
+    <hierarchy>
+        <rdf:RDF xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xml:base="http://www.gnorasi.gr/ontology/generated_20131128085109" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.gnorasi.gr/ontology/generated_20131128085109#" xmlns:geo="http://rdf.opensahara.com/type/geo/" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:owl  ="http://www.w3.org/2002/07/owl#" xmlns:gno="http://www.gnorasi.gr/ontology#">
+            <owl:Ontology rdf:about=""/>
+            <owl:Class rdf:ID="Water">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Water</rdfs:label>
+                <rdfs:subClassOf>
+                    <owl:Class rdf:about="http://www.gnorasi.gr/ontology#ObjectDepiction"/>
+                </rdfs:subClassOf>
+            </owl:Class>
+            <rdf:Description rdf:ID="ins_water">
+                <rdf:type rdf:resource="#Water"/>
+                <gno:hasObjectClassID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</gno:hasObjectClassID>
+                <gno:definedForSegmentationLevel rdf:resource="#segmentationLevel_0"/>
+            </rdf:Description>
+            <owl:Class rdf:ID="NotWater">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NotWater</rdfs:label>
+                <rdfs:subClassOf>
+                    <owl:Class rdf:about="http://www.gnorasi.gr/ontology#ObjectDepiction"/>
+                </rdfs:subClassOf>
+            </owl:Class>
+            <rdf:Description rdf:ID="ins_notwater">
+                <rdf:type rdf:resource="#NotWater"/>
+                <gno:hasObjectClassID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2</gno:hasObjectClassID>
+                <gno:definedForSegmentationLevel rdf:resource="#segmentationLevel_0"/>
+            </rdf:Description>
+            <owl:Class rdf:ID="Vegetation">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vegetation</rdfs:label>
+                <rdfs:subClassOf>
+                    <owl:Class rdf:ID="NotWater"/>
+                </rdfs:subClassOf>
+            </owl:Class>
+            <rdf:Description rdf:ID="ins_vegetation">
+                <rdf:type rdf:resource="#Vegetation"/>
+                <gno:hasObjectClassID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">3</gno:hasObjectClassID>
+                <gno:definedForSegmentationLevel rdf:resource="#segmentationLevel_0"/>
+            </rdf:Description>
+            <owl:Class rdf:ID="NotVegetation">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NotVegetation</rdfs:label>
+                <rdfs:subClassOf>
+                    <owl:Class rdf:ID="NotWater"/>
+                </rdfs:subClassOf>
+            </owl:Class>
+            <rdf:Description rdf:ID="ins_notvegetation">
+                <rdf:type rdf:resource="#NotVegetation"/>
+                <gno:hasObjectClassID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">4</gno:hasObjectClassID>
+                <gno:definedForSegmentationLevel rdf:resource="#segmentationLevel_0"/>
+            </rdf:Description>
+            <rdf:Description rdf:ID="segmentationLevel_0">
+                <rdf:type rdf:resource="http://www.gnorasi.gr/ontology#SegmentationLevel"/>
+            </rdf:Description>
+        </rdf:RDF>
+    </hierarchy>
+    <classes>
+        <class idx="1" id="Water">
+            <fuzzyRules operator="min">
+                <attributeRule property="FuzzySTATSBand4Mean1" id="1">
+                    <function name="Left Shoulder">
+                        <parameters>
+                            <parameter value="30.000" name="a"/>
+                            <parameter value="33.000" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+            </fuzzyRules>
+            <spatialRules operator="min"/>
+        </class>
+        <class idx="2" id="NotWater">
+            <fuzzyRules operator="min">
+                <attributeRule property="FuzzySTATSBand4Mean2" id="2">
+                    <function name="Right Shoulder">
+                        <parameters>
+                            <parameter value="30.000" name="a"/>
+                            <parameter value="33.000" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+            </fuzzyRules>
+            <spatialRules operator="min"/>
+        </class>
+        <class idx="3" id="Vegetation">
+            <fuzzyRules operator="min">
+                <attributeRule property="FuzzySTATSNDVIMean3" id="3">
+                    <function name="Right Shoulder">
+                        <parameters>
+                            <parameter value="0.100" name="a"/>
+                            <parameter value="0.150" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+            </fuzzyRules>
+            <spatialRules operator="min"/>
+        </class>
+        <class idx="4" id="NotVegetation">
+            <fuzzyRules operator="min">
+                <attributeRule property="FuzzySTATSNDVIMean4" id="4">
+                    <function name="Left Shoulder">
+                        <parameters>
+                            <parameter value="0.100" name="a"/>
+                            <parameter value="0.150" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+            </fuzzyRules>
+            <spatialRules operator="min"/>
+        </class>
+    </classes>
+</root>

@@ -5,7 +5,7 @@
             <MetaData>
                 <MetaItem name="ProcessorSelection" type="SelectionMetaData::Processor">
                     <values>
-                        <item type="Band Math Calculator (Single Image)" ref="ref5" />
+                        <item type="Image File Writer" ref="ref6" />
                     </values>
                 </MetaItem>
             </MetaData>
@@ -17,7 +17,7 @@
                     <Properties>
                         <Property name="clearButton" />
                         <Property name="enableSignleBand" value="false" />
-                        <Property name="imageFile" noPathSet="false" value="FLOOD_Evros.img" />
+                        <Property name="imageFile" noPathSet="false" value="../../data/FLOOD_Evros.img" />
                         <Property name="outputBand" value="1" />
                     </Properties>
                     <InteractionHandlers />
@@ -67,7 +67,7 @@
                     <Properties>
                         <Property name="clearButton" />
                         <Property name="enableSignleBand" value="false" />
-                        <Property name="imageFile" noPathSet="false" value="FLOOD_Evros.img" />
+                        <Property name="imageFile" noPathSet="false" value="../../data/FLOOD_Evros.img" />
                         <Property name="outputBand" value="1" />
                     </Properties>
                     <InteractionHandlers />
@@ -81,7 +81,7 @@
                     </Properties>
                     <InteractionHandlers />
                 </Processor>
-                <Processor type="Image File Writer" name="Image File Writer 2">
+                <Processor type="Image File Writer" name="Image File Writer 2" id="ref6">
                     <MetaData>
                         <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="323" y="-330" />
                     </MetaData>
