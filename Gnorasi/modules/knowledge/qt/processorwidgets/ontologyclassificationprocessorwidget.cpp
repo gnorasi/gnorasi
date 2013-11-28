@@ -180,7 +180,7 @@ QString OntologyClassificationProcessorWidget::constructCSVText(){
         FuzzyRule *pFuzzyRule = *k;
 
         QString name = pFuzzyRule->name();
-        QString fname = name.remove("::");
+        QString fname = name.replace(QLatin1String("::"),QLatin1String("_"));
 
         fname = QString("Fuzzy%1%2").arg(fname).arg(QString::number(pFuzzyRule->id()));
         firstline.append(";");

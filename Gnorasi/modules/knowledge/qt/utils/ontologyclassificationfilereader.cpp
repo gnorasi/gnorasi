@@ -71,14 +71,12 @@ QString OntologyClassificationFileReader::getAttributeName(const QString &proper
     if(!tagname.compare(QLatin1String("attributeRule"))){
 
         name.remove(QLatin1String("Fuzzy"));
-        name.insert(5,QLatin1String("::"));
+        name.replace(QLatin1String("_"),QLatin1String("::"));
 
-        int idx = name.indexOf(QLatin1String("Band"));
-        name.insert(idx+5,QLatin1String("::"));
     }else if(!tagname.compare(QLatin1String("shapeRule"))){
 
         name.remove(QLatin1String("Fuzzy"));
-        name.insert(5,QLatin1String("::"));
+        name.replace(QLatin1String("_"),QLatin1String("::"));
     }
 
     return name;
