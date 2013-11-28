@@ -46,7 +46,7 @@ public:
     virtual Processor* create() const;
 
     virtual std::string getCategory() const { return "Basic Filters"; }
-    virtual std::string getClassName() const { return "Label Map  to Vector Data Filter"; }
+    virtual std::string getClassName() const { return "Object Map  to Vector Data Filter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL;}//STABLE, TESTING, EXPERIMENTAL
 
     virtual std::string getProcessorInfo() const;
