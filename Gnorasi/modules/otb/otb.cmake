@@ -342,8 +342,6 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/BasicFilters/otbperbandvectorimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbmdmdnmfimagefilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbsigmoidimagefilterprocessor.cpp
-    ${MOD_DIR}/processors/BasicFilters/otblabelimagetovectordatafilterprocessor.cpp
-    ${MOD_DIR}/processors/BasicFilters/otblabelmaptovectordatafilterprocessor.cpp
     ${MOD_DIR}/processors/BasicFilters/otbrasterizevectordatafilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.cpp
@@ -365,6 +363,8 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/OBIA/otblabelmaptoclassimageprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otbmultiplelabelimagetolabelmapprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelmaptobinaryimagefilterprocessor.cpp
+    ${MOD_DIR}/processors/OBIA/otblabelimagetovectordatafilterprocessor.cpp
+    ${MOD_DIR}/processors/OBIA/otblabelmaptovectordatafilterprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbndviprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbmsaviprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.cpp
@@ -465,8 +465,6 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/BasicFilters/otbperbandvectorimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbmdmdnmfimagefilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbsigmoidimagefilterprocessor.h
-    ${MOD_DIR}/processors/BasicFilters/otblabelimagetovectordatafilterprocessor.h
-    ${MOD_DIR}/processors/BasicFilters/otblabelmaptovectordatafilterprocessor.h
     ${MOD_DIR}/processors/BasicFilters/otbrasterizevectordatafilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedopeningimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgrayscaleconnectedclosingimagefilterprocessor.h
@@ -488,6 +486,8 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/OBIA/otblabelmaptoclassimageprocessor.h
     ${MOD_DIR}/processors/OBIA/otbmultiplelabelimagetolabelmapprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelmaptobinaryimagefilterprocessor.h
+    ${MOD_DIR}/processors/OBIA/otblabelimagetovectordatafilterprocessor.h
+    ${MOD_DIR}/processors/OBIA/otblabelmaptovectordatafilterprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbndviprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbmsaviprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.h
