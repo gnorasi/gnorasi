@@ -45,7 +45,7 @@ public:
 
     virtual Processor* create() const;
 
-    virtual std::string getCategory() const { return "Basic Filters"; }
+    virtual std::string getCategory() const { return "OBIA"; }
     virtual std::string getClassName() const { return "Label Image to Vector Data Filter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL;}//STABLE, TESTING, EXPERIMENTAL
 
