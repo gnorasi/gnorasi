@@ -72,8 +72,9 @@ void OTBLabelImageToLabelMapProcessor::process() {
     try
     {
 	labelMapFilter->SetInput(inPort_.getData());
-	labelMapFilter->SetBackgroundValue(itk::NumericTraits<LabelType>::min());
-    labelMapFilter->Update();
+	//labelMapFilter->SetBackgroundValue(itk::NumericTraits<LabelType>::min());
+        labelMapFilter->SetBackgroundValue(-1);
+        labelMapFilter->Update();
 	outPort_.setData(labelMapFilter->GetOutput());
 	LINFO("Label Image to Objects Processed");
     }
