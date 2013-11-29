@@ -54,11 +54,12 @@ public:
     
     virtual std::string getProcessorInfo() const;
     
+    static const unsigned int Dimension = 2;
     typedef double                   DoublePixelType;
-    typedef otb::Image<DoublePixelType, 2> ImageType;
+    typedef otb::Image<DoublePixelType, Dimension> ImageType;
     
     typedef unsigned char             BytePixelType;
-    typedef otb::Image<BytePixelType, 2> ByteImageType;
+    typedef otb::Image<BytePixelType, Dimension> ByteImageType;
     
     typedef itk::RescaleIntensityImageFilter<ImageType,
       ByteImageType>    ByteRescalerFilterType;
@@ -68,7 +69,7 @@ public:
       ImageType>    DoubleRescalerFilterType;
     DoubleRescalerFilterType::Pointer  doublerescaler;
     
-    typedef itk::BinaryBallStructuringElement<BytePixelType, 2> StructuringElementType;
+    typedef itk::BinaryBallStructuringElement<BytePixelType, Dimension> StructuringElementType;
     
     typedef itk::BinaryDilateImageFilter<ByteImageType, ByteImageType, 
 				    StructuringElementType>  DilateFilterType;

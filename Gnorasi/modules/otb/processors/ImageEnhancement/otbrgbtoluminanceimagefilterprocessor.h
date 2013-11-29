@@ -53,9 +53,10 @@ public:
 
     virtual std::string getProcessorInfo() const;
 
-    typedef otb::VectorImage<double, 2> VectorImageType;
-    typedef itk::Image<itk::RGBPixel<unsigned char>, 2> RGBImageType;
-    typedef otb::Image<unsigned char, 2> ScalarImageType;
+    static const unsigned int Dimension = 2;
+    typedef otb::VectorImage<double, Dimension> VectorImageType;
+    typedef itk::Image<itk::RGBPixel<unsigned char>, Dimension> RGBImageType;
+    typedef otb::Image<unsigned char, Dimension> ScalarImageType;
 
     typedef itk::RGBToLuminanceImageFilter<RGBImageType, ScalarImageType> FilterType;
     FilterType::Pointer filter;

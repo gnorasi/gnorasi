@@ -53,7 +53,8 @@ public:
 
     virtual std::string getProcessorInfo() const;
 
-    typedef otb::VectorImage<double, 2> VectorImageType;
+    static const unsigned int Dimension = 2;
+    typedef otb::VectorImage<double, Dimension> VectorImageType;
 
     typedef otb::EstimateInnerProductPCAImageFilter<VectorImageType, VectorImageType> FilterType;
     FilterType::Pointer filter;

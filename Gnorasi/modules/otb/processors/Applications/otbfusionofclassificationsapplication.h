@@ -69,10 +69,11 @@ public:
 
     virtual std::string getProcessorInfo() const;
 
+    static const unsigned int Dimension = 2;
     /** Images typedefs */
     typedef ImageType               MaskImageType;
-    typedef otb::Image<unsigned int, 2>       LabelImageType;
-    typedef otb::VectorImage<double, 2> VectorImageType;
+    typedef otb::Image<unsigned int, Dimension>       LabelImageType;
+    typedef otb::VectorImage<double, Dimension> VectorImageType;
 
     typedef otb::MultiToMonoChannelExtractROI<VectorImageType::InternalPixelType, LabelImageType::PixelType> ConverterType;
 

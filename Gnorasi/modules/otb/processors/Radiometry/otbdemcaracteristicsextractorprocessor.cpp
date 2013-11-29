@@ -24,14 +24,14 @@
  *                                                                              *
  ********************************************************************************/
 
-#include "otbdemcaracteristicsextractor.h"
+#include "otbdemcaracteristicsextractorprocessor.h"
 #include "voreen/core/voreenapplication.h"
 
 namespace voreen {
 
-const std::string OTBDEMCaracteristicsExtractor::loggerCat_("voreen.OTBDEMCaracteristicsExtractor");
+const std::string OTBDEMCaracteristicsExtractorProcessor::loggerCat_("voreen.OTBDEMCaracteristicsExtractorProcessor");
 
-OTBDEMCaracteristicsExtractor::OTBDEMCaracteristicsExtractor()
+OTBDEMCaracteristicsExtractorProcessor::OTBDEMCaracteristicsExtractorProcessor()
     :OTBImageFilterProcessor(),
       solarAngle_("solarAngle", "Solar Angle:", 1.0f, 0.0f, 360.0f),
       solarAzimut_("solarAzimut", "Solar Azimut:", 1.0f, 0.0f, 360.0f),
@@ -51,27 +51,27 @@ OTBDEMCaracteristicsExtractor::OTBDEMCaracteristicsExtractor()
     extractor = DEMCaracteristicsExtractorFilter::New();
 }
 
-Processor* OTBDEMCaracteristicsExtractor::create() const {
-    return new OTBDEMCaracteristicsExtractor();
+Processor* OTBDEMCaracteristicsExtractorProcessor::create() const {
+    return new OTBDEMCaracteristicsExtractorProcessor();
 }
 
-OTBDEMCaracteristicsExtractor::~OTBDEMCaracteristicsExtractor() {
+OTBDEMCaracteristicsExtractorProcessor::~OTBDEMCaracteristicsExtractorProcessor() {
 
 }
 
-void OTBDEMCaracteristicsExtractor::initialize() throw (tgt::Exception) {
+void OTBDEMCaracteristicsExtractorProcessor::initialize() throw (tgt::Exception) {
     Processor::initialize();
 }
 
-void OTBDEMCaracteristicsExtractor::deinitialize() throw (tgt::Exception) {
+void OTBDEMCaracteristicsExtractorProcessor::deinitialize() throw (tgt::Exception) {
     Processor::deinitialize();
 }
 
-std::string OTBDEMCaracteristicsExtractor::getProcessorInfo() const {
+std::string OTBDEMCaracteristicsExtractorProcessor::getProcessorInfo() const {
     return "DEM Caracteristics Extractor";
 }
 
-void OTBDEMCaracteristicsExtractor::process() {
+void OTBDEMCaracteristicsExtractorProcessor::process() {
 
     //check bypass switch
     if (!enableSwitch_.get()) {

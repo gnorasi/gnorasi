@@ -81,9 +81,12 @@ ELSEIF(WIN32)
         ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters
         ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/CurlAdapters
         ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/ITKPendingPatches
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/OGRAdapters
         ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/OssimAdapters
+        ${MOD_DIR}/ext/orfeotoolbox/include/Code/UtilitiesAdapters/TinyXMLAdapters
         ${MOD_DIR}/ext/orfeotoolbox/include/Code/Visualization
         ${MOD_DIR}/ext/orfeotoolbox/include/Utilities
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/InsightJournal
         ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK
         ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code
         ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/ITK/Code/Algorithms
@@ -102,6 +105,11 @@ ELSEIF(WIN32)
         ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbconfigfile
         ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbedison
         ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbedison/segm
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbmsinttypes
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbmuparser
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbossim
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/otbossimplugins
+        ${MOD_DIR}/ext/orfeotoolbox/include/Utilities/tinyXMLlib
     )
 
 	# libraries
@@ -166,7 +174,7 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/OTBObjectDetection.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/OTBOGRAdapters.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/otbopenjpeg.lib
-                ${ORFEOTOOLBOX_LIB_DIR}/debug/otbossim.lib
+#                ${ORFEOTOOLBOX_LIB_DIR}/debug/otbossim.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/OTBOssimAdapters.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/otbossimplugins.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/OTBProjections.lib
@@ -189,7 +197,7 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/jpeg12_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/libtiff_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/debug/libcurl_imp.lib
-                ${ORFEOTOOLBOX_LIB_DIR}/debug/qwtd.lib
+                ${ORFEOTOOLBOX_LIB_DIR}/debug/libexpat.lib
     )
 
 	# link against OrfeoToolBox
@@ -245,7 +253,7 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/release/OTBObjectDetection.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/OTBOGRAdapters.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/otbopenjpeg.lib
-                ${ORFEOTOOLBOX_LIB_DIR}/release/otbossim.lib
+#                ${ORFEOTOOLBOX_LIB_DIR}/release/otbossim.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/OTBOssimAdapters.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/otbossimplugins.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/OTBProjections.lib
@@ -269,6 +277,8 @@ ELSEIF(WIN32)
                 ${ORFEOTOOLBOX_LIB_DIR}/release/libtiff_i.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/libcurl_imp.lib
                 ${ORFEOTOOLBOX_LIB_DIR}/release/qwt.lib
+                ${ORFEOTOOLBOX_LIB_DIR}/release/libexpat.lib
+                ${ORFEOTOOLBOX_LIB_DIR}/release/ossim.lib
     )
 
 ENDIF(UNIX)
@@ -372,7 +382,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbbayesianfusionfilterprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.cpp
-    ${MOD_DIR}/processors/Radiometry/otbdemcaracteristicsextractor.cpp
+    ${MOD_DIR}/processors/Radiometry/otbdemcaracteristicsextractorprocessor.cpp
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.cpp
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosiftkeypointsetfilterprocessor.cpp
@@ -495,7 +505,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Radiometry/otbtwoimagebandmathprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbbayesianfusionfilterprocessor.h 
     ${MOD_DIR}/processors/Radiometry/otblaindviprocessor.h
-    ${MOD_DIR}/processors/Radiometry/otbdemcaracteristicsextractor.h
+    ${MOD_DIR}/processors/Radiometry/otbdemcaracteristicsextractorprocessor.h
     ${MOD_DIR}/processors/Visualization/otbimageviewerprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.h
     ${MOD_DIR}/processors/FeatureExtraction/otbimagetosiftkeypointsetfilterprocessor.h

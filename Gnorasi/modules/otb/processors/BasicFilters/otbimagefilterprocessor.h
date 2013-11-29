@@ -52,8 +52,9 @@ public:
     OTBImageFilterProcessor();
     virtual ~OTBImageFilterProcessor();
     
+    static const unsigned int Dimension = 2;
     typedef double                   PixelType;
-    typedef otb::Image<PixelType, 2> ImageType;
+    typedef otb::Image<PixelType, Dimension> ImageType;
     typedef ImageType* 		     ImagePointer;
     
     virtual std::string getProcessorInfo() const;

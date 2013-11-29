@@ -52,9 +52,10 @@ public:
 
     virtual std::string getProcessorInfo() const;
 
-    typedef otb::Image<double, 2> ImageType;
-    typedef otb::VectorImage<double, 2> VectorImageType;
-    typedef otb::VectorImage<unsigned short int, 2> VectorIntImageType;
+    static const unsigned int Dimension = 2;
+    typedef otb::Image<double, Dimension> ImageType;
+    typedef otb::VectorImage<double, Dimension> VectorImageType;
+    typedef otb::VectorImage<unsigned short int, Dimension> VectorIntImageType;
 
 
     typedef otb::LmvmPanSharpeningFusionImageFilter<ImageType, VectorImageType, VectorIntImageType> LmvmFusionFilterType;

@@ -24,8 +24,8 @@
  *                                                                              *
  ********************************************************************************/
 
-#ifndef OTBDEMCARACTERISTICSEXTRACTOR_H
-#define OTBDEMCARACTERISTICSEXTRACTOR_H
+#ifndef OTBDEMCARACTERISTICSEXTRACTORPROCESSOR_H
+#define OTBDEMCARACTERISTICSEXTRACTORPROCESSOR_H
 
 #include "modules/otb/processors/BasicFilters/otbimagefilterprocessor.h"
 #include "otbDEMCaracteristicsExtractor.h"
@@ -33,13 +33,13 @@
 
 namespace voreen {
 
-class OTBDEMCaracteristicsExtractor : public OTBImageFilterProcessor
+class OTBDEMCaracteristicsExtractorProcessor : public OTBImageFilterProcessor
 {
 public:
 
-    OTBDEMCaracteristicsExtractor();
+    OTBDEMCaracteristicsExtractorProcessor();
 
-    virtual ~OTBDEMCaracteristicsExtractor();
+    virtual ~OTBDEMCaracteristicsExtractorProcessor();
 
     virtual Processor* create() const;
 
@@ -76,5 +76,5 @@ private:
 
 } // namespace
 
-#endif // OTBDEMCARACTERISTICSEXTRACTOR_H
+#endif // OTBDEMCARACTERISTICSEXTRACTORPROCESSOR_H
 

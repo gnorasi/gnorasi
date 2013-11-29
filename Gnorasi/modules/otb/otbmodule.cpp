@@ -109,7 +109,7 @@
 #include "processors/Radiometry/otbtwoimagebandmathprocessor.h"
 #include "processors/Radiometry/otbbayesianfusionfilterprocessor.h"
 #include "processors/Radiometry/otblaindviprocessor.h"
-#include "processors/Radiometry/otbdemcaracteristicsextractor.h"
+#include "processors/Radiometry/otbdemcaracteristicsextractorprocessor.h"
 #include "processors/ImageIO/otbimagetovectorimagecastprocessor.h"
 #include "processors/ImageIO/otbvectorimagewriterprocessor.h"
 #include "processors/FeatureExtraction/otbimagetosurfkeypointsetfilterprocessor.h"
@@ -228,7 +228,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBRescaleIntensityImageFilterProcessor());
     registerProcessor(new OTBDotProductImageFilterProcessor());
     registerProcessor(new OTBEstimateInnerProductPCAImageFilterProcessor());
-    registerProcessor(new OTBDEMCaracteristicsExtractor());
+    registerProcessor(new OTBDEMCaracteristicsExtractorProcessor());
     registerProcessor(new OTBGrayscaleConnectedOpeningImageFilterProcessor());
     registerProcessor(new OTBGrayscaleConnectedClosingImageFilterProcessor());
     registerProcessor(new OTBGrayscaleGeodesicDilateImageFilterProcessor());
