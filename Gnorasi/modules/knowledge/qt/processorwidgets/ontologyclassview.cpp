@@ -14,8 +14,7 @@
 #include <QStandardItemModel>
 
 #include <QtCore/QDebug>
-
-
+#include <QColorDialog>
 
 using namespace voreen;
 
@@ -52,9 +51,11 @@ void OntologyClassView::contextMenuEvent ( QContextMenuEvent * e )
         menu->addAction(tr("New subclass"),this,SLOT(onAddChildClass()));
         menu->addAction(tr("New sibling class"),this,SLOT(onAddSiblingClass()));
         menu->addAction(tr("Delete class"),this,SLOT(onRemoveCurrentClass()));
+        menu->addAction(tr("Change color"),this,SLOT(changeClassColor()));
     }
-    else
+    else{
         menu->addAction("New subclass",this,SLOT(onAddChildClass()));
+    }
 
     menu->exec(QCursor::pos());
 
@@ -136,6 +137,13 @@ void OntologyClassView::onAddChildClass(){
         pItem->setData(classId,Qt::DisplayRole);
         pItem->setData(classId);
 
+        OntologyClass *pClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassById(classId);
+        if(pClass){
+
+            QColor color = pClass->color();
+            pItem->setData(color,Qt::DecorationRole);
+        }
+
         QList<QStandardItem*> parentItemList = omodel->findItems(pClassDescriptionDialog->parentClassId(),Qt::MatchExactly | Qt::MatchRecursive);
         if(!parentItemList.isEmpty())
         {
@@ -152,6 +160,14 @@ void OntologyClassView::onAddChildClass(){
         QStandardItem *pItem = new QStandardItem();
         pItem->setData(classId,Qt::DisplayRole);
         pItem->setData(classId);
+
+        OntologyClass *pClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassById(classId);
+        if(pClass){
+
+            QColor color = pClass->color();
+            pItem->setData(color,Qt::DecorationRole);
+        }
+
         omodel->setItem(omodel->rowCount(),pItem);
 
         expand(index);
@@ -237,6 +253,30 @@ void OntologyClassView::onAddSiblingClass(){
 
         setCurrentIndex(omodel->index(omodel->rowCount(index.parent()),0,index.parent()));
 //    }
+}
+
+
+void OntologyClassView::changeClassColor(){
+
+    if(!OBJECTLEVELMANAGER->count())
+        return;
+
+    QModelIndex index = selectionModel()->currentIndex();
+    if(!index.isValid())
+        return;
+
+    QString classid = model()->data(index,Qt::DisplayRole).toString();
+
+    QColor color;
+    OntologyClass *pClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyClassById(classid);
+    if(pClass)
+        color = QColor(pClass->color());
+
+    color = QColorDialog::getColor(color,this,tr("Select Color"));
+    if(pClass)
+        pClass->setColor(color.name());
+
+    model()->setData(index,color,Qt::DecorationRole);
 }
 
 QString OntologyClassView::getUniqueNameFromIndex(const QModelIndex &index){

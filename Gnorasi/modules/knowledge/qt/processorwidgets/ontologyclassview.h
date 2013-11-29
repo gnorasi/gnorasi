@@ -60,6 +60,7 @@ public slots:
     void onAddChildClass();
     void onRemoveCurrentClass();
     void onAddSiblingClass();
+    void changeClassColor();
 
 private:
     QString getUniqueNameFromIndex(const QModelIndex& );

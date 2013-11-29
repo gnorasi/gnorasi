@@ -32,6 +32,12 @@ public:
     QString parentClassId() const { return m_parentClassId; }
     void setParentClassId(const QString &n) { m_parentClassId = n;}
 
+    static int randInt(int low, int high)
+    {
+        // Random number between low and high
+        return qrand() % ((high + 1) - low) + low;
+    }
+
 signals:
     void ontologyClassAdded(int );
     

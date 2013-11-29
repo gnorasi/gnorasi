@@ -21,6 +21,7 @@
 #include "../fuzzy/fuzzyfunctionmanager.h"
 
 #include <QDebug>
+#include <QTime>
 
 ClassDescriptionDialog::ClassDescriptionDialog(QWidget *parent) :
     QDialog(parent)
@@ -28,6 +29,11 @@ ClassDescriptionDialog::ClassDescriptionDialog(QWidget *parent) :
     setWindowTitle(tr("Class Description"));
 
     initialize();
+
+    // Create seed for the random
+    // That is needed only once on application startup
+    QTime time = QTime::currentTime();
+    qsrand((uint)time.msec());
 }
 
 void ClassDescriptionDialog::clearFuzzyRules(){
@@ -262,6 +268,11 @@ bool ClassDescriptionDialog::createNewClass(){
     pClass->setLevel(lId);
     pClass->setopername(m_pOperatorItem->data(Qt::DisplayRole).toString());
     pClass->setIdx(ONTOLOGYCLASSIFICATIONMANAGER->uniqueIdx());
+    int r = ClassDescriptionDialog::randInt(0,255);
+    int g = ClassDescriptionDialog::randInt(0,255);
+    int b = ClassDescriptionDialog::randInt(0,255);
+    QColor color = QColor(r,g,b);
+    pClass->setColor(color.name());
     m_classId = name;
     ONTOLOGYCLASSIFICATIONMANAGER->addOntologyClass(pClass);
 

@@ -92,6 +92,8 @@ void ClassHierarchyWidget::processOntology(OntologyClass *pClass, QStandardItem 
 
     QStandardItem *pItem = new QStandardItem();
     pItem->setData(pClass->name(),Qt::DisplayRole);
+    QColor color = QColor(pClass->color());
+    pItem->setData(color,Qt::DecorationRole);
     pItem->setData(pClass->id());
 
     if(pParentItem){

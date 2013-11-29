@@ -364,7 +364,7 @@ QList<itiviewer::Region*> LabelMapParser::parse(LabelMapType *lblmap, VectorData
                 Region *pRegion = list.at(counter);
                 pRegion->setArea(plgon);
 
-                qDebug() << plgon;
+//                qDebug() << plgon;
 
                 counter++;
             }

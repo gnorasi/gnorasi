@@ -294,18 +294,32 @@ void ItiOtbImageManager::setupColors(){
 
         int clid = i.key();
 
-        int r = Region::randInt(0,255);
-        int g = Region::randInt(0,255);
-        int b = Region::randInt(0,255);
-        QColor color = QColor(r,g,b);
-        m_colorHash[clid] = color;
-
         OntologyClass *pClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyByIdx(clid);
         if(pClass){
 
-            QString colorname = color.name();
-            pClass->setColor(colorname);
-            qDebug() << "set color to class : " << colorname;
+            QString colorname = pClass->color();
+            if(colorname.isEmpty()){
+
+                int r = Region::randInt(0,255);
+                int g = Region::randInt(0,255);
+                int b = Region::randInt(0,255);
+                QColor color = QColor(r,g,b);
+                m_colorHash[clid] = color;
+
+                pClass->setColor(colorname);
+            }else
+                m_colorHash[clid] = QColor(colorname);
+
+            qDebug() << "class color : " << colorname << ", pClass->classId() : " << pClass->id() << ", pClass->classIdx() : " << pClass->idx();
+        }else{
+
+            int r = Region::randInt(0,255);
+            int g = Region::randInt(0,255);
+            int b = Region::randInt(0,255);
+            QColor color = QColor(r,g,b);
+            m_colorHash[clid] = color;
+
+            qDebug() << "class color : " << color.name();
         }
     }
 
