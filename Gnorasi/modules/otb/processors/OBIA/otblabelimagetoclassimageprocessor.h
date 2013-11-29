@@ -58,7 +58,7 @@ public:
     typedef unsigned long           LabelType;
     typedef unsigned short          ClassType;
     typedef otb::Image<LabelType, 2> LabeledImageType;
-    typedef LabeledImageType* LabelImagePointer;
+    typedef LabeledImageType::Pointer LabelImagePointer;
     
     typedef itk::ImageLinearIteratorWithIndex<LabeledImageType>      IteratorType; 
     typedef itk::ImageLinearConstIteratorWithIndex<LabeledImageType> ConstIteratorType;

@@ -48,8 +48,8 @@ OTBLabelImageToClassImageProcessor::OTBLabelImageToClassImageProcessor()
     addProperty(updateButton_);
     
     //OTB initialization
-    inLabelImg = 0;
-    outLabelImg = 0;
+    inLabelImg = NULL;
+    outLabelImg = LabeledImageType::New();
 }
 
 Processor* OTBLabelImageToClassImageProcessor::create() const {
@@ -96,6 +96,7 @@ void OTBLabelImageToClassImageProcessor::update() {
 	    
 	    //For each input text line (CSV)
 	    std::string line;
+	    std::getline(ss,line);//throw first line
 	    while(std::getline(ss,line))
 	    {
 		std::stringstream  lineStream(line);
@@ -103,6 +104,8 @@ void OTBLabelImageToClassImageProcessor::update() {
 		int i = 1;
 		unsigned long id;
 		unsigned short classid;
+		//debug info
+		//LINFO(line);
 		while(std::getline(lineStream,cell,';'))
 		{
 		    std::stringstream tmp(cell);
@@ -116,23 +119,24 @@ void OTBLabelImageToClassImageProcessor::update() {
             ////////////////////////////////////////////////
             //Image port code
             ////////////////////////////////////////////////            
-            outLabelImg = LabeledImageType::New();
-            outLabelImg->SetRegions(inLabelImg->GetRequestedRegion()); 
-            outLabelImg->CopyInformation(inLabelImg); 
-            outLabelImg->Allocate();
-            
+            inLabelImg->UpdateOutputInformation();
+	    inLabelImg->UpdateOutputData();
+	    outLabelImg->SetRegions(inLabelImg->GetRequestedRegion());
+	    outLabelImg->CopyInformation(inLabelImg);
+	    outLabelImg->Allocate();
+	    
             ConstIteratorType inputIt(inLabelImg, inLabelImg->GetRequestedRegion()); 
-            IteratorType outputIt(outLabelImg, inLabelImg->GetRequestedRegion()); 
- 
+            IteratorType outputIt(outLabelImg, inLabelImg->GetRequestedRegion());
+	    
             inputIt.SetDirection(0); 
             outputIt.SetDirection(0);
-            
+	    
             for (inputIt.GoToBegin(),  outputIt.GoToBegin(); !inputIt.IsAtEnd(); 
                 outputIt.NextLine(),  inputIt.NextLine()) 
             { 
-                inputIt.GoToBeginOfLine(); 
-                outputIt.GoToBeginOfLine(); 
-                while (!inputIt.IsAtEndOfLine()) 
+                inputIt.GoToBeginOfLine();
+		outputIt.GoToBeginOfLine();
+		while (!inputIt.IsAtEndOfLine()) 
                 { 
                     //TODO: Check if I can connect to color type from global
                     unsigned long curval;
