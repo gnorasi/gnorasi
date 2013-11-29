@@ -108,7 +108,7 @@ void OTBLabelImageToClassImageProcessor::update() {
 		    std::stringstream tmp(cell);
 		    if (i == 1)	tmp >> id;
 		    if (i == 2) tmp >> classid;
-                    classIndex.insert(make_pair(id, classid));
+                    classIndex.insert(std::make_pair(id, classid));
 		    i++;
 		}
 	    }

@@ -373,6 +373,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/OBIA/otblabelmaptobinaryimagefilterprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelimagetovectordatafilterprocessor.cpp
     ${MOD_DIR}/processors/OBIA/otblabelmaptovectordatafilterprocessor.cpp
+    ${MOD_DIR}/processors/OBIA/otblabelimagetoclassimageprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbndviprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbmsaviprocessor.cpp
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.cpp
@@ -494,6 +495,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/OBIA/otblabelmaptobinaryimagefilterprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelimagetovectordatafilterprocessor.h
     ${MOD_DIR}/processors/OBIA/otblabelmaptovectordatafilterprocessor.h
+    ${MOD_DIR}/processors/OBIA/otblabelimagetoclassimageprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbndviprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbmsaviprocessor.h
     ${MOD_DIR}/processors/Radiometry/otbndwiprocessor.h

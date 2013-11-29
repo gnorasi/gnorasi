@@ -102,6 +102,7 @@
 #include "processors/OBIA/otblabelmaptobinaryimagefilterprocessor.h"
 #include "processors/OBIA/otblabelimagetovectordatafilterprocessor.h"
 #include "processors/OBIA/otblabelmaptovectordatafilterprocessor.h"
+#include "processors/OBIA/otblabelimagetoclassimageprocessor.h"
 #include "processors/Radiometry/otbndviprocessor.h"
 #include "processors/Radiometry/otbmsaviprocessor.h"
 #include "processors/Radiometry/otbndwiprocessor.h"
@@ -199,6 +200,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBBandStatisticsAttributesLabelMapProcessor());
     registerProcessor(new OTBStatisticsAttributesLabelMapProcessor());
     registerProcessor(new OTBLabelMapStatisticsWriterProcessor());
+    registerProcessor(new OTBLabelImageToClassImageProcessor());
     registerProcessor(new OTBObjectClassificationToLabelMapProcessor());
     registerProcessor(new OTBLabelMapToClassImageProcessor());
     registerProcessor(new OTBNDVIProcessor());
