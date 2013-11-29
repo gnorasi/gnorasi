@@ -103,6 +103,7 @@ void OTBObjectClassificationToLabelMapProcessor::update() {
 		int i = 1;
 		long unsigned int id;
 		short unsigned int classid;
+                std::string classstr = "CLASSID"; 
                 std::string classname;
 		while(std::getline(lineStream,cell,';'))
 		{
@@ -118,7 +119,7 @@ void OTBObjectClassificationToLabelMapProcessor::update() {
 		if (it != labelmap->GetLabelObjectContainer().end())
 		{
 		    it->second->SetClassLabel(classid);
-                    it->second->SetAttribute(classname,666.666);
+                    it->second->SetAttribute(classstr,classid);
 		}
 		
 	    }
