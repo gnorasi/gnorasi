@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <Installer>
+     <Name>Gnorasi</Name>
+     <Version>0.5.0</Version>
+     <Title>Gnorasi Installer</Title>
+     <Publisher>ITI</Publisher>
+     <StartMenuDir>Gnorasi</StartMenuDir>
+	 <InstallerApplicationIcon>icon-64</InstallerApplicationIcon>
+     <TargetDir>@rootDir@InstallationDirectory</TargetDir>
+ </Installer>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+ <Package>
+     <DisplayName>Gnorasi</DisplayName>
+     <Description>Gnorasi Package</Description>
+     <Version>0.5.0</Version>
+     <ReleaseDate>2013-11-28</ReleaseDate>
+     <Name>org.gnorasi</Name>
+     <Default>true</Default>
+     <ForcedInstallation>false</ForcedInstallation>
+     <Essential>false</Essential>
+ </Package>
