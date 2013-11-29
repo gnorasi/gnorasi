@@ -94,6 +94,27 @@ OntologyClass* OntologyClassificationManager::ontologyByIdx(int idx){
     return 0;
 }
 
+
+QRgb OntologyClassificationManager::getRGBColorOfOntologyClassByIdx(int idx){
+
+    QList<OntologyClass*>::const_iterator i;
+    for(i = m_OntoloyClassList.constBegin(); i != m_OntoloyClassList.constEnd(); i++){
+
+        OntologyClass *p = *i;
+        if(p->idx() == idx){
+
+            QString colorname = p->color();
+            QColor color = QColor(colorname);
+            QRgb rgb = color.rgb();
+
+            return rgb;
+        }
+    }
+
+    return 0;
+}
+
+
 int OntologyClassificationManager::uniqueIdx(){
 
     int helper = 1;

@@ -53,7 +53,7 @@ public:
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     virtual std::string getProcessorInfo() const;
-    
+
     typedef unsigned long           LabelType;
     typedef otb::Image<LabelType, 2> LabeledImageType;
     typedef otb::AttributesMapLabelObjectWithClassLabel<LabelType, 2, double, unsigned short> LabelObjectType;

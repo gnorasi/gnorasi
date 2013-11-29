@@ -307,7 +307,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/Applications/otbcomputeimagesstatisticsapplication.cpp
     ${MOD_DIR}/processors/Applications/otbsegmentationapplication.cpp
     ${MOD_DIR}/processors/Applications/otbcomputeconfusionmatrixapplication.cpp
-    ${MOD_DIR}/processors/Applications/otbfusionofclassificationsapplication.cpp
+#    ${MOD_DIR}/processors/Applications/otbfusionofclassificationsapplication.cpp
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.cpp
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.cpp
@@ -360,7 +360,7 @@ SET(MOD_CORE_SOURCES
     ${MOD_DIR}/processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.cpp
     #${MOD_DIR}/processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.cpp
-    ${MOD_DIR}/processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.cpp
+#    ${MOD_DIR}/processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbbinarythinningimagefilterprocessor.cpp
     ${MOD_DIR}/processors/ImageEnhancement/otbgeodesicmorphologylevelingfilterprocessor.cpp
@@ -430,7 +430,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/Applications/otbcomputeimagesstatisticsapplication.h
     ${MOD_DIR}/processors/Applications/otbsegmentationapplication.h
     ${MOD_DIR}/processors/Applications/otbcomputeconfusionmatrixapplication.h
-    ${MOD_DIR}/processors/Applications/otbfusionofclassificationsapplication.h
+#    ${MOD_DIR}/processors/Applications/otbfusionofclassificationsapplication.h
     ${MOD_DIR}/processors/ImageIO/otbimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otblabelimagereaderprocessor.h
     ${MOD_DIR}/processors/ImageIO/otbvectorimagereaderprocessor.h
@@ -483,7 +483,7 @@ SET(MOD_CORE_HEADERS
     ${MOD_DIR}/processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.h
     #${MOD_DIR}/processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.h
-    ${MOD_DIR}/processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h
+#    ${MOD_DIR}/processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbbinarythinningimagefilterprocessor.h
     ${MOD_DIR}/processors/ImageEnhancement/otbgeodesicmorphologylevelingfilterprocessor.h

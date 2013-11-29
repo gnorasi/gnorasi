@@ -30,6 +30,7 @@
 #define ONLOLOGYCLASSIFICATIONMANAGER_H
 
 #include <QObject>
+#include <QColor>
 
 // a helper macro
 #define ONTOLOGYCLASSIFICATIONMANAGER OntologyClassificationManager::instance()
@@ -58,6 +59,13 @@ public:
     OntologyClass* ontologyClassById(const QString& );
 
     OntologyClass* ontologyByIdx(int idx);
+
+    //!
+    //! \brief getRGBColorByIdx, An ARGB quadruplet on the format #AARRGGBB, equivalent to an unsigned int.
+    //! \param idx, the Class id
+    //! \return the QRgb value of the class, if no class has been found it returns 0.
+    //!
+    QRgb getRGBColorOfOntologyClassByIdx(int idx);
 
     int uniqueIdx();
 

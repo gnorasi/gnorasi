@@ -16,6 +16,9 @@
 #include "../../../ports/otblabelimageport.h"
 #include "../../../ports/otbvectordataport.h"
 
+#include "../../../../knowledge/qt/models/ontologyclass.h"
+#include "../../../../knowledge/qt/utils/ontologyclassificationmanager.h"
+
 #include "../models/itiotbVectorImageModel.h"
 
 using namespace itiviewer;
@@ -288,12 +291,22 @@ void ItiOtbImageManager::setupColors(){
 
     QHash<int,QString>::const_iterator i;
     for(i = m_classficationNamesIds.constBegin(); i != m_classficationNamesIds.constEnd(); i++){
+
         int clid = i.key();
 
         int r = Region::randInt(0,255);
         int g = Region::randInt(0,255);
         int b = Region::randInt(0,255);
-        m_colorHash[clid] = QColor(r,g,b);
+        QColor color = QColor(r,g,b);
+        m_colorHash[clid] = color;
+
+        OntologyClass *pClass = ONTOLOGYCLASSIFICATIONMANAGER->ontologyByIdx(clid);
+        if(pClass){
+
+            QString colorname = color.name();
+            pClass->setColor(colorname);
+            qDebug() << "set color to class : " << colorname;
+        }
     }
 
 

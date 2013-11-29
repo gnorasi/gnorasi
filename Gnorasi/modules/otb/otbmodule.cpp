@@ -36,7 +36,7 @@
 #include "processors/Applications/otbcomputeimagesstatisticsapplication.h"
 #include "processors/Applications/otbsegmentationapplication.h"
 #include "processors/Applications/otbcomputeconfusionmatrixapplication.h"
-#include "processors/Applications/otbfusionofclassificationsapplication.h"
+//#include "processors/Applications/otbfusionofclassificationsapplication.h"
 #include "processors/ImageIO/otbimagereaderprocessor.h"
 #include "processors/ImageIO/otblabelimagereaderprocessor.h"
 #include "processors/ImageIO/otbvectorimagereaderprocessor.h"
@@ -88,7 +88,7 @@
 #include "processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.h"
 //#include "processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.h"
-#include "processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h"
+//#include "processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbbinarythinningimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgeodesicmorphologylevelingfilterprocessor.h"
@@ -246,7 +246,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     //registerProcessor(new OTBGeodesicActiveContourLevelSetImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DLinesImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DCirclesImageFilterProcessor());
-    registerProcessor(new OTBLmvmPanSharpeningFusionImageFilterProcessor());
+//    registerProcessor(new OTBLmvmPanSharpeningFusionImageFilterProcessor());
     //registerProcessor(new OTBShapeDetectionLevelSetImageFilterProcessor());
     registerProcessor(new OTBMRFEnergyGaussianClassificationFilterProcessor());
     registerProcessor(new OTBSOMImageClassificationFilterProcessor());
@@ -274,7 +274,7 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBComputeImagesStatisticsApplication());
     registerProcessor(new OTBSegmentationApplication());
     registerProcessor(new OTBComputeConfusionMatrixApplication());
-    registerProcessor(new OTBFusionOfClassificationsApplication());
+//    registerProcessor(new OTBFusionOfClassificationsApplication());
 
     registerProcessor(new OTBImageViewerProcessor());
 //    registerProcessor(new OTBOrthoRectifyProcessor());
