@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<root>
+    <hierarchy>
+        <rdf:RDF xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xml:base="http://www.gnorasi.gr/ontology/generated_20131128165300" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.gnorasi.gr/ontology/generated_20131128165300#" xmlns:geo="http://rdf.opensahara.com/type/geo/" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:owl  ="http://www.w3.org/2002/07/owl#" xmlns:gno="http://www.gnorasi.gr/ontology#">
+            <owl:Ontology rdf:about=""/>
+            <owl:Class rdf:ID="Veg">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Veg</rdfs:label>
+                <rdfs:subClassOf>
+                    <owl:Class rdf:about="http://www.gnorasi.gr/ontology#ObjectDepiction"/>
+                </rdfs:subClassOf>
+            </owl:Class>
+            <rdf:Description rdf:ID="ins_veg">
+                <rdf:type rdf:resource="#Veg"/>
+                <gno:hasObjectClassID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</gno:hasObjectClassID>
+                <gno:definedForSegmentationLevel rdf:resource="#segmentationLevel_0"/>
+            </rdf:Description>
+            <rdf:Description rdf:ID="segmentationLevel_0">
+                <rdf:type rdf:resource="http://www.gnorasi.gr/ontology#SegmentationLevel"/>
+            </rdf:Description>
+        </rdf:RDF>
+    </hierarchy>
+    <classes>
+        <class idx="1" id="Veg">
+            <fuzzyRules operator="min">
+                <attributeRule property="FuzzySTATS_Band1_Mean1" id="1">
+                    <function name="Right Shoulder">
+                        <parameters>
+                            <parameter value="0.500" name="a"/>
+                            <parameter value="0.600" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+            </fuzzyRules>
+            <spatialRules operator="min"/>
+        </class>
+    </classes>
+</root>
