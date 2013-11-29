@@ -86,6 +86,8 @@ void OTBLabelImageToClassImageProcessor::update() {
 	{
 	    //Connect with data inport
 	    inLabelImg = inPort_.getData();
+            
+            std::map<unsigned long, unsigned short> classIndex;
 	    
             ////////////////////////////////////////////////
 	    //Text port code
@@ -106,6 +108,7 @@ void OTBLabelImageToClassImageProcessor::update() {
 		    std::stringstream tmp(cell);
 		    if (i == 1)	tmp >> id;
 		    if (i == 2) tmp >> classid;
+                    classIndex.insert(make_pair(id, classid));
 		    i++;
 		}
 	    }
@@ -131,11 +134,14 @@ void OTBLabelImageToClassImageProcessor::update() {
                 outputIt.GoToBeginOfLine(); 
                 while (!inputIt.IsAtEndOfLine()) 
                 { 
-                    //TODO: Hotplug class id here from id to classid map
-                    //TODO: Check if I can connect to color type from global 
-                    outputIt.Set(inputIt.Get()); 
+                    //TODO: Check if I can connect to color type from global
+                    unsigned long curval;
+                    unsigned short classval;
+                    curval = inputIt.Get();
+                    classval = classIndex[curval];
+                    outputIt.Set(classval);
                     ++inputIt; 
-                    ++outputIt; 
+                    ++outputIt;
                 } 
             }            
             
