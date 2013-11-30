@@ -1,13 +1,13 @@
 /********************************************************************************
- *                                                                      		*
- * GNORASI - The Knowlegde-Based Remote Sensing Engine                  		*
+ *                                                                      	*
+ * GNORASI - The Knowlegde-Based Remote Sensing Engine                  	*
  *                                                                              *
  * Language:  C++                                                               *
  *                                                                              *
  * Copyright (c) Angelos Tzotsos <tzotsos@gmail.com>. All rights reserved.   	*
  * Copyright (c) National Technical University of Athens. All rights reserved.	*
  * Copyright (c) Informatics and Telematics Institute                           *
- *	  Centre for Research and Technology Hellas. All rights reserved.           *
+ *	  Centre for Research and Technology Hellas. All rights reserved.       *
  * Copyright (c) ALTEC SA - www.altec.gr - All rights reserved.                 *
  *                                                                          	*
  *                                                                              *
@@ -88,7 +88,7 @@
 #include "processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.h"
 //#include "processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.h"
-//#include "processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h"
+#include "processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbbinarythinningimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgeodesicmorphologylevelingfilterprocessor.h"
@@ -129,8 +129,8 @@
 #include "processors/Segmentation/otbmeanshiftimagesegmentationprocessor.h"
 #include "processors/Segmentation/otbwatershedsegmentationfilterprocessor.h"
 #include "processors/Segmentation/otblaplaciansegmentationlevelsetimagefilterprocessor.h"
-//#include "processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.h"
-//#include "processors/Segmentation/otbshapedetectionlevelsetimagefilterprocessor.h"
+#include "processors/Segmentation/otbgeodesicactivecontourlevelsetimagefilterprocessor.h"
+#include "processors/Segmentation/otbshapedetectionlevelsetimagefilterprocessor.h"
 #include "processors/Classification/otbconfusionmatrixcalculatorprocessor.h"
 #include "processors/Classification/otbkmeansimageclassificationfilterprocessor.h"
 #include "processors/Classification/otbbayesianclassifierimagefilterprocessor.h"
@@ -245,11 +245,11 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBPerBandVectorImageFilterProcessor());
     registerProcessor(new OTBCloudDetectionImageFilterProcessor());
     registerProcessor(new OTBBayesianClassifierImageFilterProcessor());
-    //registerProcessor(new OTBGeodesicActiveContourLevelSetImageFilterProcessor());
+    registerProcessor(new OTBGeodesicActiveContourLevelSetImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DLinesImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DCirclesImageFilterProcessor());
-//    registerProcessor(new OTBLmvmPanSharpeningFusionImageFilterProcessor());
-    //registerProcessor(new OTBShapeDetectionLevelSetImageFilterProcessor());
+    registerProcessor(new OTBLmvmPanSharpeningFusionImageFilterProcessor());
+    registerProcessor(new OTBShapeDetectionLevelSetImageFilterProcessor());
     registerProcessor(new OTBMRFEnergyGaussianClassificationFilterProcessor());
     registerProcessor(new OTBSOMImageClassificationFilterProcessor());
     registerProcessor(new OTBSOMMapReaderProcessor());

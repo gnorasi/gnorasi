@@ -66,7 +66,7 @@ Processor::deinitialize();
 
 std::string OTBLmvmPanSharpeningFusionImageFilterProcessor::getProcessorInfo() const {
 
-  return "Lmvm Pan Sharpening Fusion Image Filter";
+  return "LMVM Pan Sharpening Fusion Image Filter";
 }
 
 void OTBLmvmPanSharpeningFusionImageFilterProcessor::process() {
@@ -98,7 +98,7 @@ void OTBLmvmPanSharpeningFusionImageFilterProcessor::process() {
     }
     catch (int e)
     {
-        LERROR("Lmvm Pan Sharpening Fusion Image Filter");
+        LERROR("LMVM Pan Sharpening Fusion Image Filter");
     return;
     }
 }

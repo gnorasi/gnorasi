@@ -46,7 +46,7 @@ public:
 
     virtual Processor* create() const;
 
-    virtual std::string getCategory() const { return "Image Enhancement"; }
+    virtual std::string getCategory() const { return "OBIA"; }
     virtual std::string getClassName() const { return "Attributes Map Opening Label Map Filter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL;}//STABLE, TESTING, EXPERIMENTAL
 

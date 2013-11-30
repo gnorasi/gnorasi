@@ -47,7 +47,7 @@ public:
     virtual Processor* create() const;
 
     virtual std::string getCategory() const { return "Image Enhancement"; }
-    virtual std::string getClassName() const { return "Lmvm Pan Sharpening Fusion Image Filter"; }
+    virtual std::string getClassName() const { return "LMVM Pan Sharpening Fusion Image Filter"; }
     virtual CodeState getCodeState() const { return CODE_STATE_EXPERIMENTAL; }//STABLE, TESTING, EXPERIMENTAL
 
     virtual std::string getProcessorInfo() const;

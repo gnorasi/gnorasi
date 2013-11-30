@@ -44,7 +44,7 @@ public:
     
     virtual Processor* create() const;
     
-    virtual std::string getCategory() const { return "Anisotropic Diffusion"; }
+    virtual std::string getCategory() const { return "Image Enhancement"; }
     virtual std::string getClassName() const { return "Gradient Anisotropic Diffusion"; }
     virtual CodeState getCodeState() const { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     

@@ -21,7 +21,7 @@ public:
 
     virtual std::string getClassName() const { return "OntologyClassification Processor"; }
     virtual std::string getCategory() const  { return "Classification"; }
-    virtual CodeState getCodeState() const   { return CODE_STATE_EXPERIMENTAL; } //STABLE, TESTING, EXPERIMENTAL
+    virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; } //STABLE, TESTING, EXPERIMENTAL
     virtual std::string getProcessorInfo() const;
     
 //    virtual bool isEndProcessor() const;

@@ -43,7 +43,7 @@ public:
 
     virtual std::string getClassName() const { return "Vector Data File Reader"; }
     virtual std::string getCategory() const  { return "Image IO"; }
-    virtual CodeState getCodeState() const   { return CODE_STATE_EXPERIMENTAL; } //STABLE, TESTING, EXPERIMENTAL
+    virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; } //STABLE, TESTING, EXPERIMENTAL
     virtual std::string getProcessorInfo() const;
 
     typedef otb::VectorData<double, 2> VectorDataType;
