@@ -1,44 +1,38 @@
 #
-# spec file for package dlib
+# spec file for package gnorasi
 #
 
 # norootforbuild
 
 %define _datadir /usr/share
 Name:           gnorasi
-Version:        0.1.8
+Version:        0.5.0
 Release:        1
 Summary:        Gnorasi is a knowledge-based remote sensing processing engine
 Group:          Development/Libraries/C and C++
-License:        GPL
+License:        GPL-2.0
 URL:            http://www.gnorasi.gr
 Source0:        %{name}-%{version}.tar.gz
 Source1:	gnorasi.desktop
 Source2:	gnorasi.png
 Source3:        %{name}.rpmlintrc
-#Patch1:		VRE30_opensuse_OBS.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-# BuildArch:      noarch
 
-BuildRequires:  gcc-c++ gcc cmake boost-devel
-BuildRequires:  fdupes libqt4-devel OrfeoToolbox-devel 
+BuildRequires:  gcc-c++ 
+BuildRequires:  gcc 
+BuildRequires:  cmake 
+BuildRequires:  boost-devel
+BuildRequires:  fdupes 
+BuildRequires:  libqt4-devel 
+BuildRequires:  OrfeoToolbox-devel
 BuildRequires:  glew-devel >= 1.6.0
+BuildRequires:  qwt6-devel
 
 %description
 Gnorasi aims to advance the current state of the art in research and development of knowledge-based image interpretation applications by providing a generic, modular, platform for the systematic coupling of image processing algorithms and formal knowledge.
 
-#%package        devel
-#Summary:        Development files for Gnorasi
-#Group:          Development/Libraries/C and C++
-
-#%description    devel
-#Gnorasi is a knowledge-based remote sensing processing engine
-
-
 %prep
 %setup
-##%patch1
-
 
 %build
 %if "%{_lib}" == "lib"
@@ -54,6 +48,7 @@ cmake  -DVRN_BUILD_GNORASI:BOOL=ON \
        -DVRN_BUILD_LIB_VOREENQT:BOOL=ON \
        -DVRN_DEBUG:BOOL=OFF \
        -DVRN_MODULE_OTB:BOOL=ON \
+       -DVRN_MODULE_KNOWLEDGE:BOOL=ON \
        -DVRN_PRECOMPILED_HEADER:BOOL=OFF \
        -DVRN_SHARED_LIBS:BOOL=ON \
        -DCMAKE_INSTALL_PREFIX:PATH=/usr \
@@ -107,10 +102,7 @@ rm -rf %{buildroot}
 %{_libdir}/*
 %{_datadir}/applications/gnorasi.desktop
 %{_datadir}/icons/gnorasi.png
+%dir %{_datadir}/gnorasi
 %{_datadir}/gnorasi/standard.vws
-
-#%files devel
-#%defattr(-,root,root,-)
-#%{_includedir}/voreen/
 
 %changelog
