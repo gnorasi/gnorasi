@@ -1,0 +1,285 @@
+<?xml version="1.0"?>
+<root>
+    <hierarchy>
+        <rdf:RDF xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xml:base="http://www.gnorasi.gr/ontology/generated_20131201204725" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.gnorasi.gr/ontology/generated_20131201204725#" xmlns:geo="http://rdf.opensahara.com/type/geo/" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:owl  ="http://www.w3.org/2002/07/owl#" xmlns:gno="http://www.gnorasi.gr/ontology#">
+            <owl:Ontology rdf:about=""/>
+            <owl:Class rdf:ID="Vegetation">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vegetation</rdfs:label>
+                <rdfs:subClassOf>
+                    <owl:Class rdf:about="http://www.gnorasi.gr/ontology#ObjectDepiction"/>
+                </rdfs:subClassOf>
+            </owl:Class>
+            <rdf:Description rdf:ID="ins_vegetation">
+                <rdf:type rdf:resource="#Vegetation"/>
+                <gno:hasObjectClassID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</gno:hasObjectClassID>
+                <gno:definedForSegmentationLevel rdf:resource="#segmentationLevel_0"/>
+            </rdf:Description>
+            <owl:Class rdf:ID="NotVegetation">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NotVegetation</rdfs:label>
+                <rdfs:subClassOf>
+                    <owl:Class rdf:about="http://www.gnorasi.gr/ontology#ObjectDepiction"/>
+                </rdfs:subClassOf>
+            </owl:Class>
+            <rdf:Description rdf:ID="ins_notvegetation">
+                <rdf:type rdf:resource="#NotVegetation"/>
+                <gno:hasObjectClassID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2</gno:hasObjectClassID>
+                <gno:definedForSegmentationLevel rdf:resource="#segmentationLevel_0"/>
+            </rdf:Description>
+            <owl:Class rdf:ID="Road">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Road</rdfs:label>
+                <rdfs:subClassOf>
+                    <owl:Class rdf:ID="NotVegetation"/>
+                </rdfs:subClassOf>
+            </owl:Class>
+            <rdf:Description rdf:ID="ins_road">
+                <rdf:type rdf:resource="#Road"/>
+                <gno:hasObjectClassID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">3</gno:hasObjectClassID>
+                <gno:definedForSegmentationLevel rdf:resource="#segmentationLevel_0"/>
+            </rdf:Description>
+            <owl:Class rdf:ID="NotRoad">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NotRoad</rdfs:label>
+                <rdfs:subClassOf>
+                    <owl:Class rdf:ID="NotVegetation"/>
+                </rdfs:subClassOf>
+            </owl:Class>
+            <rdf:Description rdf:ID="ins_notroad">
+                <rdf:type rdf:resource="#NotRoad"/>
+                <gno:hasObjectClassID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">4</gno:hasObjectClassID>
+                <gno:definedForSegmentationLevel rdf:resource="#segmentationLevel_0"/>
+            </rdf:Description>
+            <owl:Class rdf:ID="BrightRoofedConcrete">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BrightRoofedConcrete</rdfs:label>
+                <rdfs:subClassOf>
+                    <owl:Class rdf:ID="NotRoad"/>
+                </rdfs:subClassOf>
+            </owl:Class>
+            <rdf:Description rdf:ID="ins_brightroofedconcrete">
+                <rdf:type rdf:resource="#BrightRoofedConcrete"/>
+                <gno:hasObjectClassID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5</gno:hasObjectClassID>
+                <gno:definedForSegmentationLevel rdf:resource="#segmentationLevel_0"/>
+            </rdf:Description>
+            <owl:Class rdf:ID="NotBrightRoofedConcrete">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NotBrightRoofedConcrete</rdfs:label>
+                <rdfs:subClassOf>
+                    <owl:Class rdf:ID="NotRoad"/>
+                </rdfs:subClassOf>
+            </owl:Class>
+            <rdf:Description rdf:ID="ins_notbrightroofedconcrete">
+                <rdf:type rdf:resource="#NotBrightRoofedConcrete"/>
+                <gno:hasObjectClassID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">6</gno:hasObjectClassID>
+                <gno:definedForSegmentationLevel rdf:resource="#segmentationLevel_0"/>
+            </rdf:Description>
+            <owl:Class rdf:ID="CeramicRoof">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CeramicRoof</rdfs:label>
+                <rdfs:subClassOf>
+                    <owl:Class rdf:ID="NotBrightRoofedConcrete"/>
+                </rdfs:subClassOf>
+            </owl:Class>
+            <rdf:Description rdf:ID="ins_ceramicroof">
+                <rdf:type rdf:resource="#CeramicRoof"/>
+                <gno:hasObjectClassID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">7</gno:hasObjectClassID>
+                <gno:definedForSegmentationLevel rdf:resource="#segmentationLevel_0"/>
+            </rdf:Description>
+            <owl:Class rdf:ID="NotCeramicRoof">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NotCeramicRoof</rdfs:label>
+                <rdfs:subClassOf>
+                    <owl:Class rdf:ID="NotBrightRoofedConcrete"/>
+                </rdfs:subClassOf>
+            </owl:Class>
+            <rdf:Description rdf:ID="ins_notceramicroof">
+                <rdf:type rdf:resource="#NotCeramicRoof"/>
+                <gno:hasObjectClassID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">8</gno:hasObjectClassID>
+                <gno:definedForSegmentationLevel rdf:resource="#segmentationLevel_0"/>
+            </rdf:Description>
+            <owl:Class rdf:ID="GreyRoof">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GreyRoof</rdfs:label>
+                <rdfs:subClassOf>
+                    <owl:Class rdf:ID="NotCeramicRoof"/>
+                </rdfs:subClassOf>
+            </owl:Class>
+            <rdf:Description rdf:ID="ins_greyroof">
+                <rdf:type rdf:resource="#GreyRoof"/>
+                <gno:hasObjectClassID rdf:datatype="http://www.w3.org/2001/XMLSchema#int">9</gno:hasObjectClassID>
+                <gno:definedForSegmentationLevel rdf:resource="#segmentationLevel_0"/>
+            </rdf:Description>
+            <rdf:Description rdf:ID="segmentationLevel_0">
+                <rdf:type rdf:resource="http://www.gnorasi.gr/ontology#SegmentationLevel"/>
+            </rdf:Description>
+        </rdf:RDF>
+    </hierarchy>
+    <classes>
+        <class idx="1" id="Vegetation">
+            <fuzzyRules operator="min">
+                <attributeRule property="FuzzySTATS_ndvi_Mean1" id="1">
+                    <function name="Right Shoulder">
+                        <parameters>
+                            <parameter value="0.180" name="a"/>
+                            <parameter value="0.220" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+                <attributeRule property="FuzzySTATS_ndvi_Mean1" id="1">
+                    <function name="Right Shoulder">
+                        <parameters>
+                            <parameter value="0.260" name="a"/>
+                            <parameter value="0.280" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+            </fuzzyRules>
+            <spatialRules operator="min"/>
+        </class>
+        <class idx="2" id="NotVegetation">
+            <fuzzyRules operator="min">
+                <attributeRule property="FuzzySTATS_ndvi_Mean2" id="2">
+                    <function name="Left Shoulder">
+                        <parameters>
+                            <parameter value="0.180" name="a"/>
+                            <parameter value="0.220" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+                <attributeRule property="FuzzySTATS_ndvi_Mean2" id="2">
+                    <function name="Left Shoulder">
+                        <parameters>
+                            <parameter value="0.280" name="a"/>
+                            <parameter value="0.320" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+            </fuzzyRules>
+            <spatialRules operator="min"/>
+        </class>
+        <class idx="3" id="Road">
+            <fuzzyRules operator="min">
+                <shapeRule property="FuzzySHAPE_Elongation3" id="3">
+                    <function name="Right Shoulder">
+                        <parameters>
+                            <parameter value="2.000" name="a"/>
+                            <parameter value="2.200" name="b"/>
+                        </parameters>
+                    </function>
+                </shapeRule>
+            </fuzzyRules>
+            <spatialRules operator="min"/>
+        </class>
+        <class idx="4" id="NotRoad">
+            <fuzzyRules operator="min">
+                <shapeRule property="FuzzySHAPE_Elongation4" id="4">
+                    <function name="Left Shoulder">
+                        <parameters>
+                            <parameter value="2.600" name="a"/>
+                            <parameter value="2.900" name="b"/>
+                        </parameters>
+                    </function>
+                </shapeRule>
+            </fuzzyRules>
+            <spatialRules operator="min"/>
+        </class>
+        <class idx="5" id="BrightRoofedConcrete">
+            <fuzzyRules operator="min">
+                <attributeRule property="FuzzySTATS_Band2_Mean6" id="6">
+                    <function name="Right Shoulder">
+                        <parameters>
+                            <parameter value="850.000" name="a"/>
+                            <parameter value="870.000" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+                <attributeRule property="FuzzySTATS_Band1_Mean5" id="5">
+                    <function name="Right Shoulder">
+                        <parameters>
+                            <parameter value="100.000" name="a"/>
+                            <parameter value="150.000" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+            </fuzzyRules>
+            <spatialRules operator="min"/>
+        </class>
+        <class idx="6" id="NotBrightRoofedConcrete">
+            <fuzzyRules operator="max">
+                <attributeRule property="FuzzySTATS_Band2_Mean8" id="8">
+                    <function name="Left Shoulder">
+                        <parameters>
+                            <parameter value="850.000" name="a"/>
+                            <parameter value="870.000" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+                <attributeRule property="FuzzySTATS_Band1_Mean7" id="7">
+                    <function name="Left Shoulder">
+                        <parameters>
+                            <parameter value="100.000" name="a"/>
+                            <parameter value="150.000" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+            </fuzzyRules>
+            <spatialRules operator="max"/>
+        </class>
+        <class idx="7" id="CeramicRoof">
+            <fuzzyRules operator="min">
+                <shapeRule property="FuzzySHAPE_Size15" id="15">
+                    <function name="Left Shoulder">
+                        <parameters>
+                            <parameter value="400.000" name="a"/>
+                            <parameter value="430.000" name="b"/>
+                        </parameters>
+                    </function>
+                </shapeRule>
+                <attributeRule property="FuzzySTATS_ratio_red_Mean14" id="14">
+                    <function name="Right Shoulder">
+                        <parameters>
+                            <parameter value="0.550" name="a"/>
+                            <parameter value="0.580" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+            </fuzzyRules>
+            <spatialRules operator="min"/>
+        </class>
+        <class idx="8" id="NotCeramicRoof">
+            <fuzzyRules operator="max">
+                <attributeRule property="FuzzySTATS_ratio_red_Mean16" id="16">
+                    <function name="Left Shoulder">
+                        <parameters>
+                            <parameter value="0.550" name="a"/>
+                            <parameter value="0.580" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+                <shapeRule property="FuzzySHAPE_Size9" id="9">
+                    <function name="Right Shoulder">
+                        <parameters>
+                            <parameter value="400.000" name="a"/>
+                            <parameter value="430.000" name="b"/>
+                        </parameters>
+                    </function>
+                </shapeRule>
+            </fuzzyRules>
+            <spatialRules operator="max"/>
+        </class>
+        <class idx="9" id="GreyRoof">
+            <fuzzyRules operator="min">
+                <shapeRule property="FuzzySHAPE_Size12" id="12">
+                    <function name="Left Shoulder">
+                        <parameters>
+                            <parameter value="520.000" name="a"/>
+                            <parameter value="550.000" name="b"/>
+                        </parameters>
+                    </function>
+                </shapeRule>
+                <attributeRule property="FuzzySTATS_Band4_Mean13" id="13">
+                    <function name="Right Shoulder">
+                        <parameters>
+                            <parameter value="620.000" name="a"/>
+                            <parameter value="640.000" name="b"/>
+                        </parameters>
+                    </function>
+                </attributeRule>
+            </fuzzyRules>
+            <spatialRules operator="min"/>
+        </class>
+    </classes>
+</root>

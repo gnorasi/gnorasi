@@ -1,0 +1,420 @@
+<?xml version="1.0" ?>
+<VoreenData version="1">
+    <Workspace version="2" GlobalDescription="">
+        <ProcessorNetwork version="12">
+            <MetaData>
+                <MetaItem name="ProcessorSelection" type="SelectionMetaData::Processor">
+                    <values>
+                        <item type="Knowledge Web Service" ref="ref14" />
+                    </values>
+                </MetaItem>
+                <MetaItem name="Zoom" type="ZoomMetaData">
+                    <transform.row0 x="0.70870578289031982" y="0" z="0" />
+                    <transform.row1 x="0" y="0.70870578289031982" z="0" />
+                    <transform.row2 x="1734.0384521484375" y="1328.47265625" z="1" />
+                </MetaItem>
+            </MetaData>
+            <Processors>
+                <Processor type="MultiBand Image File Reader" name="MultiBand Image File Reader" id="ref0">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-917" y="-1013" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="clearButton" />
+                        <Property name="enableSignleBand" value="false" />
+                        <Property name="imageFile" noPathSet="false" value="../../data/05_Buildings/BUILDINGS_QB_Athens_2006_area2b.tif" />
+                        <Property name="outputBand" value="1" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Mean Shift Segmentation" name="Mean Shift Segmentation" id="ref1">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-701" y="-909" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="enable" value="true" />
+                        <Property name="minRegionSize" value="30" />
+                        <Property name="rangeRadius" value="70" />
+                        <Property name="scale" value="1" />
+                        <Property name="spatialRadius" value="10" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Label Image to Object Map" name="Label Image to Object Map" id="ref7">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-698" y="-794" />
+                    </MetaData>
+                    <Properties />
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Calculate NDVI" name="Calculate NDVI" id="ref8">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-381" y="-789" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="nir" value="4" />
+                        <Property name="red" value="3" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Calculate New Feature for Objects" name="Calculate New Feature for Objects" id="ref9">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-717" y="-677" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="automaticUpdate" value="true" />
+                        <Property name="featurename" value="ndvi" />
+                        <Property name="reduced" value="true" />
+                        <Property name="updateButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Calculate Band Statistics for Objects" name="Calculate Band Statistics for Objects" id="ref2">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-852" y="-441" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="automaticUpdate" value="true" />
+                        <Property name="reduced" value="false" />
+                        <Property name="updateButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="OntologyClassification Processor" name="OntologyClassification Processor" id="ref13">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-848" y="-282" />
+                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="false" x="760" y="224" width="595" height="493" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="xmlfile" noPathSet="false" value="05_Buildings_case1.xml" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Knowledge Web Service" name="Knowledge Web Service" id="ref14">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-827" y="-185" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="serverURLupdate_" value="http://localhost:9998/georulesservice" />
+                        <Property name="updateButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Label Image to Classified Image" name="Label Image to Classified Image" id="ref6">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-1081" y="-117" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="updateButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Otb Image Viewer" name="Otb Image Viewer" id="ref4">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-1452" y="-742" />
+                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="false" x="0" y="0" width="1920" height="1145" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="imageFile" noPathSet="true" value="" />
+                        <Property name="showButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Label Image File Writer" name="Label Image File Writer" id="ref16">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-679" y="42" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="clearButton" />
+                        <Property name="imageFile" noPathSet="false" value="../../data/05_Buildings/result/classification_result.img" />
+                        <Property name="saveButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Otb Image Viewer" name="Otb Image Viewer 2" id="ref10">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-407" y="-612" />
+                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="false" x="760" y="400" width="602" height="563" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="imageFile" noPathSet="true" value="" />
+                        <Property name="showButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Label Image File Writer" name="Label Image File Writer 2" id="ref5">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-942" y="-686" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="clearButton" />
+                        <Property name="imageFile" noPathSet="false" value="../../data/label_image_segmentation.img" />
+                        <Property name="saveButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Text File Writer" name="Text File Writer" id="ref15">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-661" y="-81" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="clearButton" />
+                        <Property name="csvfile" noPathSet="false" value="../../data/05_Buildings/result/classification_result.csv" />
+                        <Property name="saveButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Calculate Shape Properties for Objects" name="Calculate Shape Properties for Objects" id="ref12">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-865" y="-360" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="automaticUpdate" value="true" />
+                        <Property name="reduced" value="false" />
+                        <Property name="updateButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Vector Data File Writer" name="Vector Data File Writer">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-1155" y="54" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="clearButton" />
+                        <Property name="saveButton" />
+                        <Property name="vectorDataFile" noPathSet="false" value="../../data/05_Buildings/result/classification_result.shp" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Band Math Calculator (Single Image)" name="Band Math Calculator (Single Image)" id="ref3">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-1219" y="-691" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="expr" value="(b3)/(b1+b2)" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Calculate New Feature for Objects" name="Calculate New Feature for Objects 2" id="ref11">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-999" y="-549" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="automaticUpdate" value="true" />
+                        <Property name="featurename" value="ratio_red" />
+                        <Property name="reduced" value="true" />
+                        <Property name="updateButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Otb Image Viewer" name="Otb Image Viewer 3" id="ref18">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-1375" y="-529" />
+                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="false" x="0" y="0" width="1920" height="1107" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="imageFile" noPathSet="true" value="" />
+                        <Property name="showButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Label Image to Vector Data Filter" name="Label Image to Vector Data Filter" id="ref17">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-1179" y="-30" />
+                    </MetaData>
+                    <Properties />
+                    <InteractionHandlers />
+                </Processor>
+            </Processors>
+            <Connections>
+                <Connection>
+                    <Outport name="MultibandImage">
+                        <Processor type="MultiBand Image File Reader" ref="ref0" />
+                    </Outport>
+                    <Inport name="MultiBand Image">
+                        <Processor type="Mean Shift Segmentation" ref="ref1" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="MultibandImage">
+                        <Processor type="MultiBand Image File Reader" ref="ref0" />
+                    </Outport>
+                    <Inport name="Input MultiBand Image">
+                        <Processor type="Calculate Band Statistics for Objects" ref="ref2" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="MultibandImage">
+                        <Processor type="MultiBand Image File Reader" ref="ref0" />
+                    </Outport>
+                    <Inport name="Vector Image Input">
+                        <Processor type="Band Math Calculator (Single Image)" ref="ref3" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Clustered MultiBand Image">
+                        <Processor type="Mean Shift Segmentation" ref="ref1" />
+                    </Outport>
+                    <Inport name="IN Multi Band Image">
+                        <Processor type="Otb Image Viewer" ref="ref4" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Labeled Image">
+                        <Processor type="Mean Shift Segmentation" ref="ref1" />
+                    </Outport>
+                    <Inport name="Label Image">
+                        <Processor type="Label Image File Writer" ref="ref5" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Labeled Image">
+                        <Processor type="Mean Shift Segmentation" ref="ref1" />
+                    </Outport>
+                    <Inport name="Label Image Input">
+                        <Processor type="Label Image to Classified Image" ref="ref6" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Labeled Image">
+                        <Processor type="Mean Shift Segmentation" ref="ref1" />
+                    </Outport>
+                    <Inport name="Label Image">
+                        <Processor type="Label Image to Object Map" ref="ref7" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Initial MultiBand Image">
+                        <Processor type="Mean Shift Segmentation" ref="ref1" />
+                    </Outport>
+                    <Inport name="Vector Image Input">
+                        <Processor type="Calculate NDVI" ref="ref8" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Object Map">
+                        <Processor type="Label Image to Object Map" ref="ref7" />
+                    </Outport>
+                    <Inport name="Input Object Map">
+                        <Processor type="Calculate New Feature for Objects" ref="ref9" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="NDVI Image Output">
+                        <Processor type="Calculate NDVI" ref="ref8" />
+                    </Outport>
+                    <Inport name="Input Feature Image">
+                        <Processor type="Calculate New Feature for Objects" ref="ref9" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="NDVI Image Output">
+                        <Processor type="Calculate NDVI" ref="ref8" />
+                    </Outport>
+                    <Inport name="OTBImage.inport">
+                        <Processor type="Otb Image Viewer" ref="ref10" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Output Object Map">
+                        <Processor type="Calculate New Feature for Objects" ref="ref9" />
+                    </Outport>
+                    <Inport name="Input Object Map">
+                        <Processor type="Calculate New Feature for Objects" ref="ref11" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Output Object Map">
+                        <Processor type="Calculate Band Statistics for Objects" ref="ref2" />
+                    </Outport>
+                    <Inport name="Input Object Map">
+                        <Processor type="Calculate Shape Properties for Objects" ref="ref12" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="CSV Text Port">
+                        <Processor type="OntologyClassification Processor" ref="ref13" />
+                    </Outport>
+                    <Inport name="Input CSV fuzzy data">
+                        <Processor type="Knowledge Web Service" ref="ref14" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="XML Port">
+                        <Processor type="OntologyClassification Processor" ref="ref13" />
+                    </Outport>
+                    <Inport name="Input XML user hierarchy">
+                        <Processor type="Knowledge Web Service" ref="ref14" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="CSV output classification">
+                        <Processor type="Knowledge Web Service" ref="ref14" />
+                    </Outport>
+                    <Inport name="Input Classification Text">
+                        <Processor type="Label Image to Classified Image" ref="ref6" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="CSV output classification">
+                        <Processor type="Knowledge Web Service" ref="ref14" />
+                    </Outport>
+                    <Inport name="Text Data Input">
+                        <Processor type="Text File Writer" ref="ref15" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Classified Image Output">
+                        <Processor type="Label Image to Classified Image" ref="ref6" />
+                    </Outport>
+                    <Inport name="Label Image">
+                        <Processor type="Label Image File Writer" ref="ref16" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Classified Image Output">
+                        <Processor type="Label Image to Classified Image" ref="ref6" />
+                    </Outport>
+                    <Inport name="Label Image Inport">
+                        <Processor type="Label Image to Vector Data Filter" ref="ref17" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Output Object Map">
+                        <Processor type="Calculate Shape Properties for Objects" ref="ref12" />
+                    </Outport>
+                    <Inport name="Input Object Map Port">
+                        <Processor type="OntologyClassification Processor" ref="ref13" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Image Output">
+                        <Processor type="Band Math Calculator (Single Image)" ref="ref3" />
+                    </Outport>
+                    <Inport name="Input Feature Image">
+                        <Processor type="Calculate New Feature for Objects" ref="ref11" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Image Output">
+                        <Processor type="Band Math Calculator (Single Image)" ref="ref3" />
+                    </Outport>
+                    <Inport name="OTBImage.inport">
+                        <Processor type="Otb Image Viewer" ref="ref18" />
+                    </Inport>
+                </Connection>
+                <Connection>
+                    <Outport name="Output Object Map">
+                        <Processor type="Calculate New Feature for Objects" ref="ref11" />
+                    </Outport>
+                    <Inport name="Input Object Map">
+                        <Processor type="Calculate Band Statistics for Objects" ref="ref2" />
+                    </Inport>
+                </Connection>
+            </Connections>
+            <CoProcessorConnections />
+            <PropertyLinks />
+        </ProcessorNetwork>
+        <Animation />
+    </Workspace>
+</VoreenData>
