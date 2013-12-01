@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<VoreenData version="1">
+    <Workspace version="2" GlobalDescription="">
+        <ProcessorNetwork version="12">
+            <MetaData>
+                <MetaItem name="ProcessorSelection" type="SelectionMetaData::Processor">
+                    <values>
+                        <item type="Image File Reader" ref="ref0" />
+                    </values>
+                </MetaItem>
+            </MetaData>
+            <Processors>
+                <Processor type="Image File Reader" name="Image File Reader" id="ref0">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-39" y="-460" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="clearButton" />
+                        <Property name="imageFile" noPathSet="false" value="../../data/06_Oil_Spills/Cearac3.img" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Binary Threshold Image Segmentation" name="Binary Threshold Image Segmentation">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-97" y="-337" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="enable" value="true" />
+                        <Property name="insideValue" value="255" />
+                        <Property name="lowerThreshold" value="0" />
+                        <Property name="outsideValue" value="0" />
+                        <Property name="upperThreshold" value="50" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+                <Processor type="Otb Image Viewer" name="Otb Image Viewer">
+                    <MetaData>
+                        <MetaItem name="ProcessorGraphicsItem" type="PositionMetaData" x="-24" y="-193" />
+                        <MetaItem name="ProcessorWidget" type="WindowStateMetaData" visible="false" x="483" y="159" width="602" height="558" />
+                    </MetaData>
+                    <Properties>
+                        <Property name="imageFile" noPathSet="true" value="" />
+                        <Property name="showButton" />
+                    </Properties>
+                    <InteractionHandlers />
+                </Processor>
+            </Processors>
+            <Connections />
+            <CoProcessorConnections />
+            <PropertyLinks />
+        </ProcessorNetwork>
+        <Animation />
+    </Workspace>
+</VoreenData>
