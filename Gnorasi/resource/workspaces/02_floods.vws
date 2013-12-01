@@ -17,7 +17,7 @@
                     <Properties>
                         <Property name="clearButton" />
                         <Property name="enableSignleBand" value="false" />
-                        <Property name="imageFile" noPathSet="false" value="../../data/FLOOD_Evros.img" />
+                        <Property name="imageFile" noPathSet="false" value="../../data/02_Flood/FLOOD_Evros.img" />
                         <Property name="outputBand" value="1" />
                     </Properties>
                     <InteractionHandlers />
@@ -51,7 +51,7 @@
                     </MetaData>
                     <Properties>
                         <Property name="clearButton" />
-                        <Property name="imageFile" noPathSet="false" value="flood1.img" />
+                        <Property name="imageFile" noPathSet="false" value="../../data/flood1.img" />
                         <Property name="maxValue" value="255" />
                         <Property name="minValue" value="0" />
                         <Property name="outputImageType" value="char" />
@@ -67,7 +67,7 @@
                     <Properties>
                         <Property name="clearButton" />
                         <Property name="enableSignleBand" value="false" />
-                        <Property name="imageFile" noPathSet="false" value="../../data/FLOOD_Evros.img" />
+                        <Property name="imageFile" noPathSet="false" value="../../data/02_Flood/FLOOD_Evros.img" />
                         <Property name="outputBand" value="1" />
                     </Properties>
                     <InteractionHandlers />
@@ -87,7 +87,7 @@
                     </MetaData>
                     <Properties>
                         <Property name="clearButton" />
-                        <Property name="imageFile" noPathSet="false" value="flood2.img" />
+                        <Property name="imageFile" noPathSet="false" value="../../data/flood2.img" />
                         <Property name="maxValue" value="255" />
                         <Property name="minValue" value="0" />
                         <Property name="outputImageType" value="char" />
