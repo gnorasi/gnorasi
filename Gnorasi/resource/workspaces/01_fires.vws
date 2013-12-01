@@ -22,7 +22,7 @@
                     <Properties>
                         <Property name="clearButton" />
                         <Property name="enableSignleBand" value="false" />
-                        <Property name="imageFile" noPathSet="false" value="../../data/FIRE_242_250.img" />
+                        <Property name="imageFile" noPathSet="false" value="../../data/01_Fire/FIRE_242_250.img" />
                         <Property name="outputBand" value="1" />
                     </Properties>
                     <InteractionHandlers />
@@ -34,7 +34,7 @@
                     <Properties>
                         <Property name="clearButton" />
                         <Property name="enableSignleBand" value="false" />
-                        <Property name="imageFile" noPathSet="false" value="../../data/FIRE_230_250.img" />
+                        <Property name="imageFile" noPathSet="false" value="../../data/01_Fire/FIRE_230_250.img" />
                         <Property name="outputBand" value="1" />
                     </Properties>
                     <InteractionHandlers />
