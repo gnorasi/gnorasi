@@ -88,7 +88,6 @@
 #include "processors/ImageEnhancement/otbcurvatureanisotropicdiffusionimagefilterprocessor.h"
 //#include "processors/ImageEnhancement/otbmorphologicalwatershedimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbattributesmapopeninglabelmapfilterprocessor.h"
-#include "processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbrgbtoluminanceimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbbinarythinningimagefilterprocessor.h"
 #include "processors/ImageEnhancement/otbgeodesicmorphologylevelingfilterprocessor.h"
@@ -143,12 +142,12 @@
 //#include "processors/Geometry/otborthorectifyprocessor.h"
 
 #ifdef WIN32
-
 //#include "processors/Visualization/otbsimpleviewerprocessor.h"
 
 #else
 
 #include "processors/Visualization/otbsimpleviewerprocessor.h"
+#include "processors/ImageEnhancement/otblmvmpansharpeningfusionimagefilterprocessor.h"
 
 #endif
 
@@ -168,11 +167,11 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBImageToVectorImageCastProcessor());
     registerProcessor(new OTBVectorImageWriterProcessor());
 #ifdef WIN32
-
     //registerProcessor(new OTBSimpleViewerProcessor());
 #else
 
     registerProcessor(new OTBSimpleViewerProcessor());
+    registerProcessor(new OTBLmvmPanSharpeningFusionImageFilterProcessor());
 #endif
     registerProcessor(new OTBLabelImageWriterProcessor());
     registerProcessor(new OTBCSVWriterProcessor());
@@ -248,7 +247,6 @@ OTBModule::OTBModule(const std::string& moduleName)
     registerProcessor(new OTBGeodesicActiveContourLevelSetImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DLinesImageFilterProcessor());
     registerProcessor(new OTBHoughTransform2DCirclesImageFilterProcessor());
-    registerProcessor(new OTBLmvmPanSharpeningFusionImageFilterProcessor());
     registerProcessor(new OTBShapeDetectionLevelSetImageFilterProcessor());
     registerProcessor(new OTBMRFEnergyGaussianClassificationFilterProcessor());
     registerProcessor(new OTBSOMImageClassificationFilterProcessor());

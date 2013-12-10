@@ -56,7 +56,8 @@ public:
     virtual CodeState getCodeState() const   { return CODE_STATE_TESTING; }//STABLE, TESTING, EXPERIMENTAL
     
     typedef double                   PixelType;
-    typedef otb::Image<PixelType, 2> ImageType;
+    static const unsigned int Dimension = 2;
+    typedef otb::Image<PixelType, Dimension> ImageType;
     typedef ImageType* 		     ImagePointer;
     typedef otb::ImageFileReader<ImageType> ReaderType;
     ReaderType::Pointer reader;
