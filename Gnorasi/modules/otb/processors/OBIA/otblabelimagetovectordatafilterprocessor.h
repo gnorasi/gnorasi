@@ -32,6 +32,7 @@
 #include "../../ports/otbvectordataport.h"
 #include "otbVectorData.h"
 #include "otbLabelImageToVectorDataFilter.h"
+#include "voreen/core/properties/buttonproperty.h"
 
 namespace voreen {
 
@@ -68,11 +69,14 @@ protected:
     void process();
     virtual void initialize() throw (tgt::Exception);
     virtual void deinitialize() throw (tgt::Exception);
+    void update();
 
 private:
 
     OTBLabelImagePort inPort_;
     OTBVectorDataPort outPort_;
+
+    ButtonProperty update_;      ///< Updates the chain
 
     static const std::string loggerCat_; ///< category used in logging
 };

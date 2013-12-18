@@ -34,10 +34,14 @@ const std::string OTBLabelImageToVectorDataFilterProcessor::loggerCat_("voreen.O
 OTBLabelImageToVectorDataFilterProcessor::OTBLabelImageToVectorDataFilterProcessor()
     :OTBImageFilterProcessor(),
       inPort_(Port::INPORT, "Label Image Inport",0),
-      outPort_(Port::OUTPORT, "Vector Data Outport",0)
+      outPort_(Port::OUTPORT, "Vector Data Outport",0),
+      update_("updateButton", "Update")
 {
     addPort(inPort_);
     addPort(outPort_);
+
+    update_.onChange(CallMemberAction<OTBLabelImageToVectorDataFilterProcessor>(this, &OTBLabelImageToVectorDataFilterProcessor::update));
+    addProperty(update_);
 
     filter = VectorizationFilterType::New();
 }
@@ -60,6 +64,11 @@ void OTBLabelImageToVectorDataFilterProcessor::deinitialize() throw (tgt::Except
 
 std::string OTBLabelImageToVectorDataFilterProcessor::getProcessorInfo() const {
     return "Label Image to Vector Data Filter Processor";
+}
+
+void OTBLabelImageToVectorDataFilterProcessor::update() {
+    process();
+    filter->Update();
 }
 
 void OTBLabelImageToVectorDataFilterProcessor::process() {
