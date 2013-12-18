@@ -93,7 +93,7 @@ void OTBBinaryThresholdFilterProcessor::process() {
     try
     {
 	filter->SetInput(inPort_.getData());
-	outPort_.setData(filter->GetOutput());
+    outPort_.setData(filter->GetOutput());
     }
     catch (int e)
     {
